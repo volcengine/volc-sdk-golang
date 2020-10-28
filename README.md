@@ -24,7 +24,10 @@ VOLCSECRETKEY #sk
 
 ~/.volcconfig/config
 
-```
-
+```json
+{
+	"ak":"Your-AK",
+	"sk":"Your-SK"
+}
 ```
 
