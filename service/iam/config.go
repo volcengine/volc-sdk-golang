@@ -9,13 +9,13 @@ import (
 )
 
 const (
-	DefaultRegion = "cn-north-1"
+	DefaultRegion          = "cn-north-1"
 	ServiceVersion20180101 = "2018-01-01"
-	ServiceName = "iam"
+	ServiceName            = "iam"
 )
 
 var (
-	ServiceInfo = &base.ServiceInfo {
+	ServiceInfo = &base.ServiceInfo{
 		Timeout: 5 * time.Second,
 		Host:    "open.volcengineapi.com",
 		Header: http.Header{
@@ -64,6 +64,7 @@ func (p *IAM) GetAPIInfo(api string) *base.ApiInfo {
 	}
 	return nil
 }
+
 // SetHost .
 func (p *IAM) SetRegion(region string) {
 	ServiceInfo.Credentials.Region = region
