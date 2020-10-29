@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	ServiceVersion20180101 = "2018-01-01"
 	DefaultRegion = "cn-north-1"
+	ServiceVersion20180101 = "2018-01-01"
 	ServiceName = "iam"
 )
 
