@@ -2,8 +2,9 @@ package iam
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"net/url"
+
+	"github.com/gin-gonic/gin"
 )
 
 // helper func
@@ -27,7 +28,3 @@ func (p *IAM) ListUsers(c *gin.Context, query url.Values) (*UserListResp, int, e
 	}
 	return resp, statusCode, nil
 }
-
-
-
-
