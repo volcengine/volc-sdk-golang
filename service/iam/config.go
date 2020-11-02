@@ -40,13 +40,13 @@ var DefaultInstance = NewInstance()
 
 // IAM .
 type IAM struct {
-	client *base.Client
+	Client *base.Client
 }
 
 // NewInstance 创建一个实例
 func NewInstance() *IAM {
 	instance := &IAM{}
-	instance.client = base.NewClient(ServiceInfo, ApiInfoList)
+	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
 	ServiceInfo.Credentials.Service = ServiceName
 	ServiceInfo.Credentials.Region = DefaultRegion
 	return instance

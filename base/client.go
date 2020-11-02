@@ -12,6 +12,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"code.byted.org/gopkg/pkg/log"
 )
 
 const (
@@ -24,6 +26,7 @@ const (
 // Client 基础客户端
 type Client struct {
 	Client      http.Client
+	SdkVersion  string
 	ServiceInfo *ServiceInfo
 	ApiInfoList map[string]*ApiInfo
 }
@@ -57,6 +60,13 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 				client.ServiceInfo.Credentials.SecretAccessKey = secretKey
 			}
 		}
+	}
+
+	content, err := ioutil.ReadFile("VERSION")
+	if err != nil {
+		log.Error(err)
+	} else {
+		client.SdkVersion = string(content)
 	}
 
 	return client
@@ -166,6 +176,7 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
+	header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
 	query = mergeQuery(query, apiInfo.Query)
 
 	u := url.URL{
