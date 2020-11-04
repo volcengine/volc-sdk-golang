@@ -1,10 +1,10 @@
 ### Change log
 
+2020-11-04 Bumped to version v1.0.1
+- Add version file.
+- Add example of iam.
+
 2020-11-02 Bumped to version v1.0.0
 - Add the default signature package.
 - Add ListUsers api.
 - Update README.md.
-
-2020-11-04 Bumped to version v1.0.1
-- Add version file.
-- Add example of iam.
