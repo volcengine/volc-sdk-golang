@@ -6,15 +6,16 @@ import (
 	"testing"
 )
 
-const(
+const (
 	region = "region"
-	host = "host"
+	host   = "hosts"
 	testAk = "ak"
 	testSk = "sk"
 )
+
 func TestIAM_ListUsers(t *testing.T) {
-	DefaultInstance.client.SetAccessKey(testAk)
-	DefaultInstance.client.SetSecretKey(testSk)
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
 	DefaultInstance.SetHost(host)
 	DefaultInstance.SetRegion(region)
 

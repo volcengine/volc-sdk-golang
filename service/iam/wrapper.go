@@ -9,7 +9,7 @@ import (
 
 // helper func
 func (p *IAM) commonHandler(c *gin.Context, api string, query url.Values, resp interface{}) (int, error) {
-	respBody, statusCode, err := p.client.Query(api, query)
+	respBody, statusCode, err := p.Client.Query(api, query)
 	if err != nil {
 		return statusCode, err
 	}

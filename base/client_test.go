@@ -32,7 +32,7 @@ var (
 
 func TestClient_GetSignUrl(t *testing.T) {
 	client := NewClient(serviceInfo, apiList)
-	// set aksk or read from ~/.volcconfig/config
+	// set aksk or read from ~/.volc/config
 	// client.SetAccessKey("your-ak")
 	// client.SetSecretKey("your-sk")
 
@@ -42,7 +42,7 @@ func TestClient_GetSignUrl(t *testing.T) {
 
 func TestClient_Query(t *testing.T) {
 	client := NewClient(serviceInfo, apiList)
-	// set aksk or read from ~/.volcconfig/config
+	// set aksk or read from ~/.volc/config
 	// client.SetAccessKey("your-ak")
 	// client.SetSecretKey("your-sk")
 

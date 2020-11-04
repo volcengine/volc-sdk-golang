@@ -24,6 +24,7 @@ const (
 // Client 基础客户端
 type Client struct {
 	Client      http.Client
+	SdkVersion  string
 	ServiceInfo *ServiceInfo
 	ApiInfoList map[string]*ApiInfo
 }
@@ -46,8 +47,8 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	if os.Getenv(accessKey) != "" && os.Getenv(secretKey) != "" {
 		client.ServiceInfo.Credentials.AccessKeyID = os.Getenv(accessKey)
 		client.ServiceInfo.Credentials.SecretAccessKey = os.Getenv(secretKey)
-	} else if _, err := os.Stat(os.Getenv("HOME") + "/.volcconfig/config"); err == nil {
-		if content, err := ioutil.ReadFile(os.Getenv("HOME") + "/.volcconfig/config"); err == nil {
+	} else if _, err := os.Stat(os.Getenv("HOME") + "/.volc/config"); err == nil {
+		if content, err := ioutil.ReadFile(os.Getenv("HOME") + "/.volc/config"); err == nil {
 			m := make(map[string]string)
 			json.Unmarshal(content, &m)
 			if accessKey, ok := m["ak"]; ok {
@@ -57,6 +58,11 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 				client.ServiceInfo.Credentials.SecretAccessKey = secretKey
 			}
 		}
+	}
+
+	content, err := ioutil.ReadFile("VERSION")
+	if err == nil {
+		client.SdkVersion = string(content)
 	}
 
 	return client
@@ -166,6 +172,7 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
+	header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
 	query = mergeQuery(query, apiInfo.Query)
 
 	u := url.URL{

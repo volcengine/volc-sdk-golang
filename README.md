@@ -22,7 +22,7 @@ VOLCSECRETKEY #sk
 
 ##### 从HOME文件加载AKSK
 
-~/.volcconfig/config
+~/.volc/config
 
 ```json
 {
