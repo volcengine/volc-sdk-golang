@@ -12,8 +12,6 @@ import (
 	"os"
 	"strings"
 	"time"
-
-	"code.byted.org/gopkg/pkg/log"
 )
 
 const (
@@ -63,9 +61,7 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	}
 
 	content, err := ioutil.ReadFile("VERSION")
-	if err != nil {
-		log.Error(err)
-	} else {
+	if err == nil {
 		client.SdkVersion = string(content)
 	}
 
