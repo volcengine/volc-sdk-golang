@@ -16,8 +16,8 @@ client.SetSecretKey("Your-SK")
 环境变量信息
 
 ```
-VOLCACCESSKEY #ak
-VOLCSECRETKEY #sk
+VOLC_ACCESSKEY #ak
+VOLC_SECRETKEY #sk
 ```
 
 ##### 从HOME文件加载AKSK
