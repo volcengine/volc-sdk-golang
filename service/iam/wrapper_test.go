@@ -8,7 +8,6 @@ import (
 
 const (
 	region = "region"
-	host   = "hosts"
 	testAk = "ak"
 	testSk = "sk"
 )
@@ -16,7 +15,6 @@ const (
 func TestIAM_ListUsers(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
-	DefaultInstance.SetHost(host)
 	DefaultInstance.SetRegion(region)
 
 	list, status, err := DefaultInstance.ListUsers(nil, nil)

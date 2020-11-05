@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	accessKey = "VOLCACCESSKEY"
-	secretKey = "VOLCSECRETKEY"
+	accessKey = "VOLC_ACCESSKEY"
+	secretKey = "VOLC_SECRETKEY"
 
 	defaultScheme = "http"
 )
@@ -63,6 +63,7 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	content, err := ioutil.ReadFile("VERSION")
 	if err == nil {
 		client.SdkVersion = string(content)
+		client.ServiceInfo.Header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
 	}
 
 	return client
@@ -172,7 +173,6 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
-	header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
 	query = mergeQuery(query, apiInfo.Query)
 
 	u := url.URL{
