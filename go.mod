@@ -16,4 +16,4 @@ require (
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 )
 
-replace github.com/volcengine/volc-sdk-golang => ../../../code.byted.org/volcengine/volc-sdk-golang
+replace github.com/volcengine/volc-sdk-golang => ./volc-sdk-golang
