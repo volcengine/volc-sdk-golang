@@ -253,7 +253,7 @@ func (client *Client) makeRequest(api string, req *http.Request, timeout time.Du
 
 	resp, err := client.Client.Do(req)
 	if err != nil {
-		return []byte(""), http.StatusInternalServerError, err
+		return []byte(""), 500, err
 	}
 	defer resp.Body.Close()
 
