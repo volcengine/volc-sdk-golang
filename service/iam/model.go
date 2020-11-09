@@ -1,29 +1,10 @@
 package iam
 
-// ErrorObj 错误结构
-type ErrorObj struct {
-	Code    string
-	Message string
-}
-
-// ResponseMetadata metadata结构
-type ResponseMetadata struct {
-	RequestID string
-	Action    string
-	Version   string
-	Service   string    `json:",omitempty"`
-	Error     *ErrorObj `json:",omitempty"`
-}
-
-type BaseResp struct {
-	Status     string
-	CreateDate string
-	UpdateDate string `json:",omitempty"`
-}
+import "github.com/volcengine/volc-sdk-golang/base"
 
 // user
 type UserStructure struct {
-	BaseResp
+	base.BaseResp
 	Id                  uint `json:",omitempty"`
 	Trn                 string
 	UserName            string
@@ -44,6 +25,6 @@ type UserList struct {
 }
 
 type UserListResp struct {
-	ResponseMetadata ResponseMetadata
+	ResponseMetadata base.ResponseMetadata
 	Result           *UserList `json:",omitempty"`
 }
