@@ -21,9 +21,9 @@ func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayIn
 		EnableSsl:      params.URLParams.SSL,
 		VideoDuration:  metaDataInfo.GetOriginalStream().GetMeta().GetDuration(),
 		MediaType:      "",
-		EnableAdaptive: metaDataInfo.CheckAdaptive(params.FilterParams.FormatType),
+		EnableAdaptive: metaDataInfo.CheckAdaptive(params.FilterParams.Format),
 	}
-	switch params.FilterParams.FormatType {
+	switch params.FilterParams.Format {
 	case Normal_FormatType, MP4_FormatType, FMP4_FormatType:
 		videoInfo.VideoList, err = metaDataInfo.getStaticVideoStreams(params, vodInstance)
 		if err != nil {
@@ -176,17 +176,17 @@ func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilte
 	builder := url_sign.NewDefaultURLBuilder(url_sign.WithCDNs([]*url_sign.CDN{cdn}))
 	for _, row := range list {
 		// 1. 类型
-		checkFormat := matchFormatType(params.FilterParams.FormatType, row.GetMeta().GetFormatType())
+		checkFormat := matchFormatType(params.FilterParams.Format, row.GetMeta().GetFormatType())
 		if !checkFormat {
 			continue
 		}
 		// 2. 格式
-		checkCodec := matchCodecType(params.FilterParams.CodecType, row.GetMeta().GetCodecType())
+		checkCodec := matchCodecType(params.FilterParams.Codec, row.GetMeta().GetCodecType())
 		if !checkCodec {
 			continue
 		}
 		// 3. 清晰度
-		checkDefinition := matchDefinitionType(params.FilterParams.DefinitionType, row.GetMeta().GetDefinition())
+		checkDefinition := matchDefinitionType(params.FilterParams.Definition, row.GetMeta().GetDefinition())
 		if !checkDefinition {
 			continue
 		}
@@ -196,7 +196,7 @@ func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilte
 			continue
 		}
 		// 5. 加密
-		checkStream := matchStreamType(params.FilterParams.StreamType, row)
+		checkStream := matchStreamType(params.FilterParams.FileType, row)
 		if !checkStream {
 			continue
 		}
@@ -245,12 +245,12 @@ func (info *MetaDataInfo) getHlsVideoStreams(params *ComposePlayInfoWithFilter, 
 	builder := url_sign.NewDefaultURLBuilder(url_sign.WithCDNs([]*url_sign.CDN{cdn}))
 	for _, row := range list {
 		// 1. 格式
-		checkCodec := matchCodecType(params.FilterParams.CodecType, row.GetMeta().GetCodecType())
+		checkCodec := matchCodecType(params.FilterParams.Codec, row.GetMeta().GetCodecType())
 		if !checkCodec {
 			continue
 		}
 		// 2. 清晰度
-		checkDefinition := matchDefinitionType(params.FilterParams.DefinitionType, row.GetMeta().GetDefinition())
+		checkDefinition := matchDefinitionType(params.FilterParams.Definition, row.GetMeta().GetDefinition())
 		if !checkDefinition {
 			continue
 		}
@@ -315,12 +315,12 @@ func parseVideoList(req []*PlayInfo, params *ComposePlayInfoWithFilter, vodInsta
 	var resp []*Video
 	for _, row := range req {
 		// 1. 格式
-		checkCodec := matchCodecType(params.FilterParams.CodecType, row.GetMeta().GetCodecType())
+		checkCodec := matchCodecType(params.FilterParams.Codec, row.GetMeta().GetCodecType())
 		if !checkCodec {
 			continue
 		}
 		// 2. 清晰度
-		checkDefinition := matchDefinitionType(params.FilterParams.DefinitionType, row.GetMeta().GetDefinition())
+		checkDefinition := matchDefinitionType(params.FilterParams.Definition, row.GetMeta().GetDefinition())
 		if !checkDefinition {
 			continue
 		}
@@ -363,12 +363,12 @@ func parseAudioList(req []*PlayInfo, params *ComposePlayInfoWithFilter, vodInsta
 	var resp []*Audio
 	for _, row := range req {
 		// 1. 格式
-		checkCodec := matchCodecType(params.FilterParams.CodecType, row.GetMeta().GetCodecType())
+		checkCodec := matchCodecType(params.FilterParams.Codec, row.GetMeta().GetCodecType())
 		if !checkCodec {
 			continue
 		}
 		// 2. 清晰度
-		checkDefinition := matchDefinitionType(params.FilterParams.DefinitionType, row.GetMeta().GetDefinition())
+		checkDefinition := matchDefinitionType(params.FilterParams.Definition, row.GetMeta().GetDefinition())
 		if !checkDefinition {
 			continue
 		}
@@ -458,14 +458,14 @@ type ComposePlayInfoWithFilter struct {
 }
 
 type FilterParams struct {
-	DefinitionType DefinitionType
-	CodecType      CodecType
-	Watermark      string // 水印名称,不明确指定,按照我们服务播放策略返回(若无策略则返回无水印视频) //# 如果明确想获取某种水印，需要明确指定 //# 如果明确想要获取无水印视频，明确传递(unwatermarked)
-	StreamType     string // 视频转码类型有一下几种，按需传参 //#normal普通非加密转码视频流 //#audio普通非加密转码音频流 //#encrypt加密转码视频流 //#audio_encrypt加密转码音频流 //#normal_short截断非加密转码视频 // perview预览
-	FormatType     FormatType
-	VQuality       QualityType
-	EncodeUserTag  string
-	VLadder        string
+	Definition    DefinitionType
+	Codec         CodecType
+	LogoType      string // 水印名称,不明确指定,按照我们服务播放策略返回(若无策略则返回无水印视频) //# 如果明确想获取某种水印，需要明确指定 //# 如果明确想要获取无水印视频，明确传递(unwatermarked)
+	FileType      string // 视频转码类型有一下几种，按需传参 //#normal普通非加密转码视频流 //#audio普通非加密转码音频流 //#encrypt加密转码视频流 //#audio_encrypt加密转码音频流 //#normal_short截断非加密转码视频 // perview预览
+	Format        FormatType
+	VQuality      QualityType
+	EncodeUserTag string
+	VLadder       string
 }
 
 type URLParams struct {
