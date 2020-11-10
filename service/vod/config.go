@@ -61,7 +61,7 @@ var (
 		base.RegionCnNorth1: {
 			Timeout: 5 * time.Second,
 			//Host:    "vod.volcengineapi.com",
-			Host:    "volcengineapi-boe.byted.org",
+			Host: "volcengineapi-boe.byted.org",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -143,14 +143,6 @@ var (
 				"Version": []string{"2018-01-01"},
 			},
 		},
-		"SetVideoPublishStatus": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"SetVideoPublishStatus"},
-				"Version": []string{"2018-01-01"},
-			},
-		},
 		"GetCdnDomainWeights": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -159,12 +151,36 @@ var (
 				"Version": []string{"2019-07-01"},
 			},
 		},
-		"ModifyVideoInfo": {
-			Method: http.MethodPost,
+		"UpdateVideoInfo": {
+			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ModifyVideoInfo"},
-				"Version": []string{"2018-01-01"},
+				"Action":  []string{"UpdateVideoInfo"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"UpdateVideoPublishStatus": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateVideoPublishStatus"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetVideoInfos": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetVideoInfos"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetRecommendedPoster": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetRecommendedPoster"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
 	}
