@@ -1,7 +1,7 @@
 ## Example
 
 调用代码示例均在example/visual文件夹下，以下为银行卡OCR调用示例
-```
+```go
 package main
 
 import (
@@ -29,7 +29,7 @@ func main() {
 }
 ```
 运行代码方式，在根目录下执行
-```
+```bash
 go run example/visual/bank_card.go
 ```
 
