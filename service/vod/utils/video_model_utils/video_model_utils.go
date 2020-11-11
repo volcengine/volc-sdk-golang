@@ -8,12 +8,13 @@ import (
 
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	url_sign "github.com/volcengine/volc-sdk-golang/service/vod/internal/urlsign"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
-func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) (*VideoInfo, string, error) {
+func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) (string, *MetaDataInfo, error) {
 	metaDataInfo, err := ParseMetaDataInfoFromString(infoStr)
 	if err != nil {
-		return nil, "", err
+		return "", nil, err
 	}
 	videoInfo := &VideoInfo{
 		Status:         metaDataInfo.GetStatus(),
@@ -28,7 +29,7 @@ func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayIn
 	case Normal_FormatType, MP4_FormatType, FMP4_FormatType:
 		videoInfo.VideoList, err = metaDataInfo.getStaticVideoStreams(params, vodInstance)
 		if err != nil {
-			return nil, "", err
+			return "", nil, err
 		}
 	case M3U8_FormatType, HLS_FormatType:
 		videoInfo.DynamicVideo, err = metaDataInfo.getHlsVideoStreams(params, vodInstance)
@@ -36,9 +37,14 @@ func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayIn
 		videoInfo.DynamicVideo, err = metaDataInfo.getDashVideoStreams(params, vodInstance)
 	}
 	if len(videoInfo.GetVideoList()) == 0 && len(videoInfo.GetDynamicVideo().GetMainUrl()) == 0 && len(videoInfo.GetDynamicVideo().GetDynamicVideoList()) == 0 {
-		return nil, "", errors.New("nil video play info")
+		return "", nil, errors.New("nil video play info")
 	}
-	return videoInfo, metaDataInfo.GetPosterUri(), nil
+	marshaler := protojson.MarshalOptions{
+		UseProtoNames:     true,
+		UseEnumNumbers:    true,
+		EmitUnpopulated:   false,
+	}
+	return marshaler.Format(videoInfo), metaDataInfo, nil
 }
 
 func matchCodecType(reqCodecType CodecType, dataCodecType string) bool {
