@@ -275,8 +275,8 @@ func TestComposeVideoInfo(t *testing.T) {
 				infoStr: info,
 				params: &ComposePlayInfoWithFilter{
 					FilterParams: FilterParams{
-						DefinitionType: V720P_DefinitionType,
-						FormatType:     Normal_FormatType,
+						Definition: V720P_DefinitionType,
+						Format:     Normal_FormatType,
 					},
 					NeedOriginalVideoInfo: false,
 				},
@@ -291,9 +291,9 @@ func TestComposeVideoInfo(t *testing.T) {
 				infoStr: info,
 				params: &ComposePlayInfoWithFilter{
 					FilterParams: FilterParams{
-						DefinitionType: V720P_DefinitionType,
-						FormatType:     MP4_FormatType,
-						StreamType:     "encrypt",
+						Definition: V720P_DefinitionType,
+						Format:     MP4_FormatType,
+						FileType:     "encrypt",
 					},
 					NeedOriginalVideoInfo: false,
 				},
@@ -307,8 +307,8 @@ func TestComposeVideoInfo(t *testing.T) {
 				infoStr: info,
 				params: &ComposePlayInfoWithFilter{
 					FilterParams: FilterParams{
-						DefinitionType: V480P_DefinitionType,
-						FormatType:     DASH_FormatType,
+						Definition: V480P_DefinitionType,
+						Format:     DASH_FormatType,
 					},
 					NeedOriginalVideoInfo: false,
 				},
@@ -318,7 +318,7 @@ func TestComposeVideoInfo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ComposeVideoInfo(tt.args.ctx, tt.args.infoStr, tt.args.params, tt.args.vodInstance)
+			got, _, err := ComposeVideoInfo(tt.args.ctx, tt.args.infoStr, tt.args.params, tt.args.vodInstance)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ComposeVideoInfo() error = %v, wantErr %v", err, tt.wantErr)
 				return

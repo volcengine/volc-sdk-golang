@@ -2,6 +2,7 @@ package video_model_utils
 
 import (
 	"context"
+	"errors"
 	"os"
 	"strings"
 
@@ -9,10 +10,10 @@ import (
 	url_sign "github.com/volcengine/volc-sdk-golang/service/vod/internal/urlsign"
 )
 
-func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) (*VideoInfo, error) {
+func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) (*VideoInfo, string, error) {
 	metaDataInfo, err := ParseMetaDataInfoFromString(infoStr)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 	videoInfo := &VideoInfo{
 		Status:         metaDataInfo.GetStatus(),
@@ -27,15 +28,17 @@ func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayIn
 	case Normal_FormatType, MP4_FormatType, FMP4_FormatType:
 		videoInfo.VideoList, err = metaDataInfo.getStaticVideoStreams(params, vodInstance)
 		if err != nil {
-			return nil, err
+			return nil, "", err
 		}
 	case M3U8_FormatType, HLS_FormatType:
 		videoInfo.DynamicVideo, err = metaDataInfo.getHlsVideoStreams(params, vodInstance)
 	case DASH_FormatType:
 		videoInfo.DynamicVideo, err = metaDataInfo.getDashVideoStreams(params, vodInstance)
 	}
-
-	return videoInfo, nil
+	if len(videoInfo.GetVideoList()) == 0 && len(videoInfo.GetDynamicVideo().GetMainUrl()) == 0 && len(videoInfo.GetDynamicVideo().GetDynamicVideoList()) == 0 {
+		return nil, "", errors.New("nil video play info")
+	}
+	return videoInfo, metaDataInfo.GetPosterUri(), nil
 }
 
 func matchCodecType(reqCodecType CodecType, dataCodecType string) bool {
