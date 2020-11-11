@@ -17,7 +17,7 @@ const (
 var (
 	ServiceInfo = &base.ServiceInfo{
 		Timeout: 10 * time.Second,
-		Host:    "open.volcengineapi.com",
+		Host:    "visual.volcengineapi.com",
 		Header:  http.Header{},
 	}
 
