@@ -63,8 +63,7 @@ var (
 			//Host:    "vod.volcengineapi.com",
 			Host: "volcengineapi-boe.byted.org",
 			Header: http.Header{
-				"Accept":   []string{"application/json"},
-				"X-TT-ENV": []string{"boe_husky_feature"},
+				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "vod"},
 		},
