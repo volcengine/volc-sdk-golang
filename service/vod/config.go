@@ -119,28 +119,36 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"QueryUploadTaskInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryUploadTaskInfo"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 		"UploadMediaByUrl": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UploadMediaByUrl"},
-				"Version": []string{"2018-01-01"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
-		"ApplyUpload": {
+		"ApplyUploadInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ApplyUpload"},
-				"Version": []string{"2018-01-01"},
+				"Action":  []string{"ApplyUploadInfo"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
-		"CommitUpload": {
-			Method: http.MethodPost,
+		"CommitUploadInfo": {
+			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CommitUpload"},
-				"Version": []string{"2018-01-01"},
+				"Action":  []string{"CommitUploadInfo"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
 		"GetCdnDomainWeights": {
