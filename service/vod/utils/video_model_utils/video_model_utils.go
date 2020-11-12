@@ -40,9 +40,9 @@ func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayIn
 		return "", nil, errors.New("nil video play info")
 	}
 	marshaler := protojson.MarshalOptions{
-		UseProtoNames:     true,
-		UseEnumNumbers:    true,
-		EmitUnpopulated:   false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  true,
+		EmitUnpopulated: false,
 	}
 	return marshaler.Format(videoInfo), metaDataInfo, nil
 }
@@ -83,6 +83,15 @@ func matchDefinitionType(reqDefinitionType DefinitionType, dataDefinitionType st
 		}
 	}
 	return true
+}
+
+func parseDefinitionType(dataDefinitionType string) (DefinitionType, bool) {
+	d, ok := DefinitionTypeName[dataDefinitionType]
+	if ok {
+		return d, true
+
+	}
+	return -1, false
 }
 
 func matchQualityType(reqQualityType QualityType, dataQualityType string) bool {
@@ -183,34 +192,73 @@ func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilte
 	var respList []*Video
 	cdn := url_sign.NewCDN(os.Getenv("SIGN_HOST"), os.Getenv("SIGN_KEY"))
 	builder := url_sign.NewDefaultURLBuilder(url_sign.WithCDNs([]*url_sign.CDN{cdn}))
+
+	// 1. 类型
+	var matchFormatList []*PlayInfo
 	for _, row := range list {
-		// 1. 类型
 		checkFormat := matchFormatType(params.FilterParams.Format, row.GetMeta().GetFormatType())
 		if !checkFormat {
 			continue
 		}
-		// 2. 格式
+		matchFormatList = append(matchFormatList, row)
+	}
+
+	// 2. 格式
+	var matchCodecList []*PlayInfo
+	for _, row := range matchFormatList {
 		checkCodec := matchCodecType(params.FilterParams.Codec, row.GetMeta().GetCodecType())
 		if !checkCodec {
 			continue
 		}
-		// 3. 清晰度
+		matchCodecList = append(matchCodecList, row)
+	}
+
+	// 3. 清晰度
+	var matchDefinitionList []*PlayInfo
+	definitionStreamMap := map[DefinitionType][]*PlayInfo{}
+	for _, row := range matchCodecList {
+		definition, ok := parseDefinitionType(row.GetMeta().GetDefinition())
+		if ok {
+			definitionStreamMap[definition] = append(definitionStreamMap[definition], row)
+		}
 		checkDefinition := matchDefinitionType(params.FilterParams.Definition, row.GetMeta().GetDefinition())
 		if !checkDefinition {
 			continue
 		}
-		// 4. 质量
+		matchDefinitionList = append(matchDefinitionList, row)
+	}
+	// 没有找到请求所需的清晰度流
+	if len(matchDefinitionList) == 0 {
+		for i := params.FilterParams.Definition; i > 0; i-- {
+			if lowDefinitionList, ok := definitionStreamMap[i]; ok {
+				matchDefinitionList = lowDefinitionList
+				break
+			}
+		}
+	}
+
+	// 4. 质量
+	var matchQualityList []*PlayInfo
+	for _, row := range matchDefinitionList {
 		checkQuality := matchQualityType(params.FilterParams.VQuality, row.GetMeta().GetQuality())
 		if !checkQuality {
 			continue
 		}
-		// 5. 加密
+		matchQualityList = append(matchQualityList, row)
+	}
+
+	// 5. 加密
+	var matchStreamList []*PlayInfo
+	for _, row := range matchQualityList {
 		checkStream := matchStreamType(params.FilterParams.FileType, row)
 		if !checkStream {
 			continue
 		}
+		matchStreamList = append(matchStreamList, row)
+	}
 
-		// 6. url
+	// 6. 最终处理
+	for _, row := range matchStreamList {
 		url, err := builder.BuildURL(row.GetPlayUri())
 		if err != nil {
 			continue
@@ -237,6 +285,7 @@ func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilte
 		}
 		respList = append(respList, respRow)
 	}
+
 	return respList, nil
 }
 

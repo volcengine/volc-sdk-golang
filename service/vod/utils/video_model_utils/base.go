@@ -48,6 +48,20 @@ var DefinitionTypeDescription = map[DefinitionType]string{
 	V4K_DefinitionType:    "4k",
 }
 
+var DefinitionTypeName = map[string]DefinitionType{
+	"all":   ALL_DefinitionType,
+	"240p":  V240P_DefinitionType,
+	"360p":  V360P_DefinitionType,
+	"420p":  V420P_DefinitionType,
+	"480p":  V480P_DefinitionType,
+	"540p":  V540P_DefinitionType,
+	"720p":  V720P_DefinitionType,
+	"1080p": V1080P_DefinitionType,
+	"hdr":   HDR_DefinitionType,
+	"2k":    V2K_DefinitionType,
+	"4k":    V4K_DefinitionType,
+}
+
 type CodecType int
 
 const (
