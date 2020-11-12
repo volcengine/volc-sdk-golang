@@ -22,7 +22,7 @@ func main() {
 
 	//vid := "your vid"
 
-	// GetPlayInfo
+	// Media Info
 	instance := vod.NewInstance()
 
 	query := &request.VodGetVideoInfosRequest{
