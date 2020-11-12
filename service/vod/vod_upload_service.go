@@ -6,13 +6,14 @@ package vod
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/url"
+	"strconv"
+
 	"github.com/pkg/errors"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
-	"net/http"
-	"net/url"
-	"strconv"
 )
 
 /**
