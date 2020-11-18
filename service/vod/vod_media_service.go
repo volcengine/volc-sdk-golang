@@ -17,13 +17,13 @@ import (
 )
 
 /**
- * UpdateVideoInfo.
+ * UpdateMediaInfo.
  *
- * @param input *models.request.VodUpdateVideoInfoRequest
- * @return *models.response.VodUpdateVideoInfoResponse, int, error
+ * @param input *models.request.VodUpdateMediaInfoRequest
+ * @return *models.response.VodUpdateMediaInfoResponse, int, error
  * @throws Exception the exception
  */
-func (p *Vod) UpdateVideoInfo(req *request.VodUpdateVideoInfoRequest) (*response.VodUpdateVideoInfoResponse, int, error) {
+func (p *Vod) UpdateMediaInfo(req *request.VodUpdateMediaInfoRequest) (*response.VodUpdateMediaInfoResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -83,9 +83,9 @@ func (p *Vod) UpdateVideoInfo(req *request.VodUpdateVideoInfoRequest) (*response
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("UpdateVideoInfo", query)
+	respBody, status, err := p.Query("UpdateMediaInfo", query)
 
-	output := &response.VodUpdateVideoInfoResponse{}
+	output := &response.VodUpdateMediaInfoResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
@@ -112,13 +112,13 @@ func (p *Vod) UpdateVideoInfo(req *request.VodUpdateVideoInfoRequest) (*response
 }
 
 /**
- * UpdateVideoPublishStatus.
+ * UpdateMediaPublishStatus.
  *
- * @param input *models.request.VodUpdateVideoPublishStatusRequest
- * @return *models.response.VodUpdateVideoPublishStatusResponse, int, error
+ * @param input *models.request.VodUpdateMediaPublishStatusRequest
+ * @return *models.response.VodUpdateMediaPublishStatusResponse, int, error
  * @throws Exception the exception
  */
-func (p *Vod) UpdateVideoPublishStatus(req *request.VodUpdateVideoPublishStatusRequest) (*response.VodUpdateVideoPublishStatusResponse, int, error) {
+func (p *Vod) UpdateMediaPublishStatus(req *request.VodUpdateMediaPublishStatusRequest) (*response.VodUpdateMediaPublishStatusResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -178,9 +178,9 @@ func (p *Vod) UpdateVideoPublishStatus(req *request.VodUpdateVideoPublishStatusR
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("UpdateVideoPublishStatus", query)
+	respBody, status, err := p.Query("UpdateMediaPublishStatus", query)
 
-	output := &response.VodUpdateVideoPublishStatusResponse{}
+	output := &response.VodUpdateMediaPublishStatusResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
@@ -207,13 +207,13 @@ func (p *Vod) UpdateVideoPublishStatus(req *request.VodUpdateVideoPublishStatusR
 }
 
 /**
- * GetVideoInfos.
+ * GetMediaInfos.
  *
- * @param input *models.request.VodGetVideoInfosRequest
- * @return *models.response.VodGetVideoInfosResponse, int, error
+ * @param input *models.request.VodGetMediaInfosRequest
+ * @return *models.response.VodGetMediaInfosResponse, int, error
  * @throws Exception the exception
  */
-func (p *Vod) GetVideoInfos(req *request.VodGetVideoInfosRequest) (*response.VodGetVideoInfosResponse, int, error) {
+func (p *Vod) GetMediaInfos(req *request.VodGetMediaInfosRequest) (*response.VodGetMediaInfosResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -273,9 +273,9 @@ func (p *Vod) GetVideoInfos(req *request.VodGetVideoInfosRequest) (*response.Vod
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("GetVideoInfos", query)
+	respBody, status, err := p.Query("GetMediaInfos", query)
 
-	output := &response.VodGetVideoInfosResponse{}
+	output := &response.VodGetMediaInfosResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}

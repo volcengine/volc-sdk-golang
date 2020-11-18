@@ -25,10 +25,10 @@ func main() {
 	// Media Info
 	instance := vod.NewInstance()
 
-	query := &request.VodGetVideoInfosRequest{
+	query := &request.VodGetMediaInfosRequest{
 		Vids: vid,
 	}
-	resp, code, err := instance.GetVideoInfos(query)
+	resp, code, err := instance.GetMediaInfos(query)
 	fmt.Println(code)
 	fmt.Println(err)
 	b, _ := json.Marshal(resp)
@@ -43,22 +43,22 @@ func main() {
 	b, _ = json.Marshal(resp1)
 	fmt.Println(string(b))
 
-	query2 := &request.VodUpdateVideoInfoRequest{
+	query2 := &request.VodUpdateMediaInfoRequest{
 		Vid:   vid,
 		Title: wrapperspb.String("aaaaa"),
 		//Tags:  wrapperspb.String("aaa,aa:w"),
 	}
-	resp2, code, err := instance.UpdateVideoInfo(query2)
+	resp2, code, err := instance.UpdateMediaInfo(query2)
 	fmt.Println(code)
 	fmt.Println(err)
 	b, _ = json.Marshal(resp2)
 	fmt.Println(string(b))
 
-	query3 := &request.VodUpdateVideoPublishStatusRequest{
+	query3 := &request.VodUpdateMediaPublishStatusRequest{
 		Vid:    vid,
 		Status: "Unpublished",
 	}
-	resp3, code, err := instance.UpdateVideoPublishStatus(query3)
+	resp3, code, err := instance.UpdateMediaPublishStatus(query3)
 	fmt.Println(code)
 	fmt.Println(err)
 	b, _ = json.Marshal(resp3)

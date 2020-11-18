@@ -151,27 +151,27 @@ var (
 				"Version": []string{"2019-07-01"},
 			},
 		},
-		"UpdateVideoInfo": {
+		"UpdateMediaInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UpdateVideoInfo"},
+				"Action":  []string{"UpdateMediaInfo"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"UpdateVideoPublishStatus": {
+		"UpdateMediaPublishStatus": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UpdateVideoPublishStatus"},
+				"Action":  []string{"UpdateMediaPublishStatus"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"GetVideoInfos": {
+		"GetMediaInfos": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetVideoInfos"},
+				"Action":  []string{"GetMediaInfos"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
