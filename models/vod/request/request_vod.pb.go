@@ -602,7 +602,7 @@ func (x *VodGetRecommendedPosterRequest) GetVids() string {
 	return ""
 }
 
-type VodUpdateVideoPublishStatusRequest struct {
+type VodUpdateMediaPublishStatusRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -611,8 +611,8 @@ type VodUpdateVideoPublishStatusRequest struct {
 	Status string `protobuf:"bytes,2,opt,name=Status,proto3" json:"Status,omitempty"` //视频发布状态
 }
 
-func (x *VodUpdateVideoPublishStatusRequest) Reset() {
-	*x = VodUpdateVideoPublishStatusRequest{}
+func (x *VodUpdateMediaPublishStatusRequest) Reset() {
+	*x = VodUpdateMediaPublishStatusRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_vod_request_request_vod_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -620,13 +620,13 @@ func (x *VodUpdateVideoPublishStatusRequest) Reset() {
 	}
 }
 
-func (x *VodUpdateVideoPublishStatusRequest) String() string {
+func (x *VodUpdateMediaPublishStatusRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VodUpdateVideoPublishStatusRequest) ProtoMessage() {}
+func (*VodUpdateMediaPublishStatusRequest) ProtoMessage() {}
 
-func (x *VodUpdateVideoPublishStatusRequest) ProtoReflect() protoreflect.Message {
+func (x *VodUpdateMediaPublishStatusRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_vod_request_request_vod_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -638,26 +638,26 @@ func (x *VodUpdateVideoPublishStatusRequest) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VodUpdateVideoPublishStatusRequest.ProtoReflect.Descriptor instead.
-func (*VodUpdateVideoPublishStatusRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use VodUpdateMediaPublishStatusRequest.ProtoReflect.Descriptor instead.
+func (*VodUpdateMediaPublishStatusRequest) Descriptor() ([]byte, []int) {
 	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *VodUpdateVideoPublishStatusRequest) GetVid() string {
+func (x *VodUpdateMediaPublishStatusRequest) GetVid() string {
 	if x != nil {
 		return x.Vid
 	}
 	return ""
 }
 
-func (x *VodUpdateVideoPublishStatusRequest) GetStatus() string {
+func (x *VodUpdateMediaPublishStatusRequest) GetStatus() string {
 	if x != nil {
 		return x.Status
 	}
 	return ""
 }
 
-type VodUpdateVideoInfoRequest struct {
+type VodUpdateMediaInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -669,8 +669,8 @@ type VodUpdateVideoInfoRequest struct {
 	Tags        *wrappers.StringValue `protobuf:"bytes,5,opt,name=Tags,proto3" json:"Tags,omitempty"`               //视频标签
 }
 
-func (x *VodUpdateVideoInfoRequest) Reset() {
-	*x = VodUpdateVideoInfoRequest{}
+func (x *VodUpdateMediaInfoRequest) Reset() {
+	*x = VodUpdateMediaInfoRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_vod_request_request_vod_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -678,13 +678,13 @@ func (x *VodUpdateVideoInfoRequest) Reset() {
 	}
 }
 
-func (x *VodUpdateVideoInfoRequest) String() string {
+func (x *VodUpdateMediaInfoRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VodUpdateVideoInfoRequest) ProtoMessage() {}
+func (*VodUpdateMediaInfoRequest) ProtoMessage() {}
 
-func (x *VodUpdateVideoInfoRequest) ProtoReflect() protoreflect.Message {
+func (x *VodUpdateMediaInfoRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_vod_request_request_vod_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -696,47 +696,47 @@ func (x *VodUpdateVideoInfoRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VodUpdateVideoInfoRequest.ProtoReflect.Descriptor instead.
-func (*VodUpdateVideoInfoRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use VodUpdateMediaInfoRequest.ProtoReflect.Descriptor instead.
+func (*VodUpdateMediaInfoRequest) Descriptor() ([]byte, []int) {
 	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *VodUpdateVideoInfoRequest) GetVid() string {
+func (x *VodUpdateMediaInfoRequest) GetVid() string {
 	if x != nil {
 		return x.Vid
 	}
 	return ""
 }
 
-func (x *VodUpdateVideoInfoRequest) GetPosterUri() *wrappers.StringValue {
+func (x *VodUpdateMediaInfoRequest) GetPosterUri() *wrappers.StringValue {
 	if x != nil {
 		return x.PosterUri
 	}
 	return nil
 }
 
-func (x *VodUpdateVideoInfoRequest) GetTitle() *wrappers.StringValue {
+func (x *VodUpdateMediaInfoRequest) GetTitle() *wrappers.StringValue {
 	if x != nil {
 		return x.Title
 	}
 	return nil
 }
 
-func (x *VodUpdateVideoInfoRequest) GetDescription() *wrappers.StringValue {
+func (x *VodUpdateMediaInfoRequest) GetDescription() *wrappers.StringValue {
 	if x != nil {
 		return x.Description
 	}
 	return nil
 }
 
-func (x *VodUpdateVideoInfoRequest) GetTags() *wrappers.StringValue {
+func (x *VodUpdateMediaInfoRequest) GetTags() *wrappers.StringValue {
 	if x != nil {
 		return x.Tags
 	}
 	return nil
 }
 
-type VodGetVideoInfosRequest struct {
+type VodGetMediaInfosRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -744,8 +744,8 @@ type VodGetVideoInfosRequest struct {
 	Vids string `protobuf:"bytes,1,opt,name=Vids,proto3" json:"Vids,omitempty"` //视频ID列表
 }
 
-func (x *VodGetVideoInfosRequest) Reset() {
-	*x = VodGetVideoInfosRequest{}
+func (x *VodGetMediaInfosRequest) Reset() {
+	*x = VodGetMediaInfosRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_vod_request_request_vod_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -753,13 +753,13 @@ func (x *VodGetVideoInfosRequest) Reset() {
 	}
 }
 
-func (x *VodGetVideoInfosRequest) String() string {
+func (x *VodGetMediaInfosRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VodGetVideoInfosRequest) ProtoMessage() {}
+func (*VodGetMediaInfosRequest) ProtoMessage() {}
 
-func (x *VodGetVideoInfosRequest) ProtoReflect() protoreflect.Message {
+func (x *VodGetMediaInfosRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_vod_request_request_vod_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -771,12 +771,12 @@ func (x *VodGetVideoInfosRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VodGetVideoInfosRequest.ProtoReflect.Descriptor instead.
-func (*VodGetVideoInfosRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use VodGetMediaInfosRequest.ProtoReflect.Descriptor instead.
+func (*VodGetMediaInfosRequest) Descriptor() ([]byte, []int) {
 	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *VodGetVideoInfosRequest) GetVids() string {
+func (x *VodGetMediaInfosRequest) GetVids() string {
 	if x != nil {
 		return x.Vids
 	}
@@ -942,12 +942,12 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x64, 0x65, 0x64, 0x50, 0x6f, 0x73, 0x74, 0x65, 0x72, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22, 0x4e, 0x0a, 0x22, 0x56, 0x6f, 0x64,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x50, 0x75, 0x62, 0x6c, 0x69,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x50, 0x75, 0x62, 0x6c, 0x69,
 	0x73, 0x68, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
 	0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69,
 	0x64, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x8f, 0x02, 0x0a, 0x19, 0x56, 0x6f,
-	0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x49, 0x6e, 0x66, 0x6f,
+	0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x49, 0x6e, 0x66, 0x6f,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12, 0x3a, 0x0a, 0x09, 0x50, 0x6f, 0x73,
 	0x74, 0x65, 0x72, 0x55, 0x72, 0x69, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67,
@@ -964,7 +964,7 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69, 0x6e, 0x67,
 	0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x04, 0x54, 0x61, 0x67, 0x73, 0x22, 0x2d, 0x0a, 0x17, 0x56,
-	0x6f, 0x64, 0x47, 0x65, 0x74, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x52,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x49, 0x6e, 0x66, 0x6f, 0x73, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22, 0xd1, 0x01, 0x0a, 0x17, 0x56,
 	0x6f, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52,
@@ -979,19 +979,18 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x0a, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05,
 	0x52, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x12, 0x22, 0x0a, 0x0c, 0x43, 0x61,
 	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x42, 0xb2,
-	0x01, 0x0a, 0x22, 0x63, 0x6f, 0x6d, 0x2e, 0x62, 0x79, 0x74, 0x65, 0x64, 0x61, 0x6e, 0x63, 0x65,
-	0x61, 0x70, 0x69, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x72, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x50, 0x01, 0x5a, 0x38, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
-	0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d,
-	0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01,
-	0xd8, 0x01, 0x01, 0xca, 0x02, 0x1d, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0xe2, 0x02, 0x1d, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x52, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x42, 0xa4,
+	0x01, 0x0a, 0x20, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e,
+	0x65, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x72, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x50,
+	0x01, 0x5a, 0x38, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64,
+	0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f,
+	0x76, 0x6f, 0x64, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01, 0xd8, 0x01,
+	0x01, 0xca, 0x02, 0x17, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c,
+	0x56, 0x6f, 0x64, 0x5c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xe2, 0x02, 0x17, 0x56, 0x6f,
+	0x6c, 0x63, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1017,9 +1016,9 @@ var file_vod_request_request_vod_proto_goTypes = []interface{}{
 	(*VodCommitUploadInfoRequest)(nil),         // 6: Volcengine.Models.Vod.Request.VodCommitUploadInfoRequest
 	(*VodUrlUploadJsonRequest)(nil),            // 7: Volcengine.Models.Vod.Request.VodUrlUploadJsonRequest
 	(*VodGetRecommendedPosterRequest)(nil),     // 8: Volcengine.Models.Vod.Request.VodGetRecommendedPosterRequest
-	(*VodUpdateVideoPublishStatusRequest)(nil), // 9: Volcengine.Models.Vod.Request.VodUpdateVideoPublishStatusRequest
-	(*VodUpdateVideoInfoRequest)(nil),          // 10: Volcengine.Models.Vod.Request.VodUpdateVideoInfoRequest
-	(*VodGetVideoInfosRequest)(nil),            // 11: Volcengine.Models.Vod.Request.VodGetVideoInfosRequest
+	(*VodUpdateMediaPublishStatusRequest)(nil), // 9: Volcengine.Models.Vod.Request.VodUpdateMediaPublishStatusRequest
+	(*VodUpdateMediaInfoRequest)(nil),          // 10: Volcengine.Models.Vod.Request.VodUpdateMediaInfoRequest
+	(*VodGetMediaInfosRequest)(nil),            // 11: Volcengine.Models.Vod.Request.VodGetMediaInfosRequest
 	(*VodStartWorkflowRequest)(nil),            // 12: Volcengine.Models.Vod.Request.VodStartWorkflowRequest
 	(*business.VodUrlUploadURLSet)(nil),        // 13: Volcengine.Models.Vod.Business.VodUrlUploadURLSet
 	(*wrappers.StringValue)(nil),               // 14: google.protobuf.StringValue
@@ -1027,10 +1026,10 @@ var file_vod_request_request_vod_proto_goTypes = []interface{}{
 }
 var file_vod_request_request_vod_proto_depIdxs = []int32{
 	13, // 0: Volcengine.Models.Vod.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Models.Vod.Business.VodUrlUploadURLSet
-	14, // 1: Volcengine.Models.Vod.Request.VodUpdateVideoInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
-	14, // 2: Volcengine.Models.Vod.Request.VodUpdateVideoInfoRequest.Title:type_name -> google.protobuf.StringValue
-	14, // 3: Volcengine.Models.Vod.Request.VodUpdateVideoInfoRequest.Description:type_name -> google.protobuf.StringValue
-	14, // 4: Volcengine.Models.Vod.Request.VodUpdateVideoInfoRequest.Tags:type_name -> google.protobuf.StringValue
+	14, // 1: Volcengine.Models.Vod.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
+	14, // 2: Volcengine.Models.Vod.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
+	14, // 3: Volcengine.Models.Vod.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
+	14, // 4: Volcengine.Models.Vod.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
 	15, // 5: Volcengine.Models.Vod.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Models.Vod.Business.WorkflowParams
 	6,  // [6:6] is the sub-list for method output_type
 	6,  // [6:6] is the sub-list for method input_type
@@ -1154,7 +1153,7 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateVideoPublishStatusRequest); i {
+			switch v := v.(*VodUpdateMediaPublishStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1166,7 +1165,7 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateVideoInfoRequest); i {
+			switch v := v.(*VodUpdateMediaInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1178,7 +1177,7 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetVideoInfosRequest); i {
+			switch v := v.(*VodGetMediaInfosRequest); i {
 			case 0:
 				return &v.state
 			case 1:

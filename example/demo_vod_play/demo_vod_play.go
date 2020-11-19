@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	// call below method if you dont set ak and sk in ～/.vcloud/config
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
@@ -39,6 +38,8 @@ func main() {
 	fmt.Println(code)
 	fmt.Println(err)
 	b, _ := json.Marshal(resp)
+	resp.GetResponseMetadata().GetError().String()
+	resp.GetResult().String()
 	fmt.Println(string(b))
 
 
