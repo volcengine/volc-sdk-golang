@@ -20,6 +20,7 @@ func (p *Vod) GetPlayAuthToken(query url.Values) (string, error) {
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret["GetPlayInfoToken"] = getPlayInfoToken
+		ret["TokenVersion"] = "V2"
 	} else {
 		return "", err
 	}
