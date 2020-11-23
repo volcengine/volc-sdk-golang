@@ -33,8 +33,8 @@ type VodGetPlayInfoRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Vid        string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`               // 视频ID
-	Format     string `protobuf:"bytes,2,opt,name=Format,proto3" json:"Format,omitempty"`         //封装格式，支持mp4,dash,hls，默认mp4 Format
-	Codec      string `protobuf:"bytes,3,opt,name=Codec,proto3" json:"Codec,omitempty"`           //编码类型，默认h264，可选值为h264,h265等 Codec
+	Format     string `protobuf:"bytes,2,opt,name=Format,proto3" json:"Format,omitempty"`         //封装格式，支持mp4,dash,hls，默认mp4Format
+	Codec      string `protobuf:"bytes,3,opt,name=Codec,proto3" json:"Codec,omitempty"`           //编码类型，默认h264，可选值为h264,bytevc1等Codec
 	Definition string `protobuf:"bytes,4,opt,name=Definition,proto3" json:"Definition,omitempty"` //视频流清晰度，默认返回全部，支持：240p，360p，480p，540p，720p，1080p
 	FileType   string `protobuf:"bytes,5,opt,name=FileType,proto3" json:"FileType,omitempty"`     //流文件类型，默认video，支持：加密视频流evideo，加密音频流传eaudio，非加密视频流video，普通音频音频流audio
 	LogoType   string `protobuf:"bytes,6,opt,name=LogoType,proto3" json:"LogoType,omitempty"`     // 水印贴片标签
@@ -300,9 +300,9 @@ type VodApplyUploadInfoRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SpaceName  string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
-	SessionKey string `protobuf:"bytes,2,opt,name=SessionKey,proto3" json:"SessionKey,omitempty"`
-	FileSize   int32  `protobuf:"varint,3,opt,name=FileSize,proto3" json:"FileSize,omitempty"`
+	SpaceName  string  `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	SessionKey string  `protobuf:"bytes,2,opt,name=SessionKey,proto3" json:"SessionKey,omitempty"`
+	FileSize   float64 `protobuf:"fixed64,3,opt,name=FileSize,proto3" json:"FileSize,omitempty"`
 }
 
 func (x *VodApplyUploadInfoRequest) Reset() {
@@ -351,7 +351,7 @@ func (x *VodApplyUploadInfoRequest) GetSessionKey() string {
 	return ""
 }
 
-func (x *VodApplyUploadInfoRequest) GetFileSize() int32 {
+func (x *VodApplyUploadInfoRequest) GetFileSize() float64 {
 	if x != nil {
 		return x.FileSize
 	}
@@ -913,7 +913,7 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x1e, 0x0a, 0x0a, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x0a, 0x53, 0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x4b, 0x65, 0x79, 0x12,
 	0x1a, 0x0a, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x93, 0x01, 0x0a, 0x15,
+	0x01, 0x52, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x93, 0x01, 0x0a, 0x15,
 	0x56, 0x6f, 0x64, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x52, 0x65,
 	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
 	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
