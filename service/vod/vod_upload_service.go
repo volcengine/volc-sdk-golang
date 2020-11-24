@@ -6,30 +6,15 @@ package vod
 
 import (
 	"encoding/json"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"strconv"
-	"time"
 
 	"github.com/pkg/errors"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
 )
-
-func (p *Vod) GetUploadAuthWithExpiredTime(expiredTime time.Duration) (*base.SecurityToken2, error) {
-	inlinePolicy := new(base.Policy)
-	actions := []string{"vod:ApplyUploadInfo", "vod:CommitUploadInfo"}
-	resources := make([]string, 0)
-	statement := base.NewAllowStatement(actions, resources)
-	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
-	return p.SignSts2(inlinePolicy, expiredTime)
-}
-
-func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
-	return p.GetUploadAuthWithExpiredTime(time.Hour)
-}
 
 /**
  * UploadMediaByUrl.

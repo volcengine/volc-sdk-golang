@@ -6,12 +6,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"hash/crc32"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 func (p *Vod) GetPlayAuthToken(query url.Values) (string, error) {
@@ -54,6 +56,20 @@ func (p *Vod) UploadMediaInner(fileBytes []byte, spaceName string, callbackArgs 
 		return nil, err
 	}
 	return commitResp, nil
+}
+
+
+func (p *Vod) GetUploadAuthWithExpiredTime(expiredTime time.Duration) (*base.SecurityToken2, error) {
+	inlinePolicy := new(base.Policy)
+	actions := []string{"vod:ApplyUploadInfo", "vod:CommitUploadInfo"}
+	resources := make([]string, 0)
+	statement := base.NewAllowStatement(actions, resources)
+	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
+	return p.SignSts2(inlinePolicy, expiredTime)
+}
+
+func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
+	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
 func (p *Vod) Upload(fileBytes []byte, spaceName string) (string, string, error) {
