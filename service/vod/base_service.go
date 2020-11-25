@@ -6,25 +6,56 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"hash/crc32"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 )
 
-func (p *Vod) GetPlayAuthToken(query url.Values) (string, error) {
-	ret := map[string]string{}
+func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest) (string, error) {
+	if len(req.GetVid()) == 0 {
+		return "", errors.New("传入的Vid为空")
+	}
+	query := url.Values{
+		"Vid": []string{req.GetVid()},
+	}
+	if len(req.GetDefinition()) > 0 {
+		query.Add("Definition", req.GetDefinition())
+	}
+	if len(req.GetFileType()) > 0 {
+		query.Add("FileType", req.GetFileType())
+	}
+	if len(req.GetCodec()) > 0 {
+		query.Add("Codec", req.GetCodec())
+	}
+	if len(req.GetFormat()) > 0 {
+		query.Add("Format", req.GetFormat())
+	}
+	if len(req.GetBase64()) > 0 {
+		query.Add("Base64", req.GetBase64())
+	}
+	if len(req.GetLogoType()) > 0 {
+		query.Add("LogoType", req.GetLogoType())
+	}
+	if len(req.GetSsl()) > 0 {
+		query.Add("Ssl", req.GetSsl())
+	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
+		ret := map[string]string{}
 		ret["GetPlayInfoToken"] = getPlayInfoToken
 		ret["TokenVersion"] = "V2"
+		b, err := json.Marshal(ret)
+		if err != nil {
+			return "", err
+		}
+		return base64.StdEncoding.EncodeToString(b), nil
 	} else {
 		return "", err
 	}
-
-	b, _ := json.Marshal(ret)
-	return base64.StdEncoding.EncodeToString(b), nil
 }
 
 func (p *Vod) UploadMediaWithCallback(fileBytes []byte, spaceName string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, error) {
@@ -54,6 +85,20 @@ func (p *Vod) UploadMediaInner(fileBytes []byte, spaceName string, callbackArgs 
 		return nil, err
 	}
 	return commitResp, nil
+}
+
+
+func (p *Vod) GetUploadAuthWithExpiredTime(expiredTime time.Duration) (*base.SecurityToken2, error) {
+	inlinePolicy := new(base.Policy)
+	actions := []string{"vod:ApplyUploadInfo", "vod:CommitUploadInfo"}
+	resources := make([]string, 0)
+	statement := base.NewAllowStatement(actions, resources)
+	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
+	return p.SignSts2(inlinePolicy, expiredTime)
+}
+
+func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
+	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
 func (p *Vod) Upload(fileBytes []byte, spaceName string) (string, string, error) {
