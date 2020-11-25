@@ -16,17 +16,46 @@ import (
 	"time"
 )
 
-func (p *Vod) GetPlayAuthToken(query url.Values) (string, error) {
-	ret := map[string]string{}
+func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest) (string, error) {
+	if len(req.GetVid()) == 0 {
+		return "", errors.New("传入的Vid为空")
+	}
+	query := url.Values{
+		"Vid": []string{req.GetVid()},
+	}
+	if len(req.GetDefinition()) > 0 {
+		query.Add("Definition", req.GetDefinition())
+	}
+	if len(req.GetFileType()) > 0 {
+		query.Add("FileType", req.GetFileType())
+	}
+	if len(req.GetCodec()) > 0 {
+		query.Add("Codec", req.GetCodec())
+	}
+	if len(req.GetFormat()) > 0 {
+		query.Add("Format", req.GetFormat())
+	}
+	if len(req.GetBase64()) > 0 {
+		query.Add("Base64", req.GetBase64())
+	}
+	if len(req.GetLogoType()) > 0 {
+		query.Add("LogoType", req.GetLogoType())
+	}
+	if len(req.GetSsl()) > 0 {
+		query.Add("Ssl", req.GetSsl())
+	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
+		ret := map[string]string{}
 		ret["GetPlayInfoToken"] = getPlayInfoToken
 		ret["TokenVersion"] = "V2"
+		b, err := json.Marshal(ret)
+		if err != nil {
+			return "", err
+		}
+		return base64.StdEncoding.EncodeToString(b), nil
 	} else {
 		return "", err
 	}
-
-	b, _ := json.Marshal(ret)
-	return base64.StdEncoding.EncodeToString(b), nil
 }
 
 func (p *Vod) UploadMediaWithCallback(fileBytes []byte, spaceName string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, error) {
