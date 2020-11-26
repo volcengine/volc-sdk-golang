@@ -13,10 +13,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"time"
 )
 
-func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest) (string, error) {
+func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
 	}
@@ -43,6 +44,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest) (string, erro
 	}
 	if len(req.GetSsl()) > 0 {
 		query.Add("Ssl", req.GetSsl())
+	}
+	if tokenExpireTime > 0 {
+		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
