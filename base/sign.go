@@ -35,6 +35,13 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	query.Set("X-Credential", c.AccessKeyID+"/"+meta.credentialScope)
 	query.Set("X-Algorithm", meta.algorithm)
 	query.Set("X-SignedHeaders", meta.signedHeaders)
+	query.Set("X-SignedQueries", "")
+	keys := make([]string, 0, len(query))
+	for k := range query {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	query.Set("X-SignedQueries", strings.Join(keys, ";"))
 
 	// Task 1
 	hashedCanonReq := hashedSimpleCanonicalRequestV4(request, query, meta)
@@ -142,7 +149,7 @@ func signatureV4(signingKey []byte, stringToSign string) string {
 func prepareRequestV4(request *http.Request) *http.Request {
 	necessaryDefaults := map[string]string{
 		"Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-		"X-Date":   timestampV4(),
+		"X-Date":       timestampV4(),
 	}
 
 	for header, value := range necessaryDefaults {
