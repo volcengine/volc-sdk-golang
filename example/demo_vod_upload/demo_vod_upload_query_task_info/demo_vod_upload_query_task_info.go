@@ -35,7 +35,7 @@ func main() {
 		fmt.Println(resp.ResponseMetadata.Error)
 		return
 	}
-	fmt.Println(resp.GetResult().GetData().GetVideoInfoList()[0].GetVid())
+	fmt.Println(resp.GetResult().GetData().GetMediaInfoList()[0].GetVid())
 	bts, _ := json.Marshal(resp)
 	fmt.Printf("resp = %s", bts)
 }
