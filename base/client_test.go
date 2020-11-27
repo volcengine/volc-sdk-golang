@@ -1,6 +1,7 @@
 package base
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -33,11 +34,17 @@ var (
 func TestClient_GetSignUrl(t *testing.T) {
 	client := NewClient(serviceInfo, apiList)
 	// set aksk or read from ~/.volc/config
-	// client.SetAccessKey("your-ak")
-	// client.SetSecretKey("your-sk")
-
-	url, _ := client.GetSignUrl("ListUsers", nil)
-	fmt.Println(url)
+	client.SetAccessKey("ak")
+	client.SetSecretKey("sk")
+	urlStr, _ := client.GetSignUrl("ListUsers", nil)
+	fmt.Println(urlStr)
+	if resp, err := http.Get("baseUrl?" + urlStr); err == nil {
+		var result map[string]interface{}
+		json.NewDecoder(resp.Body).Decode(&result)
+		fmt.Println(result)
+	} else {
+		fmt.Println(err)
+	}
 }
 
 func TestClient_Query(t *testing.T) {
