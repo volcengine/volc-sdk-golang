@@ -34,7 +34,7 @@ func main() {
 		os.Exit(-1)
 	}
 
-	resp, err := instance.UploadMediaWithCallback(dat, spaceName, "my callback", getMetaFunc, snapShotFunc)
+	resp, _, err := instance.UploadMediaWithCallback(dat, spaceName, "my callback", getMetaFunc, snapShotFunc)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
