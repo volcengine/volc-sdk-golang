@@ -2,6 +2,7 @@ package video_model_utils
 
 import (
 	"context"
+	"os"
 	"reflect"
 	"testing"
 
@@ -318,7 +319,7 @@ func TestComposeVideoInfo(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, _, err := ComposeVideoInfo(tt.args.ctx, tt.args.infoStr, tt.args.params, tt.args.vodInstance)
+			got, _, err := ComposeVideoInfo(tt.args.ctx, tt.args.infoStr, tt.args.params, tt.args.vodInstance, os.Getenv("POSTER_PREFIX"))
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ComposeVideoInfo() error = %v, wantErr %v", err, tt.wantErr)
 				return

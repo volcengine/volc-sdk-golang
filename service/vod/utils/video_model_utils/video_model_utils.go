@@ -6,43 +6,42 @@ import (
 	"os"
 	"strings"
 
+	"github.com/volcengine/volc-sdk-golang/models/vod/business"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	url_sign "github.com/volcengine/volc-sdk-golang/service/vod/internal/urlsign"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 
-func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) (string, *MetaDataInfo, error) {
+func ComposeVideoInfo(ctx context.Context, infoStr string, params *ComposePlayInfoWithFilter, vodInstance *vod.Vod, posterDomain string) (string, *MetaDataInfo, error) {
 	metaDataInfo, err := ParseMetaDataInfoFromString(infoStr)
 	if err != nil {
 		return "", nil, err
 	}
-	videoInfo := &VideoInfo{
-		Status:         metaDataInfo.GetStatus(),
-		Version:        VideoModelVersion,
-		VideoId:        metaDataInfo.GetId(),
-		EnableSsl:      params.URLParams.SSL,
-		VideoDuration:  metaDataInfo.GetOriginalStream().GetMeta().GetDuration(),
-		MediaType:      "",
+	videoInfo := &business.VodPlayInfoModel{
+		Version:        business.VodPlayInfoModelVersion_ToBV1VodPlayInfoModelVersion,
+		Vid:            metaDataInfo.GetId(),
+		Status:         int32(metaDataInfo.GetStatus()),
+		PosterUrl:      posterDomain + metaDataInfo.GetPosterUri(),
+		Duration:       float32(metaDataInfo.GetOriginalStream().GetMeta().GetDuration()),
 		EnableAdaptive: metaDataInfo.CheckAdaptive(params.FilterParams.Format),
 	}
+
 	switch params.FilterParams.Format {
 	case Normal_FormatType, MP4_FormatType, FMP4_FormatType:
-		videoInfo.VideoList, err = metaDataInfo.getStaticVideoStreams(params, vodInstance)
+		videoInfo.PlayInfoList, err = metaDataInfo.getStaticVideoStreams(params, vodInstance)
 		if err != nil {
 			return "", nil, err
 		}
-	case M3U8_FormatType, HLS_FormatType:
-		videoInfo.DynamicVideo, err = metaDataInfo.getHlsVideoStreams(params, vodInstance)
-	case DASH_FormatType:
-		videoInfo.DynamicVideo, err = metaDataInfo.getDashVideoStreams(params, vodInstance)
+	default:
+		return "", nil, errors.New("unsupported format")
 	}
-	if len(videoInfo.GetVideoList()) == 0 && len(videoInfo.GetDynamicVideo().GetMainUrl()) == 0 && len(videoInfo.GetDynamicVideo().GetDynamicVideoList()) == 0 {
+	if len(videoInfo.GetPlayInfoList()) == 0 {
 		return "", nil, errors.New("nil video play info")
 	}
 	marshaler := protojson.MarshalOptions{
 		UseProtoNames:   true,
 		UseEnumNumbers:  true,
-		EmitUnpopulated: false,
+		EmitUnpopulated: true,
 	}
 	return marshaler.Format(videoInfo), metaDataInfo, nil
 }
@@ -184,12 +183,12 @@ func matchStreamType(reqStreamType string, data *PlayInfo) bool {
 	return false
 }
 
-func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) ([]*Video, error) {
+func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilter, vodInstance *vod.Vod) ([]*business.VodPlayInfo, error) {
 	list := info.GetStaticStreams()
 	if list == nil || len(list) == 0 {
 		return nil, nil
 	}
-	var respList []*Video
+	var respList []*business.VodPlayInfo
 	cdn := url_sign.NewCDN(os.Getenv("SIGN_HOST"), os.Getenv("SIGN_KEY"))
 	builder := url_sign.NewDefaultURLBuilder(url_sign.WithCDNs([]*url_sign.CDN{cdn}))
 
@@ -263,25 +262,25 @@ func (info *MetaDataInfo) getStaticVideoStreams(params *ComposePlayInfoWithFilte
 		if err != nil {
 			continue
 		}
-		respRow := &Video{
-			MainUrl:   url,
-			BackupUrl: url,
-			VideoMeta: &VideoMeta{
-				Definition:  row.GetMeta().GetDefinition(),
-				Quality:     row.GetMeta().GetQuality(),
-				QualityDesc: row.GetMeta().GetQualityDesc(),
-				Vtype:       row.GetMeta().GetFormatType(),
-				Vwidth:      row.GetMeta().GetWidth(),
-				Vheight:     row.GetMeta().GetHeight(),
-				Bitrate:     row.GetMeta().GetBitrate(),
-				CodecType:   row.GetMeta().GetCodecType(),
-				Size:        row.GetMeta().GetSize(),
-				FileId:      row.GetMeta().GetFileId(),
-				Fps:         row.GetMeta().GetFps(),
-			},
-			EncryptInfo:   row.GetEncryptInfo(),
-			BaseRangeInfo: row.GetBaseRangeInfo(),
-			CheckInfo:     row.GetCheckInfo(),
+		respRow := &business.VodPlayInfo{
+			FileId:        row.GetMeta().GetFileId(),
+			Md5:           row.GetMeta().GetMd5(),
+			Format:        row.GetMeta().GetFormatType(),
+			Codec:         row.GetMeta().GetCodecType(),
+			Definition:    row.GetMeta().GetDefinition(),
+			MainPlayUrl:   url,
+			BackupPlayUrl: url,
+			Bitrate:       int32(row.GetMeta().GetBitrate()),
+			Width:         int32(row.GetMeta().GetWidth()),
+			Height:        int32(row.GetMeta().GetHeight()),
+			Size:          float64(row.GetMeta().GetSize()),
+			CheckInfo:     row.GetCheckInfo().GetCheckInfo(),
+			IndexRange:    row.GetBaseRangeInfo().GetIndexRange(),
+			InitRange:     row.GetBaseRangeInfo().GetInitRange(),
+			PlayAuth:      row.GetEncryptInfo().GetSpadeA(),
+			PlayAuthId:    row.GetEncryptInfo().GetKid(),
+			LogoType:      "",
+			Quality:       row.GetMeta().GetQuality(),
 		}
 		respList = append(respList, respRow)
 	}
