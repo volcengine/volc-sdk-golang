@@ -137,7 +137,7 @@ func (x *VodGetOriginalPlayInfoResponse) GetResult() *business.VodGetOriginalPla
 	return nil
 }
 
-type VodUploadVideoResponse struct {
+type VodUploadMediaResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -146,8 +146,8 @@ type VodUploadVideoResponse struct {
 	Result           *business.VodCommitData `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
 }
 
-func (x *VodUploadVideoResponse) Reset() {
-	*x = VodUploadVideoResponse{}
+func (x *VodUploadMediaResponse) Reset() {
+	*x = VodUploadMediaResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_vod_response_response_vod_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -155,13 +155,13 @@ func (x *VodUploadVideoResponse) Reset() {
 	}
 }
 
-func (x *VodUploadVideoResponse) String() string {
+func (x *VodUploadMediaResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*VodUploadVideoResponse) ProtoMessage() {}
+func (*VodUploadMediaResponse) ProtoMessage() {}
 
-func (x *VodUploadVideoResponse) ProtoReflect() protoreflect.Message {
+func (x *VodUploadMediaResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_vod_response_response_vod_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -173,19 +173,19 @@ func (x *VodUploadVideoResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use VodUploadVideoResponse.ProtoReflect.Descriptor instead.
-func (*VodUploadVideoResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use VodUploadMediaResponse.ProtoReflect.Descriptor instead.
+func (*VodUploadMediaResponse) Descriptor() ([]byte, []int) {
 	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *VodUploadVideoResponse) GetResponseMetadata() *base.ResponseMetadata {
+func (x *VodUploadMediaResponse) GetResponseMetadata() *base.ResponseMetadata {
 	if x != nil {
 		return x.ResponseMetadata
 	}
 	return nil
 }
 
-func (x *VodUploadVideoResponse) GetResult() *business.VodCommitData {
+func (x *VodUploadMediaResponse) GetResult() *business.VodCommitData {
 	if x != nil {
 		return x.Result
 	}
@@ -712,7 +712,7 @@ var file_vod_response_response_vod_proto_rawDesc = []byte{
 	0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x4f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x61,
 	0x6c, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
 	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xb5, 0x01, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x55,
-	0x70, 0x6c, 0x6f, 0x61, 0x64, 0x56, 0x69, 0x64, 0x65, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x70, 0x6c, 0x6f, 0x61, 0x64, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x54, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x56,
 	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
@@ -853,7 +853,7 @@ var file_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo
 var file_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodGetPlayInfoResponse)(nil),                // 0: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse
 	(*VodGetOriginalPlayInfoResponse)(nil),        // 1: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse
-	(*VodUploadVideoResponse)(nil),                // 2: Volcengine.Models.Vod.Response.VodUploadVideoResponse
+	(*VodUploadMediaResponse)(nil),                // 2: Volcengine.Models.Vod.Response.VodUploadMediaResponse
 	(*VodQueryUploadTaskInfoResponse)(nil),        // 3: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse
 	(*VodUrlUploadResponse)(nil),                  // 4: Volcengine.Models.Vod.Response.VodUrlUploadResponse
 	(*VodApplyUploadInfoResponse)(nil),            // 5: Volcengine.Models.Vod.Response.VodApplyUploadInfoResponse
@@ -880,8 +880,8 @@ var file_vod_response_response_vod_proto_depIdxs = []int32{
 	13, // 1: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodPlayInfoModel
 	12, // 2: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
 	14, // 3: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetOriginalPlayInfoResult
-	12, // 4: Volcengine.Models.Vod.Response.VodUploadVideoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	15, // 5: Volcengine.Models.Vod.Response.VodUploadVideoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitData
+	12, // 4: Volcengine.Models.Vod.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	15, // 5: Volcengine.Models.Vod.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitData
 	12, // 6: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
 	16, // 7: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodQueryData
 	12, // 8: Volcengine.Models.Vod.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
@@ -936,7 +936,7 @@ func file_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_vod_response_response_vod_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUploadVideoResponse); i {
+			switch v := v.(*VodUploadMediaResponse); i {
 			case 0:
 				return &v.state
 			case 1:
