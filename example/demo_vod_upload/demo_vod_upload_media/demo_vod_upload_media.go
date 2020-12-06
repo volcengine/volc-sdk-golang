@@ -6,8 +6,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
-	"io/ioutil"
-	"os"
 )
 
 func main() {
@@ -28,13 +26,7 @@ func main() {
 	snapShotFunc := functions.SnapshotFunc(1.3)
 	getMetaFunc := functions.GetMeatFunc()
 
-	dat, err := ioutil.ReadFile(filePath)
-	if err != nil {
-		fmt.Printf("read file from %s error %v", filePath, err)
-		os.Exit(-1)
-	}
-
-	resp, _, err := instance.UploadMediaWithCallback(dat, spaceName, "my callback", getMetaFunc, snapShotFunc)
+	resp, _, err := instance.UploadMediaWithCallback(filePath, spaceName, "my callback", getMetaFunc, snapShotFunc)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
