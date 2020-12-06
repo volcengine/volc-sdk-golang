@@ -38,7 +38,7 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	}
 
 	c := http.Client{Transport: transport}
-	client := &Client{Client: c, ServiceInfo: info, ApiInfoList: apiInfoList}
+	client := &Client{Client: c, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
 
 	if client.ServiceInfo.Scheme == "" {
 		client.ServiceInfo.Scheme = defaultScheme
@@ -67,6 +67,30 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	}
 
 	return client
+}
+
+func (serviceInfo *ServiceInfo) Clone() *ServiceInfo {
+	ret := new(ServiceInfo)
+	//base info
+	ret.Timeout = serviceInfo.Timeout
+	ret.Host = serviceInfo.Host
+	ret.Scheme = serviceInfo.Scheme
+
+	//credential
+	ret.Credentials = serviceInfo.Credentials.Clone()
+
+	// header
+	ret.Header = serviceInfo.Header.Clone()
+	return ret
+}
+
+func (cred Credentials) Clone() Credentials {
+	return Credentials{
+		Service:         cred.Service,
+		Region:          cred.Region,
+		SecretAccessKey: cred.SecretAccessKey,
+		AccessKeyID:     cred.AccessKeyID,
+	}
 }
 
 // SetAccessKey 设置AK
