@@ -1,15 +1,17 @@
-package main
+package demo_vod_upload
 
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
 )
 
-func main() {
+func TestVod_CommitUploadInfo(t *testing.T) {
 	// call below method if you dont set ak and sk in ～/.vcloud/config
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
