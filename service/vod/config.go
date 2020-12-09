@@ -29,8 +29,6 @@ const (
 	// ResourceWatermarkFormat 水印信息与账号有关,与region无关
 	ResourceWatermarkFormat = "trn:vod::*:watermark/%s"
 
-	ActionGetPalyInfo = "vod:GetPlayInfo"
-
 	Star = "*"
 )
 
@@ -60,8 +58,7 @@ var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: 5 * time.Second,
-			//Host:    "vod.volcengineapi.com",
-			Host: "volcengineapi-boe.byted.org",
+			Host:    "vod.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},

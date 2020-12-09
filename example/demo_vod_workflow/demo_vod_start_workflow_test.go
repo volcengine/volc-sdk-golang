@@ -1,14 +1,16 @@
-package main
+package demo_vod_workflow
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/models/vod/business"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 )
 
-func main() {
+func TestVod_StartWorkflow(t *testing.T) {
 	// call below method if you dont set ak and sk in ～/.vcloud/config
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
