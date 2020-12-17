@@ -6,11 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/base"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
-	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
-	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 	"hash/crc32"
 	"io"
 	"io/ioutil"
@@ -20,6 +15,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/avast/retry-go"
+	"github.com/volcengine/volc-sdk-golang/base"
+	"github.com/volcengine/volc-sdk-golang/models/vod/request"
+	"github.com/volcengine/volc-sdk-golang/models/vod/response"
+	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
+	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
 func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTime int) (string, error) {
@@ -168,7 +170,7 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string) (string, string
 			if size > consts.LargeFileSize {
 				isLargeFile = true
 			}
-			if err := p.chunkUpload(rd, uploadPart, client, isLargeFile); err != nil {
+			if err := p.chunkUpload(rd, uploadPart, client, size, isLargeFile); err != nil {
 				return "", "", err, http.StatusBadRequest
 			}
 		}
@@ -206,54 +208,48 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	return nil
 }
 
-func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, client *http.Client, isLargeFile bool) error {
+func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, client *http.Client, size int64, isLargeFile bool) error {
 	uploadID, err := p.initUploadPart(uploadPart.TosHost, uploadPart.Oid, uploadPart.Auth, client, isLargeFile)
 	if err != nil {
 		return err
 	}
-	pre, cur := make([]byte, consts.MinChunckSize), make([]byte, consts.MinChunckSize)
+	cur := make([]byte, consts.MinChunckSize)
 	parts := make([]string, 0)
 
-	n, err := io.ReadFull(rd, pre) // 保留前一个分片，避免最后的分片小于MinChunkSize上传失败
-	if err != nil {
-		return err
-	}
-	pre = pre[:n]
-	i := 0
-	for ; ; i++ {
-		n, err = io.ReadFull(rd, cur)
-		if err == io.EOF {
-			break
-		}
-		if err == io.ErrUnexpectedEOF {
-			//当 io 本身出现问题时，n = 0，n =0 正确情况只有EOF， ErrUnexpectedEOF 为错误，不处理会发生上传不完整情况
-			if n == 0 {
-				return err
-			}
-		} else if err != nil {
+	num := size / consts.MinChunckSize
+	cnt := 0
+	lastNum := int(num) - 1
+
+	// 读 n-1 片并上传上去
+	var part string
+	for i := 0; i < lastNum; i++ {
+		n, err := io.ReadFull(rd, cur)
+		if err != nil {
 			return err
 		}
-
-		// UploadPart要求分片不能小于MinChunkSize，否则会报错
-		// 所以如果当前分片小于MinChunkSize，表示文件已经读到末尾，当前分片与前一片合起来一起上传。
-		if int64(n) < consts.MinChunckSize {
-			pre = append(pre, cur[:n]...)
-			break
-		}
-
-		part, err := p.uploadPart(uploadPart, uploadID, i, pre, client, isLargeFile)
-		if err != nil { // retry part
-			part, err = p.uploadPart(uploadPart, uploadID, i, pre, client, isLargeFile)
-		}
+		cnt += n
+		err = retry.Do(func() error {
+			part, err = p.uploadPart(uploadPart, uploadID, i, cur, client, isLargeFile)
+			return err
+		}, retry.Attempts(3))
 		if err != nil {
 			return err
 		}
 		parts = append(parts, part)
-		copy(pre, cur[:n])
-		pre = pre[:n]
 	}
-	// 退出的条件有两个：文件读EOF；读字节数小于MinChunkSize；这两种情况都需要把pre保存下来的分片上传
-	part, err := p.uploadPart(uploadPart, uploadID, i, pre, client, isLargeFile)
+	// 读 n 和 n+1片（如有）上传上去
+	bts, err := ioutil.ReadAll(rd)
+	if err != nil {
+		return err
+	}
+	total := len(bts) + cnt
+	if total != int(size) {
+		return errors.New(fmt.Sprintf("last part download size mismatch ,download %d , size %d", total, size))
+	}
+	err = retry.Do(func() error {
+		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile)
+		return err
+	}, retry.Attempts(3))
 	if err != nil {
 		return err
 	}

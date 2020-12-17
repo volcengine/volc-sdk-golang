@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
@@ -20,7 +21,7 @@ func main() {
 	//vod.NewInstance().SetAccessKey("")
 	//vod.NewInstance().SetSecretKey("")
 
-	spaceName := "your space name"
+	spaceName := "your space"
 	filePath := "media file path"
 
 	snapShotFunc := functions.SnapshotFunc(1.3)
