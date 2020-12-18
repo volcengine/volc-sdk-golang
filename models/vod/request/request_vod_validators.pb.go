@@ -8,11 +8,11 @@ import (
 	"fmt"
 )
 
-func (this *VodGetPlayInfoRequest) Validate() error {
-
+func (this *VodGetPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 	if len(this.GetVid()) == 0 {
-		err := fmt.Errorf("%s not be an empty string", this.GetVid())
-		return err
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s", "VidNotExist")
+		return
 	}
 	if len(this.GetVid()) <= 100 {
 		err := fmt.Errorf("%s have a length smaller than %d", this.GetVid(), 100)
@@ -58,53 +58,53 @@ func (this *VodGetPlayInfoRequest) Validate() error {
 		err := fmt.Errorf("%s is strictly equal to '%g", this.GetFloatTest(), -1.0909019231)
 		return err
 	}
-	return nil
+	return
 }
-func (this *VodGetOriginalPlayInfoRequest) Validate() error {
+func (this *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodUrlUploadRequest) Validate() error {
+func (this *VodUrlUploadRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodQueryUploadTaskInfoRequest) Validate() error {
+func (this *VodQueryUploadTaskInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodApplyUploadInfoRequest) Validate() error {
+func (this *VodApplyUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodUploadMediaRequest) Validate() error {
+func (this *VodUploadMediaRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodCommitUploadInfoRequest) Validate() error {
+func (this *VodCommitUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodUrlUploadJsonRequest) Validate() error {
+func (this *VodUrlUploadJsonRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodGetRecommendedPosterRequest) Validate() error {
+func (this *VodGetRecommendedPosterRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodUpdateMediaPublishStatusRequest) Validate() error {
+func (this *VodUpdateMediaPublishStatusRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodUpdateMediaInfoRequest) Validate() error {
+func (this *VodUpdateMediaInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodGetMediaInfosRequest) Validate() error {
+func (this *VodGetMediaInfosRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
-func (this *VodStartWorkflowRequest) Validate() error {
+func (this *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
-	return nil
+	return
 }
