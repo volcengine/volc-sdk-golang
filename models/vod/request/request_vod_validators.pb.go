@@ -8,103 +8,65 @@ import (
 	"fmt"
 )
 
-func (this *VodGetPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
-	if len(this.GetVid()) == 0 {
-		privateErrorCodeStr = "InvalidVid"
-		err = fmt.Errorf("%s", "VidNotExist")
+func (req *VodGetPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "VidNotExist"
+		err = fmt.Errorf("%s is empty", req.GetVid())
 		return
 	}
-	if len(this.GetVid()) <= 100 {
-		err := fmt.Errorf("%s have a length smaller than %d", this.GetVid(), 100)
-		return err
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
 	}
-	if len(this.GetVid()) >= 1 {
-		err := fmt.Errorf("%s have a length greater than %d", this.GetVid(), 1)
-		return err
-	}
-	if len(this.GetVid()) != 3 {
-		err := fmt.Errorf("%s not have a length equal to %d", this.GetVid(), 3)
-		return err
-	}
-	if this.GetIntTest() <= 100000000000 {
-		err := fmt.Errorf("%s is smaller than %d", this.GetIntTest(), 100000000000)
-		return err
-	}
-	if this.GetIntTest() >= 1 {
-		err := fmt.Errorf("%s is greater than %d", this.GetIntTest(), 1)
-		return err
-	}
-	if this.GetIntTest() != 0 {
-		err := fmt.Errorf("%s is not equal to %d", this.GetIntTest(), 0)
-		return err
-	}
-	if this.GetIntTest() == -1 {
-		err := fmt.Errorf("%s is equal to %d", this.GetIntTest(), -1)
-		return err
-	}
-	if this.GetFloatTest() <= 1.000000000009081e+11 {
-		err := fmt.Errorf("%s is strictly smaller than '%g", this.GetFloatTest(), 1.000000000009081e+11)
-		return err
-	}
-	if this.GetFloatTest() > 1.00001919191 {
-		err := fmt.Errorf("%s is strictly greater than '%g", this.GetFloatTest(), 1.00001919191)
-		return err
-	}
-	if this.GetFloatTest() > 0.97897987987981 {
-		err := fmt.Errorf("%s is not strictly equal to '%g", this.GetFloatTest(), 0.97897987987981)
-		return err
-	}
-	if this.GetFloatTest() == -1.0909019231 {
-		err := fmt.Errorf("%s is strictly equal to '%g", this.GetFloatTest(), -1.0909019231)
-		return err
-	}
-	return
-}
-func (this *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodUrlUploadRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodQueryUploadTaskInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodUrlUploadRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodApplyUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodQueryUploadTaskInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodUploadMediaRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodApplyUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodCommitUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodUploadMediaRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodUrlUploadJsonRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodCommitUploadInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodGetRecommendedPosterRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodUrlUploadJsonRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodUpdateMediaPublishStatusRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodGetRecommendedPosterRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodUpdateMediaInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodUpdateMediaPublishStatusRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodGetMediaInfosRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodUpdateMediaInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
-func (this *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodGetMediaInfosRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
