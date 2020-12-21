@@ -10,7 +10,7 @@ import (
 
 func (req *VodGetPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
 	if len(req.GetVid()) == 0 {
-		privateErrorCodeStr = "VidNotExist"
+		privateErrorCodeStr = "InvalidVid"
 		err = fmt.Errorf("%s is empty", req.GetVid())
 		return
 	}
@@ -23,6 +23,16 @@ func (req *VodGetPlayInfoRequest) Validate() (privateErrorCodeStr string, err er
 	return
 }
 func (req *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
 
 	return
 }
