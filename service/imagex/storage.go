@@ -95,7 +95,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 	}
 
 	checkSum := fmt.Sprintf("%x", crc32.ChecksumIEEE(imageBytes))
-	url := fmt.Sprintf("http://%s/%s", host, storeInfo.StoreUri)
+	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
 	if err != nil {
 		return fmt.Errorf("fail to new put request, %v", err)
@@ -105,16 +105,16 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 
 	rsp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return fmt.Errorf("fail to do request, %v", err)
+		return fmt.Errorf("fail to do request to %s, %v", url, err)
 	}
 
 	body, err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
-		return fmt.Errorf("fail to read response body, %v", err)
+		return fmt.Errorf("fail to read response body %s, %v", url, err)
 	}
 
 	if rsp.StatusCode != http.StatusOK {
-		return fmt.Errorf("http status=%v, body=%s, remote_addr=%v", rsp.StatusCode, string(body), req.Host)
+		return fmt.Errorf("http status=%v, body=%s, url=%s", rsp.StatusCode, string(body), url)
 	}
 	defer rsp.Body.Close()
 
@@ -126,7 +126,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 		return fmt.Errorf("fail to unmarshal response, %v", err)
 	}
 	if putResp.Success != 0 {
-		return fmt.Errorf("put to host %s err:%+v", host, putResp)
+		return fmt.Errorf("put to host %s err:%+v", url, putResp)
 	}
 	return nil
 }
