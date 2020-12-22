@@ -62,7 +62,7 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 
 	content, err := ioutil.ReadFile("VERSION")
 	if err == nil {
-		client.SdkVersion = string(content)
+		client.SdkVersion = strings.TrimSpace(string(content))
 		client.ServiceInfo.Header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
 	}
 
