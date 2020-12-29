@@ -47,8 +47,8 @@ type IAM struct {
 func NewInstance() *IAM {
 	instance := &IAM{}
 	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
-	ServiceInfo.Credentials.Service = ServiceName
-	ServiceInfo.Credentials.Region = DefaultRegion
+	instance.Client.ServiceInfo.Credentials.Service = ServiceName
+	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
 	return instance
 }
 
@@ -72,10 +72,10 @@ func (p *IAM) SetRegion(region string) {
 
 // SetHost .
 func (p *IAM) SetHost(host string) {
-	ServiceInfo.Host = host
+	p.Client.ServiceInfo.Host = host
 }
 
 // SetSchema .
 func (p *IAM) SetSchema(schema string) {
-	ServiceInfo.Scheme = schema
+	p.Client.ServiceInfo.Scheme = schema
 }
