@@ -32,6 +32,7 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	meta.credentialScope = concat("/", meta.date, meta.region, meta.service, "request")
 
 	query.Set("X-Date", ldt)
+	query.Set("X-NotSignBody", "")
 	query.Set("X-Credential", c.AccessKeyID+"/"+meta.credentialScope)
 	query.Set("X-Algorithm", meta.algorithm)
 	query.Set("X-SignedHeaders", meta.signedHeaders)

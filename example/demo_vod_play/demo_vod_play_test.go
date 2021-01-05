@@ -1,14 +1,15 @@
-package main
+package demo_vod_play
 
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 )
 
-func main() {
+func TestVod_GetPlayInfo(t *testing.T) {
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
@@ -18,8 +19,7 @@ func main() {
 	//vod.NewInstance().SetAccessKey("")
 	//vod.NewInstance().SetSecretKey("")
 
-	//vid := "your vid"
-	vid := "v0c2c369007abu04ru8riko30uo9n73g"
+	vid := "your vid"
 
 	// GetPlayInfo
 	instance := vod.NewInstance()
@@ -41,14 +41,4 @@ func main() {
 	resp.GetResponseMetadata().GetError().String()
 	resp.GetResult().String()
 	fmt.Println(string(b))
-
-
-	// GetOriginalPlayInfo
-	query2 := &request.VodGetOriginalPlayInfoRequest{Vid: vid}
-	resp2, code2, err2 := instance.GetOriginalPlayInfo(query2)
-	fmt.Println(code2)
-	fmt.Println(err2)
-	b2, _ := json.Marshal(resp2)
-	fmt.Println(string(b2))
-
 }

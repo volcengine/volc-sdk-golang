@@ -85,8 +85,8 @@ type Visual struct {
 func NewInstance() *Visual {
 	instance := &Visual{}
 	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
-	ServiceInfo.Credentials.Service = ServiceName
-	ServiceInfo.Credentials.Region = DefaultRegion
+	instance.Client.ServiceInfo.Credentials.Service = ServiceName
+	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
 	return instance
 }
 

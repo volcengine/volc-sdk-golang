@@ -1,14 +1,15 @@
-package main
+package demo_vod_upload
 
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
 	"time"
 
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 )
 
-func main() {
+func TestVod_GetUploadAuthWithExpiredTime(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetAccessKey("")
 	instance.SetSecretKey("")
