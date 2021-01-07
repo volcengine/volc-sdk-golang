@@ -55,6 +55,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
 	}
+	if len(req.GetNeedThumbs()) > 0 {
+		query.Add("LogoType", req.GetNeedThumbs())
+	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
 		ret["GetPlayInfoToken"] = getPlayInfoToken
