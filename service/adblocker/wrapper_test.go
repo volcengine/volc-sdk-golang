@@ -7,8 +7,8 @@ import (
 
 const (
 	region = "region"
-	testAk = "***REMOVED***"
-	testSk = "***REMOVED***"
+	testAk = "ak"
+	testSk = "sk"
 )
 
 func TestAdBlock(t *testing.T) {
