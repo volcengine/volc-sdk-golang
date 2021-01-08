@@ -3,7 +3,7 @@ package adblocker
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/TTvcloud/vcloud-sdk-golang/base"
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 type AdBlockRequest struct {
