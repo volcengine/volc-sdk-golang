@@ -2,6 +2,7 @@ package vod
 
 type PublicErrorCode string
 
+
 // General
 const (
 	success       PublicErrorCode = "Success"       // 请求成功，对应200
