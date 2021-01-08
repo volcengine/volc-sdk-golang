@@ -4,6 +4,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
+
 type StartWorkflowRequest struct {
 	Vid          string
 	TemplateId   string
