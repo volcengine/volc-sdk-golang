@@ -134,6 +134,38 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"ConvertPhoto": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ConvertPhoto"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EnhancePhoto": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EnhancePhoto"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GeneralSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GeneralSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"HumanSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"HumanSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
 	}
 )
 

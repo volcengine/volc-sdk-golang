@@ -148,3 +148,40 @@ func (p *Visual) GoodsDetect(form url.Values) (*model.GoodsDetectResult, int, er
 	}
 	return resp, statusCode, nil
 }
+
+func (p *Visual) ConvertPhoto(form url.Values) (*model.ConvertPhotoResult, int, error) {
+	resp := new(model.ConvertPhotoResult)
+	statusCode, err := p.commonHandler("ConvertPhoto", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+
+func (p *Visual) EnhancePhoto(form url.Values) (*model.EnhancePhotoResult, int, error) {
+	resp := new(model.EnhancePhotoResult)
+	statusCode, err := p.commonHandler("EnhancePhoto", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) GeneralSegment(form url.Values) (*model.GeneralSegmentResult, int, error) {
+	resp := new(model.GeneralSegmentResult)
+	statusCode, err := p.commonHandler("GeneralSegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) HumanSegment(form url.Values) (*model.HumanSegmentResult, int, error) {
+	resp := new(model.HumanSegmentResult)
+	statusCode, err := p.commonHandler("HumanSegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
