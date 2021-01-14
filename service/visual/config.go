@@ -70,6 +70,70 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"VideoSceneDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoSceneDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OverResolution": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OverResolution"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GoodsSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GoodsSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageOutpaint": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageOutpaint"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageInpaint": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageInpaint"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageCut": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageCut"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EntityDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EntityDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GoodsDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GoodsDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
 	}
 )
 
