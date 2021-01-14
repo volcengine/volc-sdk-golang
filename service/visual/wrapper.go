@@ -76,3 +76,75 @@ func (p *Visual) JPCartoonCut(form url.Values) (*model.JPCartoonCutResult, int, 
 	}
 	return resp, statusCode, nil
 }
+
+func (p *Visual) VideoSceneDetect(form url.Values) (*model.VideoSceneDetectResult, int, error) {
+	resp := new(model.VideoSceneDetectResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) OverResolution(form url.Values) (*model.OverResolutionResult, int, error) {
+	resp := new(model.OverResolutionResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) GoodsSegment(form url.Values) (*model.GoodsSegmentResult, int, error) {
+	resp := new(model.GoodsSegmentResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageOutpaint(form url.Values) (*model.ImageOutpaintResult, int, error) {
+	resp := new(model.ImageOutpaintResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageInpaint(form url.Values) (*model.ImageInpaintResult, int, error) {
+	resp := new(model.ImageInpaintResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageCut(form url.Values) (*model.ImageCutResult, int, error) {
+	resp := new(model.ImageCutResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) EntityDetect(form url.Values) (*model.EntityDetectResult, int, error) {
+	resp := new(model.EntityDetectResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) GoodsDetect(form url.Values) (*model.GoodsDetectResult, int, error) {
+	resp := new(model.GoodsDetectResult)
+	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
