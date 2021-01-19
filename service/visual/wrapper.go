@@ -104,7 +104,7 @@ func (p *Visual) VideoSceneDetect(form url.Values) (*model.VideoSceneDetectResul
 
 func (p *Visual) OverResolution(form url.Values) (*model.OverResolutionResult, int, error) {
 	resp := new(model.OverResolutionResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("OverResolution", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -113,7 +113,7 @@ func (p *Visual) OverResolution(form url.Values) (*model.OverResolutionResult, i
 
 func (p *Visual) GoodsSegment(form url.Values) (*model.GoodsSegmentResult, int, error) {
 	resp := new(model.GoodsSegmentResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("GoodsSegment", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -122,7 +122,7 @@ func (p *Visual) GoodsSegment(form url.Values) (*model.GoodsSegmentResult, int, 
 
 func (p *Visual) ImageOutpaint(form url.Values) (*model.ImageOutpaintResult, int, error) {
 	resp := new(model.ImageOutpaintResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("ImageOutpaint", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -131,7 +131,7 @@ func (p *Visual) ImageOutpaint(form url.Values) (*model.ImageOutpaintResult, int
 
 func (p *Visual) ImageInpaint(form url.Values) (*model.ImageInpaintResult, int, error) {
 	resp := new(model.ImageInpaintResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("ImageInpaint", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -140,7 +140,7 @@ func (p *Visual) ImageInpaint(form url.Values) (*model.ImageInpaintResult, int, 
 
 func (p *Visual) ImageCut(form url.Values) (*model.ImageCutResult, int, error) {
 	resp := new(model.ImageCutResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("ImageCut", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -149,7 +149,7 @@ func (p *Visual) ImageCut(form url.Values) (*model.ImageCutResult, int, error) {
 
 func (p *Visual) EntityDetect(form url.Values) (*model.EntityDetectResult, int, error) {
 	resp := new(model.EntityDetectResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("EntityDetect", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -158,7 +158,7 @@ func (p *Visual) EntityDetect(form url.Values) (*model.EntityDetectResult, int, 
 
 func (p *Visual) GoodsDetect(form url.Values) (*model.GoodsDetectResult, int, error) {
 	resp := new(model.GoodsDetectResult)
-	statusCode, err := p.commonHandler("VideoSceneDetect", form, resp)
+	statusCode, err := p.commonHandler("GoodsDetect", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
