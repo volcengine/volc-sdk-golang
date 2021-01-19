@@ -23,6 +23,22 @@ func (p *Visual) commonHandler(api string, form url.Values, resp interface{}) (i
 	return statusCode, nil
 }
 
+func (p *Visual) commonQueryHandler(api string, query url.Values, resp interface{}) (int, error) {
+	respBody, statusCode, err := p.Client.Query(api, query)
+	if err != nil {
+		errMsg := err.Error()
+		// business error will be shown in resp, request error should be nil here
+		if errMsg[:3] != "api" {
+			return statusCode, err
+		}
+	}
+
+	if err := json.Unmarshal(respBody, resp); err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
 func (p *Visual) BankCard(form url.Values) (*model.BankCardResult, int, error) {
 	resp := new(model.BankCardResult)
 	statusCode, err := p.commonHandler("BankCard", form, resp)
@@ -158,7 +174,6 @@ func (p *Visual) ConvertPhoto(form url.Values) (*model.ConvertPhotoResult, int, 
 	return resp, statusCode, nil
 }
 
-
 func (p *Visual) EnhancePhoto(form url.Values) (*model.EnhancePhotoResult, int, error) {
 	resp := new(model.EnhancePhotoResult)
 	statusCode, err := p.commonHandler("EnhancePhoto", form, resp)
@@ -180,6 +195,78 @@ func (p *Visual) GeneralSegment(form url.Values) (*model.GeneralSegmentResult, i
 func (p *Visual) HumanSegment(form url.Values) (*model.HumanSegmentResult, int, error) {
 	resp := new(model.HumanSegmentResult)
 	statusCode, err := p.commonHandler("HumanSegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoInpaintSubmitTask(form url.Values) (*model.VideoEditSubmitTaskResult, int, error) {
+	resp := new(model.VideoEditSubmitTaskResult)
+	statusCode, err := p.commonHandler("VideoInpaintSubmitTask", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoInpaintQueryTask(query url.Values) (*model.VideoEditQueryTaskResult, int, error) {
+	resp := new(model.VideoEditQueryTaskResult)
+	statusCode, err := p.commonQueryHandler("VideoInpaintQueryTask", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoRetargetingSubmitTask(form url.Values) (*model.VideoEditSubmitTaskResult, int, error) {
+	resp := new(model.VideoEditSubmitTaskResult)
+	statusCode, err := p.commonHandler("VideoRetargetingSubmitTask", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoRetargetingQueryTask(query url.Values) (*model.VideoEditQueryTaskResult, int, error) {
+	resp := new(model.VideoEditQueryTaskResult)
+	statusCode, err := p.commonQueryHandler("VideoRetargetingQueryTask", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoSummarizationSubmitTask(form url.Values) (*model.VideoEditSubmitTaskResult, int, error) {
+	resp := new(model.VideoEditSubmitTaskResult)
+	statusCode, err := p.commonHandler("VideoSummarizationSubmitTask", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoSummarizationQueryTask(query url.Values) (*model.VideoEditQueryTaskResult, int, error) {
+	resp := new(model.VideoEditQueryTaskResult)
+	statusCode, err := p.commonQueryHandler("VideoSummarizationQueryTask", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoOverResolutionSubmitTask(form url.Values) (*model.VideoEditSubmitTaskResult, int, error) {
+	resp := new(model.VideoEditSubmitTaskResult)
+	statusCode, err := p.commonHandler("VideoOverResolutionSubmitTask", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoOverResolutionQueryTask(query url.Values) (*model.VideoEditQueryTaskResult, int, error) {
+	resp := new(model.VideoEditQueryTaskResult)
+	statusCode, err := p.commonQueryHandler("VideoOverResolutionQueryTask", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
