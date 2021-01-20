@@ -1,5 +1,9 @@
 ### Change log
 
+2021-01-20 Bumped to version v1.0.4
+- Add adblock sdk.
+- Add visual photo sdk.
+
 2020-12-22 Bumped to version v1.0.3
 - Add vod sdk.
 - Add ImageX sdk.
