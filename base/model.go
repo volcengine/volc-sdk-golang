@@ -91,7 +91,7 @@ type Statement struct {
 }
 
 type SecurityToken2 struct {
-	AccessKeyId     string
+	AccessKeyID     string
 	SecretAccessKey string
 	SessionToken    string
 	ExpiredTime     string

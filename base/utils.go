@@ -63,7 +63,7 @@ func createInnerToken(credentials Credentials, sts *SecurityToken2, inlinePolicy
 	innerToken := new(InnerToken)
 
 	innerToken.LTAccessKeyId = credentials.AccessKeyID
-	innerToken.AccessKeyId = sts.AccessKeyId
+	innerToken.AccessKeyId = sts.AccessKeyID
 	innerToken.ExpiredTime = t
 
 	key := md5.Sum([]byte(credentials.SecretAccessKey))
