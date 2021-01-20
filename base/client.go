@@ -164,7 +164,7 @@ func (client *Client) GetSignUrl(api string, query url.Values) (string, error) {
 func (client *Client) SignSts2(inlinePolicy *Policy, expire time.Duration) (*SecurityToken2, error) {
 	var err error
 	sts := new(SecurityToken2)
-	if sts.AccessKeyId, sts.SecretAccessKey, err = createTempAKSK(); err != nil {
+	if sts.AccessKeyID, sts.SecretAccessKey, err = createTempAKSK(); err != nil {
 		return nil, err
 	}
 
