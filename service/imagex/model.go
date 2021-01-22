@@ -53,7 +53,6 @@ type StoreInfo struct {
 // CommitImageUpload
 type CommitUploadImageParam struct {
 	ServiceId   string       `json:"-"`
-	SkipMeta    bool         `json:"-"`
 	SessionKey  string       `json:"SessionKey"`
 	OptionInfos []OptionInfo `json:"OptionInfos"`
 	Functions   []Function   `json:"Functions"`
