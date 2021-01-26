@@ -113,6 +113,7 @@ var (
 				"Action":  []string{"CommitUploadInfo"},
 				"Version": []string{"2020-08-01"},
 			},
+			Timeout: 8 * time.Second,
 		},
 		"GetCdnDomainWeights": {
 			Method: http.MethodGet,
