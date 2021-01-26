@@ -16,6 +16,32 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
+func (c *ImageX) ImageXGet(action string, query url.Values, result interface{}) error {
+	respBody, _, err := c.Client.Query(action, query)
+	if err != nil {
+		return fmt.Errorf("%s: fail to do request, %v", action, err)
+	}
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
+	}
+	return nil
+}
+
+func (c *ImageX) ImageXPost(action string, query url.Values, req, result interface{}) error {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return fmt.Errorf("%s: fail to marshal request, %v", action, err)
+	}
+	data, _, err := c.Client.Json(action, query, string(body))
+	if err != nil {
+		return fmt.Errorf("%s: fail to do request, %v", action, err)
+	}
+	if err := UnmarshalResultInto(data, result); err != nil {
+		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
+	}
+	return nil
+}
+
 // DeleteImageUploadFiles 删除图片
 func (c *ImageX) DeleteImages(serviceId string, uris []string) (*DeleteImageResult, error) {
 	query := url.Values{}
@@ -70,7 +96,6 @@ func (c *ImageX) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 func (c *ImageX) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploadImageResult, error) {
 	query := url.Values{}
 	query.Add("ServiceId", params.ServiceId)
-	query.Add("SkipMeta", fmt.Sprintf("%v", params.SkipMeta))
 
 	bts, err := json.Marshal(params)
 	if err != nil {
@@ -167,7 +192,6 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		SessionKey: uploadAddr.SessionKey,
 	}
 	if params.CommitParam != nil {
-		commitParams.SkipMeta = params.CommitParam.SkipMeta
 		commitParams.OptionInfos = params.CommitParam.OptionInfos
 		commitParams.Functions = params.CommitParam.Functions
 	}
