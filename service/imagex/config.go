@@ -58,6 +58,47 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		// 模板管理
+		"CreateImageTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageTemplate"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"DeleteImageTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageTemplate"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"PreviewImageTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"PreviewImageTemplate"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageTemplate"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetAllImageTemplates": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllImageTemplates"},
+				"Version": []string{ApiVersion},
+			},
+		},
 		// 资源管理相关
 		"DeleteImageUploadFiles": {
 			Method: http.MethodPost,
@@ -88,6 +129,38 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateImageUploadFiles"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageUploadFile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageUploadFile"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageUploadFiles": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageUploadFiles"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"PreviewImageUploadFile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"PreviewImageUploadFile"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageUpdateFiles": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageUpdateFiles"},
 				"Version": []string{ApiVersion},
 			},
 		},
