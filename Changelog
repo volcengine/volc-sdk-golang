@@ -1,4 +1,8 @@
 ### Change log
+2021-01-27 Bumped to version v1.0.5
+- added sts2_ak
+- fixed thumbs bug
+- added common imagex api
 
 2021-01-20 Bumped to version v1.0.4
 - Add adblock sdk.
