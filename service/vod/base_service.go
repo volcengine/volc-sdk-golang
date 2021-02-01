@@ -24,6 +24,16 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
+func (p *Vod) CreateSha1V1Auth(deadline time.Time) (auth string, err error) {
+	return createAuth(DSAHmacSha1, Version1, p.ServiceInfo.Credentials.AccessKeyID,
+		p.ServiceInfo.Credentials.SecretAccessKey, deadline)
+}
+
+func (p *Vod) CreateSha256V1Auth(deadline time.Time) (auth string, err error) {
+	return createAuth(DSAHmacSha256, Version1, p.ServiceInfo.Credentials.AccessKeyID,
+		p.ServiceInfo.Credentials.SecretAccessKey, deadline)
+}
+
 func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
