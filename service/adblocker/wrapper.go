@@ -12,13 +12,26 @@ func (p *AdBlocker) AdBlock(req *AdBlockRequest) (*AdBlockResponse, error) {
 	}
 
 	respBody, _, err := p.Client.Json("AdBlock", nil, string(reqData))
-	if err != nil {
-		return nil, fmt.Errorf("AdBlock: fail to do request, %v", err)
+	if err == nil {
+		result := new(AdBlockResponse)
+		if err := UnmarshalResultInto(respBody, result); err != nil {
+			return nil, err
+		}
+		return result, nil
 	}
 
-	result := new(AdBlockResponse)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
-		return nil, err
+	// 支持错误重试
+	if p.Retry() {
+		respBody, _, err = p.Client.Json("AdBlock", nil, string(reqData))
+		if err != nil {
+			return nil, fmt.Errorf("AdBlock: fail to do request, %v", err)
+		}
+		result := new(AdBlockResponse)
+		if err := UnmarshalResultInto(respBody, result); err != nil {
+			return nil, err
+		}
+		return result, nil
 	}
-	return result, nil
+
+	return nil, fmt.Errorf("AdBlock: fail to do request, %v", err)
 }
