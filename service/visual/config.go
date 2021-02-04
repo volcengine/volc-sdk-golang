@@ -70,6 +70,166 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"VideoSceneDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoSceneDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OverResolution": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OverResolution"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GoodsSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GoodsSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageOutpaint": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageOutpaint"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageInpaint": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageInpaint"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageCut": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageCut"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EntityDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EntityDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GoodsDetect": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GoodsDetect"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ConvertPhoto": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ConvertPhoto"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EnhancePhoto": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EnhancePhoto"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"GeneralSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GeneralSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"HumanSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"HumanSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoInpaintSubmitTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoInpaintSubmitTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoInpaintQueryTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoInpaintQueryTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoRetargetingSubmitTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoRetargetingSubmitTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoRetargetingQueryTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoRetargetingQueryTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoSummarizationSubmitTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoSummarizationSubmitTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoSummarizationQueryTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoSummarizationQueryTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoOverResolutionSubmitTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoOverResolutionSubmitTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VideoOverResolutionQueryTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoOverResolutionQueryTask"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
 	}
 )
 
