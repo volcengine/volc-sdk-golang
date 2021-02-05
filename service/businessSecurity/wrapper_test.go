@@ -2,8 +2,6 @@ package businessSecurity
 
 import (
 	"fmt"
-	"testing"
-	"time"
 )
 
 const (
@@ -16,13 +14,6 @@ func init() {
 	DefaultInstance.Client.SetSecretKey(Sk)
 }
 
-func TestBusinessSecurity_RiskDetection(t *testing.T) {
-	for i := 0; i < 400; i++ {
-		go RiskDetection(3332, "register", "{\"operate_time\":1612269789}")
-	}
-
-	time.Sleep(10 * time.Second)
-}
 
 func RiskDetection(appId int64, service string, parameters string) {
 	res, err := DefaultInstance.RiskDetection(&RiskDetectionRequest{
