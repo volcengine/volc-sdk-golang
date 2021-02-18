@@ -1,5 +1,8 @@
 ### Change log
 
+2021-02-18 Bumped to version v1.0.7
+- Upgrade adblock sdk.
+
 2021-02-04 Bumped to version v1.0.6
 - Add cloud-edit sdk.
 - Add new visual api: HumanSegment, GeneralSegment, EnhancePhoto, ConvertPhoto, VideoSceneDetect, OverResolution, GoodsSegment, ImageOutpaint, ImageInpaint, ImageCut, EntityDetect, GoodsDetect, VideoSummarization, VideoOverResolution, VideoRetargeting, VideoInpaint.
