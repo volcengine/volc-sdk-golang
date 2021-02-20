@@ -155,5 +155,21 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"DeleteMedia": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteMedia"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DeleteTranscodes": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTranscodes"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 	}
 )

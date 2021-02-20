@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/protobuf v1.4.3
 	github.com/google/uuid v1.1.2
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kr/pretty v0.2.0 // indirect

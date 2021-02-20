@@ -3,26 +3,25 @@ package demo_vod_media
 import (
 	"encoding/json"
 	"fmt"
-	"testing"
-
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"google.golang.org/protobuf/types/known/wrapperspb"
+	"testing"
 )
 
 func TestVod_GetMediaInfos(t *testing.T) {
-	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
 	//})
 
 	// or set ak and ak as follow
-	// vod.NewInstance().SetAccessKey("your ak")
-	// vod.NewInstance().SetSecretKey("your sk")
+	// instance.SetAccessKey("")
+	// instance.SetSecretKey("")
 	vid := "your vid"
 	// Media Info
-	instance := vod.NewInstance()
 	query := &request.VodGetMediaInfosRequest{
 		Vids: vid,
 	}
@@ -34,7 +33,8 @@ func TestVod_GetMediaInfos(t *testing.T) {
 }
 
 func TestVod_GetRecommendedPoster(t *testing.T) {
-	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
@@ -44,19 +44,19 @@ func TestVod_GetRecommendedPoster(t *testing.T) {
 	// vod.NewInstance().SetAccessKey("your ak")
 	// vod.NewInstance().SetSecretKey("your sk")
 	vid := "your vid"
-	instance := vod.NewInstance()
-	query1 := &request.VodGetRecommendedPosterRequest{
+	query := &request.VodGetRecommendedPosterRequest{
 		Vids: vid,
 	}
-	resp1, code, err := instance.GetRecommendedPoster(query1)
+	resp, code, err := instance.GetRecommendedPoster(query)
 	fmt.Println(code)
 	fmt.Println(err)
-	b, _ := json.Marshal(resp1)
+	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
 
 func TestVod_UpdateMediaInfo(t *testing.T) {
-	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
@@ -66,21 +66,22 @@ func TestVod_UpdateMediaInfo(t *testing.T) {
 	// vod.NewInstance().SetAccessKey("your ak")
 	// vod.NewInstance().SetSecretKey("your sk")
 	vid := "your vid"
-	instance := vod.NewInstance()
-	query2 := &request.VodUpdateMediaInfoRequest{
+	title := "your title"
+	query := &request.VodUpdateMediaInfoRequest{
 		Vid:   vid,
-		Title: wrapperspb.String("aaaaa"),
+		Title: wrapperspb.String(title),
 		//Tags:  wrapperspb.String("aaa,aa:w"),
 	}
-	resp2, code, err := instance.UpdateMediaInfo(query2)
+	resp, code, err := instance.UpdateMediaInfo(query)
 	fmt.Println(code)
 	fmt.Println(err)
-	b, _ := json.Marshal(resp2)
+	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
 
 func TestVod_UpdateMediaPublishStatus(t *testing.T) {
-	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
 	//vod.NewInstance().SetCredential(base.Credentials{
 	//	AccessKeyID:     "your ak",
 	//	SecretAccessKey: "your sk",
@@ -90,14 +91,63 @@ func TestVod_UpdateMediaPublishStatus(t *testing.T) {
 	// vod.NewInstance().SetAccessKey("your ak")
 	// vod.NewInstance().SetSecretKey("your sk")
 	vid := "your vid"
-	instance := vod.NewInstance()
-	query3 := &request.VodUpdateMediaPublishStatusRequest{
+	query := &request.VodUpdateMediaPublishStatusRequest{
 		Vid:    vid,
 		Status: "Unpublished",
 	}
-	resp3, code, err := instance.UpdateMediaPublishStatus(query3)
+	resp, code, err := instance.UpdateMediaPublishStatus(query)
 	fmt.Println(code)
 	fmt.Println(err)
-	b, _ := json.Marshal(resp3)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVod_DeleteMedia(t *testing.T) {
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
+	//vod.NewInstance().SetCredential(base.Credentials{
+	//	AccessKeyID:     "your ak",
+	//	SecretAccessKey: "your sk",
+	//})
+
+	// or set ak and ak as follow
+	// vod.NewInstance().SetAccessKey("your ak")
+	// vod.NewInstance().SetSecretKey("your sk")
+	vids := "your vids"
+	callbackArgs := "callbackArgs"
+	query := &request.VodDeleteMediaRequest{
+		Vids: vids,
+		CallbackArgs: callbackArgs,
+	}
+	resp, code, err := instance.DeleteMedia(query)
+	fmt.Println(code)
+	fmt.Println(err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVod_DeleteTranscodes(t *testing.T) {
+	instance := vod.NewInstance()
+	// call below method if you dont set ak and sk in ～/.volc/config
+	//vod.NewInstance().SetCredential(base.Credentials{
+	//	AccessKeyID:     "your ak",
+	//	SecretAccessKey: "your sk",
+	//})
+
+	// or set ak and ak as follow
+	// vod.NewInstance().SetAccessKey("your ak")
+	// vod.NewInstance().SetSecretKey("your sk")
+	vid := "your vid"
+	fileIds := "your file ids"
+	callbackArgs := "callbackArgs"
+	query := &request.VodDeleteTranscodesRequest{
+		Vid: vid,
+		FileIds: fileIds,
+		CallbackArgs: callbackArgs,
+	}
+	resp, code, err := instance.DeleteTranscodes(query)
+	fmt.Println(code)
+	fmt.Println(err)
+	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
