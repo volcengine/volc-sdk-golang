@@ -58,6 +58,47 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		// 服务管理
+		"GetImageService": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageService"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetAllImageServices": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllImageServices"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageAuthKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAuthKey"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageObjectAccess": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageObjectAccess"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageMirrorConf": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageMirrorConf"},
+				"Version": []string{ApiVersion},
+			},
+		},
 		// 模板管理
 		"CreateImageTemplate": {
 			Method: http.MethodPost,

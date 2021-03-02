@@ -43,6 +43,25 @@ func (c *ImageX) ImageXPost(action string, query url.Values, req, result interfa
 	return nil
 }
 
+// GetAllImageServices 获取所有服务信息
+func (c *ImageX) GetImageServices(searchPtn string) (*GetServicesResult, error) {
+	query := url.Values{}
+	if searchPtn != "" {
+		query.Add("SearchPtn", searchPtn)
+	}
+
+	respBody, _, err := c.Client.Query("GetAllImageServices", query)
+	if err != nil {
+		return nil, fmt.Errorf("GetAllImageServices: fail to do request, %v", err)
+	}
+
+	result := new(GetServicesResult)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, fmt.Errorf("GetAllImageServices: fail to unmarshal response, %v", err)
+	}
+	return result, nil
+}
+
 // DeleteImageUploadFiles 删除图片
 func (c *ImageX) DeleteImages(serviceId string, uris []string) (*DeleteImageResult, error) {
 	query := url.Values{}

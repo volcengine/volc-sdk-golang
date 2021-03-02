@@ -15,6 +15,50 @@ const (
 	FunctionEncryption = "Encryption"
 )
 
+// GetAllImageServices
+type GetServicesResult struct {
+	Services []Service `json:"Services"`
+}
+
+// GetImageService
+type Service struct {
+	ServiceName    string   `json:"ServiceName"`
+	ServiceId      string   `json:"ServiceId"`
+	ServiceRegion  string   `json:"ServiceRegion"`
+	CreateAt       string   `json:"CreateAt"`
+	ServiceStatus  string   `json:"ServiceStatus"`
+	HasSigkey      bool     `json:"HasSigkey"`
+	TemplatePrefix string   `json:"TemplatePrefix"`
+	DomainInfos    []Domain `json:"DomainInfos"`
+	PrimaryKey     string   `json:"PrimaryKey"`
+	SecondaryKey   string   `json:"SecondaryKey"`
+	ObjectAccess   bool     `json:"ObjectAccess"`
+	CompactURL     bool     `json:"CompactURL"`
+	Mirror         Mirror   `json:"Mirror"`
+	Storage        Storage  `json:"Storage"`
+	AllowBkts      []string `json:"AllowBkts"`
+}
+
+type Mirror struct {
+	Schema  string            `json:"Schema"`
+	Host    string            `json:"Host"`
+	Source  string            `json:"Source"`
+	Headers map[string]string `json:"Headers"`
+}
+
+type Domain struct {
+	DomainName string `json:"DomainName"`
+	CNAME      string `json:"CNAME"`
+	Status     string `json:"Status"`
+	IsDefault  bool   `json:"IsDefault"`
+}
+
+type Storage struct {
+	BktName  string `json:"BktName"`
+	TTL      int    `json:"TTL"`
+	AllTypes bool   `json:"AllTypes"`
+}
+
 // DeleteImageUploadFiles
 type DeleteImageParam struct {
 	StoreUris []string `json:"StoreUris"`
