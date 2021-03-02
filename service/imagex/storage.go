@@ -123,7 +123,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
 	if err != nil {
-		return fmt.Errorf("fail to new put request, %v", err)
+		return fmt.Errorf("fail to new put request %s, %v", url, err)
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", storeInfo.Auth)
@@ -148,7 +148,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 		Payload interface{} `json:"payload"`
 	}
 	if err = json.Unmarshal(body, &putResp); err != nil {
-		return fmt.Errorf("fail to unmarshal response, %v", err)
+		return fmt.Errorf("fail to unmarshal %s response %s, %v", url, string(body), err)
 	}
 	if putResp.Success != 0 {
 		return fmt.Errorf("put to host %s err:%+v", url, putResp)
@@ -158,12 +158,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 
 // 上传图片
 func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*CommitUploadImageResult, error) {
-	if params.UploadNum == 0 {
-		params.UploadNum = 1
-	}
-	if len(images) != params.UploadNum {
-		return nil, fmt.Errorf("UploadImages: images num %d != upload num %d", len(images), params.UploadNum)
-	}
+	params.UploadNum = len(images)
 
 	// 1. apply
 	applyResp, err := c.ApplyUploadImage(params)
@@ -179,17 +174,26 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	}
 
 	// 2. upload
+	success := make([]string, 0)
+	host := uploadAddr.UploadHosts[0]
 	for i, image := range images {
-		err := c.upload(uploadAddr.UploadHosts[0], uploadAddr.StoreInfos[i], image)
-		if err != nil {
-			return nil, fmt.Errorf("UploadImages: fail to do upload, %v", err)
+		info := uploadAddr.StoreInfos[i]
+		for n := 0; n < 3; n++ {
+			err := c.upload(host, info, image)
+			if err != nil {
+				fmt.Printf("UploadImages: fail to do upload, %v", err)
+			} else {
+				success = append(success, info.StoreUri)
+				break
+			}
 		}
 	}
 
 	// 3. commit
 	commitParams := &CommitUploadImageParam{
-		ServiceId:  params.ServiceId,
-		SessionKey: uploadAddr.SessionKey,
+		ServiceId:   params.ServiceId,
+		SessionKey:  uploadAddr.SessionKey,
+		SuccessOids: success,
 	}
 	if params.CommitParam != nil {
 		commitParams.OptionInfos = params.CommitParam.OptionInfos

@@ -54,6 +54,7 @@ type StoreInfo struct {
 type CommitUploadImageParam struct {
 	ServiceId   string       `json:"-"`
 	SessionKey  string       `json:"SessionKey"`
+	SuccessOids []string     `json:"SuccessOids"`
 	OptionInfos []OptionInfo `json:"OptionInfos"`
 	Functions   []Function   `json:"Functions"`
 }
@@ -81,6 +82,7 @@ type CommitUploadImageResult struct {
 
 type Result struct {
 	Uri        string     `json:"Uri"`
+	UriStatus  int        `json:"UriStatus"` // 图片上传结果（2000:成功，2001:失败）需要传 SuccessOids 才会返回
 	Encryption Encryption `json:"Encryption"`
 }
 
