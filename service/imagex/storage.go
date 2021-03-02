@@ -62,6 +62,23 @@ func (c *ImageX) GetImageServices(searchPtn string) (*GetServicesResult, error) 
 	return result, nil
 }
 
+// GetServiceDomains 获取服务下的所有域名
+func (c *ImageX) GetImageDomains(serviceId string) ([]DomainResult, error) {
+	query := url.Values{}
+	query.Add("ServiceId", serviceId)
+
+	respBody, _, err := c.Client.Query("GetServiceDomains", query)
+	if err != nil {
+		return nil, fmt.Errorf("GetServiceDomains: fail to do request, %v", err)
+	}
+
+	result := make([]DomainResult, 0)
+	if err := UnmarshalResultInto(respBody, &result); err != nil {
+		return nil, fmt.Errorf("GetServiceDomains: fail to unmarshal response, %v", err)
+	}
+	return result, nil
+}
+
 // DeleteImageUploadFiles 删除图片
 func (c *ImageX) DeleteImages(serviceId string, uris []string) (*DeleteImageResult, error) {
 	query := url.Values{}

@@ -59,6 +59,38 @@ type Storage struct {
 	AllTypes bool   `json:"AllTypes"`
 }
 
+// GetServiceDomains
+type DomainResult struct {
+	Domain      string      `json:"domain"`
+	CNAME       string      `json:"cname"`
+	Status      string      `json:"status"`
+	HttpsConfig HttpsConfig `json:"https_config"`
+	IsDefault   bool        `json:"is_default"`
+	Resolved    bool        `json:"resolved"`
+}
+
+type HttpsConfig struct {
+	EnableHttps bool   `json:"enable_https"`
+	ForceHttps  bool   `json:"force_https"`
+	CertId      string `json:"cert_id"`
+}
+
+type AccessControlConfig struct {
+	ReferLink ReferLink `json:"refer_link"`
+}
+
+type ReferLink struct {
+	Enabled         bool     `json:"enabled"`
+	IsWhiteMode     bool     `json:"is_white_mode"`
+	Values          []string `json:"values"`
+	AllowEmptyRefer bool     `json:"allow_empty_refer"`
+}
+
+type RespHdr struct {
+	Key string `json:"key"`
+	Val string `json:"value"`
+}
+
 // DeleteImageUploadFiles
 type DeleteImageParam struct {
 	StoreUris []string `json:"StoreUris"`

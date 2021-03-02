@@ -99,6 +99,55 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		// 域名管理
+		"GetServiceDomains": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetServiceDomains"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetDomainConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDomainConfig"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateResponseHeader": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateResponseHeader"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateRefer": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateRefer"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateHttps": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateHttps"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetResponseHeaderValidateKeys": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetResponseHeaderValidateKeys"},
+				"Version": []string{ApiVersion},
+			},
+		},
 		// 模板管理
 		"CreateImageTemplate": {
 			Method: http.MethodPost,
