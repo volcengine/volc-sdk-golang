@@ -44,6 +44,10 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	sort.Strings(keys)
 	query.Set("X-SignedQueries", strings.Join(keys, ";"))
 
+	if c.StsSecretToken != "" {
+		query.Set("X-Security-Token", c.StsSecretToken)
+	}
+
 	// Task 1
 	hashedCanonReq := hashedSimpleCanonicalRequestV4(request, query, meta)
 
@@ -61,6 +65,9 @@ func (c Credentials) SignUrl(request *http.Request) string {
 // Sign4 signs a request with Signed Signature Version 4.
 func Sign4(request *http.Request, credential Credentials) *http.Request {
 	keys := credential
+	if credential.StsSecretToken != "" {
+		request.Header.Set("X-Security-Token", credential.StsSecretToken)
+	}
 
 	prepareRequestV4(request)
 	meta := new(metadata)
@@ -101,9 +108,9 @@ func hashedCanonicalRequestV4(request *http.Request, meta *metadata) string {
 	request.Header.Set("Host", request.Host)
 
 	var sortedHeaderKeys []string
-	for key, _ := range request.Header {
+	for key := range request.Header {
 		switch key {
-		case "Content-Type", "Content-Md5", "Host":
+		case "Content-Type", "Content-Md5", "Host", "X-Security-Token":
 		default:
 			if !strings.HasPrefix(key, "X-") {
 				continue

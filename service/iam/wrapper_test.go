@@ -17,7 +17,7 @@ func TestIAM_ListUsers(t *testing.T) {
 	DefaultInstance.Client.SetSecretKey(testSk)
 	DefaultInstance.SetRegion(region)
 
-	list, status, err := DefaultInstance.ListUsers(nil, nil)
+	list, status, err := DefaultInstance.ListUsers(nil)
 	fmt.Println(status, err)
 	b, _ := json.Marshal(list)
 	fmt.Println(string(b))
