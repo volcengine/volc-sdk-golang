@@ -18,7 +18,7 @@ func main() {
 	iam.DefaultInstance.Client.SetSecretKey(testSk)
 	iam.DefaultInstance.SetRegion(region)
 
-	list, status, err := iam.DefaultInstance.ListUsers(nil, nil)
+	list, status, err := iam.DefaultInstance.ListUsers(nil)
 	fmt.Println(status, err)
 	b, _ := json.Marshal(list)
 	fmt.Println(string(b))
