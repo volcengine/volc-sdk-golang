@@ -17,7 +17,7 @@ const (
 var (
 	ServiceInfo = &base.ServiceInfo{
 		Timeout: 5 * time.Second,
-		Host:    "open.volcengineapi.com",
+		Host:    "iam.volcengineapi.com",
 		Header: http.Header{
 			"Accept": []string{"application/json"},
 		},
@@ -58,117 +58,6 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"CreateService": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":       []string{"CreateService"},
-				"Version":      []string{"2018-01-01"},
-				"X-Account-Id": []string{"1"},
-			},
-		},
-		"ListAccessKeysForService": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":       []string{"ListAccessKeysForService"},
-				"Version":      []string{"2018-01-01"},
-				"X-Account-Id": []string{"1"},
-			},
-		},
-		"CreateAccessKeyForService": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":       []string{"CreateAccessKeyForService"},
-				"Version":      []string{"2018-01-01"},
-				"X-Account-Id": []string{"1"},
-			},
-		},
-		"UpdateAccessKeyForService": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":       []string{"UpdateAccessKeyForService"},
-				"Version":      []string{"2018-01-01"},
-				"X-Account-Id": []string{"1"},
-			},
-		},
-		"DeleteAccessKeyForService": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":       []string{"DeleteAccessKeyForService"},
-				"Version":      []string{"2018-01-01"},
-				"X-Account-Id": []string{"1"},
-			},
-		},
-
-		// federation
-		"AddAppIDToOAuthProvider": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"AddAppIDToOAuthProvider"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"RemoveAppIDFromOAuthProvider": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"RemoveAppIDFromOAuthProvider"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"GetAppIDofOAuthProvider": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetAppIDofOAuthProvider"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"UpdateAppIDName": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateAppIDName"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"ListAppIDsofOAuthProvider": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListAppIDsofOAuthProvider"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"UpdateActorFilter": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateActorFilter"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"ListRolesAfterActorFilter": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListRolesAfterActorFilter"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"ListIdentityProviders": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListIdentityProviders"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
 
 		// policy
 		"CreatePolicy": {
@@ -200,6 +89,30 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeletePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"AttachRolePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AttachRolePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DetachRolePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetachRolePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListAttachedRolePolicies": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAttachedRolePolicies"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
@@ -245,30 +158,6 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"AttachRolePolicy": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"AttachRolePolicy"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"DetachRolePolicy": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DetachRolePolicy"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"ListAttachedRolePolicies": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListAttachedRolePolicies"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
 		"ListUsersForRole": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -277,27 +166,27 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"AddIdpToRole": {
+		"AddUserToRole": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"AddIdpToRole"},
+				"Action":  []string{"AddUserToRole"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"RemoveIDPFromRole": {
+		"RemoveUserFromRole": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"RemoveIDPFromRole"},
+				"Action":  []string{"RemoveUserFromRole"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"ListIDPsForRole": {
+		"ListRolesForUser": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListIDPsForRole"},
+				"Action":  []string{"ListRolesForUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
@@ -332,30 +221,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteUser"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"AddUserToRole": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"AddUserToRole"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"RemoveUserFromRole": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"RemoveUserFromRole"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"ListRolesForUser": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListRolesForUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
