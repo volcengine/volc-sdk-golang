@@ -13,7 +13,7 @@ const (
 	testSk = "sk"
 )
 
-func main() {
+func TestIAM_() {
 	iam.DefaultInstance.Client.SetAccessKey(testAk)
 	iam.DefaultInstance.Client.SetSecretKey(testSk)
 	iam.DefaultInstance.SetRegion(region)
