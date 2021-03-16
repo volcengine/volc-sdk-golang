@@ -37,6 +37,7 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	query.Set("X-Algorithm", meta.algorithm)
 	query.Set("X-SignedHeaders", meta.signedHeaders)
 	query.Set("X-SignedQueries", "")
+	query.Set("X-Security-Token", c.SessionToken)
 	keys := make([]string, 0, len(query))
 	for k := range query {
 		keys = append(keys, k)
@@ -65,6 +66,11 @@ func Sign4(request *http.Request, credential Credentials) *http.Request {
 	prepareRequestV4(request)
 	meta := new(metadata)
 	meta.service, meta.region = keys.Service, keys.Region
+
+	// Task 0 设置SessionToken的header
+	if credential.SessionToken != "" {
+		request.Header.Set("X-Security-Token", credential.SessionToken)
+	}
 
 	// Task 1
 	hashedCanonReq := hashedCanonicalRequestV4(request, meta)

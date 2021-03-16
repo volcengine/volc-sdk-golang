@@ -24,9 +24,11 @@ func (p *STS) AssumeRole(req *AssumeRoleRequest) (*AssumeRoleResp, int, error) {
 	if req.DurationSeconds == 0 {
 		query.Set("DurationSeconds", "3600")
 	}
+	if req.Policy != "" {
+		query.Set("Policy", req.Policy)
+	}
 
 	query.Set("RoleTrn", req.RoleTrn)
-	query.Set("Policy", req.Policy)
 	query.Set("RoleSessionName", req.RoleSessionName)
 
 	statusCode, err := p.commonHandler("AssumeRole", query, resp)

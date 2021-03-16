@@ -16,9 +16,9 @@ func TestIAM_AssumeRole(t *testing.T) {
 	DefaultInstance.Client.SetSecretKey(testSk)
 
 	req := &AssumeRoleRequest{
-		DurationSeconds: 3600,
+		DurationSeconds: 7200,
 		Policy:          "",
-		RoleTrn:         "test-role-trn",
+		RoleTrn:         "testRoleTrn",
 		RoleSessionName: "test",
 	}
 
