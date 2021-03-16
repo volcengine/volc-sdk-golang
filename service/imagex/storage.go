@@ -2,6 +2,7 @@ package imagex
 
 import (
 	"bytes"
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -40,6 +41,42 @@ func (c *ImageX) ImageXPost(action string, query url.Values, req, result interfa
 		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
 	}
 	return nil
+}
+
+// GetAllImageServices 获取所有服务信息
+func (c *ImageX) GetImageServices(searchPtn string) (*GetServicesResult, error) {
+	query := url.Values{}
+	if searchPtn != "" {
+		query.Add("SearchPtn", searchPtn)
+	}
+
+	respBody, _, err := c.Client.Query("GetAllImageServices", query)
+	if err != nil {
+		return nil, fmt.Errorf("GetAllImageServices: fail to do request, %v", err)
+	}
+
+	result := new(GetServicesResult)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, fmt.Errorf("GetAllImageServices: fail to unmarshal response, %v", err)
+	}
+	return result, nil
+}
+
+// GetServiceDomains 获取服务下的所有域名
+func (c *ImageX) GetImageDomains(serviceId string) ([]DomainResult, error) {
+	query := url.Values{}
+	query.Add("ServiceId", serviceId)
+
+	respBody, _, err := c.Client.Query("GetServiceDomains", query)
+	if err != nil {
+		return nil, fmt.Errorf("GetServiceDomains: fail to do request, %v", err)
+	}
+
+	result := make([]DomainResult, 0)
+	if err := UnmarshalResultInto(respBody, &result); err != nil {
+		return nil, fmt.Errorf("GetServiceDomains: fail to unmarshal response, %v", err)
+	}
+	return result, nil
 }
 
 // DeleteImageUploadFiles 删除图片
@@ -119,14 +156,17 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 		return fmt.Errorf("file size is zero")
 	}
 
+	ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
+	defer cancel()
 	checkSum := fmt.Sprintf("%x", crc32.ChecksumIEEE(imageBytes))
 	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
 	if err != nil {
-		return fmt.Errorf("fail to new put request, %v", err)
+		return fmt.Errorf("fail to new put request %s, %v", url, err)
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", storeInfo.Auth)
+	req = req.WithContext(ctx)
 
 	rsp, err := http.DefaultClient.Do(req)
 	if err != nil {
@@ -148,7 +188,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 		Payload interface{} `json:"payload"`
 	}
 	if err = json.Unmarshal(body, &putResp); err != nil {
-		return fmt.Errorf("fail to unmarshal response, %v", err)
+		return fmt.Errorf("fail to unmarshal %s response %s, %v", url, string(body), err)
 	}
 	if putResp.Success != 0 {
 		return fmt.Errorf("put to host %s err:%+v", url, putResp)
@@ -158,12 +198,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 
 // 上传图片
 func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*CommitUploadImageResult, error) {
-	if params.UploadNum == 0 {
-		params.UploadNum = 1
-	}
-	if len(images) != params.UploadNum {
-		return nil, fmt.Errorf("UploadImages: images num %d != upload num %d", len(images), params.UploadNum)
-	}
+	params.UploadNum = len(images)
 
 	// 1. apply
 	applyResp, err := c.ApplyUploadImage(params)
@@ -179,17 +214,26 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	}
 
 	// 2. upload
+	success := make([]string, 0)
+	host := uploadAddr.UploadHosts[0]
 	for i, image := range images {
-		err := c.upload(uploadAddr.UploadHosts[0], uploadAddr.StoreInfos[i], image)
-		if err != nil {
-			return nil, fmt.Errorf("UploadImages: fail to do upload, %v", err)
+		info := uploadAddr.StoreInfos[i]
+		for n := 0; n < 3; n++ {
+			err := c.upload(host, info, image)
+			if err != nil {
+				fmt.Printf("UploadImages: fail to do upload, %v", err)
+			} else {
+				success = append(success, info.StoreUri)
+				break
+			}
 		}
 	}
 
 	// 3. commit
 	commitParams := &CommitUploadImageParam{
-		ServiceId:  params.ServiceId,
-		SessionKey: uploadAddr.SessionKey,
+		ServiceId:   params.ServiceId,
+		SessionKey:  uploadAddr.SessionKey,
+		SuccessOids: success,
 	}
 	if params.CommitParam != nil {
 		commitParams.OptionInfos = params.CommitParam.OptionInfos

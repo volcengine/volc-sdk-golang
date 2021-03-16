@@ -135,6 +135,12 @@ func (client *Client) SetCredential(c Credentials) {
 	}
 }
 
+func (client *Client) SetTimeout(timeout time.Duration) {
+	if timeout > 0 {
+		client.ServiceInfo.Timeout = timeout
+	}
+}
+
 // GetSignUrl 获取签名字符串
 func (client *Client) GetSignUrl(api string, query url.Values) (string, error) {
 	apiInfo := client.ApiInfoList[api]
