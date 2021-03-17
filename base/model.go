@@ -34,9 +34,9 @@ type ApiInfo struct {
 type Credentials struct {
 	AccessKeyID     string
 	SecretAccessKey string
-	StsSecretToken  string
 	Service         string
 	Region          string
+	SessionToken    string
 }
 
 type metadata struct {

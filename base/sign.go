@@ -44,8 +44,8 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	sort.Strings(keys)
 	query.Set("X-SignedQueries", strings.Join(keys, ";"))
 
-	if c.StsSecretToken != "" {
-		query.Set("X-Security-Token", c.StsSecretToken)
+	if c.SessionToken != "" {
+		query.Set("X-Security-Token", c.SessionToken)
 	}
 
 	// Task 1
@@ -65,13 +65,15 @@ func (c Credentials) SignUrl(request *http.Request) string {
 // Sign4 signs a request with Signed Signature Version 4.
 func Sign4(request *http.Request, credential Credentials) *http.Request {
 	keys := credential
-	if credential.StsSecretToken != "" {
-		request.Header.Set("X-Security-Token", credential.StsSecretToken)
-	}
 
 	prepareRequestV4(request)
 	meta := new(metadata)
 	meta.service, meta.region = keys.Service, keys.Region
+
+	// Task 0 设置SessionToken的header
+	if credential.SessionToken != "" {
+		request.Header.Set("X-Security-Token", credential.SessionToken)
+	}
 
 	// Task 1
 	hashedCanonReq := hashedCanonicalRequestV4(request, meta)

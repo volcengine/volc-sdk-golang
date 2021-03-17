@@ -90,7 +90,7 @@ func (cred Credentials) Clone() Credentials {
 		Region:          cred.Region,
 		SecretAccessKey: cred.SecretAccessKey,
 		AccessKeyID:     cred.AccessKeyID,
-		StsSecretToken:  cred.StsSecretToken,
+		SessionToken:    cred.SessionToken,
 	}
 }
 
@@ -108,10 +108,10 @@ func (client *Client) SetSecretKey(sk string) {
 	}
 }
 
-// SetStsSecretToken 设置STS
-func (client *Client) SetStsSecretToken(sts string) {
-	if sts != "" {
-		client.ServiceInfo.Credentials.StsSecretToken = sts
+// SetSessionToken
+func (client *Client) SetSessionToken(token string) {
+	if token != "" {
+		client.ServiceInfo.Credentials.SessionToken = token
 	}
 }
 
@@ -138,12 +138,18 @@ func (client *Client) SetCredential(c Credentials) {
 		client.ServiceInfo.Credentials.SecretAccessKey = c.SecretAccessKey
 	}
 
-	if c.StsSecretToken != "" {
-		client.ServiceInfo.Credentials.StsSecretToken = c.StsSecretToken
-	}
-
 	if c.Region != "" {
 		client.ServiceInfo.Credentials.Region = c.Region
+	}
+
+	if c.SessionToken != "" {
+		client.ServiceInfo.Credentials.SessionToken = c.SessionToken
+	}
+}
+
+func (client *Client) SetTimeout(timeout time.Duration) {
+	if timeout > 0 {
+		client.ServiceInfo.Timeout = timeout
 	}
 }
 

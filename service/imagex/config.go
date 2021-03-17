@@ -58,6 +58,96 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		// 服务管理
+		"GetImageService": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageService"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetAllImageServices": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllImageServices"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageAuthKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAuthKey"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageObjectAccess": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageObjectAccess"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateImageMirrorConf": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageMirrorConf"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		// 域名管理
+		"GetServiceDomains": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetServiceDomains"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetDomainConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDomainConfig"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateResponseHeader": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateResponseHeader"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateRefer": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateRefer"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"UpdateHttps": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateHttps"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetResponseHeaderValidateKeys": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetResponseHeaderValidateKeys"},
+				"Version": []string{ApiVersion},
+			},
+		},
 		// 模板管理
 		"CreateImageTemplate": {
 			Method: http.MethodPost,
