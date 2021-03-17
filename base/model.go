@@ -36,6 +36,7 @@ type Credentials struct {
 	SecretAccessKey string
 	Service         string
 	Region          string
+	SessionToken    string
 }
 
 type metadata struct {
