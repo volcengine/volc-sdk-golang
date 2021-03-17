@@ -18,6 +18,7 @@ func (p *IAM) commonHandler(api string, query url.Values, resp interface{}) (int
 	return statusCode, nil
 }
 
+// AccessKey
 func (p *IAM) ListAccessKeys(query url.Values) (*AccessKeyListResp, int, error) {
 	respBody, status, err := p.Client.Query("ListAccessKeys", query)
 	if err != nil {
@@ -75,7 +76,7 @@ func (p *IAM) UpdateAccessKey(query url.Values) (*AccessKeyResp, int, error) {
 	}
 }
 
-// role
+// Role
 func (p *IAM) CreateRole(query url.Values) (*RoleResp, int, error) {
 	resp := new(RoleResp)
 	statusCode, err := p.commonHandler("CreateRole", query, resp)
@@ -121,6 +122,61 @@ func (p *IAM) UpdateRole(query url.Values) (*NullResultResp, int, error) {
 	return resp, statusCode, nil
 }
 
+func (p *IAM) ListUsersForRole(query url.Values) (*AddedUserListResp, int, error) {
+	resp := new(AddedUserListResp)
+	statusCode, err := p.commonHandler("ListUsersForRole", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *IAM) ListRolesForUser(query url.Values) (*RoleListResp, int, error) {
+	resp := new(RoleListResp)
+	statusCode, err := p.commonHandler("ListRolesForUser", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *IAM) RemoveUserFromRole(query url.Values) (*NullResultResp, int, error) {
+	resp := new(NullResultResp)
+	statusCode, err := p.commonHandler("RemoveUserFromRole", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *IAM) AddUserToRole(query url.Values) (*NullResultResp, int, error) {
+	resp := new(NullResultResp)
+	statusCode, err := p.commonHandler("AddUserToRole", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Policy
+func (p *IAM) CreatePolicy(query url.Values) (*NullResultResp, int, error) {
+	resp := new(NullResultResp)
+	statusCode, err := p.commonHandler("CreatePolicy", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *IAM) DeletePolicy(query url.Values) (*NullResultResp, int, error) {
+	resp := new(NullResultResp)
+	statusCode, err := p.commonHandler("DeletePolicy", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *IAM) AttachRolePolicy(query url.Values) (*NullResultResp, int, error) {
 	resp := new(NullResultResp)
 	statusCode, err := p.commonHandler("AttachRolePolicy", query, resp)
@@ -148,9 +204,18 @@ func (p *IAM) ListAttachedRolePolicies(query url.Values) (*AttachedPolicyListRes
 	return resp, statusCode, nil
 }
 
-func (p *IAM) ListUsersForRole(query url.Values) (*AddedUserListResp, int, error) {
-	resp := new(AddedUserListResp)
-	statusCode, err := p.commonHandler("ListUsersForRole", query, resp)
+func (p *IAM) ListPolicies(query url.Values) (*PolicyListResp, int, error) {
+	resp := new(PolicyListResp)
+	statusCode, err := p.commonHandler("ListPolicies", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *IAM) GetPolicy(query url.Values) (*PolicyStructure, int, error) {
+	resp := new(PolicyStructure)
+	statusCode, err := p.commonHandler("GetPolicy", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -188,43 +253,6 @@ func (p *IAM) DeleteUser(query url.Values) (*NullResultResp, int, error) {
 func (p *IAM) ListUsers(query url.Values) (*UserListResp, int, error) {
 	resp := new(UserListResp)
 	statusCode, err := p.commonHandler("ListUsers", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) AddUserToRole(query url.Values) (*NullResultResp, int, error) {
-	resp := new(NullResultResp)
-	statusCode, err := p.commonHandler("AddUserToRole", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) RemoveUserFromRole(query url.Values) (*NullResultResp, int, error) {
-	resp := new(NullResultResp)
-	statusCode, err := p.commonHandler("RemoveUserFromRole", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) ListRolesForUser(query url.Values) (*RoleListResp, int, error) {
-	resp := new(RoleListResp)
-	statusCode, err := p.commonHandler("ListRolesForUser", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-// policy
-func (p *IAM) ListPolicies(query url.Values) (*PolicyListResp, int, error) {
-	resp := new(PolicyListResp)
-	statusCode, err := p.commonHandler("ListPolicies", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
