@@ -7,7 +7,7 @@ import (
 )
 
 type AdBlockRequest struct {
-	AppID      int64  `json:"AppID"`
+	AppId      int64  `json:"AppId"`
 	Service    string `json:"Service"`
 	Parameters string `json:"Parameters"`
 }
