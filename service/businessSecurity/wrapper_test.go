@@ -52,7 +52,7 @@ func RiskResult(appId int64, service string, startTime, endTime, pageSize, pageN
 	})
 	fmt.Println(err)
 	if res != nil {
-		fmt.Printf("result %+v\n",*res)
+		fmt.Printf("result %+v\n", *res)
 	}
 }
 

@@ -47,9 +47,9 @@ type RiskResultRequest struct {
 }
 
 type RiskResultResponse struct {
-	RequestId string                 `json:"RequestId"`
-	Code      int                    `json:"Code"`
-	Message   string                 `json:"Message"`
+	RequestId string                   `json:"RequestId"`
+	Code      int                      `json:"Code"`
+	Message   string                   `json:"Message"`
 	Data      []map[string]interface{} `json:"Data"`
 	Page
 }
