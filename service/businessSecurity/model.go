@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
+	"net/url"
 )
 
 type RiskDetectionRequest struct {
-	AppID      int64  `json:"app_id"`
-	Service    string `json:"service"`
-	Parameters string `json:"parameters"`
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
 }
 
 type RiskDetectionResponse struct {
@@ -23,6 +24,44 @@ type DecisionData struct {
 	Score  int      `json:"Score"`
 	Tags   []string `json:"Tags"`
 	Detail string   `json:"Detail"`
+}
+
+type AsyncRiskDetectionRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type AsyncRiskDetectionResponse struct {
+	RequestId string `json:"RequestId"`
+	Code      int    `json:"Code"`
+	Message   string `json:"Message"`
+}
+
+type RiskResultRequest struct {
+	AppId     int64  `json:"AppId" form:"AppId"`
+	Service   string `json:"Service" form:"Service"`
+	StartTime int64  `json:"StartTime" form:"StartTime"`
+	EndTime   int64  `json:"EndTime" form:"EndTime"`
+	Page
+}
+
+type RiskResultResponse struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      []map[string]interface{} `json:"Data"`
+	Page
+}
+
+type Page struct {
+	PageNum  int64 `json:"PageNum" form:"PageNum"`
+	PageSize int64 `json:"PageSize" form:"PageSize"`
+	Total    int64 `json:"Total" form:"Total"` // used when return page information in response, no need when request
+}
+
+func (r *RiskResultRequest) ToQuery() url.Values {
+	return ToMap(r)
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {

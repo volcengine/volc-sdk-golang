@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	Ak = "ak" // write your access key
-	Sk = "sk" // write your secret key
+	Ak = "***REMOVED***"              // write your access key
+	Sk = "***REMOVED***" // write your secret key
 )
 
 func init() {
