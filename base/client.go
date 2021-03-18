@@ -90,6 +90,7 @@ func (cred Credentials) Clone() Credentials {
 		Region:          cred.Region,
 		SecretAccessKey: cred.SecretAccessKey,
 		AccessKeyID:     cred.AccessKeyID,
+		SessionToken:    cred.SessionToken,
 	}
 }
 
@@ -104,6 +105,13 @@ func (client *Client) SetAccessKey(ak string) {
 func (client *Client) SetSecretKey(sk string) {
 	if sk != "" {
 		client.ServiceInfo.Credentials.SecretAccessKey = sk
+	}
+}
+
+// SetSessionToken
+func (client *Client) SetSessionToken(token string) {
+	if token != "" {
+		client.ServiceInfo.Credentials.SessionToken = token
 	}
 }
 
@@ -132,6 +140,16 @@ func (client *Client) SetCredential(c Credentials) {
 
 	if c.Region != "" {
 		client.ServiceInfo.Credentials.Region = c.Region
+	}
+
+	if c.SessionToken != "" {
+		client.ServiceInfo.Credentials.SessionToken = c.SessionToken
+	}
+}
+
+func (client *Client) SetTimeout(timeout time.Duration) {
+	if timeout > 0 {
+		client.ServiceInfo.Timeout = timeout
 	}
 }
 

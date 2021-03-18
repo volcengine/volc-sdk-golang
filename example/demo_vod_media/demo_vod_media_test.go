@@ -20,10 +20,10 @@ func TestVod_GetMediaInfos(t *testing.T) {
 	// or set ak and ak as follow
 	// instance.SetAccessKey("")
 	// instance.SetSecretKey("")
-	vid := "your vid"
+	vids := "your vids"
 	// Media Info
 	query := &request.VodGetMediaInfosRequest{
-		Vids: vid,
+		Vids: vids,
 	}
 	resp, code, err := instance.GetMediaInfos(query)
 	fmt.Println(code)
@@ -70,7 +70,9 @@ func TestVod_UpdateMediaInfo(t *testing.T) {
 	query := &request.VodUpdateMediaInfoRequest{
 		Vid:   vid,
 		Title: wrapperspb.String(title),
-		//Tags:  wrapperspb.String("aaa,aa:w"),
+		PosterUri: wrapperspb.String("PosterUri"),
+		Description: wrapperspb.String("description"),
+		Tags:  wrapperspb.String("tag1,tag2"),
 	}
 	resp, code, err := instance.UpdateMediaInfo(query)
 	fmt.Println(code)
