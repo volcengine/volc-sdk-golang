@@ -14,28 +14,27 @@ func (p *BusinessSecurity) RiskDetection(req *RiskDetectionRequest) (*RiskDetect
 	}
 
 	respBody, _, err := p.Client.Json("RiskDetection", nil, string(reqData))
-	if err == nil {
-		result := new(RiskDetectionResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("RiskDetection", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
+			}
+			result := new(RiskDetectionResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
 		}
-		return result, nil
+		return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
 	}
-
-	// Retry on error
-	// 支持错误重试
-	if p.Retry() {
-		respBody, _, err = p.Client.Json("RiskDetection", nil, string(reqData))
-		if err != nil {
-			return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
-		}
-		result := new(RiskDetectionResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
-		}
-		return result, nil
+	result := new(RiskDetectionResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
 	}
-	return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
+	return result, nil
 }
 
 // Asynchronous risk detection
@@ -47,54 +46,52 @@ func (p *BusinessSecurity) AsyncRiskDetection(req *AsyncRiskDetectionRequest) (*
 	}
 
 	respBody, _, err := p.Client.Json("AsyncRiskDetection", nil, string(reqData))
-	if err == nil {
-		result := new(AsyncRiskDetectionResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncRiskDetection", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+			}
+			result := new(AsyncRiskDetectionResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
 		}
-		return result, nil
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-
-	// Retry on error
-	// 支持错误重试
-	if p.Retry() {
-		respBody, _, err = p.Client.Json("AsyncRiskDetection", nil, string(reqData))
-		if err != nil {
-			return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
-		}
-		result := new(AsyncRiskDetectionResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
-		}
-		return result, nil
+	result := new(AsyncRiskDetectionResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
 	}
-	return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	return result, nil
 }
 
 // Risk result
 // 风险识别结果获取接口
 func (p *BusinessSecurity) RiskResult(req *RiskResultRequest) (*RiskResultResponse, error) {
 	respBody, _, err := p.Client.Query("RiskResult", req.ToQuery())
-	if err == nil {
-		result := new(RiskResultResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("RiskResult", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("RiskResult: fail to do request, %v", err)
+			}
+			result := new(RiskResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
 		}
-		return result, nil
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-
-	// Retry on error
-	// 支持错误重试
-	if p.Retry() {
-		respBody, _, err := p.Client.Query("RiskResult", req.ToQuery())
-		if err != nil {
-			return nil, fmt.Errorf("RiskResult: fail to do request, %v", err)
-		}
-		result := new(RiskResultResponse)
-		if err := UnmarshalResultInto(respBody, result); err != nil {
-			return nil, err
-		}
-		return result, nil
+	result := new(RiskResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
 	}
-	return nil, fmt.Errorf("RiskResult: fail to do request, %v", err)
+	return result, nil
 }
