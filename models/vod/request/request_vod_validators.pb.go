@@ -76,6 +76,14 @@ func (req *VodGetMediaInfosRequest) Validate() (privateErrorCodeStr string, err 
 
 	return
 }
+func (req *VodDeleteMediaRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodDeleteTranscodesRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
 func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return

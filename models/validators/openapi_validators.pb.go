@@ -33,23 +33,24 @@ type FieldValidator struct {
 
 	// Used for nested message types, requires that the field must exists.
 	MustExists *bool `protobuf:"varint,1,opt,name=must_exists,json=mustExists" json:"must_exists,omitempty"`
-	// Used for string fields, requires the string to be not empty (i.e different from "").
+	// Used for string fields, requires the string to be not empty (i.e different
+	// from "").
 	StringNotEmpty *ValidateStringNotEmpty `protobuf:"bytes,101,opt,name=string_not_empty,json=stringNotEmpty" json:"string_not_empty,omitempty"`
-	// Field value of length greater than this value.
+	// Field value of length must greater than this value.
 	StringLengthGt *ValidateStringLengthGt `protobuf:"bytes,102,opt,name=string_length_gt,json=stringLengthGt" json:"string_length_gt,omitempty"`
-	// Field value of length smaller than this value.
+	// Field value of length must smaller than this value.
 	StringLengthLt *ValidateStringLengthLt `protobuf:"bytes,103,opt,name=string_length_lt,json=stringLengthLt" json:"string_length_lt,omitempty"`
-	// Field value of length strictly equal to this value.
+	// Field value of length must strictly equal to this value.
 	StringLengthEq *ValidateStringLengthEq `protobuf:"bytes,104,opt,name=string_length_eq,json=stringLengthEq" json:"string_length_eq,omitempty"`
-	// Field value of length not equal to this value.
+	// Field value of length must not equal to this value.
 	StringLengthNotEq *ValidateStringLengthNotEq `protobuf:"bytes,105,opt,name=string_length_not_eq,json=stringLengthNotEq" json:"string_length_not_eq,omitempty"`
-	// Field value greater to this value.
+	// Field value must greater to this value.
 	IntGt *ValidateIntGt `protobuf:"bytes,201,opt,name=int_gt,json=intGt" json:"int_gt,omitempty"`
-	// Field value smaller to this value.
+	// Field value must smaller to this value.
 	IntLt *ValidateIntLt `protobuf:"bytes,202,opt,name=int_lt,json=intLt" json:"int_lt,omitempty"`
-	// Field value equal to this value.
+	// Field value must equal to this value.
 	IntEq *ValidateIntEq `protobuf:"bytes,203,opt,name=int_eq,json=intEq" json:"int_eq,omitempty"`
-	// Field value not equal to this value.
+	// Field value must not equal to this value.
 	IntNotEq *ValidateIntNotEq `protobuf:"bytes,204,opt,name=int_not_eq,json=intNotEq" json:"int_not_eq,omitempty"`
 	// Field value of double strictly greater than this value.
 	// Note that this value can only take on a valid floating point
@@ -59,13 +60,16 @@ type FieldValidator struct {
 	// Note that this value can only take on a valid floating point
 	// value. Use together with float_epsilon if you need something more specific.
 	FloatLt *ValidateFloatLt `protobuf:"bytes,302,opt,name=float_lt,json=floatLt" json:"float_lt,omitempty"`
-	// Floating-point value compared to which the field content should be greater or equal.
+	// Floating-point value compared to which the field content should be greater
+	// or equal.
 	FloatGte *ValidateFloatGte `protobuf:"bytes,303,opt,name=float_gte,json=floatGte" json:"float_gte,omitempty"`
-	// Floating-point value compared to which the field content should be smaller or equal.
+	// Floating-point value compared to which the field content should be smaller
+	// or equal.
 	FloatLte *ValidateFloatLte `protobuf:"bytes,304,opt,name=float_lte,json=floatLte" json:"float_lte,omitempty"`
 	// Floating-point value compared to which the field content should be equal.
 	FloatEq *ValidateFloatEq `protobuf:"bytes,305,opt,name=float_eq,json=floatEq" json:"float_eq,omitempty"`
-	// Floating-point value compared to which the field content should not be equal.
+	// Floating-point value compared to which the field content should not be
+	// equal.
 	FloatNotEq *ValidateFloatNotEq `protobuf:"bytes,306,opt,name=float_not_eq,json=floatNotEq" json:"float_not_eq,omitempty"`
 }
 
