@@ -51,7 +51,7 @@ type RiskResultResponse struct {
 	Code      int                      `json:"Code"`
 	Message   string                   `json:"Message"`
 	Data      []map[string]interface{} `json:"Data"`
-	Page
+	Page      Page                     `json:"page"`
 }
 
 type Page struct {
@@ -61,7 +61,7 @@ type Page struct {
 }
 
 func (r *RiskResultRequest) ToQuery() url.Values {
-	return ToMap(r)
+	return ToUrlValues(r)
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {

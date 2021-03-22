@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func ToMap(i interface{}) (values url.Values) {
+func ToUrlValues(i interface{}) (values url.Values) {
 	values = url.Values{}
 	iVal := reflect.ValueOf(i).Elem()
 	typ := iVal.Type()
