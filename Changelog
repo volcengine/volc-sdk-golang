@@ -4,7 +4,7 @@
 - STS support.
 - Added Standard iam sdk.
 - STS asummeRole support.
-- added adblocker.
+- Added adblocker.
 
 2021-03-02 Bumped to version v1.0.7
 - Update adblock sdk.
