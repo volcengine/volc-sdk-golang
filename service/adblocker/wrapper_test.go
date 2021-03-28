@@ -2,23 +2,24 @@ package adblocker
 
 import (
 	"fmt"
-	"testing"
 )
 
 const (
-	region = "region"
-	testAk = "ak"
-	testSk = "sk"
+	Ak = "ak" // write your access key
+	Sk = "sk" // write your secret key
 )
 
-func TestAdBlock(t *testing.T) {
-	DefaultInstance.Client.SetAccessKey(testAk)
-	DefaultInstance.Client.SetSecretKey(testSk)
+func init() {
+	DefaultInstance.Client.SetAccessKey(Ak)
+	DefaultInstance.Client.SetSecretKey(Sk)
+	// DefaultInstance.CloseRetry()   // call this if you don't want retry on error
+}
 
+func AdBlock(appId int64, service string, parameters string) {
 	res, err := DefaultInstance.AdBlock(&AdBlockRequest{
-		AppID:      3332,
-		Service:    "chat",
-		Parameters: "{\"uid\":123411, \"operate_time\":1609818934, \"chat_text\":\"a😊\"}",
+		AppID:      appId,      // write your app id
+		Service:    service,    // write adblocker service
+		Parameters: parameters, // write your parameters
 	})
 	fmt.Println(err)
 	if res != nil {

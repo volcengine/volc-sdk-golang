@@ -15,6 +15,82 @@ const (
 	FunctionEncryption = "Encryption"
 )
 
+// GetAllImageServices
+type GetServicesResult struct {
+	Services []Service `json:"Services"`
+}
+
+// GetImageService
+type Service struct {
+	ServiceName    string   `json:"ServiceName"`
+	ServiceId      string   `json:"ServiceId"`
+	ServiceRegion  string   `json:"ServiceRegion"`
+	CreateAt       string   `json:"CreateAt"`
+	ServiceStatus  string   `json:"ServiceStatus"`
+	HasSigkey      bool     `json:"HasSigkey"`
+	TemplatePrefix string   `json:"TemplatePrefix"`
+	DomainInfos    []Domain `json:"DomainInfos"`
+	PrimaryKey     string   `json:"PrimaryKey"`
+	SecondaryKey   string   `json:"SecondaryKey"`
+	ObjectAccess   bool     `json:"ObjectAccess"`
+	CompactURL     bool     `json:"CompactURL"`
+	Mirror         Mirror   `json:"Mirror"`
+	Storage        Storage  `json:"Storage"`
+	AllowBkts      []string `json:"AllowBkts"`
+}
+
+type Mirror struct {
+	Schema  string            `json:"Schema"`
+	Host    string            `json:"Host"`
+	Source  string            `json:"Source"`
+	Headers map[string]string `json:"Headers"`
+}
+
+type Domain struct {
+	DomainName string `json:"DomainName"`
+	CNAME      string `json:"CNAME"`
+	Status     string `json:"Status"`
+	IsDefault  bool   `json:"IsDefault"`
+}
+
+type Storage struct {
+	BktName  string `json:"BktName"`
+	TTL      int    `json:"TTL"`
+	AllTypes bool   `json:"AllTypes"`
+}
+
+// GetServiceDomains
+type DomainResult struct {
+	Domain      string      `json:"domain"`
+	CNAME       string      `json:"cname"`
+	Status      string      `json:"status"`
+	HttpsConfig HttpsConfig `json:"https_config"`
+	IsDefault   bool        `json:"is_default"`
+	Resolved    bool        `json:"resolved"`
+}
+
+type HttpsConfig struct {
+	EnableHttps bool   `json:"enable_https"`
+	ForceHttps  bool   `json:"force_https"`
+	CertId      string `json:"cert_id"`
+}
+
+type AccessControlConfig struct {
+	ReferLink ReferLink `json:"refer_link"`
+}
+
+type ReferLink struct {
+	Enabled         bool     `json:"enabled"`
+	IsWhiteMode     bool     `json:"is_white_mode"`
+	Values          []string `json:"values"`
+	AllowEmptyRefer bool     `json:"allow_empty_refer"`
+}
+
+type RespHdr struct {
+	Key string `json:"key"`
+	Val string `json:"value"`
+}
+
 // DeleteImageUploadFiles
 type DeleteImageParam struct {
 	StoreUris []string `json:"StoreUris"`
@@ -54,6 +130,7 @@ type StoreInfo struct {
 type CommitUploadImageParam struct {
 	ServiceId   string       `json:"-"`
 	SessionKey  string       `json:"SessionKey"`
+	SuccessOids []string     `json:"SuccessOids"`
 	OptionInfos []OptionInfo `json:"OptionInfos"`
 	Functions   []Function   `json:"Functions"`
 }
@@ -81,6 +158,7 @@ type CommitUploadImageResult struct {
 
 type Result struct {
 	Uri        string     `json:"Uri"`
+	UriStatus  int        `json:"UriStatus"` // 图片上传结果（2000:成功，2001:失败）需要传 SuccessOids 才会返回
 	Encryption Encryption `json:"Encryption"`
 }
 

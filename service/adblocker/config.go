@@ -9,6 +9,15 @@ import (
 
 type AdBlocker struct {
 	*base.Client
+	retry bool
+}
+
+func (p *AdBlocker) Retry() bool {
+	return p.retry
+}
+
+func (p *AdBlocker) CloseRetry() {
+	p.retry = false
 }
 
 var DefaultInstance = NewInstance()
@@ -16,6 +25,7 @@ var DefaultInstance = NewInstance()
 func NewInstance() *AdBlocker {
 	instance := &AdBlocker{
 		Client: base.NewClient(ServiceInfoMap[base.RegionCnNorth1], ApiInfoList),
+		retry:  false,
 	}
 	return instance
 }
