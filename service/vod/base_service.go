@@ -32,14 +32,13 @@ func (p *Vod) CreateSha256HlsDrmAuthToken(expireSeconds int64) (auth string, err
 	return p.createHlsDrmAuthToken(DSAHmacSha256, expireSeconds)
 }
 
-func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expire int64) (string, error) {
-	if expire == 0 {
+func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (string, error) {
+	if expireSeconds == 0 {
 		return "", errors.New("invalid expire")
 	}
-	deadline := time.Now().Add(time.Duration(expire) * time.Second)
 
 	token, err := createAuth(authAlgorithm, Version1, p.ServiceInfo.Credentials.AccessKeyID,
-		p.ServiceInfo.Credentials.SecretAccessKey, deadline)
+		p.ServiceInfo.Credentials.SecretAccessKey, expireSeconds)
 	if err != nil {
 		return "", err
 	}
