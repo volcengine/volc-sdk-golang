@@ -51,5 +51,21 @@ var (
 				"Version": []string{"2021-02-02"},
 			},
 		},
+		"AsyncRiskDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AsyncRiskDetection"},
+				"Version": []string{"2021-02-25"},
+			},
+		},
+		"RiskResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RiskResult"},
+				"Version": []string{"2021-03-10"},
+			},
+		},
 	}
 )

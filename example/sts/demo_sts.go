@@ -8,15 +8,15 @@ import (
 )
 
 const (
-	region = "region"
-	testAk = "ak"
-	testSk = "sk"
+	testAk           = "testAK"
+	testSk           = "testSK"
+	testSessionToken = "testSessionToken"
 )
 
 func main() {
 	iam.DefaultInstance.Client.SetAccessKey(testAk)
 	iam.DefaultInstance.Client.SetSecretKey(testSk)
-	iam.DefaultInstance.SetRegion(region)
+	iam.DefaultInstance.Client.SetSessionToken(testSessionToken)
 
 	list, status, err := iam.DefaultInstance.ListUsers(nil, nil)
 	fmt.Println(status, err)
