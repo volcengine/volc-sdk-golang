@@ -17,7 +17,7 @@ func init() {
 
 func AdBlock(appId int64, service string, parameters string) {
 	res, err := DefaultInstance.AdBlock(&AdBlockRequest{
-		AppID:      appId,      // write your app id
+		AppId:      appId,      // write your app id
 		Service:    service,    // write adblocker service
 		Parameters: parameters, // write your parameters
 	})
