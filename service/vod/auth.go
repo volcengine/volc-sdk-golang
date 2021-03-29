@@ -9,7 +9,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"hash"
-	"net/url"
 	"reflect"
 	"strconv"
 	"strings"
@@ -36,16 +35,16 @@ var (
 	ErrSecretKeyInvalid = errors.New("secret key invalid")
 )
 
-
-func createAuth(dsa, version, accessKey, secretKey string, deadline time.Time) (string, error) {
+func createAuth(dsa, version, accessKey, secretKey string, expireSeconds int64) (string, error) {
 	if err := validate(accessKey, secretKey); err != nil {
 		return "", err
 	}
 
+	deadline := time.Now().Add(time.Duration(expireSeconds) * time.Second)
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
-	sign := BuildSign(dsa, version, timestamp, parseKey(secretKey, deadline))
+	sign := buildSign(dsa, version, timestamp, parseKey(secretKey, deadline))
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
-	return url.QueryEscape(strings.Join(tokens, SprAuth)), nil
+	return strings.Join(tokens, SprAuth), nil
 }
 
 func validate(accessKey, secretKey string) error {
@@ -58,7 +57,7 @@ func validate(accessKey, secretKey string) error {
 	return nil
 }
 
-func BuildSign(dsa, version, timestamp string, key []byte) string {
+func buildSign(dsa, version, timestamp string, key []byte) string {
 	data := str2Bytes(join(dsa, SprSign, version, SprSign, timestamp))
 	switch dsa {
 	case DSAHmacSha1:

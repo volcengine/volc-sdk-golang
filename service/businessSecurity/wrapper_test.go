@@ -14,7 +14,6 @@ func init() {
 	DefaultInstance.Client.SetSecretKey(Sk)
 }
 
-
 func RiskDetection(appId int64, service string, parameters string) {
 	res, err := DefaultInstance.RiskDetection(&RiskDetectionRequest{
 		AppID:      appId,      // write your app id
