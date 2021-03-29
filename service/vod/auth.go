@@ -36,14 +36,13 @@ var (
 	ErrSecretKeyInvalid = errors.New("secret key invalid")
 )
 
-
 func createAuth(dsa, version, accessKey, secretKey string, deadline time.Time) (string, error) {
 	if err := validate(accessKey, secretKey); err != nil {
 		return "", err
 	}
 
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
-	sign := BuildSign(dsa, version, timestamp, parseKey(secretKey, deadline))
+	sign := buildSign(dsa, version, timestamp, parseKey(secretKey, deadline))
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
 	return url.QueryEscape(strings.Join(tokens, SprAuth)), nil
 }
@@ -58,7 +57,7 @@ func validate(accessKey, secretKey string) error {
 	return nil
 }
 
-func BuildSign(dsa, version, timestamp string, key []byte) string {
+func buildSign(dsa, version, timestamp string, key []byte) string {
 	data := str2Bytes(join(dsa, SprSign, version, SprSign, timestamp))
 	switch dsa {
 	case DSAHmacSha1:
