@@ -24,6 +24,7 @@ func main() {
 	serviceIds := []string{"imagex service id"}
 
 	// set expire time by GetUploadAuthWithExpire, default is 1 hour
+	// set key pattern with imagex.WithUploadKeyPtn("pattern"). eg: "test/*" means upload key must have prefix "test/"
 	token, err := instance.GetUploadAuth(serviceIds)
 	if err != nil {
 		fmt.Printf("error %v", err)
