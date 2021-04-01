@@ -1,5 +1,9 @@
 ### Change log
 
+2021-04-01 Bumped to version v1.0.9
+- Add SMS sdk.
+- Update imagex sdk
+
 2021-03-24 Bumped to version v1.0.8
 - STS support.
 - Added Standard iam sdk.
