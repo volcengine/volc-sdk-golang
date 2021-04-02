@@ -15,6 +15,7 @@ const (
 	DefaultTimeout = 10 * time.Second
 
 	ResourceServiceIdTRN = "trn:ImageX:*:*:ServiceId/%s"
+	ResourceStoreKeyTRN  = "trn:ImageX:*:*:StoreKeys/%s"
 )
 
 var (
