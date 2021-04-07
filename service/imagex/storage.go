@@ -302,9 +302,6 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	for _, o := range opt {
 		o(op)
 	}
-	if op.keyPtn == "" {
-		op.keyPtn = "*"
-	}
 	storeKeyRes := []string{
 		fmt.Sprintf(ResourceStoreKeyTRN, op.keyPtn),
 	}
