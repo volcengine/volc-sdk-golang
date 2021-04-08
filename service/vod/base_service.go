@@ -45,6 +45,7 @@ func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (
 
 	query := url.Values{}
 	query.Set("token", token)
+	query.Set("X-Expires", strconv.FormatInt(expireSeconds, 10))
 	if getAuth, err := p.GetSignUrl("GetHlsDecryptionKey", query); err == nil {
 		return getAuth, nil
 	} else {
