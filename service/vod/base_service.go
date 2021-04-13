@@ -87,6 +87,12 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	if len(req.GetNeedThumbs()) > 0 {
 		query.Add("NeedThumbs", req.GetNeedThumbs())
 	}
+	if len(req.GetNeedBarrageMask()) > 0 {
+		query.Add("NeedBarrageMask", req.GetNeedBarrageMask())
+	}
+	if len(req.GetCdnType()) > 0 {
+		query.Add("CdnType", req.GetCdnType())
+	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
 		ret["GetPlayInfoToken"] = getPlayInfoToken
