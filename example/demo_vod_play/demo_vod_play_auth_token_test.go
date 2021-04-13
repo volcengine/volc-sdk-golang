@@ -24,14 +24,14 @@ func TestVod_GetPlayAuthToken(t *testing.T) {
 
 	query := &request.VodGetPlayInfoRequest{
 		Vid:        vid,
-		Format:     "",
-		Codec:      "",
+		Format:     "mp4",
 		Definition: "360p",
-		FileType:   "",
+		FileType:   "video",
 		LogoType:   "",
-		Base64:     "1",
-		Ssl:        "",
-		NeedThumbs: "1",
+		Ssl:        "1",
+		NeedThumbs: "0",
+		NeedBarrageMask: "0",
+		CdnType: "0",
 	}
 	newToken, _ := instance.GetPlayAuthToken(query, tokenExpireTime)
 	fmt.Println(newToken)

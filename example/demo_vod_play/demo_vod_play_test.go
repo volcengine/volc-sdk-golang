@@ -26,12 +26,14 @@ func TestVod_GetPlayInfo(t *testing.T) {
 
 	query := &request.VodGetPlayInfoRequest{
 		Vid:        vid,
-		Format:     "",
-		Codec:      "",
+		Format:     "mp4",
 		Definition: "360p",
-		FileType:   "",
+		FileType:   "video",
 		LogoType:   "",
-		Ssl:        "",
+		Ssl:        "1",
+		NeedThumbs: "0",
+		NeedBarrageMask: "0",
+		CdnType: "0",
 	}
 	resp, code, err := instance.GetPlayInfo(query)
 	fmt.Println(code)
