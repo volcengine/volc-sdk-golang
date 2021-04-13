@@ -272,29 +272,48 @@ func (c *ImageX) GetUploadAuthToken(query url.Values) (string, error) {
 	return base64.StdEncoding.EncodeToString([]byte(token)), nil
 }
 
-// 获取上传临时密钥
-func (c *ImageX) GetUploadAuth(serviceIds []string) (*base.SecurityToken2, error) {
-	return c.GetUploadAuthWithExpire(serviceIds, time.Hour)
+type UploadAuthOpt func(option *uploadAuthOption)
+
+type uploadAuthOption struct {
+	keyPtn string
 }
 
-func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Duration) (*base.SecurityToken2, error) {
-	inlinePolicy := new(base.Policy)
-	actions := []string{
-		"ImageX:ApplyImageUpload",
-		"ImageX:CommitImageUpload",
+func WithUploadKeyPtn(ptn string) UploadAuthOpt {
+	return func(o *uploadAuthOption) {
+		o.keyPtn = ptn
 	}
+}
 
-	resources := make([]string, 0)
+// 获取上传临时密钥
+func (c *ImageX) GetUploadAuth(serviceIds []string, opt ...UploadAuthOpt) (*base.SecurityToken2, error) {
+	return c.GetUploadAuthWithExpire(serviceIds, time.Hour, opt...)
+}
+
+func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Duration, opt ...UploadAuthOpt) (*base.SecurityToken2, error) {
+	serviceIdRes := make([]string, 0)
 	if len(serviceIds) == 0 {
-		resources = append(resources, fmt.Sprintf(ResourceServiceIdTRN, "*"))
+		serviceIdRes = append(serviceIdRes, fmt.Sprintf(ResourceServiceIdTRN, "*"))
 	} else {
 		for _, sid := range serviceIds {
-			resources = append(resources, fmt.Sprintf(ResourceServiceIdTRN, sid))
+			serviceIdRes = append(serviceIdRes, fmt.Sprintf(ResourceServiceIdTRN, sid))
 		}
 	}
+	op := new(uploadAuthOption)
+	for _, o := range opt {
+		o(op)
+	}
+	storeKeyRes := []string{
+		fmt.Sprintf(ResourceStoreKeyTRN, op.keyPtn),
+	}
 
-	statement := base.NewAllowStatement(actions, resources)
-	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
+	inlinePolicy := new(base.Policy)
+	inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{
+		"ImageX:ApplyImageUpload",
+	}, append(serviceIdRes, storeKeyRes...)))
+	inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{
+		"ImageX:CommitImageUpload",
+	}, serviceIdRes))
+
 	return c.Client.SignSts2(inlinePolicy, expire)
 }
 

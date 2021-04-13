@@ -118,7 +118,7 @@ func TestVod_DeleteMedia(t *testing.T) {
 	vids := "your vids"
 	callbackArgs := "callbackArgs"
 	query := &request.VodDeleteMediaRequest{
-		Vids: vids,
+		Vids:         vids,
 		CallbackArgs: callbackArgs,
 	}
 	resp, code, err := instance.DeleteMedia(query)
@@ -143,8 +143,8 @@ func TestVod_DeleteTranscodes(t *testing.T) {
 	fileIds := "your file ids"
 	callbackArgs := "callbackArgs"
 	query := &request.VodDeleteTranscodesRequest{
-		Vid: vid,
-		FileIds: fileIds,
+		Vid:          vid,
+		FileIds:      fileIds,
 		CallbackArgs: callbackArgs,
 	}
 	resp, code, err := instance.DeleteTranscodes(query)

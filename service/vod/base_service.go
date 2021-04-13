@@ -24,6 +24,35 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
+func (p *Vod) CreateSha1HlsDrmAuthToken(expireSeconds int64) (auth string, err error) {
+	return p.createHlsDrmAuthToken(DSAHmacSha1, expireSeconds)
+}
+
+func (p *Vod) CreateSha256HlsDrmAuthToken(expireSeconds int64) (auth string, err error) {
+	return p.createHlsDrmAuthToken(DSAHmacSha256, expireSeconds)
+}
+
+func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (string, error) {
+	if expireSeconds == 0 {
+		return "", errors.New("invalid expire")
+	}
+
+	token, err := createAuth(authAlgorithm, Version1, p.ServiceInfo.Credentials.AccessKeyID,
+		p.ServiceInfo.Credentials.SecretAccessKey, expireSeconds)
+	if err != nil {
+		return "", err
+	}
+
+	query := url.Values{}
+	query.Set("token", token)
+	query.Set("X-Expires", strconv.FormatInt(expireSeconds, 10))
+	if getAuth, err := p.GetSignUrl("GetHlsDecryptionKey", query); err == nil {
+		return getAuth, nil
+	} else {
+		return "", err
+	}
+}
+
 func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
