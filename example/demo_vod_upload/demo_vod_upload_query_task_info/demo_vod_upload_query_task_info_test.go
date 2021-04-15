@@ -30,7 +30,7 @@ func TestVod_QueryUploadTaskInfo(t *testing.T) {
 	queryRequest := &request.VodQueryUploadTaskInfoRequest{JobIds: str}
 	resp, _, err := instance.QueryUploadTaskInfo(queryRequest)
 	if err != nil {
-		fmt.Printf("err:%s\n")
+		fmt.Printf("err:%v\n", err)
 	}
 	if resp.ResponseMetadata.Error != nil {
 		fmt.Println(resp.ResponseMetadata.Error)
