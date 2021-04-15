@@ -9,7 +9,6 @@ import (
 	"encoding/hex"
 	"errors"
 	"hash"
-	"reflect"
 	"strconv"
 	"strings"
 	"time"
@@ -18,18 +17,17 @@ import (
 
 const (
 	DSAHmacSha1   = "HMAC-SHA1"
-	DSAHmacSha256 = "HMAC-SHA256"
 
-	Version1 = "1.0"
+	Version2 = "2.0"
 
 	SprAuth = ":"
 	SprSign = "&"
 
-	DateYYMMDD = "20060102"
+	DateYYYYMMDDTHHmmss = "20060102T150405Z0700"
 )
 
 var (
-	ServiceVOD = str2Bytes("vod")
+	ServiceVOD = stringToBytes("vod")
 
 	ErrAccessKeyInvalid = errors.New("access key invalid")
 	ErrSecretKeyInvalid = errors.New("secret key invalid")
@@ -39,10 +37,10 @@ func createAuth(dsa, version, accessKey, secretKey string, expireSeconds int64) 
 	if err := validate(accessKey, secretKey); err != nil {
 		return "", err
 	}
-
 	deadline := time.Now().Add(time.Duration(expireSeconds) * time.Second)
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
-	sign := buildSign(dsa, version, timestamp, parseKey(secretKey, deadline))
+	dataKey := parseKey(secretKey, deadline)
+	sign := buildSign(dsa, version, timestamp, dataKey)
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
 	return strings.Join(tokens, SprAuth), nil
 }
@@ -58,19 +56,17 @@ func validate(accessKey, secretKey string) error {
 }
 
 func buildSign(dsa, version, timestamp string, key []byte) string {
-	data := str2Bytes(join(dsa, SprSign, version, SprSign, timestamp))
+	data := stringToBytes(join(dsa, SprSign, version, SprSign, timestamp))
 	switch dsa {
 	case DSAHmacSha1:
 		return encodeToBase64(getHmac1(key, data))
-	case DSAHmacSha256:
-		return encodeToBase64(getHmac256(key, data))
 	}
 	return ""
 }
 
 func parseKey(key string, t time.Time) []byte {
-	dateKey := getHmac256(str2Bytes(key), str2Bytes(GetDate(t)))
-	return str2Bytes(hex.EncodeToString(getHmac256(dateKey, ServiceVOD)))
+	dateKey := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
+	return stringToBytes(hex.EncodeToString(getHmac256(dateKey, ServiceVOD)))
 }
 
 func join(tokens ...string) string {
@@ -82,7 +78,7 @@ func join(tokens ...string) string {
 }
 
 func GetDate(t time.Time) string {
-	return t.Format(DateYYMMDD)
+	return t.UTC().Format(DateYYYYMMDDTHHmmss)
 }
 
 func getHmac1(key, data []byte) []byte {
@@ -105,12 +101,8 @@ func encodeToBase64(data []byte) string {
 	return base64.StdEncoding.EncodeToString(data)
 }
 
-func str2Bytes(s string) []byte {
-	sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
-	bh := &reflect.SliceHeader{
-		Data: sh.Data,
-		Len:  sh.Len,
-		Cap:  sh.Len,
-	}
-	return *(*[]byte)(unsafe.Pointer(bh))
+func stringToBytes(s string) []byte {
+	x := (*[2]uintptr)(unsafe.Pointer(&s))
+	b := [3]uintptr{x[0], x[1], x[1]}
+	return *(*[]byte)(unsafe.Pointer(&b))
 }
