@@ -28,7 +28,7 @@ func TestVod_ApplyUploadInfo(t *testing.T) {
 
 	resp, _, err := instance.ApplyUploadInfo(applyRequest)
 	if err != nil {
-		fmt.Printf("err:%s\n")
+		fmt.Printf("err:%v\n", err)
 	}
 	if resp.GetResponseMetadata().GetError() != nil {
 		fmt.Println(resp.ResponseMetadata.Error)

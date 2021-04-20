@@ -10,29 +10,30 @@ import (
 )
 
 func TestVod_GetPlayInfo(t *testing.T) {
-	//vod.NewInstance().SetCredential(base.Credentials{
-	//	AccessKeyID:     "your ak",
-	//	SecretAccessKey: "your sk",
-	//})
-
-	// or set ak and ak as follow
-	//vod.NewInstance().SetAccessKey("")
-	//vod.NewInstance().SetSecretKey("")
-
 	vid := "your vid"
 
 	// GetPlayInfo
 	instance := vod.NewInstance()
 
+	//instance.SetCredential(base.Credentials{
+	//	AccessKeyID:     "your ak",
+	//	SecretAccessKey: "your sk",
+	//})
+
+	// or set ak and ak as follow
+	//instance.SetAccessKey("")
+	//instance.SetSecretKey("")
+
 	query := &request.VodGetPlayInfoRequest{
 		Vid:        vid,
-		Format:     "",
-		Codec:      "",
+		Format:     "mp4",
 		Definition: "360p",
-		FileType:   "",
+		FileType:   "video",
 		LogoType:   "",
-		Base64:     "1",
-		Ssl:        "",
+		Ssl:        "1",
+		NeedThumbs: "0",
+		NeedBarrageMask: "0",
+		CdnType: "0",
 	}
 	resp, code, err := instance.GetPlayInfo(query)
 	fmt.Println(code)
