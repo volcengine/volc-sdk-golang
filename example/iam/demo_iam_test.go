@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/service/iam"
 )
@@ -13,7 +14,7 @@ const (
 	testSk = "sk"
 )
 
-func TestIAM_() {
+func TestIAM(t *testing.T) {
 	iam.DefaultInstance.Client.SetAccessKey(testAk)
 	iam.DefaultInstance.Client.SetSecretKey(testSk)
 	iam.DefaultInstance.SetRegion(region)
