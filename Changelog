@@ -1,5 +1,8 @@
 ### Change log
 
+2021-04-20 Bumped to version v1.0.11
+- Added pcdn and barrageMask.
+
 2021-04-08 Bumped to version v1.0.10
 - Fixed magex sts2: default storekey empty.
 
