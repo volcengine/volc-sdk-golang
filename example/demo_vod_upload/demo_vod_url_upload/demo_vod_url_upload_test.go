@@ -36,7 +36,7 @@ func TestVod_UrlUploadURLSet(t *testing.T) {
 
 	resp, _, err := instance.UploadMediaByUrl(req)
 	if err != nil {
-		fmt.Printf("err:%s\n")
+		fmt.Printf("err:%v\n", err)
 		return
 	}
 	if resp.GetResponseMetadata().GetError() != nil {

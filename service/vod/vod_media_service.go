@@ -492,7 +492,7 @@ func (p *Vod) DeleteMedia(req *request.VodDeleteMediaRequest) (*response.VodDele
 }
 
 /**
- * DeleteTranscodes
+ * DeleteTranscodes.
  *
  * @param input *models.request.VodDeleteTranscodesRequest
  * @return *models.response.VodDeleteTranscodesResponse, int, error
