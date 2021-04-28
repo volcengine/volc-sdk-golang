@@ -179,5 +179,29 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"GetSubtitleInfoList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSubtitleInfoList"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"UpdateSubtitleStatus": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSubtitleStatus"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"UpdateSubtitleInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSubtitleInfo"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 	}
 )

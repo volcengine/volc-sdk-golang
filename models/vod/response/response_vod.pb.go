@@ -781,6 +781,163 @@ func (x *VodGetMediaListResponse) GetResult() *business.VodGetMediaListData {
 	return nil
 }
 
+type VodGetSubtitleInfoListResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata               `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.VodGetSubtitleInfoListData `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *VodGetSubtitleInfoListResponse) Reset() {
+	*x = VodGetSubtitleInfoListResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetSubtitleInfoListResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetSubtitleInfoListResponse) ProtoMessage() {}
+
+func (x *VodGetSubtitleInfoListResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetSubtitleInfoListResponse.ProtoReflect.Descriptor instead.
+func (*VodGetSubtitleInfoListResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *VodGetSubtitleInfoListResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodGetSubtitleInfoListResponse) GetResult() *business.VodGetSubtitleInfoListData {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type VodUpdateSubtitleStatusResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.VodUpdateSubtitleStatusData `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *VodUpdateSubtitleStatusResponse) Reset() {
+	*x = VodUpdateSubtitleStatusResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodUpdateSubtitleStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodUpdateSubtitleStatusResponse) ProtoMessage() {}
+
+func (x *VodUpdateSubtitleStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodUpdateSubtitleStatusResponse.ProtoReflect.Descriptor instead.
+func (*VodUpdateSubtitleStatusResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *VodUpdateSubtitleStatusResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodUpdateSubtitleStatusResponse) GetResult() *business.VodUpdateSubtitleStatusData {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type VodUpdateSubtitleInfoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+}
+
+func (x *VodUpdateSubtitleInfoResponse) Reset() {
+	*x = VodUpdateSubtitleInfoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodUpdateSubtitleInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodUpdateSubtitleInfoResponse) ProtoMessage() {}
+
+func (x *VodUpdateSubtitleInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodUpdateSubtitleInfoResponse.ProtoReflect.Descriptor instead.
+func (*VodUpdateSubtitleInfoResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *VodUpdateSubtitleInfoResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
 type VodStartWorkflowResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -793,7 +950,7 @@ type VodStartWorkflowResponse struct {
 func (x *VodStartWorkflowResponse) Reset() {
 	*x = VodStartWorkflowResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_response_response_vod_proto_msgTypes[14]
+		mi := &file_vod_response_response_vod_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -806,7 +963,7 @@ func (x *VodStartWorkflowResponse) String() string {
 func (*VodStartWorkflowResponse) ProtoMessage() {}
 
 func (x *VodStartWorkflowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_response_response_vod_proto_msgTypes[14]
+	mi := &file_vod_response_response_vod_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -819,7 +976,7 @@ func (x *VodStartWorkflowResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodStartWorkflowResponse.ProtoReflect.Descriptor instead.
 func (*VodStartWorkflowResponse) Descriptor() ([]byte, []int) {
-	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{14}
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *VodStartWorkflowResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -1012,30 +1169,64 @@ var file_vod_response_response_vod_proto_rawDesc = []byte{
 	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x56, 0x6f, 0x64,
 	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74,
 	0x4d, 0x65, 0x64, 0x69, 0x61, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xc0, 0x01, 0x0a, 0x18, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xca, 0x01, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74,
+	0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x4c, 0x69, 0x73, 0x74,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x54, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x28, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
+	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x52,
+	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3a,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
+	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x49, 0x6e,
+	0x66, 0x6f, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x22, 0xcc, 0x01, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65,
+	0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x54, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x28, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x53, 0x0a, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3b, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
+	0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0x75, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x75,
+	0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x54, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x56,
 	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
 	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
 	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4e, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x36, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
-	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x56, 0x6f, 0x64,
-	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
-	0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42, 0xac, 0x01, 0x0a, 0x21, 0x63, 0x6f, 0x6d,
-	0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x6d, 0x6f, 0x64, 0x65,
-	0x6c, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0b,
-	0x56, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x50, 0x01, 0x5a, 0x39, 0x67,
-	0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
-	0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f,
-	0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x76, 0x6f, 0x64, 0x2f,
-	0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02,
-	0x18, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x56, 0x6f, 0x64,
-	0x5c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xe2, 0x02, 0x1b, 0x56, 0x6f, 0x6c, 0x63,
-	0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x47, 0x50, 0x42, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0xc0, 0x01, 0x0a, 0x18, 0x56, 0x6f, 0x64,
+	0x53, 0x74, 0x61, 0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x54, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x28, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64,
+	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4e, 0x0a, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x36, 0x2e, 0x56, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x56, 0x6f, 0x64, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64,
+	0x53, 0x74, 0x61, 0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42, 0xac, 0x01, 0x0a, 0x21,
+	0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x6d,
+	0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x42, 0x0b, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x50, 0x01,
+	0x5a, 0x39, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b,
+	0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x76,
+	0x6f, 0x64, 0x2f, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xa0, 0x01, 0x01, 0xd8, 0x01,
+	0x01, 0xca, 0x02, 0x18, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c,
+	0x56, 0x6f, 0x64, 0x5c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xe2, 0x02, 0x1b, 0x56,
+	0x6f, 0x6c, 0x63, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x47,
+	0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -1050,7 +1241,7 @@ func file_vod_response_response_vod_proto_rawDescGZIP() []byte {
 	return file_vod_response_response_vod_proto_rawDescData
 }
 
-var file_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodGetPlayInfoResponse)(nil),                // 0: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse
 	(*VodGetOriginalPlayInfoResponse)(nil),        // 1: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse
@@ -1066,56 +1257,66 @@ var file_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodDeleteMediaResponse)(nil),                // 11: Volcengine.Models.Vod.Response.VodDeleteMediaResponse
 	(*VodDeleteTranscodesResponse)(nil),           // 12: Volcengine.Models.Vod.Response.VodDeleteTranscodesResponse
 	(*VodGetMediaListResponse)(nil),               // 13: Volcengine.Models.Vod.Response.VodGetMediaListResponse
-	(*VodStartWorkflowResponse)(nil),              // 14: Volcengine.Models.Vod.Response.VodStartWorkflowResponse
-	(*base.ResponseMetadata)(nil),                 // 15: Volcengine.Models.Base.ResponseMetadata
-	(*business.VodPlayInfoModel)(nil),             // 16: Volcengine.Models.Vod.Business.VodPlayInfoModel
-	(*business.VodGetOriginalPlayInfoResult)(nil), // 17: Volcengine.Models.Vod.Business.VodGetOriginalPlayInfoResult
-	(*business.VodCommitData)(nil),                // 18: Volcengine.Models.Vod.Business.VodCommitData
-	(*business.VodQueryData)(nil),                 // 19: Volcengine.Models.Vod.Business.VodQueryData
-	(*business.VodUrlResponseData)(nil),           // 20: Volcengine.Models.Vod.Business.VodUrlResponseData
-	(*business.VodApplyUploadInfoResult)(nil),     // 21: Volcengine.Models.Vod.Business.VodApplyUploadInfoResult
-	(*business.VodCommitUploadInfoResult)(nil),    // 22: Volcengine.Models.Vod.Business.VodCommitUploadInfoResult
-	(*business.VodGetMediaInfosData)(nil),         // 23: Volcengine.Models.Vod.Business.VodGetMediaInfosData
-	(*business.VodGetRecPosterData)(nil),          // 24: Volcengine.Models.Vod.Business.VodGetRecPosterData
-	(*business.VodDeleteMediaData)(nil),           // 25: Volcengine.Models.Vod.Business.VodDeleteMediaData
-	(*business.VodDeleteTranscodesData)(nil),      // 26: Volcengine.Models.Vod.Business.VodDeleteTranscodesData
-	(*business.VodGetMediaListData)(nil),          // 27: Volcengine.Models.Vod.Business.VodGetMediaListData
-	(*business.VodStartWorkflowResult)(nil),       // 28: Volcengine.Models.Vod.Business.VodStartWorkflowResult
+	(*VodGetSubtitleInfoListResponse)(nil),        // 14: Volcengine.Models.Vod.Response.VodGetSubtitleInfoListResponse
+	(*VodUpdateSubtitleStatusResponse)(nil),       // 15: Volcengine.Models.Vod.Response.VodUpdateSubtitleStatusResponse
+	(*VodUpdateSubtitleInfoResponse)(nil),         // 16: Volcengine.Models.Vod.Response.VodUpdateSubtitleInfoResponse
+	(*VodStartWorkflowResponse)(nil),              // 17: Volcengine.Models.Vod.Response.VodStartWorkflowResponse
+	(*base.ResponseMetadata)(nil),                 // 18: Volcengine.Models.Base.ResponseMetadata
+	(*business.VodPlayInfoModel)(nil),             // 19: Volcengine.Models.Vod.Business.VodPlayInfoModel
+	(*business.VodGetOriginalPlayInfoResult)(nil), // 20: Volcengine.Models.Vod.Business.VodGetOriginalPlayInfoResult
+	(*business.VodCommitData)(nil),                // 21: Volcengine.Models.Vod.Business.VodCommitData
+	(*business.VodQueryData)(nil),                 // 22: Volcengine.Models.Vod.Business.VodQueryData
+	(*business.VodUrlResponseData)(nil),           // 23: Volcengine.Models.Vod.Business.VodUrlResponseData
+	(*business.VodApplyUploadInfoResult)(nil),     // 24: Volcengine.Models.Vod.Business.VodApplyUploadInfoResult
+	(*business.VodCommitUploadInfoResult)(nil),    // 25: Volcengine.Models.Vod.Business.VodCommitUploadInfoResult
+	(*business.VodGetMediaInfosData)(nil),         // 26: Volcengine.Models.Vod.Business.VodGetMediaInfosData
+	(*business.VodGetRecPosterData)(nil),          // 27: Volcengine.Models.Vod.Business.VodGetRecPosterData
+	(*business.VodDeleteMediaData)(nil),           // 28: Volcengine.Models.Vod.Business.VodDeleteMediaData
+	(*business.VodDeleteTranscodesData)(nil),      // 29: Volcengine.Models.Vod.Business.VodDeleteTranscodesData
+	(*business.VodGetMediaListData)(nil),          // 30: Volcengine.Models.Vod.Business.VodGetMediaListData
+	(*business.VodGetSubtitleInfoListData)(nil),   // 31: Volcengine.Models.Vod.Business.VodGetSubtitleInfoListData
+	(*business.VodUpdateSubtitleStatusData)(nil),  // 32: Volcengine.Models.Vod.Business.VodUpdateSubtitleStatusData
+	(*business.VodStartWorkflowResult)(nil),       // 33: Volcengine.Models.Vod.Business.VodStartWorkflowResult
 }
 var file_vod_response_response_vod_proto_depIdxs = []int32{
-	15, // 0: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	16, // 1: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodPlayInfoModel
-	15, // 2: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	17, // 3: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetOriginalPlayInfoResult
-	15, // 4: Volcengine.Models.Vod.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	18, // 5: Volcengine.Models.Vod.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitData
-	15, // 6: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	19, // 7: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodQueryData
-	15, // 8: Volcengine.Models.Vod.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	20, // 9: Volcengine.Models.Vod.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodUrlResponseData
-	15, // 10: Volcengine.Models.Vod.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	21, // 11: Volcengine.Models.Vod.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodApplyUploadInfoResult
-	15, // 12: Volcengine.Models.Vod.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	22, // 13: Volcengine.Models.Vod.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitUploadInfoResult
-	15, // 14: Volcengine.Models.Vod.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	23, // 15: Volcengine.Models.Vod.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetMediaInfosData
-	15, // 16: Volcengine.Models.Vod.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	15, // 17: Volcengine.Models.Vod.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	24, // 18: Volcengine.Models.Vod.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetRecPosterData
-	15, // 19: Volcengine.Models.Vod.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	15, // 20: Volcengine.Models.Vod.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	25, // 21: Volcengine.Models.Vod.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodDeleteMediaData
-	15, // 22: Volcengine.Models.Vod.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	26, // 23: Volcengine.Models.Vod.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodDeleteTranscodesData
-	15, // 24: Volcengine.Models.Vod.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	27, // 25: Volcengine.Models.Vod.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetMediaListData
-	15, // 26: Volcengine.Models.Vod.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
-	28, // 27: Volcengine.Models.Vod.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodStartWorkflowResult
-	28, // [28:28] is the sub-list for method output_type
-	28, // [28:28] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	18, // 0: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	19, // 1: Volcengine.Models.Vod.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodPlayInfoModel
+	18, // 2: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	20, // 3: Volcengine.Models.Vod.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetOriginalPlayInfoResult
+	18, // 4: Volcengine.Models.Vod.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	21, // 5: Volcengine.Models.Vod.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitData
+	18, // 6: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	22, // 7: Volcengine.Models.Vod.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodQueryData
+	18, // 8: Volcengine.Models.Vod.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	23, // 9: Volcengine.Models.Vod.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodUrlResponseData
+	18, // 10: Volcengine.Models.Vod.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	24, // 11: Volcengine.Models.Vod.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodApplyUploadInfoResult
+	18, // 12: Volcengine.Models.Vod.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	25, // 13: Volcengine.Models.Vod.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodCommitUploadInfoResult
+	18, // 14: Volcengine.Models.Vod.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	26, // 15: Volcengine.Models.Vod.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetMediaInfosData
+	18, // 16: Volcengine.Models.Vod.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	18, // 17: Volcengine.Models.Vod.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	27, // 18: Volcengine.Models.Vod.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetRecPosterData
+	18, // 19: Volcengine.Models.Vod.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	18, // 20: Volcengine.Models.Vod.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	28, // 21: Volcengine.Models.Vod.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodDeleteMediaData
+	18, // 22: Volcengine.Models.Vod.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	29, // 23: Volcengine.Models.Vod.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodDeleteTranscodesData
+	18, // 24: Volcengine.Models.Vod.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	30, // 25: Volcengine.Models.Vod.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetMediaListData
+	18, // 26: Volcengine.Models.Vod.Response.VodGetSubtitleInfoListResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	31, // 27: Volcengine.Models.Vod.Response.VodGetSubtitleInfoListResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodGetSubtitleInfoListData
+	18, // 28: Volcengine.Models.Vod.Response.VodUpdateSubtitleStatusResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	32, // 29: Volcengine.Models.Vod.Response.VodUpdateSubtitleStatusResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodUpdateSubtitleStatusData
+	18, // 30: Volcengine.Models.Vod.Response.VodUpdateSubtitleInfoResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	18, // 31: Volcengine.Models.Vod.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Models.Base.ResponseMetadata
+	33, // 32: Volcengine.Models.Vod.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Models.Vod.Business.VodStartWorkflowResult
+	33, // [33:33] is the sub-list for method output_type
+	33, // [33:33] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_vod_response_response_vod_proto_init() }
@@ -1293,6 +1494,42 @@ func file_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_vod_response_response_vod_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetSubtitleInfoListResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodUpdateSubtitleStatusResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodUpdateSubtitleInfoResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodStartWorkflowResponse); i {
 			case 0:
 				return &v.state
@@ -1311,7 +1548,7 @@ func file_vod_response_response_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_response_response_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
