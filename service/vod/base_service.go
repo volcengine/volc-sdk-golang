@@ -24,7 +24,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
-func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmSecretKeyRequest, tokenExpireTime int) (string, error) {
+func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
 	}
@@ -32,14 +32,14 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmSecretKeyReque
 		"Vid": []string{req.GetVid()},
 	}
 
-	if len(req.GetKids()) > 0 {
-		query.Add("Kids", req.GetKids())
+	if len(req.GetPlayAuthIds()) > 0 {
+		query.Add("PlayAuthIds", req.GetPlayAuthIds())
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
 	}
 
-	if getPrivateDrmAuthToken, err := p.GetSignUrl("GetPrivateDrmSecretKey", query); err == nil {
+	if getPrivateDrmAuthToken, err := p.GetSignUrl("GetPrivateDrmPlayAuth", query); err == nil {
 		return getPrivateDrmAuthToken, nil
 	} else {
 		return "", err
