@@ -23,7 +23,7 @@ const (
 	SprAuth = ":"
 	SprSign = "&"
 
-	DateYYYYMMDDTHHmmss = "20060102T150405Z0700"
+	DateYYYYMMDDTHHmmss = "20060102T150405Z"
 )
 
 var (
@@ -67,6 +67,7 @@ func BuildSign(dsa, version, timestamp string, key []byte) string {
 func parseKey(key string, t time.Time) []byte {
 	dateKey := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
 	return stringToBytes(hex.EncodeToString(getHmac256(dateKey, ServiceVOD)))
+	//return stringToBytes(hex.EncodeToString(getHmac256(dateKey, stringToBytes(""))))
 }
 
 func join(tokens ...string) string {
