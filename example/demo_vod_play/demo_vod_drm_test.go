@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/models/vod/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 )
@@ -25,21 +24,21 @@ func TestVod_GetSha1HlsDrmAuthToken(t *testing.T) {
 }
 
 func TestVod_GetPrivateDrmAuthToken(t *testing.T) {
-	vid := "v0c38242007abvga3dtqktlkf5j3a7ng"
+	vid := "your vid"
 	tokenExpireTime := 9000000 // Token Expire Duration（s）
 	instance := vod.NewInstance()
 
-	instance.SetCredential(base.Credentials{
-	AccessKeyID:     "***REMOVED***",
-	SecretAccessKey: "***REMOVED***",
-	})
+	//instance.SetCredential(base.Credentials{
+	//	AccessKeyID:     "your ak",
+	//	SecretAccessKey: "your sk",
+	//})
 
 	// or set ak and ak as follow
 	//instance.SetAccessKey("")
 	//instance.SetSecretKey("")
 
 	query := &request.VodGetPrivateDrmPlayAuthRequest{
-		Vid:        vid,
+		Vid: vid,
 	}
 	newToken, _ := instance.GetPrivateDrmAuthToken(query, tokenExpireTime)
 	fmt.Println(newToken)

@@ -23,7 +23,7 @@ const (
 	SprAuth = ":"
 	SprSign = "&"
 
-	DateYYYYMMDDTHHmmss = "20060102T150405Z0700"
+	DateYYYYMMDDTHHmmss = "20060102T150405Z"
 )
 
 var (
@@ -40,7 +40,7 @@ func createAuth(dsa, version, accessKey, secretKey string, expireSeconds int64) 
 	deadline := time.Now().Add(time.Duration(expireSeconds) * time.Second)
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
 	dataKey := parseKey(secretKey, deadline)
-	sign := buildSign(dsa, version, timestamp, dataKey)
+	sign := BuildSign(dsa, version, timestamp, dataKey)
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
 	return strings.Join(tokens, SprAuth), nil
 }
@@ -55,7 +55,7 @@ func validate(accessKey, secretKey string) error {
 	return nil
 }
 
-func buildSign(dsa, version, timestamp string, key []byte) string {
+func BuildSign(dsa, version, timestamp string, key []byte) string {
 	data := stringToBytes(join(dsa, SprSign, version, SprSign, timestamp))
 	switch dsa {
 	case DSAHmacSha1:
