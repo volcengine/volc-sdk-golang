@@ -41,7 +41,8 @@ var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: 5 * time.Second,
-			Host:    "vod.volcengineapi.com",
+			//Host:    "vod.volcengineapi.com",
+			Host:    "volcengineapi-boe.byted.org",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -177,6 +178,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetHlsDecryptionKey"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetPrivateDrmPlayAuth": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPrivateDrmPlayAuth"},
 				"Version": []string{"2020-08-01"},
 			},
 		},

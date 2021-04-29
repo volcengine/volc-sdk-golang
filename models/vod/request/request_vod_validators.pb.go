@@ -36,7 +36,7 @@ func (req *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string
 
 	return
 }
-func (req *VodGetPrivateDrmSecretKeyRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodGetPrivateDrmPlayAuthRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }
