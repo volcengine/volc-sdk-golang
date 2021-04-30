@@ -40,7 +40,7 @@ func (req *VodGetPrivateDrmPlayAuthRequest) Validate() (privateErrorCodeStr stri
 
 	return
 }
-func (req *VodGetHlsDrmSecretKeyRequest) Validate() (privateErrorCodeStr string, err error) {
+func (req *VodGetHlsDecryptionKeyRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
 }

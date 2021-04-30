@@ -207,13 +207,13 @@ func (p *Vod) GetPrivateDrmPlayAuth(req *request.VodGetPrivateDrmPlayAuthRequest
 }
 
 /**
- * GetHlsDrmSecretKey.
+ * GetHlsDecryptionKey.
  *
- * @param input *models.request.VodGetHlsDrmSecretKeyRequest
- * @return *models.response.VodGetHlsDrmSecretKeyResponse, int, error
+ * @param input *models.request.VodGetHlsDecryptionKeyRequest
+ * @return *models.response.VodGetHlsDecryptionKeyResponse, int, error
  * @throws Exception the exception
  */
-func (p *Vod) GetHlsDrmSecretKey(req *request.VodGetHlsDrmSecretKeyRequest) (*response.VodGetHlsDrmSecretKeyResponse, int, error) {
+func (p *Vod) GetHlsDecryptionKey(req *request.VodGetHlsDecryptionKeyRequest) (*response.VodGetHlsDecryptionKeyResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -273,9 +273,9 @@ func (p *Vod) GetHlsDrmSecretKey(req *request.VodGetHlsDrmSecretKeyRequest) (*re
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("GetHlsDrmSecretKey", query)
+	respBody, status, err := p.Query("GetHlsDecryptionKey", query)
 
-	output := &response.VodGetHlsDrmSecretKeyResponse{}
+	output := &response.VodGetHlsDecryptionKeyResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
