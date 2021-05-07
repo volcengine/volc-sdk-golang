@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/service/vod"
-	request2 "github.com/volcengine/volc-sdk-golang/service/vod/models/vod/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
 func TestVod_GetSha1HlsDrmAuthToken(t *testing.T) {
@@ -37,7 +37,7 @@ func TestVod_GetPrivateDrmAuthToken(t *testing.T) {
 	//instance.SetAccessKey("")
 	//instance.SetSecretKey("")
 
-	query := &request2.VodGetPrivateDrmPlayAuthRequest{
+	query := &request.VodGetPrivateDrmPlayAuthRequest{
 		Vid: vid,
 	}
 	newToken, _ := instance.GetPrivateDrmAuthToken(query, tokenExpireTime)
