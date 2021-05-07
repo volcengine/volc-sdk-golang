@@ -18,8 +18,9 @@ import (
 
 	"github.com/avast/retry-go"
 	"github.com/volcengine/volc-sdk-golang/base"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
+
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )

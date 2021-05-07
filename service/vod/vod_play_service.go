@@ -10,18 +10,18 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/pkg/errors"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
+
+	"github.com/pkg/errors"
+
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
 )
 
-/**
- * GetPlayInfo.
- *
- * @param input *models.request.VodGetPlayInfoRequest
- * @return *models.response.VodGetPlayInfoResponse, int, error
- * @throws Exception the exception
+// GetPlayInfo
+/*
+ * @param *request.VodGetPlayInfoRequest
+ * @return *response.VodGetPlayInfoResponse, int, error
  */
 func (p *Vod) GetPlayInfo(req *request.VodGetPlayInfoRequest) (*response.VodGetPlayInfoResponse, int, error) {
 	query := url.Values{}
@@ -111,12 +111,10 @@ func (p *Vod) GetPlayInfo(req *request.VodGetPlayInfoRequest) (*response.VodGetP
 	return output, status, nil
 }
 
-/**
- * GetPrivateDrmPlayAuth.
- *
- * @param input *models.request.VodGetPrivateDrmPlayAuthRequest
- * @return *models.response.VodGetPrivateDrmPlayAuthResponse, int, error
- * @throws Exception the exception
+// GetPrivateDrmPlayAuth
+/*
+ * @param *request.VodGetPrivateDrmPlayAuthRequest
+ * @return *response.VodGetPrivateDrmPlayAuthResponse, int, error
  */
 func (p *Vod) GetPrivateDrmPlayAuth(req *request.VodGetPrivateDrmPlayAuthRequest) (*response.VodGetPrivateDrmPlayAuthResponse, int, error) {
 	query := url.Values{}
@@ -206,12 +204,10 @@ func (p *Vod) GetPrivateDrmPlayAuth(req *request.VodGetPrivateDrmPlayAuthRequest
 	return output, status, nil
 }
 
-/**
- * GetHlsDecryptionKey.
- *
- * @param input *models.request.VodGetHlsDecryptionKeyRequest
- * @return *models.response.VodGetHlsDecryptionKeyResponse, int, error
- * @throws Exception the exception
+// GetHlsDecryptionKey
+/*
+ * @param *request.VodGetHlsDecryptionKeyRequest
+ * @return *response.VodGetHlsDecryptionKeyResponse, int, error
  */
 func (p *Vod) GetHlsDecryptionKey(req *request.VodGetHlsDecryptionKeyRequest) (*response.VodGetHlsDecryptionKeyResponse, int, error) {
 	query := url.Values{}
