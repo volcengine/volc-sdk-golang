@@ -10,18 +10,18 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/pkg/errors"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
+
+	"github.com/pkg/errors"
+
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
 )
 
-/**
- * StartWorkflow.
- *
- * @param input *models.request.VodStartWorkflowRequest
- * @return *models.response.VodStartWorkflowResponse, int, error
- * @throws Exception the exception
+// StartWorkflow
+/*
+ * @param *request.VodStartWorkflowRequest
+ * @return *response.VodStartWorkflowResponse, int, error
  */
 func (p *Vod) StartWorkflow(req *request.VodStartWorkflowRequest) (*response.VodStartWorkflowResponse, int, error) {
 	query := url.Values{}
