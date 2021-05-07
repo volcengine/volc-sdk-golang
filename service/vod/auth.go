@@ -33,13 +33,13 @@ var (
 	ErrSecretKeyInvalid = errors.New("secret key invalid")
 )
 
-func createAuth(dsa, version, accessKey, secretKey string, expireSeconds int64) (string, error) {
+func createAuth(dsa, version, accessKey, secretKey, region string, expireSeconds int64) (string, error) {
 	if err := validate(accessKey, secretKey); err != nil {
 		return "", err
 	}
 	deadline := time.Now().Add(time.Duration(expireSeconds) * time.Second)
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
-	dataKey := parseKey(secretKey, deadline)
+	dataKey := getSignedKey(secretKey, deadline, region)
 	sign := BuildSign(dsa, version, timestamp, dataKey)
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
 	return strings.Join(tokens, SprAuth), nil
@@ -64,10 +64,14 @@ func BuildSign(dsa, version, timestamp string, key []byte) string {
 	return ""
 }
 
-func parseKey(key string, t time.Time) []byte {
-	dateKey := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
-	return stringToBytes(hex.EncodeToString(getHmac256(dateKey, ServiceVOD)))
+func getSignedKey(key string, t time.Time, region string) []byte {
+	kDate := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
+	kRegion := getHmac256(kDate, stringToBytes(region))
+	kService := getHmac256(kRegion, ServiceVOD)
+	kCredentials := getHmac256(kService, []byte("request"))
+	return stringToBytes(hex.EncodeToString(kCredentials))
 }
+
 
 func join(tokens ...string) string {
 	var buf bytes.Buffer

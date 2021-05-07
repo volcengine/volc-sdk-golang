@@ -57,7 +57,7 @@ func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (
 	}
 
 	token, err := createAuth(authAlgorithm, Version2, p.ServiceInfo.Credentials.AccessKeyID,
-		p.ServiceInfo.Credentials.SecretAccessKey, expireSeconds)
+		p.ServiceInfo.Credentials.SecretAccessKey, p.ServiceInfo.Credentials.Region, expireSeconds)
 	if err != nil {
 		return "", err
 	}
