@@ -36,6 +36,9 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	if len(req.GetPlayAuthIds()) > 0 {
 		query.Add("PlayAuthIds", req.GetPlayAuthIds())
 	}
+	if len(req.GetDrmType()) > 0 {
+		query.Add("DrmType", req.GetDrmType())
+	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
 	}
