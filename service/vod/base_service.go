@@ -18,18 +18,40 @@ import (
 
 	"github.com/avast/retry-go"
 	"github.com/volcengine/volc-sdk-golang/base"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
+
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
-func (p *Vod) CreateSha1HlsDrmAuthToken(expireSeconds int64) (auth string, err error) {
-	return p.createHlsDrmAuthToken(DSAHmacSha1, expireSeconds)
+func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
+	if len(req.GetVid()) == 0 {
+		return "", errors.New("传入的Vid为空")
+	}
+	query := url.Values{
+		"Vid": []string{req.GetVid()},
+	}
+
+	if len(req.GetPlayAuthIds()) > 0 {
+		query.Add("PlayAuthIds", req.GetPlayAuthIds())
+	}
+	if len(req.GetDrmType()) > 0 {
+		query.Add("DrmType", req.GetDrmType())
+	}
+	if tokenExpireTime > 0 {
+		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
+	}
+
+	if getPrivateDrmAuthToken, err := p.GetSignUrl("GetPrivateDrmPlayAuth", query); err == nil {
+		return getPrivateDrmAuthToken, nil
+	} else {
+		return "", err
+	}
 }
 
-func (p *Vod) CreateSha256HlsDrmAuthToken(expireSeconds int64) (auth string, err error) {
-	return p.createHlsDrmAuthToken(DSAHmacSha256, expireSeconds)
+func (p *Vod) CreateSha1HlsDrmAuthToken(expireSeconds int64) (auth string, err error) {
+	return p.createHlsDrmAuthToken(DSAHmacSha1, expireSeconds)
 }
 
 func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (string, error) {
@@ -37,14 +59,14 @@ func (p *Vod) createHlsDrmAuthToken(authAlgorithm string, expireSeconds int64) (
 		return "", errors.New("invalid expire")
 	}
 
-	token, err := createAuth(authAlgorithm, Version1, p.ServiceInfo.Credentials.AccessKeyID,
-		p.ServiceInfo.Credentials.SecretAccessKey, expireSeconds)
+	token, err := createAuth(authAlgorithm, Version2, p.ServiceInfo.Credentials.AccessKeyID,
+		p.ServiceInfo.Credentials.SecretAccessKey, p.ServiceInfo.Credentials.Region, expireSeconds)
 	if err != nil {
 		return "", err
 	}
 
 	query := url.Values{}
-	query.Set("token", token)
+	query.Set("DrmAuthToken", token)
 	query.Set("X-Expires", strconv.FormatInt(expireSeconds, 10))
 	if getAuth, err := p.GetSignUrl("GetHlsDecryptionKey", query); err == nil {
 		return getAuth, nil
