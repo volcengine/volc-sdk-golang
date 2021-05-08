@@ -8,7 +8,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"errors"
-	"fmt"
 	"hash"
 	"strconv"
 	"strings"
@@ -41,7 +40,6 @@ func createAuth(dsa, version, accessKey, secretKey, region string, expireSeconds
 	deadline := time.Now().Add(time.Duration(expireSeconds) * time.Second)
 	timestamp := strconv.FormatInt(deadline.Unix(), 10)
 	dataKey := getSignedKey(secretKey, deadline, region)
-	fmt.Println(string(dataKey))
 	sign := BuildSign(dsa, version, timestamp, dataKey)
 	tokens := []string{dsa, version, timestamp, accessKey, sign}
 	return strings.Join(tokens, SprAuth), nil
@@ -66,12 +64,6 @@ func BuildSign(dsa, version, timestamp string, key []byte) string {
 	return ""
 }
 
-func parseKey(key string, t time.Time) []byte {
-	dateKey := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
-	return stringToBytes(hex.EncodeToString(getHmac256(dateKey, ServiceVOD)))
-	//return stringToBytes(hex.EncodeToString(getHmac256(dateKey, stringToBytes(""))))
-}
-
 func getSignedKey(key string, t time.Time, region string) []byte {
 	kDate := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
 	kRegion := getHmac256(kDate, stringToBytes(region))
@@ -79,6 +71,7 @@ func getSignedKey(key string, t time.Time, region string) []byte {
 	kCredentials := getHmac256(kService, []byte("request"))
 	return stringToBytes(hex.EncodeToString(kCredentials))
 }
+
 
 func join(tokens ...string) string {
 	var buf bytes.Buffer
