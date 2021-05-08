@@ -1,5 +1,8 @@
 ### Change log
 
+2021-05-08 Bumped to version v1.0.12
+- Added vod private drm and hls drm sdk.
+
 2021-04-20 Bumped to version v1.0.11
 - Added pcdn and barrageMask.
 
