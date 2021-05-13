@@ -255,6 +255,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"FetchImageUrl": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"FetchImageUrl"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

@@ -361,3 +361,12 @@ func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, er
 	}
 	return c.updateImageUrls(serviceId, req)
 }
+
+func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
+	resp := new(FetchUrlResp)
+	err := c.ImageXPost("FetchImageUrl", nil, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

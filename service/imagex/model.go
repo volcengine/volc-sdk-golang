@@ -189,6 +189,19 @@ type UpdateImageUrlPayload struct {
 	ImageUrls []string `json:"ImageUrls"`
 }
 
+// FetchImageUrl
+type FetchUrlReq struct {
+	Url       string `json:"Url"`
+	ServiceId string `json:"ServiceId"`
+	StoreKey  string `json:"StoreKey"`
+}
+
+type FetchUrlResp struct {
+	Url      string `json:"Url"`
+	StoreUri string `json:"StoreUri"`
+	FSize    int    `json:"FSize"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {
