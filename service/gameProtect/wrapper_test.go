@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	Ak = "***REMOVED***" // write your access key
-	Sk = "***REMOVED***" // write your secret key
+	Ak = "ak" // write your access key
+	Sk = "sk" // write your secret key
 )
 
 func init() {
@@ -15,13 +15,12 @@ func init() {
 	DefaultInstance.Client.SetSecretKey(Sk)
 }
 
-func RiskResult(appId int64, service string, startTime, endTime, pageSize, pageNum int64) {
+func RiskResult(appId int64, startTime, endTime, pageSize, pageNum int64) {
 	res, err := DefaultInstance.RiskResult(&RiskResultRequest{
 		AppId:     appId,   // write your app id
-		Service:   service, // write business security service
 		StartTime: startTime,
 		EndTime:   endTime,
-		Page: Page{
+		Page: Page {
 			PageNum:  pageNum,
 			PageSize: pageSize,
 		},
@@ -33,5 +32,5 @@ func RiskResult(appId int64, service string, startTime, endTime, pageSize, pageN
 }
 
 func TestGameProtector_RiskResult(t *testing.T) {
-	RiskResult(218745, "anti_plugin",1618502400, 1618545491, 2, 1)
+	RiskResult(218745, 1618502400, 1618545491, 2, 1)
 }

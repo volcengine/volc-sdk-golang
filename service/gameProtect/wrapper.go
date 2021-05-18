@@ -5,6 +5,7 @@ import (
 )
 
 func (p *GameProtector) RiskResult(req *RiskResultRequest) (*RiskResultResponse, error) {
+	req.Service = serviceAntiPlugin
 	respBody, _, err := p.Client.Query("RiskResult", req.ToQuery())
 	if err == nil {
 		result := new(RiskResultResponse)

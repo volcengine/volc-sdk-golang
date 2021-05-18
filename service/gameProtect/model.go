@@ -9,6 +9,8 @@ import (
 	"strconv"
 )
 
+const serviceAntiPlugin = "anti_plugin"
+
 type RiskResultRequest struct {
 	AppId     int64  `json:"AppId" form:"AppId"`
 	Service   string `json:"Service" form:"Service"`
