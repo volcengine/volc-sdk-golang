@@ -163,6 +163,8 @@ type OptionInfo struct {
 	Tags        string
 	Description string
 	Category    string
+	RecordType  int
+	Format      string
 }
 
 type WorkflowInput struct {
