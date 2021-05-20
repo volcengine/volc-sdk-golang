@@ -17,7 +17,7 @@ const (
 var (
 	ServiceInfo = &base.ServiceInfo{
 		Timeout: 5 * time.Second,
-		Host:    "open.volcengineapi.com",
+		Host:    "sms.volcengineapi.com",
 		Header: http.Header{
 			"Accept": []string{"application/json"},
 		},
