@@ -1,5 +1,11 @@
 ### Change log
 
+2021-05-20 Bumped to version v1.0.13
+- Support material upload
+- Add retry after http error
+- Add imagex image fetch API
+- Add a new product 'game_protect' api to get risk result on gaming scenes.
+
 2021-05-08 Bumped to version v1.0.12
 - Added vod private drm and hls drm sdk.
 
