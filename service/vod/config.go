@@ -179,6 +179,7 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+
 		"GetSubtitleInfoList": {
 			Method: http.MethodGet,
 			Path:   "/",
