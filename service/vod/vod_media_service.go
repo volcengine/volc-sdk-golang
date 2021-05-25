@@ -576,12 +576,10 @@ func (p *Vod) DeleteTranscodes(req *request.VodDeleteTranscodesRequest) (*respon
 	return output, status, nil
 }
 
-/**
- * GetMediaList.
- *
- * @param input *models.request.VodGetMediaListRequest
- * @return *models.response.VodGetMediaListResponse, int, error
- * @throws Exception the exception
+// GetMediaList
+/*
+ * @param *request.VodGetMediaListRequest
+ * @return *response.VodGetMediaListResponse, int, error
  */
 func (p *Vod) GetMediaList(req *request.VodGetMediaListRequest) (*response.VodGetMediaListResponse, int, error) {
 	query := url.Values{}
@@ -671,12 +669,10 @@ func (p *Vod) GetMediaList(req *request.VodGetMediaListRequest) (*response.VodGe
 	return output, status, nil
 }
 
-/**
- * GetSubtitleInfoList.
- *
- * @param input *models.request.VodGetSubtitleInfoListRequest
- * @return *models.response.VodGetSubtitleInfoListResponse, int, error
- * @throws Exception the exception
+// GetSubtitleInfoList
+/*
+ * @param *request.VodGetSubtitleInfoListRequest
+ * @return *response.VodGetSubtitleInfoListResponse, int, error
  */
 func (p *Vod) GetSubtitleInfoList(req *request.VodGetSubtitleInfoListRequest) (*response.VodGetSubtitleInfoListResponse, int, error) {
 	query := url.Values{}
@@ -766,12 +762,10 @@ func (p *Vod) GetSubtitleInfoList(req *request.VodGetSubtitleInfoListRequest) (*
 	return output, status, nil
 }
 
-/**
- * UpdateSubtitleStatus.
- *
- * @param input *models.request.VodUpdateSubtitleStatusRequest
- * @return *models.response.VodUpdateSubtitleStatusResponse, int, error
- * @throws Exception the exception
+// UpdateSubtitleStatus
+/*
+ * @param *request.VodUpdateSubtitleStatusRequest
+ * @return *response.VodUpdateSubtitleStatusResponse, int, error
  */
 func (p *Vod) UpdateSubtitleStatus(req *request.VodUpdateSubtitleStatusRequest) (*response.VodUpdateSubtitleStatusResponse, int, error) {
 	query := url.Values{}
@@ -861,12 +855,10 @@ func (p *Vod) UpdateSubtitleStatus(req *request.VodUpdateSubtitleStatusRequest) 
 	return output, status, nil
 }
 
-/**
- * UpdateSubtitleInfo.
- *
- * @param input *models.request.VodUpdateSubtitleInfoRequest
- * @return *models.response.VodUpdateSubtitleInfoResponse, int, error
- * @throws Exception the exception
+// UpdateSubtitleInfo
+/*
+ * @param *request.VodUpdateSubtitleInfoRequest
+ * @return *response.VodUpdateSubtitleInfoResponse, int, error
  */
 func (p *Vod) UpdateSubtitleInfo(req *request.VodUpdateSubtitleInfoRequest) (*response.VodUpdateSubtitleInfoResponse, int, error) {
 	query := url.Values{}

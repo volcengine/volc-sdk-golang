@@ -25,6 +25,25 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
+func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, tokenExpireTime int) (string, error) {
+	if len(req.GetVid()) == 0 {
+		return "", errors.New("传入的Vid为空")
+	}
+	query := url.Values{
+		"Vid": []string{req.GetVid()},
+	}
+
+	if tokenExpireTime > 0 {
+		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
+	}
+
+	if getSubtitleInfoAuthToken, err := p.GetSignUrl("GetSubtitleInfoList", query); err == nil {
+		return getSubtitleInfoAuthToken, nil
+	} else {
+		return "", err
+	}
+}
+
 func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
