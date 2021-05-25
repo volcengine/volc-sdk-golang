@@ -203,5 +203,21 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"GetHlsDecryptionKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetHlsDecryptionKey"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetPrivateDrmPlayAuth": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPrivateDrmPlayAuth"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 	}
 )

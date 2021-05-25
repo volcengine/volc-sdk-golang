@@ -15,6 +15,7 @@ const (
 	DefaultTimeout = 10 * time.Second
 
 	ResourceServiceIdTRN = "trn:ImageX:*:*:ServiceId/%s"
+	ResourceStoreKeyTRN  = "trn:ImageX:*:*:StoreKeys/%s"
 )
 
 var (
@@ -251,6 +252,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageUpdateFiles"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"FetchImageUrl": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"FetchImageUrl"},
 				"Version": []string{ApiVersion},
 			},
 		},

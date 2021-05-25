@@ -10,18 +10,18 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/pkg/errors"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
+
+	"github.com/pkg/errors"
+
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
 )
 
-/**
- * UpdateMediaInfo.
- *
- * @param input *models.request.VodUpdateMediaInfoRequest
- * @return *models.response.VodUpdateMediaInfoResponse, int, error
- * @throws Exception the exception
+// UpdateMediaInfo
+/*
+ * @param *request.VodUpdateMediaInfoRequest
+ * @return *response.VodUpdateMediaInfoResponse, int, error
  */
 func (p *Vod) UpdateMediaInfo(req *request.VodUpdateMediaInfoRequest) (*response.VodUpdateMediaInfoResponse, int, error) {
 	query := url.Values{}
@@ -111,12 +111,10 @@ func (p *Vod) UpdateMediaInfo(req *request.VodUpdateMediaInfoRequest) (*response
 	return output, status, nil
 }
 
-/**
- * UpdateMediaPublishStatus.
- *
- * @param input *models.request.VodUpdateMediaPublishStatusRequest
- * @return *models.response.VodUpdateMediaPublishStatusResponse, int, error
- * @throws Exception the exception
+// UpdateMediaPublishStatus
+/*
+ * @param *request.VodUpdateMediaPublishStatusRequest
+ * @return *response.VodUpdateMediaPublishStatusResponse, int, error
  */
 func (p *Vod) UpdateMediaPublishStatus(req *request.VodUpdateMediaPublishStatusRequest) (*response.VodUpdateMediaPublishStatusResponse, int, error) {
 	query := url.Values{}
@@ -206,12 +204,10 @@ func (p *Vod) UpdateMediaPublishStatus(req *request.VodUpdateMediaPublishStatusR
 	return output, status, nil
 }
 
-/**
- * GetMediaInfos.
- *
- * @param input *models.request.VodGetMediaInfosRequest
- * @return *models.response.VodGetMediaInfosResponse, int, error
- * @throws Exception the exception
+// GetMediaInfos
+/*
+ * @param *request.VodGetMediaInfosRequest
+ * @return *response.VodGetMediaInfosResponse, int, error
  */
 func (p *Vod) GetMediaInfos(req *request.VodGetMediaInfosRequest) (*response.VodGetMediaInfosResponse, int, error) {
 	query := url.Values{}
@@ -301,12 +297,10 @@ func (p *Vod) GetMediaInfos(req *request.VodGetMediaInfosRequest) (*response.Vod
 	return output, status, nil
 }
 
-/**
- * GetRecommendedPoster.
- *
- * @param input *models.request.VodGetRecommendedPosterRequest
- * @return *models.response.VodGetRecommendedPosterResponse, int, error
- * @throws Exception the exception
+// GetRecommendedPoster
+/*
+ * @param *request.VodGetRecommendedPosterRequest
+ * @return *response.VodGetRecommendedPosterResponse, int, error
  */
 func (p *Vod) GetRecommendedPoster(req *request.VodGetRecommendedPosterRequest) (*response.VodGetRecommendedPosterResponse, int, error) {
 	query := url.Values{}
@@ -396,12 +390,10 @@ func (p *Vod) GetRecommendedPoster(req *request.VodGetRecommendedPosterRequest) 
 	return output, status, nil
 }
 
-/**
- * DeleteMedia.
- *
- * @param input *models.request.VodDeleteMediaRequest
- * @return *models.response.VodDeleteMediaResponse, int, error
- * @throws Exception the exception
+// DeleteMedia
+/*
+ * @param *request.VodDeleteMediaRequest
+ * @return *response.VodDeleteMediaResponse, int, error
  */
 func (p *Vod) DeleteMedia(req *request.VodDeleteMediaRequest) (*response.VodDeleteMediaResponse, int, error) {
 	query := url.Values{}
@@ -491,12 +483,10 @@ func (p *Vod) DeleteMedia(req *request.VodDeleteMediaRequest) (*response.VodDele
 	return output, status, nil
 }
 
-/**
- * DeleteTranscodes.
- *
- * @param input *models.request.VodDeleteTranscodesRequest
- * @return *models.response.VodDeleteTranscodesResponse, int, error
- * @throws Exception the exception
+// DeleteTranscodes
+/*
+ * @param *request.VodDeleteTranscodesRequest
+ * @return *response.VodDeleteTranscodesResponse, int, error
  */
 func (p *Vod) DeleteTranscodes(req *request.VodDeleteTranscodesRequest) (*response.VodDeleteTranscodesResponse, int, error) {
 	query := url.Values{}
