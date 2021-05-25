@@ -10,18 +10,18 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/pkg/errors"
-	"github.com/volcengine/volc-sdk-golang/models/vod/request"
-	"github.com/volcengine/volc-sdk-golang/models/vod/response"
 	"google.golang.org/protobuf/encoding/protojson"
+
+	"github.com/pkg/errors"
+
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
 )
 
-/**
- * UploadMediaByUrl.
- *
- * @param input *models.request.VodUrlUploadRequest
- * @return *models.response.VodUrlUploadResponse, int, error
- * @throws Exception the exception
+// UploadMediaByUrl
+/*
+ * @param *request.VodUrlUploadRequest
+ * @return *response.VodUrlUploadResponse, int, error
  */
 func (p *Vod) UploadMediaByUrl(req *request.VodUrlUploadRequest) (*response.VodUrlUploadResponse, int, error) {
 	query := url.Values{}
@@ -111,12 +111,10 @@ func (p *Vod) UploadMediaByUrl(req *request.VodUrlUploadRequest) (*response.VodU
 	return output, status, nil
 }
 
-/**
- * QueryUploadTaskInfo.
- *
- * @param input *models.request.VodQueryUploadTaskInfoRequest
- * @return *models.response.VodQueryUploadTaskInfoResponse, int, error
- * @throws Exception the exception
+// QueryUploadTaskInfo
+/*
+ * @param *request.VodQueryUploadTaskInfoRequest
+ * @return *response.VodQueryUploadTaskInfoResponse, int, error
  */
 func (p *Vod) QueryUploadTaskInfo(req *request.VodQueryUploadTaskInfoRequest) (*response.VodQueryUploadTaskInfoResponse, int, error) {
 	query := url.Values{}
@@ -206,12 +204,10 @@ func (p *Vod) QueryUploadTaskInfo(req *request.VodQueryUploadTaskInfoRequest) (*
 	return output, status, nil
 }
 
-/**
- * ApplyUploadInfo.
- *
- * @param input *models.request.VodApplyUploadInfoRequest
- * @return *models.response.VodApplyUploadInfoResponse, int, error
- * @throws Exception the exception
+// ApplyUploadInfo
+/*
+ * @param *request.VodApplyUploadInfoRequest
+ * @return *response.VodApplyUploadInfoResponse, int, error
  */
 func (p *Vod) ApplyUploadInfo(req *request.VodApplyUploadInfoRequest) (*response.VodApplyUploadInfoResponse, int, error) {
 	query := url.Values{}
@@ -301,12 +297,10 @@ func (p *Vod) ApplyUploadInfo(req *request.VodApplyUploadInfoRequest) (*response
 	return output, status, nil
 }
 
-/**
- * CommitUploadInfo.
- *
- * @param input *models.request.VodCommitUploadInfoRequest
- * @return *models.response.VodCommitUploadInfoResponse, int, error
- * @throws Exception the exception
+// CommitUploadInfo
+/*
+ * @param *request.VodCommitUploadInfoRequest
+ * @return *response.VodCommitUploadInfoResponse, int, error
  */
 func (p *Vod) CommitUploadInfo(req *request.VodCommitUploadInfoRequest) (*response.VodCommitUploadInfoResponse, int, error) {
 	query := url.Values{}

@@ -1,5 +1,24 @@
 ### Change log
 
+2021-05-20 Bumped to version v1.0.13
+- Support material upload
+- Add retry after http error
+- Add imagex image fetch API
+- Add a new product 'game_protect' api to get risk result on gaming scenes.
+
+2021-05-08 Bumped to version v1.0.12
+- Added vod private drm and hls drm sdk.
+
+2021-04-20 Bumped to version v1.0.11
+- Added pcdn and barrageMask.
+
+2021-04-08 Bumped to version v1.0.10
+- Fixed magex sts2: default storekey empty.
+
+2021-04-01 Bumped to version v1.0.9
+- Add SMS sdk.
+- Update imagex sdk.
+
 2021-03-24 Bumped to version v1.0.8
 - STS support.
 - Added Standard iam sdk.

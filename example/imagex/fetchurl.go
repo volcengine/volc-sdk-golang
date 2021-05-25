@@ -8,7 +8,7 @@ import (
 )
 
 /*
- * get image upload auth
+ * fetch image url
  */
 func main() {
 	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
@@ -20,15 +20,14 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	// service id list allowed to do upload, pass empty list if no restriction
-	serviceIds := []string{"imagex service id"}
-
-	// set expire time by GetUploadAuthWithExpire, default is 1 hour
-	// set key pattern with imagex.WithUploadKeyPtn("pattern"). eg: "test/*" means upload key must have prefix "test/"
-	token, err := instance.GetUploadAuth(serviceIds)
+	req := &imagex.FetchUrlReq{
+		Url:       "image url",
+		ServiceId: "imagex service id",
+	}
+	resp, err := instance.FetchImageUrl(req)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
-		fmt.Printf("token %+v", token)
+		fmt.Printf("success %v", resp)
 	}
 }
