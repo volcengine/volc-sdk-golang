@@ -1,5 +1,9 @@
 ### Change log
 
+2021-06-02 Bumped to version v1.0.14
+- Update get media list
+- Imagex: support preload & refresh dir
+
 2021-05-20 Bumped to version v1.0.13
 - Support material upload
 - Add retry after http error
