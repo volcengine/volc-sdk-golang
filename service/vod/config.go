@@ -171,7 +171,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-
+		"GetMediaList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMediaList"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 		"GetHlsDecryptionKey": {
 			Method: http.MethodGet,
 			Path:   "/",
