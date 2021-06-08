@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	ActionRefresh = 0
-	ActionDisable = 1
-	ActionEnable  = 2
+	ActionRefresh    = 0
+	ActionDisable    = 1
+	ActionEnable     = 2
+	ActionPreload    = 4
+	ActionRefreshDir = 5
 
 	FunctionEncryption = "Encryption"
 )

@@ -23,7 +23,10 @@ func main() {
 	serviceId := "imagex service id"
 	urls := []string{"image url 1"}
 
-	resp, err := instance.RefreshImageUrls(serviceId, urls)
+	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
+		Action:    imagex.ActionRefresh,
+		ImageUrls: urls,
+	})
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
