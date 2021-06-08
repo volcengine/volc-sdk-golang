@@ -258,6 +258,36 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 	return client.makeRequest(api, req, timeout)
 }
 
+// PostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
+func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
+	apiInfo := client.ApiInfoList[api]
+
+	if apiInfo == nil {
+		return []byte(""), 500, errors.New("相关api不存在")
+	}
+	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
+	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
+	query = mergeQuery(query, apiInfo.Query)
+
+	u := url.URL{
+		Scheme:   client.ServiceInfo.Scheme,
+		Host:     client.ServiceInfo.Host,
+		Path:     apiInfo.Path,
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
+	if err != nil {
+		return []byte(""), 500, errors.New("构建request失败")
+	}
+	req.Header = header
+	if ct == "" {
+		return []byte(""), 500, errors.New("构建reques失败，未指定 Context-Type")
+	}
+	req.Header.Set("Content-Type", ct)
+
+	return client.makeRequest(api, req, timeout)
+}
+
 // Post 发起Post请求
 func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]

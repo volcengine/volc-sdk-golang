@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	DSAHmacSha1   = "HMAC-SHA1"
+	DSAHmacSha1 = "HMAC-SHA1"
 
 	Version2 = "2.0"
 
@@ -71,7 +71,6 @@ func getSignedKey(key string, t time.Time, region string) []byte {
 	kCredentials := getHmac256(kService, []byte("request"))
 	return stringToBytes(hex.EncodeToString(kCredentials))
 }
-
 
 func join(tokens ...string) string {
 	var buf bytes.Buffer

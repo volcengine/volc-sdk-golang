@@ -96,6 +96,22 @@ func (req *VodDeleteTranscodesRequest) Validate() (privateErrorCodeStr string, e
 
 	return
 }
+func (req *VodGetMediaListRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetSubtitleInfoListRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodUpdateSubtitleStatusRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodUpdateSubtitleInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
 func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return

@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	ActionRefresh = 0
-	ActionDisable = 1
-	ActionEnable  = 2
+	ActionRefresh    = 0
+	ActionDisable    = 1
+	ActionEnable     = 2
+	ActionPreload    = 4
+	ActionRefreshDir = 5
 
 	FunctionEncryption = "Encryption"
 )
@@ -187,6 +189,19 @@ type ImageInfo struct {
 type UpdateImageUrlPayload struct {
 	Action    int      `json:"Action"`
 	ImageUrls []string `json:"ImageUrls"`
+}
+
+// FetchImageUrl
+type FetchUrlReq struct {
+	Url       string `json:"Url"`
+	ServiceId string `json:"ServiceId"`
+	StoreKey  string `json:"StoreKey"`
+}
+
+type FetchUrlResp struct {
+	Url      string `json:"Url"`
+	StoreUri string `json:"StoreUri"`
+	FSize    int    `json:"FSize"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {

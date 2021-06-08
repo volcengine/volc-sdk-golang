@@ -25,6 +25,25 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
+func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, tokenExpireTime int) (string, error) {
+	if len(req.GetVid()) == 0 {
+		return "", errors.New("传入的Vid为空")
+	}
+	query := url.Values{
+		"Vid": []string{req.GetVid()},
+	}
+
+	if tokenExpireTime > 0 {
+		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
+	}
+
+	if getSubtitleInfoAuthToken, err := p.GetSignUrl("GetSubtitleInfoList", query); err == nil {
+		return getSubtitleInfoAuthToken, nil
+	} else {
+		return "", err
+	}
+}
+
 func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
@@ -139,12 +158,25 @@ func (p *Vod) UploadMediaWithCallback(filePath string, spaceName string, callbac
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), spaceName, callbackArgs, funcs...)
+	return p.UploadMediaInner(file, stat.Size(), spaceName, "", callbackArgs, funcs...)
 
 }
 
-func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	_, sessionKey, err, code := p.Upload(rd, size, spaceName)
+func (p *Vod) UploadMaterialWithCallback(filePath string, spaceName string, fileType string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, -1, err
+	}
+	defer file.Close()
+	stat, err := file.Stat()
+	if err != nil {
+		return nil, -1, err
+	}
+	return p.UploadMediaInner(file, stat.Size(), spaceName, fileType, callbackArgs, funcs...)
+}
+
+func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
+	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType)
 	if err != nil {
 		return nil, code, err
 	}
@@ -181,12 +213,12 @@ func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
 	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
-func (p *Vod) Upload(rd io.Reader, size int64, spaceName string) (string, string, error, int) {
+func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string) (string, string, error, int) {
 	if size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
 
-	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName}
+	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
 	if err != nil {

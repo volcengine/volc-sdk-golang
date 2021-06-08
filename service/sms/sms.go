@@ -20,6 +20,12 @@ func (p *SMS) smsHandler(api string, req interface{}, resp interface{}) (int, er
 	if err != nil {
 		return statusCode, err
 	}
+	if statusCode >= 500 {
+		respBody, statusCode, err = p.Client.Json(api, nil, string(reqJ))
+		if err != nil {
+			return statusCode, err
+		}
+	}
 
 	if err := json.Unmarshal(respBody, resp); err != nil {
 		return statusCode, err

@@ -317,7 +317,7 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	return c.Client.SignSts2(inlinePolicy, expire)
 }
 
-func (c *ImageX) updateImageUrls(serviceId string, req *UpdateImageUrlPayload) ([]string, error) {
+func (c *ImageX) UpdateImageUrls(serviceId string, req *UpdateImageUrlPayload) ([]string, error) {
 	query := url.Values{}
 	query.Add("ServiceId", serviceId)
 
@@ -343,7 +343,7 @@ func (c *ImageX) RefreshImageUrls(serviceId string, urls []string) ([]string, er
 		Action:    ActionRefresh,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
 }
 
 func (c *ImageX) EnableImageUrls(serviceId string, urls []string) ([]string, error) {
@@ -351,7 +351,7 @@ func (c *ImageX) EnableImageUrls(serviceId string, urls []string) ([]string, err
 		Action:    ActionEnable,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
 }
 
 func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, error) {
@@ -359,5 +359,14 @@ func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, er
 		Action:    ActionDisable,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
+}
+
+func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
+	resp := new(FetchUrlResp)
+	err := c.ImageXPost("FetchImageUrl", nil, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

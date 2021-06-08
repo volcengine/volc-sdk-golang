@@ -8,7 +8,7 @@ import (
 )
 
 /*
- * update image urls
+ * fetch image url
  */
 func main() {
 	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
@@ -20,13 +20,11 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	serviceId := "imagex service id"
-	urls := []string{"image url 1"}
-
-	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
-		Action:    imagex.ActionRefresh,
-		ImageUrls: urls,
-	})
+	req := &imagex.FetchUrlReq{
+		Url:       "image url",
+		ServiceId: "imagex service id",
+	}
+	resp, err := instance.FetchImageUrl(req)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
