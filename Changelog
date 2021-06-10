@@ -1,5 +1,8 @@
 ### Change log
 
+2021-06-09 Bumped to version v1.0.15
+- Added Post with content type
+
 2021-06-02 Bumped to version v1.0.14
 - Update get media list
 - Imagex: support preload & refresh dir
