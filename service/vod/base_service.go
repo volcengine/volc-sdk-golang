@@ -39,7 +39,13 @@ func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, t
 	}
 
 	if getSubtitleInfoAuthToken, err := p.GetSignUrl("GetSubtitleInfoList", query); err == nil {
-		return getSubtitleInfoAuthToken, nil
+		ret := map[string]string{}
+		ret["GetSubtitleAuthToken"] = getSubtitleInfoAuthToken
+		b, err := json.Marshal(ret)
+		if err != nil {
+			return "", err
+		}
+		return base64.StdEncoding.EncodeToString(b), nil
 	} else {
 		return "", err
 	}
