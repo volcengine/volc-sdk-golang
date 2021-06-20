@@ -31,13 +31,8 @@ func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, t
 	}
 	query := url.Values{
 		"Vid": []string{req.GetVid()},
+		"Status": []string{"Published"},
 	}
-
-	if req.Status != "Published" {
-		return "", errors.New("Status必须是Published")
-	}
-
-	query.Add("Status", "Published")
 
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
