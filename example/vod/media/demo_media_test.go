@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"testing"
 
+	"google.golang.org/protobuf/types/known/wrapperspb"
+
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
-	"google.golang.org/protobuf/types/known/wrapperspb"
 )
-
 
 func TestVod_GetMediaInfos(t *testing.T) {
 	instance := vod.NewInstance()
@@ -70,11 +70,11 @@ func TestVod_UpdateMediaInfo(t *testing.T) {
 	vid := "your vid"
 	title := "your title"
 	query := &request.VodUpdateMediaInfoRequest{
-		Vid:   vid,
-		Title: wrapperspb.String(title),
-		PosterUri: wrapperspb.String("PosterUri"),
+		Vid:         vid,
+		Title:       wrapperspb.String(title),
+		PosterUri:   wrapperspb.String("PosterUri"),
 		Description: wrapperspb.String("description"),
-		Tags:  wrapperspb.String("tag1,tag2"),
+		Tags:        wrapperspb.String("tag1,tag2"),
 	}
 	resp, code, err := instance.UpdateMediaInfo(query)
 	fmt.Println(code)
@@ -156,7 +156,6 @@ func TestVod_DeleteTranscodes(t *testing.T) {
 	fmt.Println(string(b))
 }
 
-
 func TestVod_GetMediaList(t *testing.T) {
 	instance := vod.NewInstance()
 	// call below method if you dont set ak and sk in ～/.volc/config
@@ -171,7 +170,7 @@ func TestVod_GetMediaList(t *testing.T) {
 	spaceName := "you space"
 	vid := "your vid"
 	status := "your status" // Published or Unpublished
-	order := "your order"         // Desc or Asc
+	order := "your order"   // Desc or Asc
 	tags := "your tags"
 	startTime := "2021-01-01T00:00:00Z"
 	endTime := "2021-04-01T00:00:00Z"
@@ -181,14 +180,14 @@ func TestVod_GetMediaList(t *testing.T) {
 	// Media Info
 	query := &request.VodGetMediaListRequest{
 		SpaceName: spaceName,
-		Vid: vid,
-		Status: status,
-		Order: order,
-		Tags: tags,
+		Vid:       vid,
+		Status:    status,
+		Order:     order,
+		Tags:      tags,
 		StartTime: startTime,
-		EndTime: endTime,
-		Offset: offset,
-		PageSize: pageSize,
+		EndTime:   endTime,
+		Offset:    offset,
+		PageSize:  pageSize,
 	}
 	resp, code, err := instance.GetMediaList(query)
 	fmt.Println(code)
