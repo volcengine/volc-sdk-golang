@@ -334,7 +334,7 @@ func (client *Client) makeRequest(api string, req *http.Request, timeout time.Du
 		return []byte(""), resp.StatusCode, err
 	}
 
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body))
 	}
 
