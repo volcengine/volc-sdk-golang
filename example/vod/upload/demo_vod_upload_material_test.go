@@ -27,7 +27,7 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 	filePath := "material file path"
 
 	snapShotFunc := functions.SnapshotFunc(0.0)
-	getMetaFunc := functions.GetMeatFunc()
+	getMetaFunc := functions.GetMetaFunc()
 	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
 		Title:       "素材测试视频",
 		Tags:        "test",
@@ -65,7 +65,7 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 	spaceName := "your space"
 	filePath := "material file path"
 
-	getMetaFunc := functions.GetMeatFunc()
+	getMetaFunc := functions.GetMetaFunc()
 	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
 		Title:       "素材测试图片",
 		Tags:        "test",
@@ -103,7 +103,7 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 	spaceName := "your space"
 	filePath := "material file path"
 
-	getMetaFunc := functions.GetMeatFunc()
+	getMetaFunc := functions.GetMetaFunc()
 	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
 		Title:       "素材测试字幕",
 		Tags:        "test",
