@@ -29,7 +29,7 @@ func TestVod_CommitUploadInfo(t *testing.T) {
 	funcs := make([]vod.Function, 0)
 
 	snapShotFunc := functions.SnapshotFunc(2.3)
-	getMetaFunc := functions.GetMetaFunc()
+	getMetaFunc := functions.GetMeatFunc()
 
 	funcs = append(funcs, snapShotFunc)
 	funcs = append(funcs, getMetaFunc)

@@ -26,7 +26,7 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 	filePath := "media file path"
 
 	snapShotFunc := functions.SnapshotFunc(1.3)
-	getMetaFunc := functions.GetMetaFunc()
+	getMetaFunc := functions.GetMeatFunc()
 
 	resp, _, err := instance.UploadMediaWithCallback(filePath, spaceName, "my callback", getMetaFunc, snapShotFunc)
 	if err != nil {

@@ -2,7 +2,7 @@ package functions
 
 import "github.com/volcengine/volc-sdk-golang/service/vod"
 
-func GetMetaFunc() vod.Function {
+func GetMeatFunc() vod.Function {
 	return vod.Function{Name: "GetMeta"}
 }
 
