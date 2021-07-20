@@ -32,3 +32,37 @@ func TestSMS_send(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestSMSVerifyCode_send(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+	req := &SmsVerifyCodeRequest{
+		SmsAccount:    "smsAccount",
+		Sign:          "sign",
+		TemplateID:    "ST_xxx",
+		PhoneNumber:   "188xxxxxxxx",
+		Scene:         "123",
+		CodeType:      6,
+		ExpireTime:    240,
+		TryCount:      3,
+	}
+	result, statusCode, err := DefaultInstance.SendVerifyCode(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestSMSVerifyCode_check(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+	req := &CheckSmsVerifyCodeRequest{
+		SmsAccount:  "smsAccount",
+		Scene:       "123",
+		Code:        "123456",
+		PhoneNumber: "188xxxxxxxx",
+	}
+	result, statusCode, err := DefaultInstance.CheckVerifyCode(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}

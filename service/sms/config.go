@@ -31,6 +31,22 @@ var (
 				"Version": []string{ServiceVersion20200101},
 			},
 		},
+		"SendSmsVerifyCode": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SendSmsVerifyCode"},
+				"Version": []string{ServiceVersion20200101},
+			},
+		},
+		"CheckSmsVerifyCode": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CheckSmsVerifyCode"},
+				"Version": []string{ServiceVersion20200101},
+			},
+		},
 	}
 )
 
