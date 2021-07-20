@@ -44,6 +44,30 @@ func (req *VodGetHlsDecryptionKeyRequest) Validate() (privateErrorCodeStr string
 
 	return
 }
+func (req *VodGetIntertrustDrmPlayAuthRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetIntertrustDrmType()) == 0 {
+		privateErrorCodeStr = "InvalidIntertrustDrmType"
+		err = fmt.Errorf("%s is empty", req.GetIntertrustDrmType())
+		return
+	}
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
+	if len(req.GetPlayAuthIds()) == 0 {
+		privateErrorCodeStr = "InvalidPlayAuthIds"
+		err = fmt.Errorf("%s is empty", req.GetPlayAuthIds())
+		return
+	}
+
+	return
+}
 func (req *VodUrlUploadRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
