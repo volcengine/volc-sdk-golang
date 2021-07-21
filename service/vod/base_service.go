@@ -29,15 +29,16 @@ func (p *Vod) GetIntertrustDrmAuthToken(req *request.VodGetIntertrustDrmPlayAuth
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
 	}
-	if len(req.GetPlayAuthIds()) == 0 {
-		return "", errors.New("传入的PlayAuthIds为空")
-	}
 	if len(req.GetIntertrustDrmType()) == 0 {
 		return "", errors.New("传入的IntertrustDrmType为空")
 	}
+	var playAuthIds string
+	if len(req.GetPlayAuthIds()) > 0 {
+		playAuthIds = req.GetPlayAuthIds()
+	}
 	query := url.Values{
 		"Vid": []string{req.GetVid()},
-		"PlayAuthIds": []string{req.GetPlayAuthIds()},
+		"PlayAuthIds": []string{playAuthIds},
 		"IntertrustDrmType": []string{req.GetIntertrustDrmType()},
 	}
 
