@@ -1,4 +1,6 @@
 ### Change log
+2021-07-08 Bumped to version v1.0.18
+- Fix cr32
 
 2021-07-08 Bumped to version v1.0.17
 - Fix error http code process
