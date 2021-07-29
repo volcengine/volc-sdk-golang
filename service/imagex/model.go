@@ -204,6 +204,23 @@ type FetchUrlResp struct {
 	FSize    int    `json:"FSize"`
 }
 
+//GetImageOCR
+type GetImageOCRResult struct {
+	Scene     string                          `json:"Scene"`
+	OCRResult map[string]*GetImageOCRTextInfo `json:"OCR_result"`
+}
+
+type GetImageOCRTextInfo struct {
+	Content  string `json:"Content"`
+	Location []int  `json:"Location"`
+}
+
+type GetImageOCRParam struct {
+	ServiceId string
+	Scene     string
+	StoreUri  string
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {
