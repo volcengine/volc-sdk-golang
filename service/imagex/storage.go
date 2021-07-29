@@ -378,7 +378,7 @@ func (c *ImageX) GetImageOCR(param *GetImageOCRParam) (*GetImageOCRResult, error
 	u.Set("StoreUri", param.StoreUri)
 	data, _, err := c.Post("GetImageOCR", u, url.Values{})
 	if err != nil {
-		return nil, fmt.Errorf("fail to request api GetImageOCR, %v\n", err)
+		return nil, fmt.Errorf("fail to request api GetImageOCR, %v", err)
 	}
 	result := new(GetImageOCRResult)
 	if err := UnmarshalResultInto(data, result); err != nil {
