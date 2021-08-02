@@ -20,11 +20,6 @@ func main() {
 		SecretAccessKey: "your sk",
 	})
 
-	// or set ak and sk as follow
-	//instance.SetAccessKey("")
-	//instance.SetSecretKey("")
-
-	//use the param when image is stored in tos
 	param := &imagex.GetImageOCRParam{
 		ServiceId: "xx",
 		Scene:     "license",
