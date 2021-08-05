@@ -1,4 +1,11 @@
 ### Change log
+
+2021-08-05 Bumped to version v1.0.19
+- Added ocr
+- Added sms sdk
+- Added sg region
+
+
 2021-07-08 Bumped to version v1.0.18
 - Fix cr32
 
