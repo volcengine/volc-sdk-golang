@@ -21,9 +21,19 @@ const (
 	defaultScheme = "http"
 )
 
+var _GlobalClient *http.Client
+
+func init() {
+	_GlobalClient = &http.Client{Transport: &http.Transport{
+		MaxIdleConns:        1000,
+		MaxIdleConnsPerHost: 100,
+		IdleConnTimeout:     10 * time.Second,
+	}}
+}
+
 // Client 基础客户端
 type Client struct {
-	Client      http.Client
+	Client      *http.Client
 	SdkVersion  string
 	ServiceInfo *ServiceInfo
 	ApiInfoList map[string]*ApiInfo
@@ -31,14 +41,7 @@ type Client struct {
 
 // NewClient 生成一个客户端
 func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
-	transport := &http.Transport{
-		MaxIdleConns:        1000,
-		MaxIdleConnsPerHost: 100,
-		IdleConnTimeout:     10 * time.Second,
-	}
-
-	c := http.Client{Transport: transport}
-	client := &Client{Client: c, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
+	client := &Client{Client: _GlobalClient, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
 
 	if client.ServiceInfo.Scheme == "" {
 		client.ServiceInfo.Scheme = defaultScheme
