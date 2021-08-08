@@ -37,11 +37,6 @@ func (req *VodGetOriginalPlayInfoRequest) Validate() (privateErrorCodeStr string
 	return
 }
 func (req *VodGetPrivateDrmPlayAuthRequest) Validate() (privateErrorCodeStr string, err error) {
-	if len(req.GetUnionInfo()) == 0 {
-		privateErrorCodeStr = "InvalidUnionInfo"
-		err = fmt.Errorf("%s is empty", req.GetUnionInfo())
-		return
-	}
 
 	return
 }
