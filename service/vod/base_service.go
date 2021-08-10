@@ -25,33 +25,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
-func (p *Vod) GetIntertrustDrmAuthToken(req *request.VodGetIntertrustDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
-	if len(req.GetVid()) == 0 {
-		return "", errors.New("传入的Vid为空")
-	}
-	if len(req.GetPlayAuthIds()) == 0 {
-		return "", errors.New("传入的PlayAuthIds为空")
-	}
-	if len(req.GetIntertrustDrmType()) == 0 {
-		return "", errors.New("传入的IntertrustDrmType为空")
-	}
-	query := url.Values{
-		"Vid": []string{req.GetVid()},
-		"PlayAuthIds": []string{req.GetPlayAuthIds()},
-		"IntertrustDrmType": []string{req.GetIntertrustDrmType()},
-	}
-
-	if tokenExpireTime > 0 {
-		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
-	}
-
-	if getIntertrustDrmAuthToken, err := p.GetSignUrl("GetIntertrustDrmPlayAuth", query); err == nil {
-		return getIntertrustDrmAuthToken, nil
-	} else {
-		return "", err
-	}
-}
-
 func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
@@ -91,6 +64,15 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	}
 	if len(req.GetDrmType()) > 0 {
 		query.Add("DrmType", req.GetDrmType())
+		switch req.GetDrmType(){
+		case "appdevice","webdevice":
+			if len(req.GetUnionInfo()) == 0 {
+				return "", errors.New("invalid unionInfo")
+			}
+		}
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
@@ -167,6 +149,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 	if len(req.GetCdnType()) > 0 {
 		query.Add("CdnType", req.GetCdnType())
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
