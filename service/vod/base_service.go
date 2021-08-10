@@ -37,8 +37,8 @@ func (p *Vod) GetIntertrustDrmAuthToken(req *request.VodGetIntertrustDrmPlayAuth
 		playAuthIds = req.GetPlayAuthIds()
 	}
 	query := url.Values{
-		"Vid": []string{req.GetVid()},
-		"PlayAuthIds": []string{playAuthIds},
+		"Vid":               []string{req.GetVid()},
+		"PlayAuthIds":       []string{playAuthIds},
 		"IntertrustDrmType": []string{req.GetIntertrustDrmType()},
 	}
 
@@ -58,7 +58,7 @@ func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, t
 		return "", errors.New("传入的Vid为空")
 	}
 	query := url.Values{
-		"Vid": []string{req.GetVid()},
+		"Vid":    []string{req.GetVid()},
 		"Status": []string{"Published"},
 	}
 
@@ -92,6 +92,15 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	}
 	if len(req.GetDrmType()) > 0 {
 		query.Add("DrmType", req.GetDrmType())
+		switch req.GetDrmType() {
+		case "appdevice", "webdevice":
+			if len(req.GetUnionInfo()) == 0 {
+				return "", errors.New("invalid unionInfo")
+			}
+		}
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
@@ -168,6 +177,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 	if len(req.GetCdnType()) > 0 {
 		query.Add("CdnType", req.GetCdnType())
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
