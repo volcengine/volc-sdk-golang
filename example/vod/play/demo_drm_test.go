@@ -24,45 +24,23 @@ func TestVod_GetSha1HlsDrmAuthToken(t *testing.T) {
 }
 
 func TestVod_GetPrivateDrmAuthToken(t *testing.T) {
-	vid := "your vid"
-	tokenExpireTime := 9000000 // Token Expire Duration（s）
 	instance := vod.NewInstance()
 
 	//instance.SetCredential(base.Credentials{
-	//	AccessKeyID:     "your ak",
-	//	SecretAccessKey: "your sk",
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
 	//})
 
 	// or set ak and ak as follow
 	//instance.SetAccessKey("")
 	//instance.SetSecretKey("")
-
 	query := &request.VodGetPrivateDrmPlayAuthRequest{
-		Vid: vid,
+		Vid: "your vid",
+		DrmType: "your drmType",
+		PlayAuthIds: "your playAuthIds",
+		UnionInfo: "your unionInfo",
 	}
+	tokenExpireTime := 6000000 // Token Expire Duration（s）
 	newToken, _ := instance.GetPrivateDrmAuthToken(query, tokenExpireTime)
 	fmt.Println(newToken)
 }
-
-func TestVod_GetIntertrustDrmAuthToken(t *testing.T) {
-	tokenExpireTime := 9000000 // Token Expire Duration（s）
-	instance := vod.NewInstance()
-
-	//instance.SetCredential(base.Credentials{
-	//	AccessKeyID:     "your ak",
-	//	SecretAccessKey: "your sk",
-	//})
-
-	// or set ak and ak as follow
-	//instance.SetAccessKey("")
-	//instance.SetSecretKey("")
-
-	query := &request.VodGetIntertrustDrmPlayAuthRequest{
-		Vid: "your vid",
-		IntertrustDrmType: "which your wanted", // readyPlay、failPlay、wideVine
-		PlayAuthIds: "playAuthId1,playAuthId2,...", // these ids must belong to vid
-	}
-	newToken, _ := instance.GetIntertrustDrmAuthToken(query, tokenExpireTime)
-	fmt.Println(newToken)
-}
-
