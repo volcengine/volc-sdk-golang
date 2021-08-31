@@ -1,5 +1,29 @@
 ### Change log
 
+2021-08-05 Bumped to version v1.0.19
+- Added ocr
+- Added sms sdk
+- Added sg region
+
+
+2021-07-08 Bumped to version v1.0.18
+- Fix cr32
+
+2021-07-08 Bumped to version v1.0.17
+- Fix error http code process
+- Get meta function name error
+
+2021-07-01 Bumped to version v1.0.16
+- Added verify code feature
+- Fixed subtitle token
+
+2021-06-09 Bumped to version v1.0.15
+- Added Post with content type
+
+2021-06-02 Bumped to version v1.0.14
+- Update get media list
+- Imagex: support preload & refresh dir
+
 2021-05-20 Bumped to version v1.0.13
 - Support material upload
 - Add retry after http error

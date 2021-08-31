@@ -158,7 +158,7 @@ func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) err
 
 	ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
 	defer cancel()
-	checkSum := fmt.Sprintf("%x", crc32.ChecksumIEEE(imageBytes))
+	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(imageBytes))
 	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
 	if err != nil {
@@ -317,7 +317,7 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	return c.Client.SignSts2(inlinePolicy, expire)
 }
 
-func (c *ImageX) updateImageUrls(serviceId string, req *UpdateImageUrlPayload) ([]string, error) {
+func (c *ImageX) UpdateImageUrls(serviceId string, req *UpdateImageUrlPayload) ([]string, error) {
 	query := url.Values{}
 	query.Add("ServiceId", serviceId)
 
@@ -343,7 +343,7 @@ func (c *ImageX) RefreshImageUrls(serviceId string, urls []string) ([]string, er
 		Action:    ActionRefresh,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
 }
 
 func (c *ImageX) EnableImageUrls(serviceId string, urls []string) ([]string, error) {
@@ -351,7 +351,7 @@ func (c *ImageX) EnableImageUrls(serviceId string, urls []string) ([]string, err
 		Action:    ActionEnable,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
 }
 
 func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, error) {
@@ -359,7 +359,7 @@ func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, er
 		Action:    ActionDisable,
 		ImageUrls: urls,
 	}
-	return c.updateImageUrls(serviceId, req)
+	return c.UpdateImageUrls(serviceId, req)
 }
 
 func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
@@ -369,4 +369,21 @@ func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (c *ImageX) GetImageOCR(param *GetImageOCRParam) (*GetImageOCRResult, error) {
+	u := url.Values{}
+	u.Set("Scene", param.Scene)
+	u.Set("ServiceId", param.ServiceId)
+	u.Set("StoreUri", param.StoreUri)
+	data, _, err := c.Post("GetImageOCR", u, url.Values{})
+	if err != nil {
+		return nil, fmt.Errorf("fail to request api GetImageOCR, %v", err)
+	}
+	result := new(GetImageOCRResult)
+	if err := UnmarshalResultInto(data, result); err != nil {
+		return nil, err
+	} else {
+		return result, nil
+	}
 }

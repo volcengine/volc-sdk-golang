@@ -263,6 +263,15 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+
+		"GetImageOCR": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageOCR"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

@@ -21,9 +21,19 @@ const (
 	defaultScheme = "http"
 )
 
+var _GlobalClient *http.Client
+
+func init() {
+	_GlobalClient = &http.Client{Transport: &http.Transport{
+		MaxIdleConns:        1000,
+		MaxIdleConnsPerHost: 100,
+		IdleConnTimeout:     10 * time.Second,
+	}}
+}
+
 // Client 基础客户端
 type Client struct {
-	Client      http.Client
+	Client      *http.Client
 	SdkVersion  string
 	ServiceInfo *ServiceInfo
 	ApiInfoList map[string]*ApiInfo
@@ -31,14 +41,7 @@ type Client struct {
 
 // NewClient 生成一个客户端
 func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
-	transport := &http.Transport{
-		MaxIdleConns:        1000,
-		MaxIdleConnsPerHost: 100,
-		IdleConnTimeout:     10 * time.Second,
-	}
-
-	c := http.Client{Transport: transport}
-	client := &Client{Client: c, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
+	client := &Client{Client: _GlobalClient, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
 
 	if client.ServiceInfo.Scheme == "" {
 		client.ServiceInfo.Scheme = defaultScheme
@@ -258,6 +261,36 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 	return client.makeRequest(api, req, timeout)
 }
 
+// PostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
+func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
+	apiInfo := client.ApiInfoList[api]
+
+	if apiInfo == nil {
+		return []byte(""), 500, errors.New("相关api不存在")
+	}
+	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
+	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
+	query = mergeQuery(query, apiInfo.Query)
+
+	u := url.URL{
+		Scheme:   client.ServiceInfo.Scheme,
+		Host:     client.ServiceInfo.Host,
+		Path:     apiInfo.Path,
+		RawQuery: query.Encode(),
+	}
+	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
+	if err != nil {
+		return []byte(""), 500, errors.New("构建request失败")
+	}
+	req.Header = header
+	if ct == "" {
+		return []byte(""), 500, errors.New("构建reques失败，未指定 Context-Type")
+	}
+	req.Header.Set("Content-Type", ct)
+
+	return client.makeRequest(api, req, timeout)
+}
+
 // Post 发起Post请求
 func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
@@ -304,7 +337,7 @@ func (client *Client) makeRequest(api string, req *http.Request, timeout time.Du
 		return []byte(""), resp.StatusCode, err
 	}
 
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body))
 	}
 

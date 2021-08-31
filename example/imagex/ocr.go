@@ -8,28 +8,28 @@ import (
 )
 
 /*
- * update image urls
+ * get image ocr
  */
 func main() {
 	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
 	instance := imagex.DefaultInstance
 
-	// call below method if you dont set ak and sk in ～/.volc/config
+	// call below method if you dont set ak and sk in ～/.vcloud/config
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "ak",
-		SecretAccessKey: "sk",
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
 	})
 
-	serviceId := "imagex service id"
-	urls := []string{"image url 1"}
+	param := &imagex.GetImageOCRParam{
+		ServiceId: "xx",
+		Scene:     "license",
+		StoreUri:  "xx",
+	}
 
-	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
-		Action:    imagex.ActionRefresh,
-		ImageUrls: urls,
-	})
+	resp, err := instance.GetImageOCR(param)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
-		fmt.Printf("success %v", resp)
+		fmt.Printf("success %+v", resp)
 	}
 }

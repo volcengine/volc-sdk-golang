@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	ActionRefresh = 0
-	ActionDisable = 1
-	ActionEnable  = 2
+	ActionRefresh    = 0
+	ActionDisable    = 1
+	ActionEnable     = 2
+	ActionPreload    = 4
+	ActionRefreshDir = 5
 
 	FunctionEncryption = "Encryption"
 )
@@ -200,6 +202,23 @@ type FetchUrlResp struct {
 	Url      string `json:"Url"`
 	StoreUri string `json:"StoreUri"`
 	FSize    int    `json:"FSize"`
+}
+
+//GetImageOCR
+type GetImageOCRResult struct {
+	Scene     string                          `json:"Scene"`
+	OCRResult map[string]*GetImageOCRTextInfo `json:"OCR_result"`
+}
+
+type GetImageOCRTextInfo struct {
+	Content  string `json:"Content"`
+	Location []int  `json:"Location"`
+}
+
+type GetImageOCRParam struct {
+	ServiceId string
+	Scene     string
+	StoreUri  string
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {
