@@ -56,6 +56,18 @@ func RiskResult(appId int64, service string, startTime, endTime, pageSize, pageN
 	}
 }
 
+func DataReport(appId int64, service string, parameters string) {
+	res, err := DefaultInstance.DataReport(&DataReportRequest{
+		AppId:      appId,      // write your app id
+		Service:    service,    // write business security service
+		Parameters: parameters, // write your parameters
+	})
+	fmt.Println(err)
+	if res != nil {
+		fmt.Println(*res)
+	}
+}
+
 func TestBusinessSecurity_RiskResult(t *testing.T) {
 	RiskResult(3332, "login", 1615535000, 1615540603, 10, 1)
 }

@@ -252,7 +252,6 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 	}
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
 	if err != nil {
-		fmt.Printf("error %s\n", err)
 		return []byte(""), 500, errors.New("构建request失败")
 	}
 	req.Header = header
