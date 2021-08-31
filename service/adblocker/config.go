@@ -1,6 +1,7 @@
 package adblocker
 
 import (
+	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
@@ -20,6 +21,15 @@ func (p *AdBlocker) CloseRetry() {
 	p.retry = false
 }
 
+func (p *AdBlocker) SetRegion(region string) error {
+	serviceInfo, ok := ServiceInfoMap[region]
+	if !ok {
+		return fmt.Errorf("region does not spport or unknown region")
+	}
+	p.ServiceInfo = serviceInfo
+	return nil
+}
+
 var DefaultInstance = NewInstance()
 
 func NewInstance() *AdBlocker {
@@ -34,11 +44,30 @@ var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: 5 * time.Second,
-			Host:    "open.volcengineapi.com",
-			Header: http.Header{
+			Host:    "adblocker.volcengineapi.com",
+			Scheme:  "https",
+			Header: http.Header {
 				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "AdBlocker"},
+		},
+		base.RegionApSingapore: {
+			Timeout: 5 * time.Second,
+			Host: "open-ap-singapore-1.volcengineapi.com",
+			Scheme:  "https",
+			Header: http.Header {
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "AdBlocker"},
+		},
+		base.RegionUsEast1: {
+			Timeout: 5 * time.Second,
+			Host: "open-us-east-1.volcengineapi.com",
+			Scheme:  "https",
+			Header: http.Header {
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "AdBlocker"},
 		},
 	}
 

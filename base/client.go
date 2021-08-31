@@ -212,7 +212,6 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 	if apiInfo == nil {
 		return []byte(""), 500, errors.New("相关api不存在")
 	}
-
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
 	query = mergeQuery(query, apiInfo.Query)
@@ -250,6 +249,7 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 	}
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
 	if err != nil {
+		fmt.Printf("error %s\n", err)
 		return []byte(""), 500, errors.New("构建request失败")
 	}
 	req.Header = header

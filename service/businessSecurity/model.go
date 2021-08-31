@@ -54,6 +54,18 @@ type RiskResultResponse struct {
 	Page      Page                     `json:"page"`
 }
 
+type DataReportRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type DataReportResponse struct {
+	RequestId string `json:"RequestId"`
+	Code      int    `json:"Code"`
+	Message   string `json:"Message"`
+}
+
 type Page struct {
 	PageNum  int64 `json:"PageNum" form:"PageNum"`
 	PageSize int64 `json:"PageSize" form:"PageSize"`

@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	Ak = "ak" // write your access key
-	Sk = "sk" // write your secret key
+	Ak = "***REMOVED***" // write your access key
+	Sk = "***REMOVED***" // write your secret key
 )
 
 func init() {
@@ -57,5 +57,9 @@ func RiskResult(appId int64, service string, startTime, endTime, pageSize, pageN
 }
 
 func TestBusinessSecurity_RiskResult(t *testing.T) {
-	RiskResult(3332, "register", 1615535000, 1615540603, 10, 1)
+	RiskResult(3332, "login", 1615535000, 1615540603, 10, 1)
+}
+
+func TestBusinessSecurity_RiskDetection(t *testing.T) {
+	RiskDetection(3332, "login", "{\"operate_time\": 1615540603, \"uid\":123444}")
 }
