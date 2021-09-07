@@ -27,7 +27,7 @@ func TestTopGTM(t *testing.T) {
 	perf2 := uuid.NewString()[:8]
 
 	domain1 := perf1 + "-volc-test.com"
-	cname1 := perf1 + "-volc-test.com"
+	cname1 := perf1 + ".gtm.volcdns.com"
 	ip := "ip"
 	accmode := "cname"
 
@@ -50,7 +50,7 @@ func TestTopGTM(t *testing.T) {
 	gID := respCreate.ID
 
 	// Modify GTM
-	cname1 = perf1 + "-volc-test-modify.com"
+	cname1 = perf1 + "-modify.gtm.volcdns.com"
 	err = c.ModifyGTM(ctx, &gtm.ModifyGTMRequest{
 
 		Version:       &version,
@@ -156,7 +156,7 @@ func TestTopGTM(t *testing.T) {
 
 	// Create GTM
 	domain2 := perf2 + "-volc-test.com"
-	cname2 := perf2 + "-volc-test.com"
+	cname2 := perf2 + ".gtm.volcdns.com"
 	respCreate, err = c.CreateGTM(ctx, &gtm.CreateGTMRequest{
 
 		Version:       &version,
@@ -232,7 +232,7 @@ func TestTopGTMProbe(t *testing.T) {
 	perf1 := uuid.NewString()[:8]
 
 	domain1 := perf1 + "-volc-test.com"
-	cname1 := perf1 + "-volc-test.com"
+	cname1 := perf1 + ".gtm.volcdns.com"
 	ip := "ip"
 	accmode := "cname"
 
@@ -307,7 +307,7 @@ func TestTopGTMView(t *testing.T) {
 	perf := uuid.NewString()[:8]
 
 	domain := perf + "-volc-test.com"
-	cname := perf + "-volc-test.com"
+	cname := perf + ".gtm.volcdns.com"
 	ip := "ip"
 	accmode := "cname"
 
