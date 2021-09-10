@@ -45,7 +45,7 @@ func TestVod_GetPrivateDrmAuthToken(t *testing.T) {
 	fmt.Println(newToken)
 }
 
-func TestVod_GetPrivateDrmAuth(t *testing.T) {
+func TestVod_GetPrivateDrmPlayAuth(t *testing.T) {
 	instance := vod.NewInstance()
 
 	//instance.SetCredential(base.Credentials{
