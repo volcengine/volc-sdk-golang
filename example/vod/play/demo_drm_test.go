@@ -44,3 +44,24 @@ func TestVod_GetPrivateDrmAuthToken(t *testing.T) {
 	newToken, _ := instance.GetPrivateDrmAuthToken(query, tokenExpireTime)
 	fmt.Println(newToken)
 }
+
+func TestVod_GetPrivateDrmAuth(t *testing.T) {
+	instance := vod.NewInstance()
+
+	//instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
+
+	// or set ak and ak as follow
+	//instance.SetAccessKey("")
+	//instance.SetSecretKey("")
+	query := &request.VodGetPrivateDrmPlayAuthRequest{
+		Vid: "your vid",
+		DrmType: "your drmType",
+		PlayAuthIds: "your playAuthIds",
+		UnionInfo: "your unionInfo",
+	}
+	newToken, statusCode, err := instance.GetPrivateDrmPlayAuth(query)
+	fmt.Println(newToken, statusCode, err)
+}
