@@ -6,7 +6,7 @@ import (
 )
 
 type QueryOption struct {
-	Key string
+	Key   string
 	Value string
 }
 
@@ -230,4 +230,20 @@ type DescribeCdnAccessLogResponse struct {
 		TotalCount       int64             `json:"TotalCount"`
 		DomainLogDetails []DomainLogDetail `json:"DomainLogDetails"`
 	} `json:"Result"`
+}
+
+type StartDomainParam struct {
+	DomainName string `json:"DomainName"`
+}
+
+type DeleteDomainParam struct {
+	DomainName string `json:"DomainName"`
+}
+
+type StopDomainParam struct {
+	DomainName string `json:"DomainName"`
+}
+
+type EmptyResponse struct {
+	ResponseMetadata *base.ResponseMetadata `json:"ResponseMetadata"`
 }

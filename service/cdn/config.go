@@ -105,6 +105,30 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"StartCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"StopCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DeleteCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
 
