@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -210,59 +211,20 @@ func (client *Client) SignSts2(inlinePolicy *Policy, expire time.Duration) (*Sec
 
 // Query 发起Get的query请求
 func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
-	apiInfo := client.ApiInfoList[api]
-
-	if apiInfo == nil {
-		return []byte(""), 500, errors.New("相关api不存在")
-	}
-
-	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
-	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
-	query = mergeQuery(query, apiInfo.Query)
-
-	u := url.URL{
-		Scheme:   client.ServiceInfo.Scheme,
-		Host:     client.ServiceInfo.Host,
-		Path:     apiInfo.Path,
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
-	if err != nil {
-		return []byte(""), 500, errors.New("构建request失败")
-	}
-	req.Header = header
-	return client.makeRequest(api, req, timeout)
+	return client.requestWithContentType(api, query, "", "")
 }
 
 // Json 发起Json的post请求
 func (client *Client) Json(api string, query url.Values, body string) ([]byte, int, error) {
-	apiInfo := client.ApiInfoList[api]
-
-	if apiInfo == nil {
-		return []byte(""), 500, errors.New("相关api不存在")
-	}
-	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
-	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
-	query = mergeQuery(query, apiInfo.Query)
-
-	u := url.URL{
-		Scheme:   client.ServiceInfo.Scheme,
-		Host:     client.ServiceInfo.Host,
-		Path:     apiInfo.Path,
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
-	if err != nil {
-		return []byte(""), 500, errors.New("构建request失败")
-	}
-	req.Header = header
-	req.Header.Set("Content-Type", "application/json")
-
-	return client.makeRequest(api, req, timeout)
+	return client.requestWithContentType(api, query, body, "application/json")
 }
 
 // PostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
 func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
+	return client.requestWithContentType(api, query, body, ct)
+}
+
+func (client *Client) requestWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
@@ -278,45 +240,26 @@ func (client *Client) PostWithContentType(api string, query url.Values, body str
 		Path:     apiInfo.Path,
 		RawQuery: query.Encode(),
 	}
-	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(body))
+	var requestBody io.Reader
+	if body != "" {
+		requestBody = strings.NewReader(body)
+	}
+	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), requestBody)
 	if err != nil {
 		return []byte(""), 500, errors.New("构建request失败")
 	}
 	req.Header = header
-	if ct == "" {
-		return []byte(""), 500, errors.New("构建reques失败，未指定 Context-Type")
+	if ct != "" {
+		req.Header.Set("Content-Type", ct)
 	}
-	req.Header.Set("Content-Type", ct)
-
 	return client.makeRequest(api, req, timeout)
 }
 
 // Post 发起Post请求
 func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
-
-	if apiInfo == nil {
-		return []byte(""), 500, errors.New("相关api不存在")
-	}
-	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
-	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
-	query = mergeQuery(query, apiInfo.Query)
 	form = mergeQuery(form, apiInfo.Form)
-
-	u := url.URL{
-		Scheme:   client.ServiceInfo.Scheme,
-		Host:     client.ServiceInfo.Host,
-		Path:     apiInfo.Path,
-		RawQuery: query.Encode(),
-	}
-	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), strings.NewReader(form.Encode()))
-	if err != nil {
-		return []byte(""), 500, errors.New("构建request失败")
-	}
-	req.Header = header
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-
-	return client.makeRequest(api, req, timeout)
+	return client.requestWithContentType(api, query, form.Encode(), "application/x-www-form-urlencoded")
 }
 
 func (client *Client) makeRequest(api string, req *http.Request, timeout time.Duration) ([]byte, int, error) {
