@@ -2,6 +2,8 @@
 
 2021-09-14 Bumped to version v1.0.21
 - Add rtc sdk
+- Add GTM sdk
+- CDN sdk basic fix
 
 2021-09-13 Bumped to version v1.0.20
 - Fix sts miss param DurationSeconds
