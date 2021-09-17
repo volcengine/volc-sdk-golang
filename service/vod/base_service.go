@@ -64,6 +64,15 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	}
 	if len(req.GetDrmType()) > 0 {
 		query.Add("DrmType", req.GetDrmType())
+		switch req.GetDrmType(){
+		case "appdevice","webdevice":
+			if len(req.GetUnionInfo()) == 0 {
+				return "", errors.New("invalid unionInfo")
+			}
+		}
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
@@ -140,6 +149,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 	if len(req.GetCdnType()) > 0 {
 		query.Add("CdnType", req.GetCdnType())
+	}
+	if len(req.GetUnionInfo()) > 0 {
+		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
