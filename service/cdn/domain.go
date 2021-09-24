@@ -6,7 +6,7 @@ import (
 
 func (s *CDN) StartCdnDomain(dto *StartCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
-	if dto.DomainName == "" {
+	if dto.Domain == "" {
 		err = errors.New("domain name cannot be empty")
 		return
 	}
@@ -21,7 +21,7 @@ func (s *CDN) StartCdnDomain(dto *StartCdnDomainParam, queryOptions ...QueryOpti
 
 func (s *CDN) StopCdnDomain(dto *StopCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
-	if dto.DomainName == "" {
+	if dto.Domain == "" {
 		err = errors.New("domain name cannot be empty")
 		return
 	}
@@ -36,7 +36,7 @@ func (s *CDN) StopCdnDomain(dto *StopCdnDomainParam, queryOptions ...QueryOption
 
 func (s *CDN) DeleteCdnDomain(dto *DeleteCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
-	if dto.DomainName == "" {
+	if dto.Domain == "" {
 		err = errors.New("domain name cannot be empty")
 		return
 	}

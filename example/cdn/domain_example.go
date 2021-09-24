@@ -9,25 +9,25 @@ import (
 var testDomain = "www.yourdomain.com"
 
 func TestCDN_StartDomain(t *testing.T) {
-	resp, err := DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainParam{DomainName: testDomain})
+	resp, err := DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainParam{Domain: testDomain})
 	if err != nil {
-		resp, err = DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainParam{DomainName: testDomain})
+		resp, err = DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainParam{Domain: testDomain})
 	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
 
 func TestCDN_StopDomain(t *testing.T) {
-	resp, err := DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainParam{DomainName: testDomain})
+	resp, err := DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainParam{Domain: testDomain})
 	if err != nil {
-		resp, err = DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainParam{DomainName: testDomain})
+		resp, err = DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainParam{Domain: testDomain})
 	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
 
 func TestCDN_DeleteDomain(t *testing.T) {
-	resp, err := DefaultInstance.DeleteCdnDomain(&cdn.DeleteCdnDomainParam{DomainName: testDomain})
+	resp, err := DefaultInstance.DeleteCdnDomain(&cdn.DeleteCdnDomainParam{Domain: testDomain})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }

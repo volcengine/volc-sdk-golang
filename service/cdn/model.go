@@ -233,15 +233,15 @@ type DescribeCdnAccessLogResponse struct {
 }
 
 type StartCdnDomainParam struct {
-	DomainName string `json:"DomainName"`
+	Domain string `json:"Domain"`
 }
 
 type DeleteCdnDomainParam struct {
-	DomainName string `json:"DomainName"`
+	Domain string `json:"Domain"`
 }
 
 type StopCdnDomainParam struct {
-	DomainName string `json:"DomainName"`
+	Domain string `json:"Domain"`
 }
 
 type ListCdnDomainsParam struct {
