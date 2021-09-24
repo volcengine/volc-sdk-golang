@@ -281,3 +281,23 @@ type ListCdnDomainsResponse struct {
 type EmptyResponse struct {
 	ResponseMetadata *base.ResponseMetadata `json:"ResponseMetadata"`
 }
+
+type DescribeCdnUpperIpParam struct {
+	Domain    string `json:"Domain"`
+	IpVersion string `json:"IpVersion,omitempty"`
+}
+
+type DescribeCdnUpperIpResponse struct {
+	ResponseMetadata *base.ResponseMetadata `json:"ResponseMetadata"`
+	Result           DescribeCdnIpResult    `json:"Result"`
+}
+
+type DescribeCdnIpResult struct {
+	CdnIpv4 []CdnIp `json:"CdnIpv4"`
+	CdnIpv6 []CdnIp `json:"CdnIpv6"`
+}
+
+type CdnIp struct {
+	Ip   string `json:"Ip"`
+	Cidr string `json:"Cidr,omitempty"`
+}
