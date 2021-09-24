@@ -31,3 +31,9 @@ func TestCDN_DeleteDomain(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
+
+func TestCDN_ListCdnDomains(t *testing.T) {
+	resp, err := DefaultInstance.ListCdnDomains(&cdn.ListCdnDomainsParam{Domain: testDomain, ServiceType: "web", ResourceTag: "tagk:tagv", PageSize: 3, PageNum: 50})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+}
