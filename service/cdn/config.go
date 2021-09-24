@@ -10,7 +10,7 @@ import (
 const (
 	DefaultRegion  = "cn-north-1"
 	ServiceVersion = "2021-03-01"
-	ServiceName    = "cdn"
+	ServiceName    = "CDN"
 )
 
 var (
