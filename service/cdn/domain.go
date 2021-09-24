@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-func (s *CDN) StartCdnDomain(dto *StartDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
+func (s *CDN) StartCdnDomain(dto *StartCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
 	if dto.DomainName == "" {
 		err = errors.New("domain name cannot be empty")
@@ -19,7 +19,7 @@ func (s *CDN) StartCdnDomain(dto *StartDomainParam, queryOptions ...QueryOption)
 	return
 }
 
-func (s *CDN) StopCdnDomain(dto *StopDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
+func (s *CDN) StopCdnDomain(dto *StopCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
 	if dto.DomainName == "" {
 		err = errors.New("domain name cannot be empty")
@@ -34,13 +34,24 @@ func (s *CDN) StopCdnDomain(dto *StopDomainParam, queryOptions ...QueryOption) (
 	return
 }
 
-func (s *CDN) DeleteCdnDomain(dto *DeleteDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
+func (s *CDN) DeleteCdnDomain(dto *DeleteCdnDomainParam, queryOptions ...QueryOption) (responseBody *EmptyResponse, err error) {
 	responseBody = new(EmptyResponse)
 	if dto.DomainName == "" {
 		err = errors.New("domain name cannot be empty")
 		return
 	}
 	if err = s.post("DeleteCdnDomain", &dto, responseBody, queryOptions...); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) ListCdnDomains(dto *ListCdnDomainsParam, queryOptions ...QueryOption) (responseBody *ListCdnDomainsResponse, err error) {
+	responseBody = new(ListCdnDomainsResponse)
+	if err = s.post("ListCdnDomains", &dto, responseBody, queryOptions...); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {

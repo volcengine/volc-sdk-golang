@@ -232,16 +232,50 @@ type DescribeCdnAccessLogResponse struct {
 	} `json:"Result"`
 }
 
-type StartDomainParam struct {
+type StartCdnDomainParam struct {
 	DomainName string `json:"DomainName"`
 }
 
-type DeleteDomainParam struct {
+type DeleteCdnDomainParam struct {
 	DomainName string `json:"DomainName"`
 }
 
-type StopDomainParam struct {
+type StopCdnDomainParam struct {
 	DomainName string `json:"DomainName"`
+}
+
+type ListCdnDomainsParam struct {
+	Domain      string `json:"Domain,omitempty"`
+	ServiceType string `json:"ServiceType,omitempty"`
+	ResourceTag string `json:"ResourceTag,omitempty"`
+	PageNum     int64  `json:"PageNum,omitempty"`
+	PageSize    int64  `json:"PageSize,omitempty"`
+}
+
+type DomainSummary struct {
+	Domain        string             `json:"Domain"`
+	ServiceType   string             `json:"ServiceType"`
+	Status        string             `json:"Status"`
+	Cname         string             `json:"Cname"`
+	ResourceTags  []ResourceTagEntry `json:"ResourceTags"`
+	ServiceRegion string             `json:"ServiceRegion"`
+	CreateTime    int64              `json:"CreateTime"`
+	UpdateTime    int64              `json:"UpdateTime"`
+}
+
+type ResourceTagEntry struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type ListCdnDomainsResponse struct {
+	ResponseMetadata *base.ResponseMetadata `json:"ResponseMetadata"`
+	Result           struct {
+		PageNum  int64           `json:"PageNum"`
+		PageSize int64           `json:"PageSize"`
+		Total    int64           `json:"Total"`
+		Data     []DomainSummary `json:"Data"`
+	} `json:"Result"`
 }
 
 type EmptyResponse struct {

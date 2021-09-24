@@ -129,6 +129,14 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"ListCdnDomains": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnDomains"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
 
