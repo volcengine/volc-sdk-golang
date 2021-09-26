@@ -1,5 +1,22 @@
 ### Change log
 
+2021-09-14 Bumped to version v1.0.21
+- Add rtc sdk
+- Add GTM sdk
+- CDN sdk basic fix
+
+2021-09-13 Bumped to version v1.0.20
+- Fix sts miss param DurationSeconds
+
+2021-08-05 Bumped to version v1.0.19
+- Added ocr
+- Added sms sdk
+- Added sg region
+
+
+2021-07-08 Bumped to version v1.0.18
+- Fix cr32
+
 2021-07-08 Bumped to version v1.0.17
 - Fix error http code process
 - Get meta function name error
