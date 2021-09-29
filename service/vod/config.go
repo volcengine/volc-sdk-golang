@@ -220,13 +220,5 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"GetIntertrustDrmPlayAuth": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetIntertrustDrmPlayAuth"},
-				"Version": []string{"2020-08-01"},
-			},
-		},
 	}
 )

@@ -25,34 +25,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 )
 
-func (p *Vod) GetIntertrustDrmAuthToken(req *request.VodGetIntertrustDrmPlayAuthRequest, tokenExpireTime int) (string, error) {
-	if len(req.GetVid()) == 0 {
-		return "", errors.New("传入的Vid为空")
-	}
-	if len(req.GetIntertrustDrmType()) == 0 {
-		return "", errors.New("传入的IntertrustDrmType为空")
-	}
-	var playAuthIds string
-	if len(req.GetPlayAuthIds()) > 0 {
-		playAuthIds = req.GetPlayAuthIds()
-	}
-	query := url.Values{
-		"Vid":               []string{req.GetVid()},
-		"PlayAuthIds":       []string{playAuthIds},
-		"IntertrustDrmType": []string{req.GetIntertrustDrmType()},
-	}
-
-	if tokenExpireTime > 0 {
-		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
-	}
-
-	if getIntertrustDrmAuthToken, err := p.GetSignUrl("GetIntertrustDrmPlayAuth", query); err == nil {
-		return getIntertrustDrmAuthToken, nil
-	} else {
-		return "", err
-	}
-}
-
 func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, tokenExpireTime int) (string, error) {
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
