@@ -153,6 +153,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	if len(req.GetUnionInfo()) > 0 {
 		query.Add("UnionInfo", req.GetUnionInfo())
 	}
+	if len(req.GetHDRDefinition()) > 0 {
+		query.Add("HDRDefinition", req.GetHDRDefinition())
+	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
 		ret["GetPlayInfoToken"] = getPlayInfoToken
