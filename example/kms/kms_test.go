@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	testAk = "your access key id"
-	testSk = "your access key secret"
+	testAk = "<your access key id>"
+	testSk = "<your access key secret>"
+	region = "<region>"
 )
 
 var (
@@ -25,7 +26,7 @@ var (
 )
 
 func init() {
-	kms.DefaultInstance.SetHost("volcengineapi-boe-escape.byted.org")
+	kms.DefaultInstance.SetRegion(region)
 	kms.DefaultInstance.Client.SetAccessKey(testAk)
 	kms.DefaultInstance.Client.SetSecretKey(testSk)
 }
