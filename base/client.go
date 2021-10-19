@@ -25,11 +25,13 @@ const (
 var _GlobalClient *http.Client
 
 func init() {
-	_GlobalClient = &http.Client{Transport: &http.Transport{
-		MaxIdleConns:        1000,
-		MaxIdleConnsPerHost: 100,
-		IdleConnTimeout:     10 * time.Second,
-	}}
+	_GlobalClient = &http.Client{
+		Transport: &http.Transport{
+			MaxIdleConns:        1000,
+			MaxIdleConnsPerHost: 100,
+			IdleConnTimeout:     10 * time.Second,
+		},
+	}
 }
 
 // Client 基础客户端
