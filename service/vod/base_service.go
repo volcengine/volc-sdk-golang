@@ -30,7 +30,7 @@ func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, t
 		return "", errors.New("传入的Vid为空")
 	}
 	query := url.Values{
-		"Vid": []string{req.GetVid()},
+		"Vid":    []string{req.GetVid()},
 		"Status": []string{"Published"},
 	}
 
@@ -64,8 +64,8 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	}
 	if len(req.GetDrmType()) > 0 {
 		query.Add("DrmType", req.GetDrmType())
-		switch req.GetDrmType(){
-		case "appdevice","webdevice":
+		switch req.GetDrmType() {
+		case "appdevice", "webdevice":
 			if len(req.GetUnionInfo()) == 0 {
 				return "", errors.New("invalid unionInfo")
 			}
@@ -152,6 +152,9 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 	if len(req.GetUnionInfo()) > 0 {
 		query.Add("UnionInfo", req.GetUnionInfo())
+	}
+	if len(req.GetHDRDefinition()) > 0 {
+		query.Add("HDRDefinition", req.GetHDRDefinition())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
@@ -339,8 +342,12 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 			return err
 		}
 		cnt += n
+		partNumber := i
+		if isLargeFile {
+			partNumber++
+		}
 		err = retry.Do(func() error {
-			part, err = p.uploadPart(uploadPart, uploadID, i, cur, client, isLargeFile)
+			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile)
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
@@ -356,6 +363,9 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 	total := len(bts) + cnt
 	if total != int(size) {
 		return errors.New(fmt.Sprintf("last part download size mismatch ,download %d , size %d", total, size))
+	}
+	if isLargeFile {
+		lastNum++
 	}
 	err = retry.Do(func() error {
 		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile)
