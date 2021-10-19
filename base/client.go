@@ -30,7 +30,8 @@ func init() {
 			MaxIdleConns:        1000,
 			MaxIdleConnsPerHost: 100,
 			IdleConnTimeout:     10 * time.Second,
-		}}
+		},
+	}
 }
 
 // Client 基础客户端
