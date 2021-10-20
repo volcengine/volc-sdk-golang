@@ -9,17 +9,16 @@ import (
 )
 
 const (
-	DefaultRegion  = ""
+	DefaultRegion  = "cn-beijing"
 	ServiceVersion = "2021-07-05"
 	ServiceName    = "gtm"
-	Region         = ""
 	Timeout        = 15
 )
 
 var (
 	ServiceInfo = &base.ServiceInfo{
 		Timeout: Timeout * time.Second,
-		Host:    "",
+		Host:    "open.volcengineapi.com",
 		Header: http.Header{
 			"Accept": []string{"application/json"},
 		},
@@ -40,7 +39,7 @@ type SDKClient struct {
 
 // GetServiceInfo interface
 func (p *SDKClient) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 func (p *SDKClient) SetRegion(region string) {
