@@ -10,7 +10,7 @@ import (
 const (
 	DefaultRegion  = "cn-north-1"
 	ServiceVersion = "2021-03-01"
-	ServiceName    = "cdn"
+	ServiceName    = "CDN"
 )
 
 var (
@@ -102,6 +102,38 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnAccessLog"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"StartCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"StopCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DeleteCdnDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"ListCdnDomains": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnDomains"},
 				"Version": []string{ServiceVersion},
 			},
 		},

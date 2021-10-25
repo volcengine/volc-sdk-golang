@@ -342,8 +342,12 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 			return err
 		}
 		cnt += n
+		partNumber := i
+		if isLargeFile {
+			partNumber++
+		}
 		err = retry.Do(func() error {
-			part, err = p.uploadPart(uploadPart, uploadID, i, cur, client, isLargeFile)
+			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile)
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
@@ -359,6 +363,9 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 	total := len(bts) + cnt
 	if total != int(size) {
 		return errors.New(fmt.Sprintf("last part download size mismatch ,download %d , size %d", total, size))
+	}
+	if isLargeFile {
+		lastNum++
 	}
 	err = retry.Do(func() error {
 		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile)

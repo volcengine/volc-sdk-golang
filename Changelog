@@ -1,5 +1,13 @@
 ### Change log
 
+2021-10-19 Bumped to version v1.0.23
+- Fixed http client timeout
+
+2021-09-29 Bumped to version v1.0.22
+- Added CDN apis
+- Added vms apis
+
+
 2021-09-14 Bumped to version v1.0.21
 - Add rtc sdk
 - Add GTM sdk

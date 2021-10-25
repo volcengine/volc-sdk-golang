@@ -44,6 +44,10 @@ func (req *VodGetHlsDecryptionKeyRequest) Validate() (privateErrorCodeStr string
 
 	return
 }
+func (req *VodGetPlayInfoWithLiveTimeShiftSceneRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
 func (req *VodUrlUploadRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
