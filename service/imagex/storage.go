@@ -405,3 +405,25 @@ func (c *ImageX) GetImageEnhance(param *GetImageEnhanceParam) (*GetImageEnhanceR
 	}
 	return res, nil
 }
+
+func (c *ImageX) GetImageEraseModel(eraseType int) ([]string, error) {
+	res := new(struct {
+		Models []string `json:"Models"`
+	})
+	query := make(url.Values)
+	query.Add("Type", fmt.Sprintf("%d", eraseType))
+	err := c.ImageXGet("GetImageEraseModels", query, res)
+	if err != nil {
+		return nil, err
+	}
+	return res.Models, nil
+}
+
+func (c *ImageX) GetImageErase(param *GetImageEraseParam) (*GetImageEraseResult, error) {
+	res := new(GetImageEraseResult)
+	err := c.ImageXPost("GetImageEraseResult", nil, param, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

@@ -288,6 +288,22 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageEraseModels": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseModels"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageEraseResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

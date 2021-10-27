@@ -250,6 +250,25 @@ type GetImageEnhanceResult struct {
 	Method string `json:"Method"`
 }
 
+// GetImageEraseResult
+type GetImageEraseParam struct {
+	ServiceId string     `json:"ServiceId"`
+	StoreUri  string     `json:"StoreUri"`
+	Model     string     `json:"Model"`
+	BBox      []EraseBox `json:"BBox"`
+}
+
+type EraseBox struct {
+	X1 float64 `json:"X1"`
+	Y1 float64 `json:"Y1"`
+	X2 float64 `json:"X2"`
+	Y2 float64 `json:"Y2"`
+}
+
+type GetImageEraseResult struct {
+	ResUri string `json:"ResUri"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {
