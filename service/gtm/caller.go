@@ -15,26 +15,48 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/gtm/common"
 )
 
+type Conf struct {
+	Host    string
+	Name    string
+	Region  string
+	Timeout int
+	Version string
+}
+
+func InitCommonParameter() *Conf {
+	data := Conf{
+		Host:    common.ServiceInfo.Host,
+		Name:    common.ServiceName,
+		Region:  common.DefaultRegion,
+		Timeout: common.Timeout,
+		Version: common.ServiceVersion,
+	}
+	return &data
+}
+
+func NewDefaultServiceInfo() *base.Client {
+	return base.NewClient(common.ServiceInfo, nil)
+}
+
 type VolcCaller struct {
 	Volc *base.Client
 }
 
 func NewVolcCaller() *VolcCaller {
-	instance := &VolcCaller{}
-	instance.Volc = base.NewClient(common.ServiceInfo, nil)
+	instance := &VolcCaller{Volc: NewDefaultServiceInfo()}
 	instance.Volc.SetAccessKey(os.Getenv("VOLC_ACCESSKEY"))
 	instance.Volc.SetSecretKey(os.Getenv("VOLC_SECRETKEY"))
-	instance.Volc.SetHost(common.ServiceInfo.Host)
-	instance.Volc.SetScheme(common.ServiceInfo.Scheme)
-	instance.Volc.SetTimeout(common.ServiceInfo.Timeout)
+	instance.Volc.SetHost(instance.Volc.ServiceInfo.Host)
+	instance.Volc.SetScheme(instance.Volc.ServiceInfo.Scheme)
+	instance.Volc.SetTimeout(instance.Volc.ServiceInfo.Timeout)
 
 	return instance
 }
 
 func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
-	r.URL.Host = common.ServiceInfo.Host
-	r.URL.Scheme = common.ServiceInfo.Scheme
-	r.Host = common.ServiceInfo.Host
+	r.URL.Host = c.Volc.ServiceInfo.Host
+	r.URL.Scheme = c.Volc.ServiceInfo.Scheme
+	r.Host = c.Volc.ServiceInfo.Host
 
 	r = c.Volc.ServiceInfo.Credentials.Sign(r)
 
@@ -61,7 +83,7 @@ func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
 		return newResp, NewTOPError(&payload.ResponseMetadata)
 	}
 
-	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusInternalServerError {
+	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusMultipleChoices {
 		return newResp, errors.Wrap(errors.New("http error"), strconv.Itoa(resp.StatusCode))
 	}
 
@@ -72,7 +94,7 @@ func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
 
 	newResp = &http.Response{Body: ioutil.NopCloser(bytes.NewBuffer(str))}
 
-	return newResp, errors.WithStack(err)
+	return newResp, nil
 }
 
 type TOPError struct {
