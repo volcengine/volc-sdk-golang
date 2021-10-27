@@ -272,6 +272,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageBgFillResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageBgFillResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

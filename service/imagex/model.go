@@ -221,6 +221,21 @@ type GetImageOCRParam struct {
 	StoreUri  string
 }
 
+// GetImageBgFillResult
+type GetImageBgFillParam struct {
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Model     int     `json:"Model"`
+	Top       float64 `json:"Top"`
+	Bottom    float64 `json:"Bottom"`
+	Left      float64 `json:"Left"`
+	Right     float64 `json:"Right"`
+}
+
+type GetImageBgFillResult struct {
+	ResUri string `json:"ResUri"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {

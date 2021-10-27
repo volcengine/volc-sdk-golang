@@ -387,3 +387,12 @@ func (c *ImageX) GetImageOCR(param *GetImageOCRParam) (*GetImageOCRResult, error
 		return result, nil
 	}
 }
+
+func (c *ImageX) GetImageBgFill(param *GetImageBgFillParam) (*GetImageBgFillResult, error) {
+	res := new(GetImageBgFillResult)
+	err := c.ImageXPost("GetImageBgFillResult", nil, param, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
