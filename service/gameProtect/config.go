@@ -1,6 +1,7 @@
 package gameProtect
 
 import (
+	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
@@ -30,6 +31,15 @@ func NewInstance() *GameProtector {
 	return instance
 }
 
+func (p *GameProtector) SetRegion(region string) error {
+	serviceInfo, ok := ServiceInfoMap[region]
+	if !ok {
+		return fmt.Errorf("region does not spport or unknown region")
+	}
+	p.ServiceInfo = serviceInfo
+	return nil
+}
+
 var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
@@ -39,6 +49,22 @@ var (
 				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "game_protect"},
+		},
+		base.RegionApSingapore: {
+			Timeout: 5 * time.Second,
+			Host: "open-ap-singapore-1.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "game_protect"},
+		},
+		base.RegionUsEast1: {
+			Timeout: 5 * time.Second,
+			Host: "open-us-east-1.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "game_protect"},
 		},
 	}
 
