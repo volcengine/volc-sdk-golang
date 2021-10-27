@@ -396,3 +396,12 @@ func (c *ImageX) GetImageBgFill(param *GetImageBgFillParam) (*GetImageBgFillResu
 	}
 	return res, nil
 }
+
+func (c *ImageX) GetImageEnhance(param *GetImageEnhanceParam) (*GetImageEnhanceResult, error) {
+	res := new(GetImageEnhanceResult)
+	err := c.ImageXPost("GetImageEnhanceResult", nil, param, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}

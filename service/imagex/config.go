@@ -280,6 +280,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageEnhanceResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEnhanceResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

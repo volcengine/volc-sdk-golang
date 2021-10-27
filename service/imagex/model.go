@@ -236,6 +236,20 @@ type GetImageBgFillResult struct {
 	ResUri string `json:"ResUri"`
 }
 
+// GetImageEnhanceResult
+type GetImageEnhanceParam struct {
+	ServiceId    string `json:"ServiceId"`
+	StoreUri     string `json:"StoreUri"`
+	Model        int    `json:"Model"`
+	DisableAr    bool   `json:"DisableAr"`
+	DisableSharp bool   `json:"DisableSharp"`
+}
+
+type GetImageEnhanceResult struct {
+	ResUri string `json:"ResUri"`
+	Method string `json:"Method"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {
