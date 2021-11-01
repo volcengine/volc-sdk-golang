@@ -45,6 +45,16 @@ func (req *VodGetHlsDecryptionKeyRequest) Validate() (privateErrorCodeStr string
 	return
 }
 func (req *VodGetPlayInfoWithLiveTimeShiftSceneRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetStoreUris()) == 0 {
+		privateErrorCodeStr = "InvalidStoreUris"
+		err = fmt.Errorf("%s is empty", req.GetStoreUris())
+		return
+	}
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
 
 	return
 }
