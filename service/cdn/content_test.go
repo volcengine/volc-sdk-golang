@@ -15,12 +15,16 @@ var (
 func TestMain(m *testing.M) {
 	ak := os.Getenv("testAk")
 	sk := os.Getenv("testSk")
+	host := os.Getenv("host")
 	if ak != "" && sk != "" {
 		testAk = ak
 		testSk = sk
 	}
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
+	if host != "" {
+		DefaultInstance.Client.SetHost(host)
+	}
 	os.Exit(m.Run())
 }
 
