@@ -19,8 +19,8 @@ func (c *Client) CreateGTM(ctx context.Context, data *CreateGTMRequest) (*Create
 	}
 
 	q := req.URL.Query()
-	if v := data.Owner; v != nil {
-		q.Add("owner", *v)
+	if v := data.TTL; v != nil {
+		q.Add("ttl", *v)
 	}
 	if v := data.Domain; v != nil {
 		q.Add("domain", *v)
@@ -28,58 +28,49 @@ func (c *Client) CreateGTM(ctx context.Context, data *CreateGTMRequest) (*Create
 	if v := data.AccMode; v != nil {
 		q.Add("acc_mode", *v)
 	}
-	if v := data.TTL; v != nil {
-		q.Add("ttl", *v)
-	}
-	if v := data.SchedMode; v != nil {
-		q.Add("sched_mode", *v)
-	}
-	if v := data.AddrType; v != nil {
-		q.Add("addr_type", *v)
-	}
-	if v := data.Cname; v != nil {
-		q.Add("cname", *v)
-	}
-	if v := data.PrivInfo; v != nil {
-		q.Add("priv_info", *v)
-	}
-	if v := data.Platform; v != nil {
-		q.Add("platform", *v)
-	}
-	if v := data.Version; v != nil {
-		q.Add("Version", *v)
-	}
 	if v := data.MaxServer; v != nil {
 		q.Add("max_server", *v)
-	}
-	if v := data.LbMode; v != nil {
-		q.Add("lb_mode", *v)
 	}
 	if v := data.LastOperator; v != nil {
 		q.Add("last_operator", *v)
 	}
-	if v := data.AlarmOnly; v != nil {
-		q.Add("alarm_only", *v)
+	if v := data.Cname; v != nil {
+		q.Add("cname", *v)
 	}
 	if v := data.FoMode; v != nil {
 		q.Add("fo_mode", *v)
 	}
+	if v := data.Platform; v != nil {
+		q.Add("platform", *v)
+	}
+	if v := data.PrivInfo; v != nil {
+		q.Add("priv_info", *v)
+	}
+	if v := data.AlarmOnly; v != nil {
+		q.Add("alarm_only", *v)
+	}
+	if v := data.AddrType; v != nil {
+		q.Add("addr_type", *v)
+	}
+	if v := data.LbMode; v != nil {
+		q.Add("lb_mode", *v)
+	}
+	if v := data.SchedMode; v != nil {
+		q.Add("sched_mode", *v)
+	}
+	if v := data.Version; v != nil {
+		q.Add("Version", *v)
+	}
+	if v := data.Owner; v != nil {
+		q.Add("owner", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
-	}
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -115,20 +106,11 @@ func (c *Client) DeleteGTM(ctx context.Context, data *DeleteGTMRequest) error {
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
+	}
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -151,20 +133,14 @@ func (c *Client) FindGTMs(ctx context.Context, data *FindGTMsRequest) (*FindGTMs
 	}
 
 	q := req.URL.Query()
+	if v := data.State; v != nil {
+		q.Add("state", *v)
+	}
 	if v := data.PrivInfo; v != nil {
 		q.Add("priv_info", *v)
 	}
 	if v := data.Domain; v != nil {
 		q.Add("domain", *v)
-	}
-	if v := data.Cname; v != nil {
-		q.Add("cname", *v)
-	}
-	if v := data.DnsProv; v != nil {
-		q.Add("dns_prov", *v)
-	}
-	if v := data.State; v != nil {
-		q.Add("state", *v)
 	}
 	if v := data.PageNumber; v != nil {
 		q.Add("page_number", *v)
@@ -175,22 +151,19 @@ func (c *Client) FindGTMs(ctx context.Context, data *FindGTMsRequest) (*FindGTMs
 	if v := data.PageSize; v != nil {
 		q.Add("page_size", *v)
 	}
+	if v := data.Cname; v != nil {
+		q.Add("cname", *v)
+	}
+	if v := data.DnsProv; v != nil {
+		q.Add("dns_prov", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
-	}
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -218,65 +191,56 @@ func (c *Client) ModifyGTM(ctx context.Context, data *ModifyGTMRequest) error {
 	}
 
 	q := req.URL.Query()
-	if v := data.LbMode; v != nil {
-		q.Add("lb_mode", *v)
-	}
-	if v := data.PrivInfo; v != nil {
-		q.Add("priv_info", *v)
-	}
-	if v := data.Owner; v != nil {
-		q.Add("owner", *v)
-	}
-	if v := data.ID; v != nil {
-		q.Add("id", *v)
-	}
-	if v := data.Platform; v != nil {
-		q.Add("platform", *v)
-	}
 	if v := data.AccMode; v != nil {
 		q.Add("acc_mode", *v)
 	}
-	if v := data.LastOperator; v != nil {
-		q.Add("last_operator", *v)
-	}
-	if v := data.Version; v != nil {
-		q.Add("Version", *v)
-	}
-	if v := data.MaxServer; v != nil {
-		q.Add("max_server", *v)
-	}
-	if v := data.Cname; v != nil {
-		q.Add("cname", *v)
-	}
-	if v := data.AlarmOnly; v != nil {
-		q.Add("alarm_only", *v)
-	}
-	if v := data.TTL; v != nil {
-		q.Add("ttl", *v)
-	}
-	if v := data.AddrType; v != nil {
-		q.Add("addr_type", *v)
+	if v := data.LbMode; v != nil {
+		q.Add("lb_mode", *v)
 	}
 	if v := data.Domain; v != nil {
 		q.Add("domain", *v)
 	}
-	if v := data.SchedMode; v != nil {
-		q.Add("sched_mode", *v)
-	}
 	if v := data.FoMode; v != nil {
 		q.Add("fo_mode", *v)
 	}
+	if v := data.LastOperator; v != nil {
+		q.Add("last_operator", *v)
+	}
+	if v := data.MaxServer; v != nil {
+		q.Add("max_server", *v)
+	}
+	if v := data.ID; v != nil {
+		q.Add("id", *v)
+	}
+	if v := data.AlarmOnly; v != nil {
+		q.Add("alarm_only", *v)
+	}
+	if v := data.Cname; v != nil {
+		q.Add("cname", *v)
+	}
+	if v := data.SchedMode; v != nil {
+		q.Add("sched_mode", *v)
+	}
+	if v := data.Platform; v != nil {
+		q.Add("platform", *v)
+	}
+	if v := data.TTL; v != nil {
+		q.Add("ttl", *v)
+	}
+	if v := data.Version; v != nil {
+		q.Add("Version", *v)
+	}
+	if v := data.Owner; v != nil {
+		q.Add("owner", *v)
+	}
+	if v := data.AddrType; v != nil {
+		q.Add("addr_type", *v)
+	}
+	if v := data.PrivInfo; v != nil {
+		q.Add("priv_info", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
@@ -312,20 +276,11 @@ func (c *Client) ReadGTM(ctx context.Context, data *ReadGTMRequest) (*ReadGTMRes
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
-	}
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -353,23 +308,14 @@ func (c *Client) StartGTM(ctx context.Context, data *StartGTMRequest) error {
 	}
 
 	q := req.URL.Query()
-	if v := data.ID; v != nil {
-		q.Add("id", *v)
-	}
 	if v := data.Version; v != nil {
 		q.Add("Version", *v)
 	}
+	if v := data.ID; v != nil {
+		q.Add("id", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
@@ -397,11 +343,11 @@ func (c *Client) StopGTM(ctx context.Context, data *StopGTMRequest) error {
 	}
 
 	q := req.URL.Query()
-	if v := data.ID; v != nil {
-		q.Add("id", *v)
-	}
 	if v := data.Version; v != nil {
 		q.Add("Version", *v)
+	}
+	if v := data.ID; v != nil {
+		q.Add("id", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -410,15 +356,6 @@ func (c *Client) StopGTM(ctx context.Context, data *StopGTMRequest) error {
 	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -457,20 +394,11 @@ func (c *Client) ModifyProbe(ctx context.Context, data *ModifyProbeRequest) erro
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
+	}
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -493,28 +421,19 @@ func (c *Client) ReadProbe(ctx context.Context, data *ReadProbeRequest) (*ReadPr
 	}
 
 	q := req.URL.Query()
-	if v := data.ID; v != nil {
-		q.Add("id", *v)
-	}
 	if v := data.Version; v != nil {
 		q.Add("Version", *v)
 	}
+	if v := data.ID; v != nil {
+		q.Add("id", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
-	if v := data.XTopService; v != nil {
-		req.Header.Set("X-Top-Service", *v)
-	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
 	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
+	if v := data.XTopService; v != nil {
+		req.Header.Set("X-Top-Service", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -550,15 +469,6 @@ func (c *Client) Stats(ctx context.Context, data *StatsRequest) (*StatsResponse,
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
@@ -607,20 +517,11 @@ func (c *Client) CreateView(ctx context.Context, data *CreateViewRequest) (*Crea
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -659,20 +560,11 @@ func (c *Client) DeleteView(ctx context.Context, data *DeleteViewRequest) error 
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -695,34 +587,25 @@ func (c *Client) ListViews(ctx context.Context, data *ListViewsRequest) (ListVie
 	}
 
 	q := req.URL.Query()
-	if v := data.Name; v != nil {
-		q.Add("name", *v)
-	}
-	if v := data.Line; v != nil {
-		q.Add("line", *v)
-	}
 	if v := data.Version; v != nil {
 		q.Add("Version", *v)
 	}
 	if v := data.ID; v != nil {
 		q.Add("id", *v)
 	}
+	if v := data.Name; v != nil {
+		q.Add("name", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("line", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
 	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -755,31 +638,22 @@ func (c *Client) ModifyView(ctx context.Context, data *ModifyViewRequest) error 
 	}
 
 	q := req.URL.Query()
-	if v := data.Vid; v != nil {
-		q.Add("vid", *v)
-	}
 	if v := data.Version; v != nil {
 		q.Add("Version", *v)
 	}
 	if v := data.ID; v != nil {
 		q.Add("id", *v)
 	}
+	if v := data.Vid; v != nil {
+		q.Add("vid", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopRegion; v != nil {
-		req.Header.Set("X-Top-Region", *v)
-	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
-	}
 	if v := data.XTopService; v != nil {
 		req.Header.Set("X-Top-Service", *v)
+	}
+	if v := data.XTopRegion; v != nil {
+		req.Header.Set("X-Top-Region", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {
@@ -802,31 +676,22 @@ func (c *Client) ReadView(ctx context.Context, data *ReadViewRequest) (*ReadView
 	}
 
 	q := req.URL.Query()
-	if v := data.Version; v != nil {
-		q.Add("Version", *v)
-	}
 	if v := data.ID; v != nil {
 		q.Add("id", *v)
 	}
 	if v := data.Vid; v != nil {
 		q.Add("vid", *v)
 	}
+	if v := data.Version; v != nil {
+		q.Add("Version", *v)
+	}
 	req.URL.RawQuery = q.Encode()
 
-	if v := data.XTopService; v != nil {
-		req.Header.Set("X-Top-Service", *v)
-	}
 	if v := data.XTopRegion; v != nil {
 		req.Header.Set("X-Top-Region", *v)
 	}
-	if v := data.XTopAccountId; v != nil {
-		req.Header.Set("X-Top-Account-Id", *v)
-	}
-	if v := data.XTopUserId; v != nil {
-		req.Header.Set("X-Top-User-Id", *v)
-	}
-	if v := data.XTopRequestId; v != nil {
-		req.Header.Set("X-Top-Request-Id", *v)
+	if v := data.XTopService; v != nil {
+		req.Header.Set("X-Top-Service", *v)
 	}
 
 	if v, ok := ctx.Value("K_LOGID").(string); ok {

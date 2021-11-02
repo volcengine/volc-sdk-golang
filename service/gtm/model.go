@@ -3,79 +3,74 @@
 package gtm
 
 type CreateGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	AccMode       *string `form:"-" json:"-"`
-	AddrType      *string `form:"-" json:"-"`
-	AlarmOnly     *string `form:"-" json:"-"`
-	Cname         *string `form:"-" json:"-"`
-	Domain        *string `form:"-" json:"-"`
-	FoMode        *string `form:"-" json:"-"`
-	LastOperator  *string `form:"-" json:"-"`
-	LbMode        *string `form:"-" json:"-"`
-	MaxServer     *string `form:"-" json:"-"`
-	Owner         *string `form:"-" json:"-"`
-	Platform      *string `form:"-" json:"-"`
-	PrivInfo      *string `form:"-" json:"-"`
-	SchedMode     *string `form:"-" json:"-"`
-	TTL           *string `form:"-" json:"-"`
+	Version      *string `form:"-" json:"-"`
+	XTopRegion   *string `form:"-" json:"-"`
+	XTopService  *string `form:"-" json:"-"`
+	AccMode      *string `form:"-" json:"-"`
+	AddrType     *string `form:"-" json:"-"`
+	AlarmOnly    *string `form:"-" json:"-"`
+	Cname        *string `form:"-" json:"-"`
+	Domain       *string `form:"-" json:"-"`
+	FoMode       *string `form:"-" json:"-"`
+	LastOperator *string `form:"-" json:"-"`
+	LbMode       *string `form:"-" json:"-"`
+	MaxServer    *string `form:"-" json:"-"`
+	Owner        *string `form:"-" json:"-"`
+	Platform     *string `form:"-" json:"-"`
+	PrivInfo     *string `form:"-" json:"-"`
+	SchedMode    *string `form:"-" json:"-"`
+	TTL          *string `form:"-" json:"-"`
 }
 
 type CreateGTMResponse struct {
-	AccMode      *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
-	AddrType     *int64            `form:"addr_type" json:"addr_type,omitempty"`
-	AlarmOnly    *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
-	Cname        *string           `form:"cname" json:"cname,omitempty"`
-	Domain       *string           `form:"domain" json:"domain,omitempty"`
-	FoMode       *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
-	ID           *string           `form:"id" json:"id,omitempty"`
-	LastOperator *string           `form:"last_operator" json:"last_operator,omitempty"`
-	LbMode       *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
-	MaxServer    *int64            `form:"max_server" json:"max_server,omitempty"`
-	Owner        *string           `form:"owner" json:"owner,omitempty"`
-	Platform     *string           `form:"platform" json:"platform,omitempty"`
-	PoolStats    *string           `form:"pool_stats" json:"pool_stats,omitempty"`
-	PrivInfo     *string           `form:"priv_info" json:"priv_info,omitempty"`
-	Probe        *ProbeParam       `form:"probe" json:"probe,omitempty"`
-	Remark       *string           `form:"remark" json:"remark,omitempty"`
-	SchedMode    *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
-	State        *int64            `form:"state" json:"state,omitempty"`
-	Tags         map[string]string `form:"tags" json:"tags,omitempty"`
-	TsDel        *string           `form:"ts_del" json:"ts_del,omitempty"`
-	TsMod        *string           `form:"ts_mod" json:"ts_mod,omitempty"`
-	TsNew        *string           `form:"ts_new" json:"ts_new,omitempty"`
-	TTL          *int64            `form:"ttl" json:"ttl,omitempty"`
-	Views        map[string]View   `form:"views" json:"views,omitempty"`
+	AccMode           *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
+	AddrType          *int64            `form:"addr_type" json:"addr_type,omitempty"`
+	AlarmOnly         *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
+	Cname             *string           `form:"cname" json:"cname,omitempty"`
+	ConfigurationCode *string           `form:"configuration_code" json:"configuration_code,omitempty"`
+	Domain            *string           `form:"domain" json:"domain,omitempty"`
+	FoMode            *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
+	ID                *string           `form:"id" json:"id,omitempty"`
+	InstanceID        *string           `form:"instance_id" json:"instance_id,omitempty"`
+	InstanceStatus    *int64            `form:"instance_status" json:"instance_status,omitempty"`
+	LastOperator      *string           `form:"last_operator" json:"last_operator,omitempty"`
+	LbMode            *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
+	MaxServer         *int64            `form:"max_server" json:"max_server,omitempty"`
+	Owner             *string           `form:"owner" json:"owner,omitempty"`
+	Platform          *string           `form:"platform" json:"platform,omitempty"`
+	PoolStats         *string           `form:"pool_stats" json:"pool_stats,omitempty"`
+	PrivInfo          *string           `form:"priv_info" json:"priv_info,omitempty"`
+	Probe             *ProbeParam       `form:"probe" json:"probe,omitempty"`
+	Remark            *string           `form:"remark" json:"remark,omitempty"`
+	SchedMode         *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
+	State             *int64            `form:"state" json:"state,omitempty"`
+	Tags              map[string]string `form:"tags" json:"tags,omitempty"`
+	TsDel             *string           `form:"ts_del" json:"ts_del,omitempty"`
+	TsExpired         *string           `form:"ts_expired" json:"ts_expired,omitempty"`
+	TsMod             *string           `form:"ts_mod" json:"ts_mod,omitempty"`
+	TsNew             *string           `form:"ts_new" json:"ts_new,omitempty"`
+	TTL               *int64            `form:"ttl" json:"ttl,omitempty"`
+	Views             map[string]View   `form:"views" json:"views,omitempty"`
 }
 
 type DeleteGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
 }
 
 type FindGTMsRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	Cname         *string `form:"-" json:"-"`
-	DnsProv       *string `form:"-" json:"-"`
-	Domain        *string `form:"-" json:"-"`
-	PageNumber    *string `form:"-" json:"-"`
-	PageSize      *string `form:"-" json:"-"`
-	PrivInfo      *string `form:"-" json:"-"`
-	State         *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	Cname       *string `form:"-" json:"-"`
+	DnsProv     *string `form:"-" json:"-"`
+	Domain      *string `form:"-" json:"-"`
+	PageNumber  *string `form:"-" json:"-"`
+	PageSize    *string `form:"-" json:"-"`
+	PrivInfo    *string `form:"-" json:"-"`
+	State       *string `form:"-" json:"-"`
 }
 
 type FindGTMsResponse struct {
@@ -84,151 +79,131 @@ type FindGTMsResponse struct {
 }
 
 type ModifyGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	AccMode       *string `form:"-" json:"-"`
-	AddrType      *string `form:"-" json:"-"`
-	AlarmOnly     *string `form:"-" json:"-"`
-	Cname         *string `form:"-" json:"-"`
-	Domain        *string `form:"-" json:"-"`
-	FoMode        *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
-	LastOperator  *string `form:"-" json:"-"`
-	LbMode        *string `form:"-" json:"-"`
-	MaxServer     *string `form:"-" json:"-"`
-	Owner         *string `form:"-" json:"-"`
-	Platform      *string `form:"-" json:"-"`
-	PrivInfo      *string `form:"-" json:"-"`
-	SchedMode     *string `form:"-" json:"-"`
-	TTL           *string `form:"-" json:"-"`
+	Version      *string `form:"-" json:"-"`
+	XTopRegion   *string `form:"-" json:"-"`
+	XTopService  *string `form:"-" json:"-"`
+	AccMode      *string `form:"-" json:"-"`
+	AddrType     *string `form:"-" json:"-"`
+	AlarmOnly    *string `form:"-" json:"-"`
+	Cname        *string `form:"-" json:"-"`
+	Domain       *string `form:"-" json:"-"`
+	FoMode       *string `form:"-" json:"-"`
+	ID           *string `form:"-" json:"-"`
+	LastOperator *string `form:"-" json:"-"`
+	LbMode       *string `form:"-" json:"-"`
+	MaxServer    *string `form:"-" json:"-"`
+	Owner        *string `form:"-" json:"-"`
+	Platform     *string `form:"-" json:"-"`
+	PrivInfo     *string `form:"-" json:"-"`
+	SchedMode    *string `form:"-" json:"-"`
+	TTL          *string `form:"-" json:"-"`
 }
 
 type ReadGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
 }
 
 type ReadGTMResponse struct {
-	AccMode      *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
-	AddrType     *int64            `form:"addr_type" json:"addr_type,omitempty"`
-	AlarmOnly    *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
-	Cname        *string           `form:"cname" json:"cname,omitempty"`
-	Domain       *string           `form:"domain" json:"domain,omitempty"`
-	FoMode       *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
-	ID           *string           `form:"id" json:"id,omitempty"`
-	LastOperator *string           `form:"last_operator" json:"last_operator,omitempty"`
-	LbMode       *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
-	MaxServer    *int64            `form:"max_server" json:"max_server,omitempty"`
-	Owner        *string           `form:"owner" json:"owner,omitempty"`
-	Platform     *string           `form:"platform" json:"platform,omitempty"`
-	PoolStats    *string           `form:"pool_stats" json:"pool_stats,omitempty"`
-	PrivInfo     *string           `form:"priv_info" json:"priv_info,omitempty"`
-	Probe        *ProbeParam       `form:"probe" json:"probe,omitempty"`
-	Remark       *string           `form:"remark" json:"remark,omitempty"`
-	SchedMode    *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
-	State        *int64            `form:"state" json:"state,omitempty"`
-	Tags         map[string]string `form:"tags" json:"tags,omitempty"`
-	TsDel        *string           `form:"ts_del" json:"ts_del,omitempty"`
-	TsMod        *string           `form:"ts_mod" json:"ts_mod,omitempty"`
-	TsNew        *string           `form:"ts_new" json:"ts_new,omitempty"`
-	TTL          *int64            `form:"ttl" json:"ttl,omitempty"`
-	Views        map[string]View   `form:"views" json:"views,omitempty"`
+	AccMode           *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
+	AddrType          *int64            `form:"addr_type" json:"addr_type,omitempty"`
+	AlarmOnly         *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
+	Cname             *string           `form:"cname" json:"cname,omitempty"`
+	ConfigurationCode *string           `form:"configuration_code" json:"configuration_code,omitempty"`
+	Domain            *string           `form:"domain" json:"domain,omitempty"`
+	FoMode            *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
+	ID                *string           `form:"id" json:"id,omitempty"`
+	InstanceID        *string           `form:"instance_id" json:"instance_id,omitempty"`
+	InstanceStatus    *int64            `form:"instance_status" json:"instance_status,omitempty"`
+	LastOperator      *string           `form:"last_operator" json:"last_operator,omitempty"`
+	LbMode            *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
+	MaxServer         *int64            `form:"max_server" json:"max_server,omitempty"`
+	Owner             *string           `form:"owner" json:"owner,omitempty"`
+	Platform          *string           `form:"platform" json:"platform,omitempty"`
+	PoolStats         *string           `form:"pool_stats" json:"pool_stats,omitempty"`
+	PrivInfo          *string           `form:"priv_info" json:"priv_info,omitempty"`
+	Probe             *ProbeParam       `form:"probe" json:"probe,omitempty"`
+	Remark            *string           `form:"remark" json:"remark,omitempty"`
+	SchedMode         *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
+	State             *int64            `form:"state" json:"state,omitempty"`
+	Tags              map[string]string `form:"tags" json:"tags,omitempty"`
+	TsDel             *string           `form:"ts_del" json:"ts_del,omitempty"`
+	TsExpired         *string           `form:"ts_expired" json:"ts_expired,omitempty"`
+	TsMod             *string           `form:"ts_mod" json:"ts_mod,omitempty"`
+	TsNew             *string           `form:"ts_new" json:"ts_new,omitempty"`
+	TTL               *int64            `form:"ttl" json:"ttl,omitempty"`
+	Views             map[string]View   `form:"views" json:"views,omitempty"`
 }
 
 type StartGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
 }
 
 type StopGTMRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
 }
 
 type ModifyProbeRequest struct {
-	Version       *string           `form:"-" json:"-"`
-	XTopAccountId *string           `form:"-" json:"-"`
-	XTopRegion    *string           `form:"-" json:"-"`
-	XTopRequestId *string           `form:"-" json:"-"`
-	XTopService   *string           `form:"-" json:"-"`
-	XTopUserId    *string           `form:"-" json:"-"`
-	Count         *int64            `form:"count" json:"count,omitempty"`
-	Enable        *bool             `form:"enable" json:"enable,omitempty"`
-	FailCount     *int64            `form:"fail_count" json:"fail_count,omitempty"`
-	Host          *string           `form:"host" json:"host,omitempty"`
-	HttpBody      *string           `form:"http_body" json:"http_body,omitempty"`
-	HttpHeader    map[string]string `form:"http_header" json:"http_header,omitempty"`
-	HttpMethod    *string           `form:"http_method" json:"http_method,omitempty"`
-	ID            *string           `form:"-" json:"-"`
-	Interval      *int64            `form:"interval" json:"interval,omitempty"`
-	Port          *int64            `form:"port" json:"port,omitempty"`
-	Proto         *string           `form:"proto" json:"proto,omitempty"`
-	Sni           *string           `form:"sni" json:"sni,omitempty"`
-	StCodeMin     *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
-	Timeout       *string           `form:"timeout" json:"timeout,omitempty"`
-	Url           *string           `form:"url" json:"url,omitempty"`
+	Version     *string           `form:"-" json:"-"`
+	XTopRegion  *string           `form:"-" json:"-"`
+	XTopService *string           `form:"-" json:"-"`
+	Count       *int64            `form:"count" json:"count,omitempty"`
+	Enable      *bool             `form:"enable" json:"enable,omitempty"`
+	FailCount   *int64            `form:"fail_count" json:"fail_count,omitempty"`
+	Host        *string           `form:"host" json:"host,omitempty"`
+	HttpBody    *string           `form:"http_body" json:"http_body,omitempty"`
+	HttpHeader  map[string]string `form:"http_header" json:"http_header,omitempty"`
+	HttpMethod  *string           `form:"http_method" json:"http_method,omitempty"`
+	ID          *string           `form:"-" json:"-"`
+	Interval    *int64            `form:"interval" json:"interval,omitempty"`
+	Port        *int64            `form:"port" json:"port,omitempty"`
+	Proto       *string           `form:"proto" json:"proto,omitempty"`
+	Sni         *string           `form:"sni" json:"sni,omitempty"`
+	StCodeMin   *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
+	Timeout     *string           `form:"timeout" json:"timeout,omitempty"`
+	Url         *string           `form:"url" json:"url,omitempty"`
 }
 
 type ReadProbeRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
 }
 
 type ReadProbeResponse struct {
-	Version       *string           `form:"Version" json:"Version,omitempty"`
-	XTopAccountId *string           `form:"XTopAccountId" json:"XTopAccountId,omitempty"`
-	XTopRegion    *string           `form:"XTopRegion" json:"XTopRegion,omitempty"`
-	XTopRequestId *string           `form:"XTopRequestId" json:"XTopRequestId,omitempty"`
-	XTopService   *string           `form:"XTopService" json:"XTopService,omitempty"`
-	XTopUserId    *string           `form:"XTopUserId" json:"XTopUserId,omitempty"`
-	Count         *int64            `form:"count" json:"count,omitempty"`
-	Enable        *bool             `form:"enable" json:"enable,omitempty"`
-	FailCount     *int64            `form:"fail_count" json:"fail_count,omitempty"`
-	Host          *string           `form:"host" json:"host,omitempty"`
-	HttpBody      *string           `form:"http_body" json:"http_body,omitempty"`
-	HttpHeader    map[string]string `form:"http_header" json:"http_header,omitempty"`
-	HttpMethod    *string           `form:"http_method" json:"http_method,omitempty"`
-	ID            *string           `form:"id" json:"id,omitempty"`
-	Interval      *int64            `form:"interval" json:"interval,omitempty"`
-	Port          *int64            `form:"port" json:"port,omitempty"`
-	Proto         *string           `form:"proto" json:"proto,omitempty"`
-	Sni           *string           `form:"sni" json:"sni,omitempty"`
-	StCodeMin     *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
-	Timeout       *string           `form:"timeout" json:"timeout,omitempty"`
-	Url           *string           `form:"url" json:"url,omitempty"`
+	Version     *string           `form:"Version" json:"Version,omitempty"`
+	XTopRegion  *string           `form:"XTopRegion" json:"XTopRegion,omitempty"`
+	XTopService *string           `form:"XTopService" json:"XTopService,omitempty"`
+	Count       *int64            `form:"count" json:"count,omitempty"`
+	Enable      *bool             `form:"enable" json:"enable,omitempty"`
+	FailCount   *int64            `form:"fail_count" json:"fail_count,omitempty"`
+	Host        *string           `form:"host" json:"host,omitempty"`
+	HttpBody    *string           `form:"http_body" json:"http_body,omitempty"`
+	HttpHeader  map[string]string `form:"http_header" json:"http_header,omitempty"`
+	HttpMethod  *string           `form:"http_method" json:"http_method,omitempty"`
+	ID          *string           `form:"id" json:"id,omitempty"`
+	Interval    *int64            `form:"interval" json:"interval,omitempty"`
+	Port        *int64            `form:"port" json:"port,omitempty"`
+	Proto       *string           `form:"proto" json:"proto,omitempty"`
+	Sni         *string           `form:"sni" json:"sni,omitempty"`
+	StCodeMin   *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
+	Timeout     *string           `form:"timeout" json:"timeout,omitempty"`
+	Url         *string           `form:"url" json:"url,omitempty"`
 }
 
 type StatsRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
 }
 
 type StatsResponse struct {
@@ -247,178 +222,155 @@ type StatsResponse struct {
 }
 
 type CreateViewRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ActPool       *string `form:"act_pool" json:"act_pool,omitempty"`
-	ID            *string `form:"-" json:"-"`
-	Line          *string `form:"line" json:"line,omitempty"`
-	Name          *string `form:"name" json:"name,omitempty"`
-	PriPool       *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
-	SecPool       *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
-	ViewID        *string `form:"view_id" json:"view_id,omitempty"`
-	Weight        *int64  `form:"weight" json:"weight,omitempty"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ActPool     *string `form:"act_pool" json:"act_pool,omitempty"`
+	ID          *string `form:"-" json:"-"`
+	Line        *string `form:"line" json:"line,omitempty"`
+	Name        *string `form:"name" json:"name,omitempty"`
+	PriPool     *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
+	SecPool     *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
+	ViewID      *string `form:"view_id" json:"view_id,omitempty"`
+	Weight      *int64  `form:"weight" json:"weight,omitempty"`
 }
 
 type CreateViewResponse struct {
-	Version       *string `form:"Version" json:"Version,omitempty"`
-	XTopAccountId *string `form:"XTopAccountId" json:"XTopAccountId,omitempty"`
-	XTopRegion    *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
-	XTopRequestId *string `form:"XTopRequestId" json:"XTopRequestId,omitempty"`
-	XTopService   *string `form:"XTopService" json:"XTopService,omitempty"`
-	XTopUserId    *string `form:"XTopUserId" json:"XTopUserId,omitempty"`
-	ActPool       *string `form:"act_pool" json:"act_pool,omitempty"`
-	ID            *string `form:"id" json:"id,omitempty"`
-	Line          *string `form:"line" json:"line,omitempty"`
-	Name          *string `form:"name" json:"name,omitempty"`
-	PriPool       *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
-	SecPool       *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
-	ViewID        *string `form:"view_id" json:"view_id,omitempty"`
-	Weight        *int64  `form:"weight" json:"weight,omitempty"`
+	Version     *string `form:"Version" json:"Version,omitempty"`
+	XTopRegion  *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
+	XTopService *string `form:"XTopService" json:"XTopService,omitempty"`
+	ActPool     *string `form:"act_pool" json:"act_pool,omitempty"`
+	ID          *string `form:"id" json:"id,omitempty"`
+	Line        *string `form:"line" json:"line,omitempty"`
+	Name        *string `form:"name" json:"name,omitempty"`
+	PriPool     *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
+	SecPool     *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
+	ViewID      *string `form:"view_id" json:"view_id,omitempty"`
+	Weight      *int64  `form:"weight" json:"weight,omitempty"`
 }
 
 type DeleteViewRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
-	Vid           *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
+	Vid         *string `form:"-" json:"-"`
 }
 
 type ListViewsRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
-	Line          *string `form:"-" json:"-"`
-	Name          *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
+	Line        *string `form:"-" json:"-"`
+	Name        *string `form:"-" json:"-"`
 }
 
 type ListViewsResponse []View
 
 type ModifyViewRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ActPool       *string `form:"act_pool" json:"act_pool,omitempty"`
-	ID            *string `form:"-" json:"-"`
-	Line          *string `form:"line" json:"line,omitempty"`
-	Name          *string `form:"name" json:"name,omitempty"`
-	PriPool       *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
-	SecPool       *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
-	Vid           *string `form:"-" json:"-"`
-	ViewID        *string `form:"view_id" json:"view_id,omitempty"`
-	Weight        *int64  `form:"weight" json:"weight,omitempty"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ActPool     *string `form:"act_pool" json:"act_pool,omitempty"`
+	ID          *string `form:"-" json:"-"`
+	Line        *string `form:"line" json:"line,omitempty"`
+	Name        *string `form:"name" json:"name,omitempty"`
+	PriPool     *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
+	SecPool     *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
+	Vid         *string `form:"-" json:"-"`
+	ViewID      *string `form:"view_id" json:"view_id,omitempty"`
+	Weight      *int64  `form:"weight" json:"weight,omitempty"`
 }
 
 type ReadViewRequest struct {
-	Version       *string `form:"-" json:"-"`
-	XTopAccountId *string `form:"-" json:"-"`
-	XTopRegion    *string `form:"-" json:"-"`
-	XTopRequestId *string `form:"-" json:"-"`
-	XTopService   *string `form:"-" json:"-"`
-	XTopUserId    *string `form:"-" json:"-"`
-	ID            *string `form:"-" json:"-"`
-	Vid           *string `form:"-" json:"-"`
+	Version     *string `form:"-" json:"-"`
+	XTopRegion  *string `form:"-" json:"-"`
+	XTopService *string `form:"-" json:"-"`
+	ID          *string `form:"-" json:"-"`
+	Vid         *string `form:"-" json:"-"`
 }
 
 type ReadViewResponse struct {
-	Version       *string `form:"Version" json:"Version,omitempty"`
-	XTopAccountId *string `form:"XTopAccountId" json:"XTopAccountId,omitempty"`
-	XTopRegion    *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
-	XTopRequestId *string `form:"XTopRequestId" json:"XTopRequestId,omitempty"`
-	XTopService   *string `form:"XTopService" json:"XTopService,omitempty"`
-	XTopUserId    *string `form:"XTopUserId" json:"XTopUserId,omitempty"`
-	ActPool       *string `form:"act_pool" json:"act_pool,omitempty"`
-	ID            *string `form:"id" json:"id,omitempty"`
-	Line          *string `form:"line" json:"line,omitempty"`
-	Name          *string `form:"name" json:"name,omitempty"`
-	PriPool       *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
-	SecPool       *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
-	Vid           *string `form:"vid" json:"vid,omitempty"`
-	ViewID        *string `form:"view_id" json:"view_id,omitempty"`
-	Weight        *int64  `form:"weight" json:"weight,omitempty"`
+	Version     *string `form:"Version" json:"Version,omitempty"`
+	XTopRegion  *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
+	XTopService *string `form:"XTopService" json:"XTopService,omitempty"`
+	ActPool     *string `form:"act_pool" json:"act_pool,omitempty"`
+	ID          *string `form:"id" json:"id,omitempty"`
+	Line        *string `form:"line" json:"line,omitempty"`
+	Name        *string `form:"name" json:"name,omitempty"`
+	PriPool     *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
+	SecPool     *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
+	Vid         *string `form:"vid" json:"vid,omitempty"`
+	ViewID      *string `form:"view_id" json:"view_id,omitempty"`
+	Weight      *int64  `form:"weight" json:"weight,omitempty"`
 }
 
 type ProbeParam struct {
-	Version       *string           `form:"Version" json:"Version,omitempty"`
-	XTopAccountId *string           `form:"XTopAccountId" json:"XTopAccountId,omitempty"`
-	XTopRegion    *string           `form:"XTopRegion" json:"XTopRegion,omitempty"`
-	XTopRequestId *string           `form:"XTopRequestId" json:"XTopRequestId,omitempty"`
-	XTopService   *string           `form:"XTopService" json:"XTopService,omitempty"`
-	XTopUserId    *string           `form:"XTopUserId" json:"XTopUserId,omitempty"`
-	Count         *int64            `form:"count" json:"count,omitempty"`
-	Enable        *bool             `form:"enable" json:"enable,omitempty"`
-	FailCount     *int64            `form:"fail_count" json:"fail_count,omitempty"`
-	Host          *string           `form:"host" json:"host,omitempty"`
-	HttpBody      *string           `form:"http_body" json:"http_body,omitempty"`
-	HttpHeader    map[string]string `form:"http_header" json:"http_header,omitempty"`
-	HttpMethod    *string           `form:"http_method" json:"http_method,omitempty"`
-	ID            *string           `form:"id" json:"id,omitempty"`
-	Interval      *int64            `form:"interval" json:"interval,omitempty"`
-	Port          *int64            `form:"port" json:"port,omitempty"`
-	Proto         *string           `form:"proto" json:"proto,omitempty"`
-	Sni           *string           `form:"sni" json:"sni,omitempty"`
-	StCodeMin     *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
-	Timeout       *string           `form:"timeout" json:"timeout,omitempty"`
-	Url           *string           `form:"url" json:"url,omitempty"`
+	Version     *string           `form:"Version" json:"Version,omitempty"`
+	XTopRegion  *string           `form:"XTopRegion" json:"XTopRegion,omitempty"`
+	XTopService *string           `form:"XTopService" json:"XTopService,omitempty"`
+	Count       *int64            `form:"count" json:"count,omitempty"`
+	Enable      *bool             `form:"enable" json:"enable,omitempty"`
+	FailCount   *int64            `form:"fail_count" json:"fail_count,omitempty"`
+	Host        *string           `form:"host" json:"host,omitempty"`
+	HttpBody    *string           `form:"http_body" json:"http_body,omitempty"`
+	HttpHeader  map[string]string `form:"http_header" json:"http_header,omitempty"`
+	HttpMethod  *string           `form:"http_method" json:"http_method,omitempty"`
+	ID          *string           `form:"id" json:"id,omitempty"`
+	Interval    *int64            `form:"interval" json:"interval,omitempty"`
+	Port        *int64            `form:"port" json:"port,omitempty"`
+	Proto       *string           `form:"proto" json:"proto,omitempty"`
+	Sni         *string           `form:"sni" json:"sni,omitempty"`
+	StCodeMin   *int64            `form:"st_code_min" json:"st_code_min,omitempty"`
+	Timeout     *string           `form:"timeout" json:"timeout,omitempty"`
+	Url         *string           `form:"url" json:"url,omitempty"`
 }
 
 type View struct {
-	Version       *string `form:"Version" json:"Version,omitempty"`
-	XTopAccountId *string `form:"XTopAccountId" json:"XTopAccountId,omitempty"`
-	XTopRegion    *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
-	XTopRequestId *string `form:"XTopRequestId" json:"XTopRequestId,omitempty"`
-	XTopService   *string `form:"XTopService" json:"XTopService,omitempty"`
-	XTopUserId    *string `form:"XTopUserId" json:"XTopUserId,omitempty"`
-	ActPool       *string `form:"act_pool" json:"act_pool,omitempty"`
-	ID            *string `form:"id" json:"id,omitempty"`
-	Line          *string `form:"line" json:"line,omitempty"`
-	Name          *string `form:"name" json:"name,omitempty"`
-	PriPool       *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
-	SecPool       *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
-	Vid           *string `form:"vid" json:"vid,omitempty"`
-	ViewID        *string `form:"view_id" json:"view_id,omitempty"`
-	Weight        *int64  `form:"weight" json:"weight,omitempty"`
+	Version     *string `form:"Version" json:"Version,omitempty"`
+	XTopRegion  *string `form:"XTopRegion" json:"XTopRegion,omitempty"`
+	XTopService *string `form:"XTopService" json:"XTopService,omitempty"`
+	ActPool     *string `form:"act_pool" json:"act_pool,omitempty"`
+	ID          *string `form:"id" json:"id,omitempty"`
+	Line        *string `form:"line" json:"line,omitempty"`
+	Name        *string `form:"name" json:"name,omitempty"`
+	PriPool     *Pool   `form:"pri_pool" json:"pri_pool,omitempty"`
+	SecPool     *Pool   `form:"sec_pool" json:"sec_pool,omitempty"`
+	Vid         *string `form:"vid" json:"vid,omitempty"`
+	ViewID      *string `form:"view_id" json:"view_id,omitempty"`
+	Weight      *int64  `form:"weight" json:"weight,omitempty"`
 }
 
 type GTM struct {
-	AccMode      *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
-	AddrType     *int64            `form:"addr_type" json:"addr_type,omitempty"`
-	AlarmOnly    *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
-	Cname        *string           `form:"cname" json:"cname,omitempty"`
-	Domain       *string           `form:"domain" json:"domain,omitempty"`
-	FoMode       *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
-	ID           *string           `form:"id" json:"id,omitempty"`
-	LastOperator *string           `form:"last_operator" json:"last_operator,omitempty"`
-	LbMode       *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
-	MaxServer    *int64            `form:"max_server" json:"max_server,omitempty"`
-	Owner        *string           `form:"owner" json:"owner,omitempty"`
-	Platform     *string           `form:"platform" json:"platform,omitempty"`
-	PoolStats    *string           `form:"pool_stats" json:"pool_stats,omitempty"`
-	PrivInfo     *string           `form:"priv_info" json:"priv_info,omitempty"`
-	Probe        *ProbeParam       `form:"probe" json:"probe,omitempty"`
-	Remark       *string           `form:"remark" json:"remark,omitempty"`
-	SchedMode    *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
-	State        *int64            `form:"state" json:"state,omitempty"`
-	Tags         map[string]string `form:"tags" json:"tags,omitempty"`
-	TsDel        *string           `form:"ts_del" json:"ts_del,omitempty"`
-	TsMod        *string           `form:"ts_mod" json:"ts_mod,omitempty"`
-	TsNew        *string           `form:"ts_new" json:"ts_new,omitempty"`
-	TTL          *int64            `form:"ttl" json:"ttl,omitempty"`
-	Views        map[string]View   `form:"views" json:"views,omitempty"`
+	AccMode           *int64            `form:"acc_mode" json:"acc_mode,omitempty"`
+	AddrType          *int64            `form:"addr_type" json:"addr_type,omitempty"`
+	AlarmOnly         *bool             `form:"alarm_only" json:"alarm_only,omitempty"`
+	Cname             *string           `form:"cname" json:"cname,omitempty"`
+	ConfigurationCode *string           `form:"configuration_code" json:"configuration_code,omitempty"`
+	Domain            *string           `form:"domain" json:"domain,omitempty"`
+	FoMode            *int64            `form:"fo_mode" json:"fo_mode,omitempty"`
+	ID                *string           `form:"id" json:"id,omitempty"`
+	InstanceID        *string           `form:"instance_id" json:"instance_id,omitempty"`
+	InstanceStatus    *int64            `form:"instance_status" json:"instance_status,omitempty"`
+	LastOperator      *string           `form:"last_operator" json:"last_operator,omitempty"`
+	LbMode            *int64            `form:"lb_mode" json:"lb_mode,omitempty"`
+	MaxServer         *int64            `form:"max_server" json:"max_server,omitempty"`
+	Owner             *string           `form:"owner" json:"owner,omitempty"`
+	Platform          *string           `form:"platform" json:"platform,omitempty"`
+	PoolStats         *string           `form:"pool_stats" json:"pool_stats,omitempty"`
+	PrivInfo          *string           `form:"priv_info" json:"priv_info,omitempty"`
+	Probe             *ProbeParam       `form:"probe" json:"probe,omitempty"`
+	Remark            *string           `form:"remark" json:"remark,omitempty"`
+	SchedMode         *int64            `form:"sched_mode" json:"sched_mode,omitempty"`
+	State             *int64            `form:"state" json:"state,omitempty"`
+	Tags              map[string]string `form:"tags" json:"tags,omitempty"`
+	TsDel             *string           `form:"ts_del" json:"ts_del,omitempty"`
+	TsExpired         *string           `form:"ts_expired" json:"ts_expired,omitempty"`
+	TsMod             *string           `form:"ts_mod" json:"ts_mod,omitempty"`
+	TsNew             *string           `form:"ts_new" json:"ts_new,omitempty"`
+	TTL               *int64            `form:"ttl" json:"ttl,omitempty"`
+	Views             map[string]View   `form:"views" json:"views,omitempty"`
 }
 
 type Pool struct {

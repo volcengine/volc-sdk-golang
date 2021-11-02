@@ -1,5 +1,13 @@
 ### Change log
 
+2021-10-27 Bumped to version v1.0.24
+- Added DNS SDK
+- Clean and updated gtm sdk
+- Added kms API
+- Added live sdk dev
+- Added DescribeCdnUpperIp CDN OpenAPI
+- Added business security api
+
 2021-10-19 Bumped to version v1.0.23
 - Fixed http client timeout
 

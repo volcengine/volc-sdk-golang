@@ -137,6 +137,14 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"DescribeCdnUpperIp": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnUpperIp"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
 

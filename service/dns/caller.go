@@ -1,4 +1,4 @@
-package gtm
+package dns
 
 import (
 	"bytes"
@@ -12,30 +12,10 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/volcengine/volc-sdk-golang/base"
-	"github.com/volcengine/volc-sdk-golang/service/gtm/common"
 )
 
-type Conf struct {
-	Host    string
-	Name    string
-	Region  string
-	Timeout int
-	Version string
-}
-
-func InitCommonParameter() *Conf {
-	data := Conf{
-		Host:    common.ServiceInfo.Host,
-		Name:    common.ServiceName,
-		Region:  common.DefaultRegion,
-		Timeout: common.Timeout,
-		Version: common.ServiceVersion,
-	}
-	return &data
-}
-
 func NewDefaultServiceInfo() *base.Client {
-	return base.NewClient(common.ServiceInfo, nil)
+	return base.NewClient(ServiceInfo, nil)
 }
 
 type VolcCaller struct {
@@ -58,6 +38,12 @@ func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
 	r.URL.Scheme = c.Volc.ServiceInfo.Scheme
 	r.Host = c.Volc.ServiceInfo.Host
 
+	r.Header.Add("Content-Type", "application/json")
+	q := r.URL.Query()
+	q.Add("Version", ServiceVersion)
+	q.Add("X-Account-Id", xTopAccountID)
+	r.URL.RawQuery = q.Encode()
+
 	r = c.Volc.ServiceInfo.Credentials.Sign(r)
 
 	ctx, cancel := context.WithTimeout(r.Context(), c.Volc.ServiceInfo.Timeout)
@@ -69,7 +55,7 @@ func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
 		return resp, errors.WithStack(err)
 	}
 
-	var payload common.TopResponse
+	var payload TopResponse
 	err = json.NewDecoder(resp.Body).Decode(&payload)
 	resp.Body.Close()
 
@@ -94,7 +80,7 @@ func (c *VolcCaller) Do(r *http.Request) (*http.Response, error) {
 
 	newResp = &http.Response{Body: ioutil.NopCloser(bytes.NewBuffer(str))}
 
-	return newResp, nil
+	return newResp, errors.WithStack(err)
 }
 
 type TOPError struct {
@@ -104,7 +90,7 @@ type TOPError struct {
 	RequestID string `form:"RequestId" json:"RequestId"`
 }
 
-func NewTOPError(respMeta *common.TopRespMeta) *TOPError {
+func NewTOPError(respMeta *TopRespMeta) *TOPError {
 	return &TOPError{
 		Code:      respMeta.Error.Code,
 		CodeN:     respMeta.Error.CodeN,
@@ -119,7 +105,27 @@ func (err *TOPError) GetCode() int64 {
 
 func (err *TOPError) Error() string {
 	return fmt.Sprintf(
-		"TOP GTM response failed with code %d: %s, %s, requestID: %s",
+		"TOP DNS response failed with code %d: %s, %s, requestID: %s",
 		err.CodeN, err.Code, err.Message, err.RequestID,
 	)
+}
+
+type TopResponse struct {
+	ResponseMetadata TopRespMeta     `form:"ResponseMetadata" json:"ResponseMetadata"`
+	Result           json.RawMessage `form:"Result" json:"Result"`
+}
+
+type TopRespMeta struct {
+	Action    string       `form:"Action" json:"Action"`
+	Error     TopRespError `form:"Error" json:"Error"`
+	Region    string       `form:"Region" json:"Region"`
+	RequestID string       `form:"RequestId" json:"RequestId"`
+	Service   string       `form:"Service" json:"Service"`
+	Version   string       `form:"Version" json:"Version"`
+}
+
+type TopRespError struct {
+	Code    string `form:"Code" json:"Code"`
+	CodeN   int64  `form:"CodeN" json:"CodeN"`
+	Message string `form:"Message" json:"Message"`
 }

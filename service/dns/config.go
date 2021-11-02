@@ -1,4 +1,4 @@
-package common
+package dns
 
 import (
 	"net/http"
@@ -10,9 +10,11 @@ import (
 
 const (
 	DefaultRegion  = "cn-beijing"
-	ServiceVersion = "2021-07-05"
-	ServiceName    = "gtm"
+	ServiceVersion = "2018-08-01"
+	ServiceName    = "dns"
 	Timeout        = 15
+
+	xTopAccountID = ""
 )
 
 var (
@@ -39,7 +41,7 @@ type SDKClient struct {
 
 // GetServiceInfo interface
 func (p *SDKClient) GetServiceInfo() *base.ServiceInfo {
-	return p.Client.ServiceInfo
+	return ServiceInfo
 }
 
 func (p *SDKClient) SetRegion(region string) {
