@@ -507,7 +507,7 @@ type VodPlayInfoWithLiveTimeShiftScene struct {
 	StoreUri      string  `protobuf:"bytes,1,opt,name=StoreUri,proto3" json:"StoreUri,omitempty"`           // URI
 	MainPlayUrl   string  `protobuf:"bytes,2,opt,name=MainPlayUrl,proto3" json:"MainPlayUrl,omitempty"`     // 主播放URL
 	BackupPlayUrl string  `protobuf:"bytes,3,opt,name=BackupPlayUrl,proto3" json:"BackupPlayUrl,omitempty"` // 备播放URL，可能不存在
-	UrlExpire     float64 `protobuf:"fixed64,4,opt,name=UrlExpire,proto3" json:"UrlExpire,omitempty"`       // 过期时间，单位：秒
+	UrlExpire     float64 `protobuf:"fixed64,4,opt,name=UrlExpire,proto3" json:"UrlExpire,omitempty"`       // 过期DDL,Unix时间戳，单位：秒
 }
 
 func (x *VodPlayInfoWithLiveTimeShiftScene) Reset() {
