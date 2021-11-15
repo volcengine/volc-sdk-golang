@@ -16,7 +16,7 @@ const (
 var (
 	ServiceInfo = map[string]*base.ServiceInfo{
 		DefaultRegion: {
-			Timeout: 5 * time.Second,
+			Timeout: 30 * time.Second,
 			Host:    "cdn.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
@@ -58,48 +58,54 @@ var (
 			},
 		},
 		"DescribeCdnData": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnData"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnOriginData": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnOriginData"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnRegionAndIsp": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnRegionAndIsp"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnDomainTopData": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnDomainTopData"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnAccountingData": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnAccountingData"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnAccessLog": {
-			Method: http.MethodPost,
-			Path:   "/",
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnAccessLog"},
 				"Version": []string{ServiceVersion},
@@ -138,6 +144,7 @@ var (
 			},
 		},
 		"DescribeCdnUpperIp": {
+			Timeout: 60 * time.Second,
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
