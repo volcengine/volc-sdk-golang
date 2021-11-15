@@ -1,5 +1,8 @@
 ### Change log
 
+2021-11-15 Bumped to version v1.0.25
+- Added CDN timeout for apis
+
 2021-10-27 Bumped to version v1.0.24
 - Added DNS SDK
 - Clean and updated gtm sdk
