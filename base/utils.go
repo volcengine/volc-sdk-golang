@@ -171,7 +171,12 @@ func ToUrlValues(i interface{}) (values url.Values) {
 			v = strconv.FormatFloat(f.Float(), 'f', 4, 64)
 		case []byte:
 			v = string(f.Bytes())
+		case bool:
+			v = strconv.FormatBool(f.Bool())
 		case string:
+			if f.Len() == 0 {
+				continue
+			}
 			v = f.String()
 		}
 		values.Set(typ.Field(i).Name, v)

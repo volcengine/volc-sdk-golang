@@ -122,5 +122,13 @@ var (
 				"Version": []string{"2020-09-01"},
 			},
 		},
+		"Click2Call": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Click2Call"},
+				"Version": []string{"2021-09-01"},
+			},
+		},
 	}
 )

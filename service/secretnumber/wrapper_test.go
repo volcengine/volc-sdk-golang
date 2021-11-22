@@ -141,3 +141,16 @@ func TestSecretNumber_UnbindAXN(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestSecretNumber_Click2Call(t *testing.T) {
+	req := &Click2CallRequest{
+		Caller:             "137XXXX8257",
+		Callee:             "158XXXX9130",
+		CallerNumberPoolNo: "NP163517154204092175",
+		CalleeNumberPoolNo: "NP163517154204092175",
+	}
+	result, statusCode, err := DefaultInstance.Click2Call(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}

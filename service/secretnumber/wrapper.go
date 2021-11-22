@@ -95,6 +95,15 @@ func (p *SecretNumber) UnbindAXN(req *SpecificSubIdRequest) (*OperationResponse,
 	}
 }
 
+func (p *SecretNumber) Click2Call(req *Click2CallRequest) (*Click2CallResponse, int, error) {
+	resp := new(Click2CallResponse)
+	if statusCode, err := p.handler("Click2Call", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) handler(api string, req interface{}, resp interface{}) (int, error) {
 	form := base.ToUrlValues(req)
 	respBody, statusCode, err := p.Client.Post(api, nil, form)
