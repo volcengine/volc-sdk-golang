@@ -53,15 +53,15 @@ type SubmitPreloadTaskResponse struct {
 }
 
 type DescribeContentTasksParam struct {
-	Url        string   `json:"Url,omitempty"`
-	DomainName string   `json:"DomainName,omitempty"`
-	TaskID     string   `json:"TaskID,omitempty"`
-	TaskType   string   `json:"TaskType,omitempty"`
-	Status     []string `json:"Status,omitempty"`
-	StartTime  int64    `json:"StartTime,omitempty"`
-	EndTime    int64    `json:"EndTime,omitempty"`
-	PageNum    int64    `json:"PageNum,omitempty"`
-	PageSize   int64    `json:"PageSize,omitempty"`
+	Url        string `json:"Url,omitempty"`
+	DomainName string `json:"DomainName,omitempty"`
+	TaskID     string `json:"TaskID,omitempty"`
+	TaskType   string `json:"TaskType,omitempty"`
+	Status     string `json:"Status,omitempty"`
+	StartTime  int64  `json:"StartTime,omitempty"`
+	EndTime    int64  `json:"EndTime,omitempty"`
+	PageNum    int64  `json:"PageNum,omitempty"`
+	PageSize   int64  `json:"PageSize,omitempty"`
 }
 
 type ContentTask struct {
@@ -285,6 +285,10 @@ type EmptyResponse struct {
 type DescribeCdnUpperIpParam struct {
 	Domain    string `json:"Domain"`
 	IpVersion string `json:"IpVersion,omitempty"`
+}
+
+type DescribeCdnRegionAndIspParam struct {
+	Area string `json:"Area,omitempty"`
 }
 
 type DescribeCdnUpperIpResponse struct {

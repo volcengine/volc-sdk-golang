@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (s *CDN) SubmitRefreshTask(dto *SubmitRefreshTaskParam, queryOptions ...QueryOption) (responseBody *SubmitRefreshTaskResponse, err error) {
+func (s *CDN) SubmitRefreshTask(dto *SubmitRefreshTaskParam) (responseBody *SubmitRefreshTaskResponse, err error) {
 	responseBody = new(SubmitRefreshTaskResponse)
 	if dto.Type != "file" && dto.Type != "dir" {
 		err = errors.New("type can only be filled by either 'file' or 'dir'")
@@ -19,7 +19,7 @@ func (s *CDN) SubmitRefreshTask(dto *SubmitRefreshTaskParam, queryOptions ...Que
 		Type: dto.Type,
 		Urls: strings.Join(dto.Urls, "\n"),
 	}
-	if err = s.post("SubmitRefreshTask", &requestBody, responseBody, queryOptions...); err != nil {
+	if err = s.post("SubmitRefreshTask", &requestBody, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
@@ -28,7 +28,7 @@ func (s *CDN) SubmitRefreshTask(dto *SubmitRefreshTaskParam, queryOptions ...Que
 	return
 }
 
-func (s *CDN) SubmitPreloadTask(dto *SubmitPreloadTaskParam, queryOptions ...QueryOption) (responseBody *SubmitPreloadTaskResponse, err error) {
+func (s *CDN) SubmitPreloadTask(dto *SubmitPreloadTaskParam) (responseBody *SubmitPreloadTaskResponse, err error) {
 	responseBody = new(SubmitPreloadTaskResponse)
 	if len(dto.Urls) == 0 {
 		err = errors.New("urls cannot be empty")
@@ -37,7 +37,7 @@ func (s *CDN) SubmitPreloadTask(dto *SubmitPreloadTaskParam, queryOptions ...Que
 	requestBody := SubmitPreloadTaskRequest{
 		Urls: strings.Join(dto.Urls, "\n"),
 	}
-	if err = s.post("SubmitPreloadTask", &requestBody, responseBody, queryOptions...); err != nil {
+	if err = s.post("SubmitPreloadTask", &requestBody, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
@@ -46,9 +46,9 @@ func (s *CDN) SubmitPreloadTask(dto *SubmitPreloadTaskParam, queryOptions ...Que
 	return
 }
 
-func (s *CDN) DescribeContentTasks(dto *DescribeContentTasksParam, queryOptions ...QueryOption) (responseBody *DescribeContentTasksResponse, err error) {
+func (s *CDN) DescribeContentTasks(dto *DescribeContentTasksParam) (responseBody *DescribeContentTasksResponse, err error) {
 	responseBody = new(DescribeContentTasksResponse)
-	if err = s.post("DescribeContentTasks", &dto, responseBody, queryOptions...); err != nil {
+	if err = s.post("DescribeContentTasks", &dto, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
@@ -57,9 +57,9 @@ func (s *CDN) DescribeContentTasks(dto *DescribeContentTasksParam, queryOptions 
 	return
 }
 
-func (s *CDN) DescribeContentQuota(queryOptions ...QueryOption) (responseBody *DescribeContentQuotaResponse, err error) {
+func (s *CDN) DescribeContentQuota() (responseBody *DescribeContentQuotaResponse, err error) {
 	responseBody = new(DescribeContentQuotaResponse)
-	if err = s.post("DescribeContentQuota", nil, responseBody, queryOptions...); err != nil {
+	if err = s.post("DescribeContentQuota", nil, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {

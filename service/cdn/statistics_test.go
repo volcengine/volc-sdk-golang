@@ -22,7 +22,7 @@ func TestCDN_DescribeCdnAccountingData(t *testing.T) {
 }
 
 func TestCDN_DescribeCdnRegionAndIsp(t *testing.T) {
-	resp, err := DefaultInstance.DescribeCdnRegionAndIsp()
+	resp, err := DefaultInstance.DescribeCdnRegionAndIsp(&DescribeCdnRegionAndIspParam{Area: "China"})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.NotEmpty(t, resp.Result.Isps)
