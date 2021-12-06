@@ -37,9 +37,6 @@ func TestCDN_SubmitRefreshTaskWithCustomExpiresTime(t *testing.T) {
 	resp, err := DefaultInstance.SubmitRefreshTask(&cdn.SubmitRefreshTaskParam{
 		Type: "file",
 		Urls: []string{"http://yourdomain.com/1.txt"},
-	}, cdn.QueryOption{
-		Key:   "X-Expires",
-		Value: "300",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
