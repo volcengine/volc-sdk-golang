@@ -49,10 +49,7 @@ func TestCDN_SubmitRefreshTask(t *testing.T) {
 func TestCDN_SubmitRefreshTaskWithCustomExpiresTime(t *testing.T) {
 	resp, err := DefaultInstance.SubmitRefreshTask(&SubmitRefreshTaskParam{
 		Type: "file",
-		Urls: []string{"http://qs0902002-auto-test.byteimg.com/1.txt"},
-	}, QueryOption{
-		Key:   "X-Expires",
-		Value: "300",
+		Urls: []string{"http://dlctest0820003.byteimg.com/1.txt"},
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

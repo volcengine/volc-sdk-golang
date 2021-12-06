@@ -1647,6 +1647,489 @@ func (x *VodUpdateSubtitleInfoRequest) GetTag() *wrappers.StringValue {
 	return nil
 }
 
+type VodGetAuditFramesForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid               string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`                              //视频ID
+	Strategy          string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"`                    //审核帧模板信息中的Strategy，抽帧策略
+	MinNumberOfFrames int32  `protobuf:"varint,3,opt,name=MinNumberOfFrames,proto3" json:"MinNumberOfFrames,omitempty"` //最小帧数，未设置时以服务配置默认值为准
+	MaxNumberOfFrames int32  `protobuf:"varint,4,opt,name=MaxNumberOfFrames,proto3" json:"MaxNumberOfFrames,omitempty"` //最大帧数，未设置时以服务配置默认值为准
+}
+
+func (x *VodGetAuditFramesForAuditRequest) Reset() {
+	*x = VodGetAuditFramesForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAuditFramesForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAuditFramesForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetAuditFramesForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAuditFramesForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetAuditFramesForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *VodGetAuditFramesForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetAuditFramesForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+func (x *VodGetAuditFramesForAuditRequest) GetMinNumberOfFrames() int32 {
+	if x != nil {
+		return x.MinNumberOfFrames
+	}
+	return 0
+}
+
+func (x *VodGetAuditFramesForAuditRequest) GetMaxNumberOfFrames() int32 {
+	if x != nil {
+		return x.MaxNumberOfFrames
+	}
+	return 0
+}
+
+type VodGetMLFramesForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid      string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`           //视频ID
+	Strategy string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"` // 审核帧模板信息中的Strategy，抽帧策略
+	FrameOpt string `protobuf:"bytes,3,opt,name=FrameOpt,proto3" json:"FrameOpt,omitempty"` //抽帧方式,参考VodFrameExtractingOptionForAudit
+	FrameFps string `protobuf:"bytes,4,opt,name=FrameFps,proto3" json:"FrameFps,omitempty"` //抽帧方式选择ByFps 或 ByFpsLimitMaxFrameNum 或
+	// ByFpsLimitMinFrameNum 时生效
+	NumberOfFrames string `protobuf:"bytes,5,opt,name=NumberOfFrames,proto3" json:"NumberOfFrames,omitempty"` //抽帧方式选择ByNumberOfFrames 或 ByFpsLimitMaxNumberOfFrames 或
+	// ByFpsLimitMinNumberOfFrames 时生效
+	FrameNumbers   string `protobuf:"bytes,6,opt,name=FrameNumbers,proto3" json:"FrameNumbers,omitempty"`     //抽帧方式选择ByFrameNos时生效，逗号分隔多个Number
+	CutTimes       string `protobuf:"bytes,7,opt,name=CutTimes,proto3" json:"CutTimes,omitempty"`             //抽帧方式选择ByCutTimes时生效, 逗号分割
+	NeedFirstFrame string `protobuf:"bytes,8,opt,name=NeedFirstFrame,proto3" json:"NeedFirstFrame,omitempty"` //需要首帧, 默认0，支持设置： 0-否，1-是
+	NeedLastFrame  string `protobuf:"bytes,9,opt,name=NeedLastFrame,proto3" json:"NeedLastFrame,omitempty"`   //需要尾帧, 默认0，支持设置： 0-否，1-是
+	StartTimeSec   string `protobuf:"bytes,10,opt,name=StartTimeSec,proto3" json:"StartTimeSec,omitempty"`    //从视频的第几秒开始抽帧，单位:s
+	Interval       string `protobuf:"bytes,11,opt,name=Interval,proto3" json:"Interval,omitempty"`            //抽帧作用的时间区间，单位:s
+}
+
+func (x *VodGetMLFramesForAuditRequest) Reset() {
+	*x = VodGetMLFramesForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetMLFramesForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetMLFramesForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetMLFramesForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetMLFramesForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetMLFramesForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetFrameOpt() string {
+	if x != nil {
+		return x.FrameOpt
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetFrameFps() string {
+	if x != nil {
+		return x.FrameFps
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetNumberOfFrames() string {
+	if x != nil {
+		return x.NumberOfFrames
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetFrameNumbers() string {
+	if x != nil {
+		return x.FrameNumbers
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetCutTimes() string {
+	if x != nil {
+		return x.CutTimes
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetNeedFirstFrame() string {
+	if x != nil {
+		return x.NeedFirstFrame
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetNeedLastFrame() string {
+	if x != nil {
+		return x.NeedLastFrame
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetStartTimeSec() string {
+	if x != nil {
+		return x.StartTimeSec
+	}
+	return ""
+}
+
+func (x *VodGetMLFramesForAuditRequest) GetInterval() string {
+	if x != nil {
+		return x.Interval
+	}
+	return ""
+}
+
+type VodGetBetterFramesForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid       string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`             // Vid
+	Strategy  string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"`   //视频审核帧模板中的Strategy，抽帧策略，默认为default
+	CoverRate string `protobuf:"bytes,3,opt,name=CoverRate,proto3" json:"CoverRate,omitempty"` // 优选帧的覆盖率得分，取值[0,1]，0代表取全部优选帧
+}
+
+func (x *VodGetBetterFramesForAuditRequest) Reset() {
+	*x = VodGetBetterFramesForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetBetterFramesForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetBetterFramesForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetBetterFramesForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetBetterFramesForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetBetterFramesForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *VodGetBetterFramesForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetBetterFramesForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+func (x *VodGetBetterFramesForAuditRequest) GetCoverRate() string {
+	if x != nil {
+		return x.CoverRate
+	}
+	return ""
+}
+
+type VodGetAudioInfoForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid      string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`           // vid
+	Strategy string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"` //音频审核帧模板中的Strategy，抽帧策略
+}
+
+func (x *VodGetAudioInfoForAuditRequest) Reset() {
+	*x = VodGetAudioInfoForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAudioInfoForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAudioInfoForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetAudioInfoForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAudioInfoForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetAudioInfoForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *VodGetAudioInfoForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetAudioInfoForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+type VodGetAutomaticSpeechRecognitionForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid      string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`           // Vid
+	Strategy string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"` // 语音转文字模板中的Strategy
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) Reset() {
+	*x = VodGetAutomaticSpeechRecognitionForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAutomaticSpeechRecognitionForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAutomaticSpeechRecognitionForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetAutomaticSpeechRecognitionForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+type VodGetAudioEventDetectionForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid      string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`           // Vid
+	Strategy string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"` // 语音转文字模板中的Strategy
+}
+
+func (x *VodGetAudioEventDetectionForAuditRequest) Reset() {
+	*x = VodGetAudioEventDetectionForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAudioEventDetectionForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAudioEventDetectionForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetAudioEventDetectionForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAudioEventDetectionForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetAudioEventDetectionForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *VodGetAudioEventDetectionForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetAudioEventDetectionForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+type VodGetSpeakerIdentificationForAuditRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid      string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`           // Vid
+	Strategy string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"` // 语音转文字模板中的Strategy
+}
+
+func (x *VodGetSpeakerIdentificationForAuditRequest) Reset() {
+	*x = VodGetSpeakerIdentificationForAuditRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetSpeakerIdentificationForAuditRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetSpeakerIdentificationForAuditRequest) ProtoMessage() {}
+
+func (x *VodGetSpeakerIdentificationForAuditRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetSpeakerIdentificationForAuditRequest.ProtoReflect.Descriptor instead.
+func (*VodGetSpeakerIdentificationForAuditRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *VodGetSpeakerIdentificationForAuditRequest) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodGetSpeakerIdentificationForAuditRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
 type VodStartWorkflowRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1662,7 +2145,7 @@ type VodStartWorkflowRequest struct {
 func (x *VodStartWorkflowRequest) Reset() {
 	*x = VodStartWorkflowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[22]
+		mi := &file_vod_request_request_vod_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1675,7 +2158,7 @@ func (x *VodStartWorkflowRequest) String() string {
 func (*VodStartWorkflowRequest) ProtoMessage() {}
 
 func (x *VodStartWorkflowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[22]
+	mi := &file_vod_request_request_vod_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1688,7 +2171,7 @@ func (x *VodStartWorkflowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodStartWorkflowRequest.ProtoReflect.Descriptor instead.
 func (*VodStartWorkflowRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{22}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *VodStartWorkflowRequest) GetVid() string {
@@ -1964,34 +2447,98 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x2e, 0x0a, 0x03,
 	0x54, 0x61, 0x67, 0x18, 0x07, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x67, 0x6f, 0x6f, 0x67,
 	0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x69,
-	0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x03, 0x54, 0x61, 0x67, 0x22, 0xd1, 0x01, 0x0a,
-	0x17, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
-	0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x54, 0x65,
-	0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
-	0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x49, 0x64, 0x12, 0x44, 0x0a, 0x05, 0x49, 0x6e,
-	0x70, 0x75, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2e, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
-	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x57, 0x6f, 0x72, 0x6b, 0x66,
-	0x6c, 0x6f, 0x77, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x05, 0x49, 0x6e, 0x70, 0x75, 0x74,
-	0x12, 0x1a, 0x0a, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x05, 0x52, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x12, 0x22, 0x0a, 0x0c,
-	0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x18, 0x05, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73,
-	0x42, 0xc8, 0x01, 0x0a, 0x28, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
-	0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e,
-	0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0x56,
-	0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x50, 0x01, 0x5a, 0x40, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69,
-	0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61,
-	0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01,
-	0xd8, 0x01, 0x01, 0xca, 0x02, 0x1f, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c,
-	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x6e, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x03, 0x54, 0x61, 0x67, 0x22, 0xac, 0x01, 0x0a,
+	0x20, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x75, 0x64, 0x69, 0x74, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x73, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x56, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x12,
+	0x2c, 0x0a, 0x11, 0x4d, 0x69, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72,
+	0x61, 0x6d, 0x65, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x4d, 0x69, 0x6e, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x2c, 0x0a,
+	0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x22, 0xfb, 0x02, 0x0a, 0x1d,
+	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x4d, 0x4c, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x46, 0x6f,
+	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a,
+	0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12,
+	0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x12, 0x1a, 0x0a, 0x08, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x4f, 0x70, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x4f, 0x70, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65,
+	0x46, 0x70, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65,
+	0x46, 0x70, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x4e, 0x75, 0x6d,
+	0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0c, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x12,
+	0x1a, 0x0a, 0x08, 0x43, 0x75, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x43, 0x75, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x4e,
+	0x65, 0x65, 0x64, 0x46, 0x69, 0x72, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x18, 0x08, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0e, 0x4e, 0x65, 0x65, 0x64, 0x46, 0x69, 0x72, 0x73, 0x74, 0x46, 0x72,
+	0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x4e, 0x65, 0x65, 0x64, 0x4c, 0x61, 0x73, 0x74, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x4e, 0x65, 0x65, 0x64,
+	0x4c, 0x61, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x1a, 0x0a,
+	0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x22, 0x6f, 0x0a, 0x21, 0x56, 0x6f, 0x64,
+	0x47, 0x65, 0x74, 0x42, 0x65, 0x74, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x46,
+	0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10,
+	0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64,
+	0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x12, 0x1c, 0x0a, 0x09,
+	0x43, 0x6f, 0x76, 0x65, 0x72, 0x52, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x43, 0x6f, 0x76, 0x65, 0x72, 0x52, 0x61, 0x74, 0x65, 0x22, 0x4e, 0x0a, 0x1e, 0x56, 0x6f,
+	0x64, 0x47, 0x65, 0x74, 0x41, 0x75, 0x64, 0x69, 0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x46, 0x6f, 0x72,
+	0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03,
+	0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12, 0x1a,
+	0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x22, 0x5f, 0x0a, 0x2f, 0x56, 0x6f,
+	0x64, 0x47, 0x65, 0x74, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x63, 0x53, 0x70, 0x65,
+	0x65, 0x63, 0x68, 0x52, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f,
+	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a,
+	0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12,
+	0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x22, 0x58, 0x0a, 0x28, 0x56,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x75, 0x64, 0x69, 0x6f, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x44,
+	0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72,
+	0x61, 0x74, 0x65, 0x67, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x72,
+	0x61, 0x74, 0x65, 0x67, 0x79, 0x22, 0x5a, 0x0a, 0x2a, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53,
+	0x70, 0x65, 0x61, 0x6b, 0x65, 0x72, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x56, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67,
+	0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67,
+	0x79, 0x22, 0xd1, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x57, 0x6f,
+	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a,
+	0x03, 0x56, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x56, 0x69, 0x64, 0x12,
+	0x1e, 0x0a, 0x0a, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x49, 0x64, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x54, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x49, 0x64, 0x12,
+	0x44, 0x0a, 0x05, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2e,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e,
+	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
+	0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x05,
+	0x49, 0x6e, 0x70, 0x75, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74,
+	0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x50, 0x72, 0x69, 0x6f, 0x72, 0x69, 0x74,
+	0x79, 0x12, 0x22, 0x0a, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67,
+	0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63,
+	0x6b, 0x41, 0x72, 0x67, 0x73, 0x42, 0xc8, 0x01, 0x0a, 0x28, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x50, 0x01,
+	0x5a, 0x40, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b,
+	0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f,
+	0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02, 0x1f, 0x56, 0x6f, 0x6c, 0x63, 0x5c,
+	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x5c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c,
+	0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2006,44 +2553,51 @@ func file_vod_request_request_vod_proto_rawDescGZIP() []byte {
 	return file_vod_request_request_vod_proto_rawDescData
 }
 
-var file_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
 var file_vod_request_request_vod_proto_goTypes = []interface{}{
-	(*VodGetPlayInfoRequest)(nil),                       // 0: Volcengine.Vod.Models.Request.VodGetPlayInfoRequest
-	(*VodGetOriginalPlayInfoRequest)(nil),               // 1: Volcengine.Vod.Models.Request.VodGetOriginalPlayInfoRequest
-	(*VodGetPrivateDrmPlayAuthRequest)(nil),             // 2: Volcengine.Vod.Models.Request.VodGetPrivateDrmPlayAuthRequest
-	(*VodGetHlsDecryptionKeyRequest)(nil),               // 3: Volcengine.Vod.Models.Request.VodGetHlsDecryptionKeyRequest
-	(*VodGetPlayInfoWithLiveTimeShiftSceneRequest)(nil), // 4: Volcengine.Vod.Models.Request.VodGetPlayInfoWithLiveTimeShiftSceneRequest
-	(*VodUrlUploadRequest)(nil),                         // 5: Volcengine.Vod.Models.Request.VodUrlUploadRequest
-	(*VodQueryUploadTaskInfoRequest)(nil),               // 6: Volcengine.Vod.Models.Request.VodQueryUploadTaskInfoRequest
-	(*VodApplyUploadInfoRequest)(nil),                   // 7: Volcengine.Vod.Models.Request.VodApplyUploadInfoRequest
-	(*VodUploadMediaRequest)(nil),                       // 8: Volcengine.Vod.Models.Request.VodUploadMediaRequest
-	(*VodUploadMaterialRequest)(nil),                    // 9: Volcengine.Vod.Models.Request.VodUploadMaterialRequest
-	(*VodCommitUploadInfoRequest)(nil),                  // 10: Volcengine.Vod.Models.Request.VodCommitUploadInfoRequest
-	(*VodUrlUploadJsonRequest)(nil),                     // 11: Volcengine.Vod.Models.Request.VodUrlUploadJsonRequest
-	(*VodGetRecommendedPosterRequest)(nil),              // 12: Volcengine.Vod.Models.Request.VodGetRecommendedPosterRequest
-	(*VodUpdateMediaPublishStatusRequest)(nil),          // 13: Volcengine.Vod.Models.Request.VodUpdateMediaPublishStatusRequest
-	(*VodUpdateMediaInfoRequest)(nil),                   // 14: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest
-	(*VodGetMediaInfosRequest)(nil),                     // 15: Volcengine.Vod.Models.Request.VodGetMediaInfosRequest
-	(*VodDeleteMediaRequest)(nil),                       // 16: Volcengine.Vod.Models.Request.VodDeleteMediaRequest
-	(*VodDeleteTranscodesRequest)(nil),                  // 17: Volcengine.Vod.Models.Request.VodDeleteTranscodesRequest
-	(*VodGetMediaListRequest)(nil),                      // 18: Volcengine.Vod.Models.Request.VodGetMediaListRequest
-	(*VodGetSubtitleInfoListRequest)(nil),               // 19: Volcengine.Vod.Models.Request.VodGetSubtitleInfoListRequest
-	(*VodUpdateSubtitleStatusRequest)(nil),              // 20: Volcengine.Vod.Models.Request.VodUpdateSubtitleStatusRequest
-	(*VodUpdateSubtitleInfoRequest)(nil),                // 21: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest
-	(*VodStartWorkflowRequest)(nil),                     // 22: Volcengine.Vod.Models.Request.VodStartWorkflowRequest
-	(*business.VodUrlUploadURLSet)(nil),                 // 23: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	(*wrappers.StringValue)(nil),                        // 24: google.protobuf.StringValue
-	(*business.WorkflowParams)(nil),                     // 25: Volcengine.Vod.Models.Business.WorkflowParams
+	(*VodGetPlayInfoRequest)(nil),                           // 0: Volcengine.Vod.Models.Request.VodGetPlayInfoRequest
+	(*VodGetOriginalPlayInfoRequest)(nil),                   // 1: Volcengine.Vod.Models.Request.VodGetOriginalPlayInfoRequest
+	(*VodGetPrivateDrmPlayAuthRequest)(nil),                 // 2: Volcengine.Vod.Models.Request.VodGetPrivateDrmPlayAuthRequest
+	(*VodGetHlsDecryptionKeyRequest)(nil),                   // 3: Volcengine.Vod.Models.Request.VodGetHlsDecryptionKeyRequest
+	(*VodGetPlayInfoWithLiveTimeShiftSceneRequest)(nil),     // 4: Volcengine.Vod.Models.Request.VodGetPlayInfoWithLiveTimeShiftSceneRequest
+	(*VodUrlUploadRequest)(nil),                             // 5: Volcengine.Vod.Models.Request.VodUrlUploadRequest
+	(*VodQueryUploadTaskInfoRequest)(nil),                   // 6: Volcengine.Vod.Models.Request.VodQueryUploadTaskInfoRequest
+	(*VodApplyUploadInfoRequest)(nil),                       // 7: Volcengine.Vod.Models.Request.VodApplyUploadInfoRequest
+	(*VodUploadMediaRequest)(nil),                           // 8: Volcengine.Vod.Models.Request.VodUploadMediaRequest
+	(*VodUploadMaterialRequest)(nil),                        // 9: Volcengine.Vod.Models.Request.VodUploadMaterialRequest
+	(*VodCommitUploadInfoRequest)(nil),                      // 10: Volcengine.Vod.Models.Request.VodCommitUploadInfoRequest
+	(*VodUrlUploadJsonRequest)(nil),                         // 11: Volcengine.Vod.Models.Request.VodUrlUploadJsonRequest
+	(*VodGetRecommendedPosterRequest)(nil),                  // 12: Volcengine.Vod.Models.Request.VodGetRecommendedPosterRequest
+	(*VodUpdateMediaPublishStatusRequest)(nil),              // 13: Volcengine.Vod.Models.Request.VodUpdateMediaPublishStatusRequest
+	(*VodUpdateMediaInfoRequest)(nil),                       // 14: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest
+	(*VodGetMediaInfosRequest)(nil),                         // 15: Volcengine.Vod.Models.Request.VodGetMediaInfosRequest
+	(*VodDeleteMediaRequest)(nil),                           // 16: Volcengine.Vod.Models.Request.VodDeleteMediaRequest
+	(*VodDeleteTranscodesRequest)(nil),                      // 17: Volcengine.Vod.Models.Request.VodDeleteTranscodesRequest
+	(*VodGetMediaListRequest)(nil),                          // 18: Volcengine.Vod.Models.Request.VodGetMediaListRequest
+	(*VodGetSubtitleInfoListRequest)(nil),                   // 19: Volcengine.Vod.Models.Request.VodGetSubtitleInfoListRequest
+	(*VodUpdateSubtitleStatusRequest)(nil),                  // 20: Volcengine.Vod.Models.Request.VodUpdateSubtitleStatusRequest
+	(*VodUpdateSubtitleInfoRequest)(nil),                    // 21: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest
+	(*VodGetAuditFramesForAuditRequest)(nil),                // 22: Volcengine.Vod.Models.Request.VodGetAuditFramesForAuditRequest
+	(*VodGetMLFramesForAuditRequest)(nil),                   // 23: Volcengine.Vod.Models.Request.VodGetMLFramesForAuditRequest
+	(*VodGetBetterFramesForAuditRequest)(nil),               // 24: Volcengine.Vod.Models.Request.VodGetBetterFramesForAuditRequest
+	(*VodGetAudioInfoForAuditRequest)(nil),                  // 25: Volcengine.Vod.Models.Request.VodGetAudioInfoForAuditRequest
+	(*VodGetAutomaticSpeechRecognitionForAuditRequest)(nil), // 26: Volcengine.Vod.Models.Request.VodGetAutomaticSpeechRecognitionForAuditRequest
+	(*VodGetAudioEventDetectionForAuditRequest)(nil),        // 27: Volcengine.Vod.Models.Request.VodGetAudioEventDetectionForAuditRequest
+	(*VodGetSpeakerIdentificationForAuditRequest)(nil),      // 28: Volcengine.Vod.Models.Request.VodGetSpeakerIdentificationForAuditRequest
+	(*VodStartWorkflowRequest)(nil),                         // 29: Volcengine.Vod.Models.Request.VodStartWorkflowRequest
+	(*business.VodUrlUploadURLSet)(nil),                     // 30: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	(*wrappers.StringValue)(nil),                            // 31: google.protobuf.StringValue
+	(*business.WorkflowParams)(nil),                         // 32: Volcengine.Vod.Models.Business.WorkflowParams
 }
 var file_vod_request_request_vod_proto_depIdxs = []int32{
-	23, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	24, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
-	24, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
-	24, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
-	24, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
-	24, // 5: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
-	24, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
-	25, // 7: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
+	30, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	31, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
+	31, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
+	31, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
+	31, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
+	31, // 5: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
+	31, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
+	32, // 7: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
 	8,  // [8:8] is the sub-list for method output_type
 	8,  // [8:8] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
@@ -2322,6 +2876,90 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAuditFramesForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetMLFramesForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetBetterFramesForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAudioInfoForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAutomaticSpeechRecognitionForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAudioEventDetectionForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetSpeakerIdentificationForAuditRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodStartWorkflowRequest); i {
 			case 0:
 				return &v.state
@@ -2340,7 +2978,7 @@ func file_vod_request_request_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_request_request_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   23,
+			NumMessages:   30,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

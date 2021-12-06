@@ -126,6 +126,34 @@ func (req *VodUpdateSubtitleInfoRequest) Validate() (privateErrorCodeStr string,
 
 	return
 }
+func (req *VodGetAuditFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetMLFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetBetterFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetAudioInfoForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetAutomaticSpeechRecognitionForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetAudioEventDetectionForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetSpeakerIdentificationForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
 func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
