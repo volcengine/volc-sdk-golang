@@ -25,6 +25,68 @@ const (
 // of the legacy proto package is being used.
 const _ = proto.ProtoPackageIsVersion4
 
+// 模型帧 抽帧选项
+type VodFrameExtractingOptionForAudit int32
+
+const (
+	VodFrameExtractingOptionForAudit_FpsVodFrameExtractingOptionForAudit                 VodFrameExtractingOptionForAudit = 0
+	VodFrameExtractingOptionForAudit_NumberOfFrameVodFrameExtractingOptionForAudit       VodFrameExtractingOptionForAudit = 1
+	VodFrameExtractingOptionForAudit_FrameNumersVodFrameExtractingOptionForAudit         VodFrameExtractingOptionForAudit = 2
+	VodFrameExtractingOptionForAudit_CutTimesVodFrameExtractingOptionForAudit            VodFrameExtractingOptionForAudit = 3
+	VodFrameExtractingOptionForAudit_FpsLimitMaxFrameNumVodFrameExtractingOptionForAudit VodFrameExtractingOptionForAudit = 4
+	VodFrameExtractingOptionForAudit_FpsLimitMinFrameNumVodFrameExtractingOptionForAudit VodFrameExtractingOptionForAudit = 5
+	VodFrameExtractingOptionForAudit_OnlyFirstLastFrameVodFrameExtractingOptionForAudit  VodFrameExtractingOptionForAudit = 6
+)
+
+// Enum value maps for VodFrameExtractingOptionForAudit.
+var (
+	VodFrameExtractingOptionForAudit_name = map[int32]string{
+		0: "FpsVodFrameExtractingOptionForAudit",
+		1: "NumberOfFrameVodFrameExtractingOptionForAudit",
+		2: "FrameNumersVodFrameExtractingOptionForAudit",
+		3: "CutTimesVodFrameExtractingOptionForAudit",
+		4: "FpsLimitMaxFrameNumVodFrameExtractingOptionForAudit",
+		5: "FpsLimitMinFrameNumVodFrameExtractingOptionForAudit",
+		6: "OnlyFirstLastFrameVodFrameExtractingOptionForAudit",
+	}
+	VodFrameExtractingOptionForAudit_value = map[string]int32{
+		"FpsVodFrameExtractingOptionForAudit":                 0,
+		"NumberOfFrameVodFrameExtractingOptionForAudit":       1,
+		"FrameNumersVodFrameExtractingOptionForAudit":         2,
+		"CutTimesVodFrameExtractingOptionForAudit":            3,
+		"FpsLimitMaxFrameNumVodFrameExtractingOptionForAudit": 4,
+		"FpsLimitMinFrameNumVodFrameExtractingOptionForAudit": 5,
+		"OnlyFirstLastFrameVodFrameExtractingOptionForAudit":  6,
+	}
+)
+
+func (x VodFrameExtractingOptionForAudit) Enum() *VodFrameExtractingOptionForAudit {
+	p := new(VodFrameExtractingOptionForAudit)
+	*p = x
+	return p
+}
+
+func (x VodFrameExtractingOptionForAudit) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (VodFrameExtractingOptionForAudit) Descriptor() protoreflect.EnumDescriptor {
+	return file_vod_business_vod_media_proto_enumTypes[0].Descriptor()
+}
+
+func (VodFrameExtractingOptionForAudit) Type() protoreflect.EnumType {
+	return &file_vod_business_vod_media_proto_enumTypes[0]
+}
+
+func (x VodFrameExtractingOptionForAudit) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use VodFrameExtractingOptionForAudit.Descriptor instead.
+func (VodFrameExtractingOptionForAudit) EnumDescriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{0}
+}
+
 type VodMediaBasicInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -718,6 +780,1230 @@ func (x *VodGetSubtitleInfoListData) GetPageSize() int32 {
 	return 0
 }
 
+type VodGetFramesOptionParamForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Opt VodFrameExtractingOptionForAudit `protobuf:"varint,1,opt,name=Opt,proto3,enum=Volcengine.Vod.Models.Business.VodFrameExtractingOptionForAudit" json:"Opt,omitempty"` // 抽帧方式，参考 VodFrameExtractingOptionForAudit
+	Fps float64                          `protobuf:"fixed64,2,opt,name=Fps,proto3" json:"Fps,omitempty"`                                                                     //抽帧方式选择ByFps 或 ByFpsLimitMaxFrameNumber 或
+	// ByFpsLimitMinFrameNumber 时生效
+	NumberOfFrames int32 `protobuf:"varint,3,opt,name=NumberOfFrames,proto3" json:"NumberOfFrames,omitempty"` //抽帧方式选择ByFrameNumber 或 ByFpsLimitMaxFrameNumber 或
+	// ByFpsLimitMinFrameNumber 时生效
+	FrameNumbers   []int32   `protobuf:"varint,4,rep,packed,name=FrameNumbers,proto3" json:"FrameNumbers,omitempty"` //抽帧方式选择ByFrameNumbers时生效
+	CutTimes       []float64 `protobuf:"fixed64,5,rep,packed,name=CutTimes,proto3" json:"CutTimes,omitempty"`        //抽帧方式选择ByCutTimes时生效
+	NeedFirstFrame bool      `protobuf:"varint,6,opt,name=NeedFirstFrame,proto3" json:"NeedFirstFrame,omitempty"`    //需要首帧
+	NeedLastFrame  bool      `protobuf:"varint,7,opt,name=NeedLastFrame,proto3" json:"NeedLastFrame,omitempty"`      //需要尾帧
+	StartTimeSec   float64   `protobuf:"fixed64,8,opt,name=StartTimeSec,proto3" json:"StartTimeSec,omitempty"`       //从视频的第几秒开始抽帧，单位:s
+	Interval       float64   `protobuf:"fixed64,9,opt,name=Interval,proto3" json:"Interval,omitempty"`               //抽帧作用的时间区间，单位:s
+}
+
+func (x *VodGetFramesOptionParamForAudit) Reset() {
+	*x = VodGetFramesOptionParamForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetFramesOptionParamForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetFramesOptionParamForAudit) ProtoMessage() {}
+
+func (x *VodGetFramesOptionParamForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetFramesOptionParamForAudit.ProtoReflect.Descriptor instead.
+func (*VodGetFramesOptionParamForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetOpt() VodFrameExtractingOptionForAudit {
+	if x != nil {
+		return x.Opt
+	}
+	return VodFrameExtractingOptionForAudit_FpsVodFrameExtractingOptionForAudit
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetFps() float64 {
+	if x != nil {
+		return x.Fps
+	}
+	return 0
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetNumberOfFrames() int32 {
+	if x != nil {
+		return x.NumberOfFrames
+	}
+	return 0
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetFrameNumbers() []int32 {
+	if x != nil {
+		return x.FrameNumbers
+	}
+	return nil
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetCutTimes() []float64 {
+	if x != nil {
+		return x.CutTimes
+	}
+	return nil
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetNeedFirstFrame() bool {
+	if x != nil {
+		return x.NeedFirstFrame
+	}
+	return false
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetNeedLastFrame() bool {
+	if x != nil {
+		return x.NeedLastFrame
+	}
+	return false
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetStartTimeSec() float64 {
+	if x != nil {
+		return x.StartTimeSec
+	}
+	return 0
+}
+
+func (x *VodGetFramesOptionParamForAudit) GetInterval() float64 {
+	if x != nil {
+		return x.Interval
+	}
+	return 0
+}
+
+type VodFrameDataForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StoreUri    string  `protobuf:"bytes,1,opt,name=StoreUri,proto3" json:"StoreUri,omitempty"`        // URI of frame store
+	FrameNumber int32   `protobuf:"varint,2,opt,name=FrameNumber,proto3" json:"FrameNumber,omitempty"` //帧号
+	CutTime     float64 `protobuf:"fixed64,3,opt,name=CutTime,proto3" json:"CutTime,omitempty"`        //帧对应时间
+	Width       int32   `protobuf:"varint,4,opt,name=Width,proto3" json:"Width,omitempty"`             //图片宽度
+	Height      int32   `protobuf:"varint,5,opt,name=Height,proto3" json:"Height,omitempty"`           //图片高度
+	FrameUrl    string  `protobuf:"bytes,6,opt,name=FrameUrl,proto3" json:"FrameUrl,omitempty"`        //抽帧图片地址
+}
+
+func (x *VodFrameDataForAudit) Reset() {
+	*x = VodFrameDataForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodFrameDataForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodFrameDataForAudit) ProtoMessage() {}
+
+func (x *VodFrameDataForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodFrameDataForAudit.ProtoReflect.Descriptor instead.
+func (*VodFrameDataForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *VodFrameDataForAudit) GetStoreUri() string {
+	if x != nil {
+		return x.StoreUri
+	}
+	return ""
+}
+
+func (x *VodFrameDataForAudit) GetFrameNumber() int32 {
+	if x != nil {
+		return x.FrameNumber
+	}
+	return 0
+}
+
+func (x *VodFrameDataForAudit) GetCutTime() float64 {
+	if x != nil {
+		return x.CutTime
+	}
+	return 0
+}
+
+func (x *VodFrameDataForAudit) GetWidth() int32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *VodFrameDataForAudit) GetHeight() int32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *VodFrameDataForAudit) GetFrameUrl() string {
+	if x != nil {
+		return x.FrameUrl
+	}
+	return ""
+}
+
+type VodGetFramesForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Frames []*VodFrameDataForAudit `protobuf:"bytes,1,rep,name=Frames,proto3" json:"Frames,omitempty"` // 帧列表
+}
+
+func (x *VodGetFramesForAuditResult) Reset() {
+	*x = VodGetFramesForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetFramesForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetFramesForAuditResult) ProtoMessage() {}
+
+func (x *VodGetFramesForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetFramesForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetFramesForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *VodGetFramesForAuditResult) GetFrames() []*VodFrameDataForAudit {
+	if x != nil {
+		return x.Frames
+	}
+	return nil
+}
+
+type VodBetterFrameDataForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StoreUri    string  `protobuf:"bytes,1,opt,name=StoreUri,proto3" json:"StoreUri,omitempty"`        // Frame URI
+	FrameNumber int32   `protobuf:"varint,2,opt,name=FrameNumber,proto3" json:"FrameNumber,omitempty"` // 帧号
+	CutTime     float64 `protobuf:"fixed64,3,opt,name=CutTime,proto3" json:"CutTime,omitempty"`
+	Width       int32   `protobuf:"varint,4,opt,name=Width,proto3" json:"Width,omitempty"`
+	Height      int32   `protobuf:"varint,5,opt,name=Height,proto3" json:"Height,omitempty"`
+	CoverRate   float64 `protobuf:"fixed64,6,opt,name=CoverRate,proto3" json:"CoverRate,omitempty"`           // Cover Rate
+	LBPHashCode []int64 `protobuf:"varint,7,rep,packed,name=LBPHashCode,proto3" json:"LBPHashCode,omitempty"` // Hash Code
+	FrameUrl    string  `protobuf:"bytes,8,opt,name=FrameUrl,proto3" json:"FrameUrl,omitempty"`               // 抽帧图片地址
+}
+
+func (x *VodBetterFrameDataForAudit) Reset() {
+	*x = VodBetterFrameDataForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodBetterFrameDataForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodBetterFrameDataForAudit) ProtoMessage() {}
+
+func (x *VodBetterFrameDataForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodBetterFrameDataForAudit.ProtoReflect.Descriptor instead.
+func (*VodBetterFrameDataForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *VodBetterFrameDataForAudit) GetStoreUri() string {
+	if x != nil {
+		return x.StoreUri
+	}
+	return ""
+}
+
+func (x *VodBetterFrameDataForAudit) GetFrameNumber() int32 {
+	if x != nil {
+		return x.FrameNumber
+	}
+	return 0
+}
+
+func (x *VodBetterFrameDataForAudit) GetCutTime() float64 {
+	if x != nil {
+		return x.CutTime
+	}
+	return 0
+}
+
+func (x *VodBetterFrameDataForAudit) GetWidth() int32 {
+	if x != nil {
+		return x.Width
+	}
+	return 0
+}
+
+func (x *VodBetterFrameDataForAudit) GetHeight() int32 {
+	if x != nil {
+		return x.Height
+	}
+	return 0
+}
+
+func (x *VodBetterFrameDataForAudit) GetCoverRate() float64 {
+	if x != nil {
+		return x.CoverRate
+	}
+	return 0
+}
+
+func (x *VodBetterFrameDataForAudit) GetLBPHashCode() []int64 {
+	if x != nil {
+		return x.LBPHashCode
+	}
+	return nil
+}
+
+func (x *VodBetterFrameDataForAudit) GetFrameUrl() string {
+	if x != nil {
+		return x.FrameUrl
+	}
+	return ""
+}
+
+type VodGetBetterFramesForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Frames []*VodBetterFrameDataForAudit `protobuf:"bytes,1,rep,name=Frames,proto3" json:"Frames,omitempty"` // frame data
+}
+
+func (x *VodGetBetterFramesForAuditResult) Reset() {
+	*x = VodGetBetterFramesForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetBetterFramesForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetBetterFramesForAuditResult) ProtoMessage() {}
+
+func (x *VodGetBetterFramesForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetBetterFramesForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetBetterFramesForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *VodGetBetterFramesForAuditResult) GetFrames() []*VodBetterFrameDataForAudit {
+	if x != nil {
+		return x.Frames
+	}
+	return nil
+}
+
+type VodGetAudioInfoForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StoreUri string  `protobuf:"bytes,1,opt,name=StoreUri,proto3" json:"StoreUri,omitempty"`   //审核音频存储的URI
+	Duration float64 `protobuf:"fixed64,2,opt,name=Duration,proto3" json:"Duration,omitempty"` //音频时长
+	Format   string  `protobuf:"bytes,3,opt,name=Format,proto3" json:"Format,omitempty"`       //格式:wav
+	PlayUrl  string  `protobuf:"bytes,4,opt,name=PlayUrl,proto3" json:"PlayUrl,omitempty"`     //音频播放地址
+}
+
+func (x *VodGetAudioInfoForAuditResult) Reset() {
+	*x = VodGetAudioInfoForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAudioInfoForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAudioInfoForAuditResult) ProtoMessage() {}
+
+func (x *VodGetAudioInfoForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAudioInfoForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetAudioInfoForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *VodGetAudioInfoForAuditResult) GetStoreUri() string {
+	if x != nil {
+		return x.StoreUri
+	}
+	return ""
+}
+
+func (x *VodGetAudioInfoForAuditResult) GetDuration() float64 {
+	if x != nil {
+		return x.Duration
+	}
+	return 0
+}
+
+func (x *VodGetAudioInfoForAuditResult) GetFormat() string {
+	if x != nil {
+		return x.Format
+	}
+	return ""
+}
+
+func (x *VodGetAudioInfoForAuditResult) GetPlayUrl() string {
+	if x != nil {
+		return x.PlayUrl
+	}
+	return ""
+}
+
+type VodASRUtteranceWordForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Text          string  `protobuf:"bytes,1,opt,name=Text,proto3" json:"Text,omitempty"`                     // 分段文本
+	StartTimeMill float64 `protobuf:"fixed64,2,opt,name=StartTimeMill,proto3" json:"StartTimeMill,omitempty"` // 起始时间(毫秒)
+	EndTimeMill   float64 `protobuf:"fixed64,3,opt,name=EndTimeMill,proto3" json:"EndTimeMill,omitempty"`     // 结束时间(毫秒)
+	BlankDuration float64 `protobuf:"fixed64,4,opt,name=BlankDuration,proto3" json:"BlankDuration,omitempty"` // 空白时长(毫秒)
+}
+
+func (x *VodASRUtteranceWordForAudit) Reset() {
+	*x = VodASRUtteranceWordForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodASRUtteranceWordForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodASRUtteranceWordForAudit) ProtoMessage() {}
+
+func (x *VodASRUtteranceWordForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodASRUtteranceWordForAudit.ProtoReflect.Descriptor instead.
+func (*VodASRUtteranceWordForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *VodASRUtteranceWordForAudit) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *VodASRUtteranceWordForAudit) GetStartTimeMill() float64 {
+	if x != nil {
+		return x.StartTimeMill
+	}
+	return 0
+}
+
+func (x *VodASRUtteranceWordForAudit) GetEndTimeMill() float64 {
+	if x != nil {
+		return x.EndTimeMill
+	}
+	return 0
+}
+
+func (x *VodASRUtteranceWordForAudit) GetBlankDuration() float64 {
+	if x != nil {
+		return x.BlankDuration
+	}
+	return 0
+}
+
+type VodASRUtteranceForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Text          string                         `protobuf:"bytes,1,opt,name=Text,proto3" json:"Text,omitempty"`                     // 分段文本
+	StartTimeMill float64                        `protobuf:"fixed64,2,opt,name=StartTimeMill,proto3" json:"StartTimeMill,omitempty"` // 起始时间(毫秒)
+	EndTimeMill   float64                        `protobuf:"fixed64,3,opt,name=EndTimeMill,proto3" json:"EndTimeMill,omitempty"`     // 结束时间(毫秒)
+	Words         []*VodASRUtteranceWordForAudit `protobuf:"bytes,4,rep,name=Words,proto3" json:"Words,omitempty"`                   // 分词
+	Language      string                         `protobuf:"bytes,5,opt,name=Language,proto3" json:"Language,omitempty"`             // language of utterance
+	SpeechRate    float64                        `protobuf:"fixed64,6,opt,name=SpeechRate,proto3" json:"SpeechRate,omitempty"`       // 语速
+}
+
+func (x *VodASRUtteranceForAudit) Reset() {
+	*x = VodASRUtteranceForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodASRUtteranceForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodASRUtteranceForAudit) ProtoMessage() {}
+
+func (x *VodASRUtteranceForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodASRUtteranceForAudit.ProtoReflect.Descriptor instead.
+func (*VodASRUtteranceForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *VodASRUtteranceForAudit) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *VodASRUtteranceForAudit) GetStartTimeMill() float64 {
+	if x != nil {
+		return x.StartTimeMill
+	}
+	return 0
+}
+
+func (x *VodASRUtteranceForAudit) GetEndTimeMill() float64 {
+	if x != nil {
+		return x.EndTimeMill
+	}
+	return 0
+}
+
+func (x *VodASRUtteranceForAudit) GetWords() []*VodASRUtteranceWordForAudit {
+	if x != nil {
+		return x.Words
+	}
+	return nil
+}
+
+func (x *VodASRUtteranceForAudit) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *VodASRUtteranceForAudit) GetSpeechRate() float64 {
+	if x != nil {
+		return x.SpeechRate
+	}
+	return 0
+}
+
+type VodASRLanguageDetailForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Prob     float64 `protobuf:"fixed64,1,opt,name=Prob,proto3" json:"Prob,omitempty"`
+	Language string  `protobuf:"bytes,2,opt,name=Language,proto3" json:"Language,omitempty"` //语言类型，形式形如"<mand>"=普通话，"<sc>" 四川话， "<cant>"粤语
+}
+
+func (x *VodASRLanguageDetailForAudit) Reset() {
+	*x = VodASRLanguageDetailForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodASRLanguageDetailForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodASRLanguageDetailForAudit) ProtoMessage() {}
+
+func (x *VodASRLanguageDetailForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodASRLanguageDetailForAudit.ProtoReflect.Descriptor instead.
+func (*VodASRLanguageDetailForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *VodASRLanguageDetailForAudit) GetProb() float64 {
+	if x != nil {
+		return x.Prob
+	}
+	return 0
+}
+
+func (x *VodASRLanguageDetailForAudit) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+type VodASRInfoForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Text            string                          `protobuf:"bytes,1,opt,name=Text,proto3" json:"Text,omitempty"`                       // 识别的语音文本
+	Confidence      int32                           `protobuf:"varint,2,opt,name=Confidence,proto3" json:"Confidence,omitempty"`          // 置信度
+	Utterances      []*VodASRUtteranceForAudit      `protobuf:"bytes,3,rep,name=Utterances,proto3" json:"Utterances,omitempty"`           // 识别结果语音分句信息
+	Language        string                          `protobuf:"bytes,4,opt,name=Language,proto3" json:"Language,omitempty"`               // language of text
+	LanguageDetails []*VodASRLanguageDetailForAudit `protobuf:"bytes,5,rep,name=LanguageDetails,proto3" json:"LanguageDetails,omitempty"` // detail info of language
+	SpeechRate      float64                         `protobuf:"fixed64,6,opt,name=SpeechRate,proto3" json:"SpeechRate,omitempty"`         //语速
+	Volume          float64                         `protobuf:"fixed64,7,opt,name=Volume,proto3" json:"Volume,omitempty"`                 //音量
+}
+
+func (x *VodASRInfoForAudit) Reset() {
+	*x = VodASRInfoForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodASRInfoForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodASRInfoForAudit) ProtoMessage() {}
+
+func (x *VodASRInfoForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodASRInfoForAudit.ProtoReflect.Descriptor instead.
+func (*VodASRInfoForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *VodASRInfoForAudit) GetText() string {
+	if x != nil {
+		return x.Text
+	}
+	return ""
+}
+
+func (x *VodASRInfoForAudit) GetConfidence() int32 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *VodASRInfoForAudit) GetUtterances() []*VodASRUtteranceForAudit {
+	if x != nil {
+		return x.Utterances
+	}
+	return nil
+}
+
+func (x *VodASRInfoForAudit) GetLanguage() string {
+	if x != nil {
+		return x.Language
+	}
+	return ""
+}
+
+func (x *VodASRInfoForAudit) GetLanguageDetails() []*VodASRLanguageDetailForAudit {
+	if x != nil {
+		return x.LanguageDetails
+	}
+	return nil
+}
+
+func (x *VodASRInfoForAudit) GetSpeechRate() float64 {
+	if x != nil {
+		return x.SpeechRate
+	}
+	return 0
+}
+
+func (x *VodASRInfoForAudit) GetVolume() float64 {
+	if x != nil {
+		return x.Volume
+	}
+	return 0
+}
+
+type VodGetAutomaticSpeechRecognitionForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *VodASRInfoForAudit `protobuf:"bytes,1,opt,name=Info,proto3" json:"Info,omitempty"`
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditResult) Reset() {
+	*x = VodGetAutomaticSpeechRecognitionForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAutomaticSpeechRecognitionForAuditResult) ProtoMessage() {}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAutomaticSpeechRecognitionForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetAutomaticSpeechRecognitionForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *VodGetAutomaticSpeechRecognitionForAuditResult) GetInfo() *VodASRInfoForAudit {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type VodAEDTimeRangeForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StartTimeSec float64 `protobuf:"fixed64,1,opt,name=StartTimeSec,proto3" json:"StartTimeSec,omitempty"` //事件识别区间的起点(秒)
+	EndTimeSec   float64 `protobuf:"fixed64,2,opt,name=EndTimeSec,proto3" json:"EndTimeSec,omitempty"`     //事件识别区间的终点(秒)
+	Prob         float64 `protobuf:"fixed64,3,opt,name=Prob,proto3" json:"Prob,omitempty"`                 //事件区间对应的事件概率
+}
+
+func (x *VodAEDTimeRangeForAudit) Reset() {
+	*x = VodAEDTimeRangeForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAEDTimeRangeForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAEDTimeRangeForAudit) ProtoMessage() {}
+
+func (x *VodAEDTimeRangeForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAEDTimeRangeForAudit.ProtoReflect.Descriptor instead.
+func (*VodAEDTimeRangeForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *VodAEDTimeRangeForAudit) GetStartTimeSec() float64 {
+	if x != nil {
+		return x.StartTimeSec
+	}
+	return 0
+}
+
+func (x *VodAEDTimeRangeForAudit) GetEndTimeSec() float64 {
+	if x != nil {
+		return x.EndTimeSec
+	}
+	return 0
+}
+
+func (x *VodAEDTimeRangeForAudit) GetProb() float64 {
+	if x != nil {
+		return x.Prob
+	}
+	return 0
+}
+
+type VodAEDEventItemForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Event      string                     `protobuf:"bytes,1,opt,name=Event,proto3" json:"Event,omitempty"`           //事件名，仅当识别成功时填写
+	UttProb    float64                    `protobuf:"fixed64,2,opt,name=UttProb,proto3" json:"UttProb,omitempty"`     //整条音频对应的事件概率，仅当识别成功时填写
+	TimeRanges []*VodAEDTimeRangeForAudit `protobuf:"bytes,3,rep,name=TimeRanges,proto3" json:"TimeRanges,omitempty"` //事件识别区间，仅当识别成功时填写
+}
+
+func (x *VodAEDEventItemForAudit) Reset() {
+	*x = VodAEDEventItemForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[23]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAEDEventItemForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAEDEventItemForAudit) ProtoMessage() {}
+
+func (x *VodAEDEventItemForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[23]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAEDEventItemForAudit.ProtoReflect.Descriptor instead.
+func (*VodAEDEventItemForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *VodAEDEventItemForAudit) GetEvent() string {
+	if x != nil {
+		return x.Event
+	}
+	return ""
+}
+
+func (x *VodAEDEventItemForAudit) GetUttProb() float64 {
+	if x != nil {
+		return x.UttProb
+	}
+	return 0
+}
+
+func (x *VodAEDEventItemForAudit) GetTimeRanges() []*VodAEDTimeRangeForAudit {
+	if x != nil {
+		return x.TimeRanges
+	}
+	return nil
+}
+
+type VodAEDEmbeddingForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Embedding []float64 `protobuf:"fixed64,1,rep,packed,name=Embedding,proto3" json:"Embedding,omitempty"`
+}
+
+func (x *VodAEDEmbeddingForAudit) Reset() {
+	*x = VodAEDEmbeddingForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAEDEmbeddingForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAEDEmbeddingForAudit) ProtoMessage() {}
+
+func (x *VodAEDEmbeddingForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAEDEmbeddingForAudit.ProtoReflect.Descriptor instead.
+func (*VodAEDEmbeddingForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *VodAEDEmbeddingForAudit) GetEmbedding() []float64 {
+	if x != nil {
+		return x.Embedding
+	}
+	return nil
+}
+
+type VodAEDInfoForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	EventItems []*VodAEDEventItemForAudit `protobuf:"bytes,1,rep,name=EventItems,proto3" json:"EventItems,omitempty"`
+	Embeddings []*VodAEDEmbeddingForAudit `protobuf:"bytes,2,rep,name=Embeddings,proto3" json:"Embeddings,omitempty"` // embeddings, will return if the result has
+}
+
+func (x *VodAEDInfoForAudit) Reset() {
+	*x = VodAEDInfoForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[25]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAEDInfoForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAEDInfoForAudit) ProtoMessage() {}
+
+func (x *VodAEDInfoForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[25]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAEDInfoForAudit.ProtoReflect.Descriptor instead.
+func (*VodAEDInfoForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *VodAEDInfoForAudit) GetEventItems() []*VodAEDEventItemForAudit {
+	if x != nil {
+		return x.EventItems
+	}
+	return nil
+}
+
+func (x *VodAEDInfoForAudit) GetEmbeddings() []*VodAEDEmbeddingForAudit {
+	if x != nil {
+		return x.Embeddings
+	}
+	return nil
+}
+
+type VodGetAudioEventDetectionForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Info *VodAEDInfoForAudit `protobuf:"bytes,1,opt,name=Info,proto3" json:"Info,omitempty"`
+}
+
+func (x *VodGetAudioEventDetectionForAuditResult) Reset() {
+	*x = VodGetAudioEventDetectionForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[26]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAudioEventDetectionForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAudioEventDetectionForAuditResult) ProtoMessage() {}
+
+func (x *VodGetAudioEventDetectionForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[26]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAudioEventDetectionForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetAudioEventDetectionForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *VodGetAudioEventDetectionForAuditResult) GetInfo() *VodAEDInfoForAudit {
+	if x != nil {
+		return x.Info
+	}
+	return nil
+}
+
+type VodSIDItemForAudit struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SID         string  `protobuf:"bytes,1,opt,name=SID,proto3" json:"SID,omitempty"`                  //人物
+	Confidence  float64 `protobuf:"fixed64,2,opt,name=Confidence,proto3" json:"Confidence,omitempty"`  //置信度
+	SliceNumber int32   `protobuf:"varint,3,opt,name=SliceNumber,proto3" json:"SliceNumber,omitempty"` //分片编号，从0开始
+}
+
+func (x *VodSIDItemForAudit) Reset() {
+	*x = VodSIDItemForAudit{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[27]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodSIDItemForAudit) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodSIDItemForAudit) ProtoMessage() {}
+
+func (x *VodSIDItemForAudit) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[27]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodSIDItemForAudit.ProtoReflect.Descriptor instead.
+func (*VodSIDItemForAudit) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *VodSIDItemForAudit) GetSID() string {
+	if x != nil {
+		return x.SID
+	}
+	return ""
+}
+
+func (x *VodSIDItemForAudit) GetConfidence() float64 {
+	if x != nil {
+		return x.Confidence
+	}
+	return 0
+}
+
+func (x *VodSIDItemForAudit) GetSliceNumber() int32 {
+	if x != nil {
+		return x.SliceNumber
+	}
+	return 0
+}
+
+type VodGetSpeakerIdentificationForAuditResult struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Candidates    []*VodSIDItemForAudit `protobuf:"bytes,1,rep,name=Candidates,proto3" json:"Candidates,omitempty"`         //识别出来的人物
+	SliceDuration float64               `protobuf:"fixed64,2,opt,name=SliceDuration,proto3" json:"SliceDuration,omitempty"` //切片时长
+	SliceCount    int32                 `protobuf:"varint,3,opt,name=SliceCount,proto3" json:"SliceCount,omitempty"`        //切片数量
+}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) Reset() {
+	*x = VodGetSpeakerIdentificationForAuditResult{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_media_proto_msgTypes[28]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetSpeakerIdentificationForAuditResult) ProtoMessage() {}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_media_proto_msgTypes[28]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetSpeakerIdentificationForAuditResult.ProtoReflect.Descriptor instead.
+func (*VodGetSpeakerIdentificationForAuditResult) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_media_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) GetCandidates() []*VodSIDItemForAudit {
+	if x != nil {
+		return x.Candidates
+	}
+	return nil
+}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) GetSliceDuration() float64 {
+	if x != nil {
+		return x.SliceDuration
+	}
+	return 0
+}
+
+func (x *VodGetSpeakerIdentificationForAuditResult) GetSliceCount() int32 {
+	if x != nil {
+		return x.SliceCount
+	}
+	return 0
+}
+
 var File_vod_business_vod_media_proto protoreflect.FileDescriptor
 
 var file_vod_business_vod_media_proto_rawDesc = []byte{
@@ -834,20 +2120,241 @@ var file_vod_business_vod_media_proto_rawDesc = []byte{
 	0x12, 0x16, 0x0a, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05,
 	0x52, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67, 0x65,
 	0x53, 0x69, 0x7a, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x50, 0x61, 0x67, 0x65,
-	0x53, 0x69, 0x7a, 0x65, 0x42, 0xcc, 0x01, 0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c,
-	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
-	0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65,
-	0x73, 0x73, 0x42, 0x08, 0x56, 0x6f, 0x64, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x50, 0x01, 0x5a, 0x41,
-	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65,
-	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67,
-	0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f,
-	0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xc2, 0x02, 0x00, 0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c,
-	0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x5c, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0xe2, 0x02, 0x23,
-	0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64,
-	0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x53, 0x69, 0x7a, 0x65, 0x22, 0xfd, 0x02, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x73, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x50, 0x61, 0x72, 0x61, 0x6d,
+	0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x52, 0x0a, 0x03, 0x4f, 0x70, 0x74, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x40, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69,
+	0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75,
+	0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45,
+	0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46,
+	0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x03, 0x4f, 0x70, 0x74, 0x12, 0x10, 0x0a, 0x03,
+	0x46, 0x70, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x03, 0x46, 0x70, 0x73, 0x12, 0x26,
+	0x0a, 0x0e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66,
+	0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x0c, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x05, 0x52, 0x0c, 0x46, 0x72,
+	0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x43, 0x75,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x18, 0x05, 0x20, 0x03, 0x28, 0x01, 0x52, 0x08, 0x43, 0x75,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x4e, 0x65, 0x65, 0x64, 0x46, 0x69,
+	0x72, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0e,
+	0x4e, 0x65, 0x65, 0x64, 0x46, 0x69, 0x72, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x12, 0x24,
+	0x0a, 0x0d, 0x4e, 0x65, 0x65, 0x64, 0x4c, 0x61, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x18,
+	0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0d, 0x4e, 0x65, 0x65, 0x64, 0x4c, 0x61, 0x73, 0x74, 0x46,
+	0x72, 0x61, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x53, 0x65, 0x63, 0x18, 0x08, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65,
+	0x72, 0x76, 0x61, 0x6c, 0x18, 0x09, 0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65,
+	0x72, 0x76, 0x61, 0x6c, 0x22, 0xb8, 0x01, 0x0a, 0x14, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x44, 0x61, 0x74, 0x61, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x1a, 0x0a,
+	0x08, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x55, 0x72, 0x69, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x55, 0x72, 0x69, 0x12, 0x20, 0x0a, 0x0b, 0x46, 0x72, 0x61,
+	0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b,
+	0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x43,
+	0x75, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x43, 0x75,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x57, 0x69, 0x64, 0x74, 0x68, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x57, 0x69, 0x64, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x48,
+	0x65, 0x69, 0x67, 0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x48, 0x65, 0x69,
+	0x67, 0x68, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x55, 0x72, 0x6c, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x55, 0x72, 0x6c, 0x22,
+	0x6a, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x46,
+	0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x4c, 0x0a,
+	0x06, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x34, 0x2e,
+	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56,
+	0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x44, 0x61, 0x74, 0x61, 0x46, 0x6f, 0x72, 0x41, 0x75,
+	0x64, 0x69, 0x74, 0x52, 0x06, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x22, 0xfe, 0x01, 0x0a, 0x1a,
+	0x56, 0x6f, 0x64, 0x42, 0x65, 0x74, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x44, 0x61,
+	0x74, 0x61, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74,
+	0x6f, 0x72, 0x65, 0x55, 0x72, 0x69, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74,
+	0x6f, 0x72, 0x65, 0x55, 0x72, 0x69, 0x12, 0x20, 0x0a, 0x0b, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e,
+	0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x46, 0x72, 0x61,
+	0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x18, 0x0a, 0x07, 0x43, 0x75, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x43, 0x75, 0x74, 0x54, 0x69,
+	0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x57, 0x69, 0x64, 0x74, 0x68, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x05, 0x57, 0x69, 0x64, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x48, 0x65, 0x69, 0x67,
+	0x68, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x48, 0x65, 0x69, 0x67, 0x68, 0x74,
+	0x12, 0x1c, 0x0a, 0x09, 0x43, 0x6f, 0x76, 0x65, 0x72, 0x52, 0x61, 0x74, 0x65, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x09, 0x43, 0x6f, 0x76, 0x65, 0x72, 0x52, 0x61, 0x74, 0x65, 0x12, 0x20,
+	0x0a, 0x0b, 0x4c, 0x42, 0x50, 0x48, 0x61, 0x73, 0x68, 0x43, 0x6f, 0x64, 0x65, 0x18, 0x07, 0x20,
+	0x03, 0x28, 0x03, 0x52, 0x0b, 0x4c, 0x42, 0x50, 0x48, 0x61, 0x73, 0x68, 0x43, 0x6f, 0x64, 0x65,
+	0x12, 0x1a, 0x0a, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x55, 0x72, 0x6c, 0x18, 0x08, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x55, 0x72, 0x6c, 0x22, 0x76, 0x0a, 0x20,
+	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x42, 0x65, 0x74, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x73, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
+	0x12, 0x52, 0x0a, 0x06, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x3a, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f,
+	0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
+	0x73, 0x2e, 0x56, 0x6f, 0x64, 0x42, 0x65, 0x74, 0x74, 0x65, 0x72, 0x46, 0x72, 0x61, 0x6d, 0x65,
+	0x44, 0x61, 0x74, 0x61, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x06, 0x46, 0x72,
+	0x61, 0x6d, 0x65, 0x73, 0x22, 0x89, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41,
+	0x75, 0x64, 0x69, 0x6f, 0x49, 0x6e, 0x66, 0x6f, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x55,
+	0x72, 0x69, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x55,
+	0x72, 0x69, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x08, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x16,
+	0x0a, 0x06, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x6c, 0x61, 0x79, 0x55, 0x72,
+	0x6c, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x50, 0x6c, 0x61, 0x79, 0x55, 0x72, 0x6c,
+	0x22, 0x9f, 0x01, 0x0a, 0x1b, 0x56, 0x6f, 0x64, 0x41, 0x53, 0x52, 0x55, 0x74, 0x74, 0x65, 0x72,
+	0x61, 0x6e, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x64, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x12, 0x12, 0x0a, 0x04, 0x54, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x54, 0x65, 0x78, 0x74, 0x12, 0x24, 0x0a, 0x0d, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x12, 0x20, 0x0a, 0x0b, 0x45, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52,
+	0x0b, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x12, 0x24, 0x0a, 0x0d,
+	0x42, 0x6c, 0x61, 0x6e, 0x6b, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x0d, 0x42, 0x6c, 0x61, 0x6e, 0x6b, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x22, 0x84, 0x02, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x41, 0x53, 0x52, 0x55, 0x74, 0x74,
+	0x65, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x12,
+	0x0a, 0x04, 0x54, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x65,
+	0x78, 0x74, 0x12, 0x24, 0x0a, 0x0d, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x4d,
+	0x69, 0x6c, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0d, 0x53, 0x74, 0x61, 0x72, 0x74,
+	0x54, 0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x12, 0x20, 0x0a, 0x0b, 0x45, 0x6e, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x45,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x12, 0x51, 0x0a, 0x05, 0x57, 0x6f,
+	0x72, 0x64, 0x73, 0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x3b, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x53,
+	0x52, 0x55, 0x74, 0x74, 0x65, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x64, 0x46, 0x6f,
+	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x05, 0x57, 0x6f, 0x72, 0x64, 0x73, 0x12, 0x1a, 0x0a,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x53, 0x70, 0x65,
+	0x65, 0x63, 0x68, 0x52, 0x61, 0x74, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x53,
+	0x70, 0x65, 0x65, 0x63, 0x68, 0x52, 0x61, 0x74, 0x65, 0x22, 0x4e, 0x0a, 0x1c, 0x56, 0x6f, 0x64,
+	0x41, 0x53, 0x52, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x50, 0x72, 0x6f,
+	0x62, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x50, 0x72, 0x6f, 0x62, 0x12, 0x1a, 0x0a,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x22, 0xdd, 0x02, 0x0a, 0x12, 0x56, 0x6f,
+	0x64, 0x41, 0x53, 0x52, 0x49, 0x6e, 0x66, 0x6f, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x12, 0x12, 0x0a, 0x04, 0x54, 0x65, 0x78, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x54, 0x65, 0x78, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e,
+	0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x64,
+	0x65, 0x6e, 0x63, 0x65, 0x12, 0x57, 0x0a, 0x0a, 0x55, 0x74, 0x74, 0x65, 0x72, 0x61, 0x6e, 0x63,
+	0x65, 0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x37, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x53, 0x52,
+	0x55, 0x74, 0x74, 0x65, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69,
+	0x74, 0x52, 0x0a, 0x55, 0x74, 0x74, 0x65, 0x72, 0x61, 0x6e, 0x63, 0x65, 0x73, 0x12, 0x1a, 0x0a,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x12, 0x66, 0x0a, 0x0f, 0x4c, 0x61, 0x6e,
+	0x67, 0x75, 0x61, 0x67, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x05, 0x20, 0x03,
+	0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
+	0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e,
+	0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x53, 0x52, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61,
+	0x67, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x52, 0x0f, 0x4c, 0x61, 0x6e, 0x67, 0x75, 0x61, 0x67, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x73, 0x12, 0x1e, 0x0a, 0x0a, 0x53, 0x70, 0x65, 0x65, 0x63, 0x68, 0x52, 0x61, 0x74, 0x65, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x53, 0x70, 0x65, 0x65, 0x63, 0x68, 0x52, 0x61, 0x74,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x06, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x22, 0x78, 0x0a, 0x2e, 0x56, 0x6f, 0x64,
+	0x47, 0x65, 0x74, 0x41, 0x75, 0x74, 0x6f, 0x6d, 0x61, 0x74, 0x69, 0x63, 0x53, 0x70, 0x65, 0x65,
+	0x63, 0x68, 0x52, 0x65, 0x63, 0x6f, 0x67, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72,
+	0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x46, 0x0a, 0x04, 0x49,
+	0x6e, 0x66, 0x6f, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x53,
+	0x52, 0x49, 0x6e, 0x66, 0x6f, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x04, 0x49,
+	0x6e, 0x66, 0x6f, 0x22, 0x71, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44, 0x54, 0x69, 0x6d,
+	0x65, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x22,
+	0x0a, 0x0c, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0c, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x53,
+	0x65, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x53, 0x65, 0x63,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x53,
+	0x65, 0x63, 0x12, 0x12, 0x0a, 0x04, 0x50, 0x72, 0x6f, 0x62, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x04, 0x50, 0x72, 0x6f, 0x62, 0x22, 0xa2, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x41, 0x45,
+	0x44, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x49, 0x74, 0x65, 0x6d, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64,
+	0x69, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x55, 0x74, 0x74, 0x50,
+	0x72, 0x6f, 0x62, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x07, 0x55, 0x74, 0x74, 0x50, 0x72,
+	0x6f, 0x62, 0x12, 0x57, 0x0a, 0x0a, 0x54, 0x69, 0x6d, 0x65, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x73,
+	0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x37, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
+	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44, 0x54, 0x69,
+	0x6d, 0x65, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52,
+	0x0a, 0x54, 0x69, 0x6d, 0x65, 0x52, 0x61, 0x6e, 0x67, 0x65, 0x73, 0x22, 0x37, 0x0a, 0x17, 0x56,
+	0x6f, 0x64, 0x41, 0x45, 0x44, 0x45, 0x6d, 0x62, 0x65, 0x64, 0x64, 0x69, 0x6e, 0x67, 0x46, 0x6f,
+	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x45, 0x6d, 0x62, 0x65, 0x64, 0x64,
+	0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x03, 0x28, 0x01, 0x52, 0x09, 0x45, 0x6d, 0x62, 0x65, 0x64,
+	0x64, 0x69, 0x6e, 0x67, 0x22, 0xc6, 0x01, 0x0a, 0x12, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44, 0x49,
+	0x6e, 0x66, 0x6f, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x57, 0x0a, 0x0a, 0x45,
+	0x76, 0x65, 0x6e, 0x74, 0x49, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x37, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x2e, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x49, 0x74, 0x65, 0x6d,
+	0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x0a, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x49,
+	0x74, 0x65, 0x6d, 0x73, 0x12, 0x57, 0x0a, 0x0a, 0x45, 0x6d, 0x62, 0x65, 0x64, 0x64, 0x69, 0x6e,
+	0x67, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x37, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44,
+	0x45, 0x6d, 0x62, 0x65, 0x64, 0x64, 0x69, 0x6e, 0x67, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69,
+	0x74, 0x52, 0x0a, 0x45, 0x6d, 0x62, 0x65, 0x64, 0x64, 0x69, 0x6e, 0x67, 0x73, 0x22, 0x71, 0x0a,
+	0x27, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x75, 0x64, 0x69, 0x6f, 0x45, 0x76, 0x65, 0x6e,
+	0x74, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64,
+	0x69, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x46, 0x0a, 0x04, 0x49, 0x6e, 0x66, 0x6f,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
+	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x41, 0x45, 0x44, 0x49, 0x6e,
+	0x66, 0x6f, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x04, 0x49, 0x6e, 0x66, 0x6f,
+	0x22, 0x68, 0x0a, 0x12, 0x56, 0x6f, 0x64, 0x53, 0x49, 0x44, 0x49, 0x74, 0x65, 0x6d, 0x46, 0x6f,
+	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x53, 0x49, 0x44, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x03, 0x53, 0x49, 0x44, 0x12, 0x1e, 0x0a, 0x0a, 0x43, 0x6f, 0x6e, 0x66,
+	0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x0a, 0x43, 0x6f,
+	0x6e, 0x66, 0x69, 0x64, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x6c, 0x69, 0x63,
+	0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x53,
+	0x6c, 0x69, 0x63, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x22, 0xc5, 0x01, 0x0a, 0x29, 0x56,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x70, 0x65, 0x61, 0x6b, 0x65, 0x72, 0x49, 0x64, 0x65, 0x6e,
+	0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64,
+	0x69, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x52, 0x0a, 0x0a, 0x43, 0x61, 0x6e, 0x64,
+	0x69, 0x64, 0x61, 0x74, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x32, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
+	0x64, 0x53, 0x49, 0x44, 0x49, 0x74, 0x65, 0x6d, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x52, 0x0a, 0x43, 0x61, 0x6e, 0x64, 0x69, 0x64, 0x61, 0x74, 0x65, 0x73, 0x12, 0x24, 0x0a, 0x0d,
+	0x53, 0x6c, 0x69, 0x63, 0x65, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x0d, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x44, 0x75, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x1e, 0x0a, 0x0a, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x43, 0x6f, 0x75, 0x6e, 0x74,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a, 0x53, 0x6c, 0x69, 0x63, 0x65, 0x43, 0x6f, 0x75,
+	0x6e, 0x74, 0x2a, 0x87, 0x03, 0x0a, 0x20, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45,
+	0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46,
+	0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x12, 0x27, 0x0a, 0x23, 0x46, 0x70, 0x73, 0x56, 0x6f,
+	0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69, 0x6e, 0x67,
+	0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x10, 0x00,
+	0x12, 0x31, 0x0a, 0x2d, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74,
+	0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69,
+	0x74, 0x10, 0x01, 0x12, 0x2f, 0x0a, 0x2b, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x65,
+	0x72, 0x73, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64,
+	0x69, 0x74, 0x10, 0x02, 0x12, 0x2c, 0x0a, 0x28, 0x43, 0x75, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69,
+	0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74,
+	0x10, 0x03, 0x12, 0x37, 0x0a, 0x33, 0x46, 0x70, 0x73, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x4d, 0x61,
+	0x78, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d,
+	0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x10, 0x04, 0x12, 0x37, 0x0a, 0x33, 0x46,
+	0x70, 0x73, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x4d, 0x69, 0x6e, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x4e,
+	0x75, 0x6d, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64,
+	0x69, 0x74, 0x10, 0x05, 0x12, 0x36, 0x0a, 0x32, 0x4f, 0x6e, 0x6c, 0x79, 0x46, 0x69, 0x72, 0x73,
+	0x74, 0x4c, 0x61, 0x73, 0x74, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x56, 0x6f, 0x64, 0x46, 0x72, 0x61,
+	0x6d, 0x65, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x69, 0x6e, 0x67, 0x4f, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x10, 0x06, 0x42, 0xcc, 0x01, 0x0a,
+	0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
+	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65,
+	0x6c, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x42, 0x08, 0x56, 0x6f, 0x64, 0x4d,
+	0x65, 0x64, 0x69, 0x61, 0x50, 0x01, 0x5a, 0x41, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f,
+	0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2f, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xc2,
+	0x02, 0x00, 0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x42, 0x75, 0x73,
+	0x69, 0x6e, 0x65, 0x73, 0x73, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -862,37 +2369,69 @@ func file_vod_business_vod_media_proto_rawDescGZIP() []byte {
 	return file_vod_business_vod_media_proto_rawDescData
 }
 
-var file_vod_business_vod_media_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_vod_business_vod_media_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_vod_business_vod_media_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_vod_business_vod_media_proto_goTypes = []interface{}{
-	(*VodMediaBasicInfo)(nil),           // 0: Volcengine.Vod.Models.Business.VodMediaBasicInfo
-	(*VodMediaInfo)(nil),                // 1: Volcengine.Vod.Models.Business.VodMediaInfo
-	(*VodGetMediaInfosData)(nil),        // 2: Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	(*VodStoreUriGroup)(nil),            // 3: Volcengine.Vod.Models.Business.VodStoreUriGroup
-	(*VodGetRecPosterData)(nil),         // 4: Volcengine.Vod.Models.Business.VodGetRecPosterData
-	(*VodDeleteMediaData)(nil),          // 5: Volcengine.Vod.Models.Business.VodDeleteMediaData
-	(*VodDeleteTranscodesData)(nil),     // 6: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
-	(*VodGetMediaListData)(nil),         // 7: Volcengine.Vod.Models.Business.VodGetMediaListData
-	(*VodUpdateSubtitleStatusData)(nil), // 8: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
-	(*VodFileSubtitleInfo)(nil),         // 9: Volcengine.Vod.Models.Business.VodFileSubtitleInfo
-	(*VodGetSubtitleInfoListData)(nil),  // 10: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
-	(*VodSourceInfo)(nil),               // 11: Volcengine.Vod.Models.Business.VodSourceInfo
-	(*VodTranscodeInfo)(nil),            // 12: Volcengine.Vod.Models.Business.VodTranscodeInfo
-	(*VodSubtitleInfo)(nil),             // 13: Volcengine.Vod.Models.Business.VodSubtitleInfo
+	(VodFrameExtractingOptionForAudit)(0),                  // 0: Volcengine.Vod.Models.Business.VodFrameExtractingOptionForAudit
+	(*VodMediaBasicInfo)(nil),                              // 1: Volcengine.Vod.Models.Business.VodMediaBasicInfo
+	(*VodMediaInfo)(nil),                                   // 2: Volcengine.Vod.Models.Business.VodMediaInfo
+	(*VodGetMediaInfosData)(nil),                           // 3: Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	(*VodStoreUriGroup)(nil),                               // 4: Volcengine.Vod.Models.Business.VodStoreUriGroup
+	(*VodGetRecPosterData)(nil),                            // 5: Volcengine.Vod.Models.Business.VodGetRecPosterData
+	(*VodDeleteMediaData)(nil),                             // 6: Volcengine.Vod.Models.Business.VodDeleteMediaData
+	(*VodDeleteTranscodesData)(nil),                        // 7: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
+	(*VodGetMediaListData)(nil),                            // 8: Volcengine.Vod.Models.Business.VodGetMediaListData
+	(*VodUpdateSubtitleStatusData)(nil),                    // 9: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
+	(*VodFileSubtitleInfo)(nil),                            // 10: Volcengine.Vod.Models.Business.VodFileSubtitleInfo
+	(*VodGetSubtitleInfoListData)(nil),                     // 11: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
+	(*VodGetFramesOptionParamForAudit)(nil),                // 12: Volcengine.Vod.Models.Business.VodGetFramesOptionParamForAudit
+	(*VodFrameDataForAudit)(nil),                           // 13: Volcengine.Vod.Models.Business.VodFrameDataForAudit
+	(*VodGetFramesForAuditResult)(nil),                     // 14: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	(*VodBetterFrameDataForAudit)(nil),                     // 15: Volcengine.Vod.Models.Business.VodBetterFrameDataForAudit
+	(*VodGetBetterFramesForAuditResult)(nil),               // 16: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
+	(*VodGetAudioInfoForAuditResult)(nil),                  // 17: Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
+	(*VodASRUtteranceWordForAudit)(nil),                    // 18: Volcengine.Vod.Models.Business.VodASRUtteranceWordForAudit
+	(*VodASRUtteranceForAudit)(nil),                        // 19: Volcengine.Vod.Models.Business.VodASRUtteranceForAudit
+	(*VodASRLanguageDetailForAudit)(nil),                   // 20: Volcengine.Vod.Models.Business.VodASRLanguageDetailForAudit
+	(*VodASRInfoForAudit)(nil),                             // 21: Volcengine.Vod.Models.Business.VodASRInfoForAudit
+	(*VodGetAutomaticSpeechRecognitionForAuditResult)(nil), // 22: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
+	(*VodAEDTimeRangeForAudit)(nil),                        // 23: Volcengine.Vod.Models.Business.VodAEDTimeRangeForAudit
+	(*VodAEDEventItemForAudit)(nil),                        // 24: Volcengine.Vod.Models.Business.VodAEDEventItemForAudit
+	(*VodAEDEmbeddingForAudit)(nil),                        // 25: Volcengine.Vod.Models.Business.VodAEDEmbeddingForAudit
+	(*VodAEDInfoForAudit)(nil),                             // 26: Volcengine.Vod.Models.Business.VodAEDInfoForAudit
+	(*VodGetAudioEventDetectionForAuditResult)(nil),        // 27: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
+	(*VodSIDItemForAudit)(nil),                             // 28: Volcengine.Vod.Models.Business.VodSIDItemForAudit
+	(*VodGetSpeakerIdentificationForAuditResult)(nil),      // 29: Volcengine.Vod.Models.Business.VodGetSpeakerIdentificationForAuditResult
+	(*VodSourceInfo)(nil),                                  // 30: Volcengine.Vod.Models.Business.VodSourceInfo
+	(*VodTranscodeInfo)(nil),                               // 31: Volcengine.Vod.Models.Business.VodTranscodeInfo
+	(*VodSubtitleInfo)(nil),                                // 32: Volcengine.Vod.Models.Business.VodSubtitleInfo
 }
 var file_vod_business_vod_media_proto_depIdxs = []int32{
-	0,  // 0: Volcengine.Vod.Models.Business.VodMediaInfo.BasicInfo:type_name -> Volcengine.Vod.Models.Business.VodMediaBasicInfo
-	11, // 1: Volcengine.Vod.Models.Business.VodMediaInfo.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
-	12, // 2: Volcengine.Vod.Models.Business.VodMediaInfo.TranscodeInfos:type_name -> Volcengine.Vod.Models.Business.VodTranscodeInfo
-	1,  // 3: Volcengine.Vod.Models.Business.VodGetMediaInfosData.MediaInfoList:type_name -> Volcengine.Vod.Models.Business.VodMediaInfo
-	3,  // 4: Volcengine.Vod.Models.Business.VodGetRecPosterData.StoreUriGroups:type_name -> Volcengine.Vod.Models.Business.VodStoreUriGroup
-	1,  // 5: Volcengine.Vod.Models.Business.VodGetMediaListData.MediaInfoList:type_name -> Volcengine.Vod.Models.Business.VodMediaInfo
-	13, // 6: Volcengine.Vod.Models.Business.VodFileSubtitleInfo.SubtitleInfoList:type_name -> Volcengine.Vod.Models.Business.VodSubtitleInfo
-	9,  // 7: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData.FileSubtitleInfoList:type_name -> Volcengine.Vod.Models.Business.VodFileSubtitleInfo
-	8,  // [8:8] is the sub-list for method output_type
-	8,  // [8:8] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	1,  // 0: Volcengine.Vod.Models.Business.VodMediaInfo.BasicInfo:type_name -> Volcengine.Vod.Models.Business.VodMediaBasicInfo
+	30, // 1: Volcengine.Vod.Models.Business.VodMediaInfo.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	31, // 2: Volcengine.Vod.Models.Business.VodMediaInfo.TranscodeInfos:type_name -> Volcengine.Vod.Models.Business.VodTranscodeInfo
+	2,  // 3: Volcengine.Vod.Models.Business.VodGetMediaInfosData.MediaInfoList:type_name -> Volcengine.Vod.Models.Business.VodMediaInfo
+	4,  // 4: Volcengine.Vod.Models.Business.VodGetRecPosterData.StoreUriGroups:type_name -> Volcengine.Vod.Models.Business.VodStoreUriGroup
+	2,  // 5: Volcengine.Vod.Models.Business.VodGetMediaListData.MediaInfoList:type_name -> Volcengine.Vod.Models.Business.VodMediaInfo
+	32, // 6: Volcengine.Vod.Models.Business.VodFileSubtitleInfo.SubtitleInfoList:type_name -> Volcengine.Vod.Models.Business.VodSubtitleInfo
+	10, // 7: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData.FileSubtitleInfoList:type_name -> Volcengine.Vod.Models.Business.VodFileSubtitleInfo
+	0,  // 8: Volcengine.Vod.Models.Business.VodGetFramesOptionParamForAudit.Opt:type_name -> Volcengine.Vod.Models.Business.VodFrameExtractingOptionForAudit
+	13, // 9: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult.Frames:type_name -> Volcengine.Vod.Models.Business.VodFrameDataForAudit
+	15, // 10: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult.Frames:type_name -> Volcengine.Vod.Models.Business.VodBetterFrameDataForAudit
+	18, // 11: Volcengine.Vod.Models.Business.VodASRUtteranceForAudit.Words:type_name -> Volcengine.Vod.Models.Business.VodASRUtteranceWordForAudit
+	19, // 12: Volcengine.Vod.Models.Business.VodASRInfoForAudit.Utterances:type_name -> Volcengine.Vod.Models.Business.VodASRUtteranceForAudit
+	20, // 13: Volcengine.Vod.Models.Business.VodASRInfoForAudit.LanguageDetails:type_name -> Volcengine.Vod.Models.Business.VodASRLanguageDetailForAudit
+	21, // 14: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult.Info:type_name -> Volcengine.Vod.Models.Business.VodASRInfoForAudit
+	23, // 15: Volcengine.Vod.Models.Business.VodAEDEventItemForAudit.TimeRanges:type_name -> Volcengine.Vod.Models.Business.VodAEDTimeRangeForAudit
+	24, // 16: Volcengine.Vod.Models.Business.VodAEDInfoForAudit.EventItems:type_name -> Volcengine.Vod.Models.Business.VodAEDEventItemForAudit
+	25, // 17: Volcengine.Vod.Models.Business.VodAEDInfoForAudit.Embeddings:type_name -> Volcengine.Vod.Models.Business.VodAEDEmbeddingForAudit
+	26, // 18: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult.Info:type_name -> Volcengine.Vod.Models.Business.VodAEDInfoForAudit
+	28, // 19: Volcengine.Vod.Models.Business.VodGetSpeakerIdentificationForAuditResult.Candidates:type_name -> Volcengine.Vod.Models.Business.VodSIDItemForAudit
+	20, // [20:20] is the sub-list for method output_type
+	20, // [20:20] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_vod_business_vod_media_proto_init() }
@@ -1034,19 +2573,236 @@ func file_vod_business_vod_media_proto_init() {
 				return nil
 			}
 		}
+		file_vod_business_vod_media_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetFramesOptionParamForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodFrameDataForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetFramesForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodBetterFrameDataForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetBetterFramesForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAudioInfoForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodASRUtteranceWordForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodASRUtteranceForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodASRLanguageDetailForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodASRInfoForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAutomaticSpeechRecognitionForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAEDTimeRangeForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAEDEventItemForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAEDEmbeddingForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAEDInfoForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetAudioEventDetectionForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSIDItemForAudit); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_business_vod_media_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetSpeakerIdentificationForAuditResult); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_business_vod_media_proto_rawDesc,
-			NumEnums:      0,
-			NumMessages:   11,
+			NumEnums:      1,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_vod_business_vod_media_proto_goTypes,
 		DependencyIndexes: file_vod_business_vod_media_proto_depIdxs,
+		EnumInfos:         file_vod_business_vod_media_proto_enumTypes,
 		MessageInfos:      file_vod_business_vod_media_proto_msgTypes,
 	}.Build()
 	File_vod_business_vod_media_proto = out.File
