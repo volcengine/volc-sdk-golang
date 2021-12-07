@@ -127,26 +127,96 @@ func (req *VodUpdateSubtitleInfoRequest) Validate() (privateErrorCodeStr string,
 	return
 }
 func (req *VodGetAuditFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
 
 	return
 }
 func (req *VodGetMLFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
+	if len(req.GetFrameOpt()) == 0 {
+		privateErrorCodeStr = "InvalidFrameOpt"
+		err = fmt.Errorf("%s is empty", req.GetFrameOpt())
+		return
+	}
 
 	return
 }
 func (req *VodGetBetterFramesForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
+	if len(req.GetCoverRate()) == 0 {
+		privateErrorCodeStr = "InvalidCoverRate"
+		err = fmt.Errorf("%s is empty", req.GetCoverRate())
+		return
+	}
 
 	return
 }
 func (req *VodGetAudioInfoForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
 
 	return
 }
 func (req *VodGetAutomaticSpeechRecognitionForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
 
 	return
 }
 func (req *VodGetAudioEventDetectionForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetVid()) == 0 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s is empty", req.GetVid())
+		return
+	}
+	if len(req.GetVid()) != 32 {
+		privateErrorCodeStr = "InvalidVid"
+		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
+		return
+	}
 
 	return
 }
