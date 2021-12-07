@@ -305,3 +305,29 @@ type CdnIp struct {
 	Ip   string `json:"Ip"`
 	Cidr string `json:"Cidr,omitempty"`
 }
+
+type DescribeCdnDataDetailParam struct {
+	StartTime int64
+	EndTime   int64
+	Metric    string
+	Domain    string
+	Interval  string
+	Protocol  string
+	IpVersion string
+}
+
+type DescribeCdnDataDetailResponse struct {
+	ResponseMetadata *base.ResponseMetadata `json:"ResponseMetadata"`
+	Result           DescribeCdnDataDetail  `json:"Result"`
+}
+
+type DescribeCdnDataDetail struct {
+	Domain      string
+	DataDetails []DataDetail
+}
+
+type DataDetail struct {
+	Isp     string
+	Region  string
+	Metrics []MetricStatData
+}

@@ -70,3 +70,19 @@ func TestCDN_DescribeCdnDomainTopData(t *testing.T) {
 	assert.NotEmpty(t, resp.Result.Domain)
 	assert.NotEmpty(t, resp.Result.TopDataDetails)
 }
+
+func TestCDN_DescribeCdnDataDetail(t *testing.T) {
+	resp, err := DefaultInstance.DescribeCdnDataDetail(&cdn.DescribeCdnDataDetailParam{
+		StartTime: testStartTime,
+		EndTime:   testEndTime,
+		Metric:    "bandwidth",
+		Domain:    "example.com",
+		Interval:  "5min",
+		Protocol:  "https",
+		IpVersion: "ipv4",
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.Domain)
+	assert.NotEmpty(t, resp.Result.DataDetails)
+}
