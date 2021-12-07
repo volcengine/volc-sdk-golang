@@ -150,10 +150,6 @@ func (req *VodGetAudioEventDetectionForAuditRequest) Validate() (privateErrorCod
 
 	return
 }
-func (req *VodGetSpeakerIdentificationForAuditRequest) Validate() (privateErrorCodeStr string, err error) {
-
-	return
-}
 func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err error) {
 
 	return
