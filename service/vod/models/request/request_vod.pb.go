@@ -1647,10 +1647,10 @@ type VodGetAuditFramesForAuditRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vid               string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`                              //视频ID
-	Strategy          string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"`                    //审核帧模板信息中的Strategy，抽帧策略
-	MinNumberOfFrames int32  `protobuf:"varint,3,opt,name=MinNumberOfFrames,proto3" json:"MinNumberOfFrames,omitempty"` //最小帧数，未设置时以服务配置默认值为准
-	MaxNumberOfFrames int32  `protobuf:"varint,4,opt,name=MaxNumberOfFrames,proto3" json:"MaxNumberOfFrames,omitempty"` //最大帧数，未设置时以服务配置默认值为准
+	Vid               string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`                             //视频ID
+	Strategy          string `protobuf:"bytes,2,opt,name=Strategy,proto3" json:"Strategy,omitempty"`                   //审核帧模板信息中的Strategy，抽帧策略
+	MinNumberOfFrames string `protobuf:"bytes,3,opt,name=MinNumberOfFrames,proto3" json:"MinNumberOfFrames,omitempty"` //最小帧数，未设置时以服务配置默认值为准
+	MaxNumberOfFrames string `protobuf:"bytes,4,opt,name=MaxNumberOfFrames,proto3" json:"MaxNumberOfFrames,omitempty"` //最大帧数，未设置时以服务配置默认值为准
 }
 
 func (x *VodGetAuditFramesForAuditRequest) Reset() {
@@ -1699,18 +1699,18 @@ func (x *VodGetAuditFramesForAuditRequest) GetStrategy() string {
 	return ""
 }
 
-func (x *VodGetAuditFramesForAuditRequest) GetMinNumberOfFrames() int32 {
+func (x *VodGetAuditFramesForAuditRequest) GetMinNumberOfFrames() string {
 	if x != nil {
 		return x.MinNumberOfFrames
 	}
-	return 0
+	return ""
 }
 
-func (x *VodGetAuditFramesForAuditRequest) GetMaxNumberOfFrames() int32 {
+func (x *VodGetAuditFramesForAuditRequest) GetMaxNumberOfFrames() string {
 	if x != nil {
 		return x.MaxNumberOfFrames
 	}
-	return 0
+	return ""
 }
 
 type VodGetMLFramesForAuditRequest struct {
@@ -1723,15 +1723,15 @@ type VodGetMLFramesForAuditRequest struct {
 	FrameOpt string `protobuf:"bytes,3,opt,name=FrameOpt,proto3" json:"FrameOpt,omitempty"` //抽帧方式,参考VodFrameExtractingOptionForAudit
 	FrameFps string `protobuf:"bytes,4,opt,name=FrameFps,proto3" json:"FrameFps,omitempty"` //抽帧方式选择Fps 或
 	// FpsLimitFrameNumber时生效,表示抽帧的帧率,生效时需要保证大于0
-	NumberOfFrames    string `protobuf:"bytes,5,opt,name=NumberOfFrames,proto3" json:"NumberOfFrames,omitempty"`         //抽帧方式选择NumberOfFrames时生效,表示需要多少帧,生效时需要保证大于0
-	FrameNumbers      string `protobuf:"bytes,6,opt,name=FrameNumbers,proto3" json:"FrameNumbers,omitempty"`             //抽帧方式选择FrameNumbers时生效，逗号分隔多个Number,表示需要获取的帧的帧号列表,生效时需要保证不为空
-	CutTimeMills      string `protobuf:"bytes,7,opt,name=CutTimeMills,proto3" json:"CutTimeMills,omitempty"`             //抽帧方式选择CutTimes时生效,逗号分割,表示需要获取的帧的时间戳(ms)列表，生效时需要保证数组不为空
-	NeedFirstFrame    string `protobuf:"bytes,8,opt,name=NeedFirstFrame,proto3" json:"NeedFirstFrame,omitempty"`         //需要首帧, 默认0，支持设置： 0-否，1-是
-	NeedLastFrame     string `protobuf:"bytes,9,opt,name=NeedLastFrame,proto3" json:"NeedLastFrame,omitempty"`           //需要尾帧, 默认0，支持设置： 0-否，1-是
-	StartTimeMill     string `protobuf:"bytes,10,opt,name=StartTimeMill,proto3" json:"StartTimeMill,omitempty"`          //从视频的第几秒开始抽帧，单位:ms
-	Interval          string `protobuf:"bytes,11,opt,name=Interval,proto3" json:"Interval,omitempty"`                    //抽帧作用的时间区间，单位:ms
-	MinNumberOfFrames int32  `protobuf:"varint,12,opt,name=MinNumberOfFrames,proto3" json:"MinNumberOfFrames,omitempty"` //抽帧方式选择FpsLimitNumberOfFrames时生效,表示限制的最小帧数,为0表示不限制
-	MaxNumberOfFrames int32  `protobuf:"varint,13,opt,name=MaxNumberOfFrames,proto3" json:"MaxNumberOfFrames,omitempty"` //抽帧方式选择FpsLimitNumberOfFrames时生效,表示限制的最大帧数,为0表示不限制
+	NumberOfFrames    string `protobuf:"bytes,5,opt,name=NumberOfFrames,proto3" json:"NumberOfFrames,omitempty"`        //抽帧方式选择NumberOfFrames时生效,表示需要多少帧,生效时需要保证大于0
+	FrameNumbers      string `protobuf:"bytes,6,opt,name=FrameNumbers,proto3" json:"FrameNumbers,omitempty"`            //抽帧方式选择FrameNumbers时生效，逗号分隔多个Number,表示需要获取的帧的帧号列表,生效时需要保证不为空
+	CutTimeMills      string `protobuf:"bytes,7,opt,name=CutTimeMills,proto3" json:"CutTimeMills,omitempty"`            //抽帧方式选择CutTimes时生效,逗号分割,表示需要获取的帧的时间戳(ms)列表，生效时需要保证数组不为空
+	NeedFirstFrame    string `protobuf:"bytes,8,opt,name=NeedFirstFrame,proto3" json:"NeedFirstFrame,omitempty"`        //需要首帧, 默认0，支持设置： 0-否，1-是
+	NeedLastFrame     string `protobuf:"bytes,9,opt,name=NeedLastFrame,proto3" json:"NeedLastFrame,omitempty"`          //需要尾帧, 默认0，支持设置： 0-否，1-是
+	StartTimeMill     string `protobuf:"bytes,10,opt,name=StartTimeMill,proto3" json:"StartTimeMill,omitempty"`         //从视频的第几秒开始抽帧，单位:ms
+	Interval          string `protobuf:"bytes,11,opt,name=Interval,proto3" json:"Interval,omitempty"`                   //抽帧作用的时间区间，单位:ms
+	MinNumberOfFrames string `protobuf:"bytes,12,opt,name=MinNumberOfFrames,proto3" json:"MinNumberOfFrames,omitempty"` //抽帧方式选择FpsLimitNumberOfFrames时生效,表示限制的最小帧数,为0表示不限制
+	MaxNumberOfFrames string `protobuf:"bytes,13,opt,name=MaxNumberOfFrames,proto3" json:"MaxNumberOfFrames,omitempty"` //抽帧方式选择FpsLimitNumberOfFrames时生效,表示限制的最大帧数,为0表示不限制
 }
 
 func (x *VodGetMLFramesForAuditRequest) Reset() {
@@ -1843,18 +1843,18 @@ func (x *VodGetMLFramesForAuditRequest) GetInterval() string {
 	return ""
 }
 
-func (x *VodGetMLFramesForAuditRequest) GetMinNumberOfFrames() int32 {
+func (x *VodGetMLFramesForAuditRequest) GetMinNumberOfFrames() string {
 	if x != nil {
 		return x.MinNumberOfFrames
 	}
-	return 0
+	return ""
 }
 
-func (x *VodGetMLFramesForAuditRequest) GetMaxNumberOfFrames() int32 {
+func (x *VodGetMLFramesForAuditRequest) GetMaxNumberOfFrames() string {
 	if x != nil {
 		return x.MaxNumberOfFrames
 	}
-	return 0
+	return ""
 }
 
 type VodGetBetterFramesForAuditRequest struct {
@@ -2409,10 +2409,10 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x56, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x18,
 	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x12,
 	0x2c, 0x0a, 0x11, 0x4d, 0x69, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72,
-	0x61, 0x6d, 0x65, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x4d, 0x69, 0x6e, 0x4e,
+	0x61, 0x6d, 0x65, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x4d, 0x69, 0x6e, 0x4e,
 	0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x2c, 0x0a,
 	0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d,
-	0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d,
+	0x65, 0x73, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d,
 	0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x22, 0xe1, 0x03, 0x0a, 0x1d,
 	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x4d, 0x4c, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x46, 0x6f,
 	0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a,
@@ -2439,10 +2439,10 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x69, 0x6d, 0x65, 0x4d, 0x69, 0x6c, 0x6c, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72,
 	0x76, 0x61, 0x6c, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72,
 	0x76, 0x61, 0x6c, 0x12, 0x2c, 0x0a, 0x11, 0x4d, 0x69, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72,
-	0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11,
+	0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
 	0x4d, 0x69, 0x6e, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65,
 	0x73, 0x12, 0x2c, 0x0a, 0x11, 0x4d, 0x61, 0x78, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66,
-	0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x4d, 0x61,
+	0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x4d, 0x61,
 	0x78, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x4f, 0x66, 0x46, 0x72, 0x61, 0x6d, 0x65, 0x73, 0x22,
 	0x6f, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x42, 0x65, 0x74, 0x74, 0x65, 0x72, 0x46,
 	0x72, 0x61, 0x6d, 0x65, 0x73, 0x46, 0x6f, 0x72, 0x41, 0x75, 0x64, 0x69, 0x74, 0x52, 0x65, 0x71,
