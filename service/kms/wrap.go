@@ -183,12 +183,12 @@ func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResp
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 	if req.NumberOfBytes != nil {
-		query.Set("NumberOfBytes ", strconv.Itoa(*req.NumberOfBytes))
+		query.Set("NumberOfBytes", strconv.Itoa(*req.NumberOfBytes))
 	}
 
 	reqBody := make(map[string]interface{})
 	if req.EncryptionContext != nil {
-		reqBody["EncryptionContext "] = req.EncryptionContext
+		reqBody["EncryptionContext"] = req.EncryptionContext
 	}
 
 	statusCode, err := p.commonHandlerJson("GenerateDataKey", query, reqBody, resp)
@@ -208,7 +208,7 @@ func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
 	query.Set("KeyName", req.KeyName)
 	reqBody := make(map[string]interface{})
 	if req.EncryptionContext != nil {
-		reqBody["EncryptionContext "] = req.EncryptionContext
+		reqBody["EncryptionContext"] = req.EncryptionContext
 	}
 	reqBody["Plaintext"] = req.Plaintext
 
@@ -226,7 +226,7 @@ func (p *KMS) Decrypt(req *DecryptRequest) (*DecryptResponse, int, error) {
 
 	reqBody := make(map[string]interface{})
 	if req.EncryptionContext != nil {
-		reqBody["EncryptionContext "] = req.EncryptionContext
+		reqBody["EncryptionContext"] = req.EncryptionContext
 	}
 	reqBody["CiphertextBlob"] = req.CiphertextBlob
 

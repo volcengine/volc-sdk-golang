@@ -2172,6 +2172,531 @@ func (x *VodStartWorkflowRequest) GetCallbackArgs() string {
 	return ""
 }
 
+type VodCreateSpaceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName   string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`     // 空间名
+	ProjectName string `protobuf:"bytes,2,opt,name=ProjectName,proto3" json:"ProjectName,omitempty"` // 项目名
+	Description string `protobuf:"bytes,3,opt,name=Description,proto3" json:"Description,omitempty"` // 描述
+	Region      string `protobuf:"bytes,4,opt,name=Region,proto3" json:"Region,omitempty"`           // 空间区域
+	UserName    string `protobuf:"bytes,5,opt,name=UserName,proto3" json:"UserName,omitempty"`       // 创建用户
+}
+
+func (x *VodCreateSpaceRequest) Reset() {
+	*x = VodCreateSpaceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodCreateSpaceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodCreateSpaceRequest) ProtoMessage() {}
+
+func (x *VodCreateSpaceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodCreateSpaceRequest.ProtoReflect.Descriptor instead.
+func (*VodCreateSpaceRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *VodCreateSpaceRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodCreateSpaceRequest) GetProjectName() string {
+	if x != nil {
+		return x.ProjectName
+	}
+	return ""
+}
+
+func (x *VodCreateSpaceRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *VodCreateSpaceRequest) GetRegion() string {
+	if x != nil {
+		return x.Region
+	}
+	return ""
+}
+
+func (x *VodCreateSpaceRequest) GetUserName() string {
+	if x != nil {
+		return x.UserName
+	}
+	return ""
+}
+
+type VodGetSpaceDetailRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+}
+
+func (x *VodGetSpaceDetailRequest) Reset() {
+	*x = VodGetSpaceDetailRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetSpaceDetailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetSpaceDetailRequest) ProtoMessage() {}
+
+func (x *VodGetSpaceDetailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetSpaceDetailRequest.ProtoReflect.Descriptor instead.
+func (*VodGetSpaceDetailRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *VodGetSpaceDetailRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+type VodListSpaceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Offset float64 `protobuf:"fixed64,1,opt,name=Offset,proto3" json:"Offset,omitempty"` // 查询游标
+	Limit  float64 `protobuf:"fixed64,2,opt,name=Limit,proto3" json:"Limit,omitempty"`   // 查询数量
+}
+
+func (x *VodListSpaceRequest) Reset() {
+	*x = VodListSpaceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodListSpaceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodListSpaceRequest) ProtoMessage() {}
+
+func (x *VodListSpaceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodListSpaceRequest.ProtoReflect.Descriptor instead.
+func (*VodListSpaceRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *VodListSpaceRequest) GetOffset() float64 {
+	if x != nil {
+		return x.Offset
+	}
+	return 0
+}
+
+func (x *VodListSpaceRequest) GetLimit() float64 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type VodGetSpaceConfigRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+}
+
+func (x *VodGetSpaceConfigRequest) Reset() {
+	*x = VodGetSpaceConfigRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetSpaceConfigRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetSpaceConfigRequest) ProtoMessage() {}
+
+func (x *VodGetSpaceConfigRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetSpaceConfigRequest.ProtoReflect.Descriptor instead.
+func (*VodGetSpaceConfigRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *VodGetSpaceConfigRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+type VodUpdateSpaceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName         string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`                 // 空间名
+	SourceProjectName string `protobuf:"bytes,2,opt,name=SourceProjectName,proto3" json:"SourceProjectName,omitempty"` // 原项目
+	TargetProjectName string `protobuf:"bytes,3,opt,name=TargetProjectName,proto3" json:"TargetProjectName,omitempty"` // 变更目标项目
+	Description       string `protobuf:"bytes,4,opt,name=Description,proto3" json:"Description,omitempty"`             // 描述
+}
+
+func (x *VodUpdateSpaceRequest) Reset() {
+	*x = VodUpdateSpaceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodUpdateSpaceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodUpdateSpaceRequest) ProtoMessage() {}
+
+func (x *VodUpdateSpaceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodUpdateSpaceRequest.ProtoReflect.Descriptor instead.
+func (*VodUpdateSpaceRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *VodUpdateSpaceRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodUpdateSpaceRequest) GetSourceProjectName() string {
+	if x != nil {
+		return x.SourceProjectName
+	}
+	return ""
+}
+
+func (x *VodUpdateSpaceRequest) GetTargetProjectName() string {
+	if x != nil {
+		return x.TargetProjectName
+	}
+	return ""
+}
+
+func (x *VodUpdateSpaceRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+// **********************************************************************
+// 分发加速管理
+// **********************************************************************
+type VodListDomainRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+}
+
+func (x *VodListDomainRequest) Reset() {
+	*x = VodListDomainRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodListDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodListDomainRequest) ProtoMessage() {}
+
+func (x *VodListDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodListDomainRequest.ProtoReflect.Descriptor instead.
+func (*VodListDomainRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *VodListDomainRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+type VodCreateCdnRefreshTaskRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+	Urls      string `protobuf:"bytes,2,opt,name=Urls,proto3" json:"Urls,omitempty"`           // 刷新Url或目录
+	Type      string `protobuf:"bytes,3,opt,name=Type,proto3" json:"Type,omitempty"`           // 刷新任务类型
+}
+
+func (x *VodCreateCdnRefreshTaskRequest) Reset() {
+	*x = VodCreateCdnRefreshTaskRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodCreateCdnRefreshTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodCreateCdnRefreshTaskRequest) ProtoMessage() {}
+
+func (x *VodCreateCdnRefreshTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodCreateCdnRefreshTaskRequest.ProtoReflect.Descriptor instead.
+func (*VodCreateCdnRefreshTaskRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *VodCreateCdnRefreshTaskRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodCreateCdnRefreshTaskRequest) GetUrls() string {
+	if x != nil {
+		return x.Urls
+	}
+	return ""
+}
+
+func (x *VodCreateCdnRefreshTaskRequest) GetType() string {
+	if x != nil {
+		return x.Type
+	}
+	return ""
+}
+
+type VodCreateCdnPreloadTaskRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+	Urls      string `protobuf:"bytes,2,opt,name=Urls,proto3" json:"Urls,omitempty"`           // 预热Url列表
+}
+
+func (x *VodCreateCdnPreloadTaskRequest) Reset() {
+	*x = VodCreateCdnPreloadTaskRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodCreateCdnPreloadTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodCreateCdnPreloadTaskRequest) ProtoMessage() {}
+
+func (x *VodCreateCdnPreloadTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodCreateCdnPreloadTaskRequest.ProtoReflect.Descriptor instead.
+func (*VodCreateCdnPreloadTaskRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *VodCreateCdnPreloadTaskRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodCreateCdnPreloadTaskRequest) GetUrls() string {
+	if x != nil {
+		return x.Urls
+	}
+	return ""
+}
+
+// **********************************************************************
+// 回调管理
+// **********************************************************************
+type VodAddCallbackSubscriptionRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
+	URL       string `protobuf:"bytes,2,opt,name=URL,proto3" json:"URL,omitempty"`             // 订阅URL
+}
+
+func (x *VodAddCallbackSubscriptionRequest) Reset() {
+	*x = VodAddCallbackSubscriptionRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_request_request_vod_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAddCallbackSubscriptionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAddCallbackSubscriptionRequest) ProtoMessage() {}
+
+func (x *VodAddCallbackSubscriptionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_request_request_vod_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAddCallbackSubscriptionRequest.ProtoReflect.Descriptor instead.
+func (*VodAddCallbackSubscriptionRequest) Descriptor() ([]byte, []int) {
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *VodAddCallbackSubscriptionRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodAddCallbackSubscriptionRequest) GetURL() string {
+	if x != nil {
+		return x.URL
+	}
+	return ""
+}
+
 var File_vod_request_request_vod_proto protoreflect.FileDescriptor
 
 var file_vod_request_request_vod_proto_rawDesc = []byte{
@@ -2510,20 +3035,75 @@ var file_vod_request_request_vod_proto_rawDesc = []byte{
 	0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x50, 0x72,
 	0x69, 0x6f, 0x72, 0x69, 0x74, 0x79, 0x12, 0x22, 0x0a, 0x0c, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61,
 	0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x43, 0x61,
-	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x42, 0xc8, 0x01, 0x0a, 0x28, 0x63,
-	0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e,
-	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x50, 0x01, 0x5a, 0x40, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
-	0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c,
-	0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f,
-	0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02, 0x1f,
-	0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64,
-	0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xe2,
-	0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56,
-	0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x41, 0x72, 0x67, 0x73, 0x22, 0xad, 0x01, 0x0a, 0x15, 0x56,
+	0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
+	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x1a,
+	0x0a, 0x08, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x38, 0x0a, 0x18, 0x56, 0x6f,
+	0x64, 0x47, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x22, 0x43, 0x0a, 0x13, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x4f,
+	0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x4f, 0x66, 0x66,
+	0x73, 0x65, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x01, 0x52, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0x38, 0x0a, 0x18, 0x56, 0x6f, 0x64,
+	0x47, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x22, 0xb3, 0x01, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74,
+	0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a,
+	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x53,
+	0x6f, 0x75, 0x72, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x50, 0x72,
+	0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x54, 0x61, 0x72,
+	0x67, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x6a,
+	0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x34, 0x0a, 0x14, 0x56, 0x6f, 0x64,
+	0x4c, 0x69, 0x73, 0x74, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22,
+	0x66, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x52,
+	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55,
+	0x72, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x22, 0x52, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x50, 0x72, 0x65, 0x6c, 0x6f, 0x61, 0x64, 0x54, 0x61,
+	0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70,
+	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x22, 0x53, 0x0a, 0x21, 0x56,
+	0x6f, 0x64, 0x41, 0x64, 0x64, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x53, 0x75, 0x62,
+	0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10,
+	0x0a, 0x03, 0x55, 0x52, 0x4c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x52, 0x4c,
+	0x42, 0xc8, 0x01, 0x0a, 0x28, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e,
+	0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0x56,
+	0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x50, 0x01, 0x5a, 0x40, 0x67, 0x69, 0x74,
+	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69,
+	0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61,
+	0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01,
+	0xd8, 0x01, 0x01, 0xca, 0x02, 0x1f, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72,
+	0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c,
+	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2538,7 +3118,7 @@ func file_vod_request_request_vod_proto_rawDescGZIP() []byte {
 	return file_vod_request_request_vod_proto_rawDescData
 }
 
-var file_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_vod_request_request_vod_proto_goTypes = []interface{}{
 	(*VodGetPlayInfoRequest)(nil),                           // 0: Volcengine.Vod.Models.Request.VodGetPlayInfoRequest
 	(*VodGetOriginalPlayInfoRequest)(nil),                   // 1: Volcengine.Vod.Models.Request.VodGetOriginalPlayInfoRequest
@@ -2569,19 +3149,28 @@ var file_vod_request_request_vod_proto_goTypes = []interface{}{
 	(*VodGetAutomaticSpeechRecognitionForAuditRequest)(nil), // 26: Volcengine.Vod.Models.Request.VodGetAutomaticSpeechRecognitionForAuditRequest
 	(*VodGetAudioEventDetectionForAuditRequest)(nil),        // 27: Volcengine.Vod.Models.Request.VodGetAudioEventDetectionForAuditRequest
 	(*VodStartWorkflowRequest)(nil),                         // 28: Volcengine.Vod.Models.Request.VodStartWorkflowRequest
-	(*business.VodUrlUploadURLSet)(nil),                     // 29: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	(*wrappers.StringValue)(nil),                            // 30: google.protobuf.StringValue
-	(*business.WorkflowParams)(nil),                         // 31: Volcengine.Vod.Models.Business.WorkflowParams
+	(*VodCreateSpaceRequest)(nil),                           // 29: Volcengine.Vod.Models.Request.VodCreateSpaceRequest
+	(*VodGetSpaceDetailRequest)(nil),                        // 30: Volcengine.Vod.Models.Request.VodGetSpaceDetailRequest
+	(*VodListSpaceRequest)(nil),                             // 31: Volcengine.Vod.Models.Request.VodListSpaceRequest
+	(*VodGetSpaceConfigRequest)(nil),                        // 32: Volcengine.Vod.Models.Request.VodGetSpaceConfigRequest
+	(*VodUpdateSpaceRequest)(nil),                           // 33: Volcengine.Vod.Models.Request.VodUpdateSpaceRequest
+	(*VodListDomainRequest)(nil),                            // 34: Volcengine.Vod.Models.Request.VodListDomainRequest
+	(*VodCreateCdnRefreshTaskRequest)(nil),                  // 35: Volcengine.Vod.Models.Request.VodCreateCdnRefreshTaskRequest
+	(*VodCreateCdnPreloadTaskRequest)(nil),                  // 36: Volcengine.Vod.Models.Request.VodCreateCdnPreloadTaskRequest
+	(*VodAddCallbackSubscriptionRequest)(nil),               // 37: Volcengine.Vod.Models.Request.VodAddCallbackSubscriptionRequest
+	(*business.VodUrlUploadURLSet)(nil),                     // 38: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	(*wrappers.StringValue)(nil),                            // 39: google.protobuf.StringValue
+	(*business.WorkflowParams)(nil),                         // 40: Volcengine.Vod.Models.Business.WorkflowParams
 }
 var file_vod_request_request_vod_proto_depIdxs = []int32{
-	29, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	30, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
-	30, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
-	30, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
-	30, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
-	30, // 5: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
-	30, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
-	31, // 7: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
+	38, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	39, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
+	39, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
+	39, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
+	39, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
+	39, // 5: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
+	39, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
+	40, // 7: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
 	8,  // [8:8] is the sub-list for method output_type
 	8,  // [8:8] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name
@@ -2943,6 +3532,114 @@ func file_vod_request_request_vod_proto_init() {
 				return nil
 			}
 		}
+		file_vod_request_request_vod_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodCreateSpaceRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetSpaceDetailRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListSpaceRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetSpaceConfigRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodUpdateSpaceRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListDomainRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodCreateCdnRefreshTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodCreateCdnPreloadTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAddCallbackSubscriptionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -2950,7 +3647,7 @@ func file_vod_request_request_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_request_request_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   29,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

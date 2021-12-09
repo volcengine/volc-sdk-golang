@@ -224,3 +224,39 @@ func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err 
 
 	return
 }
+func (req *VodCreateSpaceRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetSpaceDetailRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodListSpaceRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodGetSpaceConfigRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodUpdateSpaceRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodListDomainRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodCreateCdnRefreshTaskRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodCreateCdnPreloadTaskRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
+func (req *VodAddCallbackSubscriptionRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
