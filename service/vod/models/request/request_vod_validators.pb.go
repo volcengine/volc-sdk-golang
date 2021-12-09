@@ -225,10 +225,35 @@ func (req *VodStartWorkflowRequest) Validate() (privateErrorCodeStr string, err 
 	return
 }
 func (req *VodCreateSpaceRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetProjectName()) == 0 {
+		privateErrorCodeStr = "InvalidProjectName"
+		err = fmt.Errorf("%s is empty", req.GetProjectName())
+		return
+	}
+	if len(req.GetDescription()) == 0 {
+		privateErrorCodeStr = "InvalidDescription"
+		err = fmt.Errorf("%s is empty", req.GetDescription())
+		return
+	}
+	if len(req.GetRegion()) == 0 {
+		privateErrorCodeStr = "InvalidRegion"
+		err = fmt.Errorf("%s is empty", req.GetRegion())
+		return
+	}
 
 	return
 }
 func (req *VodGetSpaceDetailRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
 
 	return
 }
@@ -237,26 +262,76 @@ func (req *VodListSpaceRequest) Validate() (privateErrorCodeStr string, err erro
 	return
 }
 func (req *VodGetSpaceConfigRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
 
 	return
 }
 func (req *VodUpdateSpaceRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
 
 	return
 }
 func (req *VodListDomainRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
 
 	return
 }
 func (req *VodCreateCdnRefreshTaskRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetUrls()) == 0 {
+		privateErrorCodeStr = "InvalidUrls"
+		err = fmt.Errorf("%s is empty", req.GetUrls())
+		return
+	}
+	if len(req.GetType()) == 0 {
+		privateErrorCodeStr = "InvalidType"
+		err = fmt.Errorf("%s is empty", req.GetType())
+		return
+	}
 
 	return
 }
 func (req *VodCreateCdnPreloadTaskRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetUrls()) == 0 {
+		privateErrorCodeStr = "InvalidUrls"
+		err = fmt.Errorf("%s is empty", req.GetUrls())
+		return
+	}
 
 	return
 }
 func (req *VodAddCallbackSubscriptionRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetUrl()) == 0 {
+		privateErrorCodeStr = "InvalidUrl"
+		err = fmt.Errorf("%s is empty", req.GetUrl())
+		return
+	}
 
 	return
 }
