@@ -148,3 +148,18 @@ type Click2CallResponse struct {
 type Click2CallResult struct {
 	CallId string
 }
+
+type QueryAudioRecordFileUrlRequest struct {
+	CallId string
+}
+
+type QueryAudioRecordFileUrlData struct {
+	AudioRecordFileUrl string
+	AudioRecordLeftFileUrl string
+	AudioRecordRightFileUrl string
+}
+
+type QueryAudioRecordFileUrlResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           QueryAudioRecordFileUrlData
+}

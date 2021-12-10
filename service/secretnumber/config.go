@@ -33,8 +33,8 @@ func NewInstance() *SecretNumber {
 	return instance
 }
 
-func NewDataCenterInstance() *SecretNumber {
-	instance := &SecretNumber{
+func NewDataCenterInstance() *DataCenter {
+	instance := &DataCenter{
 		Client: base.NewClient(DataCenterServiceInfoMap[base.RegionCnNorth1], DataCenterApiInfoList),
 	}
 	return instance
@@ -64,17 +64,17 @@ var (
 			},
 			Credentials: base.Credentials{
 				Region:  base.RegionCnNorth1,
-				Service: "volc_secret_number",
+				Service: "volc_datacenter_http",
 			},
 		},
 	}
 
 	DataCenterApiInfoList = map[string]*base.ApiInfo{
-		"BindAXB": {
+		"QueryAudioRecordFileUrl": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"BindAXB"},
+				"Action":  []string{"QueryAudioRecordFileUrl"},
 				"Version": []string{"2020-09-01"},
 			},
 		},

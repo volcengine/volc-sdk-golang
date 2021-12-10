@@ -5,13 +5,15 @@ import (
 )
 
 const (
-	testAk = "testAK"
-	testSk = "testSK"
+	testAk = "testAk"
+	testSk = "testSk"
 )
 
 func init() {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
+	DefaultDataCenterInstance.Client.SetAccessKey(testAk)
+	DefaultDataCenterInstance.Client.SetSecretKey(testSk)
 }
 
 func TestSecretNumber_BindAXB(t *testing.T) {
@@ -150,6 +152,16 @@ func TestSecretNumber_Click2Call(t *testing.T) {
 		CalleeNumberPoolNo: "NP163517154204092175",
 	}
 	result, statusCode, err := DefaultInstance.Click2Call(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestDataCenter_QueryAudioRecordFileUrlClick2Call(t *testing.T) {
+	req := &QueryAudioRecordFileUrlRequest{
+		CallId:             "*",
+	}
+	result, statusCode, err := DefaultDataCenterInstance.QueryAudioRecordFileUrl(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
