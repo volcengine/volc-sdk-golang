@@ -264,6 +264,14 @@ var (
 			},
 		},
 
+		"GetImageStyleResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageStyleResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 		"GetImageOCR": {
 			Method: http.MethodPost,
 			Path:   "/",

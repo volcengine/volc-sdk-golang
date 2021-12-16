@@ -371,6 +371,17 @@ func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
 	return resp, nil
 }
 
+func (c *ImageX) GetImageStyleResult(req *GetImageStyleResultReq) (*GetImageStyleResultResp, error) {
+	query := url.Values{}
+	query.Add("ServiceId", req.ServiceId)
+	resp := new(GetImageStyleResultResp)
+	err := c.ImageXPost("GetImageStyleResult", query, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (c *ImageX) GetImageOCR(param *GetImageOCRParam) (*GetImageOCRResult, error) {
 	u := url.Values{}
 	u.Set("Scene", param.Scene)

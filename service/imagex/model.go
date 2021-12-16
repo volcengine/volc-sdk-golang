@@ -204,6 +204,23 @@ type FetchUrlResp struct {
 	FSize    int    `json:"FSize"`
 }
 
+// GetImageStyleResult
+type GetImageStyleResultReq struct {
+	ServiceId     string
+	StyleId       string            `json:"StyleId"`
+	Params        map[string]string `json:"Params"`
+	OutputFormat  string            `json:"OutputFormat"`
+	OutputQuality int               `json:"OutputQuality"`
+}
+
+type GetImageStyleResultResp struct {
+	ResUri       string `json:"ResUri"`
+	RenderDetail []struct {
+		Element string `json:"Element"`
+		ErrMsg  string `json:"ErrMsg"`
+	} `json:"RenderDetail"`
+}
+
 //GetImageOCR
 type GetImageOCRResult struct {
 	Scene     string                          `json:"Scene"`
