@@ -75,3 +75,18 @@ func TestBusinessSecurity_RiskResult(t *testing.T) {
 func TestBusinessSecurity_RiskDetection(t *testing.T) {
 	RiskDetection(3332, "login", "{\"operate_time\": 1615540603, \"uid\":123444}")
 }
+
+func ElementVerify(appId int64, service string, parameters string) {
+	res, err := DefaultInstance.ElementVerify(&ElementVerifyRequest{
+		AppId:      appId,      // write your app id
+		Service:    service,    // write business security service
+		Parameters: parameters, // write your parameters
+	})
+	fmt.Println(err)
+	if res != nil {
+		fmt.Println(*res)
+	}
+}
+func TestBusinessSecurity_ElementVerify(t *testing.T) {
+	ElementVerify(3332, "idcard_two_element_verify", "{\"operate_time\": 1615540603, \"idcard_no\": \"\", \"idcard_name\":\"\"}")
+}
