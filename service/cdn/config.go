@@ -75,21 +75,11 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
-		"DescribeCdnRegionAndIsp": {
-			Timeout: 60 * time.Second,
-			Method:  http.MethodPost,
-			Path:    "/",
+		"DescribeCdnDataDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DescribeCdnRegionAndIsp"},
-				"Version": []string{ServiceVersion},
-			},
-		},
-		"DescribeCdnDomainTopData": {
-			Timeout: 60 * time.Second,
-			Method:  http.MethodPost,
-			Path:    "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeCdnDomainTopData"},
+				"Action":  []string{"DescribeCdnDataDetail"},
 				"Version": []string{ServiceVersion},
 			},
 		},
@@ -102,12 +92,38 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"DescribeCdnDomainTopData": {
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnDomainTopData"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DescribeCdnRegionAndIsp": {
+			Timeout: 60 * time.Second,
+			Method:  http.MethodPost,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnRegionAndIsp"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 		"DescribeCdnAccessLog": {
 			Timeout: 60 * time.Second,
 			Method:  http.MethodPost,
 			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnAccessLog"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"ListCdnDomains": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnDomains"},
 				"Version": []string{ServiceVersion},
 			},
 		},
@@ -135,18 +151,34 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
-		"ListCdnDomains": {
+		"AddCdnDomain": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListCdnDomains"},
+				"Action":  []string{"AddCdnDomain"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"UpdateCdnConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCdnConfig"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DescribeCdnConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnConfig"},
 				"Version": []string{ServiceVersion},
 			},
 		},
 		"DescribeCdnUpperIp": {
 			Timeout: 60 * time.Second,
-			Method: http.MethodPost,
-			Path:   "/",
+			Method:  http.MethodPost,
+			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnUpperIp"},
 				"Version": []string{ServiceVersion},
