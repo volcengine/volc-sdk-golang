@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/cenkalti/backoff/v4"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -97,6 +98,13 @@ func (cred Credentials) Clone() Credentials {
 		SecretAccessKey: cred.SecretAccessKey,
 		AccessKeyID:     cred.AccessKeyID,
 		SessionToken:    cred.SessionToken,
+	}
+}
+
+// SetRetrySettings 设置重试策略
+func (client *Client) SetRetrySettings(retrySettings *RetrySettings) {
+	if retrySettings != nil {
+		client.ServiceInfo.Retry = *retrySettings
 	}
 }
 
@@ -239,6 +247,7 @@ func (client *Client) requestWithContentType(api string, query url.Values, body 
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
 	query = mergeQuery(query, apiInfo.Query)
+	retrySettings := getRetrySetting(&client.ServiceInfo.Retry, &apiInfo.Retry)
 
 	u := url.URL{
 		Scheme:   client.ServiceInfo.Scheme,
@@ -258,7 +267,20 @@ func (client *Client) requestWithContentType(api string, query url.Values, body 
 	if ct != "" {
 		req.Header.Set("Content-Type", ct)
 	}
-	return client.makeRequest(api, req, timeout)
+
+	var resp []byte
+	var code int
+
+	backoff.Retry(func() error {
+		var needRetry bool
+		resp, code, err, needRetry = client.makeRequest(api, req, timeout)
+		if needRetry {
+			return err
+		} else {
+			return backoff.Permanent(err)
+		}
+	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
+	return resp, code, err
 }
 
 // Post 发起Post请求
@@ -268,7 +290,7 @@ func (client *Client) Post(api string, query url.Values, form url.Values) ([]byt
 	return client.requestWithContentType(api, query, form.Encode(), "application/x-www-form-urlencoded")
 }
 
-func (client *Client) makeRequest(api string, req *http.Request, timeout time.Duration) ([]byte, int, error) {
+func (client *Client) makeRequest(api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool) {
 	req = client.ServiceInfo.Credentials.Sign(req)
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
@@ -277,18 +299,24 @@ func (client *Client) makeRequest(api string, req *http.Request, timeout time.Du
 
 	resp, err := client.Client.Do(req)
 	if err != nil {
-		return []byte(""), 500, err
+		// should retry when client sends request error.
+		return []byte(""), 500, err, true
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return []byte(""), resp.StatusCode, err
+		return []byte(""), resp.StatusCode, err, false
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body))
+		needRetry := false
+		// should retry when server returns 5xx error.
+		if resp.StatusCode >= http.StatusInternalServerError {
+			needRetry = true
+		}
+		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body)), needRetry
 	}
 
-	return body, resp.StatusCode, nil
+	return body, resp.StatusCode, nil, false
 }

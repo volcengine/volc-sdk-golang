@@ -17,7 +17,11 @@ import (
 	"github.com/google/uuid"
 )
 
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+var (
+	letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	defaultRetryTimes uint64 = 2
+	defaultRetryInterval = 1 * time.Second
+)
 
 func init() {
 	rand.Seed(time.Now().Unix())
@@ -94,6 +98,33 @@ func getTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
 		timeout = apiTimeout
 	}
 	return timeout
+}
+
+func getRetrySetting(serviceRetrySettings, apiRetrySettings *RetrySettings) *RetrySettings {
+	retrySettings := &RetrySettings{
+		AutoRetry:     false,
+		RetryTimes:    new(uint64),
+		RetryInterval: new(time.Duration),
+	}
+	if !apiRetrySettings.AutoRetry || !serviceRetrySettings.AutoRetry {
+		return retrySettings
+	}
+	retrySettings.AutoRetry = true
+	if serviceRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = serviceRetrySettings.RetryTimes
+	} else if apiRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = apiRetrySettings.RetryTimes
+	} else {
+		retrySettings.RetryTimes = &defaultRetryTimes
+	}
+	if serviceRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = serviceRetrySettings.RetryInterval
+	} else if apiRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = apiRetrySettings.RetryInterval
+	} else {
+		retrySettings.RetryInterval = &defaultRetryInterval
+	}
+	return retrySettings
 }
 
 func mergeQuery(query1, query2 url.Values) (query url.Values) {
