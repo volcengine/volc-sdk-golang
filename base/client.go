@@ -151,6 +151,10 @@ func (client *Client) SetCredential(c Credentials) {
 	if c.SessionToken != "" {
 		client.ServiceInfo.Credentials.SessionToken = c.SessionToken
 	}
+
+	if c.Service != "" {
+		client.ServiceInfo.Credentials.Service = c.Service
+	}
 }
 
 func (client *Client) SetTimeout(timeout time.Duration) {
