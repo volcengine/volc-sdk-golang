@@ -72,6 +72,24 @@ type Page struct {
 	Total    int64 `json:"Total" form:"Total"` // used when return page information in response, no need when request
 }
 
+type ElementVerifyRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type ElementVerifyResponse struct {
+	RequestId string            `json:"RequestId"`
+	Code      int               `json:"Code"`
+	Message   string            `json:"Message"`
+	Data      ElementVerifyData `json:"Data"`
+}
+
+type ElementVerifyData struct {
+	Status int    `json:"Status"`
+	Detail string `json:"Detail"`
+}
+
 func (r *RiskResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }
