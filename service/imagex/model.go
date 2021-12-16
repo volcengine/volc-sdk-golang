@@ -221,6 +221,54 @@ type GetImageOCRParam struct {
 	StoreUri  string
 }
 
+// GetImageBgFillResult
+type GetImageBgFillParam struct {
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Model     int     `json:"Model"`
+	Top       float64 `json:"Top"`
+	Bottom    float64 `json:"Bottom"`
+	Left      float64 `json:"Left"`
+	Right     float64 `json:"Right"`
+}
+
+type GetImageBgFillResult struct {
+	ResUri string `json:"ResUri"`
+}
+
+// GetImageEnhanceResult
+type GetImageEnhanceParam struct {
+	ServiceId    string `json:"ServiceId"`
+	StoreUri     string `json:"StoreUri"`
+	Model        int    `json:"Model"`
+	DisableAr    bool   `json:"DisableAr"`
+	DisableSharp bool   `json:"DisableSharp"`
+}
+
+type GetImageEnhanceResult struct {
+	ResUri string `json:"ResUri"`
+	Method string `json:"Method"`
+}
+
+// GetImageEraseResult
+type GetImageEraseParam struct {
+	ServiceId string     `json:"ServiceId"`
+	StoreUri  string     `json:"StoreUri"`
+	Model     string     `json:"Model"`
+	BBox      []EraseBox `json:"BBox"`
+}
+
+type EraseBox struct {
+	X1 float64 `json:"X1"`
+	Y1 float64 `json:"Y1"`
+	X2 float64 `json:"X2"`
+	Y2 float64 `json:"Y2"`
+}
+
+type GetImageEraseResult struct {
+	ResUri string `json:"ResUri"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {

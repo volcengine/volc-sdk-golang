@@ -272,6 +272,38 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageBgFillResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageBgFillResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageEnhanceResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEnhanceResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageEraseModels": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseModels"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetImageEraseResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 
