@@ -151,6 +151,11 @@ func (req *VodGetMLFramesForAuditRequest) Validate() (privateErrorCodeStr string
 		err = fmt.Errorf("%s not have a length equal to %d", req.GetVid(), 32)
 		return
 	}
+	if len(req.GetStrategy()) == 0 {
+		privateErrorCodeStr = "InvalidStrategy"
+		err = fmt.Errorf("%s is empty", req.GetStrategy())
+		return
+	}
 	if len(req.GetFrameOpt()) == 0 {
 		privateErrorCodeStr = "InvalidFrameOpt"
 		err = fmt.Errorf("%s is empty", req.GetFrameOpt())
