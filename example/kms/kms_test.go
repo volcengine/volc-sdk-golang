@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/kms"
 	"net/http"
 	"os"
@@ -29,6 +30,7 @@ func init() {
 	kms.DefaultInstance.SetRegion(region)
 	kms.DefaultInstance.Client.SetAccessKey(testAk)
 	kms.DefaultInstance.Client.SetSecretKey(testSk)
+	kms.DefaultInstance.Client.SetRetrySettings(&base.RetrySettings{AutoRetry: true})
 }
 
 func analyze(resp interface{}, status int, err error) {
