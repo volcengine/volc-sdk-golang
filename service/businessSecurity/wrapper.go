@@ -125,3 +125,33 @@ func (p *BusinessSecurity) DataReport(req *DataReportRequest) (*DataReportRespon
 	}
 	return result, nil
 }
+
+func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVerifyResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ElementVerifyRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ElementVerify", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ElementVerify", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
+			}
+			result := new(ElementVerifyResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
+	}
+	result := new(ElementVerifyResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}

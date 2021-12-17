@@ -118,3 +118,48 @@ type UpdateAXNRequest struct {
 	ExpireTime   int64
 	PhoneNoB     string
 }
+
+type Click2CallRequest struct {
+	Caller                      string
+	CallerNumber                string
+	CallerNumberPoolNo          string
+	CallerNumberCityCode        string
+	CallerNumberDegradeCityList string
+	Callee                      string
+	CalleeNumber                string
+	CalleeNumberPoolNo          string
+	CalleeNumberCityCode        string
+	CalleeNumberDegradeCityList string
+	MaxTime                     int32
+	PreVoice                    string
+	PreVoicePlay                bool
+	LastMinutes                 int32
+	LastVoice                   string
+	LastVoiceTo                 string
+	UserData                    string
+	CityCodeByPhoneNo           string
+}
+
+type Click2CallResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           Click2CallResult
+}
+
+type Click2CallResult struct {
+	CallId string
+}
+
+type QueryAudioRecordFileUrlRequest struct {
+	CallId string
+}
+
+type QueryAudioRecordFileUrlData struct {
+	AudioRecordFileUrl string
+	AudioRecordLeftFileUrl string
+	AudioRecordRightFileUrl string
+}
+
+type QueryAudioRecordFileUrlResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           QueryAudioRecordFileUrlData
+}
