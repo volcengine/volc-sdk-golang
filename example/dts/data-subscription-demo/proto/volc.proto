@@ -1,0 +1,110 @@
+syntax = "proto2";
+option go_package="./;volc";
+option optimize_for = SPEED;
+package volc;
+
+enum EntryType {
+    BEGIN = 1;
+    COMMIT = 2;
+    DML = 3;
+    DDL = 4;
+}
+
+enum SrcType {
+    MySQL = 1;
+    PostgreSQL = 2;
+}
+
+enum DMLType {
+    INSERT = 1;
+    UPDATE = 2;
+    DELETE = 3;
+}
+
+enum ColumnType {
+    STRING = 1;
+    BINARY = 2;
+    INTEGER  = 3;  // store as int64 value
+    UNSIGNED_INTEGER  = 4;  // store as  uint64 value
+    FLOAT = 5; // store as float value
+    DECIMAL = 6; // store as string value
+    BOOL = 7;
+    DATETIME = 8; //store in string value in RFC3339Nano format
+}
+
+message Entry {
+    optional int32 version = 1;
+    repeated Prop props = 2;
+    optional SrcType src_type = 3;
+    optional EntryType entry_type = 4;
+    optional int64 timestamp = 5;
+    optional string server_id = 6;
+    optional string database = 7;
+    optional string table = 8;
+
+    oneof event {
+        DMLEvent dml_event = 21;
+        DDLEvent ddl_event = 22;
+        CommitEvent commit_event = 23;
+    }
+}
+
+message Prop{
+    optional string key	= 1;
+    optional string value = 2;
+}
+
+message CommitEvent {
+    optional string transcation_id = 1;
+    optional string file = 2;
+    optional string offset = 3;
+}
+
+message DDLEvent {
+    optional string sql = 1;
+    optional int64 exec_time = 2; // unit: second
+    optional int32 err_code = 3;
+}
+
+message DMLEvent {
+    optional DMLType type = 1;
+    optional string table_id = 2;
+    optional Index use_index = 3;
+    repeated ColumnDef column_defs= 4;
+    repeated Row rows = 5;
+}
+
+message Index {
+    optional string name = 1;
+    repeated int32 column_index = 2;
+}
+
+message Row {
+    repeated Column before_cols = 1;
+    repeated Column after_cols = 2;
+}
+
+message ColumnDef {
+    repeated Prop props = 1;
+
+    optional int32 index = 2;
+    optional ColumnType type = 3;
+    optional string OriginType = 4;
+    optional string name = 5;
+    optional string charset = 6;
+    optional bool is_nullable = 7;
+    optional bool is_unsigned = 8;
+}
+
+message Column {
+    optional bool is_null = 1;
+    oneof value {
+        string string_value  = 2;
+        bytes binary_value  = 3;
+        double float_value  = 4;
+        int64 int64_value  = 5;
+        uint64 uint64_value  = 6;
+        bool bool_value = 7;
+    }
+}
+

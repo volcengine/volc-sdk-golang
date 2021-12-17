@@ -1,5 +1,14 @@
 ### Change log
 
+2021-12-16 Bumped to version v1.0.26
+- Add rds postgresql sdk
+- Added datacenter-QueryAudioRecordFileUrl
+- 添加datacenter的service
+- Fixed kms request field typo.
+- Added DescribeCdnDataDetail api
+- 设置Credentials新增支持更新Service
+- 添加双呼方法
+
 2021-11-15 Bumped to version v1.0.25
 - Added CDN timeout for apis
 

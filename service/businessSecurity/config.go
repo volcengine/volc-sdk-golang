@@ -102,5 +102,13 @@ var (
 				"Version": []string{"2021-08-31"},
 			},
 		},
+		"ElementVerify": {
+			Method: http.MethodPost,
+			Path: "/",
+			Query: url.Values{
+				"Action":  []string{"ElementVerify"},
+				"Version": []string{"2021-11-23"},
+			},
+		},
 	}
 )

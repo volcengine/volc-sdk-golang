@@ -92,6 +92,33 @@ func (s *CDN) DescribeCdnDomainTopData(dto *DescribeCdnDomainTopDataParam) (resp
 	return
 }
 
+func (s *CDN) DescribeCdnDataDetail(dto *DescribeCdnDataDetailParam) (response *DescribeCdnDataDetailResponse, err error) {
+	response = new(DescribeCdnDataDetailResponse)
+	if dto.EndTime == 0 {
+		err = errors.New("end time is required")
+		return
+	}
+	if dto.StartTime == 0 {
+		err = errors.New("start time is required")
+		return
+	}
+	if dto.Domain == "" {
+		err = errors.New("domain name is required")
+		return
+	}
+	if dto.Metric == "" {
+		err = errors.New("metric is required")
+		return
+	}
+	if err = s.post("DescribeCdnDataDetail", dto, response); err != nil {
+		return
+	}
+	if err = validateResponse(response.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeCdnAccountingData(dto *DescribeCdnAccountingDataParam) (response *DescribeCdnAccountingDataResponse, err error) {
 	response = new(DescribeCdnAccountingDataResponse)
 	if dto.EndTime == 0 {

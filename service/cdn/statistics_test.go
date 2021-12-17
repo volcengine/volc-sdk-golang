@@ -56,11 +56,24 @@ func TestCDN_DescribeCdnDomainTopData(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 		Metric:    "flux",
-		Domain:    "qs0902001-auto-test.byteimg.com",
+		Domain:    "example.com",
 		Item:      "isp",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.NotEmpty(t, resp.Result.Domain)
 	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func TestCDN_DescribeCdnDataDetail(t *testing.T) {
+	resp, err := DefaultInstance.DescribeCdnDataDetail(&DescribeCdnDataDetailParam{
+		StartTime: testStartTime,
+		EndTime:   testEndTime,
+		Metric:    "flux",
+		Domain:    "yourexample.com",
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.Domain)
+	assert.NotEmpty(t, resp.Result.DataDetails)
 }
