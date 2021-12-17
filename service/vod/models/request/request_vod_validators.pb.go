@@ -340,3 +340,17 @@ func (req *VodAddCallbackSubscriptionRequest) Validate() (privateErrorCodeStr st
 
 	return
 }
+func (req *VodSetCallbackEventRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetEvents()) == 0 {
+		privateErrorCodeStr = "InvalidEvents"
+		err = fmt.Errorf("%s is empty", req.GetEvents())
+		return
+	}
+
+	return
+}
