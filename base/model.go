@@ -115,3 +115,29 @@ type RetrySettings struct {
 	RetryTimes     *uint64
 	RetryInterval  *time.Duration
 }
+
+type RequestParam struct {
+	IsSignUrl bool
+	Body      []byte
+	Method    string
+	Date      time.Time
+	Path      string
+	Host      string
+	QueryList url.Values
+	Headers   http.Header
+}
+
+type SignRequest struct {
+	XDate          string
+	XNotSignBody   string
+	XCredential    string
+	XAlgorithm     string
+	XSignedHeaders string
+	XSignedQueries string
+	XSignature     string
+
+	Host           string
+	ContentType    string
+	XContentSha256 string
+	Authorization  string
+}
