@@ -2472,7 +2472,7 @@ type VodUpdateSpaceUploadConfigRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	SpaceName   string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`     // 空间名
-	ConfigKey   string `protobuf:"bytes,2,opt,name=ConfigKey,proto3" json:"ConfigKey,omitempty"`     // 需要变更的设置key，值为SpaceUploadConfigKey中的枚举数字
+	ConfigKey   string `protobuf:"bytes,2,opt,name=ConfigKey,proto3" json:"ConfigKey,omitempty"`     // 需要变更的设置key，值为VodSpaceUploadConfigKey中的枚举数字
 	ConfigValue string `protobuf:"bytes,3,opt,name=ConfigValue,proto3" json:"ConfigValue,omitempty"` // 需要变更的设置value
 }
 
