@@ -1,54 +1,46 @@
-# 火山引擎开发者Go SDK
+<h1 align="center"><img src="https://iam.volccdn.com/obj/volcengine-public/pic/volcengine-icon.png"></h1>
+<h1 align="center">火山引擎SDK for Go</h1> 
+欢迎使用火山引擎SDK for Go，本文档为您介绍如何获取及调用SDK。
 
-## 安装sdk(推荐)
+## 前置准备
+### 服务开通
+请确保您已开通了您需要访问的服务。您可前往[火山引擎控制台](https://console.volcengine.com/ )，在左侧菜单中选择或在顶部搜索栏中搜索您需要使用的服务，进入服务控制台内完成开通流程。
+### 获取安全凭证
+Access Key（访问密钥）是访问火山引擎服务的安全凭证，包含Access Key ID（简称为AK）和Secret Access Key（简称为SK）两部分。您可登录[火山引擎控制台](https://console.volcengine.com/ )，前往“[访问控制](https://console.volcengine.com/iam )”的“[访问密钥](https://console.volcengine.com/iam/keymanage/ )”中创建及管理您的Access Key。更多信息可参考[访问密钥帮助文档](https://www.volcengine.com/docs/6291/65568 )。
+### 环境检查
+Go版本需要不低于1.13.1。
 
-建议使用go >= 1.13.1
-
+## 获取与安装
 ```go get -u github.com/volcengine/volc-sdk-golang```
 
-### AK/SK 注册申请流程
+## 相关配置
+### 安全凭证配置
+火山引擎SDK for Go支持以下几种方式进行凭证管理：
 
-主账户和有权限的子用户可以新建AK密钥，操作如下：
+*注意：代码中Your AK及Your SK需要分别替换为您的AK及SK。*
 
-1.使用帐号/密码登录控制台；
-
-2.选择一级菜单“访问控制”->选择二级菜单“密钥管理”；
-
-3.页面中展示主账号的访问密钥列表，每个IAM用户最多可同时拥有2个访问密钥，如果当前IAM用户的访问密钥数量未达到上限，则可以点击新建密钥按钮；
-
-4.点击新建密钥按钮，弹出新建密钥弹窗，点击查看AccessKey详情，可直接查看访问密钥信息。
-
-### 通过API申请AK/SK
- 
-[生成访问密匙](https://www.volcengine.cn/docs/6291/65578)
-
-## 显示的在client中设置AKSK (推荐)
-
+**方式一**：在Client中设置AK/SK **（推荐）**
 ```go
-iam.DefaultInstance.Client.SetAccessKey(testAk)
-iam.DefaultInstance.Client.SetSecretKey(testSk)	
+iam.DefaultInstance.Client.SetAccessKey(Your AK)
+iam.DefaultInstance.Client.SetSecretKey(Your SK)	
 ```
 
-## 从环境变量加载AKSK
+**方式二**：从环境变量加载AK/SK
+  ```bash
+  VOLC_ACCESSKEY="Your AK"  
+  VOLC_SECRETKEY="Your SK"
+  ```
+**方式三**：从HOME文件加载AK/SK
 
-环境变量信息
+在本地的~/.volc/config中添加如下内容：
+  ```json
+    {
+      "ak": "Your AK",
+      "sk": "Your SK"
+    }
+  ```
 
-```bash
-VOLC_ACCESSKEY="ak"
-VOLC_SECRETKEY="sk"
-```
-
-## 从HOME文件加载AKSK
-
-在本地的`~/.volc/config`中添加如下内容：
-
-```json
-{
-	"ak":"Your-AK",
-	"sk":"Your-SK"
-}
-```
-
-## SDK服务目录及实例
+##其它资源
+###部分SDK服务目录及示例
 
 -【视觉智能】请点击[这里](service/visual/README.md)
