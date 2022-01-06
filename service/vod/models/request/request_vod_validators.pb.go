@@ -284,6 +284,25 @@ func (req *VodUpdateSpaceRequest) Validate() (privateErrorCodeStr string, err er
 
 	return
 }
+func (req *VodUpdateSpaceUploadConfigRequest) Validate() (privateErrorCodeStr string, err error) {
+	if len(req.GetSpaceName()) == 0 {
+		privateErrorCodeStr = "InvalidSpaceName"
+		err = fmt.Errorf("%s is empty", req.GetSpaceName())
+		return
+	}
+	if len(req.GetConfigKey()) == 0 {
+		privateErrorCodeStr = "InvalidConfigKey"
+		err = fmt.Errorf("%s is empty", req.GetConfigKey())
+		return
+	}
+	if len(req.GetConfigValue()) == 0 {
+		privateErrorCodeStr = "InvalidConfigValue"
+		err = fmt.Errorf("%s is empty", req.GetConfigValue())
+		return
+	}
+
+	return
+}
 func (req *VodListDomainRequest) Validate() (privateErrorCodeStr string, err error) {
 	if len(req.GetSpaceName()) == 0 {
 		privateErrorCodeStr = "InvalidSpaceName"
