@@ -312,6 +312,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageQuality": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageQuality"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

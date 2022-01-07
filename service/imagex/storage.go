@@ -438,3 +438,14 @@ func (c *ImageX) GetImageErase(param *GetImageEraseParam) (*GetImageEraseResult,
 	}
 	return res, nil
 }
+
+func (c *ImageX) GetImageQuality(param *GetImageQualityParam) (*GetImageQualityResult, error) {
+	u := url.Values{}
+	u.Add("ServiceId", param.ServiceId)
+	resp := new(GetImageQualityResult)
+	err := c.ImageXPost("GetImageQuality", u, param, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
