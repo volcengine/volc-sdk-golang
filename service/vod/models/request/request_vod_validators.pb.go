@@ -373,3 +373,7 @@ func (req *VodSetCallbackEventRequest) Validate() (privateErrorCodeStr string, e
 
 	return
 }
+func (req *VodGetSmartStrategyLitePlayInfoRequest) Validate() (privateErrorCodeStr string, err error) {
+
+	return
+}
