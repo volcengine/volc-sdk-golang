@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	testAk = "testAK"
+	testAk = "testAk"
 	testSk = "testSk"
 )
 
@@ -83,6 +83,19 @@ func TestSMSVerifyCode_check(t *testing.T) {
 		PhoneNumber: "188xxxxxxxx",
 	}
 	result, statusCode, err := DefaultInstance.CheckVerifyCode(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestSMS_conversion(t *testing.T) {
+	client := NewInstanceI18n("ap-singapore-1")
+	client.Client.SetAccessKey(testAk)
+	client.Client.SetSecretKey(testSk)
+	req := &ConversionRequest{
+		MessageIDs:    []string{"test_msg_id"},
+	}
+	result, statusCode, err := client.Conversion(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
