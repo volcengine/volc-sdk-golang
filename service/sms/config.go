@@ -57,6 +57,14 @@ var (
 				"Version": []string{ServiceVersion20200101},
 			},
 		},
+		"Conversion": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Conversion"},
+				"Version": []string{ServiceVersion20200101},
+			},
+		},
 	}
 )
 
