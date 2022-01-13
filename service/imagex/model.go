@@ -286,6 +286,18 @@ type GetImageEraseResult struct {
 	ResUri string `json:"ResUri"`
 }
 
+// GetImageQuality
+type GetImageQualityParam struct {
+	ServiceId string
+	ImageUrl  string `json:"ImageUrl"`
+	VqType    string `json:"VqType"`
+}
+
+type GetImageQualityResult struct {
+	VqType   string                 `json:"VqType"`
+	NrScores map[string]interface{} `json:"NrScores"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {
