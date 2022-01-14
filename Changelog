@@ -1,5 +1,8 @@
 ### Change log
 
+2022-01-13 Bumped to version v1.0.28
+- Add imagex GetImageQuality API
+
 2021-12-30 Bumped to version v1.0.27
 - Refactored the signing method
 
