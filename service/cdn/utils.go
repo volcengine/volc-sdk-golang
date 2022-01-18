@@ -4,11 +4,20 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/url"
 )
 
-func wrapperError(errObj *base.ErrorObj) (err error) {
+type CDNError struct {
+	Code    string `json:"Code"`
+	Message string `json:"Message"`
+	Status  int64  `json:"Status"`
+}
+
+func (e CDNError) Error() string {
+	return fmt.Sprintf("status: %d, code: %s, message: %s", e.Status, e.Code, e.Message)
+}
+
+func wrapperError(errObj *ErrorObj) (err error) {
 	if errObj == nil {
 		return
 	}
@@ -20,7 +29,7 @@ func wrapperError(errObj *base.ErrorObj) (err error) {
 	return
 }
 
-func validateResponse(meta *base.ResponseMetadata) (err error) {
+func validateResponse(meta *ResponseMetadata) (err error) {
 	if meta == nil {
 		return errors.New("response meta is not found")
 	}
