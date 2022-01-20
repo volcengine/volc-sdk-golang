@@ -77,6 +77,15 @@ func (p *SecretNumber) BindAXN(req *BindAXNRequest) (*SecretBindResponse, int, e
 	}
 }
 
+func (p *SecretNumber) SelectNumberAndBindAXN(req *SelectNumberAndBindAXNRequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.handler("SelectNumberAndBindAXN", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) UpdateAXN(req *UpdateAXNRequest) (*OperationResponse, int, error) {
 	resp := new(OperationResponse)
 	if statusCode, err := p.handler("UpdateAXN", req, resp); err != nil {
@@ -104,10 +113,18 @@ func (p *SecretNumber) Click2Call(req *Click2CallRequest) (*Click2CallResponse, 
 	}
 }
 
-
 func (p *DataCenter) QueryAudioRecordFileUrl(req *QueryAudioRecordFileUrlRequest) (*QueryAudioRecordFileUrlResponse, int, error) {
 	resp := new(QueryAudioRecordFileUrlResponse)
 	if statusCode, err := p.handler("QueryAudioRecordFileUrl", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *DataCenter) QueryAudioRecordToTextFileUrl(req *QueryAudioRecordToTextFileRequest) (*QueryAudioRecordToTextFileResponse, int, error) {
+	resp := new(QueryAudioRecordToTextFileResponse)
+	if statusCode, err := p.handler("QueryAudioRecordToTextFileUrl", req, resp); err != nil {
 		return nil, statusCode, err
 	} else {
 		return resp, statusCode, nil

@@ -111,6 +111,18 @@ type BindAXNRequest struct {
 	UserData        string
 }
 
+type SelectNumberAndBindAXNRequest struct {
+	PhoneNoA          string
+	PhoneNoB          string
+	NumberPoolNo      string
+	ExpireTime        int64
+	AudioRecordFlag   int32
+	CityCode          string
+	CityCodeByPhoneNo string
+	DegradeCityList   string
+	UserData          string
+}
+
 type UpdateAXNRequest struct {
 	UpdateType   string
 	NumberPoolNo string
@@ -154,12 +166,26 @@ type QueryAudioRecordFileUrlRequest struct {
 }
 
 type QueryAudioRecordFileUrlData struct {
-	AudioRecordFileUrl string
-	AudioRecordLeftFileUrl string
+	AudioRecordFileUrl      string
+	AudioRecordLeftFileUrl  string
 	AudioRecordRightFileUrl string
 }
 
 type QueryAudioRecordFileUrlResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           QueryAudioRecordFileUrlData
+}
+
+type QueryAudioRecordToTextFileRequest struct {
+	CallIdList string
+}
+
+type QueryAudioRecordToTextFile struct {
+	CallId                   string
+	AudioRecordToTextFileUrl string
+}
+
+type QueryAudioRecordToTextFileResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           []QueryAudioRecordToTextFile
 }

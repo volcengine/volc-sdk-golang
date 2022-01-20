@@ -78,6 +78,14 @@ var (
 				"Version": []string{"2020-09-01"},
 			},
 		},
+		"QueryAudioRecordToTextFileUrl": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryAudioRecordToTextFileUrl"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
@@ -142,6 +150,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"BindAXN"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"SelectNumberAndBindAXN": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SelectNumberAndBindAXN"},
 				"Version": []string{"2020-09-01"},
 			},
 		},
