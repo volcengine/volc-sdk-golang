@@ -120,6 +120,19 @@ func TestSecretNumber_BindAXN(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestSecretNumber_SelectNumberAndBindAXN(t *testing.T) {
+	req := &SelectNumberAndBindAXNRequest{
+		NumberPoolNo: "NP162981168404095092",
+		PhoneNoA:     "188xxxx5753",
+		PhoneNoB:     "137xxxx8257",
+		ExpireTime:   1642672859,
+	}
+	result, statusCode, err := DefaultInstance.SelectNumberAndBindAXN(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestSecretNumber_UpdateAXN(t *testing.T) {
 	req := &UpdateAXNRequest{
 		NumberPoolNo: "NP162981168404095092",
@@ -159,9 +172,19 @@ func TestSecretNumber_Click2Call(t *testing.T) {
 
 func TestDataCenter_QueryAudioRecordFileUrlClick2Call(t *testing.T) {
 	req := &QueryAudioRecordFileUrlRequest{
-		CallId:             "*",
+		CallId: "*",
 	}
 	result, statusCode, err := DefaultDataCenterInstance.QueryAudioRecordFileUrl(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestDataCenter_QueryAudioRecordToTextFileUrl(t *testing.T) {
+	req := &QueryAudioRecordToTextFileRequest{
+		CallIdList: "Vcc01b1fe30f4868c4b7c9742bdd036f12559,Vcc017784d0be628542aa9a676af3d8fa2e06",
+	}
+	result, statusCode, err := DefaultDataCenterInstance.QueryAudioRecordToTextFileUrl(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
