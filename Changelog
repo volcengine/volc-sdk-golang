@@ -1,5 +1,9 @@
 ### Change log
 
+2022-01-20 Bumped to version v1.0.29
+- Add vms secret number
+- Added 闲时转码
+
 2022-01-13 Bumped to version v1.0.28
 - Add imagex GetImageQuality API
 
