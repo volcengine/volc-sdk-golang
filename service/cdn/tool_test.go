@@ -22,7 +22,7 @@ func TestCommonRequest(t *testing.T) {
 		Domain:    "qs0902001-auto-test.byteimg.com",
 	}, &resp)
 	assert.NoError(t, err)
-	assert.NotNil(t, resp.ResponseMetadata)
-	assert.Nil(t, resp.ResponseMetadata.Error)
+	err = DefaultInstance.ValidateResponse(resp.ResponseMetadata)
+	assert.NoError(t, err)
 	fmt.Println(resp.Result)
 }
