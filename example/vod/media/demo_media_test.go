@@ -68,14 +68,13 @@ func TestVod_UpdateMediaInfo(t *testing.T) {
 	// vod.NewInstance().SetAccessKey("your ak")
 	// vod.NewInstance().SetSecretKey("your sk")
 	vid := "your vid"
-	title := "your title"
 	query := &request.VodUpdateMediaInfoRequest{
 		Vid:              vid,
-		Title:            wrapperspb.String(title),
+		Title:            wrapperspb.String("title"),
 		PosterUri:        wrapperspb.String("PosterUri"),
 		Description:      wrapperspb.String("description"),
 		Tags:             wrapperspb.String("tag1,tag2"),
-		ClassificationId: wrapperspb.Int64(2),
+		ClassificationId: wrapperspb.Int64(0),
 	}
 	resp, code, err := instance.UpdateMediaInfo(query)
 	fmt.Println(code)
@@ -268,7 +267,7 @@ func TestVod_DeleteVideoClassification(t *testing.T) {
 	// or set ak and ak as follow
 	// instance.SetAccessKey("")
 	// instance.SetSecretKey("")
-	spaceName := "you space"
+	spaceName := "your space"
 	classificationId := int64(1)
 
 	// Media Info
@@ -294,8 +293,8 @@ func TestVod_ListVideoClassifications(t *testing.T) {
 	// or set ak and ak as follow
 	// instance.SetAccessKey("")
 	// instance.SetSecretKey("")
-	spaceName := "you space"
-	classificationId := int64(1)
+	spaceName := "your space"
+	classificationId := int64(0)
 
 	// Media Info
 	query := &request.VodListVideoClassificationsRequest{
