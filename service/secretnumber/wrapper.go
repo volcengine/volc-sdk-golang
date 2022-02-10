@@ -131,6 +131,15 @@ func (p *DataCenter) QueryAudioRecordToTextFileUrl(req *QueryAudioRecordToTextFi
 	}
 }
 
+func (p *DataCenter) QueryCallRecordMsg(req *QueryCallRecordMsgRequest) (*QueryCallRecordMsgResponse, int, error) {
+	resp := new(QueryCallRecordMsgResponse)
+	if statusCode, err := p.handler("QueryCallRecordMsg", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) handler(api string, req interface{}, resp interface{}) (int, error) {
 	form := base.ToUrlValues(req)
 	respBody, statusCode, err := p.Client.Post(api, nil, form)

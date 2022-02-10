@@ -189,3 +189,43 @@ type QueryAudioRecordToTextFileResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           []QueryAudioRecordToTextFile
 }
+
+type QueryCallRecordMsgRequest struct {
+	CallIdList string
+}
+
+type QueryCallRecordMsg struct {
+	AccountId              string
+	CallId                 string
+	ServiceType            int32
+	SubServiceType         int32
+	Caller                 string
+	CallerCountryIsoCode   string
+	CallerProvinceCode     string
+	CallerCityCode         string
+	Callee                 string
+	CalleeCountryIsoCode   string
+	CalleeProvinceCode     string
+	CalleeCityCode         string
+	BeginCallTime          string
+	EndTime                string
+	ReleaseType            int32
+	CallDuration           int32
+	CallResult             int32
+	AudioRecordFlag        int32
+	CdrCreateTime          string
+	UserData               string
+	CallType               int32
+	CallerShowNumber       string
+	CallerShowNumberPoolNo string
+	CalleeShowNumber       string
+	CalleeShowNumberPoolNo string
+	CallerCallingTime      string
+	CallerRingingTime      string
+	CallerDuration         int32
+}
+
+type QueryCallRecordMsgResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           []QueryCallRecordMsg
+}

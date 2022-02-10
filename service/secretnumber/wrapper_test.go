@@ -189,3 +189,13 @@ func TestDataCenter_QueryAudioRecordToTextFileUrl(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestDataCenter_QueryCallRecordMsg(t *testing.T) {
+	req := &QueryCallRecordMsgRequest{
+		CallIdList: "S164275060051193662574_1dc1f1b3a8891a8b,S1015_c13f7b27b41e7773",
+	}
+	result, statusCode, err := DefaultDataCenterInstance.QueryCallRecordMsg(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
