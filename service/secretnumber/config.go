@@ -86,6 +86,14 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
+		"QueryCallRecordMsg": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryCallRecordMsg"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
