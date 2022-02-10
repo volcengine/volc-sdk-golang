@@ -90,3 +90,67 @@ func ElementVerify(appId int64, service string, parameters string) {
 func TestBusinessSecurity_ElementVerify(t *testing.T) {
 	ElementVerify(3332, "idcard_two_element_verify", "{\"operate_time\": 1615540603, \"idcard_no\": \"\", \"idcard_name\":\"\"}")
 }
+
+func TestBusinessSecurity_SecondSale(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_status"
+	parameters := "{\"operate_time\":1617960951,\"mobile\":\"12312341234\",\"since_date\":\"20210101\"}"
+
+	res, err := DefaultInstance.MobileSecondSale(&MobileSecondSaleRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+	t.Logf("%v", res)
+}
+
+func TestBusinessSecurity_MobileEmptyCheck(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_status"
+	parameters := "{\"operate_time\":1617960951,\"mobile\":\"12312341234\"}"
+
+	res, err := DefaultInstance.MobileEmptyCheck(&MobileEmptyCheckRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+	t.Logf("%v", res)
+}
+
+func TestBusinessSecurity_MobileOnlineStatus(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_status"
+	parameters := "{\"operate_time\":1617960951,\"mobile\":\"12312341234\"}"
+
+	res, err := DefaultInstance.MobileOnlineStatus(&MobileOnlineStatusRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+	t.Logf("%v", res)
+}
+
+func TestBusinessSecurity_MobileOnlineTime(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_status"
+	parameters := "{\"operate_time\":1617960951,\"mobile\":\"12312341234\"}"
+
+	res, err := DefaultInstance.MobileOnlineTime(&MobileOnlineTimeRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+	}
+	t.Logf("%v", res)
+}

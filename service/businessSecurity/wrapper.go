@@ -155,3 +155,123 @@ func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVer
 	}
 	return result, nil
 }
+
+func (p *BusinessSecurity) MobileSecondSale(req *MobileSecondSaleRequest) (*MobileSecondSaleResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileSecondSaleRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileSecondSale", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileSecondSale", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileSecondSale: fail to do request, %v", err)
+			}
+			result := new(MobileSecondSaleResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("MobileSecondSale: fail to do request, %v", err)
+	}
+	result := new(MobileSecondSaleResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) MobileEmptyCheck(req *MobileEmptyCheckRequest) (*MobileEmptyCheckResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileEmptyCheckRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileEmptyCheck", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileEmptyCheck", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileEmptyCheck: fail to do request, %v", err)
+			}
+			result := new(MobileEmptyCheckResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("MobileEmptyCheck: fail to do request, %v", err)
+	}
+	result := new(MobileEmptyCheckResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) MobileOnlineStatus(req *MobileOnlineStatusRequest) (*MobileOnlineStatusResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileOnlineStatusRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileOnlineStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileOnlineStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileOnlineStatus: fail to do request, %v", err)
+			}
+			result := new(MobileOnlineStatusResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("MobileOnlineStatus: fail to do request, %v", err)
+	}
+	result := new(MobileOnlineStatusResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) MobileOnlineTime(req *MobileOnlineTimeRequest) (*MobileOnlineTimeResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileOnlineTimeRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileOnlineTime", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileOnlineTime", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileOnlineTime: fail to do request, %v", err)
+			}
+			result := new(MobileOnlineTimeResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("MobileOnlineTime: fail to do request, %v", err)
+	}
+	result := new(MobileOnlineTimeResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}

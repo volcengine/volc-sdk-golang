@@ -90,6 +90,78 @@ type ElementVerifyData struct {
 	Detail string `json:"Detail"`
 }
 
+type MobileSecondSaleRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type MobileSecondSaleResponse struct {
+	RequestId string               `json:"RequestId"`
+	Code      int                  `json:"Code"`
+	Message   string               `json:"Message"`
+	Data      MobileSecondSaleData `json:"Data"`
+}
+
+type MobileSecondSaleData struct {
+	Status int    `json:"Status"`
+	Detail string `json:"Detail"`
+}
+
+type MobileEmptyCheckRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type MobileEmptyCheckResponse struct {
+	RequestId string               `json:"RequestId"`
+	Code      int                  `json:"Code"`
+	Message   string               `json:"Message"`
+	Data      MobileEmptyCheckData `json:"Data"`
+}
+
+type MobileEmptyCheckData struct {
+	Status int    `json:"Status"`
+	Detail string `json:"Detail"`
+}
+
+type MobileOnlineStatusRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type MobileOnlineStatusResponse struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      MobileOnlineStatusData `json:"Data"`
+}
+
+type MobileOnlineStatusData struct {
+	Status int    `json:"Status"`
+	Detail string `json:"Detail"`
+}
+
+type MobileOnlineTimeRequest struct {
+	AppId      int64  `json:"AppId"`
+	Service    string `json:"Service"`
+	Parameters string `json:"Parameters"`
+}
+
+type MobileOnlineTimeResponse struct {
+	RequestId string               `json:"RequestId"`
+	Code      int                  `json:"Code"`
+	Message   string               `json:"Message"`
+	Data      MobileOnlineTimeData `json:"Data"`
+}
+
+type MobileOnlineTimeData struct {
+	Status int    `json:"Status"`
+	Detail string `json:"Detail"`
+}
+
 func (r *RiskResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }

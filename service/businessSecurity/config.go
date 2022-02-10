@@ -53,7 +53,7 @@ var (
 		},
 		base.RegionApSingapore: {
 			Timeout: 5 * time.Second,
-			Host: "open-ap-singapore-1.volcengineapi.com",
+			Host:    "open-ap-singapore-1.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -61,7 +61,7 @@ var (
 		},
 		base.RegionUsEast1: {
 			Timeout: 5 * time.Second,
-			Host: "open-us-east-1.volcengineapi.com",
+			Host:    "open-us-east-1.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -96,7 +96,7 @@ var (
 		},
 		"DataReport": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DataReport"},
 				"Version": []string{"2021-08-31"},
@@ -104,10 +104,42 @@ var (
 		},
 		"ElementVerify": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ElementVerify"},
 				"Version": []string{"2021-11-23"},
+			},
+		},
+		"MobileSecondSale": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MobileSecondSale"},
+				"Version": []string{"2022-02-08"},
+			},
+		},
+		"MobileEmptyCheck": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MobileEmptyCheck"},
+				"Version": []string{"2022-02-08"},
+			},
+		},
+		"MobileOnlineStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MobileOnlineStatus"},
+				"Version": []string{"2022-02-08"},
+			},
+		},
+		"MobileOnlineTime": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MobileOnlineTime"},
+				"Version": []string{"2022-02-08"},
 			},
 		},
 	}
