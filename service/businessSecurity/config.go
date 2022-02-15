@@ -110,36 +110,12 @@ var (
 				"Version": []string{"2021-11-23"},
 			},
 		},
-		"MobileSecondSale": {
+		"MobileStatus": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"MobileSecondSale"},
-				"Version": []string{"2022-02-08"},
-			},
-		},
-		"MobileEmptyCheck": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"MobileEmptyCheck"},
-				"Version": []string{"2022-02-08"},
-			},
-		},
-		"MobileOnlineStatus": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"MobileOnlineStatus"},
-				"Version": []string{"2022-02-08"},
-			},
-		},
-		"MobileOnlineTime": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"MobileOnlineTime"},
-				"Version": []string{"2022-02-08"},
+				"Action":  []string{"MobileStatus"},
+				"Version": []string{"2020-12-25"},
 			},
 		},
 	}
