@@ -129,6 +129,7 @@ type UpdateAXNRequest struct {
 	SubId        string
 	ExpireTime   int64
 	PhoneNoB     string
+	PhoneNoA     string
 }
 
 type Click2CallRequest struct {
