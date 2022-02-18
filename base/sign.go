@@ -40,6 +40,9 @@ func (c Credentials) Sign(request *http.Request) *http.Request {
 	request.Header.Set("X-Date", signRequest.XDate)
 	request.Header.Set("X-Content-Sha256", signRequest.XContentSha256)
 	request.Header.Set("Authorization", signRequest.Authorization)
+	if signRequest.XSecurityToken != "" {
+		request.Header.Set("X-Security-Token", signRequest.XSecurityToken)
+	}
 	return request
 }
 
@@ -65,6 +68,9 @@ func (c Credentials) SignUrl(request *http.Request) string {
 	query.Set("X-SignedHeaders", signRequest.XSignedHeaders)
 	query.Set("X-SignedQueries", signRequest.XSignedQueries)
 	query.Set("X-Signature", signRequest.XSignature)
+	if signRequest.XSecurityToken != "" {
+		query.Set("X-Security-Token", signRequest.XSecurityToken)
+	}
 	return query.Encode()
 }
 
@@ -73,8 +79,12 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 	meta := getMetaData(credentials, tsDateV4(formatDate))
 
 	requestSignMap := make(map[string][]string)
+	if credentials.SessionToken != "" {
+		requestSignMap["X-Security-Token"] = []string{credentials.SessionToken}
+	}
 	signRequest := SignRequest{
-		XDate: formatDate,
+		XDate:          formatDate,
+		XSecurityToken: credentials.SessionToken,
 	}
 	var bodyHash string
 	if requestParam.IsSignUrl {
@@ -83,6 +93,7 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 		}
 		requestSignMap["X-Date"], requestSignMap["X-NotSignBody"], requestSignMap["X-Credential"], requestSignMap["X-Algorithm"], requestSignMap["X-SignedHeaders"], requestSignMap["X-SignedQueries"] =
 			[]string{formatDate}, []string{""}, []string{credentials.AccessKeyID + "/" + meta.credentialScope}, []string{meta.algorithm}, []string{meta.signedHeaders}, []string{""}
+
 		keys := make([]string, 0, len(requestSignMap))
 		for k := range requestSignMap {
 			keys = append(keys, k)
@@ -103,6 +114,7 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 			signRequest.ContentType = requestSignMap["Content-Type"][0]
 		}
 		requestSignMap["X-Date"], requestSignMap["Host"], requestSignMap["Content-Type"] = []string{formatDate}, []string{requestParam.Host}, []string{signRequest.ContentType}
+
 		if len(requestParam.Body) == 0 {
 			bodyHash = hashSHA256([]byte{})
 		} else {

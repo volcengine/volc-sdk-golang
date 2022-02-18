@@ -111,9 +111,9 @@ type InnerToken struct {
 }
 
 type RetrySettings struct {
-	AutoRetry      bool
-	RetryTimes     *uint64
-	RetryInterval  *time.Duration
+	AutoRetry     bool
+	RetryTimes    *uint64
+	RetryInterval *time.Duration
 }
 
 type RequestParam struct {
@@ -135,6 +135,7 @@ type SignRequest struct {
 	XSignedHeaders string
 	XSignedQueries string
 	XSignature     string
+	XSecurityToken string
 
 	Host           string
 	ContentType    string
