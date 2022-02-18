@@ -137,8 +137,8 @@ func TestSecretNumber_UpdateAXN(t *testing.T) {
 	req := &UpdateAXNRequest{
 		NumberPoolNo: "NP162981168404095092",
 		SubId:        "S16323109008991825a8b7",
-		UpdateType:   "updatePhoneNoB",
-		PhoneNoB:     "188xxxx5753",
+		UpdateType:   "updatePhoneNoA",
+		PhoneNoA:     "188xxxx5753",
 	}
 	result, statusCode, err := DefaultInstance.UpdateAXN(req)
 	t.Logf("result = %+v\n", result)
