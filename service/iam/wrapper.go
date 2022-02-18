@@ -122,42 +122,6 @@ func (p *IAM) UpdateRole(query url.Values) (*NullResultResp, int, error) {
 	return resp, statusCode, nil
 }
 
-func (p *IAM) ListUsersForRole(query url.Values) (*AddedUserListResp, int, error) {
-	resp := new(AddedUserListResp)
-	statusCode, err := p.commonHandler("ListUsersForRole", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) ListRolesForUser(query url.Values) (*RoleListResp, int, error) {
-	resp := new(RoleListResp)
-	statusCode, err := p.commonHandler("ListRolesForUser", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) RemoveUserFromRole(query url.Values) (*NullResultResp, int, error) {
-	resp := new(NullResultResp)
-	statusCode, err := p.commonHandler("RemoveUserFromRole", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *IAM) AddUserToRole(query url.Values) (*NullResultResp, int, error) {
-	resp := new(NullResultResp)
-	statusCode, err := p.commonHandler("AddUserToRole", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
 // Policy
 func (p *IAM) CreatePolicy(query url.Values) (*NullResultResp, int, error) {
 	resp := new(NullResultResp)
