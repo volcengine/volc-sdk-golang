@@ -1,5 +1,11 @@
 ### Change log
 
+2022-02-18 Bumped to version v1.0.31
+- Updated a for axn
+- Added mobile_status api
+- Fixed sts
+- Removed api for relation role user
+
 2022-02-10 Bumped to version v1.0.30
 - 号码核验二期产品
 - Added vms secret number
