@@ -205,9 +205,9 @@ func TestDataCenter_QueryCallRecordMsg(t *testing.T) {
 }
 
 func TestNumberPool_CreateNumberPool(t *testing.T) {
-	req := &CreateNumberPoolRequest {
-		Name: "测试创建号码池",
-		ServiceType: 100,
+	req := &CreateNumberPoolRequest{
+		Name:           "测试创建号码池",
+		ServiceType:    100,
 		SubServiceType: 101,
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.CreateNumberPool(req)
@@ -217,9 +217,9 @@ func TestNumberPool_CreateNumberPool(t *testing.T) {
 }
 
 func TestNumberPool_UpdateNumberPool(t *testing.T) {
-	req := &UpdateNumberPoolRequest {
+	req := &UpdateNumberPoolRequest{
 		NumberPoolNo: "NP164543549201918978",
-		Name: "测试创建号码池2",
+		Name:         "测试创建号码池2",
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.UpdateNumberPool(req)
 	t.Logf("result = %+v\n", result)
@@ -228,10 +228,10 @@ func TestNumberPool_UpdateNumberPool(t *testing.T) {
 }
 
 func TestNumberPool_NumberPoolList(t *testing.T) {
-	req := &NumberPoolListRequest {
+	req := &NumberPoolListRequest{
 		SubServiceType: 102,
-		Limit: 20,
-		Offset: 0,
+		Limit:          20,
+		Offset:         0,
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.NumberPoolList(req)
 	t.Logf("result = %+v\n", result)
@@ -240,9 +240,9 @@ func TestNumberPool_NumberPoolList(t *testing.T) {
 }
 
 func TestNumberPool_NumberList(t *testing.T) {
-	req := &NumberListRequest {
+	req := &NumberListRequest{
 		Number: "17074644610",
-		Limit: 20,
+		Limit:  20,
 		Offset: 0,
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.NumberList(req)
@@ -252,12 +252,33 @@ func TestNumberPool_NumberList(t *testing.T) {
 }
 
 func TestNumberPool_EnableOrDisableNumber(t *testing.T) {
-	req := &EnableOrDisableNumberRequest {
+	req := &EnableOrDisableNumberRequest{
 		NumberList: "18792770474,18792770475",
 		EnableCode: 2,
 	}
 
 	result, statusCode, err := DefaultNumberPoolInstance.EnableOrDisableNumber(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_QueryNumberApplyRecordList(t *testing.T) {
+	req := &QueryNumberApplyRecordListRequest{
+		ApplyBillId: "NA6967079179",
+	}
+
+	result, statusCode, err := DefaultNumberPoolInstance.QueryNumberApplyRecordList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestMercService_CreateNumberApplication(t *testing.T) {
+	req := &CreateNumberApplicationRequest{
+
+	}
+	result, statusCode, err := DefaultMercServiceInstance.CreateNumberApplication(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
