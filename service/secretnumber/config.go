@@ -65,6 +65,7 @@ func NewMercServiceInstance() *MercService {
 	instance := &MercService {
 		Client: base.NewClient(MercServiceInfoMap[base.RegionCnNorth1], MercApiInfoList),
 	}
+	return instance
 }
 
 var (
@@ -99,7 +100,7 @@ var (
 	NumberPoolServiceInfoMap = map[string]*base.ServiceInfo {
 		base.RegionCnNorth1: {
 			Timeout: DefaultTimeout,
-			Host:    "cloud-vms.volcengineapi.com",
+			Host:    "volcengineapi-boe.byted.org",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},

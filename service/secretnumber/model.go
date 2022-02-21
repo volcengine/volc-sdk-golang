@@ -237,19 +237,16 @@ type CreateNumberPoolRequest struct {
 	SubServiceType int32
 }
 
-type NumberPoolData struct {
-	NumberPoolName string
+type CreateNumberPoolData struct {
+	Name string
 	NumberPoolNo string
 	ServiceType int32
-	ServiceTypeName string
 	SubServiceType int32
-	SubServiceTypeName string
-	NumberCount int32
 }
 
 type CreateNumberPoolResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result NumberPoolData
+	Result CreateNumberPoolData
 }
 
 type UpdateNumberPoolRequest struct {
@@ -269,6 +266,16 @@ type NumberPoolListRequest struct {
 	SubServiceType int32
 	Limit int32
 	Offset int32
+}
+
+type NumberPoolData struct {
+	NumberPoolName string
+	NumberPoolNo string
+	ServiceType int32
+	ServiceTypeName string
+	SubServiceType int32
+	SubServiceTypeName string
+	NumberCount int32
 }
 
 type NumberPoolListPagedResponse struct {
@@ -324,7 +331,7 @@ type NumberListResponse struct {
 }
 
 type EnableOrDisableNumberRequest struct {
-	NumberList []string
+	NumberList string
 	EnableCode int32
 }
 

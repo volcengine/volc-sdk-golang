@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	testAk = "testAk"
-	testSk = "testSk"
+	testAk = "***REMOVED***"
+	testSk = "***REMOVED***"
 )
 
 func init() {
@@ -14,6 +14,10 @@ func init() {
 	DefaultInstance.Client.SetSecretKey(testSk)
 	DefaultDataCenterInstance.Client.SetAccessKey(testAk)
 	DefaultDataCenterInstance.Client.SetSecretKey(testSk)
+	DefaultNumberPoolInstance.Client.SetAccessKey(testAk)
+	DefaultNumberPoolInstance.Client.SetSecretKey(testSk)
+	DefaultMercServiceInstance.Client.SetAccessKey(testAk)
+	DefaultMercServiceInstance.Client.SetSecretKey(testSk)
 }
 
 func TestSecretNumber_BindAXB(t *testing.T) {
@@ -195,6 +199,65 @@ func TestDataCenter_QueryCallRecordMsg(t *testing.T) {
 		CallIdList: "S164275060051193662574_1dc1f1b3a8891a8b,S1015_c13f7b27b41e7773",
 	}
 	result, statusCode, err := DefaultDataCenterInstance.QueryCallRecordMsg(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_CreateNumberPool(t *testing.T) {
+	req := &CreateNumberPoolRequest {
+		Name: "测试创建号码池",
+		ServiceType: 100,
+		SubServiceType: 101,
+	}
+	result, statusCode, err := DefaultNumberPoolInstance.CreateNumberPool(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_UpdateNumberPool(t *testing.T) {
+	req := &UpdateNumberPoolRequest {
+		NumberPoolNo: "NP164543549201918978",
+		Name: "测试创建号码池2",
+	}
+	result, statusCode, err := DefaultNumberPoolInstance.UpdateNumberPool(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_NumberPoolList(t *testing.T) {
+	req := &NumberPoolListRequest {
+		SubServiceType: 102,
+		Limit: 20,
+		Offset: 0,
+	}
+	result, statusCode, err := DefaultNumberPoolInstance.NumberPoolList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_NumberList(t *testing.T) {
+	req := &NumberListRequest {
+		Number: "17074644610",
+		Limit: 20,
+		Offset: 0,
+	}
+	result, statusCode, err := DefaultNumberPoolInstance.NumberList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestNumberPool_EnableOrDisableNumber(t *testing.T) {
+	req := &EnableOrDisableNumberRequest {
+		NumberList: "18792770474,18792770475",
+		EnableCode: 2,
+	}
+
+	result, statusCode, err := DefaultNumberPoolInstance.EnableOrDisableNumber(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
