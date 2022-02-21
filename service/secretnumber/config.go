@@ -24,6 +24,10 @@ type NumberPool struct {
 	*base.Client
 }
 
+type MercService struct {
+	*base.Client
+}
+
 // DefaultInstance 默认的实例
 var DefaultInstance = NewInstance()
 
@@ -32,6 +36,9 @@ var DefaultDataCenterInstance = NewDataCenterInstance()
 
 // DefaultNumberPoolInstance 默认的实例
 var DefaultNumberPoolInstance = NewNumberPoolInstance()
+
+// DefaultMercServiceInstance 默认的实例
+var DefaultMercServiceInstance = NewMercServiceInstance()
 
 func NewInstance() *SecretNumber {
 	instance := &SecretNumber{
@@ -54,7 +61,7 @@ func NewNumberPoolInstance() *NumberPool {
 	return instance
 }
 
-func NewMercInstance() *MercService {
+func NewMercServiceInstance() *MercService {
 	instance := &MercService {
 		Client: base.NewClient(MercServiceInfoMap[base.RegionCnNorth1], MercApiInfoList),
 	}

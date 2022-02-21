@@ -231,7 +231,6 @@ type QueryCallRecordMsgResponse struct {
 	Result           []QueryCallRecordMsg
 }
 
-// 号码池相关接口
 type CreateNumberPoolRequest struct {
 	Name string 
 	ServiceType int32
@@ -239,13 +238,173 @@ type CreateNumberPoolRequest struct {
 }
 
 type NumberPoolData struct {
-	Name string
+	NumberPoolName string
 	NumberPoolNo string
 	ServiceType int32
+	ServiceTypeName string
 	SubServiceType int32
+	SubServiceTypeName string
+	NumberCount int32
 }
 
 type CreateNumberPoolResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result NumberPoolData
+}
+
+type UpdateNumberPoolRequest struct {
+	NumberPoolNo string
+	Name string
+	ServiceType int32
+	SubServiceType int32
+}
+
+type UpdateNumberPoolResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result bool
+}
+
+type NumberPoolListRequest struct {
+	ServiceType int32
+	SubServiceType int32
+	Limit int32
+	Offset int32
+}
+
+type NumberPoolListPagedResponse struct {
+	Records []NumberPoolData
+	Limit int32
+	Offset int32
+	Total int32
+}
+
+type NumberPoolListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result NumberPoolListPagedResponse
+}
+
+type NumberListRequest struct {
+	Number string
+	NumberPoolNo string
+	NumberPoolTypeCode int32
+	NumberStatusCode int32
+	NumberTypeCode int32
+	Limit int32
+	Offset int32
+}
+
+type NumberData struct {
+	Number string
+	NumberStatusCode int32
+	NumberStatusDesc string
+	NumberTypeCode int32
+	NumberTypeDesc string
+	NumberLocation string
+	NumberPurchaseTime string
+	NumberPoolNo string
+	NumberPoolName string
+	NumberPoolTypeCode int32
+	NumberPoolTypeDesc string
+	ServiceTypeCode int32
+	ServiceTypeDesc string
+	QualificationNo string
+	QualificationEntity string
+}
+
+type NumberListPagedResponse struct {
+	Records []NumberData
+	Limit int32
+	Offset int32
+	Total int32
+}
+
+type NumberListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result NumberListPagedResponse
+}
+
+type EnableOrDisableNumberRequest struct {
+	NumberList []string
+	EnableCode int32
+}
+
+type EnableOrDisableNumberResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type QueryNumberApplyRecordListRequest struct {
+	ApplyBillId string
+	QueryAccountId string
+	ApplyStatusCode int32
+	ApplyTimeLowerBound string
+	ApplyTimeUpperBound string
+	SubServiceType int32
+	NumberType int32
+	UpdateTimeLowerBound string
+	UpdateTimeUpperBound string
+}
+
+type NumberApplyRecordDetail struct {
+	NumberLocation string
+	ApplyNumberCount int32
+	ImportNumberCount int32
+}
+
+type NumberApplyRecordData struct {
+	Id int32
+	ApplyTime string
+	ApplyStatusCode int32
+	ApplyStatusDesc string
+	SubServiceTypeCode int32
+	SubServiceTypeDesc string
+	NumberPoolNo string
+	NumberPoolName string
+	NumberTypeCode int32
+	NumberTypeDesc string
+	ApplyUserId string
+	ApplyUserName string
+	UpdateTime string
+	Notes string
+	DetailList []NumberApplyRecordDetail
+	ApplyBillId string
+	QualificationId int32
+	QualificationEntity string
+}
+
+type QueryNumberApplyRecordListPagedResponse struct {
+	Records []NumberApplyRecordData
+	Limit int32
+	Offset int32
+	Total int32
+}
+
+type QueryNumberApplyRecordListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result QueryNumberApplyRecordListPagedResponse
+}
+
+type NumberApplicationCityItem struct {
+	NumberCount int32
+	CountryIsoCode string
+	ProvinceCode string
+	CityCode string
+}
+
+type CreateNumberApplicationRequest struct {
+	QualificationNo string
+	NumberPoolNo string
+	NumberPurpose int32
+	NumberType int32
+	SubServiceType int32
+	Remark string
+	NumberApplicationCityItemList []NumberApplicationCityItem
+}
+
+type CreateNumberApplicationData struct {
+	ApplyBillId string
+}
+
+type CreateNumberApplicationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result CreateNumberApplicationData
 }
