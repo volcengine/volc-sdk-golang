@@ -230,3 +230,22 @@ type QueryCallRecordMsgResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           []QueryCallRecordMsg
 }
+
+// 号码池相关接口
+type CreateNumberPoolRequest struct {
+	Name string 
+	ServiceType int32
+	SubServiceType int32
+}
+
+type NumberPoolData struct {
+	Name string
+	NumberPoolNo string
+	ServiceType int32
+	SubServiceType int32
+}
+
+type CreateNumberPoolResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result NumberPoolData
+}
