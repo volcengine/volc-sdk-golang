@@ -18,9 +18,9 @@ import (
 )
 
 var (
-	letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	defaultRetryTimes uint64 = 2
-	defaultRetryInterval = 1 * time.Second
+	letterRunes                 = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	defaultRetryTimes    uint64 = 2
+	defaultRetryInterval        = 1 * time.Second
 )
 
 func init() {
@@ -213,4 +213,24 @@ func ToUrlValues(i interface{}) (values url.Values) {
 		values.Set(typ.Field(i).Name, v)
 	}
 	return
+}
+
+func UnmarshalResultInto(data []byte, result interface{}) error {
+	resp := new(CommonResponse)
+	if err := json.Unmarshal(data, resp); err != nil {
+		return fmt.Errorf("fail to unmarshal response, %v", err)
+	}
+	errObj := resp.ResponseMetadata.Error
+	if errObj != nil && errObj.CodeN != 0 {
+		return fmt.Errorf("request %s error %s", resp.ResponseMetadata.RequestId, errObj.Message)
+	}
+
+	data, err := json.Marshal(resp.Result)
+	if err != nil {
+		return fmt.Errorf("fail to marshal result, %v", err)
+	}
+	if err = json.Unmarshal(data, result); err != nil {
+		return fmt.Errorf("fail to unmarshal result, %v", err)
+	}
+	return nil
 }
