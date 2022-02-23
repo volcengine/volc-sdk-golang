@@ -4,6 +4,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 const (
@@ -15,7 +16,8 @@ const (
 var (
 	ServiceInfo = map[string]*base.ServiceInfo{
 		DefaultRegion: {
-			Host: "cdn.volcengineapi.com",
+			Host:    "cdn.volcengineapi.com",
+			Timeout: time.Minute * 5,
 			Header: http.Header{
 				"Accept":       []string{"application/json"},
 				"Content-Type": []string{"application/json"},
