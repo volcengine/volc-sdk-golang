@@ -74,7 +74,8 @@ type CompressionRule struct {
 	CompressionAction CompressionAction
 }
 type Condition struct {
-	Connective *string `json:",omitempty"`
+	Connective    string
+	ConditionRule []ConditionRule
 }
 type ConditionRule struct {
 	Type     string
@@ -404,7 +405,7 @@ type DomainConfig struct {
 	Status            string
 	OriginHost        string
 	OriginProtocol    string
-	OriginRange       string
+	OriginRange       bool
 	FollowRedirect    bool
 	Origin            []OriginRule
 	HTTPS             HTTPS

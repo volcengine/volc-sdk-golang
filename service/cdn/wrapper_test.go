@@ -193,7 +193,7 @@ func TestCDN_DescribeEdgeStatisticalData(t *testing.T) {
 	resp, err := DefaultInstance.DescribeEdgeStatisticalData(&DescribeEdgeStatisticalDataRequest{
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
-		Metric:    "flux",
+		Metric:    "clientIp",
 		Domain:    exampleDomain,
 	})
 	assert.NoError(t, err)
@@ -206,6 +206,7 @@ func TestCDN_DescribeEdgeTopNrtData(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 		Metric:    "flux",
+		Item:      "isp",
 		Domain:    &exampleDomain,
 	})
 	assert.NoError(t, err)
@@ -219,7 +220,8 @@ func TestCDN_DescribeEdgeTopStatisticalData(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 		Metric:    &metric,
-		Domain:    "yourexample.com",
+		Item:      "url",
+		Domain:    exampleDomain,
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

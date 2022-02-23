@@ -183,7 +183,7 @@ func DescribeEdgeStatisticalData(t *testing.T) {
 	resp, err := DefaultInstance.DescribeEdgeStatisticalData(&cdn.DescribeEdgeStatisticalDataRequest{
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
-		Metric:    "flux",
+		Metric:    "clientIp",
 		Domain:    exampleDomain,
 	})
 	assert.NoError(t, err)
@@ -197,6 +197,7 @@ func DescribeEdgeTopNrtData(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    "flux",
 		Domain:    &exampleDomain,
+		Item:      "region",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -210,6 +211,7 @@ func DescribeEdgeTopStatisticalData(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    &metric,
 		Domain:    "yourexample.com",
+		Item:      "region",
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -320,7 +322,7 @@ func SubmitUnblockTask(t *testing.T) {
 
 func DescribeContentBlockTasks(t *testing.T) {
 	resp, err := DefaultInstance.DescribeContentBlockTasks(&cdn.DescribeContentBlockTasksRequest{
-		TaskType:  typeFile,
+		TaskType:  "block_url",
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 	})
