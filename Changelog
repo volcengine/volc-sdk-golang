@@ -1,5 +1,8 @@
 ### Change log
 
+2022-02-24 Bumped to version v1.0.32
+- Added cr client
+
 2022-02-18 Bumped to version v1.0.31
 - Updated a for axn
 - Added mobile_status api
