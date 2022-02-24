@@ -2,7 +2,7 @@ package cdn
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"os"
 	"testing"
 	"time"
@@ -18,8 +18,8 @@ var (
 	testDomain2   = "test2.com"
 	testDomain3   = "test3.com"
 	now           = time.Now()
-	testStartTime = now.Unix()
-	testEndTime   = now.Add(time.Minute * 10).Unix()
+	testStartTime = now.Add(-time.Minute * 10).Unix()
+	testEndTime   = now.Unix()
 	exampleDomain = "example.com"
 )
 
@@ -61,8 +61,8 @@ func TestCDN_AddCdnDomain(t *testing.T) {
 		},
 		OriginProtocol: "http",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestCDN_StartDomain(t *testing.T) {
@@ -70,8 +70,8 @@ func TestCDN_StartDomain(t *testing.T) {
 	if err != nil {
 		resp, err = DefaultInstance.StopCdnDomain(&StopCdnDomainRequest{Domain: testDomain1})
 	}
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestCDN_StopDomain(t *testing.T) {
@@ -79,21 +79,21 @@ func TestCDN_StopDomain(t *testing.T) {
 	if err != nil {
 		resp, err = DefaultInstance.StartCdnDomain(&StartCdnDomainRequest{Domain: testDomain2})
 	}
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestCDN_DeleteDomain(t *testing.T) {
 	resp, err := DefaultInstance.DeleteCdnDomain(&DeleteCdnDomainRequest{Domain: testDomain2})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 func TestCDN_ListCdnDomains(t *testing.T) {
 	resp, err := DefaultInstance.ListCdnDomains(&ListCdnDomainsRequest{Domain: &testDomain3})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Data)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Data)
 }
 
 // 域名配置
@@ -102,8 +102,8 @@ func TestCDN_DescribeCdnConfig(t *testing.T) {
 	resp, err := DefaultInstance.DescribeCdnConfig(&DescribeCdnConfigRequest{
 		Domain: testDomain2,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp.Result.DomainConfig)
+	require.NoError(t, err)
+	require.NotNil(t, resp.Result.DomainConfig)
 	domain := resp.Result.DomainConfig
 	fmt.Printf("%+v\n", domain)
 }
@@ -126,8 +126,8 @@ func TestCDN_UpdateCdnConfig(t *testing.T) {
 			}},
 		},
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 // 数据统计
@@ -138,9 +138,9 @@ func TestCDN_DescribeCdnData(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    "flux",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Resources)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Resources)
 }
 
 func TestCDN_DescribeEdgeNrtDataSummary(t *testing.T) {
@@ -149,9 +149,9 @@ func TestCDN_DescribeEdgeNrtDataSummary(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    "flux",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Resources)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Resources)
 }
 
 func TestCDN_DescribeCdnOriginData(t *testing.T) {
@@ -160,9 +160,10 @@ func TestCDN_DescribeCdnOriginData(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    "flux",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Resources)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Resources)
+	fmt.Println(resp.Result.Resources)
 }
 
 func TestCDN_DescribeOriginNrtDataSummary(t *testing.T) {
@@ -171,9 +172,9 @@ func TestCDN_DescribeOriginNrtDataSummary(t *testing.T) {
 		EndTime:   testEndTime,
 		Metric:    "flux",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Resources)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Resources)
 }
 
 func TestCDN_DescribeCdnDataDetail(t *testing.T) {
@@ -183,10 +184,10 @@ func TestCDN_DescribeCdnDataDetail(t *testing.T) {
 		Metric:    "flux",
 		Domain:    exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Domain)
-	assert.NotEmpty(t, resp.Result.DataDetails)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Domain)
+	require.NotEmpty(t, resp.Result.DataDetails)
 }
 
 func TestCDN_DescribeEdgeStatisticalData(t *testing.T) {
@@ -196,9 +197,9 @@ func TestCDN_DescribeEdgeStatisticalData(t *testing.T) {
 		Metric:    "clientIp",
 		Domain:    exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Resources)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Resources)
 }
 
 func TestCDN_DescribeEdgeTopNrtData(t *testing.T) {
@@ -209,9 +210,9 @@ func TestCDN_DescribeEdgeTopNrtData(t *testing.T) {
 		Item:      "isp",
 		Domain:    &exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.TopDataDetails)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.TopDataDetails)
 }
 
 func TestCDN_DescribeEdgeTopStatisticalData(t *testing.T) {
@@ -223,27 +224,27 @@ func TestCDN_DescribeEdgeTopStatisticalData(t *testing.T) {
 		Item:      "url",
 		Domain:    exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.TopDataDetails)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.TopDataDetails)
 }
 
 func TestCDN_DescribeCdnRegionAndIsp(t *testing.T) {
 	area := "China"
 	resp, err := DefaultInstance.DescribeCdnRegionAndIsp(&DescribeCdnRegionAndIspRequest{Area: &area})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Isps)
-	assert.NotEmpty(t, resp.Result.Regions)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.Isps)
+	require.NotEmpty(t, resp.Result.Regions)
 }
 
 // 计费查询
 
 func TestCDN_DescribeCdnService(t *testing.T) {
 	resp, err := DefaultInstance.DescribeCdnService()
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.ServiceInfos)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.ServiceInfos)
 }
 
 func TestCDN_DescribeCdnAccountingData(t *testing.T) {
@@ -253,9 +254,9 @@ func TestCDN_DescribeCdnAccountingData(t *testing.T) {
 		EndTime:   testEndTime,
 		Domain:    &domain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result)
 }
 
 // 内容管理
@@ -265,17 +266,17 @@ func TestCDN_SubmitRefreshTask(t *testing.T) {
 		Type: &typeFile,
 		Urls: "http://example.com/1.txt",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 	fmt.Println(resp.Result.TaskID)
-	assert.NotEmpty(t, resp.Result.TaskID)
+	require.NotEmpty(t, resp.Result.TaskID)
 
 	// should cause an error when domain is not belong to this account
 	_, err = DefaultInstance.SubmitRefreshTask(&SubmitRefreshTaskRequest{
 		Type: &typeFile,
 		Urls: "http://foo.com/1.txt",
 	})
-	assert.Error(t, err)
+	require.Error(t, err)
 }
 
 func TestCDN_SubmitRefreshTaskWithCustomExpiresTime(t *testing.T) {
@@ -283,19 +284,19 @@ func TestCDN_SubmitRefreshTaskWithCustomExpiresTime(t *testing.T) {
 		Type: &typeFile,
 		Urls: "http://example.com/1.txt",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.TaskID)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
+	require.NotEmpty(t, resp.Result.TaskID)
 }
 
 func TestCDN_SubmitPreloadTask(t *testing.T) {
 	resp, err := DefaultInstance.SubmitPreloadTask(&SubmitPreloadTaskRequest{
 		Urls: "http://example.com/1.txt",
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 	fmt.Println(resp.Result.TaskID)
-	assert.NotEmpty(t, resp.Result.TaskID)
+	require.NotEmpty(t, resp.Result.TaskID)
 }
 
 func TestCDN_DescribeContentTasks(t *testing.T) {
@@ -304,30 +305,30 @@ func TestCDN_DescribeContentTasks(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 	})
-	assert.NoError(t, err)
-	assert.Greater(t, int(resp.Result.Total), 0)
+	require.NoError(t, err)
+	require.Greater(t, int(resp.Result.Total), 0)
 }
 
 func TestCDN_DescribeContentQuota(t *testing.T) {
 	resp, err := DefaultInstance.DescribeContentQuota()
-	assert.NoError(t, err)
-	assert.Greater(t, int(resp.Result.RefreshQuota), 10)
+	require.NoError(t, err)
+	require.Greater(t, int(resp.Result.RefreshQuota), 10)
 }
 
 func TestCDN_SubmitBlockTask(t *testing.T) {
 	resp, err := DefaultInstance.SubmitBlockTask(&SubmitBlockTaskRequest{
 		Urls: exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp.Result.TaskID)
+	require.NoError(t, err)
+	require.NotEmpty(t, resp.Result.TaskID)
 }
 
 func TestCDN_SubmitUnblockTask(t *testing.T) {
 	resp, err := DefaultInstance.SubmitUnblockTask(&SubmitUnblockTaskRequest{
 		Urls: exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp.Result.TaskID)
+	require.NoError(t, err)
+	require.NotEmpty(t, resp.Result.TaskID)
 }
 
 func TestCDN_DescribeContentBlockTasks(t *testing.T) {
@@ -336,8 +337,8 @@ func TestCDN_DescribeContentBlockTasks(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 	})
-	assert.NoError(t, err)
-	assert.NotEmpty(t, resp.Result.Data)
+	require.NoError(t, err)
+	require.NotEmpty(t, resp.Result.Data)
 }
 
 // 日志查询
@@ -348,12 +349,12 @@ func TestCDN_DescribeCdnAccessLog(t *testing.T) {
 		EndTime:   testEndTime,
 		Domain:    exampleDomain,
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 	if resp.Result.TotalCount > 0 {
-		assert.NotEmpty(t, resp.Result.DomainLogDetails)
+		require.NotEmpty(t, resp.Result.DomainLogDetails)
 	}
-	assert.Greater(t, int(resp.Result.PageNum), 0)
+	require.Greater(t, int(resp.Result.PageNum), 0)
 }
 
 // 服务查询
@@ -362,14 +363,14 @@ func TestCDN_DescribeIPInfo(t *testing.T) {
 	resp, err := DefaultInstance.DescribeIPInfo(&DescribeIPInfoRequest{
 		IP: testDomain3,
 	})
-	assert.NoError(t, err)
-	assert.Equal(t, testDomain3, resp.Result.IP)
+	require.NoError(t, err)
+	require.Equal(t, testDomain3, resp.Result.IP)
 }
 
 func TestCDN_DescribeCdnUpperIp(t *testing.T) {
 	resp, err := DefaultInstance.DescribeCdnUpperIp(&DescribeCdnUpperIpRequest{Domain: testDomain3})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp)
+	require.NoError(t, err)
+	require.NotNil(t, resp)
 }
 
 // 标签操作
@@ -380,8 +381,8 @@ func TestCDN_AddResourceTags(t *testing.T) {
 			{Key: "userKey", Value: "userValue"},
 		},
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp.ResponseMetadata)
+	require.NoError(t, err)
+	require.NotNil(t, resp.ResponseMetadata)
 }
 
 func TestCDN_UpdateResourceTags(t *testing.T) {
@@ -391,15 +392,16 @@ func TestCDN_UpdateResourceTags(t *testing.T) {
 			{Key: "userKey", Value: "userValue"},
 		},
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp.ResponseMetadata)
+	require.NoError(t, err)
+	require.NotNil(t, resp.ResponseMetadata)
 }
 
 func TestCDN_ListResourceTags(t *testing.T) {
 	resp, err := DefaultInstance.ListResourceTags()
-	assert.NoError(t, err)
-	assert.NotNil(t, resp.ResponseMetadata)
-	assert.NotEmpty(t, resp.Result.ResourceTags)
+	require.NoError(t, err)
+	require.NotNil(t, resp.ResponseMetadata)
+	require.NotEmpty(t, resp.Result.ResourceTags)
+	fmt.Println(resp.Result.ResourceTags)
 }
 
 func TestCDN_DeleteResourceTags(t *testing.T) {
@@ -409,6 +411,6 @@ func TestCDN_DeleteResourceTags(t *testing.T) {
 			{Key: "userKey", Value: "userValue"},
 		},
 	})
-	assert.NoError(t, err)
-	assert.NotNil(t, resp.ResponseMetadata)
+	require.NoError(t, err)
+	require.NotNil(t, resp.ResponseMetadata)
 }
