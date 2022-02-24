@@ -47,22 +47,6 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "vod"},
 		},
-		base.RegionApSingapore: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.ap-singapore-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "vod"},
-		},
-		base.RegionUsEast1: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.us-east-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "vod"},
-		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
@@ -218,6 +202,38 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetPrivateDrmPlayAuth"},
 				"Version": []string{"2020-08-01"},
+			},
+		},
+		"CreateVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"DeleteVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListVideoClassifications": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVideoClassifications"},
+				"Version": []string{"2021-01-01"},
 			},
 		},
 	}
