@@ -47,22 +47,6 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "vod"},
 		},
-		base.RegionApSingapore: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.ap-singapore-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "vod"},
-		},
-		base.RegionUsEast1: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.us-east-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "vod"},
-		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
