@@ -389,7 +389,7 @@ func ListResourceTags(t *testing.T) {
 	resp, err := DefaultInstance.ListResourceTags()
 	assert.NoError(t, err)
 	assert.NotNil(t, resp.ResponseMetadata)
-	assert.NotEmpty(t, resp.Result.Resources)
+	assert.NotEmpty(t, resp.Result.ResourceTags)
 }
 
 func DeleteResourceTags(t *testing.T) {

@@ -482,7 +482,7 @@ type ListResourceTagsResponse struct {
 	Result           ListResourceTagsResult
 }
 type ListResourceTagsResult struct {
-	Resources []ResourceTagEntry
+	ResourceTags []ResourceTagEntry
 }
 type MetricStatData struct {
 	Metric string
