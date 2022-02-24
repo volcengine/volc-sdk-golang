@@ -334,11 +334,11 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		"UpdateSpaceUploadConfigRequest": {
+		"UpdateSpaceUploadConfig": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UpdateSpaceUploadConfigRequest"},
+				"Action":  []string{"UpdateSpaceUploadConfig"},
 				"Version": []string{"2022-01-01"},
 			},
 		},
