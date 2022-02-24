@@ -159,12 +159,13 @@ type EntryptionInput struct {
 }
 
 type OptionInfo struct {
-	Title       string
-	Tags        string
-	Description string
-	Category    string
-	RecordType  int
-	Format      string
+	Title            string
+	Tags             string
+	Description      string
+	Category         string
+	RecordType       int
+	Format           string
+	ClassificationId int
 }
 
 type WorkflowInput struct {
