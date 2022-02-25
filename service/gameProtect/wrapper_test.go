@@ -17,10 +17,10 @@ func init() {
 
 func RiskResult(appId int64, startTime, endTime, pageSize, pageNum int64) {
 	res, err := DefaultInstance.RiskResult(&RiskResultRequest{
-		AppId:     appId,   // write your app id
+		AppId:     appId, // write your app id
 		StartTime: startTime,
 		EndTime:   endTime,
-		Page: Page {
+		Page: Page{
 			PageNum:  pageNum,
 			PageSize: pageSize,
 		},

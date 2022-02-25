@@ -24,7 +24,7 @@ func (p *GameProtector) CloseRetry() {
 var DefaultInstance = NewInstance()
 
 func NewInstance() *GameProtector {
-	instance := &GameProtector {
+	instance := &GameProtector{
 		Client: base.NewClient(ServiceInfoMap[base.RegionCnNorth1], ApiInfoList),
 		retry:  false,
 	}
