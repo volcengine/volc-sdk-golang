@@ -192,6 +192,23 @@ type DescribeCdnDataResponse struct {
 type DescribeCdnDataResult struct {
 	Resources []ResourceStatData
 }
+type DescribeCdnDomainTopDataRequest struct {
+	Domain      string
+	StartTime   int64
+	EndTime     int64
+	Item        string
+	Metric      string
+	Area        *string `json:",omitempty"`
+	ProjectName *string `json:",omitempty"`
+}
+type DescribeCdnDomainTopDataResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeCdnDomainTopDataResult
+}
+type DescribeCdnDomainTopDataResult struct {
+	Domain         string
+	TopDataDetails []TopDataDetailDeprecated
+}
 type DescribeCdnOriginDataRequest struct {
 	StartTime int64
 	EndTime   int64
@@ -431,6 +448,7 @@ type DomainSummary struct {
 	Status        string
 	Cname         string
 	ServiceRegion string
+	ServiceType   string
 	CreateTime    int64
 	UpdateTime    int64
 	Resources     []ResourceTagEntry
@@ -473,7 +491,10 @@ type ListCdnDomainsResponse struct {
 	Result           ListCdnDomainsResult
 }
 type ListCdnDomainsResult struct {
-	Data []DomainSummary
+	Data     []DomainSummary
+	PageNum  int64
+	PageSize int64
+	Total    int64
 }
 type ListResourceTagsRequest struct {
 }
@@ -662,6 +683,14 @@ type TopDataDetail struct {
 	ItemKey   string
 	ItemKeyCN string
 	Value     float64
+}
+type TopDataDetailDeprecated struct {
+	Item      string
+	PV        int64
+	PVRatio   float64
+	Flux      int64
+	FluxRatio float64
+	Bandwidth float64
 }
 type TopDetail struct {
 	ItemKey           string

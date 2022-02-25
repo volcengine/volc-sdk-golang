@@ -176,6 +176,17 @@ func (s *CDN) DescribeCdnRegionAndIsp(dto *DescribeCdnRegionAndIspRequest, opts 
 	return
 }
 
+func (s *CDN) DescribeCdnDomainTopData(dto *DescribeCdnDomainTopDataRequest, opts ...RequestOption) (responseBody *DescribeCdnDomainTopDataResponse, err error) {
+	responseBody = new(DescribeCdnDomainTopDataResponse)
+	if err = s.doRequest("DescribeCdnDomainTopData", &dto, responseBody, opts...); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeCdnService(opts ...RequestOption) (responseBody *DescribeCdnServiceResponse, err error) {
 	responseBody = new(DescribeCdnServiceResponse)
 	if err = s.doRequest("DescribeCdnService", nil, responseBody, opts...); err != nil {
