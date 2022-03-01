@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	testAk = "***REMOVED***"
-	testSk = "***REMOVED***"
+	testAk = "testAk"
+	testSk = "testSk"
 )
 
 func init() {
