@@ -77,14 +77,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		//"GetPlayInfoWithLiveTimeShiftScene": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetPlayInfoWithLiveTimeShiftScene"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
+		"GetPlayInfoWithLiveTimeShiftScene": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPlayInfoWithLiveTimeShiftScene"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 上传
@@ -206,46 +206,46 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		//"GetMLFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetMLFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetBetterFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetBetterFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioInfoForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioInfoForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAutomaticSpeechRecognitionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioEventDetectionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioEventDetectionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
+		"GetMLFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMLFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetBetterFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetBetterFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioInfoForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioInfoForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAutomaticSpeechRecognitionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioEventDetectionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioEventDetectionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
 		"CreateVideoClassification": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -291,104 +291,104 @@ var (
 			},
 		},
 
-		//// **********************************************************************
-		//// 空间管理
-		//// **********************************************************************
-		//"CreateSpace": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"CreateSpace"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"ListSpace": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"ListSpace"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"GetSpaceDetail": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetSpaceDetail"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"GetSpaceConfig": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetSpaceConfig"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"UpdateSpace": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"UpdateSpace"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"UpdateSpaceUploadConfig": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"UpdateSpaceUploadConfig"},
-		//		"Version": []string{"2022-01-01"},
-		//	},
-		//},
+		// **********************************************************************
+		// 空间管理
+		// **********************************************************************
+		"CreateSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"GetSpaceDetail": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpaceDetail"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"GetSpaceConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpaceConfig"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateSpaceUploadConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpaceUploadConfig"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
-		//// **********************************************************************
-		//// 分发加速管理
-		//// **********************************************************************
-		//"ListDomain": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"ListDomain"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"CreateCDNRefreshTask": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"CreateCDNRefreshTask"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"CreateCDNPreloadTask": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"CreateCDNPreloadTask"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//
-		//// **********************************************************************
-		//// 回调管理
-		//// **********************************************************************
-		//"AddCallbackSubscription": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"AddCallbackSubscription"},
-		//		"Version": []string{"2021-12-01"},
-		//	},
-		//},
-		//"SetCallbackEvent": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"SetCallbackEvent"},
-		//		"Version": []string{"2021-12-01"},
-		//	},
-		//},
+		// **********************************************************************
+		// 分发加速管理
+		// **********************************************************************
+		"ListDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListDomain"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"CreateCDNRefreshTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCDNRefreshTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"CreateCDNPreloadTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCDNPreloadTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		// **********************************************************************
+		// 回调管理
+		// **********************************************************************
+		"AddCallbackSubscription": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddCallbackSubscription"},
+				"Version": []string{"2021-12-01"},
+			},
+		},
+		"SetCallbackEvent": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetCallbackEvent"},
+				"Version": []string{"2021-12-01"},
+			},
+		},
 	}
 )
