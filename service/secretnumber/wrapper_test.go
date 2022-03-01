@@ -207,8 +207,8 @@ func TestDataCenter_QueryCallRecordMsg(t *testing.T) {
 func TestNumberPool_CreateNumberPool(t *testing.T) {
 	req := &CreateNumberPoolRequest{
 		Name:           "测试创建号码池",
-		ServiceType:    100,
-		SubServiceType: 101,
+		ServiceType:    "100",
+		SubServiceType: "102",
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.CreateNumberPool(req)
 	t.Logf("result = %+v\n", result)
@@ -218,8 +218,10 @@ func TestNumberPool_CreateNumberPool(t *testing.T) {
 
 func TestNumberPool_UpdateNumberPool(t *testing.T) {
 	req := &UpdateNumberPoolRequest{
-		NumberPoolNo: "NP164543549201918978",
-		Name:         "测试创建号码池2",
+		NumberPoolNo:   "NP164612245301914680",
+		Name:           "测试创建号码池2",
+		ServiceType:    "200",
+		SubServiceType: "201",
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.UpdateNumberPool(req)
 	t.Logf("result = %+v\n", result)
@@ -229,9 +231,9 @@ func TestNumberPool_UpdateNumberPool(t *testing.T) {
 
 func TestNumberPool_NumberPoolList(t *testing.T) {
 	req := &NumberPoolListRequest{
-		SubServiceType: 102,
-		Limit:          20,
-		Offset:         0,
+		SubServiceType: "101",
+		Limit:          "10",
+		Offset:         "0",
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.NumberPoolList(req)
 	t.Logf("result = %+v\n", result)
@@ -241,9 +243,9 @@ func TestNumberPool_NumberPoolList(t *testing.T) {
 
 func TestNumberPool_NumberList(t *testing.T) {
 	req := &NumberListRequest{
-		Number: "17074644610",
-		Limit:  20,
-		Offset: 0,
+		Number: "17192359311",
+		Limit:  "3",
+		Offset: "0",
 	}
 	result, statusCode, err := DefaultNumberPoolInstance.NumberList(req)
 	t.Logf("result = %+v\n", result)
@@ -254,7 +256,7 @@ func TestNumberPool_NumberList(t *testing.T) {
 func TestNumberPool_EnableOrDisableNumber(t *testing.T) {
 	req := &EnableOrDisableNumberRequest{
 		NumberList: "18792770474,18792770475",
-		EnableCode: 2,
+		EnableCode: "1",
 	}
 
 	result, statusCode, err := DefaultNumberPoolInstance.EnableOrDisableNumber(req)
@@ -266,6 +268,8 @@ func TestNumberPool_EnableOrDisableNumber(t *testing.T) {
 func TestNumberPool_QueryNumberApplyRecordList(t *testing.T) {
 	req := &QueryNumberApplyRecordListRequest{
 		ApplyBillId: "NA6967079179",
+		Limit:       "10",
+		Offset:      "0",
 	}
 
 	result, statusCode, err := DefaultNumberPoolInstance.QueryNumberApplyRecordList(req)
@@ -275,8 +279,23 @@ func TestNumberPool_QueryNumberApplyRecordList(t *testing.T) {
 }
 
 func TestMercService_CreateNumberApplication(t *testing.T) {
-	req := &CreateNumberApplicationRequest{
 
+	detailList := []NumberApplicationCityItem{
+		{
+			CityCode:       "010",
+			CountryIsoCode: "CN",
+			NumberCount:    "1",
+		},
+	}
+
+	req := &CreateNumberApplicationRequest{
+		QualificationId:               "4155",
+		NumberPoolNo:                  "NP164015715228226293",
+		NumberPurpose:                 "1",
+		NumberType:                    "1",
+		SubServiceType:                "101",
+		Remark:                        "remark",
+		NumberApplicationCityItemList: detailList,
 	}
 	result, statusCode, err := DefaultMercServiceInstance.CreateNumberApplication(req)
 	t.Logf("result = %+v\n", result)

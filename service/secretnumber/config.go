@@ -114,7 +114,7 @@ var (
 	MercServiceInfoMap = map[string]*base.ServiceInfo {
 		base.RegionCnNorth1: {
 			Timeout: DefaultTimeout,
-			Host:    "cloud-vms.volcengineapi.com",
+			Host:    "volcengineapi-boe.byted.org",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -178,7 +178,7 @@ var (
 			},
 		},
 		"QueryNumberApplyRecordList": {
-			Method: http.MethodPost,
+			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"QueryNumberApplyRecordList"},

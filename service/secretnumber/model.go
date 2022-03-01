@@ -232,107 +232,107 @@ type QueryCallRecordMsgResponse struct {
 }
 
 type CreateNumberPoolRequest struct {
-	Name string 
-	ServiceType int32
-	SubServiceType int32
+	Name           string
+	ServiceType    string
+	SubServiceType string
 }
 
 type CreateNumberPoolData struct {
-	Name string
-	NumberPoolNo string
-	ServiceType int32
+	Name           string
+	NumberPoolNo   string
+	ServiceType    int32
 	SubServiceType int32
 }
 
 type CreateNumberPoolResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result CreateNumberPoolData
+	Result           CreateNumberPoolData
 }
 
 type UpdateNumberPoolRequest struct {
-	NumberPoolNo string
-	Name string
-	ServiceType int32
-	SubServiceType int32
+	NumberPoolNo   string
+	Name           string
+	ServiceType    string
+	SubServiceType string
 }
 
 type UpdateNumberPoolResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result bool
+	Result           bool
 }
 
 type NumberPoolListRequest struct {
-	ServiceType int32
-	SubServiceType int32
-	Limit int32
-	Offset int32
+	ServiceType    string
+	SubServiceType string
+	Limit          string
+	Offset         string
 }
 
 type NumberPoolData struct {
-	NumberPoolName string
-	NumberPoolNo string
-	ServiceType int32
-	ServiceTypeName string
-	SubServiceType int32
+	NumberPoolName     string
+	NumberPoolNo       string
+	ServiceType        int32
+	ServiceTypeName    string
+	SubServiceType     int32
 	SubServiceTypeName string
-	NumberCount int32
+	NumberCount        int32
 }
 
 type NumberPoolListPagedResponse struct {
 	Records []NumberPoolData
-	Limit int32
-	Offset int32
-	Total int32
+	Limit   int32
+	Offset  int32
+	Total   int32
 }
 
 type NumberPoolListResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result NumberPoolListPagedResponse
+	Result           NumberPoolListPagedResponse
 }
 
 type NumberListRequest struct {
-	Number string
-	NumberPoolNo string
-	NumberPoolTypeCode int32
-	NumberStatusCode int32
-	NumberTypeCode int32
-	Limit int32
-	Offset int32
+	Number             string
+	NumberPoolNo       string
+	NumberPoolTypeCode string
+	NumberStatusCode   string
+	NumberTypeCode     string
+	Limit              string
+	Offset             string
 }
 
 type NumberData struct {
-	Number string
-	NumberStatusCode int32
-	NumberStatusDesc string
-	NumberTypeCode int32
-	NumberTypeDesc string
-	NumberLocation string
-	NumberPurchaseTime string
-	NumberPoolNo string
-	NumberPoolName string
-	NumberPoolTypeCode int32
-	NumberPoolTypeDesc string
-	ServiceTypeCode int32
-	ServiceTypeDesc string
-	QualificationNo string
+	Number              string
+	NumberStatusCode    int32
+	NumberStatusDesc    string
+	NumberTypeCode      int32
+	NumberTypeDesc      string
+	NumberLocation      string
+	NumberPurchaseTime  string
+	NumberPoolNo        string
+	NumberPoolName      string
+	NumberPoolTypeCode  int32
+	NumberPoolTypeDesc  string
+	ServiceTypeCode     int32
+	ServiceTypeDesc     string
+	QualificationNo     string
 	QualificationEntity string
 }
 
 type NumberListPagedResponse struct {
 	Records []NumberData
-	Limit int32
-	Offset int32
-	Total int32
+	Limit   int32
+	Offset  int32
+	Total   int32
 }
 
 type NumberListResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result NumberListPagedResponse
+	Result           NumberListPagedResponse
 }
 
 type EnableOrDisableNumberRequest struct {
 	NumberList string
-	EnableCode int32
+	EnableCode string
 }
 
 type EnableOrDisableNumberResponse struct {
@@ -340,70 +340,72 @@ type EnableOrDisableNumberResponse struct {
 }
 
 type QueryNumberApplyRecordListRequest struct {
-	ApplyBillId string
-	QueryAccountId string
-	ApplyStatusCode int32
-	ApplyTimeLowerBound string
-	ApplyTimeUpperBound string
-	SubServiceType int32
-	NumberType int32
+	ApplyBillId          string
+	QueryAccountId       string
+	ApplyStatusCode      string
+	ApplyTimeLowerBound  string
+	ApplyTimeUpperBound  string
+	SubServiceType       string
+	NumberType           string
 	UpdateTimeLowerBound string
 	UpdateTimeUpperBound string
+	Limit                string
+	Offset               string
 }
 
 type NumberApplyRecordDetail struct {
-	NumberLocation string
-	ApplyNumberCount int32
+	NumberLocation    string
+	ApplyNumberCount  int32
 	ImportNumberCount int32
 }
 
 type NumberApplyRecordData struct {
-	Id int32
-	ApplyTime string
-	ApplyStatusCode int32
-	ApplyStatusDesc string
-	SubServiceTypeCode int32
-	SubServiceTypeDesc string
-	NumberPoolNo string
-	NumberPoolName string
-	NumberTypeCode int32
-	NumberTypeDesc string
-	ApplyUserId string
-	ApplyUserName string
-	UpdateTime string
-	Notes string
-	DetailList []NumberApplyRecordDetail
-	ApplyBillId string
-	QualificationId int32
+	Id                  int32
+	ApplyTime           string
+	ApplyStatusCode     int32
+	ApplyStatusDesc     string
+	SubServiceTypeCode  int32
+	SubServiceTypeDesc  string
+	NumberPoolNo        string
+	NumberPoolName      string
+	NumberTypeCode      int32
+	NumberTypeDesc      string
+	ApplyUserId         string
+	ApplyUserName       string
+	UpdateTime          string
+	Notes               string
+	DetailList          []NumberApplyRecordDetail
+	ApplyBillId         string
+	QualificationId     int32
 	QualificationEntity string
 }
 
 type QueryNumberApplyRecordListPagedResponse struct {
 	Records []NumberApplyRecordData
-	Limit int32
-	Offset int32
-	Total int32
+	Limit   int32
+	Offset  int32
+	Total   int32
 }
 
 type QueryNumberApplyRecordListResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result QueryNumberApplyRecordListPagedResponse
+	Result           QueryNumberApplyRecordListPagedResponse
 }
 
 type NumberApplicationCityItem struct {
-	NumberCount int32
+	NumberCount    string
 	CountryIsoCode string
-	ProvinceCode string
-	CityCode string
+	ProvinceCode   string
+	CityCode       string
 }
 
 type CreateNumberApplicationRequest struct {
-	QualificationNo string
-	NumberPoolNo string
-	NumberPurpose int32
-	NumberType int32
-	SubServiceType int32
-	Remark string
+	QualificationId               string
+	NumberPoolNo                  string
+	NumberPurpose                 string
+	NumberType                    string
+	SubServiceType                string
+	Remark                        string
 	NumberApplicationCityItemList []NumberApplicationCityItem
 }
 
@@ -413,5 +415,5 @@ type CreateNumberApplicationData struct {
 
 type CreateNumberApplicationResponse struct {
 	ResponseMetadata base.ResponseMetadata
-	Result CreateNumberApplicationData
+	Result           CreateNumberApplicationData
 }
