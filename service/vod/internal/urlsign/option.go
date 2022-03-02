@@ -31,4 +31,3 @@ func WithTTL(ttl time.Duration) Option {
 		builder.ttl = ttl
 	}
 }
-

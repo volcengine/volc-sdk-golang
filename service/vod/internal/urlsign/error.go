@@ -9,4 +9,3 @@ var (
 	ErrBucketInvalid = errors.New("[pubsdk] bucket is invalid")
 	ErrNoCDN         = errors.New("[pubsdk] there is no cdn")
 )
-

@@ -75,4 +75,3 @@ func NewCDN(host, key string) *CDN {
 		Key:  key,
 	}
 }
-

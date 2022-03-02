@@ -15,10 +15,10 @@ type Base struct {
 
 // PaginationInfo ...
 type PaginationInfo struct {
-	TotalCount int
-	PageSize int
+	TotalCount  int
+	PageSize    int
 	CurrentPage int
-	Count int
+	Count       int
 }
 
 // Keyring ...
@@ -33,13 +33,13 @@ type Keyring struct {
 // CustomerMasterKey ...
 type CustomerMasterKey struct {
 	Base
-	KeyName              string
-	KeySpec              string
-	Description          string
-	KeyState             string
-	KeyUsage             string
-	ProtectionLevel      string
-	ScheduleDeleteTime   *time.Time `json:",omitempty"`
+	KeyName            string
+	KeySpec            string
+	Description        string
+	KeyState           string
+	KeyUsage           string
+	ProtectionLevel    string
+	ScheduleDeleteTime *time.Time `json:",omitempty"`
 }
 
 // CreateKeyringRequest ...
@@ -68,7 +68,7 @@ type DescribeKeyringsRequest struct {
 
 // DescribeKeyringsResult ...
 type DescribeKeyringsResult struct {
-	Keyrings   []*Keyring
+	Keyrings []*Keyring
 }
 
 // DescribeKeyringsResponse ...
@@ -92,7 +92,7 @@ type UpdateKeyringResponse struct {
 
 // QueryKeyringRequest ...
 type QueryKeyringRequest struct {
-	KeyringName    string
+	KeyringName string
 }
 
 // QueryKeyringResult ...
@@ -136,7 +136,7 @@ type DescribeKeysRequest struct {
 
 // DescribeKeysResult ...
 type DescribeKeysResult struct {
-	Keys     []*CustomerMasterKey
+	Keys []*CustomerMasterKey
 }
 
 // DescribeKeysResponse ...
@@ -217,8 +217,8 @@ type DecryptResponse struct {
 
 // EnableKeyRequest ...
 type EnableKeyRequest struct {
-	KeyringName       string
-	KeyName           string
+	KeyringName string
+	KeyName     string
 }
 
 // EnableKeyResponse ...
@@ -228,8 +228,8 @@ type EnableKeyResponse struct {
 
 // DisableKeyRequest ...
 type DisableKeyRequest struct {
-	KeyringName       string
-	KeyName           string
+	KeyringName string
+	KeyName     string
 }
 
 // DisableKeyResponse ...
@@ -239,8 +239,8 @@ type DisableKeyResponse struct {
 
 // ScheduleKeyDeletionRequest ...
 type ScheduleKeyDeletionRequest struct {
-	KeyringName       string
-	KeyName           string
+	KeyringName         string
+	KeyName             string
 	PendingWindowInDays *int
 }
 
@@ -251,8 +251,8 @@ type ScheduleKeyDeletionResponse struct {
 
 // CancelKeyDeletionRequest ...
 type CancelKeyDeletionRequest struct {
-	KeyringName       string
-	KeyName           string
+	KeyringName string
+	KeyName     string
 }
 
 // CancelKeyDeletionResponse ...

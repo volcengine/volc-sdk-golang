@@ -19,8 +19,8 @@ const (
 )
 
 var (
-	keyringName = "TOP_SDK_EXAMPLE_KEYRING-" + uuid.New().String()[20:25]
-	keyName = "TOP_SDK_EXAMPLE_KEY-" + uuid.New().String()[20:30]
+	keyringName       = "TOP_SDK_EXAMPLE_KEYRING-" + uuid.New().String()[20:25]
+	keyName           = "TOP_SDK_EXAMPLE_KEY-" + uuid.New().String()[20:30]
 	encryptionContext = map[string]string{
 		"key": "value",
 	}
@@ -54,15 +54,15 @@ func TestKMS_DescribeKeyrings(t *testing.T) {
 	currentPage, pageSize := 1, 2
 	analyze(kms.DefaultInstance.DescribeKeyrings(&kms.DescribeKeyringsRequest{
 		CurrentPage: &currentPage,
-		PageSize:   &pageSize,
+		PageSize:    &pageSize,
 	}))
 }
 
 func TestKMS_UpdateKeyring(t *testing.T) {
 	desc := "test"
 	analyze(kms.DefaultInstance.UpdateKeyring(&kms.UpdateKeyringRequest{
-		KeyringName:    keyringName,
-		Description:    &desc,
+		KeyringName: keyringName,
+		Description: &desc,
 	}))
 }
 
@@ -133,8 +133,8 @@ func TestKMS_EnableKey(t *testing.T) {
 func TestKMS_ScheduleKeyDeletion(t *testing.T) {
 	pendingWindowInDays := 20
 	analyze(kms.DefaultInstance.ScheduleKeyDeletion(&kms.ScheduleKeyDeletionRequest{
-		KeyringName: keyringName,
-		KeyName:     keyName,
+		KeyringName:         keyringName,
+		KeyName:             keyName,
 		PendingWindowInDays: &pendingWindowInDays,
 	}))
 }

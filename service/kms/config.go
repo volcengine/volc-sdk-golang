@@ -15,8 +15,8 @@ const (
 )
 
 var (
-	defaultRetrySetting    = base.RetrySettings{
-		AutoRetry:     true,
+	defaultRetrySetting = base.RetrySettings{
+		AutoRetry: true,
 	}
 )
 

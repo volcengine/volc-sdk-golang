@@ -52,7 +52,7 @@ var (
 		},
 		base.RegionApSingapore: {
 			Timeout: 5 * time.Second,
-			Host: "open-ap-singapore-1.volcengineapi.com",
+			Host:    "open-ap-singapore-1.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -60,7 +60,7 @@ var (
 		},
 		base.RegionUsEast1: {
 			Timeout: 5 * time.Second,
-			Host: "open-us-east-1.volcengineapi.com",
+			Host:    "open-us-east-1.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},

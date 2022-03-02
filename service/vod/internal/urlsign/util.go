@@ -4,10 +4,8 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"reflect"
 	"strings"
 	"time"
-	"unsafe"
 )
 
 func getStorageAndRegion(oid string) (string, error) {
@@ -39,18 +37,7 @@ func buildExpiration(ttl time.Duration) string {
 func buildMD5(parts ...string) string {
 	hash := md5.New()
 	for _, part := range parts {
-		hash.Write(str2Bytes(part))
+		hash.Write([]byte(part))
 	}
 	return hex.EncodeToString(hash.Sum(nil))
 }
-
-func str2Bytes(s string) []byte {
-	sh := (*reflect.StringHeader)(unsafe.Pointer(&s))
-	bh := &reflect.SliceHeader{
-		Data: sh.Data,
-		Len:  sh.Len,
-		Cap:  sh.Len,
-	}
-	return *(*[]byte)(unsafe.Pointer(bh))
-}
-

@@ -42,4 +42,3 @@ func (p *rrPicker) Pick(...string) (*CDN, error) {
 	}
 	return p.cdns[(atomic.AddUint32(&p.next, 1)-1)%p.size], nil
 }
-
