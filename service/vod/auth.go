@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"unsafe"
 )
 
 const (
@@ -27,7 +26,7 @@ const (
 )
 
 var (
-	ServiceVOD = stringToBytes("vod")
+	ServiceVOD = []byte("vod")
 
 	ErrAccessKeyInvalid = errors.New("access key invalid")
 	ErrSecretKeyInvalid = errors.New("secret key invalid")
@@ -56,7 +55,7 @@ func validate(accessKey, secretKey string) error {
 }
 
 func BuildSign(dsa, version, timestamp string, key []byte) string {
-	data := stringToBytes(join(dsa, SprSign, version, SprSign, timestamp))
+	data := []byte(join(dsa, SprSign, version, SprSign, timestamp))
 	switch dsa {
 	case DSAHmacSha1:
 		return encodeToBase64(getHmac1(key, data))
@@ -65,11 +64,11 @@ func BuildSign(dsa, version, timestamp string, key []byte) string {
 }
 
 func getSignedKey(key string, t time.Time, region string) []byte {
-	kDate := getHmac256(stringToBytes(key), stringToBytes(GetDate(t)))
-	kRegion := getHmac256(kDate, stringToBytes(region))
+	kDate := getHmac256([]byte(key), []byte(GetDate(t)))
+	kRegion := getHmac256(kDate, []byte(region))
 	kService := getHmac256(kRegion, ServiceVOD)
 	kCredentials := getHmac256(kService, []byte("request"))
-	return stringToBytes(hex.EncodeToString(kCredentials))
+	return []byte(hex.EncodeToString(kCredentials))
 }
 
 func join(tokens ...string) string {
@@ -95,17 +94,11 @@ func getHmac256(key, data []byte) []byte {
 type hashFunc func() hash.Hash
 
 func getHmac(key, data []byte, hf hashFunc) []byte {
-	hash := hmac.New(hf, key)
-	hash.Write(data)
-	return hash.Sum(nil)
+	hashData := hmac.New(hf, key)
+	hashData.Write(data)
+	return hashData.Sum(nil)
 }
 
 func encodeToBase64(data []byte) string {
 	return base64.StdEncoding.EncodeToString(data)
-}
-
-func stringToBytes(s string) []byte {
-	x := (*[2]uintptr)(unsafe.Pointer(&s))
-	b := [3]uintptr{x[0], x[1], x[1]}
-	return *(*[]byte)(unsafe.Pointer(&b))
 }
