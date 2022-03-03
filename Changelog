@@ -1,5 +1,11 @@
 ### Change log
 
+2022-03-03 Bumped to version v1.0.33
+- add nlp client
+- Implement related example for cdn apis
+- Add new cdn apis
+- Add Video-Classification for VOD
+
 2022-02-24 Bumped to version v1.0.32
 - Added cr client
 
