@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	appId = ""
+	appId  = ""
 	testAk = ""
-	testSk  = ""
+	testSk = ""
 )
 
 func TestListRooms(t *testing.T) {

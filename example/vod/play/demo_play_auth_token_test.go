@@ -23,15 +23,15 @@ func TestVod_GetPlayAuthToken(t *testing.T) {
 	//instance.SetSecretKey("")
 
 	query := &request.VodGetPlayInfoRequest{
-		Vid:        vid,
-		Format:     "mp4",
-		Definition: "360p",
-		FileType:   "video",
-		LogoType:   "",
-		Ssl:        "1",
-		NeedThumbs: "0",
+		Vid:             vid,
+		Format:          "mp4",
+		Definition:      "360p",
+		FileType:        "video",
+		LogoType:        "",
+		Ssl:             "1",
+		NeedThumbs:      "0",
 		NeedBarrageMask: "0",
-		CdnType: "0",
+		CdnType:         "0",
 	}
 	newToken, _ := instance.GetPlayAuthToken(query, tokenExpireTime)
 	fmt.Println(newToken)

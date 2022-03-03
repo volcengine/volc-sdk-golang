@@ -47,8 +47,8 @@ type CheckSmsVerifyCodeResponse struct {
 	Result           string
 }
 type ConversionRequest struct {
-	MessageIDs  []string
-	Type int
+	MessageIDs []string
+	Type       int
 }
 type ConversionResponse struct {
 	ResponseMetadata base.ResponseMetadata

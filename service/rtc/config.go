@@ -61,14 +61,14 @@ var (
 		},
 		//ActionExample, add new action
 		/*
-		"ActionExample": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ActionExample"},
-				"Version": []string{ServiceVersion20201201},
+			"ActionExample": {
+				Method: http.MethodGet,
+				Path:   "/",
+				Query: url.Values{
+					"Action":  []string{"ActionExample"},
+					"Version": []string{ServiceVersion20201201},
+				},
 			},
-		},
 		*/
 	}
 )
