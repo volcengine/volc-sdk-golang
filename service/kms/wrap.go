@@ -179,7 +179,6 @@ func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResp
 	query := url.Values{}
 	resp := new(GenerateDataKeyResponse)
 
-
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 	if req.NumberOfBytes != nil {
@@ -202,7 +201,6 @@ func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResp
 func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
 	query := url.Values{}
 	resp := new(EncryptResponse)
-
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
@@ -242,7 +240,6 @@ func (p *KMS) EnableKey(req *EnableKeyRequest) (*EnableKeyResponse, int, error) 
 	query := url.Values{}
 	resp := new(EnableKeyResponse)
 
-
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
@@ -258,7 +255,6 @@ func (p *KMS) DisableKey(req *DisableKeyRequest) (*DisableKeyResponse, int, erro
 	query := url.Values{}
 	resp := new(DisableKeyResponse)
 
-
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
@@ -273,7 +269,6 @@ func (p *KMS) DisableKey(req *DisableKeyRequest) (*DisableKeyResponse, int, erro
 func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKeyDeletionResponse, int, error) {
 	query := url.Values{}
 	resp := new(ScheduleKeyDeletionResponse)
-
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
@@ -292,7 +287,6 @@ func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKey
 func (p *KMS) CancelKeyDeletion(req *CancelKeyDeletionRequest) (*CancelKeyDeletionResponse, int, error) {
 	query := url.Values{}
 	resp := new(CancelKeyDeletionResponse)
-
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)

@@ -110,7 +110,7 @@ func TestVod_GetSubtitleAuthToken(t *testing.T) {
 
 	// Media Info
 	query := &request.VodGetSubtitleInfoListRequest{
-		Vid:         "your search vid",
+		Vid: "your search vid",
 	}
 	expireSeconds := 100 // expire time duration: (s)
 	token, err := instance.GetSubtitleAuthToken(query, expireSeconds)

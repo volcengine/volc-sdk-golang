@@ -174,4 +174,3 @@ func TestListIndicatorsResponse(t *testing.T) {
 	}
 	assert.Equal(t, response, expectedModel)
 }
-

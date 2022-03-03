@@ -29,8 +29,8 @@ func TestCreateInstance(t *testing.T) {
 		StorageType:      "LocalSSD",          // storage type: "LocalSSD"
 		InstanceCategory: "Primary",           // Primary instance type should be "Primary"
 		VpcID:            "vpc-xxx",
-		ChargeType:       "PostPaid",          // ChargeType should be "PostPaid"
-		RequestSource:    "OpenAPI",           // RequestSource should be "OpenAPI"
+		ChargeType:       "PostPaid", // ChargeType should be "PostPaid"
+		RequestSource:    "OpenAPI",  // RequestSource should be "OpenAPI"
 
 	}
 	result, err := pg.DefaultInstance.CreateInstance(req)
@@ -56,8 +56,8 @@ func TestCreateROInstance(t *testing.T) {
 		InstanceCategory: "ReadOnly",          // readonly instance type should be "ReadOnly"
 		MasterInstanceId: "postgres-xxx",      // Primary instanceID
 		VpcID:            "vpc-xxx",
-		ChargeType:       "PostPaid",          // ChargeType should be "PostPaid"
-		RequestSource:    "OpenAPI",           // RequestSource should be "OpenAPI"
+		ChargeType:       "PostPaid", // ChargeType should be "PostPaid"
+		RequestSource:    "OpenAPI",  // RequestSource should be "OpenAPI"
 	}
 	result, err := pg.DefaultInstance.CreateInstance(req)
 	t.Logf("result = %+v\n", result)
