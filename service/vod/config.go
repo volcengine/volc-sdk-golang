@@ -206,46 +206,46 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"GetMLFramesForAudit": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetMLFramesForAudit"},
-				"Version": []string{"2021-11-01"},
-			},
-		},
-		"GetBetterFramesForAudit": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetBetterFramesForAudit"},
-				"Version": []string{"2021-11-01"},
-			},
-		},
-		"GetAudioInfoForAudit": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetAudioInfoForAudit"},
-				"Version": []string{"2021-11-01"},
-			},
-		},
-		"GetAutomaticSpeechRecognitionForAudit": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
-				"Version": []string{"2021-11-01"},
-			},
-		},
-		"GetAudioEventDetectionForAudit": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetAudioEventDetectionForAudit"},
-				"Version": []string{"2021-11-01"},
-			},
-		},
+		//"GetMLFramesForAudit": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetMLFramesForAudit"},
+		//		"Version": []string{"2021-11-01"},
+		//	},
+		//},
+		//"GetBetterFramesForAudit": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetBetterFramesForAudit"},
+		//		"Version": []string{"2021-11-01"},
+		//	},
+		//},
+		//"GetAudioInfoForAudit": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetAudioInfoForAudit"},
+		//		"Version": []string{"2021-11-01"},
+		//	},
+		//},
+		//"GetAutomaticSpeechRecognitionForAudit": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
+		//		"Version": []string{"2021-11-01"},
+		//	},
+		//},
+		//"GetAudioEventDetectionForAudit": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetAudioEventDetectionForAudit"},
+		//		"Version": []string{"2021-11-01"},
+		//	},
+		//},
 		"CreateVideoClassification": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -326,22 +326,22 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		"UpdateSpace": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateSpace"},
-				"Version": []string{"2021-01-01"},
-			},
-		},
-		"UpdateSpaceUploadConfig": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateSpaceUploadConfig"},
-				"Version": []string{"2022-01-01"},
-			},
-		},
+		//"UpdateSpace": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"UpdateSpace"},
+		//		"Version": []string{"2021-01-01"},
+		//	},
+		//},
+		//"UpdateSpaceUploadConfig": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"UpdateSpaceUploadConfig"},
+		//		"Version": []string{"2022-01-01"},
+		//	},
+		//},
 
 		// **********************************************************************
 		// 分发加速管理
@@ -354,22 +354,22 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		"CreateCDNRefreshTask": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreateCDNRefreshTask"},
-				"Version": []string{"2021-01-01"},
-			},
-		},
-		"CreateCDNPreloadTask": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreateCDNPreloadTask"},
-				"Version": []string{"2021-01-01"},
-			},
-		},
+		//"CreateCDNRefreshTask": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"CreateCDNRefreshTask"},
+		//		"Version": []string{"2021-01-01"},
+		//	},
+		//},
+		//"CreateCDNPreloadTask": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"CreateCDNPreloadTask"},
+		//		"Version": []string{"2021-01-01"},
+		//	},
+		//},
 
 		// **********************************************************************
 		// 回调管理
