@@ -326,22 +326,22 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		//"UpdateSpace": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"UpdateSpace"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"UpdateSpaceUploadConfig": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"UpdateSpaceUploadConfig"},
-		//		"Version": []string{"2022-01-01"},
-		//	},
-		//},
+		"UpdateSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateSpaceUploadConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpaceUploadConfig"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 分发加速管理
@@ -354,22 +354,22 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		//"CreateCDNRefreshTask": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"CreateCDNRefreshTask"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
-		//"CreateCDNPreloadTask": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"CreateCDNPreloadTask"},
-		//		"Version": []string{"2021-01-01"},
-		//	},
-		//},
+		"CreateCDNRefreshTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCDNRefreshTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"CreateCDNPreloadTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCDNPreloadTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理
