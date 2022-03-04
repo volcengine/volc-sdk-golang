@@ -387,7 +387,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"SetCallbackEvent"},
-				"Version": []string{"2021-12-01"},
+				"Version": []string{"2021-01-01"},
 			},
 		},
 	}
