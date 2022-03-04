@@ -143,14 +143,6 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"UpdateAllAuthUnderVhost": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateAllAuthUnderVhost"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"ForbidStream": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -263,22 +255,6 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"DescribeRecordPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeRecordPresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeRecordPresetDetail"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DeleteRecordPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -311,22 +287,6 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"DescribeTranscodePreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeTranscodePreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeTranscodePresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeTranscodePresetDetail"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DeleteTranscodePreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -348,22 +308,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeSnapshotPresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeSnapshotPresetDetail"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},

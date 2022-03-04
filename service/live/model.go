@@ -127,9 +127,7 @@ type DescribeAuthResp struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           *DescribeAuthOutput `json:"Result,omitempty"`
 }
-type UpdateAllAuthUnderVhostResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
+
 type ForbidStreamResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
@@ -234,35 +232,6 @@ type UpdateRecordPresetResp struct {
 type DeleteRecordPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type DescribeRecordPresetResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeRecordPresetOutput `json:"Result,omitempty"`
-}
-type DescribeRecordPresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeRecordPresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeRecordPresetDetailOutput `json:"Result,omitempty"`
-}
-type DescribeRecordPresetDetailOutput struct {
-	PresetDetailList []*RecordPreset `json:"PresetDetailList"`
-}
-type RecordPreset struct {
-	Preset          string          `json:"Preset"`
-	Status          int             `json:"Status"`
-	Format          []string        `json:"Format"`
-	Duration        int             `json:"Duration"`
-	SliceDuration   int             `json:"SliceDuration"`
-	Bucket          string          `json:"Bucket"`
-	ReserveDuration int             `json:"ReserveDuration"`
-	AccessKey       string          `json:"AccessKey"`
-	ReserveDays     int64           `json:"ReserveDays"`
-	CallbackDetail  *CallbackDetail `json:"CallbackDetail"`
-	PullDomain      string          `json:"PullDomain"`
-	VodNamespace    string          `json:"VodNamespace"`
-	WorkflowID      string          `json:"WorkflowID"`
-}
 
 type SlicePreset struct {
 	Preset         *string         `json:"Preset,omitempty"`
@@ -300,39 +269,6 @@ type UpdateTranscodePresetResp struct {
 type DeleteTranscodePresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type DescribeTranscodePresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeTranscodePresetResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeTranscodePresetOutput `json:"Result,omitempty"`
-}
-
-type TranscodePreset struct {
-	Preset       string `json:"Preset"`
-	Status       int    `json:"Status"`
-	SuffixName   string `json:"SuffixName"`
-	VideoBitrate int    `json:"VideoBitrate"`
-	Vcodec       string `json:"Vcodec"`
-	AudioBitrate int    `json:"AudioBitrate"`
-	Acodec       string `json:"Acodec"`
-	FPS          int    `json:"FPS"`
-	GOP          int    `json:"GOP"`
-	Width        int    `json:"Width"`
-	Height       int    `json:"Height"`
-	AutoTrans    int    `json:"-"`
-	As           string `json:"-"`
-	ShortSide    int    `json:"-"`
-	LongSide     int    `json:"-"`
-	Roi          bool   `json:"-"`
-}
-type DescribeTranscodePresetDetailOutput struct {
-	PresetDetailList []*TranscodePreset `json:"PresetDetailList"`
-}
-type DescribeTranscodePresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeTranscodePresetDetailOutput `json:"Result,omitempty"`
-}
 type CreateSnapshotPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
@@ -341,28 +277,6 @@ type UpdateSnapshotPresetResp struct {
 }
 type DeleteSnapshotPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
-}
-type DescribeSnapshotPresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeSnapshotPresetResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeSnapshotPresetOutput `json:"Result,omitempty"`
-}
-type SnapshotPreset struct {
-	Preset         string          `json:"Preset"`
-	Status         int             `json:"Status"`
-	Interval       int             `json:"Interval"`
-	Bucket         string          `json:"Bucket"`
-	AccessKey      string          `json:"AccessKey"`
-	CallbackDetail *CallbackDetail `json:"CallbackDetail"`
-}
-type DescribeSnapshotPresetDetailOutput struct {
-	PresetDetailList []*SnapshotPreset `json:"PresetDetailList"`
-}
-type DescribeSnapshotPresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeSnapshotPresetDetailOutput `json:"Result,omitempty"`
 }
 type ListVhostSnapshotPresetRespOutput struct {
 	PresetList []*SlicePresetsVhostAPP `json:"PresetList"`

@@ -312,29 +312,6 @@ func TestDescribeAuth(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
-func TestUpdateAllAuthUnderVhost(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountId": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"Vhost":          "",
-		"SceneType":      "",
-		"AuthDetailList": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.UpdateAllAuthUnderVhost(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
 func TestForbidStream(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
@@ -649,49 +626,6 @@ func TestUpdateRecordPreset(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
-func TestDescribeRecordPreset(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountId": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"Vhost": "",
-		"App":   "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DescribeRecordPreset(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestDescribeRecordPresetDetail(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountId": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"PresetList": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DescribeRecordPresetDetail(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
 func TestDeleteRecordPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
@@ -778,48 +712,6 @@ func TestUpdateTranscodePreset(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
-func TestDescribeTranscodePreset(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountId": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"Vhost": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DescribeTranscodePreset(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestDescribeTranscodePresetDetail(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountId": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"Vhost": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DescribeTranscodePresetDetail(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
 func TestDeleteTranscodePreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
@@ -881,47 +773,6 @@ func TestUpdateSnapshotPreset(t *testing.T) {
 	}
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestDescribeSnapshotPreset(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountID": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"Vhost": "",
-		"App":   "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	resp, statusCode, err := live.DefaultInstance.DescribeSnapshotPreset(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-
-}
-
-func TestDescribeSnapshotPresetDetail(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	query :=
-		url.Values{
-			"AccountID": []string{AccountID},
-		}
-	bodyMap := map[string]interface{}{
-		"PresetList": []string{""},
-	}
-	body, _ := json.Marshal(bodyMap)
-	resp, statusCode, err := live.DefaultInstance.DescribeSnapshotPresetDetail(query, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-
 }
 
 func TestDeleteSnapshotPreset(t *testing.T) {
