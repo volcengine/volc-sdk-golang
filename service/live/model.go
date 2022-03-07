@@ -269,6 +269,84 @@ type UpdateTranscodePresetResp struct {
 type DeleteTranscodePresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
+type ListVhostTransCodePresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListVhostTransCodePresetRespOutput `json:"Result,omitempty"`
+}
+type ListVhostTransCodePresetRespOutput struct {
+	CommonPresetList    []TranscodePresetVhostAPP `json:"CommonPresetList"`
+	CustomizePresetList []TranscodePresetVhostAPP `json:"CustomizePresetList"`
+}
+type TranscodePresetVhostAPP struct {
+	Vhost           string           `json:"Vhost"`
+	App             string           `json:"App"`
+	TranscodePreset *TranscodePreset `json:"TranscodePreset"`
+}
+type TranscodePreset struct {
+	Preset       *string `json:"Preset,omitempty"`
+	Status       *int64  `json:"Status,omitempty"`
+	SuffixName   *string `json:"SuffixName,omitempty"`
+	StopInterval *int64  `json:"StopInterval,omitempty"`
+	Describe     *string `json:"Describe,omitempty"`
+	PresetKind   *int64  `json:"PresetKind,omitempty"`
+	PresetType   *int    `json:"PresetType,omitempty"`
+	Roi          *bool   `json:"Roi,omitempty"`
+	Vclass       *bool   `json:"Vclass,omitempty"`
+	Ocr          *bool   `json:"Ocr,omitempty"`
+	Modifier     *string `json:"Modifier,omitempty"`
+	Revision     *string `json:"Revision,omitempty"`
+	//*****video param ******
+	Vn           *int64  `json:"Vn,omitempty"`
+	FPS          *int64  `json:"FPS,omitempty"`
+	VideoBitrate *int64  `json:"VideoBitrate,omitempty"`
+	VbThreshold  *string `json:"VbThreshold,omitempty"`
+	Vcodec       *string `json:"Vcodec,omitempty"`
+	VProfile     *string `json:"VProfile,omitempty"`
+	VLevel       *string `json:"VLevel,omitempty"`
+	VRateCtrl    *string `json:"VRateCtrl,omitempty"`
+	GopMin       *int64  `json:"GopMin,omitempty"`
+	GOP          *int64  `json:"GOP,omitempty"`
+	BFrames      *int64  `json:"BFrames,omitempty"`
+	LookAhead    *int64  `json:"LookAhead,omitempty"`
+	VPreset      *string `json:"VPreset,omitempty"`
+	Threads      *int64  `json:"Threads,omitempty"`
+	Width        *int64  `json:"Width,omitempty"`
+	Height       *int64  `json:"Height,omitempty"`
+	As           *string `json:"As,omitempty"`
+	AutoTrans    *int64  `json:"AutoTrans,omitempty"`
+	LongSide     *int64  `json:"LongSide,omitempty"`
+	ShortSide    *int64  `json:"ShortSide,omitempty"`
+	Abr          *bool   `json:"Abr,omitempty"`
+	VBVBufSize   *int64  `json:"VBVBufSize,omitempty"`
+	VBVMaxRate   *int64  `json:"VBVMaxRate,omitempty"`
+	Qp           *int64  `json:"Qp,omitempty"`
+	HVSPre       *bool   `json:"HVSPre,omitempty"`
+	BCM          *int64  `json:"BCM,omitempty"`
+	VBRatio      *int64  `json:"VBRatio,omitempty"`
+	SITI         *bool   `json:"SITI,omitempty"`
+
+	// Nvidia hardware encoding related parameters, Vcodec, Width, Height, Vr, Vb, gop reuse the above general parameters, other software encoding parameters are ignored
+	// When NvPriority = 0, it means that nvidia hardware transcoding is not enabled, and all nv parameters are not used
+	NvPriority  *int64  `json:"NvPriority,omitempty"` // nvidia transcoding priority, 0 means off, >0 means on, the larger the priority, the higher the priority
+	NvCodec     *string `json:"NvCodec,omitempty"`
+	NvPreset    *string `json:"NvPreset,omitempty"`
+	NvProfile   *string `json:"NvProfile,omitempty"`
+	NvGop       *int64  `json:"NvGop,omitempty"`
+	NvBf        *int64  `json:"NvBf,omitempty"`
+	NvRefs      *int64  `json:"NvRefs,omitempty"`
+	NvLookahead *int64  `json:"NvLookahead,omitempty"`
+	NvTempAQ    *int64  `json:"NvTempAQ,omitempty"`
+	NvHVSPre    *bool   `json:"NvHVSPre,omitempty"`
+	NvPercent   *int64  `json:"NvPercent,omitempty"`
+	//***** audio param *****
+	An            *int64  `json:"An,omitempty"`
+	AR            *int64  `json:"AR,omitempty"`
+	AudioBitrate  *int64  `json:"AudioBitrate,omitempty"`
+	Acodec        *string `json:"Acodec,omitempty"`
+	AProfile      *string `json:"AProfile,omitempty"`
+	RegionConfig  *string `json:"RegionConfig,omitempty"`
+	AdvancedParam *string `json:"AdvancedParam,omitempty"`
+}
 type CreateSnapshotPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }

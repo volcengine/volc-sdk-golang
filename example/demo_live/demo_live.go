@@ -733,6 +733,27 @@ func TestDeleteTranscodePreset(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
+func TestListVhostTransCodePreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	query :=
+		url.Values{
+			"AccountId": []string{AccountID},
+		}
+	bodyMap := map[string]string{
+		"Vhost": "",
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.ListVhostTransCodePreset(query, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
 func TestCreateSnapshotPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
@@ -808,6 +829,21 @@ func TestListVhostSnapshotPreset(t *testing.T) {
 	}
 	body, _ := json.Marshal(bodyMap)
 	resp, statusCode, err := live.DefaultInstance.ListVhostSnapshotPreset(query, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestListCommonTransPresetDetail(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]string{
+		"Vhost": "",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.ListCommonTransPresetDetail(nil, string(body))
 	if err != nil {
 		t.Logf("error occur %v", err)
 	}

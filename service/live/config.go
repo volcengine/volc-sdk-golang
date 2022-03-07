@@ -295,6 +295,14 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
+		"ListVhostTransCodePreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVhostTransCodePreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 		"CreateSnapshotPreset": {
 			Method: http.MethodPost,
 			Path:   "/",

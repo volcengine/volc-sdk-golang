@@ -460,6 +460,17 @@ func (p *LIVE) DeleteTranscodePreset(query url.Values, body string) (*DeleteTran
 }
 
 /**
+
+ */
+func (p *LIVE) ListVhostTransCodePreset(query url.Values, body string) (*ListVhostTransCodePresetResp, int, error) {
+	resp := new(ListVhostTransCodePresetResp)
+	statesCode, err := p.commonHandlerJson("ListVhostTransCodePreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+/**
  截图相关的
 */
 func (p *LIVE) CreateSnapshotPreset(query url.Values, body string) (*CreateSnapshotPresetResp, int, error) {
