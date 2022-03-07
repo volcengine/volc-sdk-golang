@@ -318,14 +318,14 @@ var (
 		//		"Version": []string{"2022-01-01"},
 		//	},
 		//},
-		"GetSpaceConfig": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetSpaceConfig"},
-				"Version": []string{"2021-01-01"},
-			},
-		},
+		//"GetSpaceConfig": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetSpaceConfig"},
+		//		"Version": []string{"2022-01-01"},
+		//	},
+		//},
 		"UpdateSpace": {
 			Method: http.MethodGet,
 			Path:   "/",
