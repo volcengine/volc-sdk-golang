@@ -146,6 +146,7 @@ type ListCertResp struct {
 
 type SimpleCertInfo struct {
 	CertDomain string `json:"CertDomain"`
+	CertName   string `json:"CertName"`
 	ChainID    string `json:"ChainID"`
 	NotBefore  string `json:"NotBefore"`
 	NotAfter   string `json:"NotAfter"`
@@ -168,6 +169,7 @@ type DescribeCertDetailResp struct {
 	CertDomain string           `json:"Domain"`
 	UseWay     string           `json:"UseWay,omitempty"`
 	Status     string           `json:"Status,omitempty"`
+	CertName   string           `json:"CertName,omitempty"`
 	Rsa        *OpenAPICertData `json:"Rsa,omitempty"`
 }
 
