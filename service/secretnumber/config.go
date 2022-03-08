@@ -28,6 +28,10 @@ type MercService struct {
 	*base.Client
 }
 
+type ConfigService struct {
+	*base.Client
+}
+
 // DefaultInstance 默认的实例
 var DefaultInstance = NewInstance()
 
@@ -39,6 +43,8 @@ var DefaultNumberPoolInstance = NewNumberPoolInstance()
 
 // DefaultMercServiceInstance 默认的实例
 var DefaultMercServiceInstance = NewMercServiceInstance()
+
+var DefaultConfigServiceInstance = NewConfigServiceInstance()
 
 func NewInstance() *SecretNumber {
 	instance := &SecretNumber{
@@ -55,15 +61,22 @@ func NewDataCenterInstance() *DataCenter {
 }
 
 func NewNumberPoolInstance() *NumberPool {
-	instance := &NumberPool {
+	instance := &NumberPool{
 		Client: base.NewClient(NumberPoolServiceInfoMap[base.RegionCnNorth1], NumberPoolApiInfoList),
 	}
 	return instance
 }
 
 func NewMercServiceInstance() *MercService {
-	instance := &MercService {
+	instance := &MercService{
 		Client: base.NewClient(MercServiceInfoMap[base.RegionCnNorth1], MercApiInfoList),
+	}
+	return instance
+}
+
+func NewConfigServiceInstance() *ConfigService {
+	instance := &ConfigService{
+		Client: base.NewClient(ConfigServiceInfoMap[base.RegionCnNorth1], ConfigApiInfoList),
 	}
 	return instance
 }
@@ -97,7 +110,7 @@ var (
 		},
 	}
 
-	NumberPoolServiceInfoMap = map[string]*base.ServiceInfo {
+	NumberPoolServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: DefaultTimeout,
 			Host:    "cloud-vms.volcengineapi.com",
@@ -111,7 +124,7 @@ var (
 		},
 	}
 
-	MercServiceInfoMap = map[string]*base.ServiceInfo {
+	MercServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: DefaultTimeout,
 			Host:    "cloud-vms.volcengineapi.com",
@@ -125,7 +138,77 @@ var (
 		},
 	}
 
-	MercApiInfoList = map[string]*base.ApiInfo {
+	ConfigServiceInfoMap = map[string]*base.ServiceInfo{
+		base.RegionCnNorth1: {
+			Timeout: DefaultTimeout,
+			Host:    "volcengineapi-boe.byted.org",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{
+				Region:  base.RegionCnNorth1,
+				Service: "volc_common_configure",
+			},
+		},
+	}
+
+	ConfigApiInfoList = map[string]*base.ApiInfo{
+		"AddQualification": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddQualification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		"UpdateQualification": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateQualification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		"AddQualificationScene": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddQualificationScene"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		"UpdateQualificationScene": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateQualificationScene"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		"QueryQualification": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryQualification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		"UploadQualificationFile": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UploadQualificationFile"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+	}
+
+	MercApiInfoList = map[string]*base.ApiInfo{
 		"CreateNumberApplication": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -136,7 +219,7 @@ var (
 		},
 	}
 
-	NumberPoolApiInfoList = map[string]*base.ApiInfo {
+	NumberPoolApiInfoList = map[string]*base.ApiInfo{
 		"CreateNumberPool": {
 			Method: http.MethodPost,
 			Path:   "/",

@@ -198,7 +198,52 @@ func (p *NumberPool) QueryNumberApplyRecordList(req *QueryNumberApplyRecordListR
 
 func (p *MercService) CreateNumberApplication(req *CreateNumberApplicationRequest) (*CreateNumberApplicationResponse, int, error) {
 	resp := new(CreateNumberApplicationResponse)
-	if statusCode, err := p.handlerJson("CreateNumberApplication", req, resp); err != nil {
+	if statusCode, err := handlerJson("CreateNumberApplication", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) AddQualification(req *AddQualificationRequest) (*AddQualificationResponse, int, error) {
+	resp := new(AddQualificationResponse)
+	if statusCode, err := handlerJson("AddQualification", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) UpdateQualification(req *UpdateQualificationRequest) (*UpdateQualificationResponse, int, error) {
+	resp := new(UpdateQualificationResponse)
+	if statusCode, err := handlerJson("UpdateQualification", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) AddQualificationScene(req *AddQualificationSceneRequest) (*AddQualificationSceneResponse, int, error) {
+	resp := new(AddQualificationSceneResponse)
+	if statusCode, err := handlerJson("AddQualificationScene", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) UpdateQualificationScene(req *UpdateQualificationSceneRequest) (*UpdateQualificationSceneResponse, int, error) {
+	resp := new(UpdateQualificationSceneResponse)
+	if statusCode, err := handlerJson("UpdateQualificationScene", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) QueryQualification(req *QueryQualificationRequest) (*QueryQualificationResponse, int, error) {
+	resp := new(QueryQualificationResponse)
+	if statusCode, err := handlerJson("QueryQualification", req, resp, *p.Client); err != nil {
 		return nil, statusCode, err
 	} else {
 		return resp, statusCode, nil
@@ -258,7 +303,11 @@ func handler(api string, req interface{}, resp interface{}, p base.Client) (int,
 		return statusCode, err
 	}
 	if statusCode >= 500 {
-		respBody, statusCode, err = p.Post(api, nil, form)
+		if http.MethodGet == apiInfo.Method {
+			respBody, statusCode, err = p.Query(api, form)
+		} else {
+			respBody, statusCode, err = p.Post(api, nil, form)
+		}
 		if err != nil {
 			return statusCode, err
 		}
@@ -270,33 +319,14 @@ func handler(api string, req interface{}, resp interface{}, p base.Client) (int,
 	return statusCode, nil
 }
 
-func (p *MercService) handler(api string, req interface{}, resp interface{}) (int, error) {
-	form := base.ToUrlValues(req)
-	respBody, statusCode, err := p.Client.Post(api, nil, form)
-	if err != nil {
-		return statusCode, err
-	}
-	if statusCode >= 500 {
-		respBody, statusCode, err = p.Client.Post(api, nil, form)
-		if err != nil {
-			return statusCode, err
-		}
-	}
-
-	if err := json.Unmarshal(respBody, resp); err != nil {
-		return statusCode, err
-	}
-	return statusCode, nil
-}
-
-func (p *MercService) handlerJson(api string, req interface{}, resp interface{}) (int, error) {
+func handlerJson(api string, req interface{}, resp interface{}, p base.Client) (int, error) {
 	jsonBody, _ := json.Marshal(req)
-	respBody, statusCode, err := p.Client.Json(api, nil, string(jsonBody))
+	respBody, statusCode, err := p.Json(api, nil, string(jsonBody))
 	if err != nil {
 		return statusCode, err
 	}
 	if statusCode >= 500 {
-		respBody, statusCode, err = p.Client.Json(api, nil, string(jsonBody))
+		respBody, statusCode, err = p.Json(api, nil, string(jsonBody))
 		if err != nil {
 			return statusCode, err
 		}

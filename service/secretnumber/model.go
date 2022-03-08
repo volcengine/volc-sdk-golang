@@ -417,3 +417,142 @@ type CreateNumberApplicationResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           CreateNumberApplicationData
 }
+
+type AddQualificationRequest struct {
+	QualificationMainInfoFormDO         QualificationMainInfoFormDO
+	QualificationAdminInfoFormDO        QualificationAdminInfoFormDO
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type QualificationMainInfoFormDO struct {
+	QualificationEntity                            string
+	CertificateThreeInOne                          int32
+	EnterpriseAddress                              string
+	LegalRepresentativeName                        string
+	LegalRepresentativeId                          string
+	LegalRepresentativeFrontIdPhotoFileCode        string
+	DocOfNumberApplyPhotoFileCode                  string
+	CommitmentLetterOfNetAccessPhotoFileCode       string
+	UnitSocialCreditCode                           string
+	ThreeInOneBusinessLicensePhotoFileCode         string
+	CodeOfOrganizationCertificate                  string
+	BusinessLicensePhotoFileCode                   string
+	CertificateOfOrganizationCodesPhotoFileCode    string
+	CertificateOfTaxationRegistrationPhotoFileCode string
+	QualificationNo                                string
+}
+
+type QualificationAdminInfoFormDO struct {
+	Name                              string
+	ContactNumber                     string
+	IdCardNumber                      string
+	IdCardFrontPhotoFileCode          string
+	IdCardBackPhotoWithPeopleFileCode string
+}
+
+type QualificationScenarioInfoFormDO struct {
+	QualificationNo   string
+	SceneType         int32
+	Description       string
+	ScenarioOfCalling string
+}
+
+type AddQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           AddQualificationData
+}
+
+type AddQualificationData struct {
+	QualificationNo string
+}
+
+type UpdateQualificationRequest struct {
+	QualificationMainInfoFormDO         QualificationMainInfoFormDO
+	QualificationAdminInfoFormDO        QualificationAdminInfoFormDO
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type UpdateQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type AddQualificationSceneRequest struct {
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type AddQualificationSceneResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type UpdateQualificationSceneRequest struct {
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type UpdateQualificationSceneResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type QueryQualificationRequest struct {
+	QualificationNoList []string
+	ApprovalStatus      string
+	Offset              int32
+	Limit               int32
+}
+
+type QualificationMainInfoVO struct {
+	QualificationId                           int32
+	QualificationNo                           string
+	QualificationEntity                       string
+	AccountId                                 string
+	CertificateThreeInOne                     int32
+	EnterpriseAddress                         string
+	LegalRepresentativeName                   string
+	LegalRepresentativeId                     string
+	LegalRepresentativeFrontIDPhotoURL        string
+	DocOfNumberApplyPhotoURL                  string
+	CommitmentLetterOfNetAccessPhotoURL       string
+	UnitSocialCreditCode                      string
+	ThreeInOneBusinessLicensePhotoURL         string
+	CodeOfOrganizationCertificateURL          string
+	BusinessLicensePhotoURL                   string
+	CertificateOfOrganizationCodesPhotoURL    string
+	CertificateOfTaxationRegistrationPhotoURL string
+	ApprovalStatus                            int32
+	CreateTime                                string
+	UpdateTime                                string
+}
+
+type QualificationAdminInfoVO struct {
+	Name                         string
+	ContactNumber                string
+	IdCardNumber                 string
+	IdCardFrontPhotoURL          string
+	IdCardBackPhotoWithPeopleURL string
+}
+
+type QualificationScenarioInfoVO struct {
+	SceneType         int32
+	Description       string
+	ScenarioOfCalling string
+}
+
+type QueryQualificationVO struct {
+	QualificationMainInfoVO         QualificationMainInfoVO
+	QualificationAdminInfoVO        QualificationAdminInfoVO
+	QualificationScenarioInfoVOList []QualificationScenarioInfoVO
+}
+
+type QueryQualificationData struct {
+	Records []QueryQualificationVO
+	Limit   int32
+	Offset  int32
+	Total   int32
+}
+
+type QueryQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           QueryQualificationData
+}

@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	testAk = "testAk"
-	testSk = "testSk"
+	testAk = "***REMOVED***"
+	testSk = "***REMOVED***"
 )
 
 func init() {
@@ -18,6 +18,8 @@ func init() {
 	DefaultNumberPoolInstance.Client.SetSecretKey(testSk)
 	DefaultMercServiceInstance.Client.SetAccessKey(testAk)
 	DefaultMercServiceInstance.Client.SetSecretKey(testSk)
+	DefaultConfigServiceInstance.Client.SetAccessKey(testAk)
+	DefaultConfigServiceInstance.Client.SetSecretKey(testSk)
 }
 
 func TestSecretNumber_BindAXB(t *testing.T) {
@@ -298,6 +300,158 @@ func TestMercService_CreateNumberApplication(t *testing.T) {
 		NumberApplicationCityItemList: detailList,
 	}
 	result, statusCode, err := DefaultMercServiceInstance.CreateNumberApplication(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestConfigService_AddQualification(t *testing.T) {
+	qualificationMainInfoFormDO := QualificationMainInfoFormDO{
+		QualificationEntity:                            "3",
+		CertificateThreeInOne:                          1,
+		EnterpriseAddress:                              "222",
+		LegalRepresentativeName:                        "2",
+		LegalRepresentativeId:                          "2",
+		UnitSocialCreditCode:                           "2",
+		LegalRepresentativeFrontIdPhotoFileCode:        "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		DocOfNumberApplyPhotoFileCode:                  "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CommitmentLetterOfNetAccessPhotoFileCode:       "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		ThreeInOneBusinessLicensePhotoFileCode:         "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CodeOfOrganizationCertificate:                  "2",
+		BusinessLicensePhotoFileCode:                   "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CertificateOfOrganizationCodesPhotoFileCode:    "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CertificateOfTaxationRegistrationPhotoFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+	}
+
+	qualificationAdminInfoFormDO := QualificationAdminInfoFormDO{
+		Name:                              "2",
+		ContactNumber:                     "2",
+		IdCardNumber:                      "2",
+		IdCardFrontPhotoFileCode:          "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		IdCardBackPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+	}
+
+	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
+		{
+			SceneType:         1001,
+			Description:       "2",
+			ScenarioOfCalling: "2",
+		},
+	}
+
+	req := &AddQualificationRequest{
+		QualificationMainInfoFormDO:         qualificationMainInfoFormDO,
+		QualificationAdminInfoFormDO:        qualificationAdminInfoFormDO,
+		QualificationScenarioInfoFormDOList: qualificationScenarioInfoFormDOList,
+	}
+
+	result, statusCode, err := DefaultConfigServiceInstance.AddQualification(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestConfigService_UpdateQualification(t *testing.T) {
+	qualificationMainInfoFormDO := QualificationMainInfoFormDO{
+		QualificationEntity:                            "3",
+		QualificationNo:                                "QUA164664762128220429",
+		CertificateThreeInOne:                          1,
+		EnterpriseAddress:                              "22",
+		LegalRepresentativeName:                        "2",
+		LegalRepresentativeId:                          "2",
+		UnitSocialCreditCode:                           "2",
+		LegalRepresentativeFrontIdPhotoFileCode:        "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		DocOfNumberApplyPhotoFileCode:                  "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CommitmentLetterOfNetAccessPhotoFileCode:       "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		ThreeInOneBusinessLicensePhotoFileCode:         "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CodeOfOrganizationCertificate:                  "2",
+		BusinessLicensePhotoFileCode:                   "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CertificateOfOrganizationCodesPhotoFileCode:    "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		CertificateOfTaxationRegistrationPhotoFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+	}
+
+	qualificationAdminInfoFormDO := QualificationAdminInfoFormDO{
+		Name:                              "2",
+		ContactNumber:                     "2",
+		IdCardNumber:                      "2",
+		IdCardFrontPhotoFileCode:          "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		IdCardBackPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+	}
+
+	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
+		{
+			SceneType:         1001,
+			Description:       "2",
+			ScenarioOfCalling: "2",
+		},
+	}
+
+	req := &UpdateQualificationRequest{
+		QualificationMainInfoFormDO:         qualificationMainInfoFormDO,
+		QualificationAdminInfoFormDO:        qualificationAdminInfoFormDO,
+		QualificationScenarioInfoFormDOList: qualificationScenarioInfoFormDOList,
+	}
+
+	result, statusCode, err := DefaultConfigServiceInstance.UpdateQualification(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestConfigService_AddQualificationScene(t *testing.T) {
+
+	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
+		{
+			QualificationNo:   "QUA164664762128220429",
+			SceneType:         1001,
+			Description:       "22212",
+			ScenarioOfCalling: "2222",
+		},
+	}
+
+	req := &AddQualificationSceneRequest{
+		QualificationScenarioInfoFormDOList: qualificationScenarioInfoFormDOList,
+	}
+
+	result, statusCode, err := DefaultConfigServiceInstance.AddQualificationScene(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestConfigService_UpdateQualificationScene(t *testing.T) {
+
+	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
+		{
+			QualificationNo:   "QUA164664762128220429",
+			SceneType:         1001,
+			Description:       "2221",
+			ScenarioOfCalling: "2222",
+		},
+	}
+
+	req := &UpdateQualificationSceneRequest{
+		QualificationScenarioInfoFormDOList: qualificationScenarioInfoFormDOList,
+	}
+
+	result, statusCode, err := DefaultConfigServiceInstance.UpdateQualificationScene(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestConfigService_QueryQualification(t *testing.T) {
+	
+	qualificationNoList := []string{"QUA164664762128220429","QUA164664754228227262"}
+
+
+	req := &QueryQualificationRequest{
+		QualificationNoList: qualificationNoList,
+		ApprovalStatus: "1",
+		Limit: 20,
+	}
+
+	result, statusCode, err := DefaultConfigServiceInstance.QueryQualification(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
