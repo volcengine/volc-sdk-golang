@@ -354,19 +354,19 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		"CreateCDNRefreshTask": {
+		"CreateCdnRefreshTask": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CreateCDNRefreshTask"},
+				"Action":  []string{"CreateCdnRefreshTask"},
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		"CreateCDNPreloadTask": {
+		"CreateCdnPreloadTask": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CreateCDNPreloadTask"},
+				"Action":  []string{"CreateCdnPreloadTask"},
 				"Version": []string{"2021-01-01"},
 			},
 		},
