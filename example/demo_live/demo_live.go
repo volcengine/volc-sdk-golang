@@ -15,7 +15,9 @@ func TestUpdateCallback(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"MessageType":        "record",
+		"Vhost":              "vhost",
+		"CallbackDetailList": []interface{}{},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -32,7 +34,9 @@ func TestDescribeCallback(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"MessageType": "",
+		"Domain":      "domain",
+		"App":         "app",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -49,7 +53,8 @@ func TestDeleteCallback(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"MessageType": "record",
+		"Vhost":       "vhost",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -66,7 +71,7 @@ func TestCreateDomain(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain": "test-sdk-push.byte.com",
+		"Domain": "domain",
 		"Type":   "push",
 	}
 	body, _ := json.Marshal(bodyMap)
@@ -84,7 +89,7 @@ func TestDeleteDomain(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain": "test-sdk-push.byte.com",
+		"Domain": "domain",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -117,7 +122,7 @@ func TestDescribeDomain(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain": "test-sdk-push.byte.com", //这个是不存在的
+		"DomainList": []string{"domain1", "domain2"},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -150,7 +155,7 @@ func TestEnableDomain(t *testing.T) {
 func TestDisableDomain(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
+	bodyMap := map[string]string{
 		"Domain": "",
 	}
 	body, _ := json.Marshal(bodyMap)
@@ -167,7 +172,7 @@ func TestDisableDomain(t *testing.T) {
 func TestManagerPullPushDomainBind(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
+	bodyMap := map[string]string{
 		"PullDomain": "",
 		"PushDomain": "",
 	}
@@ -186,9 +191,12 @@ func TestUpdateAuthKey(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain":         "",
-		"SceneType":      "",
-		"AuthDetailList": "",
+		"Domain":    "domain",
+		"SceneType": "push",
+		"AuthDetailList": []interface{}{map[string]interface{}{
+			"EncryptionAlgorithm": "md5",
+			"SecretKey":           "xx",
+		}},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -205,8 +213,9 @@ func TestEnableAuth(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain":    "",
-		"SceneType": "",
+		"Domain":    "domain",
+		"App":       "app",
+		"SceneType": "push",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -223,8 +232,9 @@ func TestDisableAuth(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain":    "",
-		"SceneType": "",
+		"Domain":    "domain",
+		"App":       "app",
+		"SceneType": "push",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -241,7 +251,8 @@ func TestDescribeAuth(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain": "",
+		"Domain":    "domain",
+		"SceneType": "push",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -258,9 +269,9 @@ func TestForbidStream(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost":  "",
-		"App":    "",
-		"Stream": "",
+		"Domain": "domain",
+		"App":    "app",
+		"Stream": "stream",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -277,11 +288,9 @@ func TestResumeStream(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost":    "",
-		"App":      "",
-		"Stream":   "",
-		"LastPSM":  "",
-		"LastUser": "",
+		"Domain": "",
+		"App":    "",
+		"Stream": "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -298,7 +307,9 @@ func TestListCert(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Domain":    "",
+		"Available": true,
+		"Expiring":  false,
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -315,9 +326,8 @@ func TestCreateCert(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"AccountId": "",
-		"useway":    "",
-		"rsa":       "",
+		"UseWay":   "sign",
+		"CertName": "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -351,8 +361,8 @@ func TestUpdateCert(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"rsa":     "",
-		"ChainID": "",
+		"UseWay":  "sign",
+		"ChainID": "xxx",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -405,7 +415,7 @@ func TestDeleteCert(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"chainId": "",
+		"ChainID": "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -422,8 +432,16 @@ func TestUpdateReferer(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Domain":          "",
-		"RefererInfoList": []string{""},
+		"Domain": "",
+		"App":    "",
+		"RefererInfoList": []map[string]interface{}{
+			{
+				"Key":      "asd",
+				"Type":     "xx",
+				"Value":    "sad",
+				"Priority": 0,
+			},
+		},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -459,6 +477,7 @@ func TestDescribeReferer(t *testing.T) {
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
 		"Domain": "",
+		"App":    "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -475,10 +494,18 @@ func TestCreateRecordPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost":  "",
-		"App":    "",
+		"Vhost":  "vhost",
+		"App":    "app",
 		"Status": "",
-		"Bucket": "",
+		"Bucket": "bb",
+		"RecordTob": []map[string]interface{}{
+			{
+				"Format":       "hls",
+				"Duration":     100,
+				"Splice":       -1,
+				"RecordObject": "/xx/xx",
+			},
+		},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -495,11 +522,19 @@ func TestUpdateRecordPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Preset": "",
-		"Vhost":  "",
-		"App":    "",
+		"Preset": "preset",
+		"Vhost":  "vhost",
+		"App":    "app",
 		"Status": "",
-		"Bucket": "",
+		"Bucket": "bb",
+		"RecordTob": []map[string]interface{}{
+			{
+				"Format":       "hls",
+				"Duration":     100,
+				"Splice":       -1,
+				"RecordObject": "/xx/xx",
+			},
+		},
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -516,8 +551,9 @@ func TestDeleteRecordPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
-		"App":   "",
+		"Vhost":  "",
+		"App":    "",
+		"Preset": "preset",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -534,7 +570,7 @@ func TestListVhostRecordPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Vhost": "vhost",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -551,8 +587,12 @@ func TestCreateTranscodePreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
-		"App":   "",
+		"Vhost":      "",
+		"App":        "",
+		"status":     "",
+		"SuffixName": "",
+		"Preset":     "",
+		"FPS":        30,
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -569,7 +609,12 @@ func TestUpdateTranscodePreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Vhost":      "",
+		"App":        "",
+		"status":     "",
+		"SuffixName": "",
+		"Preset":     "",
+		"FPS":        60,
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -586,7 +631,9 @@ func TestDeleteTranscodePreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Vhost":  "",
+		"App":    "",
+		"Preset": "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -616,11 +663,33 @@ func TestListVhostTransCodePreset(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
+func TestListCommonTransPresetDetail(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string][]string{
+		"PresetList": []string{"Preset1", "Preset2"},
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.ListCommonTransPresetDetail(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
 func TestCreateSnapshotPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Vhost":          "",
+		"App":            "",
+		"Status":         1,
+		"Interval":       5,
+		"Bucket":         "",
+		"SnapshotFormat": "jpeg",
+		"SnapshotObject": "xx/xx",
+		"StorageDir":     "/xx",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -637,7 +706,15 @@ func TestUpdateSnapshotPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"Vhost": "",
+		"Vhost":          "",
+		"App":            "",
+		"Preset":         "",
+		"Status":         1,
+		"Interval":       5,
+		"Bucket":         "",
+		"SnapshotFormat": "jpeg",
+		"SnapshotObject": "xx/xx",
+		"StorageDir":     "/xx",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -654,7 +731,9 @@ func TestDeleteSnapshotPreset(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]string{
-		"Vhost": "",
+		"Vhost":  "",
+		"App":    "",
+		"Preset": "",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -675,21 +754,6 @@ func TestListVhostSnapshotPreset(t *testing.T) {
 	}
 	body, _ := json.Marshal(bodyMap)
 	resp, statusCode, err := live.DefaultInstance.ListVhostSnapshotPreset(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestListCommonTransPresetDetail(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]string{
-		"Vhost": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	resp, statusCode, err := live.DefaultInstance.ListCommonTransPresetDetail(nil, string(body))
 	if err != nil {
 		t.Logf("error occur %v", err)
 	}
