@@ -401,6 +401,7 @@ type NumberApplicationCityItem struct {
 
 type CreateNumberApplicationRequest struct {
 	QualificationId               string
+	QualificationNo               string
 	NumberPoolNo                  string
 	NumberPurpose                 string
 	NumberType                    string

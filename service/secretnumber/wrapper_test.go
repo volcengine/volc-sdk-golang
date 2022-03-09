@@ -5,8 +5,8 @@ import (
 )
 
 const (
-	testAk = "***REMOVED***"
-	testSk = "***REMOVED***"
+	testAk = "testAk"
+	testSk = "testSk"
 )
 
 func init() {
@@ -269,7 +269,7 @@ func TestNumberPool_EnableOrDisableNumber(t *testing.T) {
 
 func TestNumberPool_QueryNumberApplyRecordList(t *testing.T) {
 	req := &QueryNumberApplyRecordListRequest{
-		ApplyBillId: "NA6967079179",
+		ApplyBillId: "NA5345832249",
 		Limit:       "10",
 		Offset:      "0",
 	}
@@ -291,12 +291,12 @@ func TestMercService_CreateNumberApplication(t *testing.T) {
 	}
 
 	req := &CreateNumberApplicationRequest{
-		QualificationId:               "4155",
+		QualificationNo:               "QUA164679537228220075",
 		NumberPoolNo:                  "NP164015715228226293",
 		NumberPurpose:                 "1",
 		NumberType:                    "1",
 		SubServiceType:                "101",
-		Remark:                        "remark",
+		Remark:                        "remark3",
 		NumberApplicationCityItemList: detailList,
 	}
 	result, statusCode, err := DefaultMercServiceInstance.CreateNumberApplication(req)
@@ -442,12 +442,12 @@ func TestConfigService_UpdateQualificationScene(t *testing.T) {
 
 func TestConfigService_QueryQualification(t *testing.T) {
 	
-	qualificationNoList := []string{"QUA164664762128220429","QUA164664754228227262"}
+	qualificationNoList := []string{"QUA164679537228220075"}
 
 
 	req := &QueryQualificationRequest{
 		QualificationNoList: qualificationNoList,
-		ApprovalStatus: "1",
+		ApprovalStatus: "2",
 		Limit: 20,
 	}
 

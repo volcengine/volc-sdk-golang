@@ -141,7 +141,7 @@ var (
 	ConfigServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: DefaultTimeout,
-			Host:    "volcengineapi-boe.byted.org",
+			Host:    "cloud-vms.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
