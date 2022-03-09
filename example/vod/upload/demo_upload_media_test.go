@@ -33,7 +33,7 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 		fmt.Printf("error %v", err)
 	} else {
 		bts, _ := json.Marshal(resp)
-		fmt.Printf("\nresp = %s", bts)
+		fmt.Printf("resp = %s", bts)
 	}
 
 	fmt.Println()
