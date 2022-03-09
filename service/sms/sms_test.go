@@ -93,7 +93,7 @@ func TestSMS_conversion(t *testing.T) {
 	client.Client.SetAccessKey(testAk)
 	client.Client.SetSecretKey(testSk)
 	req := &ConversionRequest{
-		MessageIDs:    []string{"test_msg_id"},
+		MessageIDs: []string{"test_msg_id"},
 	}
 	result, statusCode, err := client.Conversion(req)
 	t.Logf("result = %+v\n", result)

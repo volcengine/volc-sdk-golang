@@ -18,9 +18,9 @@ import (
 )
 
 var (
-	letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-	defaultRetryTimes uint64 = 2
-	defaultRetryInterval = 1 * time.Second
+	letterRunes                 = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	defaultRetryTimes    uint64 = 2
+	defaultRetryInterval        = 1 * time.Second
 )
 
 func init() {

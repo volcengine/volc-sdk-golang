@@ -339,7 +339,7 @@ func (p *LIVE) DeleteCert(query url.Values, body string) (*DeleteCertConsoleResp
 }
 
 /**
- 防盗链相关
+防盗链相关
 */
 /**
 1. 创建/更新防盗链配置
@@ -378,7 +378,7 @@ func (p *LIVE) DescribeReferer(query url.Values, body string) (*DescribeRefererR
 }
 
 /**
- 录制相关
+录制相关
 */
 /**
 1,
@@ -455,7 +455,7 @@ func (p *LIVE) ListVhostRecordPreset(query url.Values, body string) (*ListVhostR
 }
 
 /**
- 转码相关的
+转码相关的
 */
 /**
 1。
@@ -518,7 +518,7 @@ func (p *LIVE) DeleteTranscodePreset(query url.Values, body string) (*DeleteTran
 }
 
 /**
- 截图相关的
+截图相关的
 */
 func (p *LIVE) CreateSnapshotPreset(query url.Values, body string) (*CreateSnapshotPresetResp, int, error) {
 	resp := new(CreateSnapshotPresetResp)
