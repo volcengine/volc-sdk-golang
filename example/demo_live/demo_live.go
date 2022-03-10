@@ -496,7 +496,7 @@ func TestCreateRecordPreset(t *testing.T) {
 	bodyMap := map[string]interface{}{
 		"Vhost":  "vhost",
 		"App":    "app",
-		"Status": "",
+		"Status": 1,
 		"Bucket": "bb",
 		"RecordTob": []map[string]interface{}{
 			{
@@ -525,7 +525,7 @@ func TestUpdateRecordPreset(t *testing.T) {
 		"Preset": "preset",
 		"Vhost":  "vhost",
 		"App":    "app",
-		"Status": "",
+		"Status": 1,
 		"Bucket": "bb",
 		"RecordTob": []map[string]interface{}{
 			{
@@ -589,7 +589,7 @@ func TestCreateTranscodePreset(t *testing.T) {
 	bodyMap := map[string]interface{}{
 		"Vhost":      "",
 		"App":        "",
-		"status":     "",
+		"status":     1,
 		"SuffixName": "",
 		"Preset":     "",
 		"FPS":        30,
@@ -611,7 +611,7 @@ func TestUpdateTranscodePreset(t *testing.T) {
 	bodyMap := map[string]interface{}{
 		"Vhost":      "",
 		"App":        "",
-		"status":     "",
+		"status":     1,
 		"SuffixName": "",
 		"Preset":     "",
 		"FPS":        60,
