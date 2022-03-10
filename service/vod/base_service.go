@@ -20,6 +20,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
@@ -114,47 +115,64 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
 	}
-	query := url.Values{
-		"Vid": []string{req.GetVid()},
+	query := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
 	}
-	if len(req.GetDefinition()) > 0 {
-		query.Add("Definition", req.GetDefinition())
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return "", err
 	}
-	if len(req.GetFileType()) > 0 {
-		query.Add("FileType", req.GetFileType())
-	}
-	if len(req.GetCodec()) > 0 {
-		query.Add("Codec", req.GetCodec())
-	}
-	if len(req.GetFormat()) > 0 {
-		query.Add("Format", req.GetFormat())
-	}
-	if len(req.GetBase64()) > 0 {
-		query.Add("Base64", req.GetBase64())
-	}
-	if len(req.GetLogoType()) > 0 {
-		query.Add("LogoType", req.GetLogoType())
-	}
-	if len(req.GetSsl()) > 0 {
-		query.Add("Ssl", req.GetSsl())
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return "", e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
-	}
-	if len(req.GetNeedThumbs()) > 0 {
-		query.Add("NeedThumbs", req.GetNeedThumbs())
-	}
-	if len(req.GetNeedBarrageMask()) > 0 {
-		query.Add("NeedBarrageMask", req.GetNeedBarrageMask())
-	}
-	if len(req.GetCdnType()) > 0 {
-		query.Add("CdnType", req.GetCdnType())
-	}
-	if len(req.GetUnionInfo()) > 0 {
-		query.Add("UnionInfo", req.GetUnionInfo())
-	}
-	if len(req.GetHDRDefinition()) > 0 {
-		query.Add("HDRDefinition", req.GetHDRDefinition())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
