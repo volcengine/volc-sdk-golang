@@ -21,7 +21,7 @@ func TestImp_SubmitJob(t *testing.T) {
 	// SubmitJob
 	req := &request.ImpSubmitJobRequest{
 		InputPath: &business.InputPath{
-			Type:         "VOD",
+			Type:         "VOD", // 素材库：VODMaterial 视频库：VOD
 			VodSpaceName: "your vod space",
 			FileId:       "your file id",
 		},

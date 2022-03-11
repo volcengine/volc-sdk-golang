@@ -38,8 +38,7 @@ func NewInstanceWithRegion(region string) *Imp {
 }
 
 const (
-	// BoeHost = "volcengineapi-boe.byted.org" Boe 环境下的 Host
-	Host = "open.volcengineapi.com" // 线上环境下的 Host
+	Host = "open.volcengineapi.com"
 )
 
 var (
@@ -55,9 +54,6 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
-		// **********************************************************************
-		// 转码
-		// **********************************************************************
 		"SubmitJob": {
 			Method: http.MethodGet,
 			Path:   "/",
