@@ -221,26 +221,6 @@ func Test_UpdateSubtitleInfo(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
-func Test_GetAuditFramesForAudit(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodGetAuditFramesForAuditRequest{
-		Vid:               "your Vid",
-		Strategy:          "your Strategy",
-		MinNumberOfFrames: "your MinNumberOfFrames",
-		MaxNumberOfFrames: "your MaxNumberOfFrames",
-	}
-
-	resp, status, err := instance.GetAuditFramesForAudit(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
-
 func Test_CreateVideoClassification(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
