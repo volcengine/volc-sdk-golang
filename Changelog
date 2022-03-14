@@ -1,5 +1,23 @@
 ### Change log
 
+2022-03-14 Bumped to version v1.0.36
+- Minor Bug fix
+
+2022-03-11 Bumped to version v1.0.35
+- Minor Bug fix
+
+2022-03-10 Bumped to version v1.0.34
+- added 智能处理 sdk
+
+2022-03-03 Bumped to version v1.0.33
+- add nlp client
+- Implement related example for cdn apis
+- Add new cdn apis
+- Add Video-Classification for VOD
+
+2022-02-24 Bumped to version v1.0.32
+- Added cr client
+
 2022-02-18 Bumped to version v1.0.31
 - Updated a for axn
 - Added mobile_status api

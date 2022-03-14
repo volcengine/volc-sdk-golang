@@ -3,12 +3,11 @@ package cdn
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"testing"
 )
 
 type commonResponse struct {
-	ResponseMetadata *base.ResponseMetadata
+	ResponseMetadata *ResponseMetadata
 	Result           interface{} `json:",omitempty"`
 }
 
@@ -16,7 +15,7 @@ func TestCommonRequest(t *testing.T) {
 	resp := commonResponse{}
 	DefaultInstance.Client.SetAccessKey("ak")
 	DefaultInstance.Client.SetSecretKey("sk")
-	err := DefaultInstance.SendCommonRequest("DescribeCdnAccessLog", &DescribeCdnAccessLogParam{
+	err := DefaultInstance.SendCommonRequest("DescribeCdnAccessLog", &DescribeCdnAccessLogRequest{
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 		Domain:    "qs0902001-auto-test.byteimg.com",
