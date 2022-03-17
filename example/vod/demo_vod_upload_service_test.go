@@ -60,6 +60,7 @@ func Test_ApplyUploadInfo(t *testing.T) {
 		SessionKey: "your SessionKey",
 		FileSize:   0,
 		FileType:   "your FileType",
+		FileName:   "your FileName",
 	}
 
 	resp, status, err := instance.ApplyUploadInfo(query)
