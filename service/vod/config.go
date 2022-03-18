@@ -278,6 +278,14 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
+		"ListSnapshots": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSnapshots"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 转码
@@ -310,14 +318,14 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
-		//"GetSpaceDetail": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetSpaceDetail"},
-		//		"Version": []string{"2022-01-01"},
-		//	},
-		//},
+		"GetSpaceDetail": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpaceDetail"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 		//"GetSpaceConfig": {
 		//	Method: http.MethodGet,
 		//	Path:   "/",

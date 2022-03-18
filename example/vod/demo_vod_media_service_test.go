@@ -295,3 +295,20 @@ func Test_ListVideoClassifications(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ListSnapshots(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListSnapshotsRequest{
+		Vid: "your Vid",
+	}
+
+	resp, status, err := instance.ListSnapshots(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
