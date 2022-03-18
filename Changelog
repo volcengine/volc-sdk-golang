@@ -1,5 +1,10 @@
 ### Change log
 
+2022-03-18 Bumped to version v1.0.37
+- Added some apis of space\callback\cdn for vod
+- Added media snapshot
+- Added filename when upload
+
 2022-03-14 Bumped to version v1.0.36
 - Minor Bug fix
 
