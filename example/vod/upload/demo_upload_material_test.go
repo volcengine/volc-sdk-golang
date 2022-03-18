@@ -3,6 +3,7 @@ package upload
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -36,7 +37,20 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 		RecordType:  2,
 		Format:      "mp4",
 	})
-	resp, _, err := instance.UploadMaterialWithCallback(filePath, spaceName, consts.FileTypeMedia, "my callback", getMetaFunc, snapShotFunc, addOptionFunc)
+
+	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc, snapShotFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
+		SpaceName:    spaceName,
+		FilePath:     filePath,
+		CallbackArgs: "my callback",
+		Functions:    string(fbts),
+		FileType:     consts.FileTypeMedia,
+		FileName:     "",
+	}
+
+	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
@@ -74,7 +88,20 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 		RecordType:  2,
 		Format:      "jpg",
 	})
-	resp, _, err := instance.UploadMaterialWithCallback(filePath, spaceName, consts.FileTypeImage, "my callback", getMetaFunc, addOptionFunc)
+
+	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
+		SpaceName:    spaceName,
+		FilePath:     filePath,
+		CallbackArgs: "my callback",
+		Functions:    string(fbts),
+		FileType:     consts.FileTypeImage,
+		FileName:     "",
+	}
+
+	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
@@ -112,7 +139,20 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 		RecordType:  2,
 		Format:      "vtt",
 	})
-	resp, _, err := instance.UploadMaterialWithCallback(filePath, spaceName, consts.FileTypeObject, "my callback", getMetaFunc, addOptionFunc)
+
+	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
+		SpaceName:    spaceName,
+		FilePath:     filePath,
+		CallbackArgs: "my callback",
+		Functions:    string(fbts),
+		FileType:     consts.FileTypeObject,
+		FileName:     "",
+	}
+
+	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
