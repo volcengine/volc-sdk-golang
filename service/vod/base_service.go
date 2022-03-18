@@ -188,8 +188,8 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 }
 
-func (p *Vod) UploadMediaWithCallback(filePath string, spaceName string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(filePath)
+func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(mediaRequset.GetFilePath())
 	if err != nil {
 		return nil, -1, err
 	}
@@ -198,12 +198,12 @@ func (p *Vod) UploadMediaWithCallback(filePath string, spaceName string, callbac
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), spaceName, "", callbackArgs, funcs...)
+	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName())
 
 }
 
-func (p *Vod) UploadMaterialWithCallback(filePath string, spaceName string, fileType string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(filePath)
+func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMaterialRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(materialRequest.GetFilePath())
 	if err != nil {
 		return nil, -1, err
 	}
@@ -212,25 +212,20 @@ func (p *Vod) UploadMaterialWithCallback(filePath string, spaceName string, file
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), spaceName, fileType, callbackArgs, funcs...)
+	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName())
 }
 
-func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType)
+func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName string) (*response.VodCommitUploadInfoResponse, int, error) {
+	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName)
 	if err != nil {
 		return nil, code, err
-	}
-
-	fbts, err := json.Marshal(funcs)
-	if err != nil {
-		panic(err)
 	}
 
 	commitRequest := &request.VodCommitUploadInfoRequest{
 		SpaceName:    spaceName,
 		SessionKey:   sessionKey,
 		CallbackArgs: callbackArgs,
-		Functions:    string(fbts),
+		Functions:    funcs,
 	}
 
 	commitResp, code, err := p.CommitUploadInfo(commitRequest)
@@ -253,12 +248,12 @@ func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
 	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
-func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string) (string, string, error, int) {
+func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName string) (string, string, error, int) {
 	if size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
 
-	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType}
+	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
 	if err != nil {

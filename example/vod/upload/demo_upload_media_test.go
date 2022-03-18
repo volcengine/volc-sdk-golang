@@ -7,6 +7,7 @@ import (
 
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
 )
 
@@ -27,8 +28,18 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 
 	snapShotFunc := functions.SnapshotFunc(1.3)
 	getMetaFunc := functions.GetMetaFunc()
+	vodFunctions := []vod.Function{snapShotFunc, getMetaFunc}
+	fbts, _ := json.Marshal(vodFunctions)
 
-	resp, _, err := instance.UploadMediaWithCallback(filePath, spaceName, "my callback", getMetaFunc, snapShotFunc)
+	vodUploadMediaRequset := &request.VodUploadMediaRequest{
+		SpaceName:    spaceName,
+		FilePath:     filePath,
+		CallbackArgs: "my callback",
+		Functions:    string(fbts),
+		FileName:     "",
+	}
+
+	resp, _, err := instance.UploadMediaWithCallback(vodUploadMediaRequset)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
