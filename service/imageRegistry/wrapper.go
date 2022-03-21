@@ -427,3 +427,31 @@ func (p *ImageRegistry) ListTagsBasic(req *ListTagsBasicRequest) (*ListTagsBasic
 	}
 	return result, nil
 }
+
+func (p *ImageRegistry) GetAuthorizationTokenBasic(req *GetAuthorizationTokenBasicRequest) (*GetAuthorizationTokenBasicResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetAuthorizationTokenBasicRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("GetAuthorizationTokenBasic", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetAuthorizationTokenBasic", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetAuthorizationTokenBasic: fail to do request, %v", err)
+			}
+			result := new(GetAuthorizationTokenBasicResponse)
+			if err := base.UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetAuthorizationTokenBasic: fail to do request, %v", err)
+	}
+	result := new(GetAuthorizationTokenBasicResponse)
+	if err := base.UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
