@@ -93,14 +93,16 @@ type GenResult struct {
 }
 
 type RespPatch struct {
-	Code      int     `json:"code"`       // 差分包状态
-	ID        uint    `json:"id"`         // 唯一ID
-	CreatedAt int64   `json:"created_at"` // 创建时间
-	Url       string  `json:"patch_url"`  // patch包地址
-	Md5       string  `json:"patch_md5"`  // patch包MD5
-	Size      int64   `json:"patch_size"` // patch包Size
-	Alg       string  `json:"alg"`        // 差分算法类型
-	Ratio     float64 `json:"ratio"`      // 差分效率
+	Code       int     `json:"code"`        // 差分包状态
+	ID         uint    `json:"id"`          // 唯一ID
+	CreatedAt  int64   `json:"created_at"`  // 创建时间
+	Url        string  `json:"patch_url"`   // patch包地址
+	Md5        string  `json:"patch_md5"`   // patch包MD5
+	Size       int64   `json:"patch_size"`  // patch包Size
+	Alg        string  `json:"alg"`         // 差分算法类型
+	Ratio      float64 `json:"ratio"`       // 差分效率
+	NewVersion string  `json:"new_version"` // 新包版本
+	OldVersion string  `json:"old_version"` // 原始包版本
 }
 
 // 验证差分包的返回结构
