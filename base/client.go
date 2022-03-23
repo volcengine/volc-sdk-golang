@@ -230,7 +230,11 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 
 // Json 发起Json的post请求
 func (client *Client) Json(api string, query url.Values, body string) ([]byte, int, error) {
-	return client.requestWithContentType(api, query, body, "application/json")
+	return client.JsonWithHeader(api, query, nil, body)
+}
+
+func (client *Client) JsonWithHeader(api string, query url.Values, header http.Header, body string) ([]byte, int, error) {
+	return client.requestWithContentTypeAndHeader(api, query, header, body, "application/json")
 }
 
 // PostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
@@ -239,13 +243,17 @@ func (client *Client) PostWithContentType(api string, query url.Values, body str
 }
 
 func (client *Client) requestWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
+	return client.requestWithContentTypeAndHeader(api, query, nil, body, ct)
+}
+func (client *Client) requestWithContentTypeAndHeader(api string, query url.Values, inputHeader http.Header, body string, ct string) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
 		return []byte(""), 500, errors.New("相关api不存在")
 	}
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
-	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
+	header := mergeHeader(apiInfo.Header, inputHeader)
+	header = mergeHeader(client.ServiceInfo.Header, header)
 	query = mergeQuery(query, apiInfo.Query)
 	retrySettings := getRetrySetting(&client.ServiceInfo.Retry, &apiInfo.Retry)
 
