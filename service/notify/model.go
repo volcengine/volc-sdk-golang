@@ -60,6 +60,7 @@ type CreateTaskRequest struct {
 	NumberPoolNo      string
 	NumberList        []string `json:",omitempty"`
 	SelectNumberType  int32
+	SelectNumberRule  int32
 	Type              int32
 }
 
