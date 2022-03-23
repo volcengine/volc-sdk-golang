@@ -3,15 +3,17 @@ package diff
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"strconv"
+
+	"github.com/pkg/errors"
 )
 
 // CreateService : 新建服务
 func (d *Diff) CreateService(request *CreateServiceReq, appid int64) (response *CreateServiceResp, status int, err error) {
 	response = &CreateServiceResp{}
 	status, err = d.handleRequest(createService, request, appid, response)
+
 	return response, status, err
 }
 
@@ -19,6 +21,7 @@ func (d *Diff) CreateService(request *CreateServiceReq, appid int64) (response *
 func (d *Diff) Validate(request *ValidateReq) (response *AsyncResp, status int, err error) {
 	response = &AsyncResp{}
 	status, err = d.handleRequest(validate, request, 1, response)
+
 	return response, status, err
 }
 
@@ -26,6 +29,7 @@ func (d *Diff) Validate(request *ValidateReq) (response *AsyncResp, status int, 
 func (d *Diff) GenByCount(request *GenByCountReq, appid int64) (response *AsyncResp, status int, err error) {
 	response = &AsyncResp{}
 	status, err = d.handleRequest(genByCount, request, appid, response)
+
 	return response, status, err
 }
 
@@ -33,6 +37,7 @@ func (d *Diff) GenByCount(request *GenByCountReq, appid int64) (response *AsyncR
 func (d *Diff) GenByVersion(request *GenByVersionReq, appid int64) (response *AsyncResp, status int, err error) {
 	response = &AsyncResp{}
 	status, err = d.handleRequest(genByVersion, request, appid, response)
+
 	return response, status, err
 }
 
@@ -40,6 +45,7 @@ func (d *Diff) GenByVersion(request *GenByVersionReq, appid int64) (response *As
 func (d *Diff) GenByPkg(request *GenByPkgReq, appid int64) (response *AsyncResp, status int, err error) {
 	response = &AsyncResp{}
 	status, err = d.handleRequest(genByPkg, request, appid, response)
+
 	return response, status, err
 }
 
@@ -68,6 +74,7 @@ func (d *Diff) CheckResponse(request *CheckResponseReq) (response *CheckResponse
 	if err != nil {
 		result = nil
 	}
+
 	return
 }
 
