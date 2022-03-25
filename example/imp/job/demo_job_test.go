@@ -25,8 +25,9 @@ func TestImp_SubmitJob(t *testing.T) {
 			VodSpaceName: "your vod space",
 			FileId:       "your file id",
 		},
-		TemplateId:   "your template id",
-		CallbackArgs: "your callback args",
+		TemplateId:        "your template id",
+		CallbackArgs:      "your callback args",
+		EnableLowPriority: "false", // true开启 false 不开启 闲时转码模式
 	}
 
 	resp, status, err := impService.SubmitJob(req)
