@@ -46,6 +46,7 @@ message Entry {
         DMLEvent dml_event = 21;
         DDLEvent ddl_event = 22;
         CommitEvent commit_event = 23;
+        BeginEvent begin_event = 24;
     }
 }
 
@@ -54,16 +55,25 @@ message Prop{
     optional string value = 2;
 }
 
-message CommitEvent {
-    optional string transcation_id = 1;
+message BeginEvent {
+    optional string transaction_id = 1;
     optional string file = 2;
     optional string offset = 3;
+    repeated Prop props = 4;
+}
+
+message CommitEvent {
+    optional string transaction_id = 1;
+    optional string file = 2;
+    optional string offset = 3;
+    repeated Prop props = 4;
 }
 
 message DDLEvent {
     optional string sql = 1;
     optional int64 exec_time = 2; // unit: second
     optional int32 err_code = 3;
+    repeated Prop props = 4;
 }
 
 message DMLEvent {
@@ -72,6 +82,7 @@ message DMLEvent {
     optional Index use_index = 3;
     repeated ColumnDef column_defs= 4;
     repeated Row rows = 5;
+    repeated Prop props = 6;
 }
 
 message Index {
