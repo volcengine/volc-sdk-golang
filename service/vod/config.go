@@ -206,46 +206,46 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		//"GetMLFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetMLFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetBetterFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetBetterFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioInfoForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioInfoForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAutomaticSpeechRecognitionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioEventDetectionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioEventDetectionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
+		"GetMLFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMLFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetBetterFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetBetterFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioInfoForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioInfoForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAutomaticSpeechRecognitionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioEventDetectionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioEventDetectionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
 		"CreateVideoClassification": {
 			Method: http.MethodGet,
 			Path:   "/",
