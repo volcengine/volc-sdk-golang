@@ -3,6 +3,7 @@ package notify
 import (
 	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
+	"strings"
 	"time"
 )
 
@@ -19,7 +20,9 @@ func (this JsonTime) MarshalJSON() ([]byte, error) {
 func (this JsonTime) UnmarshalJSON(bytes []byte) error {
 	location, _ := time.LoadLocation("Asia/Shanghai")
 
-	t, err := time.ParseInLocation(TIME_LAYOUT, string(bytes), location)
+	str := string(bytes)
+	str = strings.Trim(str,"\"")
+	t, err := time.ParseInLocation(TIME_LAYOUT, str, location)
 	if err == nil {
 		this = JsonTime(t)
 	}
@@ -114,7 +117,7 @@ type FetchVoiceResourceRequest struct {
 
 type SingleParam struct {
 	SingleOpenId string
-	PhoneList    []*PhoneParam
+	Phone		 string
 	Resource     string
 	TriggerTime  JsonTime
 	//max 3

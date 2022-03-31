@@ -114,7 +114,7 @@ func (p *Notify) SingleInfo(taskOpenId string) (*SingleInfoResponse, int, error)
 	return resp, statusCode, nil
 }
 
-func (p *Notify) SingleBatchAppend(req *BatchAppendRequest) (*SingleAppendResponse, int, error) {
+func (p *Notify) SingleBatchAppend(req *SingleAppendRequest) (*SingleAppendResponse, int, error) {
 	resp := new(SingleAppendResponse)
 	statusCode, err := p.doJson("SingleBatchAppend", req, resp)
 
