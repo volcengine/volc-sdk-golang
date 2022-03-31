@@ -209,17 +209,6 @@ func ToUrlValues(i interface{}) (values url.Values) {
 				continue
 			}
 			v = f.String()
-		case *int, *int8, *int16, *int32, *int64:
-			if f.IsZero() {
-				continue
-			}
-			v = strconv.FormatInt(f.Elem().Int(), 10)
-		case *uint, *uint8, *uint16, *uint32, *uint64:
-			if f.IsZero() {
-				continue
-			}
-			v = strconv.FormatUint(f.Uint(), 10)
-		}
 		
 		values.Set(typ.Field(i).Name, v)
 	}
