@@ -126,7 +126,7 @@ type DescribeAccountingDataResponse struct {
 	Result           DescribeAccountingDataResult
 }
 type DescribeAccountingDataResult struct {
-	Resources []ResourceStatData `json:",omitempty"`
+	Resources []ResourceStatData
 }
 type DescribeCdnAccessLogRequest struct {
 	Domain    string
@@ -144,7 +144,7 @@ type DescribeCdnAccessLogResult struct {
 	PageSize         int64
 	PageNum          int64
 	TotalCount       int64
-	DomainLogDetails []DomainLogDetail `json:",omitempty"`
+	DomainLogDetails []DomainLogDetail
 }
 type DescribeCdnConfigRequest struct {
 	Domain string
@@ -171,7 +171,7 @@ type DescribeCdnDataDetailResponse struct {
 }
 type DescribeCdnDataDetailResult struct {
 	Domain      string
-	DataDetails []DataDetail `json:",omitempty"`
+	DataDetails []DataDetail
 }
 type DescribeCdnDataRequest struct {
 	StartTime int64
@@ -191,7 +191,7 @@ type DescribeCdnDataResponse struct {
 	Result           DescribeCdnDataResult
 }
 type DescribeCdnDataResult struct {
-	Resources []ResourceStatData `json:",omitempty"`
+	Resources []ResourceStatData
 }
 type DescribeCdnDomainTopDataRequest struct {
 	Domain      string
@@ -208,7 +208,7 @@ type DescribeCdnDomainTopDataResponse struct {
 }
 type DescribeCdnDomainTopDataResult struct {
 	Domain         string
-	TopDataDetails []TopDataDetailDeprecated `json:",omitempty"`
+	TopDataDetails []TopDataDetailDeprecated
 }
 type DescribeCdnOriginDataRequest struct {
 	StartTime int64
@@ -223,7 +223,7 @@ type DescribeCdnOriginDataResponse struct {
 	Result           DescribeCdnOriginDataResult
 }
 type DescribeCdnOriginDataResult struct {
-	Resources []ResourceStatData `json:",omitempty"`
+	Resources []ResourceStatData
 }
 type DescribeCdnRegionAndIspRequest struct {
 	Area *string `json:",omitempty"`
@@ -233,15 +233,15 @@ type DescribeCdnRegionAndIspResponse struct {
 	Result           DescribeCdnRegionAndIspResult
 }
 type DescribeCdnRegionAndIspResult struct {
-	Isps    []NamePair `json:",omitempty"`
-	Regions []NamePair `json:",omitempty"`
+	Isps    []NamePair
+	Regions []NamePair
 }
 type DescribeCdnServiceResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
 	Result           DescribeCdnServiceResult
 }
 type DescribeCdnServiceResult struct {
-	ServiceInfos []ServiceInformation `json:",omitempty"`
+	ServiceInfos []ServiceInformation
 }
 type DescribeCdnUpperIpRequest struct {
 	Domain    string
@@ -252,8 +252,8 @@ type DescribeCdnUpperIpResponse struct {
 	Result           DescribeCdnUpperIpResult
 }
 type DescribeCdnUpperIpResult struct {
-	CdnIpv4 []string `json:",omitempty"`
-	CdnIpv6 []string `json:",omitempty"`
+	CdnIpv4 []string
+	CdnIpv6 []string
 }
 type DescribeContentBlockTasksRequest struct {
 	Url       *string `json:",omitempty"`
@@ -274,7 +274,7 @@ type DescribeContentBlockTasksResult struct {
 	Total    int64
 	PageNum  int64
 	PageSize int64
-	Data     []ContentTask `json:",omitempty"`
+	Data     []ContentTask
 }
 type DescribeContentQuotaResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -307,7 +307,7 @@ type DescribeContentTasksResult struct {
 	Total    int64
 	PageNum  int64
 	PageSize int64
-	Data     []ContentTask `json:",omitempty"`
+	Data     []ContentTask
 }
 type DescribeEdgeNrtDataSummaryRequest struct {
 	StartTime int64
@@ -327,7 +327,7 @@ type DescribeEdgeNrtDataSummaryResponse struct {
 	Result           DescribeEdgeNrtDataSummaryResult
 }
 type DescribeEdgeNrtDataSummaryResult struct {
-	Resources []ResourceSummary `json:",omitempty"`
+	Resources []ResourceSummary
 }
 type DescribeEdgeStatisticalDataRequest struct {
 	StartTime int64
@@ -344,7 +344,7 @@ type DescribeEdgeStatisticalDataResponse struct {
 	Result           DescribeEdgeStatisticalDataResult
 }
 type DescribeEdgeStatisticalDataResult struct {
-	Resources []ResourceStatData `json:",omitempty"`
+	Resources []ResourceStatData
 }
 type DescribeEdgeTopNrtDataRequest struct {
 	StartTime int64
@@ -353,6 +353,7 @@ type DescribeEdgeTopNrtDataRequest struct {
 	Domain    *string `json:",omitempty"`
 	Item      string
 	Area      *string `json:",omitempty"`
+	Interval  *string `json:",omitempty"`
 }
 type DescribeEdgeTopNrtDataResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -362,7 +363,7 @@ type DescribeEdgeTopNrtDataResult struct {
 	Item           string
 	Metric         string
 	Name           string
-	TopDataDetails []TopDetail `json:",omitempty"`
+	TopDataDetails []TopDetail
 }
 type DescribeEdgeTopStatisticalDataRequest struct {
 	StartTime int64
@@ -378,7 +379,25 @@ type DescribeEdgeTopStatisticalDataResponse struct {
 }
 type DescribeEdgeTopStatisticalDataResult struct {
 	Domain         string
-	TopDataDetails []TopDataDetail `json:",omitempty"`
+	TopDataDetails []TopDataDetail
+}
+type DescribeEdgeTopStatusCodeRequest struct {
+	StartTime int64
+	EndTime   int64
+	Domain    *string `json:",omitempty"`
+	Item      string
+	Metric    string
+	Area      *string `json:",omitempty"`
+}
+type DescribeEdgeTopStatusCodeResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeEdgeTopStatusCodeResult
+}
+type DescribeEdgeTopStatusCodeResult struct {
+	Item           string
+	Metric         string
+	Name           string
+	TopDataDetails []TopStatusDetail
 }
 type DescribeIPInfoRequest struct {
 	IP string
@@ -406,7 +425,42 @@ type DescribeOriginNrtDataSummaryResponse struct {
 	Result           DescribeOriginNrtDataSummaryResult
 }
 type DescribeOriginNrtDataSummaryResult struct {
-	Resources []ResourceSummary `json:",omitempty"`
+	Resources []ResourceSummary
+}
+type DescribeOriginTopNrtDataRequest struct {
+	Domain    *string `json:",omitempty"`
+	StartTime *int64  `json:",omitempty"`
+	EndTime   *int64  `json:",omitempty"`
+	Item      string
+	Interval  *string `json:",omitempty"`
+	Metric    string
+}
+type DescribeOriginTopNrtDataResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeOriginTopNrtDataResult
+}
+type DescribeOriginTopNrtDataResult struct {
+	Item           string
+	Metric         string
+	Name           string
+	TopDataDetails []TopDetail
+}
+type DescribeOriginTopStatusCodeRequest struct {
+	StartTime int64
+	EndTime   int64
+	Domain    *string `json:",omitempty"`
+	Item      string
+	Metric    string
+}
+type DescribeOriginTopStatusCodeResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeOriginTopStatusCodeResult
+}
+type DescribeOriginTopStatusCodeResult struct {
+	Item           string
+	Metric         string
+	Name           string
+	TopDataDetails []TopStatusDetail
 }
 type DomainConfig struct {
 	Cname             string
@@ -516,7 +570,7 @@ type ListCdnDomainsResponse struct {
 	Result           ListCdnDomainsResult
 }
 type ListCdnDomainsResult struct {
-	Data     []DomainSummary `json:",omitempty"`
+	Data     []DomainSummary
 	PageNum  int64
 	PageSize int64
 	Total    int64
@@ -526,7 +580,7 @@ type ListResourceTagsResponse struct {
 	Result           ListResourceTagsResult
 }
 type ListResourceTagsResult struct {
-	ResourceTags []ResourceTagEntry `json:",omitempty"`
+	ResourceTags []ResourceTagEntry
 }
 type MetricStatData struct {
 	Metric string
@@ -572,9 +626,10 @@ type OriginRule struct {
 	OriginAction OriginAction
 }
 type RefererAccessRule struct {
-	Switch   bool
-	RuleType string
-	Referers []string `json:",omitempty"`
+	Switch     bool
+	RuleType   string
+	Referers   []string `json:",omitempty"`
+	AllowEmpty bool
 }
 type RequestHeaderAction struct {
 	RequestHeaderInstances []RequestHeaderInstance `json:",omitempty"`
@@ -729,6 +784,17 @@ type TopDetail struct {
 	FluxRatio         float64
 	PV                int64
 	PVRatio           int64
+}
+type TopStatusDetail struct {
+	ItemKey        string
+	Status2xx      float64 `json:"2xx"`
+	Status2xxRatio float64 `json:"2xxRatio"`
+	Status3xx      float64 `json:"3xx"`
+	Status3xxRatio float64 `json:"3xxRatio"`
+	Status4xx      float64 `json:"4xx"`
+	Status4xxRatio float64 `json:"4xxRatio"`
+	Status5xx      float64 `json:"5xx"`
+	Status5xxRatio float64 `json:"5xxRatio"`
 }
 type UpdateCdnConfigRequest struct {
 	Domain            string
