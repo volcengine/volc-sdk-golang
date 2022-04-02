@@ -57,9 +57,10 @@ type CacheKeyAction struct {
 	CacheKeyComponents []CacheKeyComponent `json:",omitempty"`
 }
 type CacheKeyComponent struct {
-	Object    string
-	Action    string
-	Subobject string
+	Object     string
+	Action     string
+	Subobject  string
+	IgnoreCase bool
 }
 type CacheKeyGenerationRule struct {
 	Condition      *Condition `json:",omitempty"`
