@@ -26,6 +26,7 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+
 		"AddCdnDomain": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -138,6 +139,30 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"DescribeOriginTopNrtData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeOriginTopNrtData"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DescribeEdgeTopStatusCode": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeEdgeTopStatusCode"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DescribeOriginTopStatusCode": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeOriginTopStatusCode"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 		"DescribeEdgeTopStatisticalData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -151,6 +176,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCdnRegionAndIsp"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DescribeCdnDomainTopData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnDomainTopData"},
 				"Version": []string{ServiceVersion},
 			},
 		},
