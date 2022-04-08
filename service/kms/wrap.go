@@ -154,6 +154,21 @@ func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int
 	return resp, statusCode, nil
 }
 
+func (p *KMS) DescribeKey(req *DescribeKeyRequest) (*DescribeKeyResponse, int, error) {
+	query := url.Values{}
+	resp := new(DescribeKeyResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery("DescribeKey", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
 func (p *KMS) UpdateKey(req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(UpdateKeyResponse)
@@ -292,6 +307,89 @@ func (p *KMS) CancelKeyDeletion(req *CancelKeyDeletionRequest) (*CancelKeyDeleti
 	query.Set("KeyName", req.KeyName)
 
 	statusCode, err := p.commonHandlerQuery("CancelKeyDeletion", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) ArchiveKey(req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, error) {
+	query := url.Values{}
+	resp := new(ArchiveKeyResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery("ArchiveKey", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) CancelArchiveKey(req *CancelArchiveKeyRequest) (*CancelArchiveKeyResponse, int, error) {
+	query := url.Values{}
+	resp := new(CancelArchiveKeyResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery("CancelArchiveKey", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) EnableKeyRotation(req *EnableKeyRotationRequest) (*EnableKeyRotationResponse, int, error) {
+	query := url.Values{}
+	resp := new(EnableKeyRotationResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery("EnableKeyRotation", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) DisableKeyRotation(req *DisableKeyRotationRequest) (*DisableKeyRotationResponse, int, error) {
+	query := url.Values{}
+	resp := new(DisableKeyRotationResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery("DisableKeyRotation", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) ReEncrypt(req *ReEncryptRequest) (*ReEncryptResponse, int, error) {
+	query := url.Values{}
+	resp := new(ReEncryptResponse)
+
+	query.Set("NewKeyringName", req.NewKeyringName)
+	query.Set("NewKeyName", req.NewKeyName)
+	reqBody := make(map[string]interface{})
+	if req.OldEncryptionContext != nil {
+		reqBody["OldEncryptionContext"] = req.OldEncryptionContext
+	}
+	if req.NewEncryptionContext != nil {
+		reqBody["NewEncryptionContext"] = req.NewEncryptionContext
+	}
+	reqBody["CiphertextBlob"] = req.CiphertextBlob
+
+	statusCode, err := p.commonHandlerJson("ReEncrypt", query, reqBody, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
