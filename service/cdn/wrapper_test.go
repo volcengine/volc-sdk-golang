@@ -67,18 +67,12 @@ func TestCDN_AddCdnDomain(t *testing.T) {
 
 func TestCDN_StartDomain(t *testing.T) {
 	resp, err := DefaultInstance.StartCdnDomain(&StartCdnDomainRequest{Domain: testDomain1})
-	if err != nil {
-		resp, err = DefaultInstance.StopCdnDomain(&StopCdnDomainRequest{Domain: testDomain1})
-	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
 
 func TestCDN_StopDomain(t *testing.T) {
 	resp, err := DefaultInstance.StopCdnDomain(&StopCdnDomainRequest{Domain: testDomain2})
-	if err != nil {
-		resp, err = DefaultInstance.StartCdnDomain(&StartCdnDomainRequest{Domain: testDomain2})
-	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
@@ -208,6 +202,39 @@ func TestCDN_DescribeEdgeTopNrtData(t *testing.T) {
 		Metric:    "flux",
 		Item:      "isp",
 		Domain:    &exampleDomain,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func TestCDN_DescribeOriginTopNrtData(t *testing.T) {
+	resp, err := DefaultInstance.DescribeOriginTopNrtData(&DescribeOriginTopNrtDataRequest{
+		Metric: "flux",
+		Item:   "domain",
+		Domain: &exampleDomain,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func TestCDN_DescribeEdgeTopStatusCode(t *testing.T) {
+	resp, err := DefaultInstance.DescribeEdgeTopStatusCode(&DescribeEdgeTopStatusCodeRequest{
+		Metric: "status_5xx",
+		Item:   "domain",
+		Domain: &exampleDomain,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func TestCDN_DescribeOriginTopStatusCode(t *testing.T) {
+	resp, err := DefaultInstance.DescribeOriginTopStatusCode(&DescribeOriginTopStatusCodeRequest{
+		Metric: "status_5xx",
+		Item:   "domain",
+		Domain: &exampleDomain,
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
