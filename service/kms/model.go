@@ -149,7 +149,7 @@ type DescribeKeysResponse struct {
 // DescribeKeyRequest ...
 type DescribeKeyRequest struct {
 	KeyringName string
-	KeyName string
+	KeyName     string
 }
 
 // DescribeKeyResult ...
@@ -279,8 +279,8 @@ type CancelKeyDeletionResponse struct {
 
 // ArchiveKeyRequest ...
 type ArchiveKeyRequest struct {
-	KeyringName       string            `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
-	KeyName           string            `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
 }
 
 // ArchiveKeyResponse ...
@@ -290,8 +290,8 @@ type ArchiveKeyResponse struct {
 
 // CancelArchiveKeyRequest ...
 type CancelArchiveKeyRequest struct {
-	KeyringName       string            `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
-	KeyName           string            `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
 }
 
 // CancelArchiveKeyResponse ...
@@ -301,8 +301,8 @@ type CancelArchiveKeyResponse struct {
 
 // EnableKeyRotationRequest ...
 type EnableKeyRotationRequest struct {
-	KeyringName       string            `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
-	KeyName           string            `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
 }
 
 // EnableKeyRotationResponse ...
@@ -312,8 +312,8 @@ type EnableKeyRotationResponse struct {
 
 // DisableKeyRotationRequest ...
 type DisableKeyRotationRequest struct {
-	KeyringName       string            `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
-	KeyName           string            `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
 }
 
 // DisableKeyRotationResponse ...
@@ -341,5 +341,4 @@ type ReEncryptResult struct {
 type ReEncryptResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           *ReEncryptResult `json:",omitempty"`
-
 }
