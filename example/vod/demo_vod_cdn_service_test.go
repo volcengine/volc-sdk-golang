@@ -74,7 +74,7 @@ func Test_ListCdnTasks(t *testing.T) {
 		SecretAccessKey: "your sk",
 	})
 
-	query := &request.ListCdnTasksRequest{
+	query := &request.VodListCdnTasksRequest{
 		SpaceName:  "your SpaceName",
 		TaskId:     "your TaskId",
 		DomainName: "your DomainName",

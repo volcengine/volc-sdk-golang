@@ -299,10 +299,10 @@ func (p *Vod) CreateCdnPreloadTask(req *request.VodCreateCdnPreloadTaskRequest) 
 
 // ListCdnTasks
 /*
- * @param *request.ListCdnTasksRequest
- * @return *response.ListCdnTasksResponse, int, error
+ * @param *request.VodListCdnTasksRequest
+ * @return *response.VodListCdnTasksResponse, int, error
  */
-func (p *Vod) ListCdnTasks(req *request.ListCdnTasksRequest) (*response.ListCdnTasksResponse, int, error) {
+func (p *Vod) ListCdnTasks(req *request.VodListCdnTasksRequest) (*response.VodListCdnTasksResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -364,7 +364,7 @@ func (p *Vod) ListCdnTasks(req *request.ListCdnTasksRequest) (*response.ListCdnT
 
 	respBody, status, err := p.Query("ListCdnTasks", query)
 
-	output := &response.ListCdnTasksResponse{}
+	output := &response.VodListCdnTasksResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
