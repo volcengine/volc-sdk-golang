@@ -8,7 +8,7 @@ import (
 )
 
 /*
- * image segment
+ * image segment v2
  */
 func main() {
 	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
@@ -22,15 +22,15 @@ func main() {
 
 	param := &imagex.GetImageSegmentParamV2{
 		GetImageSegmentParam: imagex.GetImageSegmentParam{
-			ServiceId: "imagex service id",
-			Class:     "process class",
+			ServiceId: "imageX service id",
+			Class:     imagex.SEGMENT_CLASS_HUMAN_V2,
 			Refine:    false,
-			StoreUri:  "image uri",
+			StoreUri:  "store uri",
 			OutFormat: "out format",
 		},
 		Contour: &imagex.Contour{
-			Color: "contour color",
-			Size:  10,
+			Color: "#000000",
+			Size:  0,
 		},
 		TransBg: true,
 	}

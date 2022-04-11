@@ -320,6 +320,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetSegmentImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSegmentImage"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

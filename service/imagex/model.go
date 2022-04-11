@@ -14,6 +14,12 @@ const (
 	ActionPreload    = 4
 	ActionRefreshDir = 5
 
+	SEGMENT_CLASS_GENERAL    = "general"
+	SEGMENT_CLASS_HUMAN      = "human"
+	SEGMENT_CLASS_PRODUCT    = "product"
+	SEGMENT_CLASS_HUMAN_V2   = "humanv2"
+	SEGMENT_CLASS_PRODUCT_V2 = "productv2"
+
 	FunctionEncryption = "Encryption"
 )
 
@@ -296,6 +302,30 @@ type GetImageQualityParam struct {
 type GetImageQualityResult struct {
 	VqType   string                 `json:"VqType"`
 	NrScores map[string]interface{} `json:"NrScores"`
+}
+
+// GetImageSegment
+type GetImageSegmentParam struct {
+	ServiceId string
+	Class     string `json:"Class"`
+	Refine    bool   `json:"Refine"`
+	StoreUri  string `json:"StoreUri"`
+	OutFormat string `json:"OutFormat"`
+}
+
+type Contour struct {
+	Color string `json:"Color"`
+	Size  int    `json:"Size"`
+}
+
+type GetImageSegmentParamV2 struct {
+	GetImageSegmentParam
+	TransBg bool `json:"TransBg"`
+	Contour *Contour
+}
+
+type GetImageSegmentResult struct {
+	ResUri string `json:"ResUri"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {
