@@ -318,6 +318,7 @@ type Contour struct {
 	Size  int    `json:"Size"`
 }
 
+// GetImageSegmentV2
 type GetImageSegmentParamV2 struct {
 	GetImageSegmentParam
 	TransBg bool `json:"TransBg"`
