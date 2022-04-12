@@ -16,7 +16,7 @@ const (
 var (
 	ServiceInfo = &base.ServiceInfo{
 		Timeout: 5 * time.Second,
-		Host:    "live.volcengineapi.com",
+		Host:    "volcengineapi-boe.byted.org",
 		Header: http.Header{
 			"Accept": []string{"application/json"},
 		},
