@@ -311,18 +311,13 @@ type GetImageSegmentParam struct {
 	Refine    bool   `json:"Refine"`
 	StoreUri  string `json:"StoreUri"`
 	OutFormat string `json:"OutFormat"`
+	TransBg   bool   `json:"TransBg"`
+	Contour   *Contour
 }
 
 type Contour struct {
 	Color string `json:"Color"`
 	Size  int    `json:"Size"`
-}
-
-// GetImageSegmentV2
-type GetImageSegmentParamV2 struct {
-	GetImageSegmentParam
-	TransBg bool `json:"TransBg"`
-	Contour *Contour
 }
 
 type GetImageSegmentResult struct {

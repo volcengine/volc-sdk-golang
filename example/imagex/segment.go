@@ -22,10 +22,15 @@ func main() {
 
 	param := &imagex.GetImageSegmentParam{
 		ServiceId: "imageX service id",
-		Class:     imagex.SEGMENT_CLASS_GENERAL,
+		Class:     imagex.SEGMENT_CLASS_HUMAN_V2,
 		Refine:    false,
 		StoreUri:  "store uri",
 		OutFormat: "out format",
+		Contour: &imagex.Contour{
+			Color: "#000000",
+			Size:  0,
+		},
+		TransBg: true,
 	}
 
 	resp, err := instance.GetImageSegment(param)
