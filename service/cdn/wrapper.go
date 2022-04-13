@@ -1,7 +1,7 @@
 package cdn
 
-func (s *CDN) AddCdnDomain(dto *AddCdnDomainRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) AddCdnDomain(dto *AddCdnDomainRequest) (responseBody *AddCdnDomainResponse, err error) {
+	responseBody = new(AddCdnDomainResponse)
 	if err = s.post("AddCdnDomain", &dto, responseBody); err != nil {
 		return
 	}
@@ -11,8 +11,8 @@ func (s *CDN) AddCdnDomain(dto *AddCdnDomainRequest) (responseBody *EmptyRespons
 	return
 }
 
-func (s *CDN) StartCdnDomain(dto *StartCdnDomainRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) StartCdnDomain(dto *StartCdnDomainRequest) (responseBody *StartCdnDomainResponse, err error) {
+	responseBody = new(StartCdnDomainResponse)
 	if err = s.post("StartCdnDomain", &dto, responseBody); err != nil {
 		return
 	}
@@ -22,8 +22,8 @@ func (s *CDN) StartCdnDomain(dto *StartCdnDomainRequest) (responseBody *EmptyRes
 	return
 }
 
-func (s *CDN) StopCdnDomain(dto *StopCdnDomainRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) StopCdnDomain(dto *StopCdnDomainRequest) (responseBody *StopCdnDomainResponse, err error) {
+	responseBody = new(StopCdnDomainResponse)
 	if err = s.post("StopCdnDomain", &dto, responseBody); err != nil {
 		return
 	}
@@ -33,8 +33,8 @@ func (s *CDN) StopCdnDomain(dto *StopCdnDomainRequest) (responseBody *EmptyRespo
 	return
 }
 
-func (s *CDN) DeleteCdnDomain(dto *DeleteCdnDomainRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) DeleteCdnDomain(dto *DeleteCdnDomainRequest) (responseBody *DeleteCdnDomainResponse, err error) {
+	responseBody = new(DeleteCdnDomainResponse)
 	if err = s.post("DeleteCdnDomain", &dto, responseBody); err != nil {
 		return
 	}
@@ -66,8 +66,8 @@ func (s *CDN) DescribeCdnConfig(dto *DescribeCdnConfigRequest) (responseBody *De
 	return
 }
 
-func (s *CDN) UpdateCdnConfig(dto *UpdateCdnConfigRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) UpdateCdnConfig(dto *UpdateCdnConfigRequest) (responseBody *UpdateCdnConfigResponse, err error) {
+	responseBody = new(UpdateCdnConfigResponse)
 	if err = s.post("UpdateCdnConfig", &dto, responseBody); err != nil {
 		return
 	}
@@ -154,6 +154,39 @@ func (s *CDN) DescribeEdgeTopNrtData(dto *DescribeEdgeTopNrtDataRequest) (respon
 	return
 }
 
+func (s *CDN) DescribeOriginTopNrtData(dto *DescribeOriginTopNrtDataRequest) (responseBody *DescribeOriginTopNrtDataResponse, err error) {
+	responseBody = new(DescribeOriginTopNrtDataResponse)
+	if err = s.post("DescribeOriginTopNrtData", &dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeEdgeTopStatusCode(dto *DescribeEdgeTopStatusCodeRequest) (responseBody *DescribeEdgeTopStatusCodeResponse, err error) {
+	responseBody = new(DescribeEdgeTopStatusCodeResponse)
+	if err = s.post("DescribeEdgeTopStatusCode", &dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeOriginTopStatusCode(dto *DescribeOriginTopStatusCodeRequest) (responseBody *DescribeOriginTopStatusCodeResponse, err error) {
+	responseBody = new(DescribeOriginTopStatusCodeResponse)
+	if err = s.post("DescribeOriginTopStatusCode", &dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeEdgeTopStatisticalData(dto *DescribeEdgeTopStatisticalDataRequest) (responseBody *DescribeEdgeTopStatisticalDataResponse, err error) {
 	responseBody = new(DescribeEdgeTopStatisticalDataResponse)
 	if err = s.post("DescribeEdgeTopStatisticalData", &dto, responseBody); err != nil {
@@ -168,6 +201,17 @@ func (s *CDN) DescribeEdgeTopStatisticalData(dto *DescribeEdgeTopStatisticalData
 func (s *CDN) DescribeCdnRegionAndIsp(dto *DescribeCdnRegionAndIspRequest) (responseBody *DescribeCdnRegionAndIspResponse, err error) {
 	responseBody = new(DescribeCdnRegionAndIspResponse)
 	if err = s.post("DescribeCdnRegionAndIsp", &dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeCdnDomainTopData(dto *DescribeCdnDomainTopDataRequest) (responseBody *DescribeCdnDomainTopDataResponse, err error) {
+	responseBody = new(DescribeCdnDomainTopDataResponse)
+	if err = s.post("DescribeCdnDomainTopData", &dto, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
@@ -308,8 +352,8 @@ func (s *CDN) DescribeCdnUpperIp(dto *DescribeCdnUpperIpRequest) (responseBody *
 	return
 }
 
-func (s *CDN) AddResourceTags(dto *AddResourceTagsRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) AddResourceTags(dto *AddResourceTagsRequest) (responseBody *AddResourceTagsResponse, err error) {
+	responseBody = new(AddResourceTagsResponse)
 	if err = s.post("AddResourceTags", &dto, responseBody); err != nil {
 		return
 	}
@@ -319,8 +363,8 @@ func (s *CDN) AddResourceTags(dto *AddResourceTagsRequest) (responseBody *EmptyR
 	return
 }
 
-func (s *CDN) UpdateResourceTags(dto *UpdateResourceTagsRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) UpdateResourceTags(dto *UpdateResourceTagsRequest) (responseBody *UpdateResourceTagsResponse, err error) {
+	responseBody = new(UpdateResourceTagsResponse)
 	if err = s.post("UpdateResourceTags", &dto, responseBody); err != nil {
 		return
 	}
@@ -341,8 +385,8 @@ func (s *CDN) ListResourceTags() (responseBody *ListResourceTagsResponse, err er
 	return
 }
 
-func (s *CDN) DeleteResourceTags(dto *DeleteResourceTagsRequest) (responseBody *EmptyResponse, err error) {
-	responseBody = new(EmptyResponse)
+func (s *CDN) DeleteResourceTags(dto *DeleteResourceTagsRequest) (responseBody *DeleteResourceTagsResponse, err error) {
+	responseBody = new(DeleteResourceTagsResponse)
 	if err = s.post("DeleteResourceTags", &dto, responseBody); err != nil {
 		return
 	}

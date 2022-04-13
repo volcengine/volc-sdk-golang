@@ -99,6 +99,7 @@ type UpdateAXBRequest struct {
 	SubId        string
 	ExpireTime   int64
 	PhoneNoB     string
+	UserData     string
 }
 
 type BindAXNRequest struct {

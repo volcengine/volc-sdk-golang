@@ -1,5 +1,16 @@
 ### Change log
 
+2022-04-07 Bumped to version v1.0.40
+- Added api for cdn
+
+2022-03-31 Bumped to version v1.0.39
+- Updated api and params for axb\vod
+- Added demo for dts
+- Added service billing
+
+2022-03-21 Bumped to version v1.0.38
+- Updated api and params
+
 2022-03-18 Bumped to version v1.0.37
 - Added some apis of space\callback\cdn for vod
 - Added media snapshot

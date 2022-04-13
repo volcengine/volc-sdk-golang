@@ -21,20 +21,21 @@ func Test_GetPlayInfo(t *testing.T) {
 	})
 
 	query := &request.VodGetPlayInfoRequest{
-		Vid:             "your Vid",
-		Format:          "your Format",
-		Codec:           "your Codec",
-		Definition:      "your Definition",
-		FileType:        "your FileType",
-		LogoType:        "your LogoType",
-		Base64:          "your Base64",
-		Ssl:             "your Ssl",
-		NeedThumbs:      "your NeedThumbs",
-		NeedBarrageMask: "your NeedBarrageMask",
-		CdnType:         "your CdnType",
-		UnionInfo:       "your UnionInfo",
-		HDRDefinition:   "your HDRDefinition",
-		PlayScene:       "your PlayScene",
+		Vid:                "your Vid",
+		Format:             "your Format",
+		Codec:              "your Codec",
+		Definition:         "your Definition",
+		FileType:           "your FileType",
+		LogoType:           "your LogoType",
+		Base64:             "your Base64",
+		Ssl:                "your Ssl",
+		NeedThumbs:         "your NeedThumbs",
+		NeedBarrageMask:    "your NeedBarrageMask",
+		CdnType:            "your CdnType",
+		UnionInfo:          "your UnionInfo",
+		HDRDefinition:      "your HDRDefinition",
+		PlayScene:          "your PlayScene",
+		DrmExpireTimestamp: "your DrmExpireTimestamp",
 	}
 
 	resp, status, err := instance.GetPlayInfo(query)
