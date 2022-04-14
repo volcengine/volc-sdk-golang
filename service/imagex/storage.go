@@ -439,6 +439,17 @@ func (c *ImageX) GetImageErase(param *GetImageEraseParam) (*GetImageEraseResult,
 	return res, nil
 }
 
+func (c *ImageX) GetImageSegment(param *GetImageSegmentParam) (*GetImageSegmentResult, error) {
+	query := url.Values{}
+	query.Set("ServiceId", param.ServiceId)
+	res := new(GetImageSegmentResult)
+	err := c.ImageXPost("GetSegmentImage", query, param, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 func (c *ImageX) GetImageQuality(param *GetImageQualityParam) (*GetImageQualityResult, error) {
 	u := url.Values{}
 	u.Add("ServiceId", param.ServiceId)
