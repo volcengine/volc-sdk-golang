@@ -13,9 +13,7 @@ import (
 )
 
 const (
-	testAk = "<your access key id>"
-	testSk = "<your access key secret>"
-	region = "<region>"
+	region = "cn-beijing"
 )
 
 var (
@@ -27,6 +25,8 @@ var (
 )
 
 func init() {
+	testAk := os.Getenv("TEST_AK")
+	testSk := os.Getenv("TEST_SK")
 	kms.DefaultInstance.SetRegion(region)
 	kms.DefaultInstance.Client.SetAccessKey(testAk)
 	kms.DefaultInstance.Client.SetSecretKey(testSk)
@@ -141,6 +141,34 @@ func TestKMS_ScheduleKeyDeletion(t *testing.T) {
 
 func TestKMS_CancelKeyDeletion(t *testing.T) {
 	analyze(kms.DefaultInstance.CancelKeyDeletion(&kms.CancelKeyDeletionRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_ArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.ArchiveKey(&kms.ArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_CancelArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.CancelArchiveKey(&kms.CancelArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_DisableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.DisableKeyRotation(&kms.DisableKeyRotationRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_EnableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.EnableKeyRotation(&kms.EnableKeyRotationRequest{
 		KeyringName: keyringName,
 		KeyName:     keyName,
 	}))

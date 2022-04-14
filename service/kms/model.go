@@ -146,6 +146,23 @@ type DescribeKeysResponse struct {
 	Result           *DescribeKeysResult `json:",omitempty"`
 }
 
+// DescribeKeyRequest ...
+type DescribeKeyRequest struct {
+	KeyringName string
+	KeyName     string
+}
+
+// DescribeKeyResult ...
+type DescribeKeyResult struct {
+	Keys *CustomerMasterKey
+}
+
+// DescribeKeyResponse ...
+type DescribeKeyResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *DescribeKeyResult `json:",omitempty"`
+}
+
 // UpdateKeyRequest ...
 type UpdateKeyRequest struct {
 	KeyringName string
@@ -258,4 +275,70 @@ type CancelKeyDeletionRequest struct {
 // CancelKeyDeletionResponse ...
 type CancelKeyDeletionResponse struct {
 	ResponseMetadata base.ResponseMetadata
+}
+
+// ArchiveKeyRequest ...
+type ArchiveKeyRequest struct {
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+}
+
+// ArchiveKeyResponse ...
+type ArchiveKeyResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+// CancelArchiveKeyRequest ...
+type CancelArchiveKeyRequest struct {
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+}
+
+// CancelArchiveKeyResponse ...
+type CancelArchiveKeyResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+// EnableKeyRotationRequest ...
+type EnableKeyRotationRequest struct {
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+}
+
+// EnableKeyRotationResponse ...
+type EnableKeyRotationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+// DisableKeyRotationRequest ...
+type DisableKeyRotationRequest struct {
+	KeyringName string `json:"KeyringName,required" query:"KeyringName,required" form:"KeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	KeyName     string `json:"KeyName,required" query:"KeyName,required" form:"KeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+}
+
+// DisableKeyRotationResponse ...
+type DisableKeyRotationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+//ReEncryptRequest ...
+type ReEncryptRequest struct {
+	NewKeyringName       string            `json:"NewKeyringName,required" query:"NewKeyringName,required" form:"NewKeyringName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	NewKeyName           string            `json:"NewKeyName,required" query:"NewKeyName,required" form:"NewKeyName,required" vd:"regexp('^[a-zA-Z0-9-_]{2,31}$')"`
+	OldEncryptionContext map[string]string `json:"" query:"" form:""`
+	NewEncryptionContext map[string]string `json:"" query:"" form:""`
+	CiphertextBlob       []byte            `json:"CiphertextBlob,required" query:"CiphertextBlob,required" form:"CiphertextBlob,required" vd:"len($)>18"`
+}
+
+// ReEncryptResult ...
+type ReEncryptResult struct {
+	OldKeyringName string `json:"-"`
+	OldKeyName     string `json:"-"`
+	CiphertextBlob []byte `json:""`
+}
+
+// ReEncryptResponse ...
+type ReEncryptResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ReEncryptResult `json:",omitempty"`
 }
