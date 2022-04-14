@@ -367,7 +367,6 @@ func (p *KMS) CtxCancelKeyDeletion(ctx context.Context, req *CancelKeyDeletionRe
 	return resp, statusCode, nil
 }
 
-<<<<<<< HEAD
 func (p *KMS) ArchiveKey(req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(ArchiveKeyResponse)
