@@ -13,9 +13,7 @@ import (
 )
 
 const (
-	testAk = "<your access key id>"
-	testSk = "<your access key secret>"
-	region = "<region>"
+	region = "cn-beijing"
 )
 
 var (
@@ -27,6 +25,8 @@ var (
 )
 
 func init() {
+	testAk := os.Getenv("TEST_AK")
+	testSk := os.Getenv("TEST_SK")
 	kms.DefaultInstance.SetRegion(region)
 	kms.DefaultInstance.Client.SetAccessKey(testAk)
 	kms.DefaultInstance.Client.SetSecretKey(testSk)

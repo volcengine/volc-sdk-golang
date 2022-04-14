@@ -55,25 +55,19 @@ func AddCdnDomain(t *testing.T) {
 	assert.NotNil(t, resp)
 }
 
-func StartDomain(t *testing.T) {
+func StartCdnDomain(t *testing.T) {
 	resp, err := DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainRequest{Domain: testDomain1})
-	if err != nil {
-		resp, err = DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainRequest{Domain: testDomain1})
-	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
 
-func StopDomain(t *testing.T) {
+func StopCdnDomain(t *testing.T) {
 	resp, err := DefaultInstance.StopCdnDomain(&cdn.StopCdnDomainRequest{Domain: testDomain2})
-	if err != nil {
-		resp, err = DefaultInstance.StartCdnDomain(&cdn.StartCdnDomainRequest{Domain: testDomain2})
-	}
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 }
 
-func DeleteDomain(t *testing.T) {
+func DeleteCdnDomain(t *testing.T) {
 	resp, err := DefaultInstance.DeleteCdnDomain(&cdn.DeleteCdnDomainRequest{Domain: testDomain2})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -198,6 +192,39 @@ func DescribeEdgeTopNrtData(t *testing.T) {
 		Metric:    "flux",
 		Domain:    &exampleDomain,
 		Item:      "region",
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func DescribeOriginTopNrtData(t *testing.T) {
+	resp, err := DefaultInstance.DescribeOriginTopNrtData(&cdn.DescribeOriginTopNrtDataRequest{
+		Metric: "flux",
+		Item:   "domain",
+		Domain: &exampleDomain,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func DescribeEdgeTopStatusCode(t *testing.T) {
+	resp, err := DefaultInstance.DescribeEdgeTopStatusCode(&cdn.DescribeEdgeTopStatusCodeRequest{
+		Metric: "status_5xx",
+		Item:   "domain",
+		Domain: &exampleDomain,
+	})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.TopDataDetails)
+}
+
+func DescribeOriginTopStatusCode(t *testing.T) {
+	resp, err := DefaultInstance.DescribeOriginTopStatusCode(&cdn.DescribeOriginTopStatusCodeRequest{
+		Metric: "status_5xx",
+		Item:   "domain",
+		Domain: &exampleDomain,
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
