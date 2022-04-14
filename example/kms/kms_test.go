@@ -173,5 +173,3 @@ func TestKMS_EnableKeyRotation(t *testing.T) {
 		KeyName:     keyName,
 	}))
 }
-
-
