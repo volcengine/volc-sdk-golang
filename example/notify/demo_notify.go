@@ -1,9 +1,10 @@
 package notify
 
 import (
-	n "github.com/volcengine/volc-sdk-golang/service/notify"
 	"testing"
 	"time"
+
+	n "github.com/volcengine/volc-sdk-golang/service/notify"
 )
 
 const (
