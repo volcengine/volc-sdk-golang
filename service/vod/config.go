@@ -386,6 +386,14 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
+		"ListCdnTasks": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTasks"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理

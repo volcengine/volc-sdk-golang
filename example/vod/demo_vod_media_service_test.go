@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"testing"
 
+	"google.golang.org/protobuf/types/known/wrapperspb"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
@@ -23,11 +25,11 @@ func Test_UpdateMediaInfo(t *testing.T) {
 
 	query := &request.VodUpdateMediaInfoRequest{
 		Vid:              "your Vid",
-		PosterUri:        nil,
-		Title:            nil,
-		Description:      nil,
-		Tags:             nil,
-		ClassificationId: nil,
+		PosterUri:        wrapperspb.String("your PosterUri"),
+		Title:            wrapperspb.String("your Title"),
+		Description:      wrapperspb.String("your Description"),
+		Tags:             wrapperspb.String("your Tags"),
+		ClassificationId: wrapperspb.Int64(1),
 	}
 
 	resp, status, err := instance.UpdateMediaInfo(query)
