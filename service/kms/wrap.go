@@ -1,13 +1,14 @@
 package kms
 
 import (
+	"context"
 	"encoding/json"
 	"net/url"
 	"strconv"
 )
 
-func (p *KMS) commonHandlerQuery(api string, query url.Values, resp interface{}) (int, error) {
-	respBody, statusCode, err := p.Client.Query(api, query)
+func (p *KMS) commonHandlerQuery(ctx context.Context, api string, query url.Values, resp interface{}) (int, error) {
+	respBody, statusCode, err := p.Client.CtxQuery(ctx, api, query)
 	if err != nil {
 		return statusCode, err
 	}
@@ -18,7 +19,7 @@ func (p *KMS) commonHandlerQuery(api string, query url.Values, resp interface{})
 	return statusCode, nil
 }
 
-func (p *KMS) commonHandlerJson(api string, query url.Values, reqBody map[string]interface{}, resp interface{}) (int, error) {
+func (p *KMS) commonHandlerJson(ctx context.Context, api string, query url.Values, reqBody map[string]interface{}, resp interface{}) (int, error) {
 	var statusCode int
 	var respBody []byte
 	body, err := json.Marshal(reqBody)
@@ -26,7 +27,7 @@ func (p *KMS) commonHandlerJson(api string, query url.Values, reqBody map[string
 		return statusCode, err
 	}
 
-	respBody, statusCode, err = p.Client.Json(api, query, string(body))
+	respBody, statusCode, err = p.Client.CtxJson(ctx, api, query, string(body))
 	if err != nil {
 		return statusCode, err
 	}
@@ -37,7 +38,7 @@ func (p *KMS) commonHandlerJson(api string, query url.Values, reqBody map[string
 	return statusCode, nil
 }
 
-func (p *KMS) CreateKeyring(req *CreateKeyringRequest) (*CreateKeyringResponse, int, error) {
+func (p *KMS) CtxCreateKeyring(ctx context.Context, req *CreateKeyringRequest) (*CreateKeyringResponse, int, error) {
 	query := url.Values{}
 	resp := new(CreateKeyringResponse)
 
@@ -49,7 +50,7 @@ func (p *KMS) CreateKeyring(req *CreateKeyringRequest) (*CreateKeyringResponse, 
 		query.Set("Description", *req.Description)
 	}
 
-	statusCode, err := p.commonHandlerQuery("CreateKeyring", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "CreateKeyring", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -57,7 +58,11 @@ func (p *KMS) CreateKeyring(req *CreateKeyringRequest) (*CreateKeyringResponse, 
 	return resp, statusCode, nil
 }
 
-func (p *KMS) DescribeKeyrings(req *DescribeKeyringsRequest) (*DescribeKeyringsResponse, int, error) {
+func (p *KMS) CreateKeyring(req *CreateKeyringRequest) (*CreateKeyringResponse, int, error) {
+	return p.CtxCreateKeyring(context.Background(), req)
+}
+
+func (p *KMS) CtxDescribeKeyrings(ctx context.Context, req *DescribeKeyringsRequest) (*DescribeKeyringsResponse, int, error) {
 	query := url.Values{}
 	resp := new(DescribeKeyringsResponse)
 
@@ -68,7 +73,7 @@ func (p *KMS) DescribeKeyrings(req *DescribeKeyringsRequest) (*DescribeKeyringsR
 		query.Set("PageSize", strconv.Itoa(*req.PageSize))
 	}
 
-	statusCode, err := p.commonHandlerQuery("DescribeKeyrings", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "DescribeKeyrings", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -76,7 +81,11 @@ func (p *KMS) DescribeKeyrings(req *DescribeKeyringsRequest) (*DescribeKeyringsR
 	return resp, statusCode, nil
 }
 
-func (p *KMS) UpdateKeyring(req *UpdateKeyringRequest) (*UpdateKeyringResponse, int, error) {
+func (p *KMS) DescribeKeyrings(req *DescribeKeyringsRequest) (*DescribeKeyringsResponse, int, error) {
+	return p.CtxDescribeKeyrings(context.Background(), req)
+}
+
+func (p *KMS) CtxUpdateKeyring(ctx context.Context, req *UpdateKeyringRequest) (*UpdateKeyringResponse, int, error) {
 	query := url.Values{}
 	resp := new(UpdateKeyringResponse)
 
@@ -88,7 +97,24 @@ func (p *KMS) UpdateKeyring(req *UpdateKeyringRequest) (*UpdateKeyringResponse, 
 		query.Set("Description", *req.Description)
 	}
 
-	statusCode, err := p.commonHandlerQuery("UpdateKeyring", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "UpdateKeyring", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) UpdateKeyring(req *UpdateKeyringRequest) (*UpdateKeyringResponse, int, error) {
+	return p.CtxUpdateKeyring(context.Background(), req)
+}
+
+func (p *KMS) CtxQueryKeyring(ctx context.Context, req *QueryKeyringRequest) (*QueryKeyringResponse, int, error) {
+	query := url.Values{}
+	resp := new(QueryKeyringResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	statusCode, err := p.commonHandlerQuery(ctx, "QueryKeyring", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -97,19 +123,10 @@ func (p *KMS) UpdateKeyring(req *UpdateKeyringRequest) (*UpdateKeyringResponse, 
 }
 
 func (p *KMS) QueryKeyring(req *QueryKeyringRequest) (*QueryKeyringResponse, int, error) {
-	query := url.Values{}
-	resp := new(QueryKeyringResponse)
-
-	query.Set("KeyringName", req.KeyringName)
-	statusCode, err := p.commonHandlerQuery("QueryKeyring", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return resp, statusCode, nil
+	return p.CtxQueryKeyring(context.Background(), req)
 }
 
-func (p *KMS) CreateKey(req *CreateKeyRequest) (*CreateKeyResponse, int, error) {
+func (p *KMS) CtxCreateKey(ctx context.Context, req *CreateKeyRequest) (*CreateKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(CreateKeyResponse)
 
@@ -127,15 +144,18 @@ func (p *KMS) CreateKey(req *CreateKeyRequest) (*CreateKeyResponse, int, error) 
 	if req.Description != nil {
 		query.Set("Description", *req.Description)
 	}
-	statusCode, err := p.commonHandlerQuery("CreateKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "CreateKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
 
 	return resp, statusCode, nil
 }
+func (p *KMS) CreateKey(req *CreateKeyRequest) (*CreateKeyResponse, int, error) {
+	return p.CtxCreateKey(context.Background(), req)
+}
 
-func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int, error) {
+func (p *KMS) CtxDescribeKeys(ctx context.Context, req *DescribeKeysRequest) (*DescribeKeysResponse, int, error) {
 	query := url.Values{}
 	resp := new(DescribeKeysResponse)
 
@@ -146,7 +166,7 @@ func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int
 	if req.PageSize != nil {
 		query.Set("PageSize", strconv.Itoa(*req.PageSize))
 	}
-	statusCode, err := p.commonHandlerQuery("DescribeKeys", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "DescribeKeys", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -154,7 +174,11 @@ func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int
 	return resp, statusCode, nil
 }
 
-func (p *KMS) UpdateKey(req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) {
+func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int, error) {
+	return p.CtxDescribeKeys(context.Background(), req)
+}
+
+func (p *KMS) CtxUpdateKey(ctx context.Context, req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(UpdateKeyResponse)
 
@@ -167,7 +191,7 @@ func (p *KMS) UpdateKey(req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) 
 		query.Set("Description", *req.Description)
 	}
 
-	statusCode, err := p.commonHandlerQuery("UpdateKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "UpdateKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -175,7 +199,11 @@ func (p *KMS) UpdateKey(req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) 
 	return resp, statusCode, nil
 }
 
-func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResponse, int, error) {
+func (p *KMS) UpdateKey(req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) {
+	return p.CtxUpdateKey(context.Background(), req)
+}
+
+func (p *KMS) CtxGenerateDataKey(ctx context.Context, req *GenerateDataKeyRequest) (*GenerateDataKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(GenerateDataKeyResponse)
 
@@ -190,7 +218,7 @@ func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResp
 		reqBody["EncryptionContext"] = req.EncryptionContext
 	}
 
-	statusCode, err := p.commonHandlerJson("GenerateDataKey", query, reqBody, resp)
+	statusCode, err := p.commonHandlerJson(ctx, "GenerateDataKey", query, reqBody, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -198,7 +226,11 @@ func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResp
 	return resp, statusCode, nil
 }
 
-func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
+func (p *KMS) GenerateDataKey(req *GenerateDataKeyRequest) (*GenerateDataKeyResponse, int, error) {
+	return p.CtxGenerateDataKey(context.Background(), req)
+}
+
+func (p *KMS) CtxEncrypt(ctx context.Context, req *EncryptRequest) (*EncryptResponse, int, error) {
 	query := url.Values{}
 	resp := new(EncryptResponse)
 
@@ -210,7 +242,7 @@ func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
 	}
 	reqBody["Plaintext"] = req.Plaintext
 
-	statusCode, err := p.commonHandlerJson("Encrypt", query, reqBody, resp)
+	statusCode, err := p.commonHandlerJson(ctx, "Encrypt", query, reqBody, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -218,7 +250,11 @@ func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
 	return resp, statusCode, nil
 }
 
-func (p *KMS) Decrypt(req *DecryptRequest) (*DecryptResponse, int, error) {
+func (p *KMS) Encrypt(req *EncryptRequest) (*EncryptResponse, int, error) {
+	return p.CtxEncrypt(context.Background(), req)
+}
+
+func (p *KMS) CtxDecrypt(ctx context.Context, req *DecryptRequest) (*DecryptResponse, int, error) {
 	query := url.Values{}
 	resp := new(DecryptResponse)
 
@@ -228,7 +264,26 @@ func (p *KMS) Decrypt(req *DecryptRequest) (*DecryptResponse, int, error) {
 	}
 	reqBody["CiphertextBlob"] = req.CiphertextBlob
 
-	statusCode, err := p.commonHandlerJson("Decrypt", query, reqBody, resp)
+	statusCode, err := p.commonHandlerJson(ctx, "Decrypt", query, reqBody, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) Decrypt(req *DecryptRequest) (*DecryptResponse, int, error) {
+	return p.CtxDecrypt(context.Background(), req)
+}
+
+func (p *KMS) CtxEnableKey(ctx context.Context, req *EnableKeyRequest) (*EnableKeyResponse, int, error) {
+	query := url.Values{}
+	resp := new(EnableKeyResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery(ctx, "EnableKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -237,13 +292,17 @@ func (p *KMS) Decrypt(req *DecryptRequest) (*DecryptResponse, int, error) {
 }
 
 func (p *KMS) EnableKey(req *EnableKeyRequest) (*EnableKeyResponse, int, error) {
+	return p.CtxEnableKey(context.Background(), req)
+}
+
+func (p *KMS) CtxDisableKey(ctx context.Context, req *DisableKeyRequest) (*DisableKeyResponse, int, error) {
 	query := url.Values{}
-	resp := new(EnableKeyResponse)
+	resp := new(DisableKeyResponse)
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
-	statusCode, err := p.commonHandlerQuery("EnableKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "DisableKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -252,21 +311,10 @@ func (p *KMS) EnableKey(req *EnableKeyRequest) (*EnableKeyResponse, int, error) 
 }
 
 func (p *KMS) DisableKey(req *DisableKeyRequest) (*DisableKeyResponse, int, error) {
-	query := url.Values{}
-	resp := new(DisableKeyResponse)
-
-	query.Set("KeyringName", req.KeyringName)
-	query.Set("KeyName", req.KeyName)
-
-	statusCode, err := p.commonHandlerQuery("DisableKey", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return resp, statusCode, nil
+	return p.CtxDisableKey(context.Background(), req)
 }
 
-func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKeyDeletionResponse, int, error) {
+func (p *KMS) CtxScheduleKeyDeletion(ctx context.Context, req *ScheduleKeyDeletionRequest) (*ScheduleKeyDeletionResponse, int, error) {
 	query := url.Values{}
 	resp := new(ScheduleKeyDeletionResponse)
 
@@ -276,7 +324,27 @@ func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKey
 		query.Set("PendingWindowInDays", strconv.Itoa(*req.PendingWindowInDays))
 	}
 
-	statusCode, err := p.commonHandlerQuery("ScheduleKeyDeletion", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "ScheduleKeyDeletion", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+
+}
+
+func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKeyDeletionResponse, int, error) {
+	return p.CtxScheduleKeyDeletion(context.Background(), req)
+}
+
+func (p *KMS) CtxCancelKeyDeletion(ctx context.Context, req *CancelKeyDeletionRequest) (*CancelKeyDeletionResponse, int, error) {
+	query := url.Values{}
+	resp := new(CancelKeyDeletionResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery(ctx, "CancelKeyDeletion", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -285,16 +353,5 @@ func (p *KMS) ScheduleKeyDeletion(req *ScheduleKeyDeletionRequest) (*ScheduleKey
 }
 
 func (p *KMS) CancelKeyDeletion(req *CancelKeyDeletionRequest) (*CancelKeyDeletionResponse, int, error) {
-	query := url.Values{}
-	resp := new(CancelKeyDeletionResponse)
-
-	query.Set("KeyringName", req.KeyringName)
-	query.Set("KeyName", req.KeyName)
-
-	statusCode, err := p.commonHandlerQuery("CancelKeyDeletion", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return resp, statusCode, nil
+	return p.CtxCancelKeyDeletion(context.Background(), req)
 }
