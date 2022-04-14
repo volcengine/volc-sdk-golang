@@ -21,7 +21,7 @@ func (this JsonTime) UnmarshalJSON(bytes []byte) error {
 	location, _ := time.LoadLocation("Asia/Shanghai")
 
 	str := string(bytes)
-	str = strings.Trim(str,"\"")
+	str = strings.Trim(str, "\"")
 	t, err := time.ParseInLocation(TIME_LAYOUT, str, location)
 	if err == nil {
 		this = JsonTime(t)
@@ -102,7 +102,7 @@ type EditTaskRequest struct {
 	TaskOpenId  string
 	StartTime   JsonTime
 	EndTime     JsonTime
-	Recall 		bool
+	Recall      bool
 	Concurrency int32
 	//max 3
 	RingAgainTimes int32
@@ -118,7 +118,7 @@ type FetchVoiceResourceRequest struct {
 
 type SingleParam struct {
 	SingleOpenId string
-	Phone		 string
+	Phone        string
 	Resource     string
 	TriggerTime  JsonTime
 	//max 3

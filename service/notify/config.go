@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	DefaultRegion          = "cn-north-1"
-	ServiceVersion		   = "2021-01-01"
-	ServiceName            = "volc_voice_notify"
+	DefaultRegion  = "cn-north-1"
+	ServiceVersion = "2021-01-01"
+	ServiceName    = "volc_voice_notify"
 )
 
 var (
