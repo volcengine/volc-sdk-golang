@@ -145,3 +145,33 @@ func TestKMS_CancelKeyDeletion(t *testing.T) {
 		KeyName:     keyName,
 	}))
 }
+
+func TestKMS_ArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.ArchiveKey(&kms.ArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_CancelArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.CancelArchiveKey(&kms.CancelArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_DisableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.DisableKeyRotation(&kms.DisableKeyRotationRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_EnableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.EnableKeyRotation(&kms.EnableKeyRotationRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+

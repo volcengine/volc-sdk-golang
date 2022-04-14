@@ -174,14 +174,18 @@ func (p *KMS) CtxDescribeKeys(ctx context.Context, req *DescribeKeysRequest) (*D
 	return resp, statusCode, nil
 }
 
-func (p *KMS) DescribeKey(req *DescribeKeyRequest) (*DescribeKeyResponse, int, error) {
+func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int, error) {
+	return p.CtxDescribeKeys(context.Background(), req)
+}
+
+func (p *KMS) CtxDescribeKey(ctx context.Context, req *DescribeKeyRequest) (*DescribeKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(DescribeKeyResponse)
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
-	statusCode, err := p.commonHandlerQuery("DescribeKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "DescribeKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -189,8 +193,8 @@ func (p *KMS) DescribeKey(req *DescribeKeyRequest) (*DescribeKeyResponse, int, e
 	return resp, statusCode, nil
 }
 
-func (p *KMS) DescribeKeys(req *DescribeKeysRequest) (*DescribeKeysResponse, int, error) {
-	return p.CtxDescribeKeys(context.Background(), req)
+func (p *KMS) DescribeKey(req *DescribeKeyRequest) (*DescribeKeyResponse, int, error) {
+	return p.CtxDescribeKey(context.Background(), req)
 }
 
 func (p *KMS) CtxUpdateKey(ctx context.Context, req *UpdateKeyRequest) (*UpdateKeyResponse, int, error) {
@@ -367,14 +371,37 @@ func (p *KMS) CtxCancelKeyDeletion(ctx context.Context, req *CancelKeyDeletionRe
 	return resp, statusCode, nil
 }
 
-func (p *KMS) ArchiveKey(req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, error) {
+func (p *KMS) CancelKeyDeletion(req *CancelKeyDeletionRequest) (*CancelKeyDeletionResponse, int, error) {
+	return p.CtxCancelKeyDeletion(context.Background(), req)
+}
+
+func (p *KMS) CtxArchiveKey(ctx context.Context, req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, error) {
 	query := url.Values{}
 	resp := new(ArchiveKeyResponse)
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
-	statusCode, err := p.commonHandlerQuery("ArchiveKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "ArchiveKey", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+
+	return resp, statusCode, nil
+}
+
+func (p *KMS) ArchiveKey(req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, error) {
+	return p.CtxArchiveKey(context.Background(), req)
+}
+
+func (p *KMS) CtxCancelArchiveKey(ctx context.Context, req *CancelArchiveKeyRequest) (*CancelArchiveKeyResponse, int, error) {
+	query := url.Values{}
+	resp := new(CancelArchiveKeyResponse)
+
+	query.Set("KeyringName", req.KeyringName)
+	query.Set("KeyName", req.KeyName)
+
+	statusCode, err := p.commonHandlerQuery(ctx, "CancelArchiveKey", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -383,13 +410,17 @@ func (p *KMS) ArchiveKey(req *ArchiveKeyRequest) (*ArchiveKeyResponse, int, erro
 }
 
 func (p *KMS) CancelArchiveKey(req *CancelArchiveKeyRequest) (*CancelArchiveKeyResponse, int, error) {
+	return p.CtxCancelArchiveKey(context.Background(), req)
+}
+
+func (p *KMS) CtxEnableKeyRotation(ctx context.Context, req *EnableKeyRotationRequest) (*EnableKeyRotationResponse, int, error) {
 	query := url.Values{}
-	resp := new(CancelArchiveKeyResponse)
+	resp := new(EnableKeyRotationResponse)
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
-	statusCode, err := p.commonHandlerQuery("CancelArchiveKey", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "EnableKeyRotation", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -398,13 +429,17 @@ func (p *KMS) CancelArchiveKey(req *CancelArchiveKeyRequest) (*CancelArchiveKeyR
 }
 
 func (p *KMS) EnableKeyRotation(req *EnableKeyRotationRequest) (*EnableKeyRotationResponse, int, error) {
+	return p.CtxEnableKeyRotation(context.Background(), req)
+}
+
+func (p *KMS) CtxDisableKeyRotation(ctx context.Context, req *DisableKeyRotationRequest) (*DisableKeyRotationResponse, int, error) {
 	query := url.Values{}
-	resp := new(EnableKeyRotationResponse)
+	resp := new(DisableKeyRotationResponse)
 
 	query.Set("KeyringName", req.KeyringName)
 	query.Set("KeyName", req.KeyName)
 
-	statusCode, err := p.commonHandlerQuery("EnableKeyRotation", query, resp)
+	statusCode, err := p.commonHandlerQuery(ctx, "DisableKeyRotation", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -413,21 +448,10 @@ func (p *KMS) EnableKeyRotation(req *EnableKeyRotationRequest) (*EnableKeyRotati
 }
 
 func (p *KMS) DisableKeyRotation(req *DisableKeyRotationRequest) (*DisableKeyRotationResponse, int, error) {
-	query := url.Values{}
-	resp := new(DisableKeyRotationResponse)
-
-	query.Set("KeyringName", req.KeyringName)
-	query.Set("KeyName", req.KeyName)
-
-	statusCode, err := p.commonHandlerQuery("DisableKeyRotation", query, resp)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return resp, statusCode, nil
+	return p.CtxDisableKeyRotation(context.Background(), req)
 }
 
-func (p *KMS) ReEncrypt(req *ReEncryptRequest) (*ReEncryptResponse, int, error) {
+func (p *KMS) CtxReEncrypt(ctx context.Context, req *ReEncryptRequest) (*ReEncryptResponse, int, error) {
 	query := url.Values{}
 	resp := new(ReEncryptResponse)
 
@@ -442,7 +466,7 @@ func (p *KMS) ReEncrypt(req *ReEncryptRequest) (*ReEncryptResponse, int, error) 
 	}
 	reqBody["CiphertextBlob"] = req.CiphertextBlob
 
-	statusCode, err := p.commonHandlerJson("ReEncrypt", query, reqBody, resp)
+	statusCode, err := p.commonHandlerJson(ctx, "ReEncrypt", query, reqBody, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -450,6 +474,6 @@ func (p *KMS) ReEncrypt(req *ReEncryptRequest) (*ReEncryptResponse, int, error) 
 	return resp, statusCode, nil
 }
 
-func (p *KMS) CancelKeyDeletion(req *CancelKeyDeletionRequest) (*CancelKeyDeletionResponse, int, error) {
-	return p.CtxCancelKeyDeletion(context.Background(), req)
+func (p *KMS) ReEncrypt(req *ReEncryptRequest) (*ReEncryptResponse, int, error) {
+	return p.CtxReEncrypt(context.Background(), req)
 }
