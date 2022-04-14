@@ -102,6 +102,7 @@ type EditTaskRequest struct {
 	TaskOpenId  string
 	StartTime   JsonTime
 	EndTime     JsonTime
+	Recall 		bool
 	Concurrency int32
 	//max 3
 	RingAgainTimes int32

@@ -147,7 +147,7 @@ func (p *Notify) FetchVoiceResourceByUrl(req *FetchVoiceResourceRequest) (*Basic
 	return resp, statusCode, nil
 }
 
-func (p *Notify) CreateTtsResource(req *FetchVoiceResourceRequest) (*BasicResourceResponse, int, error) {
+func (p *Notify) CreateTtsResource(req *CreateTtsResourceRequest) (*BasicResourceResponse, int, error) {
 	resp := new(BasicResourceResponse)
 	statusCode, err := p.doJson("OpenCreateTts", req, resp)
 
