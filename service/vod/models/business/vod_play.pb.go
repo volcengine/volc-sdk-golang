@@ -218,6 +218,134 @@ func (x *VodPlayInfoModel) GetSubtitleInfoList() []*VodSubtitleInfo {
 	return nil
 }
 
+type VodAllPlayInfoModel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Vid                  string                  `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`                                                                      // 唯一ID
+	Status               int32                   `protobuf:"varint,2,opt,name=Status,proto3" json:"Status,omitempty"`                                                               // 状态
+	PosterUrl            string                  `protobuf:"bytes,3,opt,name=PosterUrl,proto3" json:"PosterUrl,omitempty"`                                                          // 封面地址
+	TotalCount           int32                   `protobuf:"varint,4,opt,name=TotalCount,proto3" json:"TotalCount,omitempty"`                                                       // 播放列表数量
+	EnableAdaptive       bool                    `protobuf:"varint,5,opt,name=EnableAdaptive,proto3" json:"EnableAdaptive,omitempty"`                                               // 是否关键针对齐
+	VodTranscodePlayInfo []*VodPlayInfo          `protobuf:"bytes,6,rep,name=VodTranscodePlayInfo,proto3" json:"VodTranscodePlayInfo,omitempty"`                                    // 转码流
+	VodSourcePlayInfo    *VodPlayInfo            `protobuf:"bytes,7,opt,name=VodSourcePlayInfo,proto3" json:"VodSourcePlayInfo,omitempty"`                                          // 原片流
+	Version              VodPlayInfoModelVersion `protobuf:"varint,8,opt,name=Version,proto3,enum=Volcengine.Vod.Models.Business.VodPlayInfoModelVersion" json:"Version,omitempty"` // 数据版本
+	ThumbInfoList        []*VodThumbInfo         `protobuf:"bytes,9,rep,name=ThumbInfoList,proto3" json:"ThumbInfoList,omitempty"`                                                  // 雪碧图列表
+	BarrageMaskUrl       string                  `protobuf:"bytes,10,opt,name=BarrageMaskUrl,proto3" json:"BarrageMaskUrl,omitempty"`                                               // 弹幕蒙版url
+	SubtitleInfoList     []*VodSubtitleInfo      `protobuf:"bytes,11,rep,name=SubtitleInfoList,proto3" json:"SubtitleInfoList,omitempty"`                                           // 字幕信息列表
+}
+
+func (x *VodAllPlayInfoModel) Reset() {
+	*x = VodAllPlayInfoModel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_play_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAllPlayInfoModel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAllPlayInfoModel) ProtoMessage() {}
+
+func (x *VodAllPlayInfoModel) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_play_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAllPlayInfoModel.ProtoReflect.Descriptor instead.
+func (*VodAllPlayInfoModel) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_play_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *VodAllPlayInfoModel) GetVid() string {
+	if x != nil {
+		return x.Vid
+	}
+	return ""
+}
+
+func (x *VodAllPlayInfoModel) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *VodAllPlayInfoModel) GetPosterUrl() string {
+	if x != nil {
+		return x.PosterUrl
+	}
+	return ""
+}
+
+func (x *VodAllPlayInfoModel) GetTotalCount() int32 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *VodAllPlayInfoModel) GetEnableAdaptive() bool {
+	if x != nil {
+		return x.EnableAdaptive
+	}
+	return false
+}
+
+func (x *VodAllPlayInfoModel) GetVodTranscodePlayInfo() []*VodPlayInfo {
+	if x != nil {
+		return x.VodTranscodePlayInfo
+	}
+	return nil
+}
+
+func (x *VodAllPlayInfoModel) GetVodSourcePlayInfo() *VodPlayInfo {
+	if x != nil {
+		return x.VodSourcePlayInfo
+	}
+	return nil
+}
+
+func (x *VodAllPlayInfoModel) GetVersion() VodPlayInfoModelVersion {
+	if x != nil {
+		return x.Version
+	}
+	return VodPlayInfoModelVersion_UndefinedVodPlayInfoModelVersion
+}
+
+func (x *VodAllPlayInfoModel) GetThumbInfoList() []*VodThumbInfo {
+	if x != nil {
+		return x.ThumbInfoList
+	}
+	return nil
+}
+
+func (x *VodAllPlayInfoModel) GetBarrageMaskUrl() string {
+	if x != nil {
+		return x.BarrageMaskUrl
+	}
+	return ""
+}
+
+func (x *VodAllPlayInfoModel) GetSubtitleInfoList() []*VodSubtitleInfo {
+	if x != nil {
+		return x.SubtitleInfoList
+	}
+	return nil
+}
+
+
 type VodGetOriginalPlayInfoResult struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
