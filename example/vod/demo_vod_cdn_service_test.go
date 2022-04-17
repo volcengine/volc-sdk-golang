@@ -66,3 +66,69 @@ func Test_CreateCdnPreloadTask(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ListCdnTasks(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnTasksRequest{
+		SpaceName:  "your SpaceName",
+		TaskId:     "your TaskId",
+		DomainName: "your DomainName",
+		TaskType:   "your TaskType",
+		Status:     "your Status",
+		StartTime:  0,
+		EndTime:    0,
+		PageNum:    0,
+		PageSize:   0,
+	}
+
+	resp, status, err := instance.ListCdnTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListCdnAccessLog(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnAccessLogRequest{
+		Domains:        "your Domains",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		SpaceName:      "your SpaceName",
+	}
+
+	resp, status, err := instance.ListCdnAccessLog(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListCdnTopAccessUrl(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnTopAccessUrlRequest{
+		Domains:        "your Domains",
+		SpaceName:      "your SpaceName",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		SortType:       "your SortType",
+	}
+
+	resp, status, err := instance.ListCdnTopAccessUrl(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
