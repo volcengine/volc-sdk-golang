@@ -394,6 +394,22 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
+		"ListCdnAccessLog": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnAccessLog"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		"ListCdnTopAccessUrl": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTopAccessUrl"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理
