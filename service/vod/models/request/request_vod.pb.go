@@ -188,20 +188,21 @@ type VodGetAllPlayInfoRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vids                  string `protobuf:"bytes,1,opt,name=Vids,proto3" json:"Vids,omitempty"`                              // 视频ID
-	Format                string `protobuf:"bytes,2,opt,name=Format,proto3" json:"Format,omitempty"`                          //封装格式，支持mp4,dash,hls，默认mp4Format
-	Codec                 string `protobuf:"bytes,3,opt,name=Codec,proto3" json:"Codec,omitempty"`                            //编码类型，默认h264，可选值为h264, h265等Codec
-	Definition            string `protobuf:"bytes,4,opt,name=Definition,proto3" json:"Definition,omitempty"`                  //视频流清晰度，默认返回全部，支持：240p，360p，480p，540p，720p，1080p
-	FileType              string `protobuf:"bytes,5,opt,name=FileType,proto3" json:"FileType,omitempty"`                      //流文件类型，默认video，支持：加密视频流evideo，加密音频流传eaudio，非加密视频流video，普通音频音频流audio
-	LogoType              string `protobuf:"bytes,6,opt,name=LogoType,proto3" json:"LogoType,omitempty"`                      // 水印贴片标签
-	Ssl                   string `protobuf:"bytes,7,opt,name=Ssl,proto3" json:"Ssl,omitempty"`                                //返回https播放地址，默认否, 1-是；0-否
-	NeedThumbs            string `protobuf:"bytes,8,opt,name=NeedThumbs,proto3" json:"NeedThumbs,omitempty"`                  // 是否需要雪碧图（缩略图），默认否，1-是；0-否
-	NeedBarrageMask       string `protobuf:"bytes,9,opt,name=NeedBarrageMask,proto3" json:"NeedBarrageMask,omitempty"`        // 是否需要蒙版弹幕，默认否，1-是；0-否
-	CdnType               string `protobuf:"bytes,10,opt,name=CdnType,proto3" json:"CdnType,omitempty"`                       // 指定CDN类型
-	UnionInfo             string `protobuf:"bytes,11,opt,name=UnionInfo,proto3" json:"UnionInfo,omitempty"`                   // 唯一性标识信息
-	PlayScene             string `protobuf:"bytes,12,opt,name=PlayScene,proto3" json:"PlayScene,omitempty"`                   // 播放场景
-	DrmExpireTimestamp    string `protobuf:"bytes,13,opt,name=DrmExpireTimestamp,proto3" json:"DrmExpireTimestamp,omitempty"` // DRM过期时间戳
-	NeedKeyframeAlignment string `protobuf:"bytes,14,opt,name=NeedKeyframeAlignment,proto3" json:"NeedKeyframeAlignment,omitempty"`
+	Vids                  string `protobuf:"bytes,1,opt,name=Vids,proto3" json:"Vids,omitempty"`                                    // 视频ID
+	Format                string `protobuf:"bytes,2,opt,name=Format,proto3" json:"Format,omitempty"`                                //封装格式，支持mp4,dash,hls，默认mp4Format
+	Codec                 string `protobuf:"bytes,3,opt,name=Codec,proto3" json:"Codec,omitempty"`                                  //编码类型，默认h264，可选值为h264, h265等Codec
+	Definition            string `protobuf:"bytes,4,opt,name=Definition,proto3" json:"Definition,omitempty"`                        //视频流清晰度，默认返回全部，支持：240p，360p，480p，540p，720p，1080p
+	FileType              string `protobuf:"bytes,5,opt,name=FileType,proto3" json:"FileType,omitempty"`                            //流文件类型，默认video，支持：加密视频流evideo，加密音频流传eaudio，非加密视频流video，普通音频音频流audio
+	LogoType              string `protobuf:"bytes,6,opt,name=LogoType,proto3" json:"LogoType,omitempty"`                            // 水印贴片标签
+	Ssl                   string `protobuf:"bytes,7,opt,name=Ssl,proto3" json:"Ssl,omitempty"`                                      //返回https播放地址，默认否, 1-是；0-否
+	NeedThumbs            string `protobuf:"bytes,8,opt,name=NeedThumbs,proto3" json:"NeedThumbs,omitempty"`                        // 是否需要雪碧图（缩略图），默认否，1-是；0-否
+	NeedBarrageMask       string `protobuf:"bytes,9,opt,name=NeedBarrageMask,proto3" json:"NeedBarrageMask,omitempty"`              // 是否需要蒙版弹幕，默认否，1-是；0-否
+	CdnType               string `protobuf:"bytes,10,opt,name=CdnType,proto3" json:"CdnType,omitempty"`                             // 指定CDN类型
+	UnionInfo             string `protobuf:"bytes,11,opt,name=UnionInfo,proto3" json:"UnionInfo,omitempty"`                         // 唯一性标识信息
+	PlayScene             string `protobuf:"bytes,12,opt,name=PlayScene,proto3" json:"PlayScene,omitempty"`                         // 播放场景
+	DrmExpireTimestamp    string `protobuf:"bytes,13,opt,name=DrmExpireTimestamp,proto3" json:"DrmExpireTimestamp,omitempty"`       // DRM过期时间戳
+	HDRRange              string `protobuf:"bytes,14,opt,name=HDRRange,proto3" json:"HDRRange,omitempty"`                           // HDR 或者 SDR
+	NeedKeyframeAlignment string `protobuf:"bytes,15,opt,name=NeedKeyframeAlignment,proto3" json:"NeedKeyframeAlignment,omitempty"` // 使用的帧对齐转码版本
 }
 
 func (x *VodGetAllPlayInfoRequest) Reset() {
@@ -323,6 +324,13 @@ func (x *VodGetAllPlayInfoRequest) GetPlayScene() string {
 func (x *VodGetAllPlayInfoRequest) GetDrmExpireTimestamp() string {
 	if x != nil {
 		return x.DrmExpireTimestamp
+	}
+	return ""
+}
+
+func (x *VodGetAllPlayInfoRequest) GetHDRRange() string {
+	if x != nil {
+		return x.HDRRange
 	}
 	return ""
 }
