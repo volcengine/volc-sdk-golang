@@ -1,16 +1,18 @@
 package cdn
 
 import (
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 const (
-	DefaultRegion  = "cn-north-1"
-	ServiceVersion = "2021-03-01"
-	ServiceName    = "CDN"
+	DefaultRegion     = "cn-north-1"
+	ServiceVersion    = "2021-03-01"
+	SSLServiceVersion = "2021-06-01"
+	ServiceName       = "CDN"
 )
 
 var (
@@ -290,6 +292,22 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"UploadCert": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CertificateAddInstanceCertificate"},
+				"Version": []string{SSLServiceVersion},
+			},
+		},
+		"DescribeCert": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CertificateGetInstance"},
+				"Version": []string{SSLServiceVersion},
+			},
+		},
 	}
 )
 
@@ -323,9 +341,11 @@ func (s *CDN) GetAPIInfo(api string) *base.ApiInfo {
 }
 
 func (s *CDN) SetRegion(region string) {
-	if serviceInfo := s.GetServiceInfo(region); serviceInfo != nil {
-		serviceInfo.Credentials.Region = region
-	}
+	s.Client.ServiceInfo.Credentials.Region = region
+}
+
+func (s *CDN) SetServiceName(service string) {
+	s.Client.ServiceInfo.Credentials.Service = service
 }
 
 func (s *CDN) SetHost(host string) {
