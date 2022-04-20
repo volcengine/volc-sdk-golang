@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/cenkalti/backoff/v4"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -14,6 +13,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	"github.com/cenkalti/backoff/v4"
 )
 
 const (
@@ -225,35 +226,85 @@ func (client *Client) SignSts2(inlinePolicy *Policy, expire time.Duration) (*Sec
 
 // Query 发起Get的query请求
 func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
-	return client.requestWithContentType(api, query, "", "")
+	return client.CtxQuery(context.Background(), api, query)
+}
+
+func (client *Client) CtxQuery(ctx context.Context, api string, query url.Values) ([]byte, int, error) {
+	return client.request(ctx, api, query, "", "")
 }
 
 // Json 发起Json的post请求
 func (client *Client) Json(api string, query url.Values, body string) ([]byte, int, error) {
-	return client.JsonWithHeader(api, query, nil, body)
+	return client.CtxJson(context.Background(), api, query, body)
 }
 
-func (client *Client) JsonWithHeader(api string, query url.Values, header http.Header, body string) ([]byte, int, error) {
-	return client.requestWithContentTypeAndHeader(api, query, header, body, "application/json")
+func (client *Client) CtxJson(ctx context.Context, api string, query url.Values, body string) ([]byte, int, error) {
+	return client.request(ctx, api, query, body, "application/json")
 }
-
-// PostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
 func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
-	return client.requestWithContentType(api, query, body, ct)
+	return client.CtxPostWithContentType(context.Background(), api, query, body, ct)
 }
 
-func (client *Client) requestWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
-	return client.requestWithContentTypeAndHeader(api, query, nil, body, ct)
+// CtxPostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
+func (client *Client) CtxPostWithContentType(ctx context.Context, api string, query url.Values, body string, ct string) ([]byte, int, error) {
+	return client.request(ctx, api, query, body, ct)
 }
-func (client *Client) requestWithContentTypeAndHeader(api string, query url.Values, inputHeader http.Header, body string, ct string) ([]byte, int, error) {
+
+func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
+	return client.CtxPost(context.Background(), api, query, form)
+}
+
+// CtxPost 发起Post请求
+func (client *Client) CtxPost(ctx context.Context, api string, query url.Values, form url.Values) ([]byte, int, error) {
+	apiInfo := client.ApiInfoList[api]
+	form = mergeQuery(form, apiInfo.Form)
+	return client.request(ctx, api, query, form.Encode(), "application/x-www-form-urlencoded")
+}
+
+func (client *Client) makeRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool) {
+	req = client.ServiceInfo.Credentials.Sign(req)
+
+	ctx := inputContext
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, timeout)
+	defer cancel()
+	req = req.WithContext(ctx)
+
+	resp, err := client.Client.Do(req)
+	if err != nil {
+		// should retry when client sends request error.
+		return []byte(""), 500, err, true
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return []byte(""), resp.StatusCode, err, false
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+		needRetry := false
+		// should retry when server returns 5xx error.
+		if resp.StatusCode >= http.StatusInternalServerError {
+			needRetry = true
+		}
+		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body)), needRetry
+	}
+
+	return body, resp.StatusCode, nil, false
+}
+
+func (client *Client) request(ctx context.Context, api string, query url.Values, body string, ct string) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
 		return []byte(""), 500, errors.New("相关api不存在")
 	}
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
-	header := mergeHeader(apiInfo.Header, inputHeader)
-	header = mergeHeader(client.ServiceInfo.Header, header)
+	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
 	query = mergeQuery(query, apiInfo.Query)
 	retrySettings := getRetrySetting(&client.ServiceInfo.Retry, &apiInfo.Retry)
 
@@ -281,7 +332,7 @@ func (client *Client) requestWithContentTypeAndHeader(api string, query url.Valu
 
 	backoff.Retry(func() error {
 		var needRetry bool
-		resp, code, err, needRetry = client.makeRequest(api, req, timeout)
+		resp, code, err, needRetry = client.makeRequest(ctx, api, req, timeout)
 		if needRetry {
 			return err
 		} else {
@@ -289,42 +340,4 @@ func (client *Client) requestWithContentTypeAndHeader(api string, query url.Valu
 		}
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
 	return resp, code, err
-}
-
-// Post 发起Post请求
-func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
-	apiInfo := client.ApiInfoList[api]
-	form = mergeQuery(form, apiInfo.Form)
-	return client.requestWithContentType(api, query, form.Encode(), "application/x-www-form-urlencoded")
-}
-
-func (client *Client) makeRequest(api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool) {
-	req = client.ServiceInfo.Credentials.Sign(req)
-
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-	req = req.WithContext(ctx)
-
-	resp, err := client.Client.Do(req)
-	if err != nil {
-		// should retry when client sends request error.
-		return []byte(""), 500, err, true
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return []byte(""), resp.StatusCode, err, false
-	}
-
-	if resp.StatusCode < 200 || resp.StatusCode > 299 {
-		needRetry := false
-		// should retry when server returns 5xx error.
-		if resp.StatusCode >= http.StatusInternalServerError {
-			needRetry = true
-		}
-		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body)), needRetry
-	}
-
-	return body, resp.StatusCode, nil, false
 }

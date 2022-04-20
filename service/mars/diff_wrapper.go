@@ -1,9 +1,10 @@
-package diff
+package mars
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 
 	"github.com/pkg/errors"
@@ -21,6 +22,30 @@ func (d *Diff) CreateService(request *CreateServiceReq, appid int64) (response *
 func (d *Diff) Validate(request *ValidateReq) (response *AsyncResp, status int, err error) {
 	response = &AsyncResp{}
 	status, err = d.handleRequest(validate, request, 1, response)
+
+	return response, status, err
+}
+
+// DeletePackages : 删除原始包
+func (d *Diff) DeletePackages(request *DeletePackagesReq, appid int64) (response *DeletePackagesResp, status int, err error) {
+	response = &DeletePackagesResp{}
+	status, err = d.handleRequest(deletePackages, request, appid, response)
+
+	return response, status, err
+}
+
+// DeleteService : 删除服务
+func (d *Diff) DeleteService(request *DeleteServiceReq, appid int64) (response *DeleteServiceResp, status int, err error) {
+	response = &DeleteServiceResp{}
+	status, err = d.handleRequest(deleteService, request, appid, response)
+
+	return response, status, err
+}
+
+// QueryPatchByService : 查看服务中的包信息
+func (d *Diff) QueryPatchByService(request *QueryPatchByServiceReq, appid int64) (response *QueryPatchByServiceResp, status int, err error) {
+	response = &QueryPatchByServiceResp{}
+	status, err = d.handleRequest(queryPatchByService, request, appid, response)
 
 	return response, status, err
 }
@@ -86,11 +111,8 @@ func (d *Diff) handleRequest(api string, request interface{}, appid int64, resp 
 		return 0, err
 	}
 
-	// 将appid装入header
-	header := http.Header{"X-mars-appId": []string{strconv.FormatInt(appid, 10)}}
-
 	// do request
-	respBody, status, err := d.JsonWithHeader(api, nil, header, string(bts))
+	respBody, status, err := d.Json(api, url.Values{"aid": []string{fmt.Sprintf("%v", appid)}}, string(bts))
 	if err != nil {
 		return status, err
 	}
