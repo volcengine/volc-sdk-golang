@@ -201,7 +201,7 @@ type VodGetAllPlayInfoRequest struct {
 	UnionInfo             string `protobuf:"bytes,11,opt,name=UnionInfo,proto3" json:"UnionInfo,omitempty"`                         // 唯一性标识信息
 	PlayScene             string `protobuf:"bytes,12,opt,name=PlayScene,proto3" json:"PlayScene,omitempty"`                         // 播放场景
 	DrmExpireTimestamp    string `protobuf:"bytes,13,opt,name=DrmExpireTimestamp,proto3" json:"DrmExpireTimestamp,omitempty"`       // DRM过期时间戳
-	HDRRange              string `protobuf:"bytes,14,opt,name=HDRRange,proto3" json:"HDRRange,omitempty"`                           // HDR 或者 SDR
+	HDRType               string `protobuf:"bytes,14,opt,name=HDRType,proto3" json:"HDRType,omitempty"`                             // SDR, PQHDR, SLGHDR
 	NeedKeyframeAlignment string `protobuf:"bytes,15,opt,name=NeedKeyframeAlignment,proto3" json:"NeedKeyframeAlignment,omitempty"` // 使用的帧对齐转码版本
 }
 
@@ -328,9 +328,9 @@ func (x *VodGetAllPlayInfoRequest) GetDrmExpireTimestamp() string {
 	return ""
 }
 
-func (x *VodGetAllPlayInfoRequest) GetHDRRange() string {
+func (x *VodGetAllPlayInfoRequest) GetHDRType() string {
 	if x != nil {
-		return x.HDRRange
+		return x.HDRType
 	}
 	return ""
 }
