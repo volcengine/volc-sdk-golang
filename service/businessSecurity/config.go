@@ -118,5 +118,21 @@ var (
 				"Version": []string{"2020-12-25"},
 			},
 		},
+		"ElementVerifyV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ElementVerify"},
+				"Version": []string{"2022-04-13"},
+			},
+		},
+		"MobileStatusV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MobileStatus"},
+				"Version": []string{"2022-04-13"},
+			},
+		},
 	}
 )

@@ -1,5 +1,19 @@
 ### Change log
 
+2022-04-14 Bumped to version v1.0.41
+- Support context for base client
+- Fixed params for nlp
+- Added apis for vod\imagex\security\billing
+- Added service volc_voice_notify
+
+2022-04-07 Bumped to version v1.0.40
+- Added api for cdn
+
+2022-03-31 Bumped to version v1.0.39
+- Updated api and params for axb\vod
+- Added demo for dts
+- Added service billing
+
 2022-03-21 Bumped to version v1.0.38
 - Updated api and params
 
