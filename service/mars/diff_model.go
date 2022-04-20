@@ -16,13 +16,13 @@ type CreateServiceReq struct {
 	Comment string `json:"comment"` // 备注信息（可选）
 }
 
-type CreateServiceData struct {
-	ServiceId int `json:"service_id"` // 新建好服务的id
-}
-
 type CreateServiceResp struct {
 	RespInfo
 	Data *CreateServiceData `json:"data"`
+}
+
+type CreateServiceData struct {
+	ServiceId int `json:"service_id"` // 新建好服务的id
 }
 
 // validate
@@ -33,33 +33,37 @@ type ValidateReq struct {
 
 // gen_by_pkg
 type GenByPkgReq struct {
-	ServiceId  int                    `json:"service_id"`  // 服务id
-	Alg        string                 `json:"alg"`         // 差分算法
-	Options    map[string]interface{} `json:"options"`     // 配置项, key-value字典
-	OldUrl     string                 `json:"old_url"`     // 原始包url
-	OldVersion string                 `json:"old_version"` // 原始包版本
-	NewUrl     string                 `json:"new_url"`     // 新包url
-	NewVersion string                 `json:"new_version"` // 新包版本
+	ServiceId    int                    `json:"service_id"`     // 服务id
+	Alg          string                 `json:"alg"`            // 差分算法
+	Options      map[string]interface{} `json:"options"`        // 配置项, key-value字典
+	OldUrl       string                 `json:"old_url"`        // 原始包url
+	OldVersion   string                 `json:"old_version"`    // 原始包版本
+	OldExtraInfo string                 `json:"old_extra_info"` // 业务方对于原始包的附带信息
+	NewUrl       string                 `json:"new_url"`        // 新包url
+	NewVersion   string                 `json:"new_version"`    // 新包版本
+	NewExtraInfo string                 `json:"new_extra_info"` // 业务方对于新包的附带信息
 }
 
 // gen_by_count
 type GenByCountReq struct {
-	ServiceId  int                    `json:"service_id"`  // 服务id
-	Alg        string                 `json:"alg"`         // 差分算法
-	Options    map[string]interface{} `json:"options"`     // 配置项, key-value字典
-	NewUrl     string                 `json:"new_url"`     // 新包url
-	NewVersion string                 `json:"new_version"` // 新包版本
-	Count      int8                   `json:"count"`       // 需要生成的差分包的个数
+	ServiceId    int                    `json:"service_id"`     // 服务id
+	Alg          string                 `json:"alg"`            // 差分算法
+	Options      map[string]interface{} `json:"options"`        // 配置项, key-value字典
+	NewUrl       string                 `json:"new_url"`        // 新包url
+	NewVersion   string                 `json:"new_version"`    // 新包版本
+	NewExtraInfo string                 `json:"new_extra_info"` // 业务方对于新包的附带信息
+	Count        int8                   `json:"count"`          // 需要生成的差分包的个数
 }
 
 // gen_by_version
 type GenByVersionReq struct {
-	ServiceId   int                    `json:"service_id"`   // 服务id
-	Alg         string                 `json:"alg"`          // 差分算法
-	Options     map[string]interface{} `json:"options"`      // 配置项
-	NewUrl      string                 `json:"new_url"`      // 新包url
-	NewVersion  string                 `json:"new_version"`  // 新包版本
-	OldVersions []string               `json:"old_versions"` // 需要生成差分包的原始包版本
+	ServiceId    int                    `json:"service_id"`     // 服务id
+	Alg          string                 `json:"alg"`            // 差分算法
+	Options      map[string]interface{} `json:"options"`        // 配置项
+	NewUrl       string                 `json:"new_url"`        // 新包url
+	NewVersion   string                 `json:"new_version"`    // 新包版本
+	NewExtraInfo string                 `json:"new_extra_info"` // 业务方对于新包的附带信息
+	OldVersions  []string               `json:"old_versions"`   // 需要生成差分包的原始包版本
 }
 
 // 所有异步接口的统一返回结构
@@ -95,16 +99,20 @@ type GenResult struct {
 }
 
 type RespPatch struct {
-	Code       int     `json:"code"`        // 差分包状态
-	ID         uint    `json:"id"`          // 唯一ID
-	CreatedAt  int64   `json:"created_at"`  // 创建时间(毫秒)
-	Url        string  `json:"patch_url"`   // patch包地址
-	Md5        string  `json:"patch_md5"`   // patch包MD5
-	Size       int64   `json:"patch_size"`  // patch包Size
-	Alg        string  `json:"alg"`         // 差分算法类型
-	Ratio      float64 `json:"ratio"`       // 差分效率
-	NewVersion string  `json:"new_version"` // 新包版本
-	OldVersion string  `json:"old_version"` // 原始包版本
+	Code          int     `json:"code"`            // 差分包状态
+	ID            uint    `json:"id"`              // 唯一ID
+	CreatedAt     int64   `json:"created_at"`      // 创建时间(毫秒)
+	Url           string  `json:"patch_url"`       // patch包地址
+	Md5           string  `json:"patch_md5"`       // patch包MD5
+	Size          int64   `json:"patch_size"`      // patch包Size
+	Alg           string  `json:"alg"`             // 差分算法类型
+	Ratio         float64 `json:"ratio"`           // 差分效率
+	NewVersion    string  `json:"new_version"`     // 新包版本
+	NewExtraInfo  string  `json:"new_extra_info"`  // 业务方传入的新包附带信息
+	OldVersion    string  `json:"old_version"`     // 原始包版本
+	OldInfo       string  `json:"old_info"`        // 真正参与差分的原始包的信息
+	OldExtraInfo  string  `json:"old_extra_info"`  // 业务方传入的原始包包附带信息
+	MinSdkVersion int     `json:"min_sdk_version"` // 最小支持的sdk版本号
 }
 
 // 验证差分包的返回结构
@@ -126,7 +134,12 @@ type DeletePackagesReq struct {
 	OldVersions []string `json:"old_versions"` // 需要生成差分包的版本
 }
 
-type DeletePacakgesSinglePackage struct {
+type DeletePackagesResp struct {
+	RespInfo
+	Data *DeletePackagesSinglePackage `json:"data"`
+}
+
+type DeletePackagesSinglePackage struct {
 	Code            int    `json:"code"`              // 删除状态
 	CreatedAt       int64  `json:"created_at"`        // 上传时间
 	ServiceId       int    `json:"service_id"`        // 原始包所在Service
@@ -136,11 +149,6 @@ type DeletePacakgesSinglePackage struct {
 	Version         string `json:"version"`           // 原始包版本
 	NewPackageCount int    `json:"new_package_count"` // 删除的该包作为新包的差分包个数
 	OldPackageCount int    `json:"old_package_count"` // 删除的该包作为原始包的差分包个数
-}
-
-type DeletePackagesResp struct {
-	RespInfo
-	Data *DeletePacakgesSinglePackage `json:"data"`
 }
 
 // 删除服务
@@ -162,6 +170,26 @@ type QueryPatchByServiceReq struct {
 	NoPatches    bool   `json:"no_patches"`    // 不包含差分包信息（可选）
 }
 
+type QueryPatchByServiceResp struct {
+	RespInfo
+	Data *RespQueryPatchByServiceOverview `json:"data"`
+}
+
+type RespQueryPatchByServiceOverview struct {
+	ServiceName string                    `json:"service_name"`
+	Packages    []RespQueryPatchByService `json:"packages"`
+}
+
+type RespQueryPatchByService struct {
+	Version   string                         `json:"version"`    // 完整包版本号
+	Md5       string                         `json:"md5"`        // 完整包MD5
+	CreatedAt int64                          `json:"created_at"` // 上传时间
+	Size      int64                          `json:"size"`       // 完整包大小
+	Url       string                         `json:"url"`        // 完整包下载地址
+	ExtraInfo string                         `json:"extra_info"` // 业务方随包传入的附带信息
+	PatchList []RespQueryPatchByServicePatch `json:"patch_list"` // 差分包列表
+}
+
 type RespQueryPatchByServicePatch struct {
 	OldVersion string `json:"old_version"` // 原始包版本
 	OldMd5     string `json:"old_md5"`     // 原始包MD5
@@ -172,23 +200,4 @@ type RespQueryPatchByServicePatch struct {
 	Size       int64  `json:"size"`        // 描述
 	Url        string `json:"url"`         // 差分包下载地址
 	Alg        string `json:"alg"`         // 算法
-}
-
-type RespQueryPatchByService struct {
-	Version   string                         `json:"version"`    // 完整包版本号
-	Md5       string                         `json:"md5"`        // 完整包MD5
-	CreatedAt int64                          `json:"created_at"` // 上传时间
-	Size      int64                          `json:"size"`       // 完整包大小
-	Url       string                         `json:"url"`        // 完整包下载地址
-	PatchList []RespQueryPatchByServicePatch `json:"patch_list"` // 差分包列表
-}
-
-type RespQueryPatchByServiceOverview struct {
-	ServiceName string                    `json:"service_name"`
-	Packages    []RespQueryPatchByService `json:"packages"`
-}
-
-type QueryPatchByServiceResp struct {
-	RespInfo
-	Data *RespQueryPatchByServiceOverview `json:"data"`
 }

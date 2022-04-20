@@ -12,7 +12,8 @@ const (
 	ServiceName    = "veMARS"
 	ApiVersion     = "2022-04-19"
 	DefaultTimeout = 10 * time.Second
-	DefaultHost    = "vemars.volcengineapi.com"
+	//DefaultHost    = "vemars.volcengineapi.com"
+	DefaultHost = "open.volcengineapi.com"
 
 	DefaultRegion = "cn-north-1"
 

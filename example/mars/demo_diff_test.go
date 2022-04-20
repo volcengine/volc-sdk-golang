@@ -121,12 +121,14 @@ func TestGenByPkg(t *testing.T) {
 
 	// create request
 	request := &mars.GenByPkgReq{
-		ServiceId:  12345,
-		Alg:        "wp",
-		OldUrl:     "your old package url",
-		OldVersion: "1.0.0",
-		NewUrl:     "your new pacakge url",
-		NewVersion: "1.1.0",
+		ServiceId:    12345,
+		Alg:          "wp",
+		OldUrl:       "your old package url",
+		OldVersion:   "1.0.0",
+		OldExtraInfo: "your old package info",
+		NewUrl:       "your new pacakge url",
+		NewVersion:   "1.1.0",
+		NewExtraInfo: "your new package info",
 	}
 
 	// do http query
@@ -141,11 +143,12 @@ func TestGenByCount(t *testing.T) {
 
 	// create request
 	request := &mars.GenByCountReq{
-		ServiceId:  12345,
-		Alg:        "wp",
-		NewUrl:     "your new pacakge url",
-		NewVersion: "1.1.0",
-		Count:      1,
+		ServiceId:    12345,
+		Alg:          "wp",
+		NewUrl:       "your new pacakge url",
+		NewVersion:   "1.1.0",
+		NewExtraInfo: "your new package info",
+		Count:        1,
 	}
 
 	// do http query
@@ -160,11 +163,12 @@ func TestGenByVersion(t *testing.T) {
 
 	// create request
 	request := &mars.GenByVersionReq{
-		ServiceId:   12345,
-		Alg:         "wp",
-		NewUrl:      "your new pacakge url",
-		NewVersion:  "1.1.0",
-		OldVersions: []string{"1.0.0"},
+		ServiceId:    12345,
+		Alg:          "wp",
+		NewUrl:       "your new pacakge url",
+		NewVersion:   "1.1.0",
+		NewExtraInfo: "your new package info",
+		OldVersions:  []string{"1.0.0"},
 	}
 
 	// do http query
