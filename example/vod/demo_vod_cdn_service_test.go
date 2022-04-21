@@ -121,7 +121,6 @@ func Test_ListCdnTopAccessUrl(t *testing.T) {
 
 	query := &request.VodListCdnTopAccessUrlRequest{
 		Domains:        "your Domains",
-		SpaceName:      "your SpaceName",
 		StartTimestamp: 0,
 		EndTimestamp:   0,
 		SortType:       "your SortType",
