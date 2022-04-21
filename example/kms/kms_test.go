@@ -83,6 +83,13 @@ func TestKMS_DescribeKeys(t *testing.T) {
 	}))
 }
 
+func TestKMS_DescribeKey(t *testing.T) {
+	analyze(kms.DefaultInstance.DescribeKey(&kms.DescribeKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
 func TestKMS_UpdateKey(t *testing.T) {
 	desc := "test"
 	analyze(kms.DefaultInstance.UpdateKey(&kms.UpdateKeyRequest{

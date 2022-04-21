@@ -154,7 +154,7 @@ type DescribeKeyRequest struct {
 
 // DescribeKeyResult ...
 type DescribeKeyResult struct {
-	Keys *CustomerMasterKey
+	Key *CustomerMasterKey
 }
 
 // DescribeKeyResponse ...
