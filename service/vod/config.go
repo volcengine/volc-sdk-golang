@@ -47,25 +47,12 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "vod"},
 		},
-		base.RegionApSingapore: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.ap-singapore-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "vod"},
-		},
-		base.RegionUsEast1: {
-			Timeout: 5 * time.Second,
-			Host:    "vod.us-east-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "vod"},
-		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		// **********************************************************************
+		// 播放
+		// **********************************************************************
 		"GetPlayInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -74,11 +61,39 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"StartWorkflow": {
-			Method: http.MethodPost,
+		"GetPrivateDrmPlayAuth": {
+			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"StartWorkflow"},
+				"Action":  []string{"GetPrivateDrmPlayAuth"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetHlsDecryptionKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetHlsDecryptionKey"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"GetPlayInfoWithLiveTimeShiftScene": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPlayInfoWithLiveTimeShiftScene"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+
+		// **********************************************************************
+		// 上传
+		// **********************************************************************
+		"UploadMediaByUrl": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UploadMediaByUrl"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
@@ -87,14 +102,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"QueryUploadTaskInfo"},
-				"Version": []string{"2020-08-01"},
-			},
-		},
-		"UploadMediaByUrl": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UploadMediaByUrl"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
@@ -115,14 +122,10 @@ var (
 			},
 			Timeout: 8 * time.Second,
 		},
-		"GetCdnDomainWeights": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetCdnDomainWeights"},
-				"Version": []string{"2019-07-01"},
-			},
-		},
+
+		// **********************************************************************
+		// 媒资
+		// **********************************************************************
 		"UpdateMediaInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -179,7 +182,6 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-
 		"GetSubtitleInfoList": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -204,20 +206,212 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"GetHlsDecryptionKey": {
+		"GetAuditFramesForAudit": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetHlsDecryptionKey"},
+				"Action":  []string{"GetAuditFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetMLFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMLFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetBetterFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetBetterFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioInfoForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioInfoForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAutomaticSpeechRecognitionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioEventDetectionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioEventDetectionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"CreateVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"DeleteVideoClassification": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteVideoClassification"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListVideoClassifications": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVideoClassifications"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListSnapshots": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSnapshots"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		// **********************************************************************
+		// 转码
+		// **********************************************************************
+		"StartWorkflow": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartWorkflow"},
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		"GetPrivateDrmPlayAuth": {
+
+		// **********************************************************************
+		// 空间管理
+		// **********************************************************************
+		"CreateSpace": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetPrivateDrmPlayAuth"},
-				"Version": []string{"2020-08-01"},
+				"Action":  []string{"CreateSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"GetSpaceDetail": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpaceDetail"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		//"GetSpaceConfig": {
+		//	Method: http.MethodGet,
+		//	Path:   "/",
+		//	Query: url.Values{
+		//		"Action":  []string{"GetSpaceConfig"},
+		//		"Version": []string{"2022-01-01"},
+		//	},
+		//},
+		"UpdateSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpace"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"UpdateSpaceUploadConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpaceUploadConfig"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+
+		// **********************************************************************
+		// 分发加速管理
+		// **********************************************************************
+		"ListDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListDomain"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"CreateCdnRefreshTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCdnRefreshTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"CreateCdnPreloadTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCdnPreloadTask"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListCdnTasks": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTasks"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+
+		// **********************************************************************
+		// 回调管理
+		// **********************************************************************
+		"AddCallbackSubscription": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddCallbackSubscription"},
+				"Version": []string{"2021-12-01"},
+			},
+		},
+		"SetCallbackEvent": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetCallbackEvent"},
+				"Version": []string{"2021-01-01"},
 			},
 		},
 	}

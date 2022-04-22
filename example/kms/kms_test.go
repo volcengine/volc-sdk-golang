@@ -13,20 +13,20 @@ import (
 )
 
 const (
-	testAk = "<your access key id>"
-	testSk = "<your access key secret>"
-	region = "<region>"
+	region = "cn-beijing"
 )
 
 var (
-	keyringName = "TOP_SDK_EXAMPLE_KEYRING-" + uuid.New().String()[20:25]
-	keyName = "TOP_SDK_EXAMPLE_KEY-" + uuid.New().String()[20:30]
+	keyringName       = "TOP_SDK_EXAMPLE_KEYRING-" + uuid.New().String()[20:25]
+	keyName           = "TOP_SDK_EXAMPLE_KEY-" + uuid.New().String()[20:30]
 	encryptionContext = map[string]string{
 		"key": "value",
 	}
 )
 
 func init() {
+	testAk := os.Getenv("TEST_AK")
+	testSk := os.Getenv("TEST_SK")
 	kms.DefaultInstance.SetRegion(region)
 	kms.DefaultInstance.Client.SetAccessKey(testAk)
 	kms.DefaultInstance.Client.SetSecretKey(testSk)
@@ -54,15 +54,15 @@ func TestKMS_DescribeKeyrings(t *testing.T) {
 	currentPage, pageSize := 1, 2
 	analyze(kms.DefaultInstance.DescribeKeyrings(&kms.DescribeKeyringsRequest{
 		CurrentPage: &currentPage,
-		PageSize:   &pageSize,
+		PageSize:    &pageSize,
 	}))
 }
 
 func TestKMS_UpdateKeyring(t *testing.T) {
 	desc := "test"
 	analyze(kms.DefaultInstance.UpdateKeyring(&kms.UpdateKeyringRequest{
-		KeyringName:    keyringName,
-		Description:    &desc,
+		KeyringName: keyringName,
+		Description: &desc,
 	}))
 }
 
@@ -80,6 +80,13 @@ func TestKMS_DescribeKeys(t *testing.T) {
 		KeyringName: keyringName,
 		CurrentPage: &currentPage,
 		PageSize:    &pageSize,
+	}))
+}
+
+func TestKMS_DescribeKey(t *testing.T) {
+	analyze(kms.DefaultInstance.DescribeKey(&kms.DescribeKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
 	}))
 }
 
@@ -133,14 +140,42 @@ func TestKMS_EnableKey(t *testing.T) {
 func TestKMS_ScheduleKeyDeletion(t *testing.T) {
 	pendingWindowInDays := 20
 	analyze(kms.DefaultInstance.ScheduleKeyDeletion(&kms.ScheduleKeyDeletionRequest{
-		KeyringName: keyringName,
-		KeyName:     keyName,
+		KeyringName:         keyringName,
+		KeyName:             keyName,
 		PendingWindowInDays: &pendingWindowInDays,
 	}))
 }
 
 func TestKMS_CancelKeyDeletion(t *testing.T) {
 	analyze(kms.DefaultInstance.CancelKeyDeletion(&kms.CancelKeyDeletionRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_ArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.ArchiveKey(&kms.ArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_CancelArchiveKey(t *testing.T) {
+	analyze(kms.DefaultInstance.CancelArchiveKey(&kms.CancelArchiveKeyRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_DisableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.DisableKeyRotation(&kms.DisableKeyRotationRequest{
+		KeyringName: keyringName,
+		KeyName:     keyName,
+	}))
+}
+
+func TestKMS_EnableKeyRotation(t *testing.T) {
+	analyze(kms.DefaultInstance.EnableKeyRotation(&kms.EnableKeyRotationRequest{
 		KeyringName: keyringName,
 		KeyName:     keyName,
 	}))

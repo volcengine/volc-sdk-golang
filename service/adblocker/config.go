@@ -46,25 +46,25 @@ var (
 			Timeout: 5 * time.Second,
 			Host:    "adblocker.volcengineapi.com",
 			Scheme:  "https",
-			Header: http.Header {
+			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "AdBlocker"},
 		},
 		base.RegionApSingapore: {
 			Timeout: 5 * time.Second,
-			Host: "open-ap-singapore-1.volcengineapi.com",
+			Host:    "open-ap-singapore-1.volcengineapi.com",
 			Scheme:  "https",
-			Header: http.Header {
+			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "AdBlocker"},
 		},
 		base.RegionUsEast1: {
 			Timeout: 5 * time.Second,
-			Host: "open-us-east-1.volcengineapi.com",
+			Host:    "open-us-east-1.volcengineapi.com",
 			Scheme:  "https",
-			Header: http.Header {
+			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
 			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "AdBlocker"},

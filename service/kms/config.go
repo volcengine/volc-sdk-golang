@@ -15,8 +15,8 @@ const (
 )
 
 var (
-	defaultRetrySetting    = base.RetrySettings{
-		AutoRetry:     true,
+	defaultRetrySetting = base.RetrySettings{
+		AutoRetry: true,
 	}
 )
 
@@ -80,6 +80,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeKeys"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"DescribeKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeKey"},
 				"Version": []string{ServiceVersion20210218},
 			},
 			Retry: defaultRetrySetting,
@@ -152,6 +161,51 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CancelKeyDeletion"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"ArchiveKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ArchiveKey"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"CancelArchiveKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CancelArchiveKey"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"EnableKeyRotation": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EnableKeyRotation"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"DisableKeyRotation": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DisableKeyRotation"},
+				"Version": []string{ServiceVersion20210218},
+			},
+			Retry: defaultRetrySetting,
+		},
+		"ReEncrypt": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ReEncrypt"},
 				"Version": []string{ServiceVersion20210218},
 			},
 			Retry: defaultRetrySetting,

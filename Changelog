@@ -1,5 +1,47 @@
 ### Change log
 
+2022-04-21 Bumped to version v1.0.42
+- Added service mars
+- Added apis for vod
+- Fixed apis for cdn\kms
+
+2022-04-14 Bumped to version v1.0.41
+- Support context for base client
+- Fixed params for nlp
+- Added apis for vod\imagex\security\billing
+- Added service volc_voice_notify
+
+2022-04-07 Bumped to version v1.0.40
+- Added api for cdn
+
+2022-03-31 Bumped to version v1.0.39
+- Updated api and params for axb\vod
+- Added demo for dts
+- Added service billing
+
+2022-03-21 Bumped to version v1.0.38
+- Updated api and params
+
+2022-03-18 Bumped to version v1.0.37
+- Added some apis of space\callback\cdn for vod
+- Added media snapshot
+- Added filename when upload
+
+2022-03-14 Bumped to version v1.0.36
+- Minor Bug fix
+
+2022-03-11 Bumped to version v1.0.35
+- Minor Bug fix
+
+2022-03-10 Bumped to version v1.0.34
+- added 智能处理 sdk
+
+2022-03-03 Bumped to version v1.0.33
+- add nlp client
+- Implement related example for cdn apis
+- Add new cdn apis
+- Add Video-Classification for VOD
+
 2022-02-24 Bumped to version v1.0.32
 - Added cr client
 

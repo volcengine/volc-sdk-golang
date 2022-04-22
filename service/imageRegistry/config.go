@@ -169,5 +169,13 @@ var (
 				"Version": []string{"2021-03-03"},
 			},
 		},
+		"GetAuthorizationTokenBasic": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAuthorizationTokenBasic"},
+				"Version": []string{"2021-03-03"},
+			},
+		},
 	}
 )

@@ -148,6 +148,17 @@ type ListTagsBasicResponse struct {
 	Items     []Tag  `json:"Items"`
 }
 
+type GetAuthorizationTokenBasicRequest struct {
+}
+
+type GetAuthorizationTokenBasicResponse struct {
+	AuthorizationToken string `json:"AuthorizationToken"`
+	AuthorizationUser  string `json:"AuthorizationUser"`
+	ExpireTime         string `json:"ExpireTime"`
+	Domain             string `json:"Domain"`
+	VpcDomain          string `json:"VpcDomain"`
+}
+
 type ScanPolicy struct {
 	Cron   string `json:"Cron"`
 	Status string `json:"Status"`

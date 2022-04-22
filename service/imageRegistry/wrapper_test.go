@@ -71,6 +71,14 @@ func GetTagAdditionBasic(namespace string, repo string, name string, digest stri
 	}
 }
 
+func GetAuthorizationTokenBasic() {
+	res, err := DefaultInstance.GetAuthorizationTokenBasic(&GetAuthorizationTokenBasicRequest{})
+	fmt.Println(err)
+	if res != nil {
+		fmt.Println(*res)
+	}
+}
+
 func TestImageRegistry_ListNamespacesBasic(t *testing.T) {
 	ListNamespacesBasic()
 }
@@ -89,4 +97,8 @@ func TestImageRegistry_GetTagBasic(t *testing.T) {
 
 func TestImageRegistry_GetTagAdditionBasic(t *testing.T) {
 	GetTagAdditionBasic("xfl-test", "xfl-test/test-ruby-app", "latest", "sha256:1e994581cd4a41d04843dd9b3ce6b182eae2794cd6dfd2c6866de59efc1dbbee", "Values")
+}
+
+func TestImageRegistry_GetAuthorizationTokenBasic(t *testing.T) {
+	GetAuthorizationTokenBasic()
 }

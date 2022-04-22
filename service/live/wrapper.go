@@ -331,7 +331,7 @@ func (p *LIVE) DeleteCert(query url.Values, body string) (*DeleteCertConsoleResp
 }
 
 /**
- 防盗链相关
+防盗链相关
 */
 /**
 1. 创建/更新防盗链配置
@@ -370,7 +370,7 @@ func (p *LIVE) DescribeReferer(query url.Values, body string) (*DescribeRefererR
 }
 
 /**
- 录制相关
+录制相关
 */
 /**
 1,
@@ -422,7 +422,7 @@ func (p *LIVE) ListVhostRecordPreset(query url.Values, body string) (*ListVhostR
 }
 
 /**
- 转码相关的
+转码相关的
 */
 /**
 1。
@@ -459,9 +459,6 @@ func (p *LIVE) DeleteTranscodePreset(query url.Values, body string) (*DeleteTran
 	return resp, statesCode, nil
 }
 
-/**
-
- */
 func (p *LIVE) ListVhostTransCodePreset(query url.Values, body string) (*ListVhostTransCodePresetResp, int, error) {
 	resp := new(ListVhostTransCodePresetResp)
 	statesCode, err := p.commonHandlerJson("ListVhostTransCodePreset", query, resp, body)
