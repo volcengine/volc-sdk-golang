@@ -218,46 +218,6 @@ func TestUpdateAuthKey(t *testing.T) {
 }
 
 //done
-func TestEnableAuth(t *testing.T) {
-	DefaultInstance.Client.SetAccessKey(testAk)
-	DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"Domain":    "domain",
-		"App":       "app",
-		"SceneType": "push",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := DefaultInstance.EnableAuth(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-//done
-func TestDisableAuth(t *testing.T) {
-	DefaultInstance.Client.SetAccessKey(testAk)
-	DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"Domain":    "domain",
-		"App":       "app",
-		"SceneType": "push",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := DefaultInstance.DisableAuth(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-//done
 func TestDescribeAuth(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
@@ -349,24 +309,6 @@ func TestCreateCert(t *testing.T) {
 	//打印请求参数
 	t.Logf(string(body))
 	resp, statusCode, err := DefaultInstance.CreateCert(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-//done
-func TestDescribeCertDetailSecret(t *testing.T) {
-	DefaultInstance.Client.SetAccessKey(testAk)
-	DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"ChainID": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := DefaultInstance.DescribeCertDetailSecret(nil, string(body))
 	if err != nil {
 		t.Logf("error occur %v", err)
 	}

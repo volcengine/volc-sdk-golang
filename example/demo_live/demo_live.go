@@ -209,44 +209,6 @@ func TestUpdateAuthKey(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
 
-func TestEnableAuth(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"Domain":    "domain",
-		"App":       "app",
-		"SceneType": "push",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.EnableAuth(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestDisableAuth(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"Domain":    "domain",
-		"App":       "app",
-		"SceneType": "push",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DisableAuth(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
 func TestDescribeAuth(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
@@ -333,23 +295,6 @@ func TestCreateCert(t *testing.T) {
 	//打印请求参数
 	t.Logf(string(body))
 	resp, statusCode, err := live.DefaultInstance.CreateCert(nil, string(body))
-	if err != nil {
-		t.Logf("error occur %v", err)
-	}
-	res, _ := json.Marshal(resp)
-	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
-}
-
-func TestDescribeCertDetailSecret(t *testing.T) {
-	live.DefaultInstance.Client.SetAccessKey(testAk)
-	live.DefaultInstance.Client.SetSecretKey(testSk)
-	bodyMap := map[string]interface{}{
-		"ChainID": "",
-	}
-	body, _ := json.Marshal(bodyMap)
-	//打印请求参数
-	t.Logf(string(body))
-	resp, statusCode, err := live.DefaultInstance.DescribeCertDetailSecret(nil, string(body))
 	if err != nil {
 		t.Logf("error occur %v", err)
 	}

@@ -187,23 +187,6 @@ func (p *LIVE) UpdateAuthKey(query url.Values, body string) (*UpdateAuthKeyResp,
 	return resp, statesCode, nil
 }
 
-func (p *LIVE) EnableAuth(query url.Values, body string) (*EnableAuthResp, int, error) {
-	resp := new(EnableAuthResp)
-	statesCode, err := p.commonHandlerJson("EnableAuth", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-func (p *LIVE) DisableAuth(query url.Values, body string) (*DisableAuthResp, int, error) {
-	resp := new(DisableAuthResp)
-	statesCode, err := p.commonHandlerJson("DisableAuth", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
 
 func (p *LIVE) DescribeAuth(query url.Values, body string) (*DescribeAuthResp, int, error) {
 	resp := new(DescribeAuthResp)
@@ -263,19 +246,6 @@ func (p *LIVE) ListCert(query url.Values, body string) (*ListCertConsoleResp, in
 func (p *LIVE) CreateCert(query url.Values, body string) (*CreateCertConsoleResp, int, error) {
 	resp := new(CreateCertConsoleResp)
 	statesCode, err := p.commonHandlerJson("CreateCert", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-3. 查询证书详情 --》由DescribeCertDetail变更为DescribeCertDetailSecret接口
-*/
-
-func (p *LIVE) DescribeCertDetailSecret(query url.Values, body string) (*DescribeCertDetailConsoleResp, int, error) {
-	resp := new(DescribeCertDetailConsoleResp)
-	statesCode, err := p.commonHandlerJson("DescribeCertDetailSecret", query, resp, body)
 	if err != nil {
 		return nil, statesCode, err
 	}

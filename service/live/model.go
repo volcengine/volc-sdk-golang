@@ -101,12 +101,6 @@ type ManagerPullPushDomainBindResp struct {
 type UpdateAuthKeyResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type EnableAuthResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
-type DisableAuthResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
 type AuthDetail struct {
 }
 

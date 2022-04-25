@@ -119,22 +119,6 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"EnableAuth": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"EnableAuth"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DisableAuth": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DisableAuth"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DescribeAuth": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -172,14 +156,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateCert"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeCertDetailSecret": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeCertDetailSecret"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
