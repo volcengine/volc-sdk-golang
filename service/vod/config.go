@@ -394,6 +394,14 @@ var (
 				"Version": []string{"2021-01-01"},
 			},
 		},
+		"DescribeVodDomainBandwidthData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodDomainBandwidthData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理
