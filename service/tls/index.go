@@ -1,0 +1,189 @@
+package tls
+
+import (
+	"encoding/json"
+	"errors"
+	"io/ioutil"
+	"net/http"
+)
+
+func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexResponse, error) {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]interface{}{
+		"topic_id":        request.TopicID,
+		"fulltext_index":  request.FulltextIndex,
+		"cas_sensitive":   request.CasSensitive,
+		"include_chinese": request.IncludeChinese,
+		"delimiter":       request.Delimiter,
+		"key_value_index": request.KeyValueIndex,
+		"key_value_list":  request.KeyValueList,
+	}
+
+	bytesBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPost, IndexUrl, nil, reqHeaders, bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &CreateIndexResponse{}
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) error {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]string{
+		"topic_id": request.TopicID,
+	}
+
+	jsonBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return err
+	}
+
+	rawResponse, err := c.Request(http.MethodDelete, IndexUrl, nil, reqHeaders, jsonBody)
+	if err != nil {
+		return err
+	}
+	defer rawResponse.Body.Close()
+
+	if rawResponse.StatusCode != http.StatusOK {
+		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(errorMessage))
+	}
+
+	return nil
+}
+
+func (c *LsClient) GetIndex(request *GetIndexRequest) (*GetIndexResponse, error) {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{
+		"topic_id": request.TopicID,
+	}
+
+	body := map[string]string{}
+	bytesBody, err := json.Marshal(body)
+
+	rawResponse, err := c.Request(http.MethodGet, IndexUrl, params, reqHeaders, bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &GetIndexResponse{}
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+// UpdateIndex: 更新索引。
+// 由于该接口为全量更新接口，等同于重新创建一个新的索引，因此要注意不要漏填字段
+
+func (c *LsClient) UpdateIndex(request *UpdateIndexRequest) error {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]interface{}{
+		"topic_id":        request.TopicID,
+		"fulltext_index":  request.FulltextIndex,
+		"cas_sensitive":   request.CasSensitive,
+		"include_chinese": request.IncludeChinese,
+		"delimiter":       request.Delimiter,
+		"key_value_index": request.KeyValueIndex,
+		"key_value_list":  request.KeyValueList,
+	}
+
+	bytesBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return err
+	}
+
+	rawResponse, err := c.Request(http.MethodPut, IndexUrl, nil, reqHeaders, bytesBody)
+	if err != nil {
+		return err
+	}
+	defer rawResponse.Body.Close()
+
+	if rawResponse.StatusCode != http.StatusOK {
+		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(errorMessage))
+	}
+
+	return nil
+}
+
+func (c *LsClient) SearchIndex(request *SearchIndexRequest) (*SearchIndexResponse, error) {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]interface{}{
+		"topic_id":   request.TopicID,
+		"query":      request.Query,
+		"start_time": request.StartTime,
+		"end_time":   request.EndTime,
+		"limit":      request.Limit,
+		"high_light": request.HighLight,
+		"context":    request.Context,
+		"sort":       request.Sort,
+	}
+
+	bytesBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPost, SearchUrl, nil, reqHeaders, bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &SearchIndexResponse{}
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
