@@ -1,11 +1,11 @@
 package tls
 
 import (
+	"context"
 	"time"
 
-	"github.com/cenkalti/backoff"
+	"github.com/cenkalti/backoff/v4"
 	"github.com/pkg/errors"
-	"golang.org/x/net/context"
 )
 
 type ConditionOperation func() error
