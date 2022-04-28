@@ -41,7 +41,7 @@ func TestPutLogs(t *testing.T) {
 		LogBody:      logGroupList,
 	}
 
-	err := client.PutLogs(putLogsRequest)
+	_, err := client.PutLogs(putLogsRequest)
 	if err != nil {
 		t.Error(err.Error())
 	}

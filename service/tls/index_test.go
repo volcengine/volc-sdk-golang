@@ -31,8 +31,10 @@ func (suite *SDKIndexTestSuite) SetupTest() {
 }
 
 func (suite *SDKIndexTestSuite) TearDownTest() {
-	suite.NoError(suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic}))
-	suite.NoError(suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project}))
+	_, deleteTopicErr := suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic})
+	suite.NoError(deleteTopicErr)
+	_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
+	suite.NoError(deleteProjectErr)
 }
 
 func TestSDKIndexTestSuite(t *testing.T) {
@@ -129,7 +131,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 			suite.Equal(expectKV[i].Value.CasSensitive, kv.Value.CasSensitive)
 		}
 
-		err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 	}
 }
@@ -212,7 +214,7 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 	}
 
 	for updateIndexReq, expectGetIndexResp := range testcases {
-		err := suite.cli.UpdateIndex(updateIndexReq)
+		_, err := suite.cli.UpdateIndex(updateIndexReq)
 		suite.NoError(err)
 
 		actualGetIndexResp, err := suite.cli.GetIndex(&GetIndexRequest{TopicID: suite.topic})
@@ -237,7 +239,7 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 			suite.Equal(expectKV[i].Value.CasSensitive, kv.Value.CasSensitive)
 		}
 
-		err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 	}
 }

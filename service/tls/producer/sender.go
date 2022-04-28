@@ -65,7 +65,7 @@ func (sender *Sender) sendToServer(batch *Batch) {
 		putLogsReq.HashKey = *batch.shardHash
 	}
 
-	err = sender.client.PutLogs(putLogsReq)
+	_, err = sender.client.PutLogs(putLogsReq)
 
 	if err == nil {
 		sender.handleSuccess(batch)

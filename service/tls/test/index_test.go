@@ -52,7 +52,7 @@ func TestDeleteIndex(t *testing.T) {
 		TopicID: "topic-id",
 	}
 
-	err := client.DeleteIndex(deleteRequest)
+	_, err := client.DeleteIndex(deleteRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -85,9 +85,9 @@ func TestUpdateIndex(t *testing.T) {
 		},
 	}
 
-	err := client.UpdateIndex(updateRequest)
-	if err != nil {
-		t.Error(err.Error())
+	_, updateIndexErr := client.UpdateIndex(updateRequest)
+	if updateIndexErr != nil {
+		t.Error(updateIndexErr.Error())
 		return
 	}
 }

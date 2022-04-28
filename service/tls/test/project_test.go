@@ -37,7 +37,7 @@ func TestDeleteProject(t *testing.T) {
 		ProjectID: "project-id",
 	}
 
-	err := client.DeleteProject(deleteRequest)
+	_, err := client.DeleteProject(deleteRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -54,7 +54,7 @@ func TestUpdateProject(t *testing.T) {
 		ProjectName: StrPtr("project-name"),
 	}
 
-	err := client.UpdateProject(updateRequest)
+	_, err := client.UpdateProject(updateRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return

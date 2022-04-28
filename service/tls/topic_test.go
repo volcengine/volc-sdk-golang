@@ -28,10 +28,12 @@ func (suite *SDKTopicTestSuite) SetupTest() {
 
 func (suite *SDKTopicTestSuite) TearDownTest() {
 	for _, topicID := range suite.topicList {
-		suite.NoError(suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: topicID}))
+		_, err := suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: topicID})
+		suite.NoError(err)
 	}
 
-	suite.NoError(suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project}))
+	_, err := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
+	suite.NoError(err)
 
 	suite.topicList = nil
 }
@@ -103,7 +105,7 @@ func (suite *SDKTopicTestSuite) TestUpdateTopic() {
 	}
 
 	for updateTopicReq, getTopicResp := range testcases {
-		err := suite.cli.UpdateTopic(updateTopicReq)
+		_, err := suite.cli.UpdateTopic(updateTopicReq)
 		suite.NoError(err)
 
 		actualGetTopicResp, err := suite.cli.GetTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})

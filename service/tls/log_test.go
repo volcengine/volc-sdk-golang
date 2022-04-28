@@ -58,8 +58,10 @@ func (suite *SDKLogTestSuite) SetupTest() {
 }
 
 func (suite *SDKLogTestSuite) TearDownTest() {
-	suite.NoError(suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic}))
-	suite.NoError(suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project}))
+	_, deleteTopicErr := suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic})
+	suite.NoError(deleteTopicErr)
+	_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
+	suite.NoError(deleteProjectErr)
 }
 
 func TestSDKLogTestSuite(t *testing.T) {
@@ -99,20 +101,22 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 
 	// update 10 logGroupLists without compression
 	for _, logGroupList := range logs {
-		suite.NoError(suite.cli.PutLogs(&PutLogsRequest{
+		_, err := suite.cli.PutLogs(&PutLogsRequest{
 			TopicID:      suite.topic,
 			CompressType: "none",
 			LogBody:      logGroupList,
-		}))
+		})
+		suite.NoError(err)
 	}
 
 	// update 10 logGroupLists with lz4 compression
 	for _, logGroupList := range logs {
-		suite.NoError(suite.cli.PutLogs(&PutLogsRequest{
+		_, err := suite.cli.PutLogs(&PutLogsRequest{
 			TopicID:      suite.topic,
 			CompressType: "lz4",
 			LogBody:      logGroupList,
-		}))
+		})
+		suite.NoError(err)
 	}
 
 	// wait for consumption

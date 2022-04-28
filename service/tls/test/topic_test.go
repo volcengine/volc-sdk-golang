@@ -38,7 +38,7 @@ func TestDeleteTopic(t *testing.T) {
 		TopicID: "topic-id",
 	}
 
-	err := client.DeleteTopic(deleteRequest)
+	_, err := client.DeleteTopic(deleteRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -58,7 +58,7 @@ func TestUpdateTopic(t *testing.T) {
 		Description: &newDescription,
 	}
 
-	err := client.UpdateTopic(updateRequest)
+	_, err := client.UpdateTopic(updateRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return

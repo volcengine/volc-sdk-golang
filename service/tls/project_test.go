@@ -22,7 +22,8 @@ func (suite *SDKProjectTestSuite) SetupTest() {
 
 func (suite *SDKProjectTestSuite) TearDownTest() {
 	for _, projectID := range suite.projectList {
-		suite.NoError(suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: projectID}))
+		_, err := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: projectID})
+		suite.NoError(err)
 	}
 
 	suite.projectList = nil
@@ -170,7 +171,7 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 	}
 
 	for req, expect := range testcases {
-		rErr := suite.cli.UpdateProject(req)
+		_, rErr := suite.cli.UpdateProject(req)
 		suite.NoError(rErr)
 
 		getResp, err := suite.cli.GetProject(&GetProjectRequest{ProjectID: createResp.ProjectId})
