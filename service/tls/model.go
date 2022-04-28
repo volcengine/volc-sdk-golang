@@ -3,9 +3,14 @@ package tls
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"net/http"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
+
+type CommonResponse struct {
+	RequestID string `json:"requestID"`
+}
 
 type CreateProjectRequest struct {
 	ProjectName string
@@ -14,6 +19,7 @@ type CreateProjectRequest struct {
 }
 
 type CreateProjectResponse struct {
+	CommonResponse
 	ProjectId string `json:"project_id"`
 }
 
@@ -26,6 +32,7 @@ type GetProjectRequest struct {
 }
 
 type GetProjectResponse struct {
+	CommonResponse
 	ProjectID       string `json:"project_id"`
 	ProjectName     string `json:"project_name"`
 	Description     string `json:"description"`
@@ -42,6 +49,7 @@ type ListProjectRequest struct {
 }
 
 type ListProjectResponse struct {
+	CommonResponse
 	Projects []*struct {
 		ProjectID       string `json:"project_id"`
 		ProjectName     string `json:"project_name"`
@@ -69,6 +77,7 @@ type CreateTopicRequest struct {
 }
 
 type CreateTopicResponse struct {
+	CommonResponse
 	TopicID string `json:"topic_id"`
 }
 
@@ -88,6 +97,7 @@ type GetTopicRequest struct {
 }
 
 type GetTopicResponse struct {
+	CommonResponse
 	TopicName       string `json:"topic_name"`
 	ProjectID       string `json:"project_id"`
 	TopicID         string `json:"topic_id"`
@@ -118,6 +128,7 @@ type Topic struct {
 }
 
 type ListTopicResponse struct {
+	CommonResponse
 	Topics []*Topic `json:"topics"`
 	Total  int      `json:"total"`
 }
@@ -154,6 +165,7 @@ type CreateIndexRequest struct {
 }
 
 type CreateIndexResponse struct {
+	CommonResponse
 	TopicID string `json:"topic_id"`
 }
 
@@ -166,6 +178,7 @@ type GetIndexRequest struct {
 }
 
 type GetIndexResponse struct {
+	CommonResponse
 	TopicID         string       `json:"topic_id"`
 	FulltextIndex   bool         `json:"fulltext_index"`
 	CasSensitive    bool         `json:"cas_sensitive"`
@@ -204,6 +217,7 @@ type SearchIndexRequest struct {
 }
 
 type SearchIndexResponse struct {
+	CommonResponse
 	Status         string                   `json:"result_status"`
 	HitCount       int                      `json:"hit_count"`
 	Context        string                   `json:"context"`
@@ -221,6 +235,7 @@ type ListShardRequest struct {
 }
 
 type ListShardResponse struct {
+	CommonResponse
 	Shards []*struct {
 		TopicID           string `json:"topic_id"`
 		ShardID           int32  `json:"shard_id"`
@@ -247,6 +262,7 @@ type GetCursorRequest struct {
 }
 
 type GetCursorResponse struct {
+	CommonResponse
 	Cursor string `json:"cursor"`
 }
 
@@ -260,7 +276,13 @@ type PullLogsRequest struct {
 }
 
 type PullLogsResponse struct {
+	CommonResponse
 	Cursor string
 	Count  int
 	Logs   *pb.LogGroupList
+}
+
+// FillRequestId 成功返回填充requestId
+func (response *CommonResponse) FillRequestId(httpResponse *http.Response) {
+	response.RequestID = httpResponse.Header.Get(RequestIDHeader)
 }

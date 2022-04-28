@@ -17,9 +17,9 @@ const (
 	rawBodySizeHeader = "x-tls-bodyrawsize"
 )
 
-func (c *LsClient) PutLogs(request *PutLogsRequest) (err error) {
+func (c *LsClient) PutLogs(request *PutLogsRequest) (*CommonResponse, error) {
 	if len(request.LogBody.LogGroups) == 0 {
-		return nil
+		return nil, nil
 	}
 
 	params := map[string]string{
@@ -28,7 +28,7 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (err error) {
 
 	bodyBytes, originalLength, err := GetPutLogsBody(request.CompressType, request.LogBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	headers := map[string]string{
@@ -40,20 +40,23 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (err error) {
 
 	rawResponse, err := c.Request(http.MethodPost, PutLogsUrl, params, headers, bodyBytes)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if rawResponse.StatusCode != http.StatusOK {
-		return errors.New(string(responseBody))
+		return nil, errors.New(string(responseBody))
 	}
 
-	return nil
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
 }
 
 func lz4Decompress(input []byte, rawLength int64) ([]byte, error) {
@@ -136,6 +139,7 @@ func (c *LsClient) PullLogs(request *PullLogsRequest) (*PullLogsResponse, error)
 	}
 
 	response := &PullLogsResponse{}
+	response.FillRequestId(rawResponse)
 
 	var (
 		rawSize     int64
@@ -199,6 +203,8 @@ func (c *LsClient) GetCursor(request *GetCursorRequest) (*GetCursorResponse, err
 	}
 
 	var response = &GetCursorResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}

@@ -36,6 +36,7 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (*CreateProjectR
 	}
 
 	var response = &CreateProjectResponse{}
+	response.FillRequestId(rawResponse)
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -43,7 +44,7 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (*CreateProjectR
 	return response, nil
 }
 
-func (c *LsClient) DeleteProject(request *DeleteProjectRequest) error {
+func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -54,24 +55,27 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) error {
 
 	jsonBody, err := json.Marshal(reqBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	rawResponse, err := c.Request(http.MethodDelete, ProjectUrl, nil, reqHeaders, jsonBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
 		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		return errors.New(string(errorMessage))
+		return nil, errors.New(string(errorMessage))
 	}
 
-	return nil
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
 }
 
 func (c *LsClient) GetProject(request *GetProjectRequest) (*GetProjectResponse, error) {
@@ -98,6 +102,8 @@ func (c *LsClient) GetProject(request *GetProjectRequest) (*GetProjectResponse, 
 	}
 
 	var response = &GetProjectResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -140,6 +146,8 @@ func (c *LsClient) ListProject(request *ListProjectRequest) (*ListProjectRespons
 	}
 
 	var response = &ListProjectResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -147,7 +155,7 @@ func (c *LsClient) ListProject(request *ListProjectRequest) (*ListProjectRespons
 	return response, nil
 }
 
-func (c *LsClient) UpdateProject(request *UpdateProjectRequest) error {
+func (c *LsClient) UpdateProject(request *UpdateProjectRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -166,22 +174,24 @@ func (c *LsClient) UpdateProject(request *UpdateProjectRequest) error {
 
 	jsonBody, err := json.Marshal(reqBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	rawResponse, err := c.Request(http.MethodPut, ProjectUrl, nil, reqHeaders, jsonBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
 		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		return errors.New(string(errorMessage))
+		return nil, errors.New(string(errorMessage))
 	}
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
 
-	return nil
+	return response, nil
 }

@@ -37,6 +37,8 @@ func (c *LsClient) ListShard(request *ListShardRequest) (*ListShardResponse, err
 	}
 
 	var response = &ListShardResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}

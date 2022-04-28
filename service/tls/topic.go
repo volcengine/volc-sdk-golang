@@ -41,6 +41,8 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicRespons
 	}
 
 	var response = &CreateTopicResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -48,9 +50,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicRespons
 	return response, nil
 }
 
-// DeleteTopic
-
-func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) error {
+func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -61,29 +61,32 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) error {
 
 	bytesBody, err := json.Marshal(reqBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	rawResponse, err := c.Request(http.MethodDelete, TopicUrl, nil, reqHeaders, bytesBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
 		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		return errors.New(string(errorMessage))
+		return nil, errors.New(string(errorMessage))
 	}
 
-	return nil
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
 }
 
 // UpdateTopic: 更新日志主题信息
 
-func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) error {
+func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -106,24 +109,26 @@ func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) error {
 
 	bytesBody, err := json.Marshal(reqBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	rawResponse, err := c.Request(http.MethodPut, TopicUrl, nil, reqHeaders, bytesBody)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
 		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		return errors.New(string(errorMessage))
+		return nil, errors.New(string(errorMessage))
 	}
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
 
-	return nil
+	return response, nil
 }
 
 // GetTopic 获取一个日志项目的信息
@@ -152,6 +157,8 @@ func (c *LsClient) GetTopic(request *GetTopicRequest) (*GetTopicResponse, error)
 	}
 
 	var response = &GetTopicResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -199,6 +206,8 @@ func (c *LsClient) ListTopic(request *ListTopicRequest) (*ListTopicResponse, err
 	}
 
 	var response = &ListTopicResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
