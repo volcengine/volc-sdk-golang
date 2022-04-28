@@ -1,5 +1,8 @@
 ### Change log
 
+2022-04-28 Bumped to version v1.0.43
+- Fixed apis for cdn\imagex
+
 2022-04-21 Bumped to version v1.0.42
 - Added service mars
 - Added apis for vod
