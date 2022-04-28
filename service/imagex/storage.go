@@ -236,7 +236,6 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		SuccessOids: success,
 	}
 	if params.CommitParam != nil {
-		commitParams.OptionInfos = params.CommitParam.OptionInfos
 		commitParams.Functions = params.CommitParam.Functions
 	}
 	commitResp, err := c.CommitUploadImage(commitParams)

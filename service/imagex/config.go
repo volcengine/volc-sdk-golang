@@ -166,14 +166,6 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
-		"PreviewImageTemplate": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"PreviewImageTemplate"},
-				"Version": []string{ApiVersion},
-			},
-		},
 		"GetImageTemplate": {
 			Method: http.MethodGet,
 			Path:   "/",
