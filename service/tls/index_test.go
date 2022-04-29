@@ -43,7 +43,7 @@ func TestSDKIndexTestSuite(t *testing.T) {
 
 // TestCreateIndex: test create index
 func (suite *SDKIndexTestSuite) TestCreateIndex() {
-	testcases := map[*CreateIndexRequest]*GetIndexResponse{
+	testcases := map[*CreateIndexRequest]*DescribeIndexResponse{
 		{
 			TopicID:        suite.topic,
 			FulltextIndex:  true,
@@ -109,7 +109,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 		_, err := suite.cli.CreateIndex(createIndexReq)
 		suite.NoError(err)
 
-		actualGetIndexResp, err := suite.cli.DescribeIndex(&GetIndexRequest{TopicID: suite.topic})
+		actualGetIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
@@ -151,7 +151,7 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 	_, err := suite.cli.CreateIndex(createIndexReq)
 	suite.NoError(err)
 
-	testcases := map[*UpdateIndexRequest]*GetIndexResponse{
+	testcases := map[*ModifyIndexRequest]*DescribeIndexResponse{
 		{
 			TopicID:        suite.topic,
 			FulltextIndex:  true,
@@ -217,7 +217,7 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 		_, err := suite.cli.ModifyIndex(updateIndexReq)
 		suite.NoError(err)
 
-		actualGetIndexResp, err := suite.cli.DescribeIndex(&GetIndexRequest{TopicID: suite.topic})
+		actualGetIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)

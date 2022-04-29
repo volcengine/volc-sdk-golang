@@ -64,7 +64,7 @@ func TestUpdateIndex(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	updateRequest := &UpdateIndexRequest{
+	updateRequest := &ModifyIndexRequest{
 		TopicID:        "parent-topic-id",
 		FulltextIndex:  true,
 		CasSensitive:   false,
@@ -97,7 +97,7 @@ func TestGetIndex(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	getRequest := &GetIndexRequest{
+	getRequest := &DescribeIndexRequest{
 		TopicID: "topic-id",
 	}
 
@@ -117,7 +117,7 @@ func TestSearchIndex(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	searchRequest := &SearchIndexRequest{
+	searchRequest := &SearchLogsRequest{
 		TopicID:   "topic-id",
 		Query:     "*",
 		StartTime: 1346457600,

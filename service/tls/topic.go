@@ -86,7 +86,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, er
 
 // ModifyTopic: 更新日志主题信息
 
-func (c *LsClient) ModifyTopic(request *UpdateTopicRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -133,7 +133,7 @@ func (c *LsClient) ModifyTopic(request *UpdateTopicRequest) (*CommonResponse, er
 
 // DescribeTopic 获取一个日志项目的信息
 
-func (c *LsClient) DescribeTopic(request *GetTopicRequest) (*GetTopicResponse, error) {
+func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (*DescribeTopicResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -156,7 +156,7 @@ func (c *LsClient) DescribeTopic(request *GetTopicRequest) (*GetTopicResponse, e
 		return nil, err
 	}
 
-	var response = &GetTopicResponse{}
+	var response = &DescribeTopicResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -168,7 +168,7 @@ func (c *LsClient) DescribeTopic(request *GetTopicRequest) (*GetTopicResponse, e
 
 // DescribeTopics: 获取日志主题列表
 
-func (c *LsClient) DescribeTopics(request *ListTopicRequest) (*ListTopicResponse, error) {
+func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (*DescribeTopicsResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -205,7 +205,7 @@ func (c *LsClient) DescribeTopics(request *ListTopicRequest) (*ListTopicResponse
 		return nil, err
 	}
 
-	var response = &ListTopicResponse{}
+	var response = &DescribeTopicsResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

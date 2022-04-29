@@ -21,26 +21,26 @@ type Client interface {
 	SetTimeout(timeout time.Duration)
 
 	PutLogs(request *PutLogsRequest) (response *CommonResponse, err error)
-	DescribeCursor(request *GetCursorRequest) (*GetCursorResponse, error)
-	ConsumeLogs(request *PullLogsRequest) (*PullLogsResponse, error)
+	DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error)
+	ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error)
 
 	CreateProject(request *CreateProjectRequest) (*CreateProjectResponse, error)
 	DeleteProject(request *DeleteProjectRequest) (*CommonResponse, error)
-	DescribeProject(request *GetProjectRequest) (*GetProjectResponse, error)
-	DescribeProjects(request *ListProjectRequest) (*ListProjectResponse, error)
-	ModifyProject(request *UpdateProjectRequest) (*CommonResponse, error)
+	DescribeProject(request *DescribeProjectRequest) (*DescribeProjectResponse, error)
+	DescribeProjects(request *DescribeProjectsRequest) (*DescribeProjectsResponse, error)
+	ModifyProject(request *ModifyProjectRequest) (*CommonResponse, error)
 
 	CreateTopic(request *CreateTopicRequest) (*CreateTopicResponse, error)
 	DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, error)
-	DescribeTopic(request *GetTopicRequest) (*GetTopicResponse, error)
-	DescribeTopics(request *ListTopicRequest) (*ListTopicResponse, error)
-	ModifyTopic(request *UpdateTopicRequest) (*CommonResponse, error)
+	DescribeTopic(request *DescribeTopicRequest) (*DescribeTopicResponse, error)
+	DescribeTopics(request *DescribeTopicsRequest) (*DescribeTopicsResponse, error)
+	ModifyTopic(request *ModifyTopicRequest) (*CommonResponse, error)
 
 	CreateIndex(request *CreateIndexRequest) (*CreateIndexResponse, error)
 	DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, error)
-	DescribeIndex(request *GetIndexRequest) (*GetIndexResponse, error)
-	ModifyIndex(request *UpdateIndexRequest) (*CommonResponse, error)
-	SearchLogs(request *SearchIndexRequest) (*SearchIndexResponse, error)
+	DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexResponse, error)
+	ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, error)
+	SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, error)
 
-	DescribeShards(request *ListShardRequest) (*ListShardResponse, error)
+	DescribeShards(request *DescribeShardsRequest) (*DescribeShardsResponse, error)
 }

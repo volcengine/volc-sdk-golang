@@ -11,7 +11,7 @@ func TestListShard(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	listRequest := &ListShardRequest{
+	listRequest := &DescribeShardsRequest{
 		TopicID: "topic-id",
 		Offset:  5,
 		Limit:   5,

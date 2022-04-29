@@ -182,7 +182,7 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 	time.Sleep(30 * time.Second)
 
 	// test search logs
-	searchRes, err := suite.cli.SearchLogs(&SearchIndexRequest{
+	searchRes, err := suite.cli.SearchLogs(&SearchLogsRequest{
 		TopicID:   suite.topic,
 		Query:     "*",
 		StartTime: 1600000000000,

@@ -115,7 +115,7 @@ func (suite *SDKProjectTestSuite) TestGetProject() {
 
 	suite.projectList = append(suite.projectList, createResp.ProjectId)
 
-	testcases := map[*GetProjectRequest]*Error{
+	testcases := map[*DescribeProjectRequest]*Error{
 		{
 			ProjectID: createResp.ProjectId,
 		}: nil,
@@ -153,7 +153,7 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 
 	suite.projectList = append(suite.projectList, createResp.ProjectId)
 
-	testcases := map[*UpdateProjectRequest]*CreateProjectRequest{
+	testcases := map[*ModifyProjectRequest]*CreateProjectRequest{
 		{
 			ProjectID: createResp.ProjectId,
 		}: {
@@ -174,7 +174,7 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 		_, rErr := suite.cli.ModifyProject(req)
 		suite.NoError(rErr)
 
-		getResp, err := suite.cli.DescribeProject(&GetProjectRequest{ProjectID: createResp.ProjectId})
+		getResp, err := suite.cli.DescribeProject(&DescribeProjectRequest{ProjectID: createResp.ProjectId})
 		suite.NoError(err)
 
 		suite.Equal(getResp.ProjectName, expect.ProjectName)
@@ -209,7 +209,7 @@ func (suite *SDKProjectTestSuite) TestListProject() {
 		suite.projectList = append(suite.projectList, createResp.ProjectId)
 	}
 
-	testcases := map[*ListProjectRequest]int{
+	testcases := map[*DescribeProjectsRequest]int{
 		{
 			ProjectName: "sdk-a",
 		}: 2,

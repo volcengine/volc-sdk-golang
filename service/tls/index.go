@@ -82,7 +82,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) DescribeIndex(request *GetIndexRequest) (*GetIndexResponse, error) {
+func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -105,7 +105,7 @@ func (c *LsClient) DescribeIndex(request *GetIndexRequest) (*GetIndexResponse, e
 		return nil, err
 	}
 
-	var response = &GetIndexResponse{}
+	var response = &DescribeIndexResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -118,7 +118,7 @@ func (c *LsClient) DescribeIndex(request *GetIndexRequest) (*GetIndexResponse, e
 // ModifyIndex: 更新索引。
 // 由于该接口为全量更新接口，等同于重新创建一个新的索引，因此要注意不要漏填字段
 
-func (c *LsClient) ModifyIndex(request *UpdateIndexRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -158,7 +158,7 @@ func (c *LsClient) ModifyIndex(request *UpdateIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) SearchLogs(request *SearchIndexRequest) (*SearchIndexResponse, error) {
+func (c *LsClient) SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -190,7 +190,7 @@ func (c *LsClient) SearchLogs(request *SearchIndexRequest) (*SearchIndexResponse
 		return nil, err
 	}
 
-	var response = &SearchIndexResponse{}
+	var response = &SearchLogsResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

@@ -27,11 +27,11 @@ type DeleteProjectRequest struct {
 	ProjectID string
 }
 
-type GetProjectRequest struct {
+type DescribeProjectRequest struct {
 	ProjectID string
 }
 
-type GetProjectResponse struct {
+type DescribeProjectResponse struct {
 	CommonResponse
 	ProjectID       string `json:"project_id"`
 	ProjectName     string `json:"project_name"`
@@ -41,14 +41,14 @@ type GetProjectResponse struct {
 	InnerNetDomain  string `json:"inner_net_domain"`
 }
 
-type ListProjectRequest struct {
+type DescribeProjectsRequest struct {
 	ProjectName string
 	ProjectID   string
 	Offset      int
 	Limit       int
 }
 
-type ListProjectResponse struct {
+type DescribeProjectsResponse struct {
 	CommonResponse
 	Projects []*struct {
 		ProjectID       string `json:"project_id"`
@@ -62,7 +62,7 @@ type ListProjectResponse struct {
 	Total int64 `json:"total"`
 }
 
-type UpdateProjectRequest struct {
+type ModifyProjectRequest struct {
 	ProjectID   string
 	ProjectName *string
 	Description *string
@@ -85,18 +85,18 @@ type DeleteTopicRequest struct {
 	TopicID string
 }
 
-type UpdateTopicRequest struct {
+type ModifyTopicRequest struct {
 	TopicID     string  `json:"topic_id"`
 	TopicName   *string `json:"topic_name"`
 	Ttl         *uint16 `json:"ttl"`
 	Description *string `json:"description"`
 }
 
-type GetTopicRequest struct {
+type DescribeTopicRequest struct {
 	TopicID string
 }
 
-type GetTopicResponse struct {
+type DescribeTopicResponse struct {
 	CommonResponse
 	TopicName       string `json:"topic_name"`
 	ProjectID       string `json:"project_id"`
@@ -108,7 +108,7 @@ type GetTopicResponse struct {
 	Description     string `json:"description"`
 }
 
-type ListTopicRequest struct {
+type DescribeTopicsRequest struct {
 	ProjectID string
 	Offset    int
 	Limit     int
@@ -127,7 +127,7 @@ type Topic struct {
 	Description     string `json:"description"`
 }
 
-type ListTopicResponse struct {
+type DescribeTopicsResponse struct {
 	CommonResponse
 	Topics []*Topic `json:"topics"`
 	Total  int      `json:"total"`
@@ -173,11 +173,11 @@ type DeleteIndexRequest struct {
 	TopicID string
 }
 
-type GetIndexRequest struct {
+type DescribeIndexRequest struct {
 	TopicID string
 }
 
-type GetIndexResponse struct {
+type DescribeIndexResponse struct {
 	CommonResponse
 	TopicID         string       `json:"topic_id"`
 	FulltextIndex   bool         `json:"fulltext_index"`
@@ -190,7 +190,7 @@ type GetIndexResponse struct {
 	KeyValueList    KeyValueList `json:"key_value_list"`
 }
 
-type UpdateIndexRequest struct {
+type ModifyIndexRequest struct {
 	TopicID        string
 	FulltextIndex  bool
 	CasSensitive   bool
@@ -205,7 +205,7 @@ type AnalysisResult struct {
 	Data   []map[string]interface{} `json:"data"`
 }
 
-type SearchIndexRequest struct {
+type SearchLogsRequest struct {
 	TopicID   string `json:"topic_id"`
 	Query     string `json:"query"`
 	StartTime int64  `json:"start_time"`
@@ -216,7 +216,7 @@ type SearchIndexRequest struct {
 	Sort      string `json:"sort"`
 }
 
-type SearchIndexResponse struct {
+type SearchLogsResponse struct {
 	CommonResponse
 	Status         string                   `json:"result_status"`
 	HitCount       int                      `json:"hit_count"`
@@ -228,13 +228,13 @@ type SearchIndexResponse struct {
 	AnalysisResult *AnalysisResult          `json:"analysis_result"`
 }
 
-type ListShardRequest struct {
+type DescribeShardsRequest struct {
 	TopicID string
 	Offset  int
 	Limit   int
 }
 
-type ListShardResponse struct {
+type DescribeShardsResponse struct {
 	CommonResponse
 	Shards []*struct {
 		TopicID           string `json:"topic_id"`
@@ -255,18 +255,18 @@ type PutLogsRequest struct {
 	LogBody      *pb.LogGroupList
 }
 
-type GetCursorRequest struct {
+type DescribeCursorRequest struct {
 	TopicID string
 	ShardID int
 	From    string
 }
 
-type GetCursorResponse struct {
+type DescribeCursorResponse struct {
 	CommonResponse
 	Cursor string `json:"cursor"`
 }
 
-type PullLogsRequest struct {
+type ConsumeLogsRequest struct {
 	TopicID     string
 	ShardID     int
 	Cursor      string
@@ -275,7 +275,7 @@ type PullLogsRequest struct {
 	Compression *string
 }
 
-type PullLogsResponse struct {
+type ConsumeLogsResponse struct {
 	CommonResponse
 	Cursor string
 	Count  int

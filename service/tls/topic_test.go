@@ -44,7 +44,7 @@ func TestSDKTopicTestSuite(t *testing.T) {
 
 // TestCreateTopic: test create topic
 func (suite *SDKTopicTestSuite) TestCreateTopic() {
-	testcases := map[*CreateTopicRequest]*GetTopicResponse{
+	testcases := map[*CreateTopicRequest]*DescribeTopicResponse{
 		{
 			ProjectID:   suite.project,
 			TopicName:   "topic1",
@@ -66,7 +66,7 @@ func (suite *SDKTopicTestSuite) TestCreateTopic() {
 
 		suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 
-		getTopicResponse, err := suite.cli.DescribeTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
+		getTopicResponse, err := suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
 		suite.NoError(err)
 
 		suite.Equal(createTopicResp.TopicID, getTopicResponse.TopicID)
@@ -91,7 +91,7 @@ func (suite *SDKTopicTestSuite) TestUpdateTopic() {
 	suite.NoError(err)
 	suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 
-	testcases := map[*UpdateTopicRequest]*GetTopicResponse{
+	testcases := map[*ModifyTopicRequest]*DescribeTopicResponse{
 		{
 			TopicID:     createTopicResp.TopicID,
 			TopicName:   StrPtr("new-name"),
@@ -108,7 +108,7 @@ func (suite *SDKTopicTestSuite) TestUpdateTopic() {
 		_, err := suite.cli.ModifyTopic(updateTopicReq)
 		suite.NoError(err)
 
-		actualGetTopicResp, err := suite.cli.DescribeTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
+		actualGetTopicResp, err := suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
 		suite.NoError(err)
 
 		suite.Equal(getTopicResp.TopicName, actualGetTopicResp.TopicName)
@@ -149,7 +149,7 @@ func (suite *SDKTopicTestSuite) TestListTopic() {
 		suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 	}
 
-	testcases := map[*ListTopicRequest]*ListTopicResponse{
+	testcases := map[*DescribeTopicsRequest]*DescribeTopicsResponse{
 		{
 			ProjectID: suite.project,
 			Offset:    0,

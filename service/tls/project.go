@@ -78,7 +78,7 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (*CommonResponse
 	return response, nil
 }
 
-func (c *LsClient) DescribeProject(request *GetProjectRequest) (*GetProjectResponse, error) {
+func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (*DescribeProjectResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -101,7 +101,7 @@ func (c *LsClient) DescribeProject(request *GetProjectRequest) (*GetProjectRespo
 		return nil, err
 	}
 
-	var response = &GetProjectResponse{}
+	var response = &DescribeProjectResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -111,7 +111,7 @@ func (c *LsClient) DescribeProject(request *GetProjectRequest) (*GetProjectRespo
 	return response, nil
 }
 
-func (c *LsClient) DescribeProjects(request *ListProjectRequest) (*ListProjectResponse, error) {
+func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (*DescribeProjectsResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -145,7 +145,7 @@ func (c *LsClient) DescribeProjects(request *ListProjectRequest) (*ListProjectRe
 		return nil, err
 	}
 
-	var response = &ListProjectResponse{}
+	var response = &DescribeProjectsResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -155,7 +155,7 @@ func (c *LsClient) DescribeProjects(request *ListProjectRequest) (*ListProjectRe
 	return response, nil
 }
 
-func (c *LsClient) ModifyProject(request *UpdateProjectRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

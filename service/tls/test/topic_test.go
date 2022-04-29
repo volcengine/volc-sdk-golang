@@ -52,7 +52,7 @@ func TestUpdateTopic(t *testing.T) {
 
 	newTopicName := "new-topic-name"
 	newDescription := "new-description"
-	updateRequest := &UpdateTopicRequest{
+	updateRequest := &ModifyTopicRequest{
 		TopicID:     "topic-id",
 		TopicName:   &newTopicName,
 		Description: &newDescription,
@@ -70,7 +70,7 @@ func TestGetTopic(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	getRequest := &GetTopicRequest{
+	getRequest := &DescribeTopicRequest{
 		TopicID: "topic-id",
 	}
 
@@ -90,7 +90,7 @@ func TestListTopic(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	listRequest := &ListTopicRequest{
+	listRequest := &DescribeTopicsRequest{
 		ProjectID: "parent project id",
 		TopicID:   "topic-id",
 		TopicName: "topic-name",

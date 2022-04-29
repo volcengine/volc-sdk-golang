@@ -49,7 +49,7 @@ func TestUpdateProject(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	updateRequest := &UpdateProjectRequest{
+	updateRequest := &ModifyProjectRequest{
 		ProjectID:   "project-id",
 		ProjectName: StrPtr("project-name"),
 	}
@@ -66,7 +66,7 @@ func TestGetProject(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	getRequest := &GetProjectRequest{
+	getRequest := &DescribeProjectRequest{
 		ProjectID: "project-id",
 	}
 
@@ -86,7 +86,7 @@ func TestListProject(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	listRquest := &ListProjectRequest{
+	listRquest := &DescribeProjectsRequest{
 
 		ProjectID:   "project-id",
 		ProjectName: "project-name",

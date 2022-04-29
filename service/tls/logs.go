@@ -92,7 +92,7 @@ func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroup
 	return list, nil
 }
 
-func (c *LsClient) ConsumeLogs(request *PullLogsRequest) (*PullLogsResponse, error) {
+func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error) {
 	params := map[string]string{
 		"topic_id": request.TopicID,
 		"shard_id": strconv.Itoa(request.ShardID),
@@ -138,7 +138,7 @@ func (c *LsClient) ConsumeLogs(request *PullLogsRequest) (*PullLogsResponse, err
 		return nil, errors.New(string(responseBody))
 	}
 
-	response := &PullLogsResponse{}
+	response := &ConsumeLogsResponse{}
 	response.FillRequestId(rawResponse)
 
 	var (
@@ -172,7 +172,7 @@ func (c *LsClient) ConsumeLogs(request *PullLogsRequest) (*PullLogsResponse, err
 	return response, nil
 }
 
-func (c *LsClient) DescribeCursor(request *GetCursorRequest) (*GetCursorResponse, error) {
+func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error) {
 	params := map[string]string{
 		"topic_id": request.TopicID,
 		"shard_id": strconv.Itoa(request.ShardID),
@@ -202,7 +202,7 @@ func (c *LsClient) DescribeCursor(request *GetCursorRequest) (*GetCursorResponse
 		return nil, err
 	}
 
-	var response = &GetCursorResponse{}
+	var response = &DescribeCursorResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
