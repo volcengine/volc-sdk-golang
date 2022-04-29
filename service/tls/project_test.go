@@ -129,7 +129,7 @@ func (suite *SDKProjectTestSuite) TestGetProject() {
 	}
 
 	for req, err := range testcases {
-		resp, rErr := suite.cli.GetProject(req)
+		resp, rErr := suite.cli.DescribeProject(req)
 		suite.validateError(rErr, err)
 
 		if rErr == nil {
@@ -171,10 +171,10 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 	}
 
 	for req, expect := range testcases {
-		_, rErr := suite.cli.UpdateProject(req)
+		_, rErr := suite.cli.ModifyProject(req)
 		suite.NoError(rErr)
 
-		getResp, err := suite.cli.GetProject(&GetProjectRequest{ProjectID: createResp.ProjectId})
+		getResp, err := suite.cli.DescribeProject(&GetProjectRequest{ProjectID: createResp.ProjectId})
 		suite.NoError(err)
 
 		suite.Equal(getResp.ProjectName, expect.ProjectName)
@@ -223,7 +223,7 @@ func (suite *SDKProjectTestSuite) TestListProject() {
 	}
 
 	for req, expect := range testcases {
-		listResp, err := suite.cli.ListProject(req)
+		listResp, err := suite.cli.DescribeProjects(req)
 		suite.NoError(err)
 		suite.Equal(len(listResp.Projects), expect)
 	}

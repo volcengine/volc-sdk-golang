@@ -85,7 +85,7 @@ func TestUpdateIndex(t *testing.T) {
 		},
 	}
 
-	_, updateIndexErr := client.UpdateIndex(updateRequest)
+	_, updateIndexErr := client.ModifyIndex(updateRequest)
 	if updateIndexErr != nil {
 		t.Error(updateIndexErr.Error())
 		return
@@ -101,7 +101,7 @@ func TestGetIndex(t *testing.T) {
 		TopicID: "topic-id",
 	}
 
-	indexInfo, err := client.GetIndex(getRequest)
+	indexInfo, err := client.DescribeIndex(getRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -128,7 +128,7 @@ func TestSearchIndex(t *testing.T) {
 		Sort:      "asc",
 	}
 
-	searchResult, err := client.SearchIndex(searchRequest)
+	searchResult, err := client.SearchLogs(searchRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return

@@ -10,14 +10,27 @@ const (
 	CompressLz4  = "lz4"
 	CompressNone = "none"
 
-	ProjectUrl     = "/project"
-	ListProjectUrl = "/projects"
-	TopicUrl       = "/topic"
-	ListTopicUrl   = "/topics"
-	IndexUrl       = "/index"
-	ListShardsUrl  = "/shards"
-	SearchUrl      = "/search"
-	PutLogsUrl     = "/put_logs"
-	GetCursorUrl   = "/GetCursor"
-	PullLogsUrl    = "/PullLogs"
+	PathCreateProject    = "/CreateProject"
+	PathDescribeProject  = "/DescribeProject"
+	PathDeleteProject    = "/DeleteProject"
+	PathModifyProject    = "/ModifyProject"
+	PathDescribeProjects = "/DescribeProjects"
+
+	PathCreateTopic    = "/CreateTopic"
+	PathDescribeTopic  = "/DescribeTopic"
+	PathDeleteTopic    = "/DeleteTopic"
+	PathModifyTopic    = "/ModifyTopic"
+	PathDescribeTopics = "/DescribeTopics"
+
+	PathCreateIndex   = "/CreateIndex"
+	PathDescribeIndex = "/DescribeIndex"
+	PathDeleteIndex   = "/DeleteIndex"
+	PathModifyIndex   = "/ModifyIndex"
+	PathSearchLogs    = "/SearchLogs"
+
+	PathDescribeShards = "/DescribeShards"
+
+	PathPutLogs        = "/PutLogs"
+	PathDescribeCursor = "/DescribeCursor"
+	PathConsumeLogs    = "/ConsumeLogs"
 )

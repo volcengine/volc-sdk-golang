@@ -38,7 +38,7 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (*CommonResponse, error) {
 		"x-tls-compresstype": request.CompressType,
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PutLogsUrl, params, headers, bodyBytes)
+	rawResponse, err := c.Request(http.MethodPost, PathPutLogs, params, headers, bodyBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +92,7 @@ func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroup
 	return list, nil
 }
 
-func (c *LsClient) PullLogs(request *PullLogsRequest) (*PullLogsResponse, error) {
+func (c *LsClient) ConsumeLogs(request *PullLogsRequest) (*PullLogsResponse, error) {
 	params := map[string]string{
 		"topic_id": request.TopicID,
 		"shard_id": strconv.Itoa(request.ShardID),
@@ -123,7 +123,7 @@ func (c *LsClient) PullLogs(request *PullLogsRequest) (*PullLogsResponse, error)
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PullLogsUrl, params, headers, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathConsumeLogs, params, headers, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (c *LsClient) PullLogs(request *PullLogsRequest) (*PullLogsResponse, error)
 	return response, nil
 }
 
-func (c *LsClient) GetCursor(request *GetCursorRequest) (*GetCursorResponse, error) {
+func (c *LsClient) DescribeCursor(request *GetCursorRequest) (*GetCursorResponse, error) {
 	params := map[string]string{
 		"topic_id": request.TopicID,
 		"shard_id": strconv.Itoa(request.ShardID),
@@ -191,7 +191,7 @@ func (c *LsClient) GetCursor(request *GetCursorRequest) (*GetCursorResponse, err
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, GetCursorUrl, params, headers, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeCursor, params, headers, bytesBody)
 	if err != nil {
 		return nil, err
 	}

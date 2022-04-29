@@ -27,7 +27,7 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexRespons
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, IndexUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateIndex, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, er
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, IndexUrl, nil, reqHeaders, jsonBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteIndex, nil, reqHeaders, jsonBody)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) GetIndex(request *GetIndexRequest) (*GetIndexResponse, error) {
+func (c *LsClient) DescribeIndex(request *GetIndexRequest) (*GetIndexResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -94,7 +94,7 @@ func (c *LsClient) GetIndex(request *GetIndexRequest) (*GetIndexResponse, error)
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, IndexUrl, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeIndex, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -115,10 +115,10 @@ func (c *LsClient) GetIndex(request *GetIndexRequest) (*GetIndexResponse, error)
 	return response, nil
 }
 
-// UpdateIndex: 更新索引。
+// ModifyIndex: 更新索引。
 // 由于该接口为全量更新接口，等同于重新创建一个新的索引，因此要注意不要漏填字段
 
-func (c *LsClient) UpdateIndex(request *UpdateIndexRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyIndex(request *UpdateIndexRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -138,7 +138,7 @@ func (c *LsClient) UpdateIndex(request *UpdateIndexRequest) (*CommonResponse, er
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, IndexUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyIndex, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (c *LsClient) UpdateIndex(request *UpdateIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) SearchIndex(request *SearchIndexRequest) (*SearchIndexResponse, error) {
+func (c *LsClient) SearchLogs(request *SearchIndexRequest) (*SearchIndexResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -179,7 +179,7 @@ func (c *LsClient) SearchIndex(request *SearchIndexRequest) (*SearchIndexRespons
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, SearchUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathSearchLogs, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}

@@ -54,7 +54,7 @@ func TestUpdateProject(t *testing.T) {
 		ProjectName: StrPtr("project-name"),
 	}
 
-	_, err := client.UpdateProject(updateRequest)
+	_, err := client.ModifyProject(updateRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -70,7 +70,7 @@ func TestGetProject(t *testing.T) {
 		ProjectID: "project-id",
 	}
 
-	projectInfo, err := client.GetProject(getRequest)
+	projectInfo, err := client.DescribeProject(getRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -94,7 +94,7 @@ func TestListProject(t *testing.T) {
 		Limit:       10,
 	}
 
-	projectList, err := client.ListProject(listRquest)
+	projectList, err := client.DescribeProjects(listRquest)
 	if err != nil {
 		t.Error(err.Error())
 		return

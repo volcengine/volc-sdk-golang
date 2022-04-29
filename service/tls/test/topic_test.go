@@ -58,7 +58,7 @@ func TestUpdateTopic(t *testing.T) {
 		Description: &newDescription,
 	}
 
-	_, err := client.UpdateTopic(updateRequest)
+	_, err := client.ModifyTopic(updateRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -74,7 +74,7 @@ func TestGetTopic(t *testing.T) {
 		TopicID: "topic-id",
 	}
 
-	topicInfo, err := client.GetTopic(getRequest)
+	topicInfo, err := client.DescribeTopic(getRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return
@@ -98,7 +98,7 @@ func TestListTopic(t *testing.T) {
 		Limit:     5,
 	}
 
-	topicList, err := client.ListTopic(listRequest)
+	topicList, err := client.DescribeTopics(listRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return

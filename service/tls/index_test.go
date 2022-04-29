@@ -109,7 +109,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 		_, err := suite.cli.CreateIndex(createIndexReq)
 		suite.NoError(err)
 
-		actualGetIndexResp, err := suite.cli.GetIndex(&GetIndexRequest{TopicID: suite.topic})
+		actualGetIndexResp, err := suite.cli.DescribeIndex(&GetIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
@@ -214,10 +214,10 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 	}
 
 	for updateIndexReq, expectGetIndexResp := range testcases {
-		_, err := suite.cli.UpdateIndex(updateIndexReq)
+		_, err := suite.cli.ModifyIndex(updateIndexReq)
 		suite.NoError(err)
 
-		actualGetIndexResp, err := suite.cli.GetIndex(&GetIndexRequest{TopicID: suite.topic})
+		actualGetIndexResp, err := suite.cli.DescribeIndex(&GetIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)

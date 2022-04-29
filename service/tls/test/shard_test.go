@@ -17,7 +17,7 @@ func TestListShard(t *testing.T) {
 		Limit:   5,
 	}
 
-	resp, err := client.ListShard(listRequest)
+	resp, err := client.DescribeShards(listRequest)
 	if err != nil {
 		t.Error(err.Error())
 		return

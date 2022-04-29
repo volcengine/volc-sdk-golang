@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) ListShard(request *ListShardRequest) (*ListShardResponse, error) {
+func (c *LsClient) DescribeShards(request *ListShardRequest) (*ListShardResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -25,7 +25,7 @@ func (c *LsClient) ListShard(request *ListShardRequest) (*ListShardResponse, err
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, ListShardsUrl, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeShards, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}

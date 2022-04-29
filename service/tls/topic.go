@@ -29,7 +29,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicRespons
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, TopicUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateTopic, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, er
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, TopicUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteTopic, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -84,9 +84,9 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, er
 	return response, nil
 }
 
-// UpdateTopic: 更新日志主题信息
+// ModifyTopic: 更新日志主题信息
 
-func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyTopic(request *UpdateTopicRequest) (*CommonResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -112,7 +112,7 @@ func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) (*CommonResponse, er
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, TopicUrl, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyTopic, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -131,9 +131,9 @@ func (c *LsClient) UpdateTopic(request *UpdateTopicRequest) (*CommonResponse, er
 	return response, nil
 }
 
-// GetTopic 获取一个日志项目的信息
+// DescribeTopic 获取一个日志项目的信息
 
-func (c *LsClient) GetTopic(request *GetTopicRequest) (*GetTopicResponse, error) {
+func (c *LsClient) DescribeTopic(request *GetTopicRequest) (*GetTopicResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -145,7 +145,7 @@ func (c *LsClient) GetTopic(request *GetTopicRequest) (*GetTopicResponse, error)
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, TopicUrl, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopic, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -166,9 +166,9 @@ func (c *LsClient) GetTopic(request *GetTopicRequest) (*GetTopicResponse, error)
 	return response, nil
 }
 
-// ListTopic: 获取日志主题列表
+// DescribeTopics: 获取日志主题列表
 
-func (c *LsClient) ListTopic(request *ListTopicRequest) (*ListTopicResponse, error) {
+func (c *LsClient) DescribeTopics(request *ListTopicRequest) (*ListTopicResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -194,7 +194,7 @@ func (c *LsClient) ListTopic(request *ListTopicRequest) (*ListTopicResponse, err
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, ListTopicUrl, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopics, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}

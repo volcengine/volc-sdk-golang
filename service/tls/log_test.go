@@ -123,7 +123,7 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 	time.Sleep(30 * time.Second)
 
 	// test pull logs
-	beginCursorResp, err := suite.cli.GetCursor(&GetCursorRequest{
+	beginCursorResp, err := suite.cli.DescribeCursor(&GetCursorRequest{
 		TopicID: suite.topic,
 		ShardID: 0,
 		From:    "begin",
@@ -132,7 +132,7 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 
 	beginCursor := beginCursorResp.Cursor
 
-	pullLogsResp, err := suite.cli.PullLogs(&PullLogsRequest{
+	pullLogsResp, err := suite.cli.ConsumeLogs(&PullLogsRequest{
 		TopicID:     suite.topic,
 		ShardID:     0,
 		Cursor:      beginCursor,
@@ -148,7 +148,7 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 	time.Sleep(30 * time.Second)
 
 	// test search logs
-	searchRes, err := suite.cli.SearchIndex(&SearchIndexRequest{
+	searchRes, err := suite.cli.SearchLogs(&SearchIndexRequest{
 		TopicID:   suite.topic,
 		Query:     "*",
 		StartTime: 1600000000000,

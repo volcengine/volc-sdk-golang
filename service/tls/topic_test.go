@@ -66,7 +66,7 @@ func (suite *SDKTopicTestSuite) TestCreateTopic() {
 
 		suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 
-		getTopicResponse, err := suite.cli.GetTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
+		getTopicResponse, err := suite.cli.DescribeTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
 		suite.NoError(err)
 
 		suite.Equal(createTopicResp.TopicID, getTopicResponse.TopicID)
@@ -105,10 +105,10 @@ func (suite *SDKTopicTestSuite) TestUpdateTopic() {
 	}
 
 	for updateTopicReq, getTopicResp := range testcases {
-		_, err := suite.cli.UpdateTopic(updateTopicReq)
+		_, err := suite.cli.ModifyTopic(updateTopicReq)
 		suite.NoError(err)
 
-		actualGetTopicResp, err := suite.cli.GetTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
+		actualGetTopicResp, err := suite.cli.DescribeTopic(&GetTopicRequest{TopicID: createTopicResp.TopicID})
 		suite.NoError(err)
 
 		suite.Equal(getTopicResp.TopicName, actualGetTopicResp.TopicName)
@@ -228,7 +228,7 @@ func (suite *SDKTopicTestSuite) TestListTopic() {
 	}
 
 	for listTopicReq, expectListTopicResp := range testcases {
-		actualListTopicResp, err := suite.cli.ListTopic(listTopicReq)
+		actualListTopicResp, err := suite.cli.DescribeTopics(listTopicReq)
 		suite.NoError(err)
 
 		suite.Equal(expectListTopicResp.Total, actualListTopicResp.Total)
