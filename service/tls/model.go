@@ -173,7 +173,7 @@ type KeyValueInfo struct {
 
 type CreateIndexResponse struct {
 	CommonResponse
-	TopicID string `json:"topic_id"`
+	TopicID string `json:"TopicId"`
 }
 
 type DeleteIndexRequest struct {
