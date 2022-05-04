@@ -9,7 +9,7 @@ import (
 )
 
 type CommonResponse struct {
-	RequestID string `json:"requestID"`
+	RequestID string `json:"RequestID"`
 }
 
 type CreateProjectRequest struct {
@@ -20,46 +20,46 @@ type CreateProjectRequest struct {
 
 type CreateProjectResponse struct {
 	CommonResponse
-	ProjectId string `json:"project_id"`
+	ProjectId string `json:"ProjectId"`
 }
 
 type DeleteProjectRequest struct {
-	ProjectID string
+	ProjectID string `json:"ProjectId"`
 }
 
 type DescribeProjectRequest struct {
-	ProjectID string
+	ProjectID string `json:"ProjectId"`
 }
 
 type DescribeProjectResponse struct {
 	CommonResponse
-	ProjectID       string `json:"project_id"`
-	ProjectName     string `json:"project_name"`
-	Description     string `json:"description"`
-	CreateTimestamp string `json:"create_timestamp"`
-	TopicCount      int64  `json:"topic_count"`
-	InnerNetDomain  string `json:"inner_net_domain"`
+	ProjectID       string `json:"ProjectId"`
+	ProjectName     string `json:"ProjectName"`
+	Description     string `json:"Description"`
+	CreateTimestamp string `json:"CreateTime"`
+	TopicCount      int64  `json:"TopicCount"`
+	InnerNetDomain  string `json:"InnerNetDomain"`
 }
 
 type DescribeProjectsRequest struct {
 	ProjectName string
 	ProjectID   string
-	Offset      int
-	Limit       int
+	PageNumber  int
+	PageSize    int
 }
 
 type DescribeProjectsResponse struct {
 	CommonResponse
 	Projects []*struct {
-		ProjectID       string `json:"project_id"`
-		ProjectName     string `json:"project_name"`
-		Description     string `json:"description"`
-		CreateTimestamp string `json:"create_timestamp"`
-		TopicCount      int64  `json:"topic_count"`
-		InnerNetDomain  string `json:"inner_net_domain"`
-	} `json:"projects"`
+		ProjectID       string `json:"ProjectId"`
+		ProjectName     string `json:"ProjectName"`
+		Description     string `json:"Description"`
+		CreateTimestamp string `json:"CreateTime"`
+		TopicCount      int64  `json:"TopicCount"`
+		InnerNetDomain  string `json:"InnerNetDomain"`
+	} `json:"Projects"`
 
-	Total int64 `json:"total"`
+	Total int64 `json:"Total"`
 }
 
 type ModifyProjectRequest struct {
@@ -78,7 +78,7 @@ type CreateTopicRequest struct {
 
 type CreateTopicResponse struct {
 	CommonResponse
-	TopicID string `json:"topic_id"`
+	TopicID string `json:"TopicID"`
 }
 
 type DeleteTopicRequest struct {
@@ -86,10 +86,10 @@ type DeleteTopicRequest struct {
 }
 
 type ModifyTopicRequest struct {
-	TopicID     string  `json:"topic_id"`
-	TopicName   *string `json:"topic_name"`
-	Ttl         *uint16 `json:"ttl"`
-	Description *string `json:"description"`
+	TopicID     string  `json:"TopicId"`
+	TopicName   *string `json:"TopicName"`
+	Ttl         *uint16 `json:"Ttl"`
+	Description *string `json:"Description"`
 }
 
 type DescribeTopicRequest struct {
@@ -98,47 +98,47 @@ type DescribeTopicRequest struct {
 
 type DescribeTopicResponse struct {
 	CommonResponse
-	TopicName       string `json:"topic_name"`
-	ProjectID       string `json:"project_id"`
-	TopicID         string `json:"topic_id"`
-	Ttl             uint16 `json:"ttl"`
-	CreateTimestamp string `json:"create_timestamp"`
-	ModifyTimestamp string `json:"modify_timestamp"`
-	ShardCount      int32  `json:"shard_count"`
-	Description     string `json:"description"`
+	TopicName       string `json:"TopicName"`
+	ProjectID       string `json:"ProjectId"`
+	TopicID         string `json:"TopicId"`
+	Ttl             uint16 `json:"Ttl"`
+	CreateTimestamp string `json:"CreateTime"`
+	ModifyTimestamp string `json:"ModifyTime"`
+	ShardCount      int32  `json:"ShardCount"`
+	Description     string `json:"Description"`
 }
 
 type DescribeTopicsRequest struct {
-	ProjectID string
-	Offset    int
-	Limit     int
-	TopicName string
-	TopicID   string
+	ProjectID  string
+	PageNumber int
+	PageSize   int
+	TopicName  string
+	TopicID    string
 }
 
 type Topic struct {
-	TopicName       string `json:"topic_name"`
-	ProjectID       string `json:"project_id"`
-	TopicID         string `json:"topic_id"`
-	Ttl             uint16 `json:"ttl"`
-	CreateTimestamp string `json:"create_timestamp"`
-	ModifyTimestamp string `json:"modify_timestamp"`
-	ShardCount      int32  `json:"shard_count"`
-	Description     string `json:"description"`
+	TopicName       string `json:"TopicName"`
+	ProjectID       string `json:"ProjectId"`
+	TopicID         string `json:"TopicId"`
+	Ttl             uint16 `json:"Ttl"`
+	CreateTimestamp string `json:"CreateTime"`
+	ModifyTimestamp string `json:"ModifyTime"`
+	ShardCount      int32  `json:"ShardCount"`
+	Description     string `json:"Description"`
 }
 
 type DescribeTopicsResponse struct {
 	CommonResponse
-	Topics []*Topic `json:"topics"`
-	Total  int      `json:"total"`
+	Topics []*Topic `json:"Topics"`
+	Total  int      `json:"Total"`
 }
 
 type Value struct {
-	ValueType      string `json:"value_type"`
-	Delimiter      string `json:"delimiter"`
-	CasSensitive   bool   `json:"cas_sensitive"`
-	IncludeChinese bool   `json:"include_chinese"`
-	SQLFlag        bool   `json:"sql_flag"`
+	ValueType      string `json:"ValueType"`
+	Delimiter      string `json:"Delimiter"`
+	CasSensitive   bool   `json:"CaseSensitive"`
+	IncludeChinese bool   `json:"IncludeChinese"`
+	SQLFlag        bool   `json:"SqlFlag"`
 }
 
 type KeyValueParam struct {
@@ -155,13 +155,20 @@ func (c KeyValueList) Value() (driver.Value, error) {
 }
 
 type CreateIndexRequest struct {
-	TopicID        string
-	FulltextIndex  bool
-	CasSensitive   bool
-	IncludeChinese bool
-	Delimiter      string
-	KeyValueIndex  bool
-	KeyValueList   KeyValueList
+	TopicID  string          `json:"TopicId"`
+	FullText *FullTextInfo   `json:"FullText"`
+	KeyValue *[]KeyValueInfo `json:"KeyValue"`
+}
+
+type FullTextInfo struct {
+	Delimiter      string `json:"Delimiter"`
+	CaseSensitive  bool   `json:"CaseSensitive"`
+	IncludeChinese bool   `json:"IncludeChinese"`
+}
+
+type KeyValueInfo struct {
+	Key   string
+	Value Value
 }
 
 type CreateIndexResponse struct {
@@ -179,25 +186,17 @@ type DescribeIndexRequest struct {
 
 type DescribeIndexResponse struct {
 	CommonResponse
-	TopicID         string       `json:"topic_id"`
-	FulltextIndex   bool         `json:"fulltext_index"`
-	CasSensitive    bool         `json:"cas_sensitive"`
-	Delimiter       string       `json:"delimiter"`
-	IncludeChinese  bool         `json:"include_chinese"`
-	CreateTimestamp string       `json:"create_timestamp"`
-	UpdateTimestamp string       `json:"update_timestamp"`
-	KeyValueIndex   bool         `json:"key_value_index"`
-	KeyValueList    KeyValueList `json:"key_value_list"`
+	TopicID    string          `json:"TopicId"`
+	FullText   *FullTextInfo   `json:"FullText"`
+	KeyValue   *[]KeyValueInfo `json:"KeyValue"`
+	CreateTime string          `json:"CreateTime"`
+	ModifyTime string          `json:"ModifyTime"`
 }
 
 type ModifyIndexRequest struct {
-	TopicID        string
-	FulltextIndex  bool
-	CasSensitive   bool
-	IncludeChinese bool
-	Delimiter      string
-	KeyValueIndex  bool
-	KeyValueList   KeyValueList
+	TopicID  string          `json:"TopicId"`
+	FullText *FullTextInfo   `json:"FullText"`
+	KeyValue *[]KeyValueInfo `json:"KeyValue"`
 }
 
 type AnalysisResult struct {
@@ -206,46 +205,48 @@ type AnalysisResult struct {
 }
 
 type SearchLogsRequest struct {
-	TopicID   string `json:"topic_id"`
-	Query     string `json:"query"`
-	StartTime int64  `json:"start_time"`
-	EndTime   int64  `json:"end_time"`
-	Limit     int    `json:"limit"`
-	HighLight bool   `json:"high_light"`
-	Context   string `json:"context"`
-	Sort      string `json:"sort"`
+	TopicID   string `json:"TopicId"`
+	Query     string `json:"Query"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	Limit     int    `json:"Limit"`
+	HighLight bool   `json:"HighLight"`
+	Context   string `json:"Context"`
+	Sort      string `json:"Sort"`
 }
 
 type SearchLogsResponse struct {
 	CommonResponse
-	Status         string                   `json:"result_status"`
-	HitCount       int                      `json:"hit_count"`
-	Context        string                   `json:"context"`
-	ListOver       bool                     `json:"list_over"`
-	Analysis       bool                     `json:"analysis"`
-	Logs           []map[string]interface{} `json:"logs"`
-	HighLight      []string                 `json:"high_light,omitempty"`
-	AnalysisResult *AnalysisResult          `json:"analysis_result"`
+	Status         string                   `json:"ResultStatus"`
+	Analysis       bool                     `json:"Analysis"`
+	ListOver       bool                     `json:"ListOver"`
+	HitCount       int                      `json:"HitCount"`
+	Count          int                      `json:"Count"`
+	Limit          int                      `json:"Limit"`
+	Logs           []map[string]interface{} `json:"Logs"`
+	AnalysisResult *AnalysisResult          `json:"AnalysisResult"`
+	Context        string                   `json:"Context"`
+	HighLight      []string                 `json:"HighLight,omitempty"`
 }
 
 type DescribeShardsRequest struct {
-	TopicID string
-	Offset  int
-	Limit   int
+	TopicID    string
+	PageNumber int
+	PageSize   int
 }
 
 type DescribeShardsResponse struct {
 	CommonResponse
 	Shards []*struct {
-		TopicID           string `json:"topic_id"`
-		ShardID           int32  `json:"shard_id"`
-		InclusiveBeginKey string `json:"inclusive_begin_key"`
-		ExclusiveEndKey   string `json:"exclusive_end_key"`
-		Status            string `json:"status"`
-		ModifyTimestamp   string `json:"modify_timestamp"`
-	} `json:"shards"`
+		TopicID           string `json:"TopicId"`
+		ShardID           int32  `json:"ShardId"`
+		InclusiveBeginKey string `json:"InclusiveBeginKey"`
+		ExclusiveEndKey   string `json:"ExclusiveEndKey"`
+		Status            string `json:"Status"`
+		ModifyTimestamp   string `json:"ModifyTime"`
+	} `json:"Shards"`
 
-	Total int `json:"total"`
+	Total int `json:"Total"`
 }
 
 type PutLogsRequest struct {
@@ -267,12 +268,12 @@ type DescribeCursorResponse struct {
 }
 
 type ConsumeLogsRequest struct {
-	TopicID     string
-	ShardID     int
-	Cursor      string
-	EndCursor   *string
-	Count       *int
-	Compression *string
+	TopicID       string
+	ShardID       int
+	Cursor        string
+	EndCursor     *string
+	LogGroupCount *int
+	Compression   *string
 }
 
 type ConsumeLogsResponse struct {

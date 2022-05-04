@@ -151,11 +151,11 @@ func (suite *SDKTopicTestSuite) TestListTopic() {
 
 	testcases := map[*DescribeTopicsRequest]*DescribeTopicsResponse{
 		{
-			ProjectID: suite.project,
-			Offset:    0,
-			Limit:     20,
-			TopicName: "",
-			TopicID:   "",
+			ProjectID:  suite.project,
+			PageNumber: 1,
+			PageSize:   20,
+			TopicName:  "",
+			TopicID:    "",
 		}: {
 			Topics: []*Topic{
 				{
@@ -183,11 +183,11 @@ func (suite *SDKTopicTestSuite) TestListTopic() {
 			Total: 3,
 		},
 		{
-			ProjectID: suite.project,
-			Offset:    0,
-			Limit:     20,
-			TopicName: "sdk-a",
-			TopicID:   "",
+			ProjectID:  suite.project,
+			PageNumber: 0,
+			PageSize:   20,
+			TopicName:  "sdk-a",
+			TopicID:    "",
 		}: {
 			Topics: []*Topic{
 				{
@@ -208,11 +208,11 @@ func (suite *SDKTopicTestSuite) TestListTopic() {
 			Total: 2,
 		},
 		{
-			ProjectID: suite.project,
-			Offset:    2,
-			Limit:     20,
-			TopicName: "",
-			TopicID:   "",
+			ProjectID:  suite.project,
+			PageNumber: 2,
+			PageSize:   2,
+			TopicName:  "",
+			TopicID:    "",
 		}: {
 			Topics: []*Topic{
 				{

@@ -45,13 +45,13 @@ func TestSDKIndexTestSuite(t *testing.T) {
 func (suite *SDKIndexTestSuite) TestCreateIndex() {
 	testcases := map[*CreateIndexRequest]*DescribeIndexResponse{
 		{
-			TopicID:        suite.topic,
-			FulltextIndex:  true,
-			CasSensitive:   false,
-			IncludeChinese: false,
-			Delimiter:      ",",
-			KeyValueIndex:  true,
-			KeyValueList: KeyValueList{
+			TopicID: suite.topic,
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
 				{
 					Key: "test-key-1",
 					Value: Value{
@@ -74,13 +74,13 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 				},
 			},
 		}: {
-			TopicID:        suite.topic,
-			FulltextIndex:  true,
-			CasSensitive:   false,
-			IncludeChinese: false,
-			Delimiter:      ",",
-			KeyValueIndex:  true,
-			KeyValueList: KeyValueList{
+			TopicID: suite.topic,
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
 				{
 					Key: "test-key-1",
 					Value: Value{
@@ -113,23 +113,14 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
-		suite.Equal(expectGetIndexResp.FulltextIndex, actualGetIndexResp.FulltextIndex)
-		suite.Equal(expectGetIndexResp.CasSensitive, actualGetIndexResp.CasSensitive)
-		suite.Equal(expectGetIndexResp.IncludeChinese, actualGetIndexResp.IncludeChinese)
-		suite.Equal(expectGetIndexResp.Delimiter, actualGetIndexResp.Delimiter)
-		suite.Equal(expectGetIndexResp.KeyValueIndex, actualGetIndexResp.KeyValueIndex)
+		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
 
-		actualKV := actualGetIndexResp.KeyValueList
-		expectKV := expectGetIndexResp.KeyValueList
-
-		for i, kv := range actualKV {
-			suite.Equal(expectKV[i].Key, kv.Key)
-			suite.Equal(expectKV[i].Value.ValueType, kv.Value.ValueType)
-			suite.Equal(expectKV[i].Value.IncludeChinese, kv.Value.IncludeChinese)
-			suite.Equal(expectKV[i].Value.Delimiter, kv.Value.Delimiter)
-			suite.Equal(expectKV[i].Value.SQLFlag, kv.Value.SQLFlag)
-			suite.Equal(expectKV[i].Value.CasSensitive, kv.Value.CasSensitive)
+		if actualGetIndexResp.FullText != nil {
+			suite.Equal(expectGetIndexResp.FullText.CaseSensitive, actualGetIndexResp.FullText.CaseSensitive)
+			suite.Equal(expectGetIndexResp.FullText.IncludeChinese, actualGetIndexResp.FullText.IncludeChinese)
+			suite.Equal(expectGetIndexResp.FullText.Delimiter, actualGetIndexResp.FullText.Delimiter)
 		}
+		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
@@ -139,13 +130,13 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 // TestUpdateIndex: test update index
 func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 	createIndexReq := &CreateIndexRequest{
-		TopicID:        suite.topic,
-		FulltextIndex:  true,
-		CasSensitive:   false,
-		IncludeChinese: false,
-		Delimiter:      ", ?",
-		KeyValueIndex:  false,
-		KeyValueList:   nil,
+		TopicID: suite.topic,
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+		KeyValue: nil,
 	}
 
 	_, err := suite.cli.CreateIndex(createIndexReq)
@@ -153,13 +144,14 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 
 	testcases := map[*ModifyIndexRequest]*DescribeIndexResponse{
 		{
-			TopicID:        suite.topic,
-			FulltextIndex:  true,
-			CasSensitive:   false,
-			IncludeChinese: false,
-			Delimiter:      ",",
-			KeyValueIndex:  true,
-			KeyValueList: KeyValueList{
+			TopicID: suite.topic,
+
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
 				{
 					Key: "test-key-1",
 					Value: Value{
@@ -182,13 +174,13 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 				},
 			},
 		}: {
-			TopicID:        suite.topic,
-			FulltextIndex:  true,
-			CasSensitive:   false,
-			IncludeChinese: false,
-			Delimiter:      ",",
-			KeyValueIndex:  true,
-			KeyValueList: KeyValueList{
+			TopicID: suite.topic,
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
 				{
 					Key: "test-key-1",
 					Value: Value{
@@ -221,23 +213,13 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 		suite.NoError(err)
 
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
-		suite.Equal(expectGetIndexResp.FulltextIndex, actualGetIndexResp.FulltextIndex)
-		suite.Equal(expectGetIndexResp.CasSensitive, actualGetIndexResp.CasSensitive)
-		suite.Equal(expectGetIndexResp.IncludeChinese, actualGetIndexResp.IncludeChinese)
-		suite.Equal(expectGetIndexResp.Delimiter, actualGetIndexResp.Delimiter)
-		suite.Equal(expectGetIndexResp.KeyValueIndex, actualGetIndexResp.KeyValueIndex)
-
-		actualKV := actualGetIndexResp.KeyValueList
-		expectKV := expectGetIndexResp.KeyValueList
-
-		for i, kv := range actualKV {
-			suite.Equal(expectKV[i].Key, kv.Key)
-			suite.Equal(expectKV[i].Value.ValueType, kv.Value.ValueType)
-			suite.Equal(expectKV[i].Value.IncludeChinese, kv.Value.IncludeChinese)
-			suite.Equal(expectKV[i].Value.Delimiter, kv.Value.Delimiter)
-			suite.Equal(expectKV[i].Value.SQLFlag, kv.Value.SQLFlag)
-			suite.Equal(expectKV[i].Value.CasSensitive, kv.Value.CasSensitive)
+		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
+		if actualGetIndexResp != nil {
+			suite.Equal(expectGetIndexResp.FullText.CaseSensitive, actualGetIndexResp.FullText.CaseSensitive)
+			suite.Equal(expectGetIndexResp.FullText.IncludeChinese, actualGetIndexResp.FullText.IncludeChinese)
+			suite.Equal(expectGetIndexResp.FullText.Delimiter, actualGetIndexResp.FullText.Delimiter)
 		}
+		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)

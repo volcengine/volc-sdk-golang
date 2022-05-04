@@ -12,13 +12,14 @@ func TestCreateIndex(t *testing.T) {
 		os.Getenv("LOG_TEST_REGION"))
 
 	createRequest := &CreateIndexRequest{
-		TopicID:        "parent-topic-id",
-		FulltextIndex:  true,
-		CasSensitive:   false,
-		IncludeChinese: false,
-		Delimiter:      ", ?",
-		KeyValueIndex:  true,
-		KeyValueList: KeyValueList{
+		TopicID: "parent-topic-id",
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+
+		KeyValue: &[]KeyValueInfo{
 			{
 				Key: "test-key",
 				Value: Value{
@@ -64,14 +65,15 @@ func TestUpdateIndex(t *testing.T) {
 		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
 		os.Getenv("LOG_TEST_REGION"))
 
-	updateRequest := &ModifyIndexRequest{
-		TopicID:        "parent-topic-id",
-		FulltextIndex:  true,
-		CasSensitive:   false,
-		IncludeChinese: false,
-		Delimiter:      ", ?",
-		KeyValueIndex:  true,
-		KeyValueList: KeyValueList{
+	modifyRequest := &ModifyIndexRequest{
+		TopicID: "parent-topic-id",
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+
+		KeyValue: &[]KeyValueInfo{
 			{
 				Key: "test-key",
 				Value: Value{
@@ -85,7 +87,7 @@ func TestUpdateIndex(t *testing.T) {
 		},
 	}
 
-	_, updateIndexErr := client.ModifyIndex(updateRequest)
+	_, updateIndexErr := client.ModifyIndex(modifyRequest)
 	if updateIndexErr != nil {
 		t.Error(updateIndexErr.Error())
 		return

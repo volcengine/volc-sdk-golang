@@ -12,17 +12,7 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexRespons
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]interface{}{
-		"topic_id":        request.TopicID,
-		"fulltext_index":  request.FulltextIndex,
-		"cas_sensitive":   request.CasSensitive,
-		"include_chinese": request.IncludeChinese,
-		"delimiter":       request.Delimiter,
-		"key_value_index": request.KeyValueIndex,
-		"key_value_list":  request.KeyValueList,
-	}
-
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +44,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, er
 	}
 
 	reqBody := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
 	jsonBody, err := json.Marshal(reqBody)
@@ -88,7 +78,7 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexR
 	}
 
 	params := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
 	body := map[string]string{}
@@ -123,17 +113,7 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, er
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]interface{}{
-		"topic_id":        request.TopicID,
-		"fulltext_index":  request.FulltextIndex,
-		"cas_sensitive":   request.CasSensitive,
-		"include_chinese": request.IncludeChinese,
-		"delimiter":       request.Delimiter,
-		"key_value_index": request.KeyValueIndex,
-		"key_value_list":  request.KeyValueList,
-	}
-
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
@@ -164,14 +144,14 @@ func (c *LsClient) SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, 
 	}
 
 	reqBody := map[string]interface{}{
-		"topic_id":   request.TopicID,
-		"query":      request.Query,
-		"start_time": request.StartTime,
-		"end_time":   request.EndTime,
-		"limit":      request.Limit,
-		"high_light": request.HighLight,
-		"context":    request.Context,
-		"sort":       request.Sort,
+		"TopicId":   request.TopicID,
+		"Query":     request.Query,
+		"StartTime": request.StartTime,
+		"EndTime":   request.EndTime,
+		"Limit":     request.Limit,
+		"HighLight": request.HighLight,
+		"Context":   request.Context,
+		"Sort":      request.Sort,
 	}
 
 	bytesBody, err := json.Marshal(reqBody)

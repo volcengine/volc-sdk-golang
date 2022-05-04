@@ -13,15 +13,15 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicRespons
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]string{
-		"project_id":  request.ProjectID,
-		"topic_name":  request.TopicName,
-		"ttl":         strconv.Itoa(int(request.Ttl)),
-		"description": request.Description,
+	reqBody := map[string]interface{}{
+		"ProjectId":   request.ProjectID,
+		"TopicName":   request.TopicName,
+		"Ttl":         request.Ttl,
+		"Description": request.Description,
 	}
 
 	if request.ShardCount != 0 {
-		reqBody["partition_count"] = strconv.Itoa(request.ShardCount)
+		reqBody["ShardCount"] = request.ShardCount
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -56,7 +56,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, er
 	}
 
 	reqBody := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -91,20 +91,20 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (*CommonResponse, er
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]string{
-		"topic_id": request.TopicID,
+	reqBody := map[string]interface{}{
+		"TopicId": request.TopicID,
 	}
 
 	if request.TopicName != nil {
-		reqBody["topic_name"] = *request.TopicName
+		reqBody["TopicName"] = *request.TopicName
 	}
 
 	if request.Ttl != nil {
-		reqBody["ttl"] = strconv.Itoa(int(*request.Ttl))
+		reqBody["Ttl"] = *request.Ttl
 	}
 
 	if request.Description != nil {
-		reqBody["description"] = *request.Description
+		reqBody["Description"] = *request.Description
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -139,7 +139,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (*DescribeTopicR
 	}
 
 	params := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
 	body := map[string]string{}
@@ -174,21 +174,23 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (*DescribeTopi
 	}
 
 	params := map[string]string{
-		"project_id": request.ProjectID,
+		"ProjectId": request.ProjectID,
 	}
 
 	if len(request.TopicName) != 0 {
-		params["topic_name"] = request.TopicName
+		params["TopicName"] = request.TopicName
 	}
 
 	if len(request.TopicID) != 0 {
-		params["topic_id"] = request.TopicID
+		params["TopicID"] = request.TopicID
 	}
 
-	params["offset"] = strconv.Itoa(request.Offset)
+	if request.PageNumber != 0 {
+		params["PageNumber"] = strconv.Itoa(request.PageNumber)
+	}
 
-	if request.Limit != 0 {
-		params["limit"] = strconv.Itoa(request.Limit)
+	if request.PageSize != 0 {
+		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
 	body := map[string]string{}

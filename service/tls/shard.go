@@ -13,13 +13,15 @@ func (c *LsClient) DescribeShards(request *DescribeShardsRequest) (*DescribeShar
 	}
 
 	params := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
-	params["offset"] = strconv.Itoa(request.Offset)
+	if request.PageNumber != 0 {
+		params["PageNumber"] = strconv.Itoa(request.PageNumber)
+	}
 
-	if request.Limit != 0 {
-		params["limit"] = strconv.Itoa(request.Limit)
+	if request.PageSize != 0 {
+		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
 	body := map[string]string{}

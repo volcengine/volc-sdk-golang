@@ -12,9 +12,9 @@ func TestListShard(t *testing.T) {
 		os.Getenv("LOG_TEST_REGION"))
 
 	listRequest := &DescribeShardsRequest{
-		TopicID: "topic-id",
-		Offset:  5,
-		Limit:   5,
+		TopicID:    "topic-id",
+		PageNumber: 1,
+		PageSize:   5,
 	}
 
 	resp, err := client.DescribeShards(listRequest)

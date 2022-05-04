@@ -83,7 +83,7 @@ func (suite *SDKProjectTestSuite) TestCreateAbnormalProject() {
 		}: &Error{
 			HTTPCode: http.StatusBadRequest,
 			Code:     "InvalidArgument",
-			Message:  "Invalid argument key project_name, value a, please check argument.",
+			Message:  "Invalid argument key ProjectName, value a, please check argument.",
 		},
 		{
 			ProjectName: "golang-sdk-create-project-" + uuid.New().String(),
@@ -92,7 +92,7 @@ func (suite *SDKProjectTestSuite) TestCreateAbnormalProject() {
 		}: &Error{
 			HTTPCode: http.StatusBadRequest,
 			Code:     "InvalidArgument",
-			Message:  "Invalid argument key region, value , please check argument.",
+			Message:  "Invalid argument key Region, value , please check argument.",
 		},
 	}
 
@@ -212,13 +212,16 @@ func (suite *SDKProjectTestSuite) TestListProject() {
 	testcases := map[*DescribeProjectsRequest]int{
 		{
 			ProjectName: "sdk-a",
+			PageNumber:  1,
 		}: 2,
 		{
 			ProjectName: "sdk-b",
+			PageNumber:  1,
 		}: 1,
 		{
 			ProjectName: "sdk-a",
-			Offset:      1,
+			PageNumber:  1,
+			PageSize:    1,
 		}: 1,
 	}
 

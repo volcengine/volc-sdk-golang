@@ -54,18 +54,12 @@ func CreateTopic(projectId, topicName, description string, shardCount int, ttl u
 	return createTopicResp.TopicID, nil
 }
 
-func CreateIndex(topicID, delimiter string, casSensitive, fulltextIndex, keyValueIndex, includeChinese bool,
-	keyValueList KeyValueList, cli Client) error {
+func CreateIndex(topicID string, fulltextInfo *FullTextInfo, KeyValue *[]KeyValueInfo, cli Client) error {
 	createIndexReq := &CreateIndexRequest{
-		TopicID:        topicID,
-		FulltextIndex:  fulltextIndex,
-		CasSensitive:   casSensitive,
-		IncludeChinese: includeChinese,
-		Delimiter:      delimiter,
-		KeyValueIndex:  keyValueIndex,
-		KeyValueList:   keyValueList,
+		TopicID:  topicID,
+		FullText: fulltextInfo,
+		KeyValue: KeyValue,
 	}
-
 	_, err := cli.CreateIndex(createIndexReq)
 
 	return err

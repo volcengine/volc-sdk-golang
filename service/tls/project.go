@@ -14,9 +14,9 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (*CreateProjectR
 	}
 
 	reqBody := map[string]string{
-		"project_name": request.ProjectName,
-		"description":  request.Description,
-		"region":       request.Region,
+		"ProjectName": request.ProjectName,
+		"Description": request.Description,
+		"Region":      request.Region,
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -50,7 +50,7 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (*CommonResponse
 	}
 
 	reqBody := map[string]string{
-		"project_id": request.ProjectID,
+		"ProjectId": request.ProjectID,
 	}
 
 	jsonBody, err := json.Marshal(reqBody)
@@ -84,7 +84,7 @@ func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (*DescribePr
 	}
 
 	params := map[string]string{
-		"project_id": request.ProjectID,
+		"ProjectId": request.ProjectID,
 	}
 
 	body := map[string]string{}
@@ -118,17 +118,19 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (*Describe
 
 	params := make(map[string]string)
 	if len(request.ProjectName) != 0 {
-		params["project_name"] = request.ProjectName
+		params["ProjectName"] = request.ProjectName
 	}
 
 	if len(request.ProjectID) != 0 {
-		params["project_id"] = request.ProjectID
+		params["ProjectId"] = request.ProjectID
 	}
 
-	params["offset"] = strconv.Itoa(request.Offset)
+	if request.PageNumber != 0 {
+		params["PageNumber"] = strconv.Itoa(request.PageNumber)
+	}
 
-	if request.Limit != 0 {
-		params["limit"] = strconv.Itoa(request.Limit)
+	if request.PageSize != 0 {
+		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
 	body := map[string]string{}
@@ -161,15 +163,15 @@ func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (*CommonResponse
 	}
 
 	reqBody := map[string]string{
-		"project_id": request.ProjectID,
+		"ProjectId": request.ProjectID,
 	}
 
 	if request.ProjectName != nil {
-		reqBody["project_name"] = *request.ProjectName
+		reqBody["ProjectName"] = *request.ProjectName
 	}
 
 	if request.Description != nil {
-		reqBody["description"] = *request.Description
+		reqBody["Description"] = *request.Description
 	}
 
 	jsonBody, err := json.Marshal(reqBody)

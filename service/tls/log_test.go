@@ -32,29 +32,28 @@ func (suite *SDKLogTestSuite) SetupTest() {
 	suite.NoError(err)
 	suite.topic = topicId
 
-	suite.NoError(CreateIndex(topicId, "", false, false, true, false,
-		KeyValueList{
-			{
-				Key: "key-1",
-				Value: Value{
-					ValueType:      "text",
-					Delimiter:      "",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        true,
-				},
-			},
-			{
-				Key: "key-2",
-				Value: Value{
-					ValueType:      "long",
-					Delimiter:      "",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        true,
-				},
-			},
-		}, suite.cli))
+	keyValueList := make([]KeyValueInfo, 0)
+	keyValueList = append(keyValueList, KeyValueInfo{
+		Key: "key-1",
+		Value: Value{
+			ValueType:      "text",
+			Delimiter:      "",
+			CasSensitive:   false,
+			IncludeChinese: false,
+			SQLFlag:        true,
+		},
+	})
+	keyValueList = append(keyValueList, KeyValueInfo{
+		Key: "key-2",
+		Value: Value{
+			ValueType:      "long",
+			Delimiter:      "",
+			CasSensitive:   false,
+			IncludeChinese: false,
+			SQLFlag:        true,
+		},
+	})
+	suite.NoError(CreateIndex(topicId, nil, &keyValueList, suite.cli))
 }
 
 func (suite *SDKLogTestSuite) TearDownTest() {
@@ -133,12 +132,12 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 	beginCursor := beginCursorResp.Cursor
 
 	pullLogsResp, err := suite.cli.ConsumeLogs(&ConsumeLogsRequest{
-		TopicID:     suite.topic,
-		ShardID:     0,
-		Cursor:      beginCursor,
-		EndCursor:   nil,
-		Count:       IntPtr(100),
-		Compression: nil,
+		TopicID:       suite.topic,
+		ShardID:       0,
+		Cursor:        beginCursor,
+		EndCursor:     nil,
+		LogGroupCount: IntPtr(100),
+		Compression:   nil,
 	})
 	suite.NoError(err)
 
@@ -162,7 +161,10 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 	logMap := make(map[string]struct{})
 	for _, searchLog := range searchRes.Logs {
 		for _, v := range searchLog {
-			logMap[v.(string)] = struct{}{}
+			switch v.(type) {
+			case string:
+				logMap[v.(string)] = struct{}{}
+			}
 		}
 	}
 

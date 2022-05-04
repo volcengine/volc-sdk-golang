@@ -91,11 +91,11 @@ func TestListTopic(t *testing.T) {
 		os.Getenv("LOG_TEST_REGION"))
 
 	listRequest := &DescribeTopicsRequest{
-		ProjectID: "parent project id",
-		TopicID:   "topic-id",
-		TopicName: "topic-name",
-		Offset:    5,
-		Limit:     5,
+		ProjectID:  "parent project id",
+		TopicID:    "topic-id",
+		TopicName:  "topic-name",
+		PageNumber: 5,
+		PageSize:   5,
 	}
 
 	topicList, err := client.DescribeTopics(listRequest)

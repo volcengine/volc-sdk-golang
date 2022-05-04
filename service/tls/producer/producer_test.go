@@ -59,25 +59,15 @@ func createTopic(projectId, topicName, description string, shardCount int, ttl u
 	return createTopicResp.TopicID, nil
 }
 
-func createIndex(topicID, delimiter string, casSensitive, fulltextIndex, keyValueIndex, includeChinese bool,
-	keyValueList KeyValueList, cli Client) error {
+func createIndex(topicID string, fulltextInfo *FullTextInfo, KeyValue *[]KeyValueInfo, cli Client) error {
 	createIndexReq := &CreateIndexRequest{
-		TopicID:        topicID,
-		FulltextIndex:  fulltextIndex,
-		CasSensitive:   casSensitive,
-		IncludeChinese: includeChinese,
-		Delimiter:      delimiter,
-		KeyValueIndex:  keyValueIndex,
-		KeyValueList:   keyValueList,
+		TopicID:  topicID,
+		FullText: fulltextInfo,
+		KeyValue: KeyValue,
 	}
-
 	_, err := cli.CreateIndex(createIndexReq)
 
 	return err
-}
-
-func intPtr(in int) *int {
-	return &in
 }
 
 func (suite *SDKProducerTestSuite) SetupTest() {
@@ -93,29 +83,28 @@ func (suite *SDKProducerTestSuite) SetupTest() {
 	suite.NoError(err)
 	suite.topic = topicId
 
-	suite.NoError(createIndex(topicId, "", false, false, true, false,
-		KeyValueList{
-			{
-				Key: "key-1",
-				Value: Value{
-					ValueType:      "text",
-					Delimiter:      "",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        true,
-				},
-			},
-			{
-				Key: "key-2",
-				Value: Value{
-					ValueType:      "long",
-					Delimiter:      "",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        true,
-				},
-			},
-		}, suite.cli))
+	keyValueList := make([]KeyValueInfo, 0)
+	keyValueList = append(keyValueList, KeyValueInfo{
+		Key: "key-1",
+		Value: Value{
+			ValueType:      "text",
+			Delimiter:      "",
+			CasSensitive:   false,
+			IncludeChinese: false,
+			SQLFlag:        true,
+		},
+	})
+	keyValueList = append(keyValueList, KeyValueInfo{
+		Key: "key-2",
+		Value: Value{
+			ValueType:      "long",
+			Delimiter:      "",
+			CasSensitive:   false,
+			IncludeChinese: false,
+			SQLFlag:        true,
+		},
+	})
+	suite.NoError(createIndex(topicId, nil, &keyValueList, suite.cli))
 
 	// init producer
 	producerCfg := GetDefaultProducerConfig()
@@ -179,7 +168,7 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 	}
 
 	// wait for consumption
-	time.Sleep(30 * time.Second)
+	time.Sleep(50 * time.Second)
 
 	// test search logs
 	searchRes, err := suite.cli.SearchLogs(&SearchLogsRequest{
@@ -196,7 +185,10 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 	logMap := make(map[string]struct{})
 	for _, searchLog := range searchRes.Logs {
 		for _, v := range searchLog {
-			logMap[v.(string)] = struct{}{}
+			switch v.(type) {
+			case string:
+				logMap[v.(string)] = struct{}{}
+			}
 		}
 	}
 

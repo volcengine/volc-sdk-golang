@@ -90,8 +90,8 @@ func TestListProject(t *testing.T) {
 
 		ProjectID:   "project-id",
 		ProjectName: "project-name",
-		Offset:      5,
-		Limit:       10,
+		PageNumber:  5,
+		PageSize:    10,
 	}
 
 	projectList, err := client.DescribeProjects(listRquest)

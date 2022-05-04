@@ -23,7 +23,7 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (*CommonResponse, error) {
 	}
 
 	params := map[string]string{
-		"topic_id": request.TopicID,
+		"TopicId": request.TopicID,
 	}
 
 	bodyBytes, originalLength, err := GetPutLogsBody(request.CompressType, request.LogBody)
@@ -94,28 +94,28 @@ func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroup
 
 func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error) {
 	params := map[string]string{
-		"topic_id": request.TopicID,
-		"shard_id": strconv.Itoa(request.ShardID),
+		"TopicId": request.TopicID,
+		"ShardId": strconv.Itoa(request.ShardID),
 	}
 
 	headers := map[string]string{
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]string{
-		"cursor": request.Cursor,
+	reqBody := map[string]interface{}{
+		"Cursor": request.Cursor,
 	}
 
 	if request.EndCursor != nil {
-		reqBody["end_cursor"] = *request.EndCursor
+		reqBody["EndCursor"] = *request.EndCursor
 	}
 
-	if request.Count != nil {
-		reqBody["count"] = strconv.Itoa(*request.Count)
+	if request.LogGroupCount != nil {
+		reqBody["LogGroupCount"] = *request.LogGroupCount
 	}
 
 	if request.Compression != nil {
-		reqBody["compression"] = *request.Compression
+		reqBody["Compression"] = *request.Compression
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -174,8 +174,8 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsRespons
 
 func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error) {
 	params := map[string]string{
-		"topic_id": request.TopicID,
-		"shard_id": strconv.Itoa(request.ShardID),
+		"TopicId": request.TopicID,
+		"ShardId": strconv.Itoa(request.ShardID),
 	}
 
 	headers := map[string]string{
@@ -183,7 +183,7 @@ func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (*DescribeCurs
 	}
 
 	reqBody := map[string]string{
-		"from": request.From,
+		"From": request.From,
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
