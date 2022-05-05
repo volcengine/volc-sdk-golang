@@ -9,7 +9,7 @@ import (
 )
 
 type CommonResponse struct {
-	RequestID string `json:"RequestID"`
+	RequestID string `json:"RequestId"`
 }
 
 type CreateProjectRequest struct {
