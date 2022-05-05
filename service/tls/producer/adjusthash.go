@@ -1,7 +1,7 @@
 package producer
 
 import (
-	"crypto/md5"
+	"crypto/sha256"
 	"strings"
 )
 
@@ -42,7 +42,7 @@ func AdjustHash(shardhash string, shardCount int) (string, error) {
 	)
 	targetHash.Grow(32)
 
-	h := md5.New()
+	h := sha256.New()
 	h.Write([]byte(shardhash))
 	cipherStr := h.Sum(nil)
 

@@ -33,12 +33,7 @@ type DescribeProjectRequest struct {
 
 type DescribeProjectResponse struct {
 	CommonResponse
-	ProjectID       string `json:"ProjectId"`
-	ProjectName     string `json:"ProjectName"`
-	Description     string `json:"Description"`
-	CreateTimestamp string `json:"CreateTime"`
-	TopicCount      int64  `json:"TopicCount"`
-	InnerNetDomain  string `json:"InnerNetDomain"`
+	ProjectInfo
 }
 
 type DescribeProjectsRequest struct {
@@ -48,16 +43,18 @@ type DescribeProjectsRequest struct {
 	PageSize    int
 }
 
+type ProjectInfo struct {
+	ProjectID       string `json:"ProjectId"`
+	ProjectName     string `json:"ProjectName"`
+	Description     string `json:"Description"`
+	CreateTimestamp string `json:"CreateTime"`
+	TopicCount      int64  `json:"TopicCount"`
+	InnerNetDomain  string `json:"InnerNetDomain"`
+}
+
 type DescribeProjectsResponse struct {
 	CommonResponse
-	Projects []*struct {
-		ProjectID       string `json:"ProjectId"`
-		ProjectName     string `json:"ProjectName"`
-		Description     string `json:"Description"`
-		CreateTimestamp string `json:"CreateTime"`
-		TopicCount      int64  `json:"TopicCount"`
-		InnerNetDomain  string `json:"InnerNetDomain"`
-	} `json:"Projects"`
+	Projects []ProjectInfo `json:"Projects"`
 
 	Total int64 `json:"Total"`
 }

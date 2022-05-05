@@ -3,7 +3,8 @@ package tls
 import (
 	"bytes"
 	"context"
-	"crypto/md5"
+
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -114,7 +115,8 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	headers[AgentHeader] = defaultLogUserAgent
 
 	if body != nil {
-		bodyMD5 := fmt.Sprintf("%X", md5.Sum(body))
+		h := sha256.New()
+		bodyMD5 := fmt.Sprintf("%X", h.Sum(body))
 		headers[ContentMd5Header] = bodyMD5
 	}
 
