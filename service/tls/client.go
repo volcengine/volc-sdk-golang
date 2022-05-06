@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 
-	"crypto/sha256"
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -115,8 +115,7 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	headers[AgentHeader] = defaultLogUserAgent
 
 	if body != nil {
-		h := sha256.New()
-		bodyMD5 := fmt.Sprintf("%X", h.Sum(body))
+		bodyMD5 := fmt.Sprintf("%X", md5.Sum(body))
 		headers[ContentMd5Header] = bodyMD5
 	}
 
