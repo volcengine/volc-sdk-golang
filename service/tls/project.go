@@ -133,6 +133,8 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (*Describe
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
+	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 

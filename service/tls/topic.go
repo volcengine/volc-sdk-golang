@@ -193,6 +193,8 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (*DescribeTopi
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
+	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
