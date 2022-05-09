@@ -66,6 +66,136 @@ type DataReportResponse struct {
 	Message   string `json:"Message"`
 }
 
+type AsyncVideoRiskResponse struct {
+	RequestId string `json:"RequestId"`
+	Code      int    `json:"Code"`
+	Message   string `json:"Message"`
+}
+
+type VideoResultRequest struct {
+	DataId  string `json:"DataId"`
+	AppId   int64  `json:"AppId"`
+	Service string `json:"Service"`
+}
+
+type VideoResultResponse struct {
+	RequestId string    `json:"RequestId"`
+	Code      int       `json:"Code"`
+	Message   string    `json:"Message"`
+	VideoResp VideoResp `json:"Data"`
+}
+
+type VideoResp struct {
+	VideoResult VideoResult `json:"VideoResult"`
+}
+
+type VideoResult struct {
+	Decision string  `json:"Decision"`
+	Frames   []Frame `json:"Frames"`
+}
+
+type Frame struct {
+	Url     string   `json:"Url"`
+	Offset  float64  `json:"Offset"`
+	Results []Result `json:"Results"`
+}
+
+type Result struct {
+	Decision string   `json:"Decision"`
+	Label    string   `json:"Label"`
+	SubLabel string   `json:"SubLabel"`
+	Detail   []string `json:"Detail"`
+}
+
+type ImageResultResponse struct {
+	RequestId string               `json:"RequestId"`
+	Code      int                  `json:"Code"`
+	Message   string               `json:"Message"`
+	ImageResp ImageContentRiskResp `json:"Data"`
+}
+
+type ImageContentRiskResp struct {
+	DataId   string                 `json:"DataId"`
+	Decision string                 `json:"Decision"`
+	Results  []*ImageContentRiskTag `json:"Results"`
+	Scores   map[string]float64     `json:"Scores"`
+}
+
+type ImageContentRiskTag struct {
+	Label    string               `json:"Label"`
+	SubLabel string               `json:"SubLabel"`
+	Decision string               `json:"Decision"`
+	Score    float64              `json:"score"`
+	Detail   interface{}          `json:"Detail"`
+	Frames   []*ImageContentFrame `json:"Frames"`
+}
+
+type ImageContentFrame struct {
+	//Id float64 `json:"id"`
+	//Url   string  `json:"url"`
+	//Score float64 `json:"score"`
+}
+
+type AudioResultResponse struct {
+	RequestId string    `json:"RequestId"`
+	Code      int       `json:"Code"`
+	Message   string    `json:"Message"`
+	VideoResp VideoResp `json:"Data"`
+}
+
+type AudioResult struct {
+	Decision string         `json:"Decision"`
+	Details  []*AudioDetail `json:"Details"`
+}
+
+type AudioDetail struct {
+	StartTime    float64        `json:"StartTime"`
+	EndTime      float64        `json:"EndTime"`
+	FrameUrl     string         `json:"FrameUrl"`
+	AudioText    string         `json:"AudioText"`
+	FrameID      int            `json:"FrameID"`
+	FrameResults []*FrameResult `json:"FrameResults"`
+}
+
+type FrameResult struct {
+	Label        string   `json:"Label"`
+	SubLabel     string   `json:"SubLabel"`
+	Decision     string   `json:"Decision"`
+	MatchedWords []string `json:"MatchedWords"`
+	LibId        string   `json:"LibId"`
+	LibName      string   `json:"LibName"`
+}
+
+type TextResultResponse struct {
+	RequestId string         `json:"RequestId"`
+	Code      int            `json:"Code"`
+	Message   string         `json:"Message"`
+	VideoResp TextRiskRespV2 `json:"Data"`
+}
+
+type TextRiskRespV2 struct {
+	Decision string   `json:"Decision"`
+	Result   []*Label `json:"Result"`
+}
+
+type Label struct {
+	Label    string    `json:"Label"`
+	SubLabel string    `json:"SubLabel"`
+	Decision string    `json:"Decision"`
+	Contexts []Context `json:"Contexts"`
+}
+
+type Context struct {
+	MatchedWords []string `json:"MatchedWords"`
+	LibName      string   `json:"LibName"`
+	Positions    Position `json:"Positions"`
+}
+
+type Position struct {
+	StartPos int `json:"StartPos"`
+	EndPos   int `json:"EndPos"`
+}
+
 type Page struct {
 	PageNum  int64 `json:"PageNum" form:"PageNum"`
 	PageSize int64 `json:"PageSize" form:"PageSize"`
@@ -73,6 +203,10 @@ type Page struct {
 }
 
 func (r *RiskResultRequest) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
+
+func (r *VideoResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }
 
