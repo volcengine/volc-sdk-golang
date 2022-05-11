@@ -334,14 +334,6 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
-		//"GetSpaceConfig": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetSpaceConfig"},
-		//		"Version": []string{"2022-01-01"},
-		//	},
-		//},
 		"UpdateSpace": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -392,6 +384,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"ListCdnTasks"},
 				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListCdnAccessLog": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnAccessLog"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		"DescribeVodDomainBandwidthData": {
