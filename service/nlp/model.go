@@ -17,10 +17,10 @@ type CharResult struct {
 }
 
 type WordResult struct {
-	Correct    string `json:"correct"`
-	Original   string `json:"original"`
-	IndexOfDoc string `json:"index_of_doc"`
-	Confidence string `json:"confidence"`
+	Correct    string  `json:"correct"`
+	Original   string  `json:"original"`
+	IndexOfDoc int     `json:"index_of_doc"`
+	Confidence float64 `json:"confidence"`
 }
 
 type TextCorrectionZhCorrectParam struct {
