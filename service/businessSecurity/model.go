@@ -90,6 +90,21 @@ type ElementVerifyData struct {
 	Detail string `json:"Detail"`
 }
 
+type ElementVerifyResponseV2 struct {
+	RequestId string              `json:"RequestId"`
+	Code      int                 `json:"Code"`
+	Message   string              `json:"Message"`
+	Data      ElementVerifyDataV2 `json:"Data"`
+}
+
+type ElementVerifyDataV2 struct {
+	Status int                     `json:"Status"`
+	Detail ElementVerifyDataDetail `json:"Detail"`
+}
+
+type ElementVerifyDataDetail struct {
+}
+
 type MobileStatusRequest struct {
 	AppId      int64  `json:"AppId"`
 	Service    string `json:"Service"`
@@ -107,6 +122,31 @@ type MobileStatusData struct {
 	Status int    `json:"Status"`
 	Mobile string `json:"Mobile"`
 	Detail string `json:"Detail"`
+}
+
+type MobileStatusResponseV2 struct {
+	RequestId string             `json:"RequestId"`
+	Code      int                `json:"Code"`
+	Message   string             `json:"Message"`
+	Data      MobileStatusDataV2 `json:"Data"`
+}
+
+type MobileStatusDataV2 struct {
+	Status int                `json:"Status"`
+	Mobile string             `json:"Mobile"`
+	Detail MobileStatusDetail `json:"Detail"`
+}
+
+type MobileStatusDetail struct {
+	Province     string `json:"Province"`
+	ProvinceCode string `json:"ProvinceCode"`
+	City         string `json:"City"`
+	CityCode     string `json:"CityCode"`
+	ISP          string `json:"ISP"`
+	Mobile       string `json:"Mobile"`
+	PostCode     string `json:"PostCode"`
+	OldISP       int    `json:"OldISP"`
+	NewISP       int    `json:"NewISP"`
 }
 
 func (r *RiskResultRequest) ToQuery() url.Values {

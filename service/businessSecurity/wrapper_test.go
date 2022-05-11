@@ -91,6 +91,23 @@ func TestBusinessSecurity_ElementVerify(t *testing.T) {
 	ElementVerify(3332, "idcard_two_element_verify", "{\"operate_time\": 1615540603, \"idcard_no\": \"\", \"idcard_name\":\"\"}")
 }
 
+func TestBusinessSecurity_ElementVerifyV2(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_two_element_verify"
+	parameters := "{\"operate_time\": 1635321212,\"mobile\":\"\",\"idcard_name\":\"\"}"
+
+	res, err := DefaultInstance.ElementVerifyV2(&ElementVerifyRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *res)
+}
+
 func TestBusinessSecurity_MobileStatus(t *testing.T) {
 	appId := int64(3332)
 	service := "mobile_empty_status"
@@ -103,6 +120,23 @@ func TestBusinessSecurity_MobileStatus(t *testing.T) {
 	})
 	if err != nil {
 		t.Errorf("%v", err)
+	}
+	t.Logf("%v", *res)
+}
+
+func TestBusinessSecurity_MobileStatusV2(t *testing.T) {
+	appId := int64(3332)
+	service := "mobile_address"
+	parameters := "{\"operate_time\":1617960951,\"mobile\":\"12312341234\"}"
+
+	res, err := DefaultInstance.MobileStatusV2(&MobileStatusRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: parameters,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
 	}
 	t.Logf("%v", *res)
 }
