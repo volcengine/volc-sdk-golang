@@ -62,6 +62,7 @@ type BillDetail struct {
 	BillID                 string
 	BillCategory           string
 	InstanceNo             string
+	InstanceName           string
 	ConfigName             string
 	Element                string
 	Region                 string

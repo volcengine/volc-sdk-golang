@@ -236,7 +236,6 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		SuccessOids: success,
 	}
 	if params.CommitParam != nil {
-		commitParams.OptionInfos = params.CommitParam.OptionInfos
 		commitParams.Functions = params.CommitParam.Functions
 	}
 	commitResp, err := c.CommitUploadImage(commitParams)
@@ -433,6 +432,17 @@ func (c *ImageX) GetImageEraseModel(eraseType int) ([]string, error) {
 func (c *ImageX) GetImageErase(param *GetImageEraseParam) (*GetImageEraseResult, error) {
 	res := new(GetImageEraseResult)
 	err := c.ImageXPost("GetImageEraseResult", nil, param, res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *ImageX) GetImageSegment(param *GetImageSegmentParam) (*GetImageSegmentResult, error) {
+	query := url.Values{}
+	query.Set("ServiceId", param.ServiceId)
+	res := new(GetImageSegmentResult)
+	err := c.ImageXPost("GetSegmentImage", query, param, res)
 	if err != nil {
 		return nil, err
 	}

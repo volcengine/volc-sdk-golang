@@ -77,6 +77,61 @@ func (x *VodGetPlayInfoResponse) GetResult() *business.VodPlayInfoModel {
 	return nil
 }
 
+type VodGetAllPlayInfoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata          `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"` // 响应通用信息
+	Result           []*business.VodAllPlayInfoModel `protobuf:"bytes,2,rep,name=Result,proto3" json:"Result,omitempty"`                     // 响应结果
+}
+
+func (x *VodGetAllPlayInfoResponse) Reset() {
+	*x = VodGetAllPlayInfoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodGetAllPlayInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodGetAllPlayInfoResponse) ProtoMessage() {}
+
+func (x *VodGetAllPlayInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodGetAllPlayInfoResponse.ProtoReflect.Descriptor instead.
+func (*VodGetAllPlayInfoResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *VodGetAllPlayInfoResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodGetAllPlayInfoResponse) GetResult() []*business.VodAllPlayInfoModel {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
 type VodGetOriginalPlayInfoResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

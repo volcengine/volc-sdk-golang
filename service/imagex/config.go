@@ -166,14 +166,6 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
-		"PreviewImageTemplate": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"PreviewImageTemplate"},
-				"Version": []string{ApiVersion},
-			},
-		},
 		"GetImageTemplate": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -317,6 +309,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageQuality"},
+				"Version": []string{ApiVersion},
+			},
+		},
+		"GetSegmentImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSegmentImage"},
 				"Version": []string{ApiVersion},
 			},
 		},
