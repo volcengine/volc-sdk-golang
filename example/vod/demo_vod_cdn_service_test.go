@@ -112,6 +112,26 @@ func Test_ListCdnAccessLog(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_ListCdnTopAccessUrl(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnTopAccessUrlRequest{
+		Domains:        "your Domains",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		SortType:       "your SortType",
+	}
+
+	resp, status, err := instance.ListCdnTopAccessUrl(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

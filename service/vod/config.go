@@ -394,6 +394,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"ListCdnTopAccessUrl": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTopAccessUrl"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 		"DescribeVodDomainBandwidthData": {
 			Method: http.MethodGet,
 			Path:   "/",
