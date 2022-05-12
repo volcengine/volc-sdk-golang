@@ -11,6 +11,7 @@ type Bill struct {
 	OwnerUserName          string
 	OwnerCustomerName      string
 	Product                string
+	ProductZh              string
 	BusinessMode           string
 	BillingMode            string
 	ExpenseBeginTime       string
@@ -53,6 +54,7 @@ type BillDetail struct {
 	OwnerCustomerName      string
 	BusinessMode           string
 	Product                string
+	ProductZh              string
 	BillingMode            string
 	ExpenseBeginTime       string
 	ExpenseEndTime         string
@@ -106,6 +108,7 @@ type BillOverviewByProd struct {
 	OwnerCustomerName      string
 	BusinessMode           string
 	Product                string
+	ProductZh              string
 	BillingMode            string
 	BillCategoryParent     string
 	OriginalBillAmount     string
