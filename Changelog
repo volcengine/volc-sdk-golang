@@ -1,5 +1,9 @@
 ### Change log
 
+2022-05-12 Bumped to version v1.0.44
+- Fixed apis for billing
+- Added apis for vod\security
+
 2022-04-28 Bumped to version v1.0.43
 - Fixed apis for cdn\imagex
 
