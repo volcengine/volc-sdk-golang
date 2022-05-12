@@ -41,6 +41,7 @@ type DescribeProjectsRequest struct {
 	ProjectID   string
 	PageNumber  int
 	PageSize    int
+	IsFullName  bool
 }
 
 type ProjectInfo struct {
@@ -111,6 +112,7 @@ type DescribeTopicsRequest struct {
 	PageSize   int
 	TopicName  string
 	TopicID    string
+	IsFullName bool
 }
 
 type Topic struct {
