@@ -12,14 +12,8 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/gtm"
 )
 
-var (
-	version       = "2021-07-05"
-	xTopAccountId = ""
-	xTopUserId    = ""
-	XTopService   = "gtm"
-)
-
 func TestTopGTM(t *testing.T) {
+	comm := gtm.InitCommonParameter()
 	ctx := context.Background()
 	c := gtm.NewClient(gtm.NewVolcCaller())
 
@@ -33,10 +27,7 @@ func TestTopGTM(t *testing.T) {
 
 	// Create GTM
 	respCreate, err := c.CreateGTM(ctx, &gtm.CreateGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
+		Version: &comm.Version,
 
 		Domain:   &domain1,
 		AddrType: &ip,
@@ -52,12 +43,8 @@ func TestTopGTM(t *testing.T) {
 	// Modify GTM
 	cname1 = perf1 + "-modify.gtm.volcdns.com"
 	err = c.ModifyGTM(ctx, &gtm.ModifyGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-
+		Version:  &comm.Version,
+		ID:       gID,
 		Cname:    &cname1,
 		AddrType: &ip,
 	})
@@ -65,11 +52,8 @@ func TestTopGTM(t *testing.T) {
 
 	// Read GTM
 	respReadGTM, err := c.ReadGTM(ctx, &gtm.ReadGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 	assert.True(t, *respReadGTM.Cname == cname1)
@@ -81,7 +65,7 @@ func TestTopGTM(t *testing.T) {
 
 	addrTTL := int64(60)
 	addrType := int64(0)
-	addrValue := "1.1.1.1"
+	addrValue := "8.8.8.8"
 	addrWeight := int64(1)
 
 	poolActThresh := int64(1)
@@ -89,11 +73,8 @@ func TestTopGTM(t *testing.T) {
 	pool := gtm.Pool{ActThresh: &poolActThresh, Addrs: poolAddrs}
 
 	respCreateView, err := c.CreateView(ctx, &gtm.CreateViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 
 		Name:    &name,
 		Line:    &line,
@@ -114,42 +95,30 @@ func TestTopGTM(t *testing.T) {
 
 	// Start GTM
 	err = c.StartGTM(ctx, &gtm.StartGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 
 	// Read GTM
 	respReadGTM, err = c.ReadGTM(ctx, &gtm.ReadGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 	assert.True(t, *respReadGTM.State == 1)
 
 	// Stop GTM
 	err = c.StopGTM(ctx, &gtm.StopGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 
 	// Read GTM
 	respReadGTM, err = c.ReadGTM(ctx, &gtm.ReadGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 	assert.True(t, *respReadGTM.State == 0)
@@ -158,10 +127,7 @@ func TestTopGTM(t *testing.T) {
 	domain2 := perf2 + "-volc-test.com"
 	cname2 := perf2 + ".gtm.volcdns.com"
 	respCreate, err = c.CreateGTM(ctx, &gtm.CreateGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
+		Version: &comm.Version,
 
 		Domain:   &domain2,
 		AddrType: &ip,
@@ -175,57 +141,45 @@ func TestTopGTM(t *testing.T) {
 
 	// Find
 	respFindGTMs, err := c.FindGTMs(ctx, &gtm.FindGTMsRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		Domain:        &domain2,
+		Version: &comm.Version,
+		Domain:  &domain2,
 	})
 	assert.Nil(t, err)
 	assert.Equal(t, *respFindGTMs.Total, int64(1))
 
 	// Delete GTM
 	err = c.DeleteGTM(ctx, &gtm.DeleteGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID2,
+		Version: &comm.Version,
+		ID:      gID2,
 	})
 	assert.Nil(t, err)
 
 	// Find
 	respFindGTMs, err = c.FindGTMs(ctx, &gtm.FindGTMsRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		Domain:        &domain2,
+		Version: &comm.Version,
+		Domain:  &domain2,
 	})
 	assert.Nil(t, err)
 	assert.Equal(t, *respFindGTMs.Total, int64(0))
 
 	// Delete View
 	err = c.DeleteView(ctx, &gtm.DeleteViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-		Vid:           &vid,
+		Version: &comm.Version,
+		ID:      gID,
+		Vid:     &vid,
 	})
 	assert.Nil(t, err)
 
 	// Delete GTM
 	err = c.DeleteGTM(ctx, &gtm.DeleteGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 }
 
 func TestTopGTMProbe(t *testing.T) {
+	comm := gtm.InitCommonParameter()
 	ctx := context.Background()
 	c := gtm.NewClient(gtm.NewVolcCaller())
 
@@ -238,10 +192,7 @@ func TestTopGTMProbe(t *testing.T) {
 
 	// Create GTM
 	respCreate, err := c.CreateGTM(ctx, &gtm.CreateGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
+		Version: &comm.Version,
 
 		Domain:   &domain1,
 		AddrType: &ip,
@@ -262,25 +213,21 @@ func TestTopGTMProbe(t *testing.T) {
 	fail_count := int64(2)
 
 	err = c.ModifyProbe(ctx, &gtm.ModifyProbeRequest{
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-		Enable:        &enable,
-		Proto:         &proto,
-		Interval:      &interval,
-		Count:         &count,
-		Timeout:       &timeout,
-		FailCount:     &fail_count,
+		Version:   &comm.Version,
+		ID:        gID,
+		Enable:    &enable,
+		Proto:     &proto,
+		Interval:  &interval,
+		Count:     &count,
+		Timeout:   &timeout,
+		FailCount: &fail_count,
 	})
 	assert.Nil(t, err)
 
 	// Read Probe
 	resp, err := c.ReadProbe(ctx, &gtm.ReadProbeRequest{
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 	assert.Equal(t, *resp.Enable, enable)
@@ -292,15 +239,14 @@ func TestTopGTMProbe(t *testing.T) {
 
 	// Delete GTM
 	err = c.DeleteGTM(ctx, &gtm.DeleteGTMRequest{
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 }
 
 func TestTopGTMView(t *testing.T) {
+	comm := gtm.InitCommonParameter()
 	ctx := context.Background()
 	c := gtm.NewClient(gtm.NewVolcCaller())
 
@@ -313,10 +259,7 @@ func TestTopGTMView(t *testing.T) {
 
 	// Create GTM
 	respCreate, err := c.CreateGTM(ctx, &gtm.CreateGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
+		Version: &comm.Version,
 
 		Domain:   &domain,
 		AddrType: &ip,
@@ -335,7 +278,7 @@ func TestTopGTMView(t *testing.T) {
 
 	addrTTL := int64(60)
 	addrType := int64(0)
-	addrValue := "1.1.1.1"
+	addrValue := "8.8.8.8"
 	addrWeight := int64(1)
 
 	poolActThresh := int64(1)
@@ -344,11 +287,8 @@ func TestTopGTMView(t *testing.T) {
 	pool := gtm.Pool{ActThresh: &poolActThresh, Addrs: poolAddrs}
 
 	respCreateView, err := c.CreateView(ctx, &gtm.CreateViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 
 		Name:    &name,
 		Line:    &line,
@@ -364,11 +304,8 @@ func TestTopGTMView(t *testing.T) {
 
 	// List view
 	resp, err := c.ListViews(ctx, &gtm.ListViewsRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 	assert.Equal(t, len(resp), 1)
@@ -380,7 +317,7 @@ func TestTopGTMView(t *testing.T) {
 
 	addrTTL = int64(60)
 	addrType = int64(0)
-	addrValue = "1.1.1.2"
+	addrValue = "8.8.8.9"
 	addrWeight = int64(1)
 
 	poolActThresh = int64(1)
@@ -389,12 +326,9 @@ func TestTopGTMView(t *testing.T) {
 	pool = gtm.Pool{ActThresh: &poolActThresh, Addrs: poolAddrs}
 
 	err = c.ModifyView(ctx, &gtm.ModifyViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-		Vid:           &vid,
+		Version: &comm.Version,
+		ID:      gID,
+		Vid:     &vid,
 
 		Name:    &name,
 		Line:    &line,
@@ -406,47 +340,36 @@ func TestTopGTMView(t *testing.T) {
 
 	// Read view
 	respReadView, err := c.ReadView(ctx, &gtm.ReadViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-		Vid:           &vid,
+		Version: &comm.Version,
+		ID:      gID,
+		Vid:     &vid,
 	})
 	assert.Nil(t, err)
 	assert.Equal(t, *respReadView.Name, name)
 
 	// Delete view
 	err = c.DeleteView(ctx, &gtm.DeleteViewRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
-		Vid:           &vid,
+		Version: &comm.Version,
+		ID:      gID,
+		Vid:     &vid,
 	})
 	assert.Nil(t, err)
 
 	// Delete GTM
 	err = c.DeleteGTM(ctx, &gtm.DeleteGTMRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
-		ID:            gID,
+		Version: &comm.Version,
+		ID:      gID,
 	})
 	assert.Nil(t, err)
 }
 
 func TestTopGTMStatus(t *testing.T) {
+	comm := gtm.InitCommonParameter()
 	ctx := context.Background()
 	c := gtm.NewClient(gtm.NewVolcCaller())
 
 	res, err := c.Stats(ctx, &gtm.StatsRequest{
-
-		Version:       &version,
-		XTopAccountId: &xTopAccountId,
-		XTopUserId:    &xTopUserId,
+		Version: &comm.Version,
 	})
 	assert.Nil(t, err)
 	if err != nil {

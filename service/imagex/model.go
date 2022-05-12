@@ -14,6 +14,12 @@ const (
 	ActionPreload    = 4
 	ActionRefreshDir = 5
 
+	SEGMENT_CLASS_GENERAL    = "general"
+	SEGMENT_CLASS_HUMAN      = "human"
+	SEGMENT_CLASS_PRODUCT    = "product"
+	SEGMENT_CLASS_HUMAN_V2   = "humanv2"
+	SEGMENT_CLASS_PRODUCT_V2 = "productv2"
+
 	FunctionEncryption = "Encryption"
 )
 
@@ -130,16 +136,10 @@ type StoreInfo struct {
 
 // CommitImageUpload
 type CommitUploadImageParam struct {
-	ServiceId   string       `json:"-"`
-	SessionKey  string       `json:"SessionKey"`
-	SuccessOids []string     `json:"SuccessOids"`
-	OptionInfos []OptionInfo `json:"OptionInfos"`
-	Functions   []Function   `json:"Functions"`
-}
-
-type OptionInfo struct {
-	StoreUri string `json:"StoreUri"`
-	FileName string `json:"FileName"`
+	ServiceId   string     `json:"-"`
+	SessionKey  string     `json:"SessionKey"`
+	SuccessOids []string   `json:"SuccessOids"`
+	Functions   []Function `json:"Functions"`
 }
 
 type Function struct {
@@ -204,6 +204,23 @@ type FetchUrlResp struct {
 	FSize    int    `json:"FSize"`
 }
 
+// GetImageStyleResult
+type GetImageStyleResultReq struct {
+	ServiceId     string
+	StyleId       string            `json:"StyleId"`
+	Params        map[string]string `json:"Params"`
+	OutputFormat  string            `json:"OutputFormat"`
+	OutputQuality int               `json:"OutputQuality"`
+}
+
+type GetImageStyleResultResp struct {
+	ResUri       string `json:"ResUri"`
+	RenderDetail []struct {
+		Element string `json:"Element"`
+		ErrMsg  string `json:"ErrMsg"`
+	} `json:"RenderDetail"`
+}
+
 //GetImageOCR
 type GetImageOCRResult struct {
 	Scene     string                          `json:"Scene"`
@@ -219,6 +236,86 @@ type GetImageOCRParam struct {
 	ServiceId string
 	Scene     string
 	StoreUri  string
+}
+
+// GetImageBgFillResult
+type GetImageBgFillParam struct {
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Model     int     `json:"Model"`
+	Top       float64 `json:"Top"`
+	Bottom    float64 `json:"Bottom"`
+	Left      float64 `json:"Left"`
+	Right     float64 `json:"Right"`
+}
+
+type GetImageBgFillResult struct {
+	ResUri string `json:"ResUri"`
+}
+
+// GetImageEnhanceResult
+type GetImageEnhanceParam struct {
+	ServiceId    string `json:"ServiceId"`
+	StoreUri     string `json:"StoreUri"`
+	Model        int    `json:"Model"`
+	DisableAr    bool   `json:"DisableAr"`
+	DisableSharp bool   `json:"DisableSharp"`
+}
+
+type GetImageEnhanceResult struct {
+	ResUri string `json:"ResUri"`
+	Method string `json:"Method"`
+}
+
+// GetImageEraseResult
+type GetImageEraseParam struct {
+	ServiceId string     `json:"ServiceId"`
+	StoreUri  string     `json:"StoreUri"`
+	Model     string     `json:"Model"`
+	BBox      []EraseBox `json:"BBox"`
+}
+
+type EraseBox struct {
+	X1 float64 `json:"X1"`
+	Y1 float64 `json:"Y1"`
+	X2 float64 `json:"X2"`
+	Y2 float64 `json:"Y2"`
+}
+
+type GetImageEraseResult struct {
+	ResUri string `json:"ResUri"`
+}
+
+// GetImageQuality
+type GetImageQualityParam struct {
+	ServiceId string
+	ImageUrl  string `json:"ImageUrl"`
+	VqType    string `json:"VqType"`
+}
+
+type GetImageQualityResult struct {
+	VqType   string                 `json:"VqType"`
+	NrScores map[string]interface{} `json:"NrScores"`
+}
+
+// GetImageSegment
+type GetImageSegmentParam struct {
+	ServiceId string
+	Class     string `json:"Class"`
+	Refine    bool   `json:"Refine"`
+	StoreUri  string `json:"StoreUri"`
+	OutFormat string `json:"OutFormat"`
+	TransBg   bool   `json:"TransBg"`
+	Contour   *Contour
+}
+
+type Contour struct {
+	Color string `json:"Color"`
+	Size  int    `json:"Size"`
+}
+
+type GetImageSegmentResult struct {
+	ResUri string `json:"ResUri"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {

@@ -158,6 +158,37 @@ func (p *BusinessSecurity) AsyncVideoRisk(req *AsyncRiskDetectionRequest) (*Asyn
 	return result, nil
 }
 
+func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVerifyResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ElementVerifyRequest: fail to marshal request, %v", err)
+	}
+
+
+	respBody, _, err := p.Client.Json("ElementVerify", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ElementVerify", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
+			}
+			result := new(ElementVerifyResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
+	}
+	result := new(ElementVerifyResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // Risk result
 // 风险识别结果获取接口
 func (p *BusinessSecurity) VideoResult(req *VideoResultRequest) (*VideoResultResponse, error) {
@@ -276,6 +307,36 @@ func (p *BusinessSecurity) ImageContentRisk(req *RiskDetectionRequest) (*ImageRe
 	return result, nil
 }
 
+func (p *BusinessSecurity) ElementVerifyV2(req *ElementVerifyRequest) (*ElementVerifyResponseV2, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ElementVerifyRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ElementVerifyV2", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ElementVerifyV2", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
+			}
+			result := new(ElementVerifyResponseV2)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ImageContentRisk: fail to do request, %v", err)
+	}
+	result := new(ElementVerifyResponseV2)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // text risk detection
 // 内容安全文本实时接口
 func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultResponse, error) {
@@ -298,10 +359,39 @@ func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultRespo
 				return nil, err
 			}
 			return result, nil
-		}
+			}
 		return nil, fmt.Errorf("TextRisk: fail to do request, %v", err)
 	}
 	result := new(TextResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) MobileStatus(req *MobileStatusRequest) (*MobileStatusResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileSecondSaleRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileStatus: fail to do request, %v", err)
+			}
+			result := new(MobileStatusResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+	}
+	result := new(MobileStatusResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -334,6 +424,36 @@ func (p *BusinessSecurity) AsyncAudioRisk(req *AsyncRiskDetectionRequest) (*Asyn
 		return nil, fmt.Errorf("AsyncAudioRisk: fail to do request, %v", err)
 	}
 	result := new(AsyncVideoRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) MobileStatusV2(req *MobileStatusRequest) (*MobileStatusResponseV2, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MobileSecondSaleRequest: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MobileStatusV2", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MobileStatusV2", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MobileStatusV2: fail to do request, %v", err)
+			}
+			result := new(MobileStatusResponseV2)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("MobileStatus: fail to do request, %v", err)
+	}
+	result := new(MobileStatusResponseV2)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

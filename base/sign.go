@@ -18,113 +18,163 @@ import (
 
 func (c Credentials) Sign(request *http.Request) *http.Request {
 	query := request.URL.Query()
-
 	request.URL.RawQuery = query.Encode()
-	return Sign4(request, c)
+
+	if request.URL.Path == "" {
+		request.URL.Path += "/"
+	}
+	requestParam := RequestParam{
+		IsSignUrl: false,
+		Body:      readAndReplaceBody(request),
+		Host:      request.Host,
+		Path:      request.URL.Path,
+		Method:    request.Method,
+		Date:      now(),
+		QueryList: query,
+		Headers:   request.Header,
+	}
+	signRequest := GetSignRequest(requestParam, c)
+
+	request.Header.Set("Host", signRequest.Host)
+	request.Header.Set("Content-Type", signRequest.ContentType)
+	request.Header.Set("X-Date", signRequest.XDate)
+	request.Header.Set("X-Content-Sha256", signRequest.XContentSha256)
+	request.Header.Set("Authorization", signRequest.Authorization)
+	if signRequest.XSecurityToken != "" {
+		request.Header.Set("X-Security-Token", signRequest.XSecurityToken)
+	}
+	return request
 }
 
 func (c Credentials) SignUrl(request *http.Request) string {
 	query := request.URL.Query()
-	ldt := timestampV4()
-	sdt := ldt[:8]
-	meta := new(metadata)
-	meta.date, meta.service, meta.region, meta.signedHeaders, meta.algorithm = sdt, c.Service, c.Region, "", "HMAC-SHA256"
-	meta.credentialScope = concat("/", meta.date, meta.region, meta.service, "request")
 
-	query.Set("X-Date", ldt)
-	query.Set("X-NotSignBody", "")
-	query.Set("X-Credential", c.AccessKeyID+"/"+meta.credentialScope)
-	query.Set("X-Algorithm", meta.algorithm)
-	query.Set("X-SignedHeaders", meta.signedHeaders)
-	query.Set("X-SignedQueries", "")
-	keys := make([]string, 0, len(query))
-	for k := range query {
-		keys = append(keys, k)
+	requestParam := RequestParam{
+		IsSignUrl: true,
+		Body:      readAndReplaceBody(request),
+		Host:      request.Host,
+		Path:      request.URL.Path,
+		Method:    request.Method,
+		Date:      now(),
+		QueryList: query,
+		Headers:   request.Header,
 	}
-	sort.Strings(keys)
-	query.Set("X-SignedQueries", strings.Join(keys, ";"))
+	signRequest := GetSignRequest(requestParam, c)
 
-	if c.SessionToken != "" {
-		query.Set("X-Security-Token", c.SessionToken)
+	query.Set("X-Date", signRequest.XDate)
+	query.Set("X-NotSignBody", signRequest.XNotSignBody)
+	query.Set("X-Credential", signRequest.XCredential)
+	query.Set("X-Algorithm", signRequest.XAlgorithm)
+	query.Set("X-SignedHeaders", signRequest.XSignedHeaders)
+	query.Set("X-SignedQueries", signRequest.XSignedQueries)
+	query.Set("X-Signature", signRequest.XSignature)
+	if signRequest.XSecurityToken != "" {
+		query.Set("X-Security-Token", signRequest.XSecurityToken)
 	}
-
-	// Task 1
-	hashedCanonReq := hashedSimpleCanonicalRequestV4(request, query, meta)
-
-	// Task 2
-	stringToSign := concat("\n", meta.algorithm, ldt, meta.credentialScope, hashedCanonReq)
-
-	// Task 3
-	signingKey := signingKeyV4(c.SecretAccessKey, meta.date, meta.region, meta.service)
-	signature := signatureV4(signingKey, stringToSign)
-
-	query.Set("X-Signature", signature)
 	return query.Encode()
 }
 
-// Sign4 signs a request with Signed Signature Version 4.
-func Sign4(request *http.Request, credential Credentials) *http.Request {
-	keys := credential
+func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequest {
+	formatDate := appointTimestampV4(requestParam.Date)
+	meta := getMetaData(credentials, tsDateV4(formatDate))
 
-	prepareRequestV4(request)
-	meta := new(metadata)
-	meta.service, meta.region = keys.Service, keys.Region
+	requestSignMap := make(map[string][]string)
+	if credentials.SessionToken != "" {
+		requestSignMap["X-Security-Token"] = []string{credentials.SessionToken}
+	}
+	signRequest := SignRequest{
+		XDate:          formatDate,
+		XSecurityToken: credentials.SessionToken,
+	}
+	var bodyHash string
+	if requestParam.IsSignUrl {
+		for k, v := range requestParam.QueryList {
+			requestSignMap[k] = v
+		}
+		requestSignMap["X-Date"], requestSignMap["X-NotSignBody"], requestSignMap["X-Credential"], requestSignMap["X-Algorithm"], requestSignMap["X-SignedHeaders"], requestSignMap["X-SignedQueries"] =
+			[]string{formatDate}, []string{""}, []string{credentials.AccessKeyID + "/" + meta.credentialScope}, []string{meta.algorithm}, []string{meta.signedHeaders}, []string{""}
 
-	// Task 0 设置SessionToken的header
-	if credential.SessionToken != "" {
-		request.Header.Set("X-Security-Token", credential.SessionToken)
+		keys := make([]string, 0, len(requestSignMap))
+		for k := range requestSignMap {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+		requestSignMap["X-SignedQueries"] = []string{strings.Join(keys, ";")}
+
+		signRequest.XNotSignBody, signRequest.XCredential, signRequest.XAlgorithm, signRequest.XSignedHeaders, signRequest.XSignedQueries =
+			"", credentials.AccessKeyID+"/"+meta.credentialScope, meta.algorithm, meta.signedHeaders, strings.Join(keys, ";")
+		bodyHash = hashSHA256([]byte{})
+	} else {
+		for k, v := range requestParam.Headers {
+			requestSignMap[k] = v
+		}
+		if requestSignMap["Content-Type"] == nil {
+			signRequest.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+		} else {
+			signRequest.ContentType = requestSignMap["Content-Type"][0]
+		}
+		requestSignMap["X-Date"], requestSignMap["Host"], requestSignMap["Content-Type"] = []string{formatDate}, []string{requestParam.Host}, []string{signRequest.ContentType}
+
+		if len(requestParam.Body) == 0 {
+			bodyHash = hashSHA256([]byte{})
+		} else {
+			bodyHash = hashSHA256(requestParam.Body)
+		}
+		requestSignMap["X-Content-Sha256"] = []string{bodyHash}
+		signRequest.Host, signRequest.XContentSha256 = requestParam.Host, bodyHash
 	}
 
-	// Task 1
-	hashedCanonReq := hashedCanonicalRequestV4(request, meta)
-
-	// Task 2
-	stringToSign := stringToSignV4(request, hashedCanonReq, meta)
-
-	// Task 3
-	signingKey := signingKeyV4(keys.SecretAccessKey, meta.date, meta.region, meta.service)
-	signature := signatureV4(signingKey, stringToSign)
-
-	request.Header.Set("Authorization", buildAuthHeaderV4(signature, meta, keys))
-
-	return request
+	signature := getSignatureStr(requestParam, meta, credentials.SecretAccessKey, formatDate, requestSignMap, bodyHash)
+	if requestParam.IsSignUrl {
+		signRequest.XSignature = signature
+	} else {
+		signRequest.Authorization = buildAuthHeaderV4(signature, meta, credentials)
+	}
+	return signRequest
 }
 
-func hashedSimpleCanonicalRequestV4(request *http.Request, query url.Values, meta *metadata) string {
-	payloadHash := hashSHA256([]byte(""))
+func getSignatureStr(requestParam RequestParam, meta *metadata, secretAccessKey string,
+	formatDate string, requestSignMap map[string][]string, bodyHash string) string {
+	// Task 1
+	hashedCanonReq := hashedCanonicalRequestV4(requestParam, meta, requestSignMap, bodyHash)
 
-	if request.URL.Path == "" {
-		request.URL.Path = "/"
+	// Task 2
+	stringToSign := concat("\n", meta.algorithm, formatDate, meta.credentialScope, hashedCanonReq)
+
+	// Task 3
+	signingKey := signingKeyV4(secretAccessKey, meta.date, meta.region, meta.service)
+	return signatureV4(signingKey, stringToSign)
+}
+
+func hashedCanonicalRequestV4(param RequestParam, meta *metadata, requestSignMap map[string][]string, bodyHash string) string {
+	var canonicalRequest string
+	if param.IsSignUrl {
+		queryList := make(url.Values)
+		for k, v := range requestSignMap {
+			for i := range v {
+				queryList.Set(k, v[i])
+			}
+		}
+		canonicalRequest = concat("\n", param.Method, normuri(param.Path), normquery(queryList), "\n", meta.signedHeaders, bodyHash)
+	} else {
+		canonicalHeaders := getCanonicalHeaders(param, meta, requestSignMap)
+		canonicalRequest = concat("\n", param.Method, normuri(param.Path), normquery(param.QueryList), canonicalHeaders, meta.signedHeaders, bodyHash)
 	}
-
-	canonicalRequest := concat("\n", request.Method, normuri(request.URL.Path), normquery(query), "\n", meta.signedHeaders, payloadHash)
-
 	return hashSHA256([]byte(canonicalRequest))
 }
 
-func hashedCanonicalRequestV4(request *http.Request, meta *metadata) string {
-	payload := readAndReplaceBody(request)
-	payloadHash := hashSHA256(payload)
-	request.Header.Set("X-Content-Sha256", payloadHash)
-
-	request.Header.Set("Host", request.Host)
-
-	var sortedHeaderKeys []string
-	for key := range request.Header {
-		switch key {
-		case "Content-Type", "Content-Md5", "Host", "X-Security-Token":
-		default:
-			if !strings.HasPrefix(key, "X-") {
-				continue
-			}
-		}
-		sortedHeaderKeys = append(sortedHeaderKeys, strings.ToLower(key))
+func getCanonicalHeaders(param RequestParam, meta *metadata, requestSignMap map[string][]string) string {
+	signMap := make(map[string][]string)
+	signedHeaders := sortHeaders(requestSignMap, signMap)
+	if !param.IsSignUrl {
+		meta.signedHeaders = concat(";", signedHeaders...)
 	}
-	sort.Strings(sortedHeaderKeys)
-
+	if param.Path == "" {
+		param.Path = "/"
+	}
 	var headersToSign string
-	for _, key := range sortedHeaderKeys {
-		value := strings.TrimSpace(request.Header.Get(key))
+	for _, key := range signedHeaders {
+		value := strings.TrimSpace(signMap[key][0])
 		if key == "host" {
 			if strings.Contains(value, ":") {
 				split := strings.Split(value, ":")
@@ -136,43 +186,35 @@ func hashedCanonicalRequestV4(request *http.Request, meta *metadata) string {
 		}
 		headersToSign += key + ":" + value + "\n"
 	}
-	meta.signedHeaders = concat(";", sortedHeaderKeys...)
-	canonicalRequest := concat("\n", request.Method, normuri(request.URL.Path), normquery(request.URL.Query()), headersToSign, meta.signedHeaders, payloadHash)
-
-	return hashSHA256([]byte(canonicalRequest))
+	return headersToSign
 }
 
-func stringToSignV4(request *http.Request, hashedCanonReq string, meta *metadata) string {
-	requestTs := request.Header.Get("X-Date")
+func sortHeaders(requestSignMap map[string][]string, signMap map[string][]string) []string {
+	var sortedHeaderKeys []string
+	for k, v := range requestSignMap {
+		signMap[strings.ToLower(k)] = v
+		switch k {
+		case "Content-Type", "Content-Md5", "Host", "X-Security-Token":
+		default:
+			if !strings.HasPrefix(k, "X-") {
+				continue
+			}
+		}
+		sortedHeaderKeys = append(sortedHeaderKeys, strings.ToLower(k))
+	}
+	sort.Strings(sortedHeaderKeys)
+	return sortedHeaderKeys
+}
 
-	meta.algorithm = "HMAC-SHA256"
-	meta.date = tsDateV4(requestTs)
+func getMetaData(credentials Credentials, date string) *metadata {
+	meta := new(metadata)
+	meta.date, meta.service, meta.region, meta.signedHeaders, meta.algorithm = date, credentials.Service, credentials.Region, "", "HMAC-SHA256"
 	meta.credentialScope = concat("/", meta.date, meta.region, meta.service, "request")
-
-	return concat("\n", meta.algorithm, requestTs, meta.credentialScope, hashedCanonReq)
+	return meta
 }
 
 func signatureV4(signingKey []byte, stringToSign string) string {
 	return hex.EncodeToString(hmacSHA256(signingKey, stringToSign))
-}
-
-func prepareRequestV4(request *http.Request) *http.Request {
-	necessaryDefaults := map[string]string{
-		"Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-		"X-Date":       timestampV4(),
-	}
-
-	for header, value := range necessaryDefaults {
-		if request.Header.Get(header) == "" {
-			request.Header.Set(header, value)
-		}
-	}
-
-	if request.URL.Path == "" {
-		request.URL.Path += "/"
-	}
-
-	return request
 }
 
 func signingKeyV4(secretKey, date, region, service string) []byte {
@@ -196,6 +238,9 @@ func timestampV4() string {
 	return now().Format(timeFormatV4)
 }
 
+func appointTimestampV4(date time.Time) string {
+	return date.Format(timeFormatV4)
+}
 func tsDateV4(timestamp string) string {
 	return timestamp[:8]
 }

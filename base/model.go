@@ -20,6 +20,7 @@ type ServiceInfo struct {
 	Host        string
 	Header      http.Header
 	Credentials Credentials
+	Retry       RetrySettings
 }
 
 type ApiInfo struct {
@@ -29,6 +30,7 @@ type ApiInfo struct {
 	Form    url.Values
 	Timeout time.Duration
 	Header  http.Header
+	Retry   RetrySettings
 }
 
 type Credentials struct {
@@ -106,4 +108,37 @@ type InnerToken struct {
 	ExpiredTime           int64
 	PolicyString          string
 	Signature             string
+}
+
+type RetrySettings struct {
+	AutoRetry     bool
+	RetryTimes    *uint64
+	RetryInterval *time.Duration
+}
+
+type RequestParam struct {
+	IsSignUrl bool
+	Body      []byte
+	Method    string
+	Date      time.Time
+	Path      string
+	Host      string
+	QueryList url.Values
+	Headers   http.Header
+}
+
+type SignRequest struct {
+	XDate          string
+	XNotSignBody   string
+	XCredential    string
+	XAlgorithm     string
+	XSignedHeaders string
+	XSignedQueries string
+	XSignature     string
+	XSecurityToken string
+
+	Host           string
+	ContentType    string
+	XContentSha256 string
+	Authorization  string
 }

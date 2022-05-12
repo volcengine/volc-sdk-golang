@@ -20,6 +20,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
@@ -30,7 +31,7 @@ func (p *Vod) GetSubtitleAuthToken(req *request.VodGetSubtitleInfoListRequest, t
 		return "", errors.New("传入的Vid为空")
 	}
 	query := url.Values{
-		"Vid": []string{req.GetVid()},
+		"Vid":    []string{req.GetVid()},
 		"Status": []string{"Published"},
 	}
 
@@ -64,8 +65,8 @@ func (p *Vod) GetPrivateDrmAuthToken(req *request.VodGetPrivateDrmPlayAuthReques
 	}
 	if len(req.GetDrmType()) > 0 {
 		query.Add("DrmType", req.GetDrmType())
-		switch req.GetDrmType(){
-		case "appdevice","webdevice":
+		switch req.GetDrmType() {
+		case "appdevice", "webdevice":
 			if len(req.GetUnionInfo()) == 0 {
 				return "", errors.New("invalid unionInfo")
 			}
@@ -114,44 +115,64 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	if len(req.GetVid()) == 0 {
 		return "", errors.New("传入的Vid为空")
 	}
-	query := url.Values{
-		"Vid": []string{req.GetVid()},
+	query := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
 	}
-	if len(req.GetDefinition()) > 0 {
-		query.Add("Definition", req.GetDefinition())
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return "", err
 	}
-	if len(req.GetFileType()) > 0 {
-		query.Add("FileType", req.GetFileType())
-	}
-	if len(req.GetCodec()) > 0 {
-		query.Add("Codec", req.GetCodec())
-	}
-	if len(req.GetFormat()) > 0 {
-		query.Add("Format", req.GetFormat())
-	}
-	if len(req.GetBase64()) > 0 {
-		query.Add("Base64", req.GetBase64())
-	}
-	if len(req.GetLogoType()) > 0 {
-		query.Add("LogoType", req.GetLogoType())
-	}
-	if len(req.GetSsl()) > 0 {
-		query.Add("Ssl", req.GetSsl())
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return "", e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
 	}
 	if tokenExpireTime > 0 {
 		query.Add("X-Expires", strconv.Itoa(tokenExpireTime))
-	}
-	if len(req.GetNeedThumbs()) > 0 {
-		query.Add("NeedThumbs", req.GetNeedThumbs())
-	}
-	if len(req.GetNeedBarrageMask()) > 0 {
-		query.Add("NeedBarrageMask", req.GetNeedBarrageMask())
-	}
-	if len(req.GetCdnType()) > 0 {
-		query.Add("CdnType", req.GetCdnType())
-	}
-	if len(req.GetUnionInfo()) > 0 {
-		query.Add("UnionInfo", req.GetUnionInfo())
 	}
 	if getPlayInfoToken, err := p.GetSignUrl("GetPlayInfo", query); err == nil {
 		ret := map[string]string{}
@@ -167,8 +188,8 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 }
 
-func (p *Vod) UploadMediaWithCallback(filePath string, spaceName string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(filePath)
+func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(mediaRequset.GetFilePath())
 	if err != nil {
 		return nil, -1, err
 	}
@@ -177,12 +198,12 @@ func (p *Vod) UploadMediaWithCallback(filePath string, spaceName string, callbac
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), spaceName, "", callbackArgs, funcs...)
+	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName())
 
 }
 
-func (p *Vod) UploadMaterialWithCallback(filePath string, spaceName string, fileType string, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(filePath)
+func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMaterialRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(materialRequest.GetFilePath())
 	if err != nil {
 		return nil, -1, err
 	}
@@ -191,25 +212,20 @@ func (p *Vod) UploadMaterialWithCallback(filePath string, spaceName string, file
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), spaceName, fileType, callbackArgs, funcs...)
+	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName())
 }
 
-func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs ...Function) (*response.VodCommitUploadInfoResponse, int, error) {
-	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType)
+func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName string) (*response.VodCommitUploadInfoResponse, int, error) {
+	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName)
 	if err != nil {
 		return nil, code, err
-	}
-
-	fbts, err := json.Marshal(funcs)
-	if err != nil {
-		panic(err)
 	}
 
 	commitRequest := &request.VodCommitUploadInfoRequest{
 		SpaceName:    spaceName,
 		SessionKey:   sessionKey,
 		CallbackArgs: callbackArgs,
-		Functions:    string(fbts),
+		Functions:    funcs,
 	}
 
 	commitResp, code, err := p.CommitUploadInfo(commitRequest)
@@ -232,12 +248,12 @@ func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
 	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
-func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string) (string, string, error, int) {
+func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName string) (string, string, error, int) {
 	if size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
 
-	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType}
+	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
 	if err != nil {
@@ -339,8 +355,12 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 			return err
 		}
 		cnt += n
+		partNumber := i
+		if isLargeFile {
+			partNumber++
+		}
 		err = retry.Do(func() error {
-			part, err = p.uploadPart(uploadPart, uploadID, i, cur, client, isLargeFile)
+			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile)
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
@@ -356,6 +376,9 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 	total := len(bts) + cnt
 	if total != int(size) {
 		return errors.New(fmt.Sprintf("last part download size mismatch ,download %d , size %d", total, size))
+	}
+	if isLargeFile {
+		lastNum++
 	}
 	err = retry.Do(func() error {
 		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile)

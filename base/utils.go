@@ -9,13 +9,19 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
+	"reflect"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/google/uuid"
 )
 
-var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+var (
+	letterRunes                 = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	defaultRetryTimes    uint64 = 2
+	defaultRetryInterval        = 1 * time.Second
+)
 
 func init() {
 	rand.Seed(time.Now().Unix())
@@ -94,6 +100,33 @@ func getTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
 	return timeout
 }
 
+func getRetrySetting(serviceRetrySettings, apiRetrySettings *RetrySettings) *RetrySettings {
+	retrySettings := &RetrySettings{
+		AutoRetry:     false,
+		RetryTimes:    new(uint64),
+		RetryInterval: new(time.Duration),
+	}
+	if !apiRetrySettings.AutoRetry || !serviceRetrySettings.AutoRetry {
+		return retrySettings
+	}
+	retrySettings.AutoRetry = true
+	if serviceRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = serviceRetrySettings.RetryTimes
+	} else if apiRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = apiRetrySettings.RetryTimes
+	} else {
+		retrySettings.RetryTimes = &defaultRetryTimes
+	}
+	if serviceRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = serviceRetrySettings.RetryInterval
+	} else if apiRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = apiRetrySettings.RetryInterval
+	} else {
+		retrySettings.RetryInterval = &defaultRetryInterval
+	}
+	return retrySettings
+}
+
 func mergeQuery(query1, query2 url.Values) (query url.Values) {
 	query = url.Values{}
 	if query1 != nil {
@@ -146,4 +179,58 @@ func NewDenyStatement(actions, resources []string) *Statement {
 	sts.Resource = resources
 
 	return sts
+}
+
+func ToUrlValues(i interface{}) (values url.Values) {
+	values = url.Values{}
+	iVal := reflect.ValueOf(i).Elem()
+	typ := iVal.Type()
+	for i := 0; i < iVal.NumField(); i++ {
+		f := iVal.Field(i)
+		// You ca use tags here...
+		// tag := typ.Field(i).Tag.Get("tagname")
+		// Convert each type into a string for the url.Values string map
+		var v string
+		switch f.Interface().(type) {
+		case int, int8, int16, int32, int64:
+			v = strconv.FormatInt(f.Int(), 10)
+		case uint, uint8, uint16, uint32, uint64:
+			v = strconv.FormatUint(f.Uint(), 10)
+		case float32:
+			v = strconv.FormatFloat(f.Float(), 'f', 4, 32)
+		case float64:
+			v = strconv.FormatFloat(f.Float(), 'f', 4, 64)
+		case []byte:
+			v = string(f.Bytes())
+		case bool:
+			v = strconv.FormatBool(f.Bool())
+		case string:
+			if f.Len() == 0 {
+				continue
+			}
+			v = f.String()
+		}
+		values.Set(typ.Field(i).Name, v)
+	}
+	return
+}
+
+func UnmarshalResultInto(data []byte, result interface{}) error {
+	resp := new(CommonResponse)
+	if err := json.Unmarshal(data, resp); err != nil {
+		return fmt.Errorf("fail to unmarshal response, %v", err)
+	}
+	errObj := resp.ResponseMetadata.Error
+	if errObj != nil && errObj.CodeN != 0 {
+		return fmt.Errorf("request %s error %s", resp.ResponseMetadata.RequestId, errObj.Message)
+	}
+
+	data, err := json.Marshal(resp.Result)
+	if err != nil {
+		return fmt.Errorf("fail to marshal result, %v", err)
+	}
+	if err = json.Unmarshal(data, result); err != nil {
+		return fmt.Errorf("fail to unmarshal result, %v", err)
+	}
+	return nil
 }

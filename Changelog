@@ -1,5 +1,103 @@
 ### Change log
 
+2022-04-28 Bumped to version v1.0.43
+- Fixed apis for cdn\imagex
+
+2022-04-21 Bumped to version v1.0.42
+- Added service mars
+- Added apis for vod
+- Fixed apis for cdn\kms
+
+2022-04-14 Bumped to version v1.0.41
+- Support context for base client
+- Fixed params for nlp
+- Added apis for vod\imagex\security\billing
+- Added service volc_voice_notify
+
+2022-04-07 Bumped to version v1.0.40
+- Added api for cdn
+
+2022-03-31 Bumped to version v1.0.39
+- Updated api and params for axb\vod
+- Added demo for dts
+- Added service billing
+
+2022-03-21 Bumped to version v1.0.38
+- Updated api and params
+
+2022-03-18 Bumped to version v1.0.37
+- Added some apis of space\callback\cdn for vod
+- Added media snapshot
+- Added filename when upload
+
+2022-03-14 Bumped to version v1.0.36
+- Minor Bug fix
+
+2022-03-11 Bumped to version v1.0.35
+- Minor Bug fix
+
+2022-03-10 Bumped to version v1.0.34
+- added 智能处理 sdk
+
+2022-03-03 Bumped to version v1.0.33
+- add nlp client
+- Implement related example for cdn apis
+- Add new cdn apis
+- Add Video-Classification for VOD
+
+2022-02-24 Bumped to version v1.0.32
+- Added cr client
+
+2022-02-18 Bumped to version v1.0.31
+- Updated a for axn
+- Added mobile_status api
+- Fixed sts
+- Removed api for relation role user
+
+2022-02-10 Bumped to version v1.0.30
+- 号码核验二期产品
+- Added vms secret number
+- ValidateResponse method for CDN service
+- Add tool functions for CDN service
+
+2022-01-20 Bumped to version v1.0.29
+- Add vms secret number
+- Added 闲时转码
+
+2022-01-13 Bumped to version v1.0.28
+- Add imagex GetImageQuality API
+
+2021-12-30 Bumped to version v1.0.27
+- Refactored the signing method
+
+2021-12-16 Bumped to version v1.0.26
+- Add rds postgresql sdk
+- Added datacenter-QueryAudioRecordFileUrl
+- 添加datacenter的service
+- Fixed kms request field typo.
+- Added DescribeCdnDataDetail api
+- 设置Credentials新增支持更新Service
+- 添加双呼方法
+
+2021-11-15 Bumped to version v1.0.25
+- Added CDN timeout for apis
+
+2021-10-27 Bumped to version v1.0.24
+- Added DNS SDK
+- Clean and updated gtm sdk
+- Added kms API
+- Added live sdk dev
+- Added DescribeCdnUpperIp CDN OpenAPI
+- Added business security api
+
+2021-10-19 Bumped to version v1.0.23
+- Fixed http client timeout
+
+2021-09-29 Bumped to version v1.0.22
+- Added CDN apis
+- Added vms apis
+
+
 2021-09-14 Bumped to version v1.0.21
 - Add rtc sdk
 - Add GTM sdk

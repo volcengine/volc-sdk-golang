@@ -297,12 +297,12 @@ func (p *Vod) GetHlsDecryptionKey(req *request.VodGetHlsDecryptionKeyRequest) (*
 	return output, status, nil
 }
 
-// GetIntertrustDrmPlayAuth
+// GetPlayInfoWithLiveTimeShiftScene
 /*
- * @param *request.VodGetIntertrustDrmPlayAuthRequest
- * @return *response.VodGetIntertrustDrmPlayAuthResponse, int, error
+ * @param *request.VodGetPlayInfoWithLiveTimeShiftSceneRequest
+ * @return *response.VodGetPlayInfoWithLiveTimeShiftSceneResponse, int, error
  */
-func (p *Vod) GetIntertrustDrmPlayAuth(req *request.VodGetIntertrustDrmPlayAuthRequest) (*response.VodGetIntertrustDrmPlayAuthResponse, int, error) {
+func (p *Vod) GetPlayInfoWithLiveTimeShiftScene(req *request.VodGetPlayInfoWithLiveTimeShiftSceneRequest) (*response.VodGetPlayInfoWithLiveTimeShiftSceneResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -362,9 +362,9 @@ func (p *Vod) GetIntertrustDrmPlayAuth(req *request.VodGetIntertrustDrmPlayAuthR
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("GetIntertrustDrmPlayAuth", query)
+	respBody, status, err := p.Query("GetPlayInfoWithLiveTimeShiftScene", query)
 
-	output := &response.VodGetIntertrustDrmPlayAuthResponse{}
+	output := &response.VodGetPlayInfoWithLiveTimeShiftSceneResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
