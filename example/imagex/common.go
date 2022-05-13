@@ -28,11 +28,9 @@ func main() {
 
 	resp := new(struct {
 		ServiceId    string `json:"ServiceId"`
-		FileName     string `json:"FileName"`
 		StoreUri     string `json:"StoreUri"`
 		LastModified string `json:"LastModified"`
 		FileSize     int    `json:"FileSize"`
-		ThumbUrl     string `json:"ThumbUrl"`
 		Marker       int    `json:"Marker"`
 	})
 
