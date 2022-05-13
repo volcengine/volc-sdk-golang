@@ -613,7 +613,7 @@ func TestListCommonTransPresetDetail(t *testing.T) {
 	live.DefaultInstance.Client.SetAccessKey(testAk)
 	live.DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string][]string{
-		"PresetList": []string{"Preset1", "Preset2"},
+		"PresetList": []string{"preset1", "preset2"},
 	}
 	body, _ := json.Marshal(bodyMap)
 	resp, statusCode, err := live.DefaultInstance.ListCommonTransPresetDetail(nil, string(body))
