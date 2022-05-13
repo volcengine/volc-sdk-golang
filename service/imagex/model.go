@@ -136,16 +136,10 @@ type StoreInfo struct {
 
 // CommitImageUpload
 type CommitUploadImageParam struct {
-	ServiceId   string       `json:"-"`
-	SessionKey  string       `json:"SessionKey"`
-	SuccessOids []string     `json:"SuccessOids"`
-	OptionInfos []OptionInfo `json:"OptionInfos"`
-	Functions   []Function   `json:"Functions"`
-}
-
-type OptionInfo struct {
-	StoreUri string `json:"StoreUri"`
-	FileName string `json:"FileName"`
+	ServiceId   string     `json:"-"`
+	SessionKey  string     `json:"SessionKey"`
+	SuccessOids []string   `json:"SuccessOids"`
+	Functions   []Function `json:"Functions"`
 }
 
 type Function struct {
