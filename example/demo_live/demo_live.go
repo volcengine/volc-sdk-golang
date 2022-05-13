@@ -2,8 +2,9 @@ package demo_live
 
 import (
 	"encoding/json"
-	"github.com/volcengine/volc-sdk-golang/service/live"
 	"testing"
+
+	"github.com/volcengine/volc-sdk-golang/service/live"
 )
 
 const (

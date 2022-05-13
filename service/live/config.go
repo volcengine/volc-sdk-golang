@@ -1,10 +1,11 @@
 package live
 
 import (
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 const (

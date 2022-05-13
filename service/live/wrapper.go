@@ -187,7 +187,6 @@ func (p *LIVE) UpdateAuthKey(query url.Values, body string) (*UpdateAuthKeyResp,
 	return resp, statesCode, nil
 }
 
-
 func (p *LIVE) DescribeAuth(query url.Values, body string) (*DescribeAuthResp, int, error) {
 	resp := new(DescribeAuthResp)
 	statesCode, err := p.commonHandlerJson("DescribeAuth", query, resp, body)
@@ -196,7 +195,6 @@ func (p *LIVE) DescribeAuth(query url.Values, body string) (*DescribeAuthResp, i
 	}
 	return resp, statesCode, nil
 }
-
 
 /**
 流信息相关
@@ -417,6 +415,7 @@ func (p *LIVE) UpdateTranscodePreset(query url.Values, body string) (*UpdateTran
 	}
 	return resp, statesCode, nil
 }
+
 /**
 3。
 */
@@ -437,8 +436,9 @@ func (p *LIVE) ListVhostTransCodePreset(query url.Values, body string) (*ListVho
 	}
 	return resp, statesCode, nil
 }
+
 /**
- 截图相关的
+截图相关的
 */
 func (p *LIVE) CreateSnapshotPreset(query url.Values, body string) (*CreateSnapshotPresetResp, int, error) {
 	resp := new(CreateSnapshotPresetResp)
