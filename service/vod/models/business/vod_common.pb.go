@@ -1249,6 +1249,61 @@ func (x *VodPlayInfoModel) GetSubtitleInfoList() []*VodSubtitleInfo {
 	return nil
 }
 
+type VodPoint struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Timestamp float64 `protobuf:"fixed64,1,opt,name=Timestamp,proto3" json:"Timestamp,omitempty"` // 时间戳
+	Value     float64 `protobuf:"fixed64,2,opt,name=Value,proto3" json:"Value,omitempty"`         // 数值
+}
+
+func (x *VodPoint) Reset() {
+	*x = VodPoint{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_business_vod_common_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodPoint) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodPoint) ProtoMessage() {}
+
+func (x *VodPoint) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_business_vod_common_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodPoint.ProtoReflect.Descriptor instead.
+func (*VodPoint) Descriptor() ([]byte, []int) {
+	return file_vod_business_vod_common_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *VodPoint) GetTimestamp() float64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
+}
+
+func (x *VodPoint) GetValue() float64 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
 var File_vod_business_vod_common_proto protoreflect.FileDescriptor
 
 var file_vod_business_vod_common_proto_rawDesc = []byte{
@@ -1460,7 +1515,11 @@ var file_vod_business_vod_common_proto_rawDesc = []byte{
 	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
 	0x2e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f,
 	0x52, 0x10, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x49, 0x6e, 0x66, 0x6f, 0x4c, 0x69,
-	0x73, 0x74, 0x2a, 0xd6, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e,
+	0x73, 0x74, 0x22, 0x3e, 0x0a, 0x08, 0x56, 0x6f, 0x64, 0x50, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x1c,
+	0x0a, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x01, 0x52, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x14, 0x0a, 0x05,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x56, 0x61, 0x6c,
+	0x75, 0x65, 0x2a, 0xd6, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e,
 	0x66, 0x6f, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x24,
 	0x0a, 0x20, 0x55, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0x56, 0x6f, 0x64, 0x50, 0x6c,
 	0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x56, 0x65, 0x72, 0x73, 0x69,
@@ -1503,7 +1562,7 @@ func file_vod_business_vod_common_proto_rawDescGZIP() []byte {
 }
 
 var file_vod_business_vod_common_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_vod_business_vod_common_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_vod_business_vod_common_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_vod_business_vod_common_proto_goTypes = []interface{}{
 	(VodPlayInfoModelVersion)(0), // 0: Volcengine.Vod.Models.Business.VodPlayInfoModelVersion
 	(*VodSourceInfo)(nil),        // 1: Volcengine.Vod.Models.Business.VodSourceInfo
@@ -1516,6 +1575,7 @@ var file_vod_business_vod_common_proto_goTypes = []interface{}{
 	(*VodSubtitleInfo)(nil),      // 8: Volcengine.Vod.Models.Business.VodSubtitleInfo
 	(*VodCommonConfigInfo)(nil),  // 9: Volcengine.Vod.Models.Business.VodCommonConfigInfo
 	(*VodPlayInfoModel)(nil),     // 10: Volcengine.Vod.Models.Business.VodPlayInfoModel
+	(*VodPoint)(nil),             // 11: Volcengine.Vod.Models.Business.VodPoint
 }
 var file_vod_business_vod_common_proto_depIdxs = []int32{
 	3, // 0: Volcengine.Vod.Models.Business.VodTranscodeInfo.VideoStreamMeta:type_name -> Volcengine.Vod.Models.Business.VodVideoStreamMeta
@@ -1658,6 +1718,18 @@ func file_vod_business_vod_common_proto_init() {
 				return nil
 			}
 		}
+		file_vod_business_vod_common_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodPoint); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1665,7 +1737,7 @@ func file_vod_business_vod_common_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_business_vod_common_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   10,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
