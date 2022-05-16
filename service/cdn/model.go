@@ -24,8 +24,9 @@ type AddCdnDomainRequest struct {
 	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
 	ResponseHeader     []ResponseHeaderRule
 	RequestHeader      []RequestHeaderRule
-	Compression        *Compression `json:",omitempty"`
-	HTTPS              *HTTPS       `json:",omitempty"`
+	Compression        *Compression        `json:",omitempty"`
+	HTTPS              *HTTPS              `json:",omitempty"`
+	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
 }
 type AddCdnDomainResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -72,7 +73,13 @@ type CacheKeyGenerationRule struct {
 	CacheKeyAction *CacheKeyAction `json:",omitempty"`
 }
 type CertInfo struct {
-	CertId string
+	CertId      string
+	ExpireTime  *string      `json:",omitempty"`
+	Certificate *Certificate `json:",omitempty"`
+}
+type Certificate struct {
+	Certificate string
+	PrivateKey  string
 }
 type Compression struct {
 	Switch           bool
@@ -503,6 +510,7 @@ type DomainConfig struct {
 	RequestHeader      []RequestHeaderRule
 	Compression        Compression
 	DownloadSpeedLimit DownloadSpeedLimit
+	HttpForcedRedirect HttpForcedRedirect
 }
 type DomainLogDetail struct {
 	StartTime int64
@@ -534,6 +542,10 @@ type DownloadSpeedLimitAction struct {
 type DownloadSpeedLimitRule struct {
 	Condition                *Condition                `json:",omitempty"`
 	DownloadSpeedLimitAction *DownloadSpeedLimitAction `json:",omitempty"`
+}
+type HttpForcedRedirect struct {
+	EnableForcedRedirect bool
+	StatusCode           string
 }
 type EmptyResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
