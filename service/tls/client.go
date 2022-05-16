@@ -3,6 +3,7 @@ package tls
 import (
 	"bytes"
 	"context"
+	"github.com/volcengine/volc-sdk-golang/base"
 
 	"crypto/md5"
 	"encoding/json"
@@ -38,6 +39,7 @@ func init() {
 }
 
 type LsClient struct {
+	BaseClient      *base.Client
 	Endpoint        string
 	accessLock      *sync.RWMutex
 	AccessKeyID     string
@@ -132,7 +134,7 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 
 	c.accessLock.RLock()
 
-	credential := Credentials{
+	credential := base.Credentials{
 		AccessKeyID:     c.AccessKeyID,
 		SecretAccessKey: c.AccessKeySecret,
 		Region:          c.Region,
@@ -142,7 +144,7 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 
 	c.accessLock.RUnlock()
 
-	req = Sign(req, credential)
+	req = credential.Sign(req)
 
 	// Get ready to do request
 	resp, err := defaultHttpClient.Do(req)
