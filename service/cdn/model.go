@@ -74,7 +74,7 @@ type CacheKeyGenerationRule struct {
 }
 type CertInfo struct {
 	CertId      string
-	ExpireTime  *string      `json:",omitempty"`
+	ExpireTime  *int64       `json:",omitempty"`
 	Certificate *Certificate `json:",omitempty"`
 }
 type Certificate struct {
