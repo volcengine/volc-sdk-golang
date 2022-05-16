@@ -10,6 +10,8 @@ const (
 	CompressLz4  = "lz4"
 	CompressNone = "none"
 
+	FullTextIndexKey = "__content__"
+
 	PathCreateProject    = "/CreateProject"
 	PathDescribeProject  = "/DescribeProject"
 	PathDeleteProject    = "/DeleteProject"
