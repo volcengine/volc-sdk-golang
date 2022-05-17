@@ -113,6 +113,15 @@ func (p *SecretNumber) Click2Call(req *Click2CallRequest) (*Click2CallResponse, 
 	}
 }
 
+func (p *SecretNumber) Click2CallLite(req *Click2CallLiteRequest) (*Click2CallLiteResponse, int, error) {
+	resp := new(Click2CallLiteResponse)
+	if statusCode, err := p.handler("Click2CallLite", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *DataCenter) QueryAudioRecordFileUrl(req *QueryAudioRecordFileUrlRequest) (*QueryAudioRecordFileUrlResponse, int, error) {
 	resp := new(QueryAudioRecordFileUrlResponse)
 	if statusCode, err := p.handler("QueryAudioRecordFileUrl", req, resp); err != nil {
