@@ -1,5 +1,9 @@
 ### Change log
 
+2022-05-20 Bumped to version v1.0.45
+- Added apis for vod\secret
+- Fixed apis for live
+
 2022-05-12 Bumped to version v1.0.44
 - Fixed apis for billing
 - Added apis for vod\security
