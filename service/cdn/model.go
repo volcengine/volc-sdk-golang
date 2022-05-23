@@ -857,8 +857,9 @@ type UpdateCdnConfigRequest struct {
 	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
 	ResponseHeader     []ResponseHeaderRule
 	RequestHeader      []RequestHeaderRule
-	Compression        *Compression `json:",omitempty"`
-	HTTPS              *HTTPS       `json:",omitempty"`
+	Compression        *Compression        `json:",omitempty"`
+	HTTPS              *HTTPS              `json:",omitempty"`
+	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
 }
 type UpdateCdnConfigResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
