@@ -152,3 +152,47 @@ func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ListCdnUsageData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnUsageDataRequest{
+		Domains:        "your Domains",
+		Interval:       "your Interval",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		DataType:       "your DataType",
+		Metric:         "your Metric",
+	}
+
+	resp, status, err := instance.ListCdnUsageData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListCdnStatusData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnStatusDataRequest{
+		Domains:        "your Domains",
+		Interval:       "your Interval",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		DataType:       "your DataType",
+		Metric:         "your Metric",
+	}
+
+	resp, status, err := instance.ListCdnStatusData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
