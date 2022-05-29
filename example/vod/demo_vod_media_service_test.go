@@ -11,7 +11,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
-	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 func Test_UpdateMediaInfo(t *testing.T) {
