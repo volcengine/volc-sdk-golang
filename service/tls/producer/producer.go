@@ -37,7 +37,8 @@ type producer struct {
 }
 
 func (producer producer) ResetProducerConfig(producerConfig *Config) {
-	atomic.StorePointer((*unsafe.Pointer)(unsafe.Pointer(producer.config)), unsafe.Pointer(producerConfig))
+	configPointer := unsafe.Pointer(producer.config)
+	atomic.StorePointer(&configPointer, unsafe.Pointer(producerConfig))
 }
 
 func newProducer(producerConfig *Config) *producer {
