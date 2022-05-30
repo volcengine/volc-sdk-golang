@@ -6,6 +6,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+	"unsafe"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
@@ -33,6 +34,10 @@ type producer struct {
 	shardCount           int
 	logger               log.Logger
 	producerLogGroupSize int64
+}
+
+func (producer producer) ResetProducerConfig(producerConfig *Config) {
+	atomic.StorePointer((*unsafe.Pointer)(unsafe.Pointer(producer.config)), unsafe.Pointer(producerConfig))
 }
 
 func newProducer(producerConfig *Config) *producer {
@@ -194,6 +199,11 @@ func (producer *producer) waitTime() error {
 }
 
 func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
+
+	if batchLog.Log.Time == 0 {
+		batchLog.Log.Time = time.Now().Unix()
+	}
+
 	select {
 	case <-producer.closeCh:
 		return errors.New("the producer is closed")

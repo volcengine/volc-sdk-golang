@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexResponse, error) {
@@ -173,9 +174,11 @@ func (c *LsClient) SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, 
 	var response = &SearchLogsResponse{}
 	response.FillRequestId(rawResponse)
 
-	if err := json.Unmarshal(responseBody, response); err != nil {
+	decoder := json.NewDecoder(strings.NewReader(string(responseBody)))
+	decoder.UseNumber()
+
+	if err := decoder.Decode(response); err != nil {
 		return nil, err
 	}
-
 	return response, nil
 }

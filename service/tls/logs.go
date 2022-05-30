@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/pierrec/lz4"
@@ -20,6 +21,16 @@ const (
 func (c *LsClient) PutLogs(request *PutLogsRequest) (*CommonResponse, error) {
 	if len(request.LogBody.LogGroups) == 0 {
 		return nil, nil
+	}
+
+	for _, logGroup := range request.LogBody.LogGroups {
+		if logGroup.Logs != nil {
+			for _, log := range logGroup.Logs {
+				if log.Time == 0 {
+					log.Time = time.Now().Unix()
+				}
+			}
+		}
 	}
 
 	params := map[string]string{
