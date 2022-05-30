@@ -459,3 +459,12 @@ func (c *ImageX) GetImageQuality(param *GetImageQualityParam) (*GetImageQualityR
 	}
 	return resp, nil
 }
+
+func (c *ImageX) GetImageSuperResolution(param *GetImageSuperResolutionParam) (*GetImageSuperResolutionResp, error) {
+	result := new(GetImageSuperResolutionResp)
+	err := c.ImageXPost("GetImageSuperResolutionResult", nil, param, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
