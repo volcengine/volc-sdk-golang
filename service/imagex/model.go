@@ -321,9 +321,9 @@ type GetImageSegmentResult struct {
 
 //GetImageSuperResolutionResult
 type GetImageSuperResolutionParam struct {
-	ServiceId string `json:"ServiceId"`
-	StoreUri  string `json:"StoreUri"`
-	Multiple  int    `json:"Multiple"`
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Multiple  float64 `json:"Multiple"`
 }
 
 type GetImageSuperResolutionResp struct {
