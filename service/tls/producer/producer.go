@@ -3,15 +3,13 @@ package producer
 import (
 	"errors"
 	"fmt"
-	"sync"
-	"sync/atomic"
-	"time"
-	"unsafe"
-
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	. "github.com/volcengine/volc-sdk-golang/service/tls"
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
+	"sync"
+	"sync/atomic"
+	"time"
 )
 
 const (
@@ -34,11 +32,6 @@ type producer struct {
 	shardCount           int
 	logger               log.Logger
 	producerLogGroupSize int64
-}
-
-func (producer producer) ResetProducerConfig(producerConfig *Config) {
-	configPointer := unsafe.Pointer(producer.config)
-	atomic.StorePointer(&configPointer, unsafe.Pointer(producerConfig))
 }
 
 func newProducer(producerConfig *Config) *producer {
