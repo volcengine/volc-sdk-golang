@@ -227,7 +227,7 @@ func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
 
 func (producer *producer) Start() {
 	producer.threadPoolWaitGroup.Add(1)
-	go producer.threadPool.start(producer.senderWaitGroup, producer.threadPoolWaitGroup)
+	go producer.threadPool.start(producer.senderWaitGroup, producer.threadPoolWaitGroup, producer.dispatcher.newLogRecvChan)
 	producer.dispatcherWaitGroup.Add(2)
 	go producer.dispatcher.checkBatchTime(producer.dispatcherWaitGroup, producer.config)
 	go producer.dispatcher.run(producer.dispatcherWaitGroup)
