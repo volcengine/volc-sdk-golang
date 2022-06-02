@@ -150,13 +150,13 @@ func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
 		dispatcher.threadPool.taskChan <- batch
 	}
 
+	dispatcher.logGroupData = make(map[string]*Batch)
+	dispatcher.lock.Unlock()
+
 	close(dispatcher.newLogRecvChan)
 	for batchLog := range dispatcher.newLogRecvChan {
 		dispatcher.handleLogs(batchLog)
 	}
-
-	dispatcher.logGroupData = make(map[string]*Batch)
-	dispatcher.lock.Unlock()
 
 	// pop all retry batches
 	producerBatchList := dispatcher.retryQueue.getRetryBatch(true)
