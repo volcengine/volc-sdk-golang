@@ -39,7 +39,7 @@ func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, ThreadPoolW
 		case batch := <-threadPool.taskChan:
 			threadPool.handleBatch(batch)
 		case <-threadPool.stopCh:
-			if len(threadPool.taskChan) == 0 && len(recvChan) == 0 {
+			if len(threadPool.taskChan) == 0 {
 				return
 			}
 		case <-threadPool.forceQuitCh:

@@ -150,6 +150,11 @@ func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
 		dispatcher.threadPool.taskChan <- batch
 	}
 
+	close(dispatcher.newLogRecvChan)
+	for batchLog := range dispatcher.newLogRecvChan {
+		dispatcher.handleLogs(batchLog)
+	}
+
 	dispatcher.logGroupData = make(map[string]*Batch)
 	dispatcher.lock.Unlock()
 
