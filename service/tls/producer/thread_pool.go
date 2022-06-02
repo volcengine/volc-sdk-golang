@@ -30,7 +30,7 @@ func (threadPool *ThreadPool) hasTask() bool {
 	return len(threadPool.taskChan) != 0
 }
 
-func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, ThreadPoolWait *sync.WaitGroup, recvChan chan *BatchLog) {
+func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, ThreadPoolWait *sync.WaitGroup) {
 	defer ThreadPoolWait.Done()
 
 	threadPool.ioWaitGroup = senderWaitGroup

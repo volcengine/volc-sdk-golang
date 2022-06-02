@@ -145,6 +145,11 @@ func (dispatcher *Dispatcher) checkBatchTime(dispatcherWaitGroup *sync.WaitGroup
 }
 
 func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
+	close(dispatcher.newLogRecvChan)
+	for batchLog := range dispatcher.newLogRecvChan {
+		dispatcher.handleLogs(batchLog)
+	}
+
 	dispatcher.lock.Lock()
 	for _, batch := range dispatcher.logGroupData {
 		dispatcher.threadPool.taskChan <- batch
@@ -152,11 +157,6 @@ func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
 
 	dispatcher.logGroupData = make(map[string]*Batch)
 	dispatcher.lock.Unlock()
-
-	close(dispatcher.newLogRecvChan)
-	for batchLog := range dispatcher.newLogRecvChan {
-		dispatcher.handleLogs(batchLog)
-	}
 
 	// pop all retry batches
 	producerBatchList := dispatcher.retryQueue.getRetryBatch(true)
