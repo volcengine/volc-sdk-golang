@@ -348,9 +348,7 @@ func (s *CDN) GetAPIInfo(api string) *base.ApiInfo {
 }
 
 func (s *CDN) SetRegion(region string) {
-	if serviceInfo := s.GetServiceInfo(region); serviceInfo != nil {
-		serviceInfo.Credentials.Region = region
-	}
+	s.Client.ServiceInfo.Credentials.Region = region
 }
 
 func (s *CDN) SetHost(host string) {

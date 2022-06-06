@@ -11,6 +11,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 func Test_UpdateMediaInfo(t *testing.T) {
@@ -216,6 +217,127 @@ func Test_UpdateSubtitleInfo(t *testing.T) {
 	}
 
 	resp, status, err := instance.UpdateSubtitleInfo(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetAuditFramesForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetAuditFramesForAuditRequest{
+		Vid:               "your Vid",
+		Strategy:          "your Strategy",
+		MinNumberOfFrames: "your MinNumberOfFrames",
+		MaxNumberOfFrames: "your MaxNumberOfFrames",
+	}
+
+	resp, status, err := instance.GetAuditFramesForAudit(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetMLFramesForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetMLFramesForAuditRequest{
+		Vid:               "your Vid",
+		Strategy:          "your Strategy",
+		FrameOpt:          "your FrameOpt",
+		FrameFps:          "your FrameFps",
+		NumberOfFrames:    "your NumberOfFrames",
+		CutTimeMills:      "your CutTimeMills",
+		NeedFirstFrame:    "your NeedFirstFrame",
+		NeedLastFrame:     "your NeedLastFrame",
+		StartTimeMill:     "your StartTimeMill",
+		EndTimeMill:       "your EndTimeMill",
+		MinNumberOfFrames: "your MinNumberOfFrames",
+		MaxNumberOfFrames: "your MaxNumberOfFrames",
+	}
+
+	resp, status, err := instance.GetMLFramesForAudit(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetBetterFramesForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetBetterFramesForAuditRequest{
+		Vid:       "your Vid",
+		Strategy:  "your Strategy",
+		CoverRate: "your CoverRate",
+	}
+
+	resp, status, err := instance.GetBetterFramesForAudit(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetAudioInfoForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetAudioInfoForAuditRequest{
+		Vid:      "your Vid",
+		Strategy: "your Strategy",
+	}
+
+	resp, status, err := instance.GetAudioInfoForAudit(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetAutomaticSpeechRecognitionForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetAutomaticSpeechRecognitionForAuditRequest{
+		Vid:      "your Vid",
+		Strategy: "your Strategy",
+	}
+
+	resp, status, err := instance.GetAutomaticSpeechRecognitionForAudit(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetAudioEventDetectionForAudit(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetAudioEventDetectionForAuditRequest{
+		Vid:      "your Vid",
+		Strategy: "your Strategy",
+	}
+
+	resp, status, err := instance.GetAudioEventDetectionForAudit(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())

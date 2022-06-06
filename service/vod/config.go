@@ -206,46 +206,54 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
-		//"GetMLFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetMLFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetBetterFramesForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetBetterFramesForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioInfoForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioInfoForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAutomaticSpeechRecognitionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
-		//"GetAudioEventDetectionForAudit": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetAudioEventDetectionForAudit"},
-		//		"Version": []string{"2021-11-01"},
-		//	},
-		//},
+		"GetAuditFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAuditFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetMLFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMLFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetBetterFramesForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetBetterFramesForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioInfoForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioInfoForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAutomaticSpeechRecognitionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAutomaticSpeechRecognitionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
+		"GetAudioEventDetectionForAudit": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioEventDetectionForAudit"},
+				"Version": []string{"2021-11-01"},
+			},
+		},
 		"CreateVideoClassification": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -326,14 +334,6 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
-		//"GetSpaceConfig": {
-		//	Method: http.MethodGet,
-		//	Path:   "/",
-		//	Query: url.Values{
-		//		"Action":  []string{"GetSpaceConfig"},
-		//		"Version": []string{"2022-01-01"},
-		//	},
-		//},
 		"UpdateSpace": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -376,6 +376,38 @@ var (
 			Query: url.Values{
 				"Action":  []string{"CreateCdnPreloadTask"},
 				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListCdnTasks": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTasks"},
+				"Version": []string{"2021-01-01"},
+			},
+		},
+		"ListCdnAccessLog": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnAccessLog"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		"ListCdnTopAccessUrl": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTopAccessUrl"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		"DescribeVodDomainBandwidthData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodDomainBandwidthData"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
 
