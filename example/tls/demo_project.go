@@ -16,7 +16,7 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectId
+	testProjectId = createResp.ProjectID
 
 	// 修改project
 

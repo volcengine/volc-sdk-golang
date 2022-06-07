@@ -20,7 +20,7 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectId
+	testProjectId = createResp.ProjectID
 
 	// 新建topic
 	// TopicName Description字段规范参考api文档

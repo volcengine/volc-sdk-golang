@@ -20,7 +20,7 @@ type CreateProjectRequest struct {
 
 type CreateProjectResponse struct {
 	CommonResponse
-	ProjectId string `json:"ProjectId"`
+	ProjectID string `json:"ProjectId"`
 }
 
 type DeleteProjectRequest struct {

@@ -68,7 +68,7 @@ func (suite *SDKProjectTestSuite) TestCreateNormalProject() {
 		suite.validateError(rErr, err)
 
 		if resp != nil {
-			suite.projectList = append(suite.projectList, resp.ProjectId)
+			suite.projectList = append(suite.projectList, resp.ProjectID)
 		}
 	}
 }
@@ -113,11 +113,11 @@ func (suite *SDKProjectTestSuite) TestGetProject() {
 	createResp, err := suite.cli.CreateProject(createReq)
 	suite.NoError(err)
 
-	suite.projectList = append(suite.projectList, createResp.ProjectId)
+	suite.projectList = append(suite.projectList, createResp.ProjectID)
 
 	testcases := map[*DescribeProjectRequest]*Error{
 		{
-			ProjectID: createResp.ProjectId,
+			ProjectID: createResp.ProjectID,
 		}: nil,
 		{
 			ProjectID: uuid.New().String(),
@@ -133,7 +133,7 @@ func (suite *SDKProjectTestSuite) TestGetProject() {
 		suite.validateError(rErr, err)
 
 		if rErr == nil {
-			suite.Equal(resp.ProjectID, createResp.ProjectId)
+			suite.Equal(resp.ProjectID, createResp.ProjectID)
 			suite.Equal(resp.ProjectName, createReq.ProjectName)
 			suite.Equal(resp.Description, createReq.Description)
 		}
@@ -151,17 +151,17 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 	createResp, err := suite.cli.CreateProject(createReq)
 	suite.NoError(err)
 
-	suite.projectList = append(suite.projectList, createResp.ProjectId)
+	suite.projectList = append(suite.projectList, createResp.ProjectID)
 
 	testcases := map[*ModifyProjectRequest]*CreateProjectRequest{
 		{
-			ProjectID: createResp.ProjectId,
+			ProjectID: createResp.ProjectID,
 		}: {
 			ProjectName: createReq.ProjectName,
 			Description: "desc",
 		},
 		{
-			ProjectID:   createResp.ProjectId,
+			ProjectID:   createResp.ProjectID,
 			ProjectName: StrPtr(createReq.ProjectName + "1"),
 			Description: StrPtr("new desc"),
 		}: {
@@ -174,7 +174,7 @@ func (suite *SDKProjectTestSuite) TestUpdateProject() {
 		_, rErr := suite.cli.ModifyProject(req)
 		suite.NoError(rErr)
 
-		getResp, err := suite.cli.DescribeProject(&DescribeProjectRequest{ProjectID: createResp.ProjectId})
+		getResp, err := suite.cli.DescribeProject(&DescribeProjectRequest{ProjectID: createResp.ProjectID})
 		suite.NoError(err)
 
 		suite.Equal(getResp.ProjectName, expect.ProjectName)
@@ -206,7 +206,7 @@ func (suite *SDKProjectTestSuite) TestListProject() {
 		createResp, err := suite.cli.CreateProject(createReq)
 		suite.NoError(err)
 
-		suite.projectList = append(suite.projectList, createResp.ProjectId)
+		suite.projectList = append(suite.projectList, createResp.ProjectID)
 	}
 
 	testcases := map[*DescribeProjectsRequest]int{

@@ -39,7 +39,7 @@ func createProject(projectName, description, region string, cli Client) (string,
 		return "", err
 	}
 
-	return createProjectResp.ProjectId, nil
+	return createProjectResp.ProjectID, nil
 }
 
 func createTopic(projectId, topicName, description string, shardCount int, ttl uint16, cli Client) (string, error) {

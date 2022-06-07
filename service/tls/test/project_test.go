@@ -23,7 +23,7 @@ func TestCreateProject(t *testing.T) {
 		return
 	}
 
-	if resp.ProjectId == "" {
+	if resp.ProjectID == "" {
 		t.Error("empty project id")
 	}
 }
