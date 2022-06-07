@@ -163,6 +163,23 @@ type Click2CallResult struct {
 	CallId string
 }
 
+type Click2CallLiteRequest struct {
+	Caller          string
+	Callee          string
+	NumberPoolNo    string
+	AudioRecordFlag int32
+	UserData        string
+}
+
+type Click2CallLiteResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           Click2CallLiteResult
+}
+
+type Click2CallLiteResult struct {
+	CallId string
+}
+
 type QueryAudioRecordFileUrlRequest struct {
 	CallId string
 }

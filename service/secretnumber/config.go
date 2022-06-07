@@ -193,5 +193,13 @@ var (
 				"Version": []string{"2021-09-01"},
 			},
 		},
+		"Click2CallLite": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Click2CallLite"},
+				"Version": []string{"2021-09-01"},
+			},
+		},
 	}
 )

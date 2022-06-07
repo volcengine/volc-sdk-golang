@@ -69,23 +69,6 @@ func Test_GetSpaceDetail(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
-func Test_GetSpaceConfig(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodGetSpaceConfigRequest{
-		SpaceName: "your SpaceName",
-	}
-
-	resp, status, err := instance.GetSpaceConfig(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
-
 func Test_UpdateSpace(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
