@@ -293,7 +293,7 @@ type NewCustomContentsReq struct {
 	Name        string `json:"name" form:"name" query:"name"`
 	Description string `json:"description" form:"description" query:"description"`
 	Decision    string `json:"decision" form:"decision" query:"decision"`
-	MatchType   int `json:"match_type" form:"match_type" query:"match_type"`
+	MatchType   int    `json:"match_type" form:"match_type" query:"match_type"`
 }
 
 type UpdateContentReq struct {

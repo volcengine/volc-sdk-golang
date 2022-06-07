@@ -164,7 +164,6 @@ func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVer
 		return nil, fmt.Errorf("ElementVerifyRequest: fail to marshal request, %v", err)
 	}
 
-
 	respBody, _, err := p.Client.Json("ElementVerify", nil, string(reqData))
 	if err != nil {
 		// Retry on error
@@ -359,7 +358,7 @@ func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultRespo
 				return nil, err
 			}
 			return result, nil
-			}
+		}
 		return nil, fmt.Errorf("TextRisk: fail to do request, %v", err)
 	}
 	result := new(TextResultResponse)
@@ -636,7 +635,6 @@ func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*Asy
 	}
 	return result, nil
 }
-
 
 // enable custom contents
 // 启用文本自定义库

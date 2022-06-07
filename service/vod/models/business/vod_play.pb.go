@@ -345,7 +345,6 @@ func (x *VodAllPlayInfoModel) GetSubtitleInfoList() []*VodSubtitleInfo {
 	return nil
 }
 
-
 type VodGetOriginalPlayInfoResult struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
