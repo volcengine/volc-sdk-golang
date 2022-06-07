@@ -287,6 +287,23 @@ func (r *VideoResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }
 
+type NewCustomContentsReq struct {
+	AppID       int64  `json:"app_id" form:"app_id" query:"app_id"`
+	Service     string `json:"service" form:"service" query:"service"`
+	Name        string `json:"name" form:"name" query:"name"`
+	Description string `json:"description" form:"description" query:"description"`
+	Decision    string `json:"decision" form:"decision" query:"decision"`
+	MatchType   int `json:"match_type" form:"match_type" query:"match_type"`
+}
+
+type UpdateContentReq struct {
+	Contents   []string `json:"contents" form:"contents" query:"contents"`
+	ModifyType int      `json:"modify_type" form:"modify_type" query:"modify_type"`
+	AppID      int64    `json:"app_id" form:"app_id" query:"app_id"`
+	Name       string   `json:"name" form:"name" query:"name"`
+	IsFile     bool     `json:"is_file" form:"is_file" query:"is_file"`
+}
+
 func UnmarshalResultInto(data []byte, result interface{}) error {
 	resp := new(base.CommonResponse)
 	if err := json.Unmarshal(data, resp); err != nil {

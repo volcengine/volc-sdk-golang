@@ -214,6 +214,22 @@ var (
 				"Version": []string{"2022-04-28"},
 			},
 		},
+		"CreateCustomContents": {
+			Method: http.MethodPost,
+			Path: "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCustomContents"},
+				"Version": []string{"2022-01-22"},
+			},
+		},
+		"UploadCustomContents": {
+			Method: http.MethodPost,
+			Path: "/",
+			Query: url.Values{
+				"Action":  []string{"UploadCustomContents"},
+				"Version": []string{"2022-02-07"},
+			},
+		},
 		"DeleteCustomContents": {
 			Method: http.MethodPost,
 			Path: "/",

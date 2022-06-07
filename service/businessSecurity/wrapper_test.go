@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	Ak = "AK" // write your access key
-	Sk = "SK" // write your secret key
+	Ak = "***REMOVED***"              // write your access key
+	Sk = "***REMOVED***" // write your secret key
 )
 
 func init() {
@@ -65,8 +65,8 @@ func AsyncRiskDetection(appId int64, service string, parameters string) {
 
 func GetImageResult(dataId, service string, appId int64) (*ImageResultResponse, error) {
 	return DefaultInstance.GetImageResult(&VideoResultRequest{
-		DataId: dataId,
-		AppId: appId,
+		DataId:  dataId,
+		AppId:   appId,
 		Service: service,
 	})
 }
@@ -79,7 +79,6 @@ func ImageRisk(appId int64, service string, parameters string) (*ImageResultResp
 	})
 }
 
-
 func AsyncVideoRiskDetection(appId int64, service string, parameters string) (*AsyncVideoRiskResponse, error) {
 	return DefaultInstance.AsyncVideoRisk(&AsyncRiskDetectionRequest{
 		AppId:      appId,      // write your app id
@@ -90,8 +89,8 @@ func AsyncVideoRiskDetection(appId int64, service string, parameters string) (*A
 
 func GetVideoResult(dataId, service string, appId int64) (*VideoResultResponse, error) {
 	return DefaultInstance.GetVideoLiveResult(&VideoResultRequest{
-		DataId: dataId,
-		AppId: appId,
+		DataId:  dataId,
+		AppId:   appId,
 		Service: service,
 	})
 }
@@ -135,8 +134,8 @@ func AsyncAudioRiskDetection(appId int64, service string, parameters string) (*A
 
 func GetAudioResult(dataId, service string, appId int64) (*AudioResultResponse, error) {
 	return DefaultInstance.GetAudioResult(&VideoResultRequest{
-		DataId: dataId,
-		AppId: appId,
+		DataId:  dataId,
+		AppId:   appId,
 		Service: service,
 	})
 }
@@ -151,8 +150,8 @@ func AsyncVideoLiveRiskDetection(appId int64, service string, parameters string)
 
 func GetVideoLiveResult(dataId, service string, appId int64) (*VideoResultResponse, error) {
 	return DefaultInstance.GetVideoLiveResult(&VideoResultRequest{
-		DataId: dataId,
-		AppId: appId,
+		DataId:  dataId,
+		AppId:   appId,
 		Service: service,
 	})
 }
@@ -167,9 +166,48 @@ func AsyncAudioLiveRiskDetection(appId int64, service string, parameters string)
 
 func GetAudioLiveResult(dataId, service string, appId int64) (*AudioResultResponse, error) {
 	return DefaultInstance.GetAudioLiveResult(&VideoResultRequest{
-		DataId: dataId,
-		AppId: appId,
+		DataId:  dataId,
+		AppId:   appId,
 		Service: service,
+	})
+}
+
+func NewCustomContents(appId int64, service, name, description, decision string, matchType int) (*AsyncRiskDetectionResponse, error) {
+	return DefaultInstance.CreateCustomContents(&NewCustomContentsReq{
+		AppID:       appId,
+		Service:     service,
+		Name:        name,
+		Description: description,
+		Decision:    decision,
+		MatchType:   matchType,
+	})
+}
+
+func EnableCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
+	return DefaultInstance.EnableCustomContents(&UpdateContentReq{
+		AppID: appId,
+		Name:  name,
+	})
+}
+
+func DisableCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
+	return DefaultInstance.DisableCustomContents(&UpdateContentReq{
+		AppID: appId,
+		Name:  name,
+	})
+}
+
+func DeleteCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
+	return DefaultInstance.DeleteCustomContents(&UpdateContentReq{
+		AppID: appId,
+		Name:  name,
+	})
+}
+
+func UploadCustomContents(appId int64, name string, contents []string, modifyType int) (*AsyncRiskDetectionResponse, error) {
+	return DefaultInstance.UploadCustomContents(&UpdateContentReq{
+		AppID: appId,
+		Name:  name,
 	})
 }
 
@@ -244,4 +282,22 @@ func TestBusinessSecurity_MobileStatusV2(t *testing.T) {
 		return
 	}
 	t.Logf("%v", *res)
+}
+
+func TestNewCustomContents(t *testing.T) {
+	resp, err := NewCustomContents(5461, "text_risk", "text", "text", "BLOCK", 1)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestEnableCustomContents(t *testing.T) {
+	resp, err := UploadCustomContents(5461, "text", []string{"test1", "test2"}, 0)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
 }
