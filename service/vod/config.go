@@ -426,6 +426,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"DescribeIpInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeIpInfo"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理
