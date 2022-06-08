@@ -15,8 +15,8 @@ func AddCdnDomain(t *testing.T) {
 				OriginLines: []cdn.OriginLine{
 					{
 						OriginType:   "primary",
-						InstanceType: "ip",
-						Address:      "1.1.1.1",
+						InstanceType: "domain",
+						Address:      "origin.test.com",
 						HttpPort:     "80",
 						HttpsPort:    "80",
 						Weight:       "100",
