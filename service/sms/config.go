@@ -11,6 +11,7 @@ import (
 const (
 	DefaultRegion          = "cn-north-1"
 	ServiceVersion20200101 = "2020-01-01"
+	ServiceVersion20210101 = "2021-01-01"
 	ServiceName            = "volcSMS"
 )
 
@@ -39,6 +40,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"SendSms"},
 				"Version": []string{ServiceVersion20200101},
+			},
+		},
+		"SendBatchSms": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SendBatchSms"},
+				"Version": []string{ServiceVersion20210101},
 			},
 		},
 		"SendSmsVerifyCode": {
