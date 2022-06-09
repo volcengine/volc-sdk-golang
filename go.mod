@@ -13,7 +13,8 @@ require (
 	github.com/pierrec/lz4 v2.6.1+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf v1.25.0
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 )
 
