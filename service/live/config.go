@@ -1,10 +1,11 @@
 package live
 
 import (
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 const (
@@ -119,35 +120,11 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"EnableAuth": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"EnableAuth"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DisableAuth": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DisableAuth"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DescribeAuth": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeAuth"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"UpdateAllAuthUnderVhost": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateAllAuthUnderVhost"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
@@ -180,14 +157,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateCert"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeCertDetailSecret": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeCertDetailSecret"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
@@ -263,22 +232,6 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"DescribeRecordPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeRecordPresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeRecordPresetDetail"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DeleteRecordPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -311,27 +264,19 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
-		"DescribeTranscodePreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeTranscodePreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeTranscodePresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeTranscodePresetDetail"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
 		"DeleteTranscodePreset": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteTranscodePreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"ListVhostTransCodePreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVhostTransCodePreset"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
@@ -348,22 +293,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
-			},
-		},
-		"DescribeSnapshotPresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeSnapshotPresetDetail"},
 				"Version": []string{ServiceVersion20200801},
 			},
 		},

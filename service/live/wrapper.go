@@ -187,36 +187,9 @@ func (p *LIVE) UpdateAuthKey(query url.Values, body string) (*UpdateAuthKeyResp,
 	return resp, statesCode, nil
 }
 
-func (p *LIVE) EnableAuth(query url.Values, body string) (*EnableAuthResp, int, error) {
-	resp := new(EnableAuthResp)
-	statesCode, err := p.commonHandlerJson("EnableAuth", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-func (p *LIVE) DisableAuth(query url.Values, body string) (*DisableAuthResp, int, error) {
-	resp := new(DisableAuthResp)
-	statesCode, err := p.commonHandlerJson("DisableAuth", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
 func (p *LIVE) DescribeAuth(query url.Values, body string) (*DescribeAuthResp, int, error) {
 	resp := new(DescribeAuthResp)
 	statesCode, err := p.commonHandlerJson("DescribeAuth", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-func (p *LIVE) UpdateAllAuthUnderVhost(query url.Values, body string) (*UpdateAllAuthUnderVhostResp, int, error) {
-	resp := new(UpdateAllAuthUnderVhostResp)
-	statesCode, err := p.commonHandlerJson("UpdateAllAuthUnderVhost", query, resp, body)
 	if err != nil {
 		return nil, statesCode, err
 	}
@@ -271,19 +244,6 @@ func (p *LIVE) ListCert(query url.Values, body string) (*ListCertConsoleResp, in
 func (p *LIVE) CreateCert(query url.Values, body string) (*CreateCertConsoleResp, int, error) {
 	resp := new(CreateCertConsoleResp)
 	statesCode, err := p.commonHandlerJson("CreateCert", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-3. 查询证书详情 --》由DescribeCertDetail变更为DescribeCertDetailSecret接口
-*/
-
-func (p *LIVE) DescribeCertDetailSecret(query url.Values, body string) (*DescribeCertDetailConsoleResp, int, error) {
-	resp := new(DescribeCertDetailConsoleResp)
-	statesCode, err := p.commonHandlerJson("DescribeCertDetailSecret", query, resp, body)
 	if err != nil {
 		return nil, statesCode, err
 	}
@@ -405,32 +365,7 @@ func (p *LIVE) UpdateRecordPreset(query url.Values, body string) (*UpdateRecordP
 }
 
 /**
-3。根据vhost和app查询对应的所有的模版的模版名称
-*/
-
-func (p *LIVE) DescribeRecordPreset(query url.Values, body string) (*DescribeRecordPresetResp, int, error) {
-	resp := new(DescribeRecordPresetResp)
-	statesCode, err := p.commonHandlerJson("DescribeRecordPreset", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-4。
-*/
-func (p *LIVE) DescribeRecordPresetDetail(query url.Values, body string) (*DescribeRecordPresetDetailResp, int, error) {
-	resp := new(DescribeRecordPresetDetailResp)
-	statesCode, err := p.commonHandlerJson("DescribeRecordPresetDetail", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-5。
+3.
 */
 
 func (p *LIVE) DeleteRecordPreset(query url.Values, body string) (*DeleteRecordPresetResp, int, error) {
@@ -484,33 +419,18 @@ func (p *LIVE) UpdateTranscodePreset(query url.Values, body string) (*UpdateTran
 /**
 3。
 */
-func (p *LIVE) DescribeTranscodePreset(query url.Values, body string) (*DescribeTranscodePresetResp, int, error) {
-	resp := new(DescribeTranscodePresetResp)
-	statesCode, err := p.commonHandlerJson("DescribeTranscodePreset", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-4。
-*/
-func (p *LIVE) DescribeTranscodePresetDetail(query url.Values, body string) (*DescribeTranscodePresetDetailResp, int, error) {
-	resp := new(DescribeTranscodePresetDetailResp)
-	statesCode, err := p.commonHandlerJson("DescribeTranscodePresetDetail", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-
-/**
-5。
-*/
 func (p *LIVE) DeleteTranscodePreset(query url.Values, body string) (*DeleteTranscodePresetResp, int, error) {
 	resp := new(DeleteTranscodePresetResp)
 	statesCode, err := p.commonHandlerJson("DeleteTranscodePreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+
+func (p *LIVE) ListVhostTransCodePreset(query url.Values, body string) (*ListVhostTransCodePresetResp, int, error) {
+	resp := new(ListVhostTransCodePresetResp)
+	statesCode, err := p.commonHandlerJson("ListVhostTransCodePreset", query, resp, body)
 	if err != nil {
 		return nil, statesCode, err
 	}
@@ -531,22 +451,6 @@ func (p *LIVE) CreateSnapshotPreset(query url.Values, body string) (*CreateSnaps
 func (p *LIVE) UpdateSnapshotPreset(query url.Values, body string) (*UpdateSnapshotPresetResp, int, error) {
 	resp := new(UpdateSnapshotPresetResp)
 	statesCode, err := p.commonHandlerJson("UpdateSnapshotPreset", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-func (p *LIVE) DescribeSnapshotPreset(query url.Values, body string) (*DescribeSnapshotPresetResp, int, error) {
-	resp := new(DescribeSnapshotPresetResp)
-	statesCode, err := p.commonHandlerJson("DescribeSnapshotPreset", query, resp, body)
-	if err != nil {
-		return nil, statesCode, err
-	}
-	return resp, statesCode, nil
-}
-func (p *LIVE) DescribeSnapshotPresetDetail(query url.Values, body string) (*DescribeSnapshotPresetDetailResp, int, error) {
-	resp := new(DescribeSnapshotPresetDetailResp)
-	statesCode, err := p.commonHandlerJson("DescribeSnapshotPresetDetail", query, resp, body)
 	if err != nil {
 		return nil, statesCode, err
 	}
