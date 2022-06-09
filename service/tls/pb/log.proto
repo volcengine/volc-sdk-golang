@@ -1,0 +1,34 @@
+syntax = "proto3";
+package pb;
+option go_package = "./;pb";
+message LogContent
+{
+  string Key = 1;
+  string Value = 2;
+}
+
+message Log
+{
+  int64 Time = 1;// UNIX Time Format
+
+  repeated LogContent Contents = 2;
+
+}
+message LogTag
+{
+  string Key = 1;
+  string Value = 2;
+}
+message LogGroup
+{
+  repeated Log Logs = 1;
+  string Source = 2;
+  repeated LogTag LogTags = 3;
+  string FileName = 4;
+  string ContextFlow = 5;
+}
+
+message LogGroupList
+{
+  repeated LogGroup LogGroups = 1;
+}
