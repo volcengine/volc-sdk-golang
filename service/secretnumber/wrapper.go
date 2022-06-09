@@ -2,6 +2,8 @@ package secretnumber
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
@@ -149,6 +151,114 @@ func (p *DataCenter) QueryCallRecordMsg(req *QueryCallRecordMsgRequest) (*QueryC
 	}
 }
 
+func (p *NumberPool) CreateNumberPool(req *CreateNumberPoolRequest) (*CreateNumberPoolResponse, int, error) {
+	resp := new(CreateNumberPoolResponse)
+	if statusCode, err := handler("CreateNumberPool", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *NumberPool) UpdateNumberPool(req *UpdateNumberPoolRequest) (*UpdateNumberPoolResponse, int, error) {
+	resp := new(UpdateNumberPoolResponse)
+	if statusCode, err := handler("UpdateNumberPool", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *NumberPool) NumberPoolList(req *NumberPoolListRequest) (*NumberPoolListResponse, int, error) {
+	resp := new(NumberPoolListResponse)
+	if statusCode, err := handler("NumberPoolList", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *NumberPool) NumberList(req *NumberListRequest) (*NumberListResponse, int, error) {
+	resp := new(NumberListResponse)
+	if statusCode, err := handler("NumberList", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *NumberPool) EnableOrDisableNumber(req *EnableOrDisableNumberRequest) (*EnableOrDisableNumberResponse, int, error) {
+	resp := new(EnableOrDisableNumberResponse)
+	if statusCode, err := handler("EnableOrDisableNumber", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *NumberPool) QueryNumberApplyRecordList(req *QueryNumberApplyRecordListRequest) (*QueryNumberApplyRecordListResponse, int, error) {
+	resp := new(QueryNumberApplyRecordListResponse)
+	if statusCode, err := handler("QueryNumberApplyRecordList", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *MercService) CreateNumberApplication(req *CreateNumberApplicationRequest) (*CreateNumberApplicationResponse, int, error) {
+	resp := new(CreateNumberApplicationResponse)
+	if statusCode, err := handlerJson("CreateNumberApplication", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) AddQualification(req *AddQualificationRequest) (*AddQualificationResponse, int, error) {
+	resp := new(AddQualificationResponse)
+	if statusCode, err := handlerJson("AddQualification", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) UpdateQualification(req *UpdateQualificationRequest) (*UpdateQualificationResponse, int, error) {
+	resp := new(UpdateQualificationResponse)
+	if statusCode, err := handlerJson("UpdateQualification", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) AddQualificationScene(req *AddQualificationSceneRequest) (*AddQualificationSceneResponse, int, error) {
+	resp := new(AddQualificationSceneResponse)
+	if statusCode, err := handlerJson("AddQualificationScene", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) UpdateQualificationScene(req *UpdateQualificationSceneRequest) (*UpdateQualificationSceneResponse, int, error) {
+	resp := new(UpdateQualificationSceneResponse)
+	if statusCode, err := handlerJson("UpdateQualificationScene", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *ConfigService) QueryQualification(req *QueryQualificationRequest) (*QueryQualificationResponse, int, error) {
+	resp := new(QueryQualificationResponse)
+	if statusCode, err := handlerJson("QueryQualification", req, resp, *p.Client); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) handler(api string, req interface{}, resp interface{}) (int, error) {
 	form := base.ToUrlValues(req)
 	respBody, statusCode, err := p.Client.Post(api, nil, form)
@@ -176,6 +286,56 @@ func (p *DataCenter) handler(api string, req interface{}, resp interface{}) (int
 	}
 	if statusCode >= 500 {
 		respBody, statusCode, err = p.Client.Post(api, nil, form)
+		if err != nil {
+			return statusCode, err
+		}
+	}
+
+	if err := json.Unmarshal(respBody, resp); err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
+func handler(api string, req interface{}, resp interface{}, p base.Client) (int, error) {
+	form := base.ToUrlValues(req)
+	apiInfo := p.ApiInfoList[api]
+	var respBody []byte
+	var statusCode int
+	var err error
+	if http.MethodGet == apiInfo.Method {
+		respBody, statusCode, err = p.Query(api, form)
+	} else {
+		respBody, statusCode, err = p.Post(api, nil, form)
+	}
+	if err != nil {
+		return statusCode, err
+	}
+	if statusCode >= 500 {
+		if http.MethodGet == apiInfo.Method {
+			respBody, statusCode, err = p.Query(api, form)
+		} else {
+			respBody, statusCode, err = p.Post(api, nil, form)
+		}
+		if err != nil {
+			return statusCode, err
+		}
+	}
+
+	if err := json.Unmarshal(respBody, resp); err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
+func handlerJson(api string, req interface{}, resp interface{}, p base.Client) (int, error) {
+	jsonBody, _ := json.Marshal(req)
+	respBody, statusCode, err := p.Json(api, nil, string(jsonBody))
+	if err != nil {
+		return statusCode, err
+	}
+	if statusCode >= 500 {
+		respBody, statusCode, err = p.Json(api, nil, string(jsonBody))
 		if err != nil {
 			return statusCode, err
 		}
