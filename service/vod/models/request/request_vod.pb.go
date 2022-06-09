@@ -377,6 +377,13 @@ func (x *VodGetPlayInfoRequest) GetQuality() string {
 	return ""
 }
 
+func (x *VodGetPlayInfoRequest) GetQuality() string {
+	if x != nil {
+		return x.Quality
+	}
+	return ""
+}
+
 type VodGetOriginalPlayInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2907,7 +2914,7 @@ type VodUpdateSpaceRequest struct {
 func (x *VodUpdateSpaceRequest) Reset() {
 	*x = VodUpdateSpaceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[38]
+		mi := &file_vod_request_request_vod_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2920,7 +2927,7 @@ func (x *VodUpdateSpaceRequest) String() string {
 func (*VodUpdateSpaceRequest) ProtoMessage() {}
 
 func (x *VodUpdateSpaceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[38]
+	mi := &file_vod_request_request_vod_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2933,7 +2940,7 @@ func (x *VodUpdateSpaceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateSpaceRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSpaceRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{38}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *VodUpdateSpaceRequest) GetSpaceName() string {
@@ -2977,7 +2984,7 @@ type VodUpdateSpaceUploadConfigRequest struct {
 func (x *VodUpdateSpaceUploadConfigRequest) Reset() {
 	*x = VodUpdateSpaceUploadConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[39]
+		mi := &file_vod_request_request_vod_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2990,7 +2997,7 @@ func (x *VodUpdateSpaceUploadConfigRequest) String() string {
 func (*VodUpdateSpaceUploadConfigRequest) ProtoMessage() {}
 
 func (x *VodUpdateSpaceUploadConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[39]
+	mi := &file_vod_request_request_vod_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3003,7 +3010,7 @@ func (x *VodUpdateSpaceUploadConfigRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodUpdateSpaceUploadConfigRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSpaceUploadConfigRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{39}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *VodUpdateSpaceUploadConfigRequest) GetSpaceName() string {
@@ -3041,7 +3048,7 @@ type VodListDomainRequest struct {
 func (x *VodListDomainRequest) Reset() {
 	*x = VodListDomainRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[40]
+		mi := &file_vod_request_request_vod_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3054,7 +3061,7 @@ func (x *VodListDomainRequest) String() string {
 func (*VodListDomainRequest) ProtoMessage() {}
 
 func (x *VodListDomainRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[40]
+	mi := &file_vod_request_request_vod_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3067,7 +3074,7 @@ func (x *VodListDomainRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListDomainRequest.ProtoReflect.Descriptor instead.
 func (*VodListDomainRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{40}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *VodListDomainRequest) GetSpaceName() string {
@@ -3090,7 +3097,7 @@ type VodCreateCdnRefreshTaskRequest struct {
 func (x *VodCreateCdnRefreshTaskRequest) Reset() {
 	*x = VodCreateCdnRefreshTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[41]
+		mi := &file_vod_request_request_vod_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3103,7 +3110,7 @@ func (x *VodCreateCdnRefreshTaskRequest) String() string {
 func (*VodCreateCdnRefreshTaskRequest) ProtoMessage() {}
 
 func (x *VodCreateCdnRefreshTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[41]
+	mi := &file_vod_request_request_vod_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3116,7 +3123,7 @@ func (x *VodCreateCdnRefreshTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateCdnRefreshTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateCdnRefreshTaskRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{41}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *VodCreateCdnRefreshTaskRequest) GetSpaceName() string {
@@ -3152,7 +3159,7 @@ type VodCreateCdnPreloadTaskRequest struct {
 func (x *VodCreateCdnPreloadTaskRequest) Reset() {
 	*x = VodCreateCdnPreloadTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[42]
+		mi := &file_vod_request_request_vod_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3165,7 +3172,7 @@ func (x *VodCreateCdnPreloadTaskRequest) String() string {
 func (*VodCreateCdnPreloadTaskRequest) ProtoMessage() {}
 
 func (x *VodCreateCdnPreloadTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[42]
+	mi := &file_vod_request_request_vod_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3178,7 +3185,7 @@ func (x *VodCreateCdnPreloadTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateCdnPreloadTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateCdnPreloadTaskRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{42}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *VodCreateCdnPreloadTaskRequest) GetSpaceName() string {
@@ -3200,21 +3207,21 @@ type VodListCdnTasksRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SpaceName  string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`   //空间名
-	TaskId     string `protobuf:"bytes,2,opt,name=TaskId,proto3" json:"TaskId,omitempty"`         //任务ID
-	DomainName string `protobuf:"bytes,3,opt,name=DomainName,proto3" json:"DomainName,omitempty"` //域名
-	TaskType   string `protobuf:"bytes,4,opt,name=TaskType,proto3" json:"TaskType,omitempty"`     //任务类型
-	Status     string `protobuf:"bytes,5,opt,name=Status,proto3" json:"Status,omitempty"`         //任务状态
-	StartTime  int64  `protobuf:"varint,6,opt,name=StartTime,proto3" json:"StartTime,omitempty"`  //起始时间戳
-	EndTime    int64  `protobuf:"varint,7,opt,name=EndTime,proto3" json:"EndTime,omitempty"`      //截止时间戳
-	PageNum    int32  `protobuf:"varint,8,opt,name=PageNum,proto3" json:"PageNum,omitempty"`      //页码
-	PageSize   int32  `protobuf:"varint,9,opt,name=PageSize,proto3" json:"PageSize,omitempty"`    //页面大小
+	SpaceName      string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`            //空间名
+	TaskId         string `protobuf:"bytes,2,opt,name=TaskId,proto3" json:"TaskId,omitempty"`                  //任务ID
+	DomainName     string `protobuf:"bytes,3,opt,name=DomainName,proto3" json:"DomainName,omitempty"`          //域名
+	TaskType       string `protobuf:"bytes,4,opt,name=TaskType,proto3" json:"TaskType,omitempty"`              //任务类型
+	Status         string `protobuf:"bytes,5,opt,name=Status,proto3" json:"Status,omitempty"`                  //任务状态
+	StartTimestamp int32  `protobuf:"varint,6,opt,name=StartTimestamp,proto3" json:"StartTimestamp,omitempty"` //起始时间戳，单位：Unix秒级时间戳
+	EndTimestamp   int32  `protobuf:"varint,7,opt,name=EndTimestamp,proto3" json:"EndTimestamp,omitempty"`     //截止时间戳，单位：Unix秒级时间戳
+	PageNum        int32  `protobuf:"varint,8,opt,name=PageNum,proto3" json:"PageNum,omitempty"`               //页码
+	PageSize       int32  `protobuf:"varint,9,opt,name=PageSize,proto3" json:"PageSize,omitempty"`             //页面大小
 }
 
 func (x *VodListCdnTasksRequest) Reset() {
 	*x = VodListCdnTasksRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vod_request_request_vod_proto_msgTypes[43]
+		mi := &file_vod_request_request_vod_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3227,7 +3234,7 @@ func (x *VodListCdnTasksRequest) String() string {
 func (*VodListCdnTasksRequest) ProtoMessage() {}
 
 func (x *VodListCdnTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_vod_request_request_vod_proto_msgTypes[43]
+	mi := &file_vod_request_request_vod_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3240,7 +3247,7 @@ func (x *VodListCdnTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnTasksRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnTasksRequest) Descriptor() ([]byte, []int) {
-	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{43}
+	return file_vod_request_request_vod_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *VodListCdnTasksRequest) GetSpaceName() string {
@@ -3278,16 +3285,16 @@ func (x *VodListCdnTasksRequest) GetStatus() string {
 	return ""
 }
 
-func (x *VodListCdnTasksRequest) GetStartTime() int64 {
+func (x *VodListCdnTasksRequest) GetStartTimestamp() int32 {
 	if x != nil {
-		return x.StartTime
+		return x.StartTimestamp
 	}
 	return 0
 }
 
-func (x *VodListCdnTasksRequest) GetEndTime() int64 {
+func (x *VodListCdnTasksRequest) GetEndTimestamp() int32 {
 	if x != nil {
-		return x.EndTime
+		return x.EndTimestamp
 	}
 	return 0
 }
@@ -5079,18 +5086,6 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateSpaceRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_vod_request_request_vod_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodUpdateSpaceUploadConfigRequest); i {
 			case 0:
 				return &v.state
@@ -5102,7 +5097,7 @@ func file_vod_request_request_vod_proto_init() {
 				return nil
 			}
 		}
-		file_vod_request_request_vod_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+		file_vod_request_request_vod_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodListDomainRequest); i {
 			case 0:
 				return &v.state
@@ -5114,7 +5109,7 @@ func file_vod_request_request_vod_proto_init() {
 				return nil
 			}
 		}
-		file_vod_request_request_vod_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+		file_vod_request_request_vod_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodCreateCdnRefreshTaskRequest); i {
 			case 0:
 				return &v.state
@@ -5126,7 +5121,7 @@ func file_vod_request_request_vod_proto_init() {
 				return nil
 			}
 		}
-		file_vod_request_request_vod_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+		file_vod_request_request_vod_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodCreateCdnPreloadTaskRequest); i {
 			case 0:
 				return &v.state
@@ -5138,8 +5133,20 @@ func file_vod_request_request_vod_proto_init() {
 				return nil
 			}
 		}
-		file_vod_request_request_vod_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+		file_vod_request_request_vod_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodListCdnTasksRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListCdnAccessLogRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5211,7 +5218,7 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodAddCallbackSubscriptionRequest); i {
+			switch v := v.(*VodListCdnTopAccessUrlRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -5223,6 +5230,54 @@ func file_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_vod_request_request_vod_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodDescribeVodDomainBandwidthDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListCdnUsageDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListCdnStatusDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodAddCallbackSubscriptionRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_request_request_vod_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodSetCallbackEventRequest); i {
 			case 0:
 				return &v.state

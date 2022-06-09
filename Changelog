@@ -1,5 +1,30 @@
 ### Change log
 
+2022-06-06 Bumped to version v1.0.46
+- Fixed apis for security
+
+2022-05-20 Bumped to version v1.0.45
+- Added apis for vod\secret
+- Fixed apis for live
+
+2022-05-12 Bumped to version v1.0.44
+- Fixed apis for billing
+- Added apis for vod\security
+
+2022-04-28 Bumped to version v1.0.43
+- Fixed apis for cdn\imagex
+
+2022-04-21 Bumped to version v1.0.42
+- Added service mars
+- Added apis for vod
+- Fixed apis for cdn\kms
+
+2022-04-14 Bumped to version v1.0.41
+- Support context for base client
+- Fixed params for nlp
+- Added apis for vod\imagex\security\billing
+- Added service volc_voice_notify
+
 2022-04-07 Bumped to version v1.0.40
 - Added api for cdn
 

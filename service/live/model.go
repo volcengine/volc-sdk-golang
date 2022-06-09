@@ -101,12 +101,6 @@ type ManagerPullPushDomainBindResp struct {
 type UpdateAuthKeyResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type EnableAuthResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
-type DisableAuthResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
 type AuthDetail struct {
 }
 
@@ -127,9 +121,7 @@ type DescribeAuthResp struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           *DescribeAuthOutput `json:"Result,omitempty"`
 }
-type UpdateAllAuthUnderVhostResp struct {
-	ResponseMetadata base.ResponseMetadata
-}
+
 type ForbidStreamResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
@@ -148,6 +140,7 @@ type ListCertResp struct {
 
 type SimpleCertInfo struct {
 	CertDomain string `json:"CertDomain"`
+	CertName   string `json:"CertName"`
 	ChainID    string `json:"ChainID"`
 	NotBefore  string `json:"NotBefore"`
 	NotAfter   string `json:"NotAfter"`
@@ -170,6 +163,7 @@ type DescribeCertDetailResp struct {
 	CertDomain string           `json:"Domain"`
 	UseWay     string           `json:"UseWay,omitempty"`
 	Status     string           `json:"Status,omitempty"`
+	CertName   string           `json:"CertName,omitempty"`
 	Rsa        *OpenAPICertData `json:"Rsa,omitempty"`
 }
 
@@ -234,35 +228,6 @@ type UpdateRecordPresetResp struct {
 type DeleteRecordPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type DescribeRecordPresetResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeRecordPresetOutput `json:"Result,omitempty"`
-}
-type DescribeRecordPresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeRecordPresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeRecordPresetDetailOutput `json:"Result,omitempty"`
-}
-type DescribeRecordPresetDetailOutput struct {
-	PresetDetailList []*RecordPreset `json:"PresetDetailList"`
-}
-type RecordPreset struct {
-	Preset          string          `json:"Preset"`
-	Status          int             `json:"Status"`
-	Format          []string        `json:"Format"`
-	Duration        int             `json:"Duration"`
-	SliceDuration   int             `json:"SliceDuration"`
-	Bucket          string          `json:"Bucket"`
-	ReserveDuration int             `json:"ReserveDuration"`
-	AccessKey       string          `json:"AccessKey"`
-	ReserveDays     int64           `json:"ReserveDays"`
-	CallbackDetail  *CallbackDetail `json:"CallbackDetail"`
-	PullDomain      string          `json:"PullDomain"`
-	VodNamespace    string          `json:"VodNamespace"`
-	WorkflowID      string          `json:"WorkflowID"`
-}
 
 type SlicePreset struct {
 	Preset         *string         `json:"Preset,omitempty"`
@@ -300,38 +265,83 @@ type UpdateTranscodePresetResp struct {
 type DeleteTranscodePresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
-type DescribeTranscodePresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeTranscodePresetResp struct {
+type ListVhostTransCodePresetResp struct {
 	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeTranscodePresetOutput `json:"Result,omitempty"`
+	Result           *ListVhostTransCodePresetRespOutput `json:"Result,omitempty"`
 }
-
+type ListVhostTransCodePresetRespOutput struct {
+	CommonPresetList    []TranscodePresetVhostAPP `json:"CommonPresetList"`
+	CustomizePresetList []TranscodePresetVhostAPP `json:"CustomizePresetList"`
+}
+type TranscodePresetVhostAPP struct {
+	Vhost           string           `json:"Vhost"`
+	App             string           `json:"App"`
+	TranscodePreset *TranscodePreset `json:"TranscodePreset"`
+}
 type TranscodePreset struct {
-	Preset       string `json:"Preset"`
-	Status       int    `json:"Status"`
-	SuffixName   string `json:"SuffixName"`
-	VideoBitrate int    `json:"VideoBitrate"`
-	Vcodec       string `json:"Vcodec"`
-	AudioBitrate int    `json:"AudioBitrate"`
-	Acodec       string `json:"Acodec"`
-	FPS          int    `json:"FPS"`
-	GOP          int    `json:"GOP"`
-	Width        int    `json:"Width"`
-	Height       int    `json:"Height"`
-	AutoTrans    int    `json:"-"`
-	As           string `json:"-"`
-	ShortSide    int    `json:"-"`
-	LongSide     int    `json:"-"`
-	Roi          bool   `json:"-"`
-}
-type DescribeTranscodePresetDetailOutput struct {
-	PresetDetailList []*TranscodePreset `json:"PresetDetailList"`
-}
-type DescribeTranscodePresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeTranscodePresetDetailOutput `json:"Result,omitempty"`
+	Preset       *string `json:"Preset,omitempty"`
+	Status       *int64  `json:"Status,omitempty"`
+	SuffixName   *string `json:"SuffixName,omitempty"`
+	StopInterval *int64  `json:"StopInterval,omitempty"`
+	Describe     *string `json:"Describe,omitempty"`
+	PresetKind   *int64  `json:"PresetKind,omitempty"`
+	PresetType   *int    `json:"PresetType,omitempty"`
+	Roi          *bool   `json:"Roi,omitempty"`
+	Vclass       *bool   `json:"Vclass,omitempty"`
+	Ocr          *bool   `json:"Ocr,omitempty"`
+	Modifier     *string `json:"Modifier,omitempty"`
+	Revision     *string `json:"Revision,omitempty"`
+	//*****video param ******
+	Vn           *int64  `json:"Vn,omitempty"`
+	FPS          *int64  `json:"FPS,omitempty"`
+	VideoBitrate *int64  `json:"VideoBitrate,omitempty"`
+	VbThreshold  *string `json:"VbThreshold,omitempty"`
+	Vcodec       *string `json:"Vcodec,omitempty"`
+	VProfile     *string `json:"VProfile,omitempty"`
+	VLevel       *string `json:"VLevel,omitempty"`
+	VRateCtrl    *string `json:"VRateCtrl,omitempty"`
+	GopMin       *int64  `json:"GopMin,omitempty"`
+	GOP          *int64  `json:"GOP,omitempty"`
+	BFrames      *int64  `json:"BFrames,omitempty"`
+	LookAhead    *int64  `json:"LookAhead,omitempty"`
+	VPreset      *string `json:"VPreset,omitempty"`
+	Threads      *int64  `json:"Threads,omitempty"`
+	Width        *int64  `json:"Width,omitempty"`
+	Height       *int64  `json:"Height,omitempty"`
+	As           *string `json:"As,omitempty"`
+	AutoTrans    *int64  `json:"AutoTrans,omitempty"`
+	LongSide     *int64  `json:"LongSide,omitempty"`
+	ShortSide    *int64  `json:"ShortSide,omitempty"`
+	Abr          *bool   `json:"Abr,omitempty"`
+	VBVBufSize   *int64  `json:"VBVBufSize,omitempty"`
+	VBVMaxRate   *int64  `json:"VBVMaxRate,omitempty"`
+	Qp           *int64  `json:"Qp,omitempty"`
+	HVSPre       *bool   `json:"HVSPre,omitempty"`
+	BCM          *int64  `json:"BCM,omitempty"`
+	VBRatio      *int64  `json:"VBRatio,omitempty"`
+	SITI         *bool   `json:"SITI,omitempty"`
+
+	// Nvidia hardware encoding related parameters, Vcodec, Width, Height, Vr, Vb, gop reuse the above general parameters, other software encoding parameters are ignored
+	// When NvPriority = 0, it means that nvidia hardware transcoding is not enabled, and all nv parameters are not used
+	NvPriority  *int64  `json:"NvPriority,omitempty"` // nvidia transcoding priority, 0 means off, >0 means on, the larger the priority, the higher the priority
+	NvCodec     *string `json:"NvCodec,omitempty"`
+	NvPreset    *string `json:"NvPreset,omitempty"`
+	NvProfile   *string `json:"NvProfile,omitempty"`
+	NvGop       *int64  `json:"NvGop,omitempty"`
+	NvBf        *int64  `json:"NvBf,omitempty"`
+	NvRefs      *int64  `json:"NvRefs,omitempty"`
+	NvLookahead *int64  `json:"NvLookahead,omitempty"`
+	NvTempAQ    *int64  `json:"NvTempAQ,omitempty"`
+	NvHVSPre    *bool   `json:"NvHVSPre,omitempty"`
+	NvPercent   *int64  `json:"NvPercent,omitempty"`
+	//***** audio param *****
+	An            *int64  `json:"An,omitempty"`
+	AR            *int64  `json:"AR,omitempty"`
+	AudioBitrate  *int64  `json:"AudioBitrate,omitempty"`
+	Acodec        *string `json:"Acodec,omitempty"`
+	AProfile      *string `json:"AProfile,omitempty"`
+	RegionConfig  *string `json:"RegionConfig,omitempty"`
+	AdvancedParam *string `json:"AdvancedParam,omitempty"`
 }
 type CreateSnapshotPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
@@ -341,28 +351,6 @@ type UpdateSnapshotPresetResp struct {
 }
 type DeleteSnapshotPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
-}
-type DescribeSnapshotPresetOutput struct {
-	PresetList []string `json:"PresetList"`
-}
-type DescribeSnapshotPresetResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeSnapshotPresetOutput `json:"Result,omitempty"`
-}
-type SnapshotPreset struct {
-	Preset         string          `json:"Preset"`
-	Status         int             `json:"Status"`
-	Interval       int             `json:"Interval"`
-	Bucket         string          `json:"Bucket"`
-	AccessKey      string          `json:"AccessKey"`
-	CallbackDetail *CallbackDetail `json:"CallbackDetail"`
-}
-type DescribeSnapshotPresetDetailOutput struct {
-	PresetDetailList []*SnapshotPreset `json:"PresetDetailList"`
-}
-type DescribeSnapshotPresetDetailResp struct {
-	ResponseMetadata base.ResponseMetadata
-	Result           *DescribeSnapshotPresetDetailOutput `json:"Result,omitempty"`
 }
 type ListVhostSnapshotPresetRespOutput struct {
 	PresetList []*SlicePresetsVhostAPP `json:"PresetList"`
