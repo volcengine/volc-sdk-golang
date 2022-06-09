@@ -383,7 +383,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCdnTasks"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		"ListCdnAccessLog": {

@@ -75,15 +75,15 @@ func Test_ListCdnTasks(t *testing.T) {
 	})
 
 	query := &request.VodListCdnTasksRequest{
-		SpaceName:  "your SpaceName",
-		TaskId:     "your TaskId",
-		DomainName: "your DomainName",
-		TaskType:   "your TaskType",
-		Status:     "your Status",
-		StartTime:  0,
-		EndTime:    0,
-		PageNum:    0,
-		PageSize:   0,
+		SpaceName:      "your SpaceName",
+		TaskId:         "your TaskId",
+		DomainName:     "your DomainName",
+		TaskType:       "your TaskType",
+		Status:         "your Status",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		PageNum:        0,
+		PageSize:       0,
 	}
 
 	resp, status, err := instance.ListCdnTasks(query)
