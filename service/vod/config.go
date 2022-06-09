@@ -383,7 +383,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCdnTasks"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		"ListCdnAccessLog": {
@@ -408,6 +408,22 @@ var (
 			Query: url.Values{
 				"Action":  []string{"DescribeVodDomainBandwidthData"},
 				"Version": []string{"2020-08-01"},
+			},
+		},
+		"ListCdnUsageData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnUsageData"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		"ListCdnStatusData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnStatusData"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 
