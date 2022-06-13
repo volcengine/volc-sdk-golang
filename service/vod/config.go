@@ -85,6 +85,14 @@ var (
 				"Version": []string{"2021-11-01"},
 			},
 		},
+		"GetAllPlayInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllPlayInfo"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 上传
