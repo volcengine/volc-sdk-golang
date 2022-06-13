@@ -22,11 +22,11 @@ func Test_UpdateMediaInfo(t *testing.T) {
 
 	query := &request.VodUpdateMediaInfoRequest{
 		Vid:              "your Vid",
-		PosterUri:        nil,
-		Title:            nil,
-		Description:      nil,
-		Tags:             nil,
-		ClassificationId: nil,
+		PosterUri:        wrapperspb.String("your PosterUri"),
+		Title:            wrapperspb.String("your Title"),
+		Description:      wrapperspb.String("your Description"),
+		Tags:             wrapperspb.String("your Tags"),
+		ClassificationId: wrapperspb.Int64(0),
 	}
 
 	resp, status, err := instance.UpdateMediaInfo(query)
