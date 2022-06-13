@@ -24,7 +24,6 @@ func (c *Nlp) NlpPost(action string, query url.Values, req, result interface{}) 
 //中文文本纠错
 func (c *Nlp) GetTextCorrectionZhCorrect(param *TextCorrectionZhCorrectParam) (*TextCorrectionZhCorrectResult, error) {
 	u := url.Values{}
-	u.Add("content", param.Content)
 	resp := new(TextCorrectionZhCorrectResult)
 	err := c.NlpPost("TextCorrectionZhCorrect", u, param, resp)
 	if err != nil {
@@ -36,7 +35,6 @@ func (c *Nlp) GetTextCorrectionZhCorrect(param *TextCorrectionZhCorrectParam) (*
 //英文文本纠错
 func (c *Nlp) GetTextCorrectionEnCorrect(param *TextCorrectionEnCorrectParam) (*TextCorrectionEnCorrectResult, error) {
 	u := url.Values{}
-	u.Add("content", param.Content)
 	resp := new(TextCorrectionEnCorrectResult)
 	err := c.NlpPost("TextCorrectionEnCorrect", u, param, resp)
 	if err != nil {
@@ -48,9 +46,6 @@ func (c *Nlp) GetTextCorrectionEnCorrect(param *TextCorrectionEnCorrectParam) (*
 //关键词提取
 func (c *Nlp) GetKeyPhraseExtractionExtract(param *KeyPhraseExtractionParam) (*KeyPhraseExtractionResult, error) {
 	u := url.Values{}
-	u.Add("request_type", param.RequestType)
-	u.Add("title", param.Title)
-	u.Add("content", param.Content)
 	resp := new(KeyPhraseExtractionResult)
 	err := c.NlpPost("KeyphraseExtractionExtract", u, param, resp)
 	if err != nil {
@@ -62,7 +57,6 @@ func (c *Nlp) GetKeyPhraseExtractionExtract(param *KeyPhraseExtractionParam) (*K
 //情感分析
 func (c *Nlp) GetSentimentAnalysis(param *SentimentAnalysisParam) (*SentimentAnalysisResult, error) {
 	u := url.Values{}
-	u.Add("text", param.Text)
 	resp := new(SentimentAnalysisResult)
 	err := c.NlpPost("SentimentAnalysis", u, param, resp)
 	if err != nil {
@@ -74,7 +68,6 @@ func (c *Nlp) GetSentimentAnalysis(param *SentimentAnalysisParam) (*SentimentAna
 //文本摘要
 func (c *Nlp) GetTextSummarization(param *TextSummarizationParam) (*TextSummarizationResult, error) {
 	u := url.Values{}
-	u.Add("text", param.Text)
 	resp := new(TextSummarizationResult)
 	err := c.NlpPost("TextSummarization", u, param, resp)
 	if err != nil {

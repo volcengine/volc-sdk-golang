@@ -260,6 +260,7 @@ type GetImageEnhanceParam struct {
 	Model        int    `json:"Model"`
 	DisableAr    bool   `json:"DisableAr"`
 	DisableSharp bool   `json:"DisableSharp"`
+	Resolution   string `json:"Resolution"`
 }
 
 type GetImageEnhanceResult struct {
@@ -315,6 +316,17 @@ type Contour struct {
 }
 
 type GetImageSegmentResult struct {
+	ResUri string `json:"ResUri"`
+}
+
+//GetImageSuperResolutionResult
+type GetImageSuperResolutionParam struct {
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Multiple  float64 `json:"Multiple"`
+}
+
+type GetImageSuperResolutionResp struct {
 	ResUri string `json:"ResUri"`
 }
 

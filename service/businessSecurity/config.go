@@ -104,7 +104,7 @@ var (
 		},
 		"TextRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"TextRisk"},
 				"Version": []string{"2022-01-26"},
@@ -112,7 +112,7 @@ var (
 		},
 		"AsyncVideoRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"AsyncVideoRisk"},
 				"Version": []string{"2021-11-29"},
@@ -120,7 +120,7 @@ var (
 		},
 		"VideoResult": {
 			Method: http.MethodGet,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"VideoResult"},
 				"Version": []string{"2021-11-29"},
@@ -128,7 +128,7 @@ var (
 		},
 		"AsyncImageRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"AsyncImageRisk"},
 				"Version": []string{"2021-11-29"},
@@ -136,7 +136,7 @@ var (
 		},
 		"ImageContentRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ImageContentRisk"},
 				"Version": []string{"2021-11-29"},
@@ -144,7 +144,7 @@ var (
 		},
 		"GetImageResult": {
 			Method: http.MethodGet,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageResult"},
 				"Version": []string{"2021-11-29"},
@@ -152,7 +152,7 @@ var (
 		},
 		"AsyncAudioRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"AsyncAudioRisk"},
 				"Version": []string{"2022-04-01"},
@@ -160,7 +160,7 @@ var (
 		},
 		"GetAudioResult": {
 			Method: http.MethodGet,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAudioResult"},
 				"Version": []string{"2022-04-01"},
@@ -168,7 +168,7 @@ var (
 		},
 		"AsyncLiveVideoRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"AsyncAudioRisk"},
 				"Version": []string{"2022-04-25"},
@@ -176,7 +176,7 @@ var (
 		},
 		"GetVideoLiveResult": {
 			Method: http.MethodGet,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAudioResult"},
 				"Version": []string{"2022-04-25"},
@@ -184,7 +184,7 @@ var (
 		},
 		"AsyncLiveAudioRisk": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"AsyncLiveAudioRisk"},
 				"Version": []string{"2022-04-25"},
@@ -192,7 +192,7 @@ var (
 		},
 		"GetAudioLiveResult": {
 			Method: http.MethodGet,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAudioLiveResult"},
 				"Version": []string{"2022-04-25"},
@@ -200,7 +200,7 @@ var (
 		},
 		"EnableCustomContents": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"EnableCustomContents"},
 				"Version": []string{"2022-04-28"},
@@ -208,15 +208,31 @@ var (
 		},
 		"DisableCustomContents": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DisableCustomContents"},
 				"Version": []string{"2022-04-28"},
 			},
 		},
+		"CreateCustomContents": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCustomContents"},
+				"Version": []string{"2022-01-22"},
+			},
+		},
+		"UploadCustomContents": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UploadCustomContents"},
+				"Version": []string{"2022-02-07"},
+			},
+		},
 		"DeleteCustomContents": {
 			Method: http.MethodPost,
-			Path: "/",
+			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteCustomContents"},
 				"Version": []string{"2022-04-28"},
