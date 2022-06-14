@@ -3,6 +3,7 @@ package cdn
 type AddCdnDomainRequest struct {
 	Domain             string
 	ServiceType        string
+	ServiceRegion      *string `json:",omitempty"`
 	Origin             []OriginRule
 	OriginProtocol     string
 	Project            *string `json:",omitempty"`
@@ -23,8 +24,9 @@ type AddCdnDomainRequest struct {
 	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
 	ResponseHeader     []ResponseHeaderRule
 	RequestHeader      []RequestHeaderRule
-	Compression        *Compression `json:",omitempty"`
-	HTTPS              *HTTPS       `json:",omitempty"`
+	Compression        *Compression        `json:",omitempty"`
+	HTTPS              *HTTPS              `json:",omitempty"`
+	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
 }
 type AddCdnDomainResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -71,7 +73,13 @@ type CacheKeyGenerationRule struct {
 	CacheKeyAction *CacheKeyAction `json:",omitempty"`
 }
 type CertInfo struct {
-	CertId string
+	CertId      string
+	ExpireTime  *int64       `json:",omitempty"`
+	Certificate *Certificate `json:",omitempty"`
+}
+type Certificate struct {
+	Certificate string
+	PrivateKey  string
 }
 type Compression struct {
 	Switch           bool
@@ -179,17 +187,18 @@ type DescribeCdnDataDetailResult struct {
 	DataDetails []DataDetail
 }
 type DescribeCdnDataRequest struct {
-	StartTime int64
-	EndTime   int64
-	Metric    string
-	Domain    *string `json:",omitempty"`
-	Interval  *string `json:",omitempty"`
-	Area      *string `json:",omitempty"`
-	Region    *string `json:",omitempty"`
-	Isp       *string `json:",omitempty"`
-	Protocol  *string `json:",omitempty"`
-	IpVersion *string `json:",omitempty"`
-	Aggregate *string `json:",omitempty"`
+	StartTime     int64
+	EndTime       int64
+	Metric        string
+	Domain        *string `json:",omitempty"`
+	Interval      *string `json:",omitempty"`
+	Area          *string `json:",omitempty"`
+	Region        *string `json:",omitempty"`
+	Isp           *string `json:",omitempty"`
+	Protocol      *string `json:",omitempty"`
+	IpVersion     *string `json:",omitempty"`
+	Aggregate     *string `json:",omitempty"`
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeCdnDataResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -216,12 +225,13 @@ type DescribeCdnDomainTopDataResult struct {
 	TopDataDetails []TopDataDetailDeprecated
 }
 type DescribeCdnOriginDataRequest struct {
-	StartTime int64
-	EndTime   int64
-	Metric    string
-	Domain    *string `json:",omitempty"`
-	Interval  *string `json:",omitempty"`
-	Aggregate *string `json:",omitempty"`
+	StartTime     int64
+	EndTime       int64
+	Metric        string
+	Domain        *string `json:",omitempty"`
+	Interval      *string `json:",omitempty"`
+	Aggregate     *string `json:",omitempty"`
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeCdnOriginDataResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -315,17 +325,18 @@ type DescribeContentTasksResult struct {
 	Data     []ContentTask
 }
 type DescribeEdgeNrtDataSummaryRequest struct {
-	StartTime int64
-	EndTime   int64
-	Metric    string
-	Domain    *string `json:",omitempty"`
-	Interval  *string `json:",omitempty"`
-	Area      *string `json:",omitempty"`
-	Region    *string `json:",omitempty"`
-	Isp       *string `json:",omitempty"`
-	Protocol  *string `json:",omitempty"`
-	IpVersion *string `json:",omitempty"`
-	Aggregate *string `json:",omitempty"`
+	StartTime     int64
+	EndTime       int64
+	Metric        string
+	Domain        *string `json:",omitempty"`
+	Interval      *string `json:",omitempty"`
+	Area          *string `json:",omitempty"`
+	Region        *string `json:",omitempty"`
+	Isp           *string `json:",omitempty"`
+	Protocol      *string `json:",omitempty"`
+	IpVersion     *string `json:",omitempty"`
+	Aggregate     *string `json:",omitempty"`
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeEdgeNrtDataSummaryResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -352,13 +363,14 @@ type DescribeEdgeStatisticalDataResult struct {
 	Resources []ResourceStatData
 }
 type DescribeEdgeTopNrtDataRequest struct {
-	StartTime int64
-	EndTime   int64
-	Metric    string
-	Domain    *string `json:",omitempty"`
-	Item      string
-	Area      *string `json:",omitempty"`
-	Interval  *string `json:",omitempty"`
+	StartTime     int64
+	EndTime       int64
+	Metric        string
+	Domain        *string `json:",omitempty"`
+	Item          string
+	Area          *string `json:",omitempty"`
+	Interval      *string `json:",omitempty"`
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeEdgeTopNrtDataResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -418,12 +430,13 @@ type DescribeIPInfoResult struct {
 	CdnIp    bool
 }
 type DescribeOriginNrtDataSummaryRequest struct {
-	StartTime int64
-	EndTime   int64
-	Metric    string
-	Domain    *string `json:",omitempty"`
-	Interval  *string `json:",omitempty"`
-	Aggregate *string `json:",omitempty"`
+	StartTime     int64
+	EndTime       int64
+	Metric        string
+	Domain        *string `json:",omitempty"`
+	Interval      *string `json:",omitempty"`
+	Aggregate     *string `json:",omitempty"`
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeOriginNrtDataSummaryResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -433,12 +446,13 @@ type DescribeOriginNrtDataSummaryResult struct {
 	Resources []ResourceSummary
 }
 type DescribeOriginTopNrtDataRequest struct {
-	Domain    *string `json:",omitempty"`
-	StartTime *int64  `json:",omitempty"`
-	EndTime   *int64  `json:",omitempty"`
-	Item      string
-	Interval  *string `json:",omitempty"`
-	Metric    string
+	Domain        *string `json:",omitempty"`
+	StartTime     *int64  `json:",omitempty"`
+	EndTime       *int64  `json:",omitempty"`
+	Item          string
+	Interval      *string `json:",omitempty"`
+	Metric        string
+	BillingRegion *string `json:",omitempty"`
 }
 type DescribeOriginTopNrtDataResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -496,6 +510,7 @@ type DomainConfig struct {
 	RequestHeader      []RequestHeaderRule
 	Compression        Compression
 	DownloadSpeedLimit DownloadSpeedLimit
+	HttpForcedRedirect HttpForcedRedirect
 }
 type DomainLogDetail struct {
 	StartTime int64
@@ -527,6 +542,10 @@ type DownloadSpeedLimitAction struct {
 type DownloadSpeedLimitRule struct {
 	Condition                *Condition                `json:",omitempty"`
 	DownloadSpeedLimitAction *DownloadSpeedLimitAction `json:",omitempty"`
+}
+type HttpForcedRedirect struct {
+	EnableForcedRedirect bool
+	StatusCode           string
 }
 type EmptyResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
@@ -818,6 +837,7 @@ type TopStatusDetail struct {
 }
 type UpdateCdnConfigRequest struct {
 	Domain             string
+	ServiceRegion      *string `json:"ServiceRegion,omitempty"`
 	ResourceTags       []ResourceTagEntry
 	OriginHost         *string `json:",omitempty"`
 	OriginProtocol     *string `json:",omitempty"`
@@ -837,8 +857,9 @@ type UpdateCdnConfigRequest struct {
 	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
 	ResponseHeader     []ResponseHeaderRule
 	RequestHeader      []RequestHeaderRule
-	Compression        *Compression `json:",omitempty"`
-	HTTPS              *HTTPS       `json:",omitempty"`
+	Compression        *Compression        `json:",omitempty"`
+	HTTPS              *HTTPS              `json:",omitempty"`
+	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
 }
 type UpdateCdnConfigResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`

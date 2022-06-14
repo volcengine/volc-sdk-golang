@@ -163,6 +163,23 @@ type Click2CallResult struct {
 	CallId string
 }
 
+type Click2CallLiteRequest struct {
+	Caller          string
+	Callee          string
+	NumberPoolNo    string
+	AudioRecordFlag int32
+	UserData        string
+}
+
+type Click2CallLiteResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           Click2CallLiteResult
+}
+
+type Click2CallLiteResult struct {
+	CallId string
+}
+
 type QueryAudioRecordFileUrlRequest struct {
 	CallId string
 }
@@ -230,4 +247,331 @@ type QueryCallRecordMsg struct {
 type QueryCallRecordMsgResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           []QueryCallRecordMsg
+}
+
+type CreateNumberPoolRequest struct {
+	Name           string
+	ServiceType    string
+	SubServiceType string
+}
+
+type CreateNumberPoolData struct {
+	Name           string
+	NumberPoolNo   string
+	ServiceType    int32
+	SubServiceType int32
+}
+
+type CreateNumberPoolResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           CreateNumberPoolData
+}
+
+type UpdateNumberPoolRequest struct {
+	NumberPoolNo   string
+	Name           string
+	ServiceType    string
+	SubServiceType string
+}
+
+type UpdateNumberPoolResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           bool
+}
+
+type NumberPoolListRequest struct {
+	ServiceType    string
+	SubServiceType string
+	Limit          string
+	Offset         string
+}
+
+type NumberPoolData struct {
+	NumberPoolName     string
+	NumberPoolNo       string
+	ServiceType        int32
+	ServiceTypeName    string
+	SubServiceType     int32
+	SubServiceTypeName string
+	NumberCount        int32
+}
+
+type NumberPoolListPagedResponse struct {
+	Records []NumberPoolData
+	Limit   int32
+	Offset  int32
+	Total   int32
+}
+
+type NumberPoolListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           NumberPoolListPagedResponse
+}
+
+type NumberListRequest struct {
+	Number             string
+	NumberPoolNo       string
+	NumberPoolTypeCode string
+	NumberStatusCode   string
+	NumberTypeCode     string
+	Limit              string
+	Offset             string
+}
+
+type NumberData struct {
+	Number              string
+	NumberStatusCode    int32
+	NumberStatusDesc    string
+	NumberTypeCode      int32
+	NumberTypeDesc      string
+	NumberLocation      string
+	NumberPurchaseTime  string
+	NumberPoolNo        string
+	NumberPoolName      string
+	NumberPoolTypeCode  int32
+	NumberPoolTypeDesc  string
+	ServiceTypeCode     int32
+	ServiceTypeDesc     string
+	QualificationNo     string
+	QualificationEntity string
+}
+
+type NumberListPagedResponse struct {
+	Records []NumberData
+	Limit   int32
+	Offset  int32
+	Total   int32
+}
+
+type NumberListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           NumberListPagedResponse
+}
+
+type EnableOrDisableNumberRequest struct {
+	NumberList string
+	EnableCode string
+}
+
+type EnableOrDisableNumberResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type QueryNumberApplyRecordListRequest struct {
+	ApplyBillId          string
+	QueryAccountId       string
+	ApplyStatusCode      string
+	ApplyTimeLowerBound  string
+	ApplyTimeUpperBound  string
+	SubServiceType       string
+	NumberType           string
+	UpdateTimeLowerBound string
+	UpdateTimeUpperBound string
+	Limit                string
+	Offset               string
+}
+
+type NumberApplyRecordDetail struct {
+	NumberLocation    string
+	ApplyNumberCount  int32
+	ImportNumberCount int32
+}
+
+type NumberApplyRecordData struct {
+	Id                  int32
+	ApplyTime           string
+	ApplyStatusCode     int32
+	ApplyStatusDesc     string
+	SubServiceTypeCode  int32
+	SubServiceTypeDesc  string
+	NumberPoolNo        string
+	NumberPoolName      string
+	NumberTypeCode      int32
+	NumberTypeDesc      string
+	ApplyUserId         string
+	ApplyUserName       string
+	UpdateTime          string
+	Notes               string
+	DetailList          []NumberApplyRecordDetail
+	ApplyBillId         string
+	QualificationId     int32
+	QualificationEntity string
+}
+
+type QueryNumberApplyRecordListPagedResponse struct {
+	Records []NumberApplyRecordData
+	Limit   int32
+	Offset  int32
+	Total   int32
+}
+
+type QueryNumberApplyRecordListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           QueryNumberApplyRecordListPagedResponse
+}
+
+type NumberApplicationCityItem struct {
+	NumberCount    string
+	CountryIsoCode string
+	ProvinceCode   string
+	CityCode       string
+}
+
+type CreateNumberApplicationRequest struct {
+	QualificationId               string
+	QualificationNo               string
+	NumberPoolNo                  string
+	NumberPurpose                 string
+	NumberType                    string
+	SubServiceType                string
+	Remark                        string
+	NumberApplicationCityItemList []NumberApplicationCityItem
+}
+
+type CreateNumberApplicationData struct {
+	ApplyBillId string
+}
+
+type CreateNumberApplicationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           CreateNumberApplicationData
+}
+
+type AddQualificationRequest struct {
+	QualificationMainInfoFormDO         QualificationMainInfoFormDO
+	QualificationAdminInfoFormDO        QualificationAdminInfoFormDO
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type QualificationMainInfoFormDO struct {
+	QualificationEntity                            string
+	CertificateThreeInOne                          int32
+	EnterpriseAddress                              string
+	LegalRepresentativeName                        string
+	LegalRepresentativeId                          string
+	LegalRepresentativeFrontIdPhotoFileCode        string
+	DocOfNumberApplyPhotoFileCode                  string
+	CommitmentLetterOfNetAccessPhotoFileCode       string
+	UnitSocialCreditCode                           string
+	ThreeInOneBusinessLicensePhotoFileCode         string
+	CodeOfOrganizationCertificate                  string
+	BusinessLicensePhotoFileCode                   string
+	CertificateOfOrganizationCodesPhotoFileCode    string
+	CertificateOfTaxationRegistrationPhotoFileCode string
+	QualificationNo                                string
+}
+
+type QualificationAdminInfoFormDO struct {
+	Name                              string
+	ContactNumber                     string
+	IdCardNumber                      string
+	IdCardFrontPhotoFileCode          string
+	IdCardBackPhotoWithPeopleFileCode string
+}
+
+type QualificationScenarioInfoFormDO struct {
+	QualificationNo   string
+	SceneType         int32
+	Description       string
+	ScenarioOfCalling string
+}
+
+type AddQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           AddQualificationData
+}
+
+type AddQualificationData struct {
+	QualificationNo string
+}
+
+type UpdateQualificationRequest struct {
+	QualificationMainInfoFormDO         QualificationMainInfoFormDO
+	QualificationAdminInfoFormDO        QualificationAdminInfoFormDO
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type UpdateQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type AddQualificationSceneRequest struct {
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type AddQualificationSceneResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type UpdateQualificationSceneRequest struct {
+	QualificationScenarioInfoFormDOList []QualificationScenarioInfoFormDO
+}
+
+type UpdateQualificationSceneResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type QueryQualificationRequest struct {
+	QualificationNoList []string
+	ApprovalStatus      string
+	Offset              int32
+	Limit               int32
+}
+
+type QualificationMainInfoVO struct {
+	QualificationId                           int32
+	QualificationNo                           string
+	QualificationEntity                       string
+	AccountId                                 string
+	CertificateThreeInOne                     int32
+	EnterpriseAddress                         string
+	LegalRepresentativeName                   string
+	LegalRepresentativeId                     string
+	LegalRepresentativeFrontIDPhotoURL        string
+	DocOfNumberApplyPhotoURL                  string
+	CommitmentLetterOfNetAccessPhotoURL       string
+	UnitSocialCreditCode                      string
+	ThreeInOneBusinessLicensePhotoURL         string
+	CodeOfOrganizationCertificateURL          string
+	BusinessLicensePhotoURL                   string
+	CertificateOfOrganizationCodesPhotoURL    string
+	CertificateOfTaxationRegistrationPhotoURL string
+	ApprovalStatus                            int32
+	CreateTime                                string
+	UpdateTime                                string
+}
+
+type QualificationAdminInfoVO struct {
+	Name                         string
+	ContactNumber                string
+	IdCardNumber                 string
+	IdCardFrontPhotoURL          string
+	IdCardBackPhotoWithPeopleURL string
+}
+
+type QualificationScenarioInfoVO struct {
+	SceneType         int32
+	Description       string
+	ScenarioOfCalling string
+}
+
+type QueryQualificationVO struct {
+	QualificationMainInfoVO         QualificationMainInfoVO
+	QualificationAdminInfoVO        QualificationAdminInfoVO
+	QualificationScenarioInfoVOList []QualificationScenarioInfoVO
+}
+
+type QueryQualificationData struct {
+	Records []QueryQualificationVO
+	Limit   int32
+	Offset  int32
+	Total   int32
+}
+
+type QueryQualificationResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           QueryQualificationData
 }
