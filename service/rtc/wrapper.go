@@ -5,6 +5,7 @@ import (
 	"net/url"
 )
 
+// GET method
 // ListRooms ...
 func ListRooms(r *RTC, query url.Values) (*ListRoomsResponse, int, error) {
 	respBody, status, err := r.Client.Query(ActionListRooms, query)
@@ -17,6 +18,7 @@ func ListRooms(r *RTC, query url.Values) (*ListRoomsResponse, int, error) {
 	return output, status, err
 }
 
+// POST method
 // KickUser ...
 func ListIndicators(r *RTC, req *ListIndicatorsRequest) (*ListIndicatorsResponse, int, error) {
 	bts, err := json.Marshal(req)
