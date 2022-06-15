@@ -26,7 +26,7 @@ const (
 	DefaultRegion          = "cn-north-1"
 	ServiceVersion20201201 = "2020-12-01"
 	ServiceName            = "rtc"
-	ServiceHost            = "open.volcengineapi.com"
+	ServiceHost            = "rtc.volcengineapi.com"
 
 	// action name
 	ActionListRooms      = "ListRooms"

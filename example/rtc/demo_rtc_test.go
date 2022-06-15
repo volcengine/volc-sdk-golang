@@ -1,3 +1,10 @@
+// 描述：演示了OpenAPI鉴权SDK的使用方式
+//  	使用时请参考包github.com/volcengine/volc-sdk-golang/service/rtc或把它拷贝到自己的项目中追加所需的API
+//
+// service/rtc目录包含三个文件：
+//	1. config.go 定义API属性,引入签名包并初始化服务
+//	2. model.go 存放API的请求参数与返回参数的定义
+//	3. wrappper.go API的方法体，主要分为两类即GET和POST
 package main
 
 import (
@@ -9,13 +16,15 @@ import (
 )
 
 const (
+	//ak/sk 获取方式参考:https://www.volcengine.com/docs/6348/69828
+
 	appId  = ""
 	testAk = ""
 	testSk = ""
 )
 
 func TestListRooms(t *testing.T) {
-	//init rtc service
+	//init rtc service, 初始化一次即可
 	s := rtc.NewInstance()
 	s.Client.SetAccessKey(testAk)
 	s.Client.SetSecretKey(testSk)
