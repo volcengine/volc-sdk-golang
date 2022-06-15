@@ -85,6 +85,14 @@ var (
 				"Version": []string{"2021-11-01"},
 			},
 		},
+		"GetAllPlayInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllPlayInfo"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 上传
@@ -383,7 +391,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCdnTasks"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		"ListCdnAccessLog": {
@@ -451,7 +459,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"SetCallbackEvent"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 	}

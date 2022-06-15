@@ -320,6 +320,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageSuperResolutionResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageSuperResolutionResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 

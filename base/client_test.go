@@ -1,8 +1,10 @@
 package base
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"testing"
@@ -55,4 +57,44 @@ func TestClient_Query(t *testing.T) {
 
 	resp, _, _ := client.Query("ListUsers", nil)
 	fmt.Println(string(resp))
+}
+
+func TestClientProxy(t *testing.T) {
+	// normal case
+	client := NewClient(serviceInfo, apiList)
+	_, code, _ := client.Query("ListUsers", nil)
+	if code > 499 {
+		t.Fatalf("default client should return bad request, got %v instead", code)
+	}
+
+	// with bad proxy
+	t.Setenv(httpProxy, "http://127.0.0.1:1234")
+	t.Setenv(httpsProxy, "http://127.0.0.1:1234")
+	client.Client.Transport = &http.Transport{Proxy: volcProxy()}
+	_, code, _ = client.Query("ListUsers", nil)
+	if code != 500 {
+		t.Fatalf("invaid proxy client should return connection refused, got %v instead", code)
+	}
+
+	// with proxy
+	go setupProxy("127.0.0.1:1234")
+	_, code, _ = client.Query("ListUsers", nil)
+	if code > 499 {
+		t.Fatalf("proxy client should return as default client, got %v instead", code)
+	}
+}
+
+func setupProxy(addr string) {
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		outReq := request.Clone(context.Background())
+		res, err := http.DefaultTransport.RoundTrip(outReq)
+		if err != nil {
+			writer.WriteHeader(http.StatusBadGateway)
+			return
+		}
+		writer.WriteHeader(res.StatusCode)
+		io.Copy(writer, res.Body)
+		res.Body.Close()
+	})
+	http.ListenAndServe(addr, nil)
 }
