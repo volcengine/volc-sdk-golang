@@ -1,6 +1,8 @@
 package live
 
 import (
+	"time"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
@@ -381,4 +383,41 @@ type TranscodePresetResult struct {
 	ShortSide    *int64  `json:"ShortSide,omitempty"`
 	LongSide     *int64  `json:"LongSide,omitempty"`
 	Roi          *bool   `json:"Roi,omitempty"`
+}
+type DescribePullToPushBandwidthDataRequest struct {
+	DomainList      []string  `json:"DomainList"`
+	DstAddrTypeList []string  `json:"DstAddrTypeList"`
+	StartTime       time.Time `json:"StartTime"`
+	EndTime         time.Time `json:"EndTime"`
+	Aggregation     int       `json:"Aggregation,omitempty"`
+	ShowDetail      bool      `json:"ShowDetail,omitempty"`
+}
+
+type DescribePullToPushBandwidthDataResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *DescribePullToPushBandwidthDataResult `json:"Result,omitempty"`
+}
+
+type DescribePullToPushBandwidthDataResult struct {
+	DomainList              []string              `json:"DomainList"`
+	DstAddrTypeList         []string              `json:"DstAddrTypeList"`
+	StartTime               time.Time             `json:"StartTime"`
+	EndTime                 time.Time             `json:"EndTime"`
+	Aggregation             int                   `json:"Aggregation"`
+	ShowDetail              bool                  `json:"ShowDetail"`
+	PeakUpBandwidth         float64               `json:"PeakUpBandwidth"`
+	BandwidthDataList       []*BandwidthData      `json:"BandwidthDataList"`
+	BandwidthDetailDataList []*BandwidthDtailData `json:"BandwidthDetailDataList"`
+}
+
+type BandwidthData struct {
+	TimeStamp   time.Time `json:"TimeStamp"`
+	UpBandwidth float64   `json:"UpBandwidth"`
+}
+
+type BandwidthDtailData struct {
+	Domain            string           `json:"Domain"`
+	DstAddrType       string           `json:"DstAddrType"`
+	PeakUpBandwidth   float64          `json:"PeakUpBandwidth"`
+	BandwidthDataList []*BandwidthData `json:"BandwidthDataList"`
 }
