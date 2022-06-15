@@ -314,6 +314,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"RetrieveTranscodeResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RetrieveTranscodeResult"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 空间管理

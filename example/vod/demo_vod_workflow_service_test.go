@@ -34,3 +34,21 @@ func Test_StartWorkflow(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_RetrieveTranscodeResult(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodRetrieveTranscodeResultRequest{
+		Vid:        "your Vid",
+		ResultType: "your ResultType",
+	}
+
+	resp, status, err := instance.RetrieveTranscodeResult(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
