@@ -277,8 +277,8 @@ type ConsumeLogsRequest struct {
 
 type ConsumeLogsResponse struct {
 	CommonResponse
-	Cursor string
-	Count  int
+	Cursor string //X-Tls-Cursor
+	Count  int    //X-Tls-Count
 	Logs   *pb.LogGroupList
 }
 
