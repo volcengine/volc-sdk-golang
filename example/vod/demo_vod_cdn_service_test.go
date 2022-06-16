@@ -196,3 +196,20 @@ func Test_ListCdnStatusData(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_DescribeIpInfo(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeIPInfoRequest{
+		Ips: "your Ips",
+	}
+
+	resp, status, err := instance.DescribeIpInfo(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

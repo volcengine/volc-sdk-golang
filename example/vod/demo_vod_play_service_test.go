@@ -13,6 +13,40 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
+func Test_GetAllPlayInfo(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetAllPlayInfoRequest{
+		Vids:                     "your Vids",
+		Formats:                  "your Formats",
+		Codecs:                   "your Codecs",
+		Definitions:              "your Definitions",
+		FileTypes:                "your FileTypes",
+		LogoTypes:                "your LogoTypes",
+		NeedEncryptStream:        "your NeedEncryptStream",
+		Ssl:                      "your Ssl",
+		NeedThumbs:               "your NeedThumbs",
+		NeedBarrageMask:          "your NeedBarrageMask",
+		CdnType:                  "your CdnType",
+		UnionInfo:                "your UnionInfo",
+		PlayScene:                "your PlayScene",
+		DrmExpireTimestamp:       "your DrmExpireTimestamp",
+		HDRType:                  "your HDRType",
+		KeyFrameAlignmentVersion: "your KeyFrameAlignmentVersion",
+		UserAction:               "your UserAction",
+		Quality:                  "your Quality",
+	}
+
+	resp, status, err := instance.GetAllPlayInfo(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_GetPlayInfo(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

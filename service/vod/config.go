@@ -85,6 +85,14 @@ var (
 				"Version": []string{"2021-11-01"},
 			},
 		},
+		"GetAllPlayInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAllPlayInfo"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 上传
@@ -306,6 +314,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"RetrieveTranscodeResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RetrieveTranscodeResult"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 空间管理
@@ -426,6 +442,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"DescribeIpInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeIpInfo"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 回调管理
@@ -443,7 +467,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"SetCallbackEvent"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 	}

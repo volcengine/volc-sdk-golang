@@ -39,8 +39,10 @@ func Test_SetCallbackEvent(t *testing.T) {
 	})
 
 	query := &request.VodSetCallbackEventRequest{
-		SpaceName: "your SpaceName",
-		Events:    "your Events",
+		SpaceName:   "your SpaceName",
+		Events:      "your Events",
+		AuthEnabled: "your AuthEnabled",
+		PrivateKey:  "your PrivateKey",
 	}
 
 	resp, status, err := instance.SetCallbackEvent(query)
