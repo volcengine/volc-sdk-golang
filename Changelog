@@ -1,5 +1,8 @@
 ### Change log
 
+2022-06-17 Bumped to version v1.0.48
+- Update apis for vod\tls\rtc
+
 2022-06-09 Bumped to version v1.0.47
 - Added proxy support
 - Added service tls
