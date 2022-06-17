@@ -1,9 +1,7 @@
 ### Change log
 
-2022-06-09 Bumped to version v1.0.47
-- Added proxy support
-- Added service tls
-- Added or fixed apis for vod\cdn\vms\imagex\nlp\security
+2022-06-17 Bumped to version v1.0.48
+- Update apis for vod\tls\rtc
 
 2022-06-06 Bumped to version v1.0.46
 - Fixed apis for security
