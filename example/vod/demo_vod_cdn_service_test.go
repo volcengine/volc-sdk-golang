@@ -213,3 +213,24 @@ func Test_DescribeIpInfo(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ListCdnPvData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnPvDataRequest{
+		Domains:        "your Domains",
+		Interval:       "your Interval",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		DataType:       "your DataType",
+	}
+
+	resp, status, err := instance.ListCdnPvData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
