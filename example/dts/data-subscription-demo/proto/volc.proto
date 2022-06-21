@@ -4,6 +4,7 @@ option optimize_for = SPEED;
 package volc;
 
 enum EntryType {
+    UNKNOWN_ENTRY = 0;
     BEGIN = 1;
     COMMIT = 2;
     DML = 3;
@@ -11,17 +12,42 @@ enum EntryType {
 }
 
 enum SrcType {
+    UNKNOWN_SRC = 0;
     MySQL = 1;
     PostgreSQL = 2;
 }
 
 enum DMLType {
+    OTHER_DML = 0;
     INSERT = 1;
     UPDATE = 2;
     DELETE = 3;
 }
 
+enum DDLType {
+    OTHER_DDL = 0;
+    CREATE_TABLE = 2;
+    ALTER_TABLE = 3;
+    DROP_TABLE = 4;
+    RENAME_TABLE = 5;
+    TRUNCATE_TABLE = 6;
+
+    CREATE_VIEW = 7;
+    ALTER_VIEW = 8;
+    DROP_VIEW = 9;
+
+    CREATE_INDEX = 10;
+    DROP_INDEX = 11;
+
+    CREATE_FUNCTION = 12;
+    DROP_FUNCTION = 13;
+
+    CREATE_PROCEDURE= 14;
+    DROP_PROCEDURE = 15;
+}
+
 enum ColumnType {
+    UNKNOWN = 0;
     STRING = 1;
     BINARY = 2;
     INTEGER  = 3;  // store as int64 value
@@ -74,6 +100,7 @@ message DDLEvent {
     optional int64 exec_time = 2; // unit: second
     optional int32 err_code = 3;
     repeated Prop props = 4;
+    optional DDLType type = 5;
 }
 
 message DMLEvent {
@@ -100,7 +127,7 @@ message ColumnDef {
 
     optional int32 index = 2;
     optional ColumnType type = 3;
-    optional string OriginType = 4;
+    optional string origin_type = 4;
     optional string name = 5;
     optional string charset = 6;
     optional bool is_nullable = 7;
