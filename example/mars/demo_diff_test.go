@@ -6,13 +6,16 @@ import (
 	"testing"
 	"time"
 
+	// "time"
+
 	"github.com/volcengine/volc-sdk-golang/service/mars"
 )
 
 const (
-	testAk       = "your ak"
-	testSk       = "your sk"
-	appId  int64 = 12345
+	testAk = "your ak"
+	testSk = "your sk"
+
+	appId int64 = 12345
 )
 
 func defaultInstance() *mars.Diff {
@@ -25,7 +28,7 @@ func defaultInstance() *mars.Diff {
 }
 
 func printResult(status int, err error, response interface{}) {
-	// print httpcode (and err)
+	// print http code (and err)
 	fmt.Println("status:", status, "error:", err)
 
 	// print response
@@ -55,7 +58,7 @@ func TestDeletePackages(t *testing.T) {
 	// create request
 	request := &mars.DeletePackagesReq{
 		ServiceId:   12345,
-		OldVersions: []string{"your old package version1", "your old package version2"},
+		OldVersions: []uint64{1, 2},
 	}
 
 	// do http query
@@ -88,8 +91,8 @@ func TestQueryPatchByService(t *testing.T) {
 		ServiceId:    12345,
 		StartTime:    time.Now().UnixMilli(),
 		EndTime:      time.Now().UnixMilli(),
-		StartVersion: "your version",
-		EndVersion:   "your version",
+		StartVersion: 1,
+		EndVersion:   2,
 		NoPatches:    false,
 	}
 
@@ -123,12 +126,13 @@ func TestGenByPkg(t *testing.T) {
 	request := &mars.GenByPkgReq{
 		ServiceId:    12345,
 		Alg:          "wp",
+		Options:      map[string]interface{}{"oldClearSignature": true},
 		OldUrl:       "your old package url",
-		OldVersion:   "1.0.0",
-		OldExtraInfo: "your old package info",
-		NewUrl:       "your new pacakge url",
-		NewVersion:   "1.1.0",
-		NewExtraInfo: "your new package info",
+		OldVersion:   1,
+		OldExtraInfo: "your old version comment",
+		NewUrl:       "your new package url",
+		NewVersion:   2,
+		NewExtraInfo: "your new version comment",
 	}
 
 	// do http query
@@ -145,8 +149,9 @@ func TestGenByCount(t *testing.T) {
 	request := &mars.GenByCountReq{
 		ServiceId:    12345,
 		Alg:          "wp",
-		NewUrl:       "your new pacakge url",
-		NewVersion:   "1.1.0",
+		NewUrl:       "your new package url",
+		NewVersion:   2,
+		Options:      map[string]interface{}{"oldClearSignature": true},
 		NewExtraInfo: "your new package info",
 		Count:        1,
 	}
@@ -165,10 +170,10 @@ func TestGenByVersion(t *testing.T) {
 	request := &mars.GenByVersionReq{
 		ServiceId:    12345,
 		Alg:          "wp",
-		NewUrl:       "your new pacakge url",
-		NewVersion:   "1.1.0",
+		NewUrl:       "your new package url",
+		NewVersion:   2,
 		NewExtraInfo: "your new package info",
-		OldVersions:  []string{"1.0.0"},
+		OldVersions:  []uint64{1},
 	}
 
 	// do http query
