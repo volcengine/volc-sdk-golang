@@ -14,6 +14,16 @@ func (p *SMS) Send(req *SmsRequest) (*SmsResponse, int, error) {
 	return resp, statusCode, nil
 }
 
+func (p *SMS) BatchSend(req *SmsBatchRequest) (*SmsResponse, int, error) {
+	resp := new(SmsResponse)
+	statusCode, err := p.smsHandler("SendBatchSms", req, resp)
+
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *SMS) Conversion(req *ConversionRequest) (*ConversionResponse, int, error) {
 	resp := new(ConversionResponse)
 	statusCode, err := p.smsHandler("Conversion", req, resp)
