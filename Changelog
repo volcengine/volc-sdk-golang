@@ -1,5 +1,9 @@
 ### Change log
 
+2022-06-23 Bumped to version v1.0.49
+- Added apis for sms\vod
+- Updated models for dts
+
 2022-06-17 Bumped to version v1.0.48
 - Update apis for vod\tls\rtc
 
