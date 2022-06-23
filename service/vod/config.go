@@ -40,7 +40,7 @@ func NewInstanceWithRegion(region string) *Vod {
 var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
-			Timeout: 5 * time.Second,
+			Timeout: 60 * time.Second,
 			Host:    "vod.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
@@ -450,7 +450,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
-
+		"ListCdnPvData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnPvData"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************
