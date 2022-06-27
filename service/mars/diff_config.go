@@ -48,8 +48,7 @@ var (
 			Region:  DefaultRegion,
 		},
 		Header: http.Header{
-			"Accept":   []string{"application/json"},
-			"x-tt-env": []string{"ppe_mars_v2"},
+			"Accept": []string{"application/json"},
 		},
 	}
 
