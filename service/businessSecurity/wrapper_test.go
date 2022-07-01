@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	Ak = "AK" // write your access key
-	Sk = "SK" // write your secret key
+	Ak = "***REMOVED***" // write your access key
+	Sk = "***REMOVED***" // write your secret key
 )
 
 func init() {
@@ -208,6 +208,8 @@ func UploadCustomContents(appId int64, name string, contents []string, modifyTyp
 	return DefaultInstance.UploadCustomContents(&UpdateContentReq{
 		AppID: appId,
 		Name:  name,
+		Contents: contents,
+		ModifyType: modifyType,
 	})
 }
 
@@ -285,7 +287,7 @@ func TestBusinessSecurity_MobileStatusV2(t *testing.T) {
 }
 
 func TestNewCustomContents(t *testing.T) {
-	resp, err := NewCustomContents(5461, "text_risk", "text", "text", "BLOCK", 1)
+	resp, err := NewCustomContents(5461, "text_risk", "text", "text", "BLOCK1", 1)
 	if err != nil {
 		t.Errorf("%v", err)
 		return
@@ -294,7 +296,7 @@ func TestNewCustomContents(t *testing.T) {
 }
 
 func TestEnableCustomContents(t *testing.T) {
-	resp, err := UploadCustomContents(5461, "text", []string{"test1", "test2"}, 0)
+	resp, err := NewCustomContents(5461, "text_risk", "","是的是的","BLOCK", 1)
 	if err != nil {
 		t.Errorf("%v", err)
 		return

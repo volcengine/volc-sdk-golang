@@ -188,7 +188,7 @@ type Label struct {
 type Context struct {
 	MatchedWords []string `json:"MatchedWords"`
 	LibName      string   `json:"LibName"`
-	Positions    Position `json:"Positions"`
+	Positions    []Position `json:"Positions"`
 }
 
 type Position struct {
