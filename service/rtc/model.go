@@ -13,31 +13,27 @@ type CommonResponse struct {
 }
 
 type (
-	// ListRoomsResponse ...
-	ListRoomsResponse struct {
+	// ListRoomInformationResponse ...
+	ListRoomInformationResponse struct {
 		ResponseMetadata *base.ResponseMetadata
-		Result           *ListRoomsResult `json:"Result,omitempty"`
+		Result           *ListRoomInformationResult `json:"Result,omitempty"`
 	}
 
-	// ListRoomsResult ...
-	ListRoomsResult struct {
-		Total       int    `json:"Total"`
-		ActiveNum   int    `json:"ActiveNum"`
-		InactiveNum int    `json:"InactiveNum"`
-		Offset      int    `json:"Offset"`
-		Limit       int    `json:"Limit"`
-		Rooms       []Room `json:"Rooms"`
+	// ListRoomInformationResult ...
+	ListRoomInformationResult struct {
+		Total    int    `json:"Total"`
+		PageNum  int    `json:"PageNum"`
+		PageSize int    `json:"PageSize"`
+		HasMore  bool   `json:"HasMore"`
+		RoomList []Room `json:"RoomList"`
 	}
 
 	// Room ...
 	Room struct {
-		RoomId    string `json:"RoomId"`
-		AppId     string `json:"AppId"`
-		UserNum   int    `json:"UserNum"`
-		StreamNum int    `json:"StreamNum"`
-		State     int    `json:"State"`
-		CreatedAt string `json:"CreatedAt"`
-		UpdatedAt string `json:"UpdatedAt"`
+		RoomId      string `json:"RoomId"`
+		CreatedTime string `json:"CreatedTime"`
+		DestroyTime string `json:"DestroyTime"`
+		IsFinished  bool   `json:"IsFinished"`
 	}
 )
 

@@ -17,9 +17,9 @@ import (
 
 const (
 	// ak/sk 获取方式参考:https://www.volcengine.com/docs/6348/69828
-	appId  = ""
-	testAk = ""
-	testSk = ""
+	appId  = "61e1205d2ffc00009ee247d0"
+	testAk = "***REMOVED***"
+	testSk = "***REMOVED***"
 )
 
 func TestListRooms(t *testing.T) {
@@ -31,8 +31,10 @@ func TestListRooms(t *testing.T) {
 
 	query := url.Values{}
 	query.Set("AppId", appId)
-	// query.Set("RoomId", "zdl_room_20210818")
-	res, _, err := rtc.ListRooms(s, query)
+	query.Set("StartTime", "2022-01-22T12:00:00+08:00")
+	query.Set("EndTime", "2022-05-22T12:59:00+08:00")
+
+	res, _, err := rtc.ListRoomInformation(s, query)
 	if err != nil {
 		fmt.Printf("err:%v\n", err)
 		return
