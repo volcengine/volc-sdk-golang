@@ -22,7 +22,7 @@ const (
 	testSk = ""
 )
 
-func TestListRooms(t *testing.T) {
+func TestListRoomInformation(t *testing.T) {
 	// init rtc service, 初始化一次即可
 	s := rtc.NewInstance()
 	s.Client.SetAccessKey(testAk)
