@@ -7,10 +7,11 @@
 package business
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -1176,10 +1177,10 @@ type VodCdnIpInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Ip       string `protobuf:"bytes,1,opt,name=Ip,proto3" json:"Ip,omitempty"`             //ip地址
+	Ip       string `protobuf:"bytes,1,opt,name=Ip,proto3" json:"Ip,omitempty"`             // ip地址
 	CdnIp    bool   `protobuf:"varint,2,opt,name=CdnIp,proto3" json:"CdnIp,omitempty"`      //是否是火山cdn的ip
-	Location string `protobuf:"bytes,3,opt,name=Location,proto3" json:"Location,omitempty"` //IP所属地区,非火山cdn返回"-"
-	Isp      string `protobuf:"bytes,4,opt,name=Isp,proto3" json:"Isp,omitempty"`           //IP所属运营商,非火山cdn返回"-"
+	Location string `protobuf:"bytes,3,opt,name=Location,proto3" json:"Location,omitempty"` // IP所属地区,非火山cdn返回"-"
+	Isp      string `protobuf:"bytes,4,opt,name=Isp,proto3" json:"Isp,omitempty"`           // IP所属运营商,非火山cdn返回"-"
 }
 
 func (x *VodCdnIpInfo) Reset() {
