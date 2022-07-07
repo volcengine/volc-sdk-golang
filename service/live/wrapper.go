@@ -472,3 +472,15 @@ func (p *LIVE) ListVhostSnapshotPreset(query url.Values, body string) (*ListVhos
 	}
 	return resp, statesCode, nil
 }
+
+/**
+用量查询相关
+*/
+func (p *LIVE) DescribePullToPushBandwidthData(query url.Values, body string) (*DescribePullToPushBandwidthDataResp, int, error) {
+	resp := new(DescribePullToPushBandwidthDataResp)
+	statesCode, err := p.commonHandlerJson("DescribePullToPushBandwidthData", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}

@@ -709,3 +709,24 @@ func TestListVhostSnapshotPreset(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestDescribePullToPushBandwidthData(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"DomainList":      []string{"example.com"},
+		"DstAddrTypeList": []string{"live", "Third"},
+		"StartTime":       "2021-04-13T00:00:00+08:00",
+		"EndTime":         "2021-04-14T00:00:00+08:00",
+		"Aggregation":     300,
+		"ShowDetail":      true,
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.DescribePullToPushBandwidthData(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+
+}

@@ -312,6 +312,14 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
+		"DescribePullToPushBandwidthData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribePullToPushBandwidthData"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
