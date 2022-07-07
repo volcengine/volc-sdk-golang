@@ -324,6 +324,26 @@ var (
 		},
 
 		// **********************************************************************
+		// 视频编辑
+		// **********************************************************************
+		"SubmitDirectEditTaskAsync": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitDirectEditTaskAsync"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
+		"GetDirectEditResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDirectEditResult"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
+
+		// **********************************************************************
 		// 空间管理
 		// **********************************************************************
 		"CreateSpace": {

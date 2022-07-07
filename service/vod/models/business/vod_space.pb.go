@@ -7,10 +7,11 @@
 package business
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -74,8 +75,7 @@ type VodSpaceInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"` // 空间名
-	//  uint32 AccountID = 2;        // 账号ID
+	SpaceName      string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`            // 空间名
 	Region         string `protobuf:"bytes,3,opt,name=Region,proto3" json:"Region,omitempty"`                  // 所属区域
 	ProjectName    string `protobuf:"bytes,4,opt,name=ProjectName,proto3" json:"ProjectName,omitempty"`        // IAM项目名称
 	BucketName     string `protobuf:"bytes,5,opt,name=BucketName,proto3" json:"BucketName,omitempty"`          // 绑定的TOS Bucket名称

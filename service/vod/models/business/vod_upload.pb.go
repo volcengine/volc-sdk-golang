@@ -7,10 +7,11 @@
 package business
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -25,16 +26,26 @@ type VodUrlUploadURLSet struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SourceUrl        string `protobuf:"bytes,1,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"`                 // 视频的URL
-	CallbackArgs     string `protobuf:"bytes,2,opt,name=CallbackArgs,proto3" json:"CallbackArgs,omitempty"`           // 透传的回调信息
-	Md5              string `protobuf:"bytes,3,opt,name=Md5,proto3" json:"Md5,omitempty"`                             // 视频的MD5
-	TemplateId       string `protobuf:"bytes,4,opt,name=TemplateId,proto3" json:"TemplateId,omitempty"`               // 模板Id
-	Title            string `protobuf:"bytes,5,opt,name=Title,proto3" json:"Title,omitempty"`                         // 标题
-	Description      string `protobuf:"bytes,6,opt,name=Description,proto3" json:"Description,omitempty"`             // 描述信息
-	Tags             string `protobuf:"bytes,7,opt,name=Tags,proto3" json:"Tags,omitempty"`                           // 标签
-	Category         string `protobuf:"bytes,8,opt,name=Category,proto3" json:"Category,omitempty"`                   // 分类
-	FileName         string `protobuf:"bytes,9,opt,name=FileName,proto3" json:"FileName,omitempty"`                   // 设置文件名
-	ClassificationId int64  `protobuf:"varint,10,opt,name=ClassificationId,proto3" json:"ClassificationId,omitempty"` //设置分类Id
+	// 视频的URL
+	SourceUrl string `protobuf:"bytes,1,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"`
+	// 透传的业务信息
+	CallbackArgs string `protobuf:"bytes,2,opt,name=CallbackArgs,proto3" json:"CallbackArgs,omitempty"`
+	// 视频的MD5
+	Md5 string `protobuf:"bytes,3,opt,name=Md5,proto3" json:"Md5,omitempty"`
+	// 模板Id
+	TemplateId string `protobuf:"bytes,4,opt,name=TemplateId,proto3" json:"TemplateId,omitempty"`
+	// 标题
+	Title string `protobuf:"bytes,5,opt,name=Title,proto3" json:"Title,omitempty"`
+	// 描述信息
+	Description string `protobuf:"bytes,6,opt,name=Description,proto3" json:"Description,omitempty"`
+	// 标签
+	Tags string `protobuf:"bytes,7,opt,name=Tags,proto3" json:"Tags,omitempty"`
+	// 分类
+	Category string `protobuf:"bytes,8,opt,name=Category,proto3" json:"Category,omitempty"`
+	// 设置文件名
+	FileName string `protobuf:"bytes,9,opt,name=FileName,proto3" json:"FileName,omitempty"`
+	// 设置分类Id
+	ClassificationId int64 `protobuf:"varint,10,opt,name=ClassificationId,proto3" json:"ClassificationId,omitempty"`
 }
 
 func (x *VodUrlUploadURLSet) Reset() {
@@ -144,6 +155,7 @@ type VodUrlResponseData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 视频的URL的键值对，包含 JobId 和对应的 SourceUrl
 	Data []*ValuePair `protobuf:"bytes,1,rep,name=Data,proto3" json:"Data,omitempty"`
 }
 
@@ -191,8 +203,10 @@ type ValuePair struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	JobId     string `protobuf:"bytes,1,opt,name=JobId,proto3" json:"JobId,omitempty"`         // Url对应的JobId
-	SourceUrl string `protobuf:"bytes,2,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"` // 上传的Url
+	// Url对应的JobId
+	JobId string `protobuf:"bytes,1,opt,name=JobId,proto3" json:"JobId,omitempty"`
+	// 用户上传的Url
+	SourceUrl string `protobuf:"bytes,2,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"`
 }
 
 func (x *ValuePair) Reset() {
@@ -246,6 +260,7 @@ type VodQueryData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// URL批量上传状态查询结果
 	Data *VodQueryUploadResult `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
 }
 
@@ -293,8 +308,10 @@ type VodQueryUploadResult struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	MediaInfoList  []*VodURLSet `protobuf:"bytes,1,rep,name=MediaInfoList,proto3" json:"MediaInfoList,omitempty"`
-	NotExistJobIds []string     `protobuf:"bytes,2,rep,name=NotExistJobIds,proto3" json:"NotExistJobIds,omitempty"`
+	// URL批量上传状态查询返回的 JobId 对应的信息
+	MediaInfoList []*VodURLSet `protobuf:"bytes,1,rep,name=MediaInfoList,proto3" json:"MediaInfoList,omitempty"`
+	// URL批量上传状态查询不存在的 JobId
+	NotExistJobIds []string `protobuf:"bytes,2,rep,name=NotExistJobIds,proto3" json:"NotExistJobIds,omitempty"`
 }
 
 func (x *VodQueryUploadResult) Reset() {
@@ -348,6 +365,7 @@ type VodCommitData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 视频信息上报结果
 	Data *VodCommitUploadInfoResponseData `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
 }
 
@@ -395,11 +413,16 @@ type VodCommitUploadInfoResponseData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vid          string         `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`
-	SourceInfo   *VodSourceInfo `protobuf:"bytes,2,opt,name=SourceInfo,proto3" json:"SourceInfo,omitempty"`
-	PosterUri    string         `protobuf:"bytes,3,opt,name=PosterUri,proto3" json:"PosterUri,omitempty"`
-	CallbackArgs string         `protobuf:"bytes,4,opt,name=CallbackArgs,proto3" json:"CallbackArgs,omitempty"`
-	Mid          string         `protobuf:"bytes,5,opt,name=Mid,proto3" json:"Mid,omitempty"`
+	// 视频的 id
+	Vid string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`
+	// 视频的元信息
+	SourceInfo *VodSourceInfo `protobuf:"bytes,2,opt,name=SourceInfo,proto3" json:"SourceInfo,omitempty"`
+	// 视频的封面图 URI
+	PosterUri string `protobuf:"bytes,3,opt,name=PosterUri,proto3" json:"PosterUri,omitempty"`
+	// 视频透传业务的参数
+	CallbackArgs string `protobuf:"bytes,4,opt,name=CallbackArgs,proto3" json:"CallbackArgs,omitempty"`
+	// 素材 id
+	Mid string `protobuf:"bytes,5,opt,name=Mid,proto3" json:"Mid,omitempty"`
 }
 
 func (x *VodCommitUploadInfoResponseData) Reset() {
@@ -474,13 +497,21 @@ type VodURLSet struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RequestId  string         `protobuf:"bytes,1,opt,name=RequestId,proto3" json:"RequestId,omitempty"`
-	JobId      string         `protobuf:"bytes,2,opt,name=JobId,proto3" json:"JobId,omitempty"`
-	SourceUrl  string         `protobuf:"bytes,3,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"`
-	State      string         `protobuf:"bytes,4,opt,name=State,proto3" json:"State,omitempty"`
-	Vid        string         `protobuf:"bytes,5,opt,name=Vid,proto3" json:"Vid,omitempty"`
-	SpaceName  string         `protobuf:"bytes,6,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
-	AccountId  string         `protobuf:"bytes,7,opt,name=AccountId,proto3" json:"AccountId,omitempty"`
+	// 请求 Id,用于日志查询
+	RequestId string `protobuf:"bytes,1,opt,name=RequestId,proto3" json:"RequestId,omitempty"`
+	// JobId，用于查询 URL 上传状态
+	JobId string `protobuf:"bytes,2,opt,name=JobId,proto3" json:"JobId,omitempty"`
+	// 用户上传的Url
+	SourceUrl string `protobuf:"bytes,3,opt,name=SourceUrl,proto3" json:"SourceUrl,omitempty"`
+	// Url 的上传状态，init,process,success,fail
+	State string `protobuf:"bytes,4,opt,name=State,proto3" json:"State,omitempty"`
+	// 视频 id
+	Vid string `protobuf:"bytes,5,opt,name=Vid,proto3" json:"Vid,omitempty"`
+	// 上传的空间
+	SpaceName string `protobuf:"bytes,6,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	// 用户账号的 Id
+	AccountId string `protobuf:"bytes,7,opt,name=AccountId,proto3" json:"AccountId,omitempty"`
+	// 视频的元信息
 	SourceInfo *VodSourceInfo `protobuf:"bytes,8,opt,name=SourceInfo,proto3" json:"SourceInfo,omitempty"`
 }
 
@@ -577,6 +608,7 @@ type VodApplyUploadInfoResult struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 1001 阶段返回信息
 	Data *VodApplyUploadInfoData `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
 }
 
@@ -624,6 +656,7 @@ type VodApplyUploadInfoData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 1001 阶段返回信息
 	UploadAddress *VodUploadAddress `protobuf:"bytes,1,opt,name=UploadAddress,proto3" json:"UploadAddress,omitempty"`
 }
 
@@ -671,10 +704,14 @@ type VodUploadAddress struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	StoreInfos   []*VodStoreInfo  `protobuf:"bytes,1,rep,name=StoreInfos,proto3" json:"StoreInfos,omitempty"`
-	UploadHosts  []string         `protobuf:"bytes,2,rep,name=UploadHosts,proto3" json:"UploadHosts,omitempty"`
+	// 1001 阶段返回指定存储相关信息
+	StoreInfos []*VodStoreInfo `protobuf:"bytes,1,rep,name=StoreInfos,proto3" json:"StoreInfos,omitempty"`
+	// 1001 阶段返回指定的上传域名
+	UploadHosts []string `protobuf:"bytes,2,rep,name=UploadHosts,proto3" json:"UploadHosts,omitempty"`
+	// 1001 阶段返回指定上传带的头信息
 	UploadHeader []*VodHeaderPair `protobuf:"bytes,3,rep,name=UploadHeader,proto3" json:"UploadHeader,omitempty"`
-	SessionKey   string           `protobuf:"bytes,4,opt,name=SessionKey,proto3" json:"SessionKey,omitempty"`
+	// 1001 阶段返回的 Session 信息
+	SessionKey string `protobuf:"bytes,4,opt,name=SessionKey,proto3" json:"SessionKey,omitempty"`
 }
 
 func (x *VodUploadAddress) Reset() {
@@ -742,8 +779,10 @@ type VodStoreInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 1001 阶段返回存储的 uri
 	StoreUri string `protobuf:"bytes,1,opt,name=StoreUri,proto3" json:"StoreUri,omitempty"`
-	Auth     string `protobuf:"bytes,2,opt,name=Auth,proto3" json:"Auth,omitempty"`
+	// 1001 阶段返回上传使用的签名信息
+	Auth string `protobuf:"bytes,2,opt,name=Auth,proto3" json:"Auth,omitempty"`
 }
 
 func (x *VodStoreInfo) Reset() {
@@ -797,7 +836,9 @@ type VodHeaderPair struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Key   string `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
+	// 1001 阶段返回信息，1002-1004 上传时需要带的 header 中的 key
+	Key string `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
+	// 1001 阶段返回信息，1002-1004 上传时需要带的 header 中的 value
 	Value string `protobuf:"bytes,2,opt,name=Value,proto3" json:"Value,omitempty"`
 }
 
@@ -852,6 +893,7 @@ type VodCommitUploadInfoResult struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// 1005 阶段返回信息
 	Data *VodCommitUploadInfoData `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
 }
 
@@ -899,10 +941,14 @@ type VodCommitUploadInfoData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vid        string         `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`
-	PosterUri  string         `protobuf:"bytes,2,opt,name=PosterUri,proto3" json:"PosterUri,omitempty"`
+	// 视频 id
+	Vid string `protobuf:"bytes,1,opt,name=Vid,proto3" json:"Vid,omitempty"`
+	// 视频对应的封面图 URI id
+	PosterUri string `protobuf:"bytes,2,opt,name=PosterUri,proto3" json:"PosterUri,omitempty"`
+	// 视频元信息
 	SourceInfo *VodSourceInfo `protobuf:"bytes,3,opt,name=SourceInfo,proto3" json:"SourceInfo,omitempty"`
-	Mid        string         `protobuf:"bytes,4,opt,name=Mid,proto3" json:"Mid,omitempty"`
+	// 素材 id
+	Mid string `protobuf:"bytes,4,opt,name=Mid,proto3" json:"Mid,omitempty"`
 }
 
 func (x *VodCommitUploadInfoData) Reset() {
