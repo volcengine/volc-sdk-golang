@@ -9,36 +9,32 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestListRoomsResponse(t *testing.T) {
+func TestListRoomInformationResponse(t *testing.T) {
 	expectedJson := `{
     "ResponseMetadata": {
         "RequestId": "Your_RequestId",
-        "Action": "ListRooms",
+        "Action": "ListRoomInformation",
         "Version": "2020-12-01",
         "Service": "rtc",
         "Region": "cn-north-1"
     },
     "Result": {
         "Total": 100,
-        "ActiveNum": 20,
-        "InactiveNum": 80,
-        "Offset": 2,
-        "Limit": 10,
-        "Rooms": [
+        "PageNum": 20,
+        "PageSize": 80,
+        "HasMore": false,
+        "RoomList": [
             {
-            "RoomId": "lufei",
-            "AppId": "test",
-            "UserNum": 4,
-            "StreamNum": 2,
-            "State": 1,
-            "CreatedAt": "2021-03-16T11:35:25+08:00",
-            "UpdatedAt": "2021-03-16T11:35:27+08:00"
+				"RoomId": "RoomId",
+				"CreatedTime": "2021-03-16T11:35:25+08:00",
+				"DestroyTime": "2021-03-16T11:35:27+08:00",
+				"IsFinished": true
             }
         ]
     }
 }`
 
-	expectedModel := ListRoomsResponse{}
+	expectedModel := ListRoomInformationResponse{}
 	err := json.Unmarshal([]byte(expectedJson), &expectedModel)
 	assert.Nil(t, err)
 
@@ -46,20 +42,19 @@ func TestListRoomsResponse(t *testing.T) {
 		RequestId: "Your_RequestId",
 		Service:   "rtc",
 		Region:    "cn-north-1",
-		Action:    "ListRooms",
+		Action:    "ListRoomInformation",
 		Version:   "2020-12-01",
 		Error:     nil,
 	}
-	room := []Room{Room{RoomId: "lufei", AppId: "test", UserNum: 4, StreamNum: 2, State: 1, CreatedAt: "2021-03-16T11:35:25+08:00", UpdatedAt: "2021-03-16T11:35:27+08:00"}}
-	result := ListRoomsResult{
-		Total:       100,
-		ActiveNum:   20,
-		InactiveNum: 80,
-		Offset:      2,
-		Limit:       10,
-		Rooms:       room,
+	room := []Room{Room{RoomId: "RoomId", CreatedTime: "2021-03-16T11:35:25+08:00", DestroyTime: "2021-03-16T11:35:27+08:00", IsFinished: true}}
+	result := ListRoomInformationResult{
+		Total:    100,
+		PageNum:  20,
+		PageSize: 80,
+		HasMore:  false,
+		RoomList: room,
 	}
-	response := ListRoomsResponse{
+	response := ListRoomInformationResponse{
 		ResponseMetadata: &commonResponse,
 		Result:           &result,
 	}

@@ -29,8 +29,8 @@ const (
 	ServiceHost            = "rtc.volcengineapi.com"
 
 	// action name
-	ActionListRooms      = "ListRooms"
-	ActionListIndicators = "ListIndicators"
+	ActionListRoomInformation = "ListRoomInformation"
+	ActionListIndicators      = "ListIndicators"
 )
 
 var (
@@ -43,11 +43,11 @@ var (
 	}
 
 	DefaultApiInfoList = map[string]*base.ApiInfo{
-		ActionListRooms: {
+		ActionListRoomInformation: {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionListRooms},
+				"Action":  []string{ActionListRoomInformation},
 				"Version": []string{ServiceVersion20201201},
 			},
 		},

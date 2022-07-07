@@ -6,14 +6,14 @@ import (
 )
 
 // GET method
-// ListRooms ...
-func ListRooms(r *RTC, query url.Values) (*ListRoomsResponse, int, error) {
-	respBody, status, err := r.Client.Query(ActionListRooms, query)
+// ListRoomInformation ...
+func ListRoomInformation(r *RTC, query url.Values) (*ListRoomInformationResponse, int, error) {
+	respBody, status, err := r.Client.Query(ActionListRoomInformation, query)
 	if err != nil {
 		return nil, status, err
 	}
 
-	output := new(ListRoomsResponse)
+	output := new(ListRoomInformationResponse)
 	err = json.Unmarshal(respBody, output)
 	return output, status, err
 }
