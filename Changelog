@@ -1,5 +1,9 @@
 ### Change log
 
+2022-07-07 Bumped to version v1.0.51
+- Added apis for vod\rtc\live
+- Fixed bugs for security
+
 2022-06-30 Bumped to version v1.0.50
 - Updated models for diff
 
