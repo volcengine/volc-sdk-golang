@@ -8,8 +8,3 @@ const (
 	testSessionToken = ""
 	testPrefix       = "sdk-test-"
 )
-
-var (
-	testProjectId string
-	testTopicId   string
-)

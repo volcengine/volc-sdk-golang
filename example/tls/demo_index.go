@@ -16,23 +16,23 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectID
+	testProjectID := createResp.ProjectID
 
 	// 新建topic
 	// TopicName Description字段规范参考api文档
 	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectId,
+		ProjectID:   testProjectID,
 		TopicName:   testPrefix + uuid.NewString(),
 		Ttl:         30,
 		ShardCount:  2,
 		Description: "topic desc",
 	}
 	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicId = topic.TopicID
+	testTopicID := topic.TopicID
 
 	//新建index，开启全文索引和kv索引
 	createIndexReq := &tls.CreateIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -55,7 +55,7 @@ func main() {
 
 	//新建index，仅开启全文索引
 	createIndexReq2 := &tls.CreateIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -67,7 +67,7 @@ func main() {
 
 	//新建index，仅开启kv索引
 	createIndexReq3 := &tls.CreateIndexRequest{
-		TopicID:  testTopicId,
+		TopicID:  testTopicID,
 		FullText: nil,
 		KeyValue: &[]tls.KeyValueInfo{
 			{
@@ -88,7 +88,7 @@ func main() {
 
 	//开启全文和kv
 	updateIndexReq := &tls.ModifyIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -111,7 +111,7 @@ func main() {
 	_, _ = client.ModifyIndex(updateIndexReq)
 	//开启全文，关闭kv
 	updateIndexReq2 := &tls.ModifyIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -123,7 +123,7 @@ func main() {
 
 	//关闭全文，开启kv
 	updateIndexReq3 := &tls.ModifyIndexRequest{
-		TopicID:  testTopicId,
+		TopicID:  testTopicID,
 		FullText: nil,
 		KeyValue: &[]tls.KeyValueInfo{
 			{
@@ -142,7 +142,7 @@ func main() {
 
 	//查询索引详情
 	_, _ = client.DescribeIndex(&tls.DescribeIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 	})
 
 }

@@ -43,4 +43,30 @@ type Client interface {
 	SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, error)
 
 	DescribeShards(request *DescribeShardsRequest) (*DescribeShardsResponse, error)
+
+	CreateRule(request *CreateRuleRequest) (*CreateRuleResponse, error)
+	DeleteRule(request *DeleteRuleRequest) (*CommonResponse, error)
+	ModifyRule(request *ModifyRuleRequest) (*CommonResponse, error)
+	DescribeRule(request *DescribeRuleRequest) (*DescribeRuleResponse, error)
+	DescribeRules(request *DescribeRulesRequest) (*DescribeRulesResponse, error)
+	ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) (*CommonResponse, error)
+	DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsRequest) (*CommonResponse, error)
+
+	CreateHostGroup(request *CreateHostGroupRequest) (*CreateHostGroupResponse, error)
+	DeleteHostGroup(request *DeleteHostGroupRequest) (*CommonResponse, error)
+	ModifyHostGroup(request *ModifyHostGroupRequest) (*CommonResponse, error)
+	DescribeHostGroup(request *DescribeHostGroupRequest) (*DescribeHostGroupResponse, error)
+	DescribeHostGroups(request *DescribeHostGroupsRequest) (*DescribeHostGroupsResponse, error)
+	DescribeHosts(request *DescribeHostsRequest) (*DescribeHostsResponse, error)
+	DeleteHost(request *DeleteHostRequest) (*CommonResponse, error)
+	DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (*DescribeHostGroupRulesResponse, error)
+
+	CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmResponse, error)
+	DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, error)
+	ModifyAlarm(request *ModifyAlarmRequest) (*CommonResponse, error)
+	DescribeAlarms(request *DescribeAlarmsRequest) (*DescribeAlarmsResponse, error)
+	CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest) (*CreateAlarmNotifyGroupResponse, error)
+	DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest) (*CommonResponse, error)
+	ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest) (*CommonResponse, error)
+	DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsRequest) (*DescribeAlarmNotifyGroupsResponse, error)
 }
