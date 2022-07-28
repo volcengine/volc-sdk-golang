@@ -16,12 +16,12 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectID
+	testProjectID := createResp.ProjectID
 
 	// 新建topic
 	// TopicName Description字段规范参考api文档
 	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectId,
+		ProjectID:   testProjectID,
 		TopicName:   testPrefix + uuid.NewString(),
 		Ttl:         30,
 		ShardCount:  2,
@@ -29,38 +29,38 @@ func main() {
 	}
 
 	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicId = topic.TopicID
+	testTopicID := topic.TopicID
 
 	// 修改topic
 	updateTopicName := testPrefix + uuid.NewString()
 	modifyTopicRequest := &tls.ModifyTopicRequest{
-		TopicID:   testTopicId,
+		TopicID:   testTopicID,
 		TopicName: &updateTopicName,
 	}
 
 	_, _ = client.ModifyTopic(modifyTopicRequest)
 
 	// 查找topic
-	_, _ = client.DescribeTopic(&tls.DescribeTopicRequest{TopicID: testTopicId})
+	_, _ = client.DescribeTopic(&tls.DescribeTopicRequest{TopicID: testTopicID})
 
 	// 批量查找topic
 	// 查询project的全部topic，只填project Id
 	_, _ = client.DescribeTopics(&tls.DescribeTopicsRequest{
-		ProjectID: testProjectId,
+		ProjectID: testProjectID,
 	})
 	// 分页查询
 	_, _ = client.DescribeTopics(&tls.DescribeTopicsRequest{
-		ProjectID:  testProjectId,
+		ProjectID:  testProjectID,
 		PageNumber: 2,
 		PageSize:   5,
 	})
 	//模糊查询
 	_, _ = client.DescribeTopics(&tls.DescribeTopicsRequest{
-		ProjectID: testProjectId,
+		ProjectID: testProjectID,
 		TopicName: "groupb",
 	})
 
 	//删除topic
-	_, _ = client.DeleteTopic(&tls.DeleteTopicRequest{TopicID: testTopicId})
+	_, _ = client.DeleteTopic(&tls.DeleteTopicRequest{TopicID: testTopicID})
 
 }

@@ -174,14 +174,16 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	key := dispatcher.getKeyString(batchLog.Key)
 	dispatcher.lock.Lock()
 
+	logSize := int64(GetLogSize(batchLog.Log))
 	if producerBatch, ok := dispatcher.logGroupData[key]; ok == true {
-		logSize := int64(GetLogSize(batchLog.Log))
 		atomic.AddInt64(&producerBatch.totalDataSize, logSize)
 		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
 
 		dispatcher.addOrSendProducerBatch(key, batchLog, producerBatch)
 	} else {
 		dispatcher.createNewProducerBatch(batchLog, key)
+		atomic.AddInt64(&dispatcher.logGroupData[key].totalDataSize, logSize)
+		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
 	}
 
 	dispatcher.lock.Unlock()

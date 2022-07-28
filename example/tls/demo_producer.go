@@ -20,23 +20,23 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectID
+	testProjectID := createResp.ProjectID
 
 	// 新建topic
 	// TopicName Description字段规范参考api文档
 	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectId,
+		ProjectID:   testProjectID,
 		TopicName:   testPrefix + uuid.NewString(),
 		Ttl:         30,
 		ShardCount:  2,
 		Description: "topic desc",
 	}
 	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicId = topic.TopicID
+	testTopicID := topic.TopicID
 
 	//新建index
 	createIndexReq := &tls.CreateIndexRequest{
-		TopicID: testTopicId,
+		TopicID: testTopicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -67,7 +67,7 @@ func main() {
 	producer := producer.NewProducer(producerCfg)
 	producer.Start()
 
-	_ = producer.SendLogs("", testTopicId, "fileSource", "fileName", &pb.LogGroup{
+	_ = producer.SendLogs("", testTopicID, "fileSource", "fileName", &pb.LogGroup{
 		Source:   "localhost",
 		FileName: "logFileName",
 		Logs: []*pb.Log{

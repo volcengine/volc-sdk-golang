@@ -69,7 +69,6 @@ func (sender *Sender) sendToServer(batch *Batch) {
 
 	if err == nil {
 		sender.handleSuccess(batch)
-
 		return
 	}
 
@@ -146,12 +145,18 @@ func (sender *Sender) FailedCallback(batch *Batch) {
 
 func (sender *Sender) addErrorMessageToBatchAttempt(producerBatch *Batch, err error, retryInfo bool) {
 	if producerBatch.attemptCount < producerBatch.maxReservedAttempts {
-		Error := err.(*Error)
-		if retryInfo {
-			level.Info(sender.logger).Log("msg", "sendToServer failed,start retrying", "retry times", producerBatch.attemptCount, "requestId", Error.RequestID, "error code", Error.Code, "error message", Error.Message)
-		}
+		Error, ok := err.(*Error)
+		var attempt *Attempt
+		if ok {
+			if retryInfo {
+				level.Info(sender.logger).Log("msg", "sendToServer failed,start retrying", "retry times", producerBatch.attemptCount, "requestId", Error.RequestID, "error code", Error.Code, "error message", Error.Message)
+			}
 
-		attempt := newAttempt(false, Error.RequestID, Error.Code, Error.Message, GetTimeMs(time.Now().UnixNano()))
+			attempt = newAttempt(false, Error.RequestID, Error.Code, Error.Message, GetTimeMs(time.Now().UnixNano()))
+		} else {
+			level.Error(sender.logger).Log("msg", "putLogs internal err", err.Error())
+			attempt = newAttempt(false, "", "", err.Error(), GetTimeMs(time.Now().UnixNano()))
+		}
 		producerBatch.result.Attempts = append(producerBatch.result.Attempts, attempt)
 	}
 

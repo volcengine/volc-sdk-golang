@@ -16,9 +16,7 @@ func main() {
 		Region:      testRegion,
 	})
 
-	testProjectId = createResp.ProjectID
-
-	// 修改project
+	testProjectID := createResp.ProjectID
 
 	// projectName规范参考api文档
 	modifyProjectName := testPrefix + uuid.NewString()
@@ -26,7 +24,7 @@ func main() {
 	// project desc规范参考api文档
 	modifyProjectDesc := "test desc"
 	updateProjectReq := &tls.ModifyProjectRequest{
-		ProjectID:   testProjectId,
+		ProjectID:   testProjectID,
 		ProjectName: &modifyProjectName,
 		Description: &modifyProjectDesc,
 	}
@@ -34,7 +32,7 @@ func main() {
 	_, _ = client.ModifyProject(updateProjectReq)
 
 	// 查询project
-	_, _ = client.DescribeProject(&tls.DescribeProjectRequest{ProjectID: testProjectId})
+	_, _ = client.DescribeProject(&tls.DescribeProjectRequest{ProjectID: testProjectID})
 
 	// 批量查询project
 	// 全量查询
@@ -50,5 +48,5 @@ func main() {
 	})
 
 	//删除project
-	_, _ = client.DeleteProject(&tls.DeleteProjectRequest{ProjectID: testProjectId})
+	_, _ = client.DeleteProject(&tls.DeleteProjectRequest{ProjectID: testProjectID})
 }

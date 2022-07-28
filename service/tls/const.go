@@ -35,4 +35,31 @@ const (
 	PathPutLogs        = "/PutLogs"
 	PathDescribeCursor = "/DescribeCursor"
 	PathConsumeLogs    = "/ConsumeLogs"
+
+	PathCreateRule               = "/CreateRule"
+	PathDeleteRule               = "/DeleteRule"
+	PathModifyRule               = "/ModifyRule"
+	PathDescribeRule             = "/DescribeRule"
+	PathDescribeRules            = "/DescribeRules"
+	PathApplyRuleToHostGroups    = "/ApplyRuleToHostGroups"
+	PathDeleteRuleFromHostGroups = "/DeleteRuleFromHostGroups"
+
+	PathCreateHostGroup        = "/CreateHostGroup"
+	PathDeleteHostGroup        = "/DeleteHostGroup"
+	PathModifyHostGroup        = "/ModifyHostGroup"
+	PathDescribeHostGroup      = "/DescribeHostGroup"
+	PathDescribeHostGroups     = "/DescribeHostGroups"
+	PathDescribeHostGroupRules = "/DescribeHostGroupRules"
+
+	PathDeleteHost    = "/DeleteHost"
+	PathDescribeHosts = "/DescribeHosts"
+
+	PathCreateAlarmNotifyGroup    = "/CreateAlarmNotifyGroup"
+	PathDeleteAlarmNotifyGroup    = "/DeleteAlarmNotifyGroup"
+	PathDescribeAlarmNotifyGroups = "/DescribeAlarmNotifyGroups"
+	PathModifyAlarmNotifyGroup    = "/ModifyAlarmNotifyGroup"
+	PathCreateAlarm               = "/CreateAlarm"
+	PathDeleteAlarm               = "/DeleteAlarm"
+	PathModifyAlarm               = "/ModifyAlarm"
+	PathDescribeAlarms            = "/DescribeAlarms"
 )
