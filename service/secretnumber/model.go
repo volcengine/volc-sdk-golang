@@ -24,6 +24,7 @@ type SelectNumberAndBindAXBRequest struct {
 	CityCodeByPhoneNo string
 	DegradeCityList   string
 	UserData          string
+	RandomFlag        int32
 }
 
 type SecretBindResponse struct {
