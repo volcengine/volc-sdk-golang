@@ -145,6 +145,7 @@ func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 		EndTime:       "your EndTime",
 		Aggregation:   0,
 		BandwidthType: "your BandwidthType",
+		Area:          "your Area",
 	}
 
 	resp, status, err := instance.DescribeVodDomainBandwidthData(query)
@@ -209,6 +210,27 @@ func Test_DescribeIpInfo(t *testing.T) {
 	}
 
 	resp, status, err := instance.DescribeIpInfo(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodDomainTrafficData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeVodDomainTrafficDataRequest{
+		DomainList:  "your DomainList",
+		StartTime:   "your StartTime",
+		EndTime:     "your EndTime",
+		Aggregation: 0,
+		TrafficType: "your TrafficType",
+	}
+
+	resp, status, err := instance.DescribeVodDomainTrafficData(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())

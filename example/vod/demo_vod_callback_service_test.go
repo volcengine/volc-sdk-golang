@@ -21,8 +21,9 @@ func Test_AddCallbackSubscription(t *testing.T) {
 	})
 
 	query := &request.VodAddCallbackSubscriptionRequest{
-		SpaceName: "your SpaceName",
-		Url:       "your Url",
+		SpaceName:   "your SpaceName",
+		Url:         "your Url",
+		ContentType: "your ContentType",
 	}
 
 	resp, status, err := instance.AddCallbackSubscription(query)

@@ -386,6 +386,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"DescribeVodSpaceStorageData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceStorageData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 分发加速管理
@@ -476,6 +484,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"ListCdnPvData"},
 				"Version": []string{"2022-01-01"},
+			},
+		},
+		"DescribeVodDomainTrafficData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodDomainTrafficData"},
+				"Version": []string{"2020-08-01"},
 			},
 		},
 		// **********************************************************************
