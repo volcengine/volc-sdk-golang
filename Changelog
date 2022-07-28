@@ -1,5 +1,8 @@
 ### Change log
 
+2022-07-28 Bumped to version v1.0.52
+- Added apis for tls\axb\vod
+
 2022-07-07 Bumped to version v1.0.51
 - Added apis for vod\rtc\live
 - Fixed bugs for security
