@@ -4,21 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/volcengine/volc-sdk-golang/service/iam"
+	"github.com/volcengine/volc-sdk-golang/service/sts"
 )
 
 const (
-	testAk           = "testAK"
-	testSk           = "testSK"
-	testSessionToken = "testSessionToken"
+	testAk = "testAK"
+	testSk = "testSK"
 )
 
 func main() {
-	iam.DefaultInstance.Client.SetAccessKey(testAk)
-	iam.DefaultInstance.Client.SetSecretKey(testSk)
-	iam.DefaultInstance.Client.SetSessionToken(testSessionToken)
+	sts.DefaultInstance.Client.SetAccessKey(testAk)
+	sts.DefaultInstance.Client.SetSecretKey(testSk)
 
-	list, status, err := iam.DefaultInstance.ListUsers(nil, nil)
+	list, status, err := sts.DefaultInstance.AssumeRole(&sts.AssumeRoleRequest{
+		DurationSeconds: 900,
+		RoleTrn:         "trn:iam::YourAccountID:role/YourRoleName",
+		RoleSessionName: "jest_for_test",
+	})
 	fmt.Println(status, err)
 	b, _ := json.Marshal(list)
 	fmt.Println(string(b))
