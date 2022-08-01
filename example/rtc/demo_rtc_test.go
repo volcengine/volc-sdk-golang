@@ -1,5 +1,6 @@
-// 描述：演示了OpenAPI鉴权SDK的使用方式
-//  	使用时请参考包github.com/volcengine/volc-sdk-golang/service/rtc或把它拷贝到自己的项目中追加所需的API
+// 提示：本demo演示了OpenAPI鉴权SDK的使用方式
+//  	使用时请参考包github.com/volcengine/volc-sdk-golang/service/rtc的格式
+// 		把包内的文件拷贝到自己的项目中追加所需的API
 //
 // service/rtc目录包含三个文件：
 //	1. config.go 定义API属性,引入签名包并初始化服务
@@ -9,10 +10,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/rtc"
 	"net/url"
 	"testing"
-
-	"github.com/volcengine/volc-sdk-golang/service/rtc"
 )
 
 const (
@@ -22,7 +22,13 @@ const (
 	testSk = ""
 )
 
-func TestListRoomInformation(t *testing.T) {
+var (
+	roomId     = "Your_roomId"
+	busineseId = "Your_BusinessId"
+	taskId     = appId + "_" + roomId
+)
+
+func TestGetRecordTask(t *testing.T) {
 	// init rtc service, 初始化一次即可
 	s := rtc.NewInstance()
 	s.Client.SetAccessKey(testAk)
@@ -31,10 +37,10 @@ func TestListRoomInformation(t *testing.T) {
 
 	query := url.Values{}
 	query.Set("AppId", appId)
-	query.Set("StartTime", "2022-01-22T12:00:00+08:00")
-	query.Set("EndTime", "2022-05-22T12:59:00+08:00")
+	query.Set("RoomId", roomId)
+	query.Set("TaskId", taskId)
 
-	res, _, err := rtc.ListRoomInformation(s, query)
+	res, _, err := rtc.GetRecordTask(s, query)
 	if err != nil {
 		fmt.Printf("err:%v\n", err)
 		return
@@ -47,22 +53,35 @@ func TestListRoomInformation(t *testing.T) {
 	fmt.Printf("result: %+v\n", res.Result)
 }
 
-func TestListIndicators(t *testing.T) {
+func TestStartRecord(t *testing.T) {
 	// init rtc service
 	s := rtc.NewInstance()
 	s.Client.SetAccessKey(testAk)
 	s.Client.SetSecretKey(testSk)
 	s.Client.SetHost(rtc.ServiceHost)
 
-	req := rtc.ListIndicatorsRequest{
-		AppId:     appId,
-		StartTime: "2021-08-17T00:00:00+08:00",
-		EndTime:   "2021-08-18T00:00:00+08:00",
-		Indicator: "NetworkTransDelay",
+	req := rtc.StartRecordRequest{
+		AppId:      appId,
+		BusinessId: busineseId,
+		RoomId:     roomId,
+		TaskId:     taskId,
+		Encode: &rtc.Encode{
+			VideoWidth:   1920,
+			VideoHeight:  1080,
+			VideoFps:     15,
+			VideoBitrate: 4000,
+		},
+		FileFormatConfig: &rtc.FileFormatConfig{
+			FileFormat: []string{"MP4"},
+		},
+		StorageConfig: rtc.StorageConfig{
+			TosConfig: &rtc.TosConfig{
+				AccountId: "Your_Volc_AccountId",
+				Bucket:    "Your_Bucket",
+			},
+		},
 	}
-	// req.OS = "android"
-	// req.Network = "wifi"
-	res, _, err := rtc.ListIndicators(s, &req)
+	res, _, err := rtc.StartRecord(s, &req)
 	if err != nil {
 		fmt.Printf("err:%v\n", err)
 		return

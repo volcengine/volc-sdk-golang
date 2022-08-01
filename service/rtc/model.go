@@ -13,61 +13,91 @@ type CommonResponse struct {
 }
 
 type (
-	// ListRoomInformationResponse ...
-	ListRoomInformationResponse struct {
+	// StartRecordRequest ...
+	StartRecordRequest struct {
+		AppId            string            `json:"AppId"`
+		BusinessId       string            `json:"BusinessId"`
+		RoomId           string            `json:"RoomId"`
+		TaskId           string            `json:"TaskId"`
+		RecordMode       uint32            `json:"RecordMode"`
+		Encode           *Encode           `json:"Encode,omitempty"`
+		FileFormatConfig *FileFormatConfig `json:"FileFormatConfig,omitempty"`
+		StorageConfig    StorageConfig     `json:"StorageConfig"`
+	}
+
+	// StartRecordResponse ...
+	StartRecordResponse struct {
 		ResponseMetadata *base.ResponseMetadata
-		Result           *ListRoomInformationResult `json:"Result,omitempty"`
+		Result           string `json:"Result,omitempty"`
 	}
 
-	// ListRoomInformationResult ...
-	ListRoomInformationResult struct {
-		Total    int    `json:"Total"`
-		PageNum  int    `json:"PageNum"`
-		PageSize int    `json:"PageSize"`
-		HasMore  bool   `json:"HasMore"`
-		RoomList []Room `json:"RoomList"`
+	Encode struct {
+		VideoWidth   uint32 `json:"VideoWidth"`
+		VideoHeight  uint32 `json:"VideoHeight"`
+		VideoFps     uint32 `json:"VideoFps"`
+		VideoBitrate uint32 `json:"VideoBitrate"`
 	}
 
-	// Room ...
-	Room struct {
-		RoomId      string `json:"RoomId"`
-		CreatedTime string `json:"CreatedTime"`
-		DestroyTime string `json:"DestroyTime"`
-		IsFinished  bool   `json:"IsFinished"`
+	FileFormatConfig struct {
+		FileFormat []string
+	}
+
+	StorageConfig struct {
+		Type         uint32        `json:"Type"`
+		TosConfig    *TosConfig    `json:"TosConfig,omitempty"`
+		CustomConfig *CustomConfig `json:"CustomConfig,omitempty"`
+	}
+
+	TosConfig struct {
+		AccountId string `json:"AccountId"`
+		Region    uint32 `json:"Region"`
+		Bucket    string `json:"Bucket"`
+	}
+
+	CustomConfig struct {
+		Vendor    uint32 `json:"Vendor"`
+		Region    string `json:"Region"`
+		Bucket    string `json:"Bucket"`
+		AccessKey string `json:"AccessKey"`
+		SecretKey string `json:"SecretKey"`
 	}
 )
 
 type (
-	// ListIndicatorsRequest...
-	ListIndicatorsRequest struct {
-		AppId     string `json:"AppId"`
-		StartTime string `json:"StartTime"`
-		EndTime   string `json:"EndTime"`
-		Indicator string `json:"Indicator"`
-		OS        string `json:"OS,omitempty"`
-		Network   string `json:"Network,omitempty"`
-	}
-
-	// ListIndicatorsResponse ...
-	ListIndicatorsResponse struct {
+	// GetRecordTaskResponse ...
+	GetRecordTaskResponse struct {
 		ResponseMetadata *base.ResponseMetadata
-		Result           *ListIndicatorsResult `json:"Result,omitempty"`
+		Result           *GetRecordTaskResult `json:"Result,omitempty"`
 	}
 
-	ListIndicatorsResult struct {
-		Indicators []Indicator `json:"Indicators"`
+	GetRecordTaskResult struct {
+		RecordTask RecordTask `json:"RecordTask"`
 	}
 
-	// Indicator ...
-	Indicator struct {
-		Name  string `json:"Name"`
-		Unit  string `json:"Unit"`
-		Datas []Data `json:"Data"`
+	RecordTask struct {
+		StartTime      uint64       `json:"StartTime"`
+		EndTime        uint64       `json:"EndTime"`
+		Status         uint64       `json:"Status"`
+		StopReason     string       `json:"StopReason"`
+		RecordFileList []RecordFile `json:"RecordFileList"`
 	}
 
-	// Data ...
-	Data struct {
-		TimeStamp string  `json:"TimeStamp"`
-		Value     float64 `json:"Value"`
+	RecordFile struct {
+		Vid         string   `json:"Vid"`
+		ObjectKey   string   `json:"ObjectKey"`
+		Duration    uint64   `json:"Duration"`
+		Size        uint64   `json:"Size"`
+		StartTime   uint64   `json:"StartTime"`
+		StreamList  []Stream `json:"StreamList"`
+		VideoCodec  string   `json:"VideoCodec"`
+		AudioCodec  string   `json:"AudioCodec"`
+		VideoWidth  int      `json:"VideoWidth"`
+		VideoHeight int      `json:"VideoHeight"`
+	}
+
+	Stream struct {
+		Index      uint32 `json:"Index"`
+		StreamType uint32 `json:"StreamType"`
+		UserId     string `json:"UserId"`
 	}
 )
