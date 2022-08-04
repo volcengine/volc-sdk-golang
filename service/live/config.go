@@ -11,6 +11,7 @@ import (
 const (
 	DefaultRegion          = "cn-north-1"
 	ServiceVersion20200801 = "2020-08-01"
+	ServiceVersion20180101 = "2018-01-01"
 	ServiceName            = "live"
 )
 
@@ -318,6 +319,134 @@ var (
 			Query: url.Values{
 				"Action":  []string{"DescribePullToPushBandwidthData"},
 				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"CreateCaster": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCaster"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListCasters": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCasters"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"GetCasterInfo": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCasterInfo"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"StartCaster": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartCaster"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"StopCaster": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopCaster"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CreateCasterResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCasterResource"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"RemoveCasterResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RemoveCasterResource"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdateCasterLayout": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCasterLayout"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteCasterLayout": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCasterLayout"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CreateCasterResourceImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCasterResourceImage"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteCasterResourceImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCasterResourceImage"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CreateCasterResourceImages": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCasterResourceImages"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdateCasterImageCollection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCasterImageCollection"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdateCasterConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCasterConfig"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CreateCasterResourceOPED": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCasterResourceOPED"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteCasterResourceOPED": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCasterResourceOPED"},
+				"Version": []string{ServiceVersion20180101},
 			},
 		},
 	}
