@@ -86,7 +86,7 @@ type VideoResultResponse struct {
 }
 
 type VideoResp struct {
-	VideoResult VideoResult `json:"VideoResult"`
+	VideoResult VideoResult `json:"VideoResults"`
 }
 
 type VideoResult struct {
@@ -137,15 +137,16 @@ type ImageContentFrame struct {
 }
 
 type AudioResultResponse struct {
-	RequestId string    `json:"RequestId"`
-	Code      int       `json:"Code"`
-	Message   string    `json:"Message"`
-	VideoResp VideoResp `json:"Data"`
+	RequestId string      `json:"RequestId"`
+	Code      int         `json:"Code"`
+	Message   string      `json:"Message"`
+	AudioResp AudioResult `json:"Data"`
 }
 
 type AudioResult struct {
 	Decision string         `json:"Decision"`
 	Details  []*AudioDetail `json:"Details"`
+	DataId   string         `json:"DataId"`
 }
 
 type AudioDetail struct {
@@ -186,8 +187,8 @@ type Label struct {
 }
 
 type Context struct {
-	MatchedWords []string `json:"MatchedWords"`
-	LibName      string   `json:"LibName"`
+	MatchedWords []string   `json:"MatchedWords"`
+	LibName      string     `json:"LibName"`
 	Positions    []Position `json:"Positions"`
 }
 
