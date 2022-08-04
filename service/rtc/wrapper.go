@@ -6,32 +6,32 @@ import (
 )
 
 // GET method
-// ListRoomInformation ...
-func ListRoomInformation(r *RTC, query url.Values) (*ListRoomInformationResponse, int, error) {
-	respBody, status, err := r.Client.Query(ActionListRoomInformation, query)
+// GetRecordTask ...
+func GetRecordTask(r *RTC, query url.Values) (*GetRecordTaskResponse, int, error) {
+	respBody, status, err := r.Client.Query(ActionGetRecordTask, query)
 	if err != nil {
 		return nil, status, err
 	}
 
-	output := new(ListRoomInformationResponse)
+	output := new(GetRecordTaskResponse)
 	err = json.Unmarshal(respBody, output)
 	return output, status, err
 }
 
 // POST method
-// KickUser ...
-func ListIndicators(r *RTC, req *ListIndicatorsRequest) (*ListIndicatorsResponse, int, error) {
+// StartRecord ...
+func StartRecord(r *RTC, req *StartRecordRequest) (*StartRecordResponse, int, error) {
 	bts, err := json.Marshal(req)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	respBody, status, err := r.Client.Json(ActionListIndicators, nil, string(bts))
+	respBody, status, err := r.Client.Json(ActionStartRecord, nil, string(bts))
 	if err != nil {
 		return nil, status, err
 	}
 
-	output := new(ListIndicatorsResponse)
+	output := new(StartRecordResponse)
 	err = json.Unmarshal(respBody, output)
 	return output, status, err
 }
