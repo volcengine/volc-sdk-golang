@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	Ak = "AK" // write your access key
-	Sk = "SK" // write your secret key
+	Ak = "ak" // write your access key
+	Sk = "sk" // write your secret key
 )
 
 func init() {
@@ -88,7 +88,7 @@ func AsyncVideoRiskDetection(appId int64, service string, parameters string) (*A
 }
 
 func GetVideoResult(dataId, service string, appId int64) (*VideoResultResponse, error) {
-	return DefaultInstance.GetVideoLiveResult(&VideoResultRequest{
+	return DefaultInstance.VideoResult(&VideoResultRequest{
 		DataId:  dataId,
 		AppId:   appId,
 		Service: service,
@@ -297,6 +297,24 @@ func TestNewCustomContents(t *testing.T) {
 
 func TestEnableCustomContents(t *testing.T) {
 	resp, err := NewCustomContents(5461, "text_risk", "","是的是的","BLOCK", 1)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestVideoResultGet(t *testing.T) {
+	resp, err := GetVideoResult("wangyifan46", "video_risk", 265193)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestAudioResultGet(t *testing.T) {
+	resp, err := GetAudioResult("test009284", "audio_risk", 3332)
 	if err != nil {
 		t.Errorf("%v", err)
 		return
