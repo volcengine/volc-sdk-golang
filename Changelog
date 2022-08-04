@@ -1,5 +1,9 @@
 ### Change log
 
+2022-08-04 Bumped to version v1.0.53
+- Updated demo for sts\security\rtc
+- Added apis for live
+
 2022-07-28 Bumped to version v1.0.52
 - Added apis for tls\axb\vod
 
