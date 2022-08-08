@@ -162,6 +162,50 @@ type DeleteCasterResourceOPEDResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
 
+type SwitchCasterResourceResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *SwitchCasterResourceResponse `json:"Result,omitempty"`
+}
+
+type SwitchCasterResourceResponse struct {
+	NotStart bool
+}
+
+type SwitchCasterResourceImageResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *SwitchCasterResourceImageResponse `json:"Result,omitempty"`
+}
+
+type SwitchCasterResourceImageResponse struct {
+	NotStart bool
+}
+
+type SwitchCasterResourceOPEDResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *SwitchCasterResourceOPEDResponse `json:"Result,omitempty"`
+}
+
+type SwitchCasterResourceOPEDResponse struct {
+	NotStart bool
+}
+
+type StartCasterOPEDArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type SwitchCasterLayoutResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *SwitchCasterLayoutResponse `json:"Result,omitempty"`
+}
+
+type SwitchCasterLayoutResponse struct {
+	NotStart bool
+}
+
+type CopyCasterPVWToPGMResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
 type CasterBaseCondition struct {
 	ID            int64
 	CloudCasterID string
