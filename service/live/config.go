@@ -449,6 +449,54 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
+		"SwitchCasterResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SwitchCasterResource"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"SwitchCasterResourceImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SwitchCasterResourceImage"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"SwitchCasterResourceOPED": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SwitchCasterResourceOPED"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"StartCasterOPEDArrange": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartCasterOPEDArrange"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"SwitchCasterLayout": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SwitchCasterLayout"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CopyCasterPVWToPGM": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CopyCasterPVWToPGM"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
 	}
 )
 

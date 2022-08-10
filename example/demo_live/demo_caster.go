@@ -398,3 +398,110 @@ func TestDeleteCasterResourceOPED(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestSwitchCasterResource(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID":   0,
+		"ResourceID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.SwitchCasterResource(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestSwitchCasterResourceImage(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID":   0,
+		"ResourceID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.SwitchCasterResourceImage(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestSwitchCasterResourceOPED(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID":   0,
+		"ResourceID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.SwitchCasterResourceOPED(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestStartCasterOPEDArrange(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID":   0,
+		"ResourceID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.StartCasterOPEDArrange(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestSwitchCasterLayout(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID": 0,
+		"LayoutID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.SwitchCasterLayout(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestCopyCasterPVWToPGM(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID": 0,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.CopyCasterPVWToPGM(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}

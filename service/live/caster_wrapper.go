@@ -159,3 +159,57 @@ func (p *LIVE) DeleteCasterResourceOPED(query url.Values, body string) (*DeleteC
 	}
 	return resp, statusCode, nil
 }
+
+func (p *LIVE) SwitchCasterResource(query url.Values, body string) (*SwitchCasterResourceResp, int, error) {
+	resp := new(SwitchCasterResourceResp)
+	statusCode, err := p.commonHandlerJson("SwitchCasterResource", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) SwitchCasterResourceImage(query url.Values, body string) (*SwitchCasterResourceImageResp, int, error) {
+	resp := new(SwitchCasterResourceImageResp)
+	statusCode, err := p.commonHandlerJson("SwitchCasterResourceImage", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) SwitchCasterResourceOPED(query url.Values, body string) (*SwitchCasterResourceOPEDResp, int, error) {
+	resp := new(SwitchCasterResourceOPEDResp)
+	statusCode, err := p.commonHandlerJson("SwitchCasterResourceOPED", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) StartCasterOPEDArrange(query url.Values, body string) (*StartCasterOPEDArrangeResp, int, error) {
+	resp := new(StartCasterOPEDArrangeResp)
+	statusCode, err := p.commonHandlerJson("StartCasterOPEDArrange", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) SwitchCasterLayout(query url.Values, body string) (*SwitchCasterLayoutResp, int, error) {
+	resp := new(SwitchCasterLayoutResp)
+	statusCode, err := p.commonHandlerJson("SwitchCasterLayout", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) CopyCasterPVWToPGM(query url.Values, body string) (*CopyCasterPVWToPGMResp, int, error) {
+	resp := new(CopyCasterPVWToPGMResp)
+	statusCode, err := p.commonHandlerJson("CopyCasterPVWToPGM", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
