@@ -206,6 +206,36 @@ type CopyCasterPVWToPGMResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
 
+type GetCasterResourceVodInfoResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *GetCasterResourceVodInfoResponse `json:"Result,omitempty"`
+}
+
+type GetCasterResourceVodInfoResponse struct {
+	Resource []*ResourceVodPlayInfo
+}
+
+type GetCasterArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *GetCasterArrangeResponse `json:"Result,omitempty"`
+}
+
+type GetCasterArrangeResponse struct {
+	Arranges []*CasterArrange
+}
+
+type CreateCasterArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type UpdateCasterArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type DeleteCasterArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
 type CasterBaseCondition struct {
 	ID            int64
 	CloudCasterID string
@@ -388,4 +418,23 @@ type ArrangeInfo struct {
 	ResourceNo int64
 	ResourceID int64
 	LayoutID   int64
+}
+
+type CasterArrange struct {
+	ID            int64
+	OpType        int
+	ExecType      int
+	ExecTime      int64
+	CountdownTime int64
+	ResourceNo    int64
+	ResourceID    int64
+	LayoutID      int64
+	MainBackup    bool
+}
+
+type ResourceVodPlayInfo struct {
+	ID          int64
+	Duration    int
+	Type        int
+	VodPlayTime int
 }

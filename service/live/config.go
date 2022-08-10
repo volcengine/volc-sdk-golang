@@ -497,6 +497,38 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
+		"GetCasterResourceVodInfo": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCasterResourceVodInfo"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"CreateCasterArrange": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCasterArrange"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdateCasterArrange": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCasterArrange"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteCasterArrange": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCasterArrange"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
 	}
 )
 
