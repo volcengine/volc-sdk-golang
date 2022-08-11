@@ -1,5 +1,10 @@
 ### Change log
 
+2022-08-11 Bumped to version v1.0.55
+- Updated apis for vod\live
+- Added service verender
+- Updated demo for sms
+
 2022-08-08 Bumped to version v1.0.54
 - Updated models for vod
 
