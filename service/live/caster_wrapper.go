@@ -213,3 +213,49 @@ func (p *LIVE) CopyCasterPVWToPGM(query url.Values, body string) (*CopyCasterPVW
 	}
 	return resp, statusCode, nil
 }
+
+func (p *LIVE) GetCasterResourceVodInfo(query url.Values, body string) (*GetCasterResourceVodInfoResp, int, error) {
+	resp := new(GetCasterResourceVodInfoResp)
+	statusCode, err := p.commonHandlerJson("GetCasterResourceVodInfo", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) GetCasterArrange(query url.Values, body string) (*GetCasterArrangeResp, int, error) {
+	resp := new(GetCasterArrangeResp)
+	statusCode, err := p.commonHandlerJson("GetCasterInfo", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	resp.ResponseMetadata.Action = "GetCasterArrange"
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) CreateCasterArrange(query url.Values, body string) (*CreateCasterArrangeResp, int, error) {
+	resp := new(CreateCasterArrangeResp)
+	statusCode, err := p.commonHandlerJson("CreateCasterArrange", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) UpdateCasterArrange(query url.Values, body string) (*UpdateCasterArrangeResp, int, error) {
+	resp := new(UpdateCasterArrangeResp)
+	statusCode, err := p.commonHandlerJson("UpdateCasterArrange", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) DeleteCasterArrange(query url.Values, body string) (*DeleteCasterArrangeResp, int, error) {
+	resp := new(DeleteCasterArrangeResp)
+	statusCode, err := p.commonHandlerJson("DeleteCasterArrange", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
