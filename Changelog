@@ -1,5 +1,9 @@
 ### Change log
 
+2022-08-18 Bumped to version v1.0.56
+- Added apis for live
+- Comment Error description Change to English
+
 2022-08-11 Bumped to version v1.0.55
 - Updated apis for vod\live
 - Added service verender
