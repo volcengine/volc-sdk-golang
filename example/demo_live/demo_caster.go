@@ -627,3 +627,15 @@ func TestUpdateCasterImageCollection(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestGetPlayerAuthWithExpiredTime(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+
+	token, err := live.DefaultInstance.GetPlayerAuthWithExpiredTime()
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(token)
+	t.Logf("token = %+v  msgInfo = %+v \n", token, string(res))
+}
