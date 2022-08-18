@@ -2,6 +2,9 @@ package live
 
 import (
 	"net/url"
+	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 func (p *LIVE) CreateCaster(query url.Values, body string) (*CreateCasterResp, int, error) {
@@ -267,4 +270,31 @@ func (p *LIVE) UpdateCasterImageCollection(query url.Values, body string) (*Upda
 		return nil, statusCode, err
 	}
 	return resp, statusCode, nil
+}
+
+func (p *LIVE) GetPlayerAuthWithExpiredTime() (*SecurityToken2, error) {
+	inlinePolicy := new(base.Policy)
+	actions := []string{"live:GetCasterPlayerInfo"}
+	resources := make([]string, 0)
+	statement := base.NewAllowStatement(actions, resources)
+	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
+	if resp, err := p.Client.SignSts2(inlinePolicy, time.Hour*24); err != nil {
+		return nil, err
+	} else {
+		return &SecurityToken2{
+			AccessKeyID:     resp.AccessKeyID,
+			SecretAccessKey: resp.SecretAccessKey,
+			SessionToken:    resp.SessionToken,
+			ExpiredTime:     resp.ExpiredTime,
+			CurrentTime:     resp.CurrentTime,
+		}, nil
+	}
+}
+
+type SecurityToken2 struct {
+	AccessKeyID     string `json:"AccessKeyId"`
+	SecretAccessKey string
+	SessionToken    string
+	ExpiredTime     string
+	CurrentTime     string
 }
