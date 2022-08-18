@@ -9,7 +9,7 @@ import (
 	"fmt"
 )
 
-// AES CBC 加密
+// AES CBC
 func aesEncryptCBC(origData, key []byte) (crypted []byte, err error) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -30,7 +30,7 @@ func aesEncryptCBC(origData, key []byte) (crypted []byte, err error) {
 	return
 }
 
-// AES CBC 加密后做一次Base64加密
+// AES CBC Do a Base64 encryption after encryption
 func aesEncryptCBCWithBase64(origData, key []byte) (string, error) {
 	cbc, err := aesEncryptCBC(origData, key)
 	if err != nil {
