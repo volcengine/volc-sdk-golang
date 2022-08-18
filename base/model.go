@@ -50,7 +50,7 @@ type metadata struct {
 	service         string
 }
 
-// 统一的JSON返回结果
+// Unified JSON return results
 type CommonResponse struct {
 	ResponseMetadata ResponseMetadata
 	Result           interface{} `json:"Result,omitempty"`

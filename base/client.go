@@ -55,7 +55,7 @@ func init() {
 	}
 }
 
-// Client 基础客户端
+// Client
 type Client struct {
 	Client      *http.Client
 	SdkVersion  string
@@ -63,7 +63,7 @@ type Client struct {
 	ApiInfoList map[string]*ApiInfo
 }
 
-// NewClient 生成一个客户端
+// NewClient
 func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 	client := &Client{Client: _GlobalClient, ServiceInfo: info.Clone(), ApiInfoList: apiInfoList}
 
@@ -121,21 +121,21 @@ func (cred Credentials) Clone() Credentials {
 	}
 }
 
-// SetRetrySettings 设置重试策略
+// SetRetrySettings
 func (client *Client) SetRetrySettings(retrySettings *RetrySettings) {
 	if retrySettings != nil {
 		client.ServiceInfo.Retry = *retrySettings
 	}
 }
 
-// SetAccessKey 设置AK
+// SetAccessKey
 func (client *Client) SetAccessKey(ak string) {
 	if ak != "" {
 		client.ServiceInfo.Credentials.AccessKeyID = ak
 	}
 }
 
-// SetSecretKey 设置SK
+// SetSecretKey
 func (client *Client) SetSecretKey(sk string) {
 	if sk != "" {
 		client.ServiceInfo.Credentials.SecretAccessKey = sk
@@ -149,7 +149,7 @@ func (client *Client) SetSessionToken(token string) {
 	}
 }
 
-// SetHost 设置Host
+// SetHost
 func (client *Client) SetHost(host string) {
 	if host != "" {
 		client.ServiceInfo.Host = host
@@ -162,7 +162,7 @@ func (client *Client) SetScheme(scheme string) {
 	}
 }
 
-// SetCredential 设置Credentials
+// SetCredential
 func (client *Client) SetCredential(c Credentials) {
 	if c.AccessKeyID != "" {
 		client.ServiceInfo.Credentials.AccessKeyID = c.AccessKeyID
@@ -191,12 +191,12 @@ func (client *Client) SetTimeout(timeout time.Duration) {
 	}
 }
 
-// GetSignUrl 获取签名字符串
+// GetSignUrl
 func (client *Client) GetSignUrl(api string, query url.Values) (string, error) {
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
-		return "", errors.New("相关api不存在")
+		return "", errors.New("The related api does not exist")
 	}
 
 	query = mergeQuery(query, apiInfo.Query)
@@ -210,13 +210,13 @@ func (client *Client) GetSignUrl(api string, query url.Values) (string, error) {
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
 
 	if err != nil {
-		return "", errors.New("构建request失败")
+		return "", errors.New("Failed to build request")
 	}
 
 	return client.ServiceInfo.Credentials.SignUrl(req), nil
 }
 
-// SignSts2 生成sts信息
+// SignSts2
 func (client *Client) SignSts2(inlinePolicy *Policy, expire time.Duration) (*SecurityToken2, error) {
 	var err error
 	sts := new(SecurityToken2)
@@ -243,7 +243,7 @@ func (client *Client) SignSts2(inlinePolicy *Policy, expire time.Duration) (*Sec
 	return sts, nil
 }
 
-// Query 发起Get的query请求
+// Query Initiate a Get query request
 func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 	return client.CtxQuery(context.Background(), api, query)
 }
@@ -252,7 +252,7 @@ func (client *Client) CtxQuery(ctx context.Context, api string, query url.Values
 	return client.request(ctx, api, query, "", "")
 }
 
-// Json 发起Json的post请求
+// Json Initiate a Json post request
 func (client *Client) Json(api string, query url.Values, body string) ([]byte, int, error) {
 	return client.CtxJson(context.Background(), api, query, body)
 }
@@ -264,7 +264,7 @@ func (client *Client) PostWithContentType(api string, query url.Values, body str
 	return client.CtxPostWithContentType(context.Background(), api, query, body, ct)
 }
 
-// CtxPostWithContentType 发起自定义 Content-Type 的 post 请求，Content-Type 不可以为空
+// CtxPostWithContentType Initiate a post request with a custom Content-Type, Content-Type cannot be empty
 func (client *Client) CtxPostWithContentType(ctx context.Context, api string, query url.Values, body string, ct string) ([]byte, int, error) {
 	return client.request(ctx, api, query, body, ct)
 }
@@ -273,7 +273,7 @@ func (client *Client) Post(api string, query url.Values, form url.Values) ([]byt
 	return client.CtxPost(context.Background(), api, query, form)
 }
 
-// CtxPost 发起Post请求
+// CtxPost Initiate a Post request
 func (client *Client) CtxPost(ctx context.Context, api string, query url.Values, form url.Values) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 	form = mergeQuery(form, apiInfo.Form)
@@ -320,7 +320,7 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
-		return []byte(""), 500, errors.New("相关api不存在")
+		return []byte(""), 500, errors.New("The related api does not exist")
 	}
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
@@ -339,7 +339,7 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 	}
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), requestBody)
 	if err != nil {
-		return []byte(""), 500, errors.New("构建request失败")
+		return []byte(""), 500, errors.New("Failed to build request")
 	}
 	req.Header = header
 	if ct != "" {
