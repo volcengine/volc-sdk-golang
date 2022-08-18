@@ -128,6 +128,7 @@ type CreateCasterResourceResp struct {
 
 type UpdateCasterLayoutResp struct {
 	ResponseMetadata base.ResponseMetadata
+	Result           *CasterLayoutUpdateCondition `json:"Result,omitempty"`
 }
 
 type DeleteCasterLayoutResp struct {
@@ -136,6 +137,7 @@ type DeleteCasterLayoutResp struct {
 
 type CreateCasterResourceImageResp struct {
 	ResponseMetadata base.ResponseMetadata
+	Result           *CasterResourceImageCondition `json:"Result,omitempty"`
 }
 
 type DeleteCasterResourceImageResp struct {
@@ -144,6 +146,7 @@ type DeleteCasterResourceImageResp struct {
 
 type CreateCasterResourceImagesResp struct {
 	ResponseMetadata base.ResponseMetadata
+	Result           *CasterResourceImagesCondition `json:"Result,omitempty"`
 }
 
 type RemoveCasterResourceResp struct {
@@ -156,6 +159,7 @@ type UpdateCasterConfigResp struct {
 
 type CreateCasterResourceOPEDResp struct {
 	ResponseMetadata base.ResponseMetadata
+	Result           *CasterResourceOPEDCondition `json:"Result,omitempty"`
 }
 
 type DeleteCasterResourceOPEDResp struct {
@@ -226,6 +230,20 @@ type GetCasterArrangeResponse struct {
 
 type CreateCasterArrangeResp struct {
 	ResponseMetadata base.ResponseMetadata
+	Result           *CreateCasterArrangeResponse `json:"Result,omitempty"`
+}
+
+type CreateCasterArrangeResponse struct {
+	ID            int64
+	OpType        int
+	ExecType      int
+	ExecTime      int64
+	CountdownTime int64
+	PreResourceID int64
+	ResourceNo    int64
+	ResourceID    int64
+	LayoutID      int64
+	MainBackup    bool
 }
 
 type UpdateCasterArrangeResp struct {
@@ -233,6 +251,10 @@ type UpdateCasterArrangeResp struct {
 }
 
 type DeleteCasterArrangeResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type UpdateCasterImageCollectionResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
 
@@ -293,8 +315,10 @@ type Stream struct {
 
 type CasterResourceCondition struct {
 	ID                  int64
+	CasterID            int64
 	Name                string
 	No                  int
+	Cate                int
 	Type                int
 	URL                 string
 	Volume              int
@@ -302,16 +326,72 @@ type CasterResourceCondition struct {
 	BreakAt             int
 	Mute                bool
 	VodHeadSwitch       bool
-	VideoUsed           int
-	AudioUsed           int
-	RtcPushUserID       string
-	Status              int
-	PGMUsed             bool
-	PVWUsed             bool
 	AdjustDts           int64
 	AdjustAudio         int
 	AdjustRtcPushUserID string
 	VodUseDownload      bool
+	VodPlayPolicy       int
+}
+
+type CasterLayoutUpdateCondition struct {
+	ID         int                         `json:"ID"`
+	CasterID   int                         `json:"CasterID"`
+	Name       string                      `json:"Name"`
+	W          int                         `json:"W"`
+	H          int                         `json:"H"`
+	ScreenType int                         `json:"ScreenType"`
+	TplId      int                         `json:"TplId"`
+	Elements   []CasterLayoutUpdateElement `json:"Elements"`
+}
+
+type CasterLayoutUpdateElement struct {
+	ResourceID   int     `json:"ResourceID"`
+	ResourceNO   int     `json:"ResourceNO"`
+	Name         string  `json:"Name"`
+	X            int     `json:"X"`
+	Y            float64 `json:"Y"`
+	W            int     `json:"W"`
+	H            float64 `json:"H"`
+	ZIndex       int     `json:"ZIndex"`
+	Opacity      int     `json:"Opacity"`
+	Cate         int     `json:"Cate"`
+	IsHide       bool    `json:"IsHide"`
+	ImageIndexID int     `json:"ImageIndexID"`
+}
+
+type CasterResourceImageCondition struct {
+	ID       int64
+	CasterID int64
+	Name     string
+	Cate     int
+	Type     int
+	URL      string
+}
+
+type CasterResourceImagesCondition struct {
+	ID                   int64
+	CasterID             int64
+	Name                 string
+	Cate                 int
+	Type                 int
+	ImageCollection      []CasterResourceImageCollectionCondition
+	ImageCollectionIndex int64
+}
+
+type CasterResourceImageCollectionCondition struct {
+	ImageIndexID int64
+	Name         string
+	URL          string
+}
+
+type CasterResourceOPEDCondition struct {
+	ID       int64
+	CasterID int64
+	Name     string
+	Cate     int
+	Type     int
+	URL      string
+	Duration int
 }
 
 type CasterLayoutCondition struct {
@@ -426,6 +506,7 @@ type CasterArrange struct {
 	ExecType      int
 	ExecTime      int64
 	CountdownTime int64
+	PreResourceID int64
 	ResourceNo    int64
 	ResourceID    int64
 	LayoutID      int64

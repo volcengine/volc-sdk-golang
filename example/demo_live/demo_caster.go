@@ -607,3 +607,23 @@ func TestDeleteCasterArrange(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestUpdateCasterImageCollection(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"CasterID":     0,
+		"LayoutID":     0,
+		"OperatorType": 0,
+		"Next":         true,
+	}
+	body, _ := json.Marshal(bodyMap)
+	//打印请求参数
+	t.Logf(string(body))
+	resp, statusCode, err := live.DefaultInstance.UpdateCasterImageCollection(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
