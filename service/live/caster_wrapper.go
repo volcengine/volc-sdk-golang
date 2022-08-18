@@ -259,3 +259,12 @@ func (p *LIVE) DeleteCasterArrange(query url.Values, body string) (*DeleteCaster
 	}
 	return resp, statusCode, nil
 }
+
+func (p *LIVE) UpdateCasterImageCollection(query url.Values, body string) (*UpdateCasterImageCollectionResp, int, error) {
+	resp := new(UpdateCasterImageCollectionResp)
+	statusCode, err := p.commonHandlerJson("UpdateCasterImageCollection", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
