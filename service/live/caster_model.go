@@ -321,7 +321,7 @@ type CasterResourceCondition struct {
 	Cate                int
 	Type                int
 	URL                 string
-	Volume              int
+	Volume              float64
 	Duration            int
 	BreakAt             int
 	Mute                bool
@@ -380,6 +380,7 @@ type CasterResourceImagesCondition struct {
 
 type CasterResourceImageCollectionCondition struct {
 	ImageIndexID int64
+	ImageID      string
 	Name         string
 	URL          string
 }
@@ -442,7 +443,7 @@ type Video struct {
 	No                  int64
 	Type                EResourceType
 	URL                 string
-	Volume              int
+	Volume              float64
 	Duration            int
 	BreakAt             int64
 	Mute                bool
@@ -479,6 +480,7 @@ type ImageCollections struct {
 type ImageCollection struct {
 	ImageIndexID   int64
 	ImageID        string
+	Name           string
 	URL            string
 	DownloadStatus int
 }
