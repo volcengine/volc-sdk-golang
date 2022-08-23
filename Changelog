@@ -1,5 +1,8 @@
 ### Change log
 
+2022-08-22 Bumped to version v1.0.57
+- Fixed models for live
+
 2022-08-18 Bumped to version v1.0.56
 - Added apis for live
 - Comment Error description Change to English
