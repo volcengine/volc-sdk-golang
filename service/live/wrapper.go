@@ -484,3 +484,55 @@ func (p *LIVE) DescribePullToPushBandwidthData(query url.Values, body string) (*
 	}
 	return resp, statesCode, nil
 }
+
+//CreateSnapshotAuditPreset 创建截图审核模板
+func (p *LIVE) CreateSnapshotAuditPreset(query url.Values, body string) (*CreateAuditPresetResponse, int, error) {
+	resp := new(CreateAuditPresetResponse)
+	statesCode, err := p.commonHandlerJson("CreateSnapshotAuditPreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+
+//UpdateSnapshotAuditPreset 更新截图审核模板
+func (p *LIVE) UpdateSnapshotAuditPreset(query url.Values, body string) (*UpdateAuditPresetResponse, int, error) {
+	resp := new(UpdateAuditPresetResponse)
+	statesCode, err := p.commonHandlerJson("UpdateSnapshotAuditPreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+
+//DeleteSnapshotAuditPreset 删除截图审核模板
+func (p *LIVE) DeleteSnapshotAuditPreset(query url.Values, body string) (*DeleteAuditPresetResponse, int, error) {
+	resp := new(DeleteAuditPresetResponse)
+	statesCode, err := p.commonHandlerJson("DeleteSnapshotAuditPreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+
+//ListVhostSnapshotAuditPreset 查询截图审核模板
+func (p *LIVE) ListVhostSnapshotAuditPreset(query url.Values, body string) (*ListVhostAuditPresetResponse, int, error) {
+	resp := new(ListVhostAuditPresetResponse)
+	statesCode, err := p.commonHandlerJson("ListVhostSnapshotAuditPreset", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}
+
+/**
+截图审核用量相关
+*/
+func (p *LIVE) DescribeLiveAuditData(query url.Values, body string) (*DescribeLiveAuditDataResp, int, error) {
+	resp := new(DescribeLiveAuditDataResp)
+	statesCode, err := p.commonHandlerJson("DescribeLiveAuditData", query, resp, body)
+	if err != nil {
+		return nil, statesCode, err
+	}
+	return resp, statesCode, nil
+}

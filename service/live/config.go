@@ -449,6 +449,46 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
+		"CreateSnapshotAuditPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSnapshotAuditPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"UpdateSnapshotAuditPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSnapshotAuditPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeleteSnapshotAuditPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteSnapshotAuditPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"ListVhostSnapshotAuditPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVhostSnapshotAuditPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeLiveAuditData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveAuditData"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 		"SwitchCasterResource": {
 			Method: http.MethodPost,
 			Path:   "/",
