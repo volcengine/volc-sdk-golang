@@ -421,3 +421,117 @@ type BandwidthDtailData struct {
 	PeakUpBandwidth   float64          `json:"PeakUpBandwidth"`
 	BandwidthDataList []*BandwidthData `json:"BandwidthDataList"`
 }
+
+type CreateAuditPresetRequest struct {
+	Vhost              string           `json:"Vhost"`
+	Domain             string           `json:"Domain"`
+	App                string           `json:"App"`
+	Interval           *float64         `json:"Interval"`
+	Bucket             string           `json:"Bucket"`
+	ServiceID          string           `json:"ServiceID"`
+	StorageDir         string           `json:"StorageDir"`
+	Description        string           `json:"Description"`
+	StorageStrategy    *int64           `json:"StorageStrategy"`
+	Label              []string         `json:"Label"`
+	CallbackDetailList []CallbackDetail `json:"CallbackDetailList"`
+}
+
+type CreateAuditPresetResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type UpdateAuditPresetRequest struct {
+	Vhost              string           `json:"Vhost"`
+	Domain             string           `json:"Domain"`
+	App                string           `json:"App"`
+	Interval           *float64         `json:"Interval"`
+	Bucket             *string          `json:"Bucket"`
+	ServiceID          *string          `json:"ServiceID"`
+	StorageDir         string           `json:"StorageDir"`
+	Description        string           `json:"Description"`
+	StorageStrategy    *int64           `json:"StorageStrategy"`
+	Label              []string         `json:"Label"`
+	CallbackDetailList []CallbackDetail `json:"CallbackDetailList"`
+	PresetName         string           `json:"PresetName"`
+}
+
+type UpdateAuditPresetResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type DeleteAuditPresetRequest struct {
+	Vhost      string `json:"Vhost"`
+	App        string `json:"App"`
+	PresetName string `json:"PresetName"`
+}
+
+type DeleteAuditPresetResponse struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type ListVhostAuditPresetRequest struct {
+	Vhost string `json:"Vhost"`
+}
+
+type ListVhostAuditPresetResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListVhostAuditPresetResult `json:"Result,omitempty"`
+}
+
+type ListVhostAuditPresetResult struct {
+	PresetList []AuditPresetsVhostAPP `json:"PresetList"`
+}
+
+type AuditPresetsVhostAPP struct {
+	Vhost       string      `json:"Vhost"`
+	App         string      `json:"App"`
+	AuditPreset AuditPreset `json:"AuditPreset"`
+}
+
+type AuditPreset struct {
+	Interval           float64          `json:"Interval"`
+	Bucket             string           `json:"Bucket"`
+	ServiceID          string           `json:"ServiceID"`
+	StorageDir         string           `json:"StorageDir"`
+	Description        string           `json:"Description"`
+	StorageStrategy    int64            `json:"StorageStrategy"`
+	Label              []string         `json:"Label"`
+	CallbackDetailList []CallbackDetail `json:"CallbackDetailList"`
+	PresetName         string           `json:"PresetName"`
+	UpdateTime         string           `json:"UpdateTime"`
+}
+
+type DescribeLiveAuditDataRequest struct {
+	DomainList  []string `json:"DomainList"`
+	StartTime   string   `json:"StartTime"`
+	EndTime     string   `json:"EndTime"`
+	Aggregation int64    `json:"Aggregation"`
+	DetailField []string `json:"DetailField"`
+}
+
+type DescribeLiveAuditDataResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *DescribeLiveAuditDataResult `json:"Result,omitempty"`
+}
+
+type DescribeLiveAuditDataResult struct {
+	DomainList          []string           `json:"DomainList"`
+	StartTime           time.Time          `json:"StartTime"`
+	EndTime             time.Time          `json:"EndTime"`
+	Aggregation         int                `json:"Aggregation"`
+	DetailField         []string           `json:"DetailField"`
+	TotalCount          int64              `json:"TotalCount"`
+	AuditDataList       []*AuditData       `json:"AuditDataList"`
+	AuditDetailDataList []*AuditDetailData `json:"AuditDetailDataList"`
+}
+
+type AuditData struct {
+	TimeStamp time.Time `json:"TimeStamp"`
+	Count     int64     `json:"Count"`
+}
+
+type AuditDetailData struct {
+	Domain        string       `json:"Domain"`
+	TotalCount    int64        `json:"TotalCount"`
+	AuditDataList []*AuditData `json:"AuditDataList"`
+}

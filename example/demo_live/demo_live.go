@@ -730,3 +730,98 @@ func TestDescribePullToPushBandwidthData(t *testing.T) {
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 
 }
+
+func TestCreateSnapshotAuditPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost":              "xx",
+		"App":                "xx",
+		"Interval":           2.3,
+		"Bucket":             "xx",
+		"StorageDir":         "ii",
+		"CallbackDetailList": []live.CallbackDetail{{"XX", "http"}},
+		"Description":        "xx",
+		"StorageStrategy":    0,
+		"Label":              []string{},
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.CreateSnapshotAuditPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestUpdateSnapshotAuditPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost":              "xx",
+		"App":                "xx",
+		"Interval":           2.3,
+		"Bucket":             "xx",
+		"StorageDir":         "ii",
+		"CallbackDetailList": []live.CallbackDetail{{"XX", "http"}},
+		"Description":        "xx",
+		"StorageStrategy":    1,
+		"Label":              []string{},
+		"Preset":             "PresetName",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.UpdateSnapshotAuditPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestDeleteSnapshotAuditPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost":  "xx",
+		"App":    "xx",
+		"Preset": "PresetName",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.DeleteSnapshotAuditPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestListVhostSnapshotAuditPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost": "xx",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.ListVhostSnapshotAuditPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestDescribeLiveAuditData(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"StartTime": "xx",
+		"EndTime":   "",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.DescribeLiveAuditData(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
