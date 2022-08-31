@@ -536,3 +536,51 @@ func (p *LIVE) DescribeLiveAuditData(query url.Values, body string) (*DescribeLi
 	}
 	return resp, statesCode, nil
 }
+
+/**
+直播水印相关
+*/
+func (p *LIVE) ListVhostWatermarkPreset(query url.Values, body string) (*ListVhostWatermarkPresetResp, int, error) {
+	resp := new(ListVhostWatermarkPresetResp)
+	statusCode, err := p.commonHandlerJson("ListVhostWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) ListWatermarkPreset(query url.Values, body string) (*ListWatermarkPresetResp, int, error) {
+	resp := new(ListWatermarkPresetResp)
+	statusCode, err := p.commonHandlerJson("ListWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) CreateWatermarkPreset(query url.Values, body string) (*CreateWatermarkPresetResp, int, error) {
+	resp := new(CreateWatermarkPresetResp)
+	statusCode, err := p.commonHandlerJson("CreateWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) UpdateWatermarkPreset(query url.Values, body string) (*UpdateWatermarkPresetResp, int, error) {
+	resp := new(UpdateWatermarkPresetResp)
+	statusCode, err := p.commonHandlerJson("UpdateWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) DeleteWatermarkPreset(query url.Values, body string) (*DeleteWatermarkPresetResp, int, error) {
+	resp := new(DeleteWatermarkPresetResp)
+	statusCode, err := p.commonHandlerJson("DeleteWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}

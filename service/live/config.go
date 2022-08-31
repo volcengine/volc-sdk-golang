@@ -569,6 +569,46 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
+		"ListVhostWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVhostWatermarkPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"ListWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListWatermarkPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"CreateWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateWatermarkPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"UpdateWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateWatermarkPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeleteWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteWatermarkPreset"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
