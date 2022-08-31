@@ -4,15 +4,15 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
-type ConvertPhotoData struct {
+type EyeClose2OpenData struct {
 	Image string `json:"image"`
 }
 
-type ConvertPhotoResult struct {
+type EyeClose2OpenResult struct {
 	ResponseMetadata *base.ResponseMetadata `json:",omitempty"`
 	RequestId        string                 `json:"request_id"`
 	TimeElapsed      string                 `json:"time_elapsed"`
 	Code             int                    `json:"code"`
 	Message          string                 `json:"message"`
-	Data             *ConvertPhotoData      `json:"data"`
+	Data             *EyeClose2OpenData     `json:"data"`
 }

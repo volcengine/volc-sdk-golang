@@ -9,7 +9,7 @@ type FaceSwapData struct {
 }
 
 type FaceSwapResult struct {
-	ResponseMetadata *base.ResponseMetadata `json:",omitempty`
+	ResponseMetadata *base.ResponseMetadata `json:",omitempty"`
 	RequestId        string                 `json:"request_id"`
 	TimeElapsed      string                 `json:"time_elapsed"`
 	Code             int                    `json:"code"`
