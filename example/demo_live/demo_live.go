@@ -825,3 +825,92 @@ func TestDescribeLiveAuditData(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestListVhostWatermarkPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost": "example.com",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.ListVhostWatermarkPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestListWatermarkPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost": "example.com",
+		"App":   "live",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.ListWatermarkPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestCreateWatermarkPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost":         "example.com",
+		"App":           "live",
+		"Picture":       "data:image/png;base64,iVBORw0KGgoAAAANSU",
+		"Orientation":   "vertical",
+		"PosX":          0.1,
+		"PosY":          0.1,
+		"RelativeWidth": 0.15,
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.CreateWatermarkPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestUpdateWatermarkPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost":         "example.com",
+		"App":           "live",
+		"Picture":       "data:image/png;base64,iVBORw0KGgoAAAANSU",
+		"Orientation":   "vertical",
+		"PosX":          0.15,
+		"PosY":          0.15,
+		"RelativeWidth": 0.16,
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.UpdateWatermarkPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}
+
+func TestDeleteWatermarkPreset(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey(testAk)
+	live.DefaultInstance.Client.SetSecretKey(testSk)
+	bodyMap := map[string]interface{}{
+		"Vhost": "example.com",
+		"App":   "live",
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.DeleteWatermarkPreset(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}

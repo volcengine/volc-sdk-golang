@@ -535,3 +535,54 @@ type AuditDetailData struct {
 	TotalCount    int64        `json:"TotalCount"`
 	AuditDataList []*AuditData `json:"AuditDataList"`
 }
+
+type WatermarkPreset struct {
+	ID            *int64   `json:"ID,omitempty"`
+	AccountID     *string  `json:"AccountID,omitempty"`
+	Vhost         *string  `json:"Vhost,omitempty"`
+	App           *string  `json:"App,omitempty"`
+	Picture       *string  `json:"Picture,omitempty"`
+	PictureKey    *string  `json:"PictureKey,omitempty"`
+	Orientation   *string  `json:"Orientation,omitempty"`
+	PosX          *float64 `json:"PosX,omitempty"`
+	PosY          *float64 `json:"PosY,omitempty"`
+	RelativeWidth *float64 `json:"RelativeWidth,omitempty"`
+}
+
+type WatermarkErrMsg struct {
+	AccountID *string `json:"AccountID,omitempty"`
+	Vhost     *string `json:"Vhost,omitempty"`
+	App       *string `json:"App,omitempty"`
+	ErrMsg    *string `json:"ErrMsg,omitempty"`
+}
+
+type ListVhostWatermarkPresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListVhostWatermarkPresetResult `json:"Result,omitempty"`
+}
+type ListVhostWatermarkPresetResult struct {
+	WatermarkPresetList []*WatermarkPreset `json:"WatermarkPresetList"`
+	WatermarkErrMsgList []*WatermarkErrMsg `json:"WatermarkErrMsgList"`
+	StaticsMsg          *string
+}
+
+type ListWatermarkPresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListWatermarkPresetResult `json:"Result,omitempty"`
+}
+
+type ListWatermarkPresetResult struct {
+	Preset *WatermarkPreset `json:"Preset" form:"Preset"`
+}
+
+type CreateWatermarkPresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type UpdateWatermarkPresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
+type DeleteWatermarkPresetResp struct {
+	ResponseMetadata base.ResponseMetadata
+}
