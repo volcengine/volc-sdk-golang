@@ -4,15 +4,15 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
-type ConvertPhotoData struct {
+type EmoticonEditData struct {
 	Image string `json:"image"`
 }
 
-type ConvertPhotoResult struct {
+type EmoticonEditResult struct {
 	ResponseMetadata *base.ResponseMetadata `json:",omitempty"`
 	RequestId        string                 `json:"request_id"`
 	TimeElapsed      string                 `json:"time_elapsed"`
 	Code             int                    `json:"code"`
 	Message          string                 `json:"message"`
-	Data             *ConvertPhotoData      `json:"data"`
+	Data             *EmoticonEditData      `json:"data"`
 }

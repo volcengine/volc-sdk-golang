@@ -22,6 +22,94 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		"DistortionFree": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DistortionFree"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"StretchRecovery": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StretchRecovery"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EmoticonEdit": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EmoticonEdit"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"EyeClose2Open": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EyeClose2Open"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageScore": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageScore"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"ImageFlow": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageFlow"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"PoemMaterial": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"PoemMaterial"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"CarPlateDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CarPlateDetection"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"CarSegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CarSegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"CarDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CarDetection"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"SkySegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SkySegment"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
 		"BankCard": {
 			Method: http.MethodPost,
 			Path:   "/",

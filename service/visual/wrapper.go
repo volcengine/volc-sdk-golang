@@ -39,6 +39,105 @@ func (p *Visual) commonQueryHandler(api string, query url.Values, resp interface
 	return statusCode, nil
 }
 
+func (p *Visual) DistortionFree(form url.Values) (*model.DistortionFreeResult, int, error) {
+	resp := new(model.DistortionFreeResult)
+	statusCode, err := p.commonHandler("DistortionFree", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) StretchRecovery(form url.Values) (*model.StretchRecoveryResult, int, error) {
+	resp := new(model.StretchRecoveryResult)
+	statusCode, err := p.commonHandler("StretchRecovery", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) EmoticonEdit(form url.Values) (*model.EmoticonEditResult, int, error) {
+	resp := new(model.EmoticonEditResult)
+	statusCode, err := p.commonHandler("EmoticonEdit", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) EyeClose2Open(form url.Values) (*model.EyeClose2OpenResult, int, error) {
+	resp := new(model.EyeClose2OpenResult)
+	statusCode, err := p.commonHandler("EyeClose2Open", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageScore(form url.Values) (*model.ImageScoreResult, int, error) {
+	resp := new(model.ImageScoreResult)
+	statusCode, err := p.commonHandler("ImageScore", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageFlow(form url.Values) (*model.ImageFlowResult, int, error) {
+	resp := new(model.ImageFlowResult)
+	statusCode, err := p.commonHandler("ImageFlow", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) PoemMaterial(form url.Values) (*model.PoemMaterialResult, int, error) {
+	resp := new(model.PoemMaterialResult)
+	statusCode, err := p.commonHandler("PoemMaterial", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CarPlateDetection(form url.Values) (*model.CarPlateDetectionResult, int, error) {
+	resp := new(model.CarPlateDetectionResult)
+	statusCode, err := p.commonHandler("CarPlateDetection", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CarSegment(form url.Values) (*model.CarSegmentResult, int, error) {
+	resp := new(model.CarSegmentResult)
+	statusCode, err := p.commonHandler("CarSegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CarDetection(form url.Values) (*model.CarDetectionResult, int, error) {
+	resp := new(model.CarDetectionResult)
+	statusCode, err := p.commonHandler("CarDetection", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) SkySegment(form url.Values) (*model.SkySegmentResult, int, error) {
+	resp := new(model.SkySegmentResult)
+	statusCode, err := p.commonHandler("SkySegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) BankCard(form url.Values) (*model.BankCardResult, int, error) {
 	resp := new(model.BankCardResult)
 	statusCode, err := p.commonHandler("BankCard", form, resp)
