@@ -631,7 +631,7 @@ func NewInstance() *LIVE {
 
 // GetServiceInfo interface
 func (p *LIVE) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -644,7 +644,7 @@ func (p *LIVE) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetHost .
 func (p *LIVE) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .

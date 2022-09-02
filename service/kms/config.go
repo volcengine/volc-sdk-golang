@@ -232,7 +232,7 @@ func NewInstance() *KMS {
 
 // GetServiceInfo interface
 func (p *KMS) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -245,7 +245,7 @@ func (p *KMS) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetRegion .
 func (p *KMS) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .

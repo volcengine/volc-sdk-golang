@@ -340,7 +340,7 @@ func NewInstance() *Visual {
 
 // GetServiceInfo interface
 func (p *Visual) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -353,15 +353,15 @@ func (p *Visual) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetRegion
 func (p *Visual) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .
 func (p *Visual) SetHost(host string) {
-	ServiceInfo.Host = host
+	p.Client.ServiceInfo.Host = host
 }
 
 // SetSchema .
 func (p *Visual) SetSchema(schema string) {
-	ServiceInfo.Scheme = schema
+	p.Client.ServiceInfo.Scheme = schema
 }

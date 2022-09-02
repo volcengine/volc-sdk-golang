@@ -121,7 +121,10 @@ func (p *SMS) GetAPIInfo(api string) *base.ApiInfo {
 // SetHost .
 func (s *SMS) SetRegion(region string) {
 	if serviceInfo := s.GetServiceInfo(region); serviceInfo != nil {
-		serviceInfo.Credentials.Region = region
+		si := serviceInfo.Clone()
+		si.Credentials = s.Client.ServiceInfo.Credentials.Clone()
+		si.Credentials.Region = region
+		s.Client.ServiceInfo = si
 	}
 }
 

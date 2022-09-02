@@ -41,7 +41,7 @@ type SDKClient struct {
 
 // GetServiceInfo interface
 func (p *SDKClient) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 func (p *SDKClient) SetRegion(region string) {
