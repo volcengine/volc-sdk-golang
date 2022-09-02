@@ -395,7 +395,7 @@ func GetMinioClient(ak, sk, token, endpoint string) (*minio.Client, error) {
 
 // GetServiceInfo interface
 func (v *Verender) GetServiceInfo(env string) *base.ServiceInfo {
-	return ServiceInfo
+	return v.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -408,7 +408,7 @@ func (v *Verender) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetRegion
 func (v *Verender) SetRegion(env, region string) {
-	ServiceInfo.Credentials.Region = region
+	v.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .

@@ -246,7 +246,7 @@ func NewInstance() *IAM {
 
 // GetServiceInfo interface
 func (p *IAM) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -259,7 +259,7 @@ func (p *IAM) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetHost .
 func (p *IAM) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .

@@ -72,7 +72,7 @@ func NewInstance() *Billing {
 
 // GetServiceInfo interface
 func (p *Billing) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -85,7 +85,7 @@ func (p *Billing) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetHost .
 func (p *Billing) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .

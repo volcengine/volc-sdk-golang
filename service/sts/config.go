@@ -54,7 +54,7 @@ func NewInstance() *STS {
 
 // GetServiceInfo interface
 func (p *STS) GetServiceInfo() *base.ServiceInfo {
-	return ServiceInfo
+	return p.Client.ServiceInfo
 }
 
 // GetAPIInfo interface
@@ -67,7 +67,7 @@ func (p *STS) GetAPIInfo(api string) *base.ApiInfo {
 
 // SetHost .
 func (p *STS) SetRegion(region string) {
-	ServiceInfo.Credentials.Region = region
+	p.Client.ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .
