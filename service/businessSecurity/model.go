@@ -86,7 +86,30 @@ type VideoResultResponse struct {
 }
 
 type VideoResp struct {
-	VideoResult VideoResult `json:"VideoResults"`
+	DataId       string        `json:"DataId"`
+	VideoResult  VideoResult   `json:"VideoResults"`
+	AudioResults AudioResultV2 `json:"AudioResults"`
+}
+
+type AudioResultV2 struct {
+	Decision string           `json:"Decision"`
+	DataId   string           `json:"DataId"`
+	Details  []*AudioDetailV2 `json:"Details"`
+}
+
+type AudioDetailV2 struct {
+	StartTime    float64          `json:"StartTime"`
+	EndTime      float64          `json:"EndTime"`
+	FrameUrl     string           `json:"FrameUrl"`
+	AudioText    string           `json:"AudioText"`
+	FrameResults []*FrameResultV2 `json:"FrameResults"`
+}
+
+type FrameResultV2 struct {
+	Label    string     `json:"Label"`
+	SubLabel string     `json:"SubLabel"`
+	Decision string     `json:"Decision"`
+	Contexts []*Context `json:"Contexts"`
 }
 
 type VideoResult struct {
@@ -137,10 +160,15 @@ type ImageContentFrame struct {
 }
 
 type AudioResultResponse struct {
-	RequestId string      `json:"RequestId"`
-	Code      int         `json:"Code"`
-	Message   string      `json:"Message"`
-	AudioResp AudioResult `json:"Data"`
+	RequestId string        `json:"RequestId"`
+	Code      int           `json:"Code"`
+	Message   string        `json:"Message"`
+	AudioResp AudioResultV2 `json:"Data"`
+}
+
+func (resp *AudioResultResponse) String() string {
+	respJSON, _ := json.Marshal(resp)
+	return string(respJSON)
 }
 
 type AudioResult struct {
@@ -154,7 +182,6 @@ type AudioDetail struct {
 	EndTime      float64        `json:"EndTime"`
 	FrameUrl     string         `json:"FrameUrl"`
 	AudioText    string         `json:"AudioText"`
-	FrameID      int            `json:"FrameID"`
 	FrameResults []*FrameResult `json:"FrameResults"`
 }
 
@@ -163,7 +190,6 @@ type FrameResult struct {
 	SubLabel     string   `json:"SubLabel"`
 	Decision     string   `json:"Decision"`
 	MatchedWords []string `json:"MatchedWords"`
-	LibId        string   `json:"LibId"`
 	LibName      string   `json:"LibName"`
 }
 
