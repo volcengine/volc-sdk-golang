@@ -158,6 +158,8 @@ func (p *BusinessSecurity) AsyncVideoRisk(req *AsyncRiskDetectionRequest) (*Asyn
 	return result, nil
 }
 
+// Deprecated: use ElementVerifyV2 instead
+// 已废弃，请使用ElementVerifyV2
 func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVerifyResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -306,6 +308,7 @@ func (p *BusinessSecurity) ImageContentRisk(req *RiskDetectionRequest) (*ImageRe
 	return result, nil
 }
 
+// 要素验证
 func (p *BusinessSecurity) ElementVerifyV2(req *ElementVerifyRequest) (*ElementVerifyResponseV2, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -368,6 +371,8 @@ func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultRespo
 	return result, nil
 }
 
+// Deprecated: use MobileStatusV2 instead
+// 已废弃，请使用MobileStatusV2
 func (p *BusinessSecurity) MobileStatus(req *MobileStatusRequest) (*MobileStatusResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -429,6 +434,7 @@ func (p *BusinessSecurity) AsyncAudioRisk(req *AsyncRiskDetectionRequest) (*Asyn
 	return result, nil
 }
 
+// 号码状态
 func (p *BusinessSecurity) MobileStatusV2(req *MobileStatusRequest) (*MobileStatusResponseV2, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {

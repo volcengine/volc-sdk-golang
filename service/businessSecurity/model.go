@@ -234,6 +234,9 @@ type ElementVerifyDataV2 struct {
 }
 
 type ElementVerifyDataDetail struct {
+	BankName     string `json:"BankName,omitempty"`
+	CardType     string `json:"CardType,omitempty"`
+	CardCategory string `json:"CardCategory,omitempty"`
 }
 
 type MobileStatusRequest struct {
