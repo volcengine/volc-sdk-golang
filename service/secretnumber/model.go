@@ -34,6 +34,7 @@ type SecretBindResponse struct {
 
 type SecretBindResult struct {
 	PhoneNoX string
+	PhoneNoE string
 	SubId    string
 	Status   int32
 }
@@ -132,6 +133,28 @@ type UpdateAXNRequest struct {
 	ExpireTime   int64
 	PhoneNoB     string
 	PhoneNoA     string
+}
+
+type BindAXNERequest struct {
+	PhoneNoA          string
+	PhoneNoB          string
+	PhoneNoX          string
+	PhoneNoE          string
+	NumberPoolNo      string
+	ExpireTime        int64
+	AudioRecordFlag   int32
+	CityCode          string
+	CityCodeByPhoneNo string
+	DegradeCityList   string
+	UserData          string
+}
+
+type UpdateAXNERequest struct {
+	UpdateType   string
+	NumberPoolNo string
+	SubId        string
+	ExpireTime   int64
+	PhoneNoB     string
 }
 
 type Click2CallRequest struct {

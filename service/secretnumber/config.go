@@ -386,6 +386,30 @@ var (
 				"Version": []string{"2020-09-01"},
 			},
 		},
+		"BindAXNE": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindAXNE"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"UnbindAXNE": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindAXNE"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"UpdateAXNE": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAXNE"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
 		"Click2Call": {
 			Method: http.MethodPost,
 			Path:   "/",

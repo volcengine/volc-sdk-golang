@@ -106,6 +106,33 @@ func (p *SecretNumber) UnbindAXN(req *SpecificSubIdRequest) (*OperationResponse,
 	}
 }
 
+func (p *SecretNumber) BindAXNE(req *BindAXNERequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.handler("BindAXNE", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *SecretNumber) UnbindAXNE(req *SpecificSubIdRequest) (*OperationResponse, int, error) {
+	resp := new(OperationResponse)
+	if statusCode, err := p.handler("UnbindAXNE", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *SecretNumber) UpdateAXNE(req *UpdateAXNERequest) (*OperationResponse, int, error) {
+	resp := new(OperationResponse)
+	if statusCode, err := p.handler("UpdateAXNE", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) Click2Call(req *Click2CallRequest) (*Click2CallResponse, int, error) {
 	resp := new(Click2CallResponse)
 	if statusCode, err := p.handler("Click2Call", req, resp); err != nil {
