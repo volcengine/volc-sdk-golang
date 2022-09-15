@@ -20,6 +20,13 @@ const (
 	SEGMENT_CLASS_HUMAN_V2   = "humanv2"
 	SEGMENT_CLASS_PRODUCT_V2 = "productv2"
 
+	SMARTCROP_POLICY_DEMOTION_CENTER = "center"
+	SMARTCROP_POLICY_DEMOTION_FGLASS = "fglass"
+	SMARTCROP_POLICY_DEMOTION_TOP    = "top"
+
+	SMARTCROP_SCENE_NORMAL  = "normal"
+	SMARTCROP_SCENE_CARTOON = "cartoon"
+
 	FunctionEncryption = "Encryption"
 )
 
@@ -328,6 +335,22 @@ type GetImageSuperResolutionParam struct {
 
 type GetImageSuperResolutionResp struct {
 	ResUri string `json:"ResUri"`
+}
+
+//GetImageSmartCropResult
+type GetImageSmartCropParam struct {
+	ServiceId string  `json:"ServiceId"`
+	StoreUri  string  `json:"StoreUri"`
+	Policy    string  `json:"Policy"`
+	Scene     string  `json:"Scene"`
+	Sigma     float64 `json:"Sigma"`
+	Width     int     `json:"Width"`
+	Height    int     `json:"Height"`
+}
+
+type GetImageSmartCropResp struct {
+	ResUri     string `json:"ResUri"`
+	Demotioned bool   `json:"Demotioned"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {

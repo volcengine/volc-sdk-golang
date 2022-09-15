@@ -468,3 +468,12 @@ func (c *ImageX) GetImageSuperResolution(param *GetImageSuperResolutionParam) (*
 	}
 	return result, nil
 }
+
+func (c *ImageX) GetImageSmartCrop(param *GetImageSmartCropParam) (*GetImageSmartCropResp, error) {
+	result := new(GetImageSmartCropResp)
+	err := c.ImageXPost("GetImageSmartCropResult", nil, param, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}

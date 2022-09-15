@@ -328,6 +328,14 @@ var (
 				"Version": []string{ApiVersion},
 			},
 		},
+		"GetImageSmartCropResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageSmartCropResult"},
+				"Version": []string{ApiVersion},
+			},
+		},
 	}
 )
 
