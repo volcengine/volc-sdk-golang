@@ -25,6 +25,7 @@ type SelectNumberAndBindAXBRequest struct {
 	DegradeCityList   string
 	UserData          string
 	RandomFlag        int32
+	IdempotentId      string
 }
 
 type SecretBindResponse struct {
