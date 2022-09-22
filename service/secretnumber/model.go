@@ -12,6 +12,7 @@ type BindAXBRequest struct {
 	ExpireTime      int64
 	AudioRecordFlag int32
 	UserData        string
+	OutId           string
 }
 
 type SelectNumberAndBindAXBRequest struct {
@@ -26,6 +27,7 @@ type SelectNumberAndBindAXBRequest struct {
 	UserData          string
 	RandomFlag        int32
 	IdempotentId      string
+	OutId             string
 }
 
 type SecretBindResponse struct {
@@ -64,6 +66,7 @@ type QuerySubscriptionForListRequest struct {
 	SubId        string
 	Offset       int32
 	Limit        int32
+	OutId        string
 }
 
 type QuerySubscriptionForListResponse struct {
@@ -87,6 +90,7 @@ type Subscription struct {
 	RecordFlag int32
 	EnableTime int64
 	ExpireTime int64
+	OutId      string
 }
 
 type UpgradeAXToAXBRequest struct {
@@ -94,6 +98,7 @@ type UpgradeAXToAXBRequest struct {
 	SubId        string
 	PhoneNoB     string
 	UserData     string
+	OutId        string
 }
 
 type UpdateAXBRequest struct {
