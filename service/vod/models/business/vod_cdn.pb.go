@@ -331,7 +331,7 @@ type VodDomainCertificateInfo struct {
 	CertificatePub  string `protobuf:"bytes,3,opt,name=CertificatePub,proto3" json:"CertificatePub,omitempty"`   //证书内容
 	CertificatePri  string `protobuf:"bytes,4,opt,name=CertificatePri,proto3" json:"CertificatePri,omitempty"`   //私钥
 	HttpsStatus     string `protobuf:"bytes,5,opt,name=HttpsStatus,proto3" json:"HttpsStatus,omitempty"`         // Http开启状态
-	ExpiredAt       string `protobuf:"bytes,6,opt,name=ExpiredAt,proto3" json:"ExpiredAt,omitempty"`             // 证书过期时间
+	ExpiredAt       string `protobuf:"bytes,6,opt,name=ExpiredAt,proto3" json:"ExpiredAt,omitempty"`             // 证书过期时间，格式为"yyyy-MM-dd HH:mm:ss"
 }
 
 func (x *VodDomainCertificateInfo) Reset() {
