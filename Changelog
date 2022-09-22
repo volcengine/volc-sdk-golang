@@ -1,5 +1,9 @@
 ### Change log
 
+2022-09-22 Bumped to version v1.0.63
+- Updated models for vms
+- Updated apis for vod\imagex
+
 2022-09-15 Bumped to version v1.0.62
 - Updated apis for secret\vod
 
