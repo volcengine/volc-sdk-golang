@@ -30,8 +30,12 @@ const (
 	ServiceHost            = "rtc.volcengineapi.com"
 
 	// action name
-	ActionStartRecord   = "StartRecord"
-	ActionGetRecordTask = "GetRecordTask"
+	ActionStartRecord      = "StartRecord"
+	ActionGetRecordTask    = "GetRecordTask"
+	ActionStartWebRecord   = "StartWebRecord"
+	ActionStopWebRecord    = "StopWebRecord"
+	ActionGetWebRecordTask = "GetWebRecordTask"
+	ActionGetWebRecordList = "GetWebRecordList"
 )
 
 var (
@@ -58,6 +62,38 @@ var (
 			Query: url.Values{
 				"Action":  []string{ActionGetRecordTask},
 				"Version": []string{ServiceVersion20220601},
+			},
+		},
+		ActionStartWebRecord: {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{ActionStartWebRecord},
+				"Version": []string{ServiceVersion20201201},
+			},
+		},
+		ActionStopWebRecord: {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{ActionStopWebRecord},
+				"Version": []string{ServiceVersion20201201},
+			},
+		},
+		ActionGetWebRecordTask: {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{ActionGetWebRecordTask},
+				"Version": []string{ServiceVersion20201201},
+			},
+		},
+		ActionGetWebRecordList: {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{ActionGetWebRecordList},
+				"Version": []string{ServiceVersion20201201},
 			},
 		},
 		//ActionExample, add new action

@@ -101,3 +101,109 @@ type (
 		UserId     string `json:"UserId"`
 	}
 )
+
+type (
+	StartWebRecordRequest struct {
+		AppId           string
+		TaskId          string
+		InputURL        string
+		MaxRecordSecond int
+		JsCommand       []string
+		Bucket          string
+		VideoSpace      string
+		VideoInfo       WebVideoInfo
+		PageInfo        WebPageInfo
+		Duration        int
+	}
+
+	WebVideoInfo struct {
+		ResolutionWidth  int
+		ResolutionHeight int
+	}
+
+	WebPageInfo struct {
+		PageWidth  int
+		PageHeight int
+	}
+
+	StartWebRecordResponse struct {
+		ResponseMetadata *base.ResponseMetadata
+		Result           *StartWebRecordResult `json:"Result,omitempty"`
+	}
+
+	StartWebRecordResult struct {
+		Message string `json:"Message"`
+	}
+
+	StopWebRecordRequest struct {
+		AppId  string
+		TaskId string
+	}
+
+	StopWebRecordResponse struct {
+		ResponseMetadata *base.ResponseMetadata
+		Result           *StopWebRecordResult `json:"Result,omitempty"`
+	}
+
+	StopWebRecordResult struct {
+		Message string `json:"Message"`
+	}
+
+	GetWebRecordTaskResponse struct {
+		ResponseMetadata *base.ResponseMetadata
+		Result           *GetWebRecordTaskResult `json:"Result,omitempty"`
+	}
+
+	GetWebRecordTaskResult struct {
+		Message   string        `json:"Message"`
+		EventData TaskEventData `json:"EventData"`
+	}
+
+	TaskEventData struct {
+		TaskId     string `json:"TaskId"`
+		Status     int    `json:"Status"`
+		CreateTime int    `json:"CreateTime"`
+		FinishTime int    `json:"FinishTime"`
+		Vid        string `json:"Vid"`
+		FinalFile  File   `json:"FinalFile"`
+		Files      []File `json:"Files"`
+	}
+
+	File struct {
+		Index     int
+		Bucket    string
+		ObjectKey string
+	}
+
+	GetWebRecordListResponse struct {
+		ResponseMetadata *base.ResponseMetadata
+		Result           *GetWebRecordListResult `json:"Result,omitempty"`
+	}
+
+	GetWebRecordListResult struct {
+		Message       string        `json:"Message"`
+		WebRecordList WebRecordList `json:"WebRecordList"`
+	}
+
+	WebRecordList struct {
+		AppId      string  `json:"AppId"`
+		Tasks      []Tasks `json:"Tasks"`
+		PageNumber int     `json:"PageNumber"`
+		PageSize   int     `json:"PageSize"`
+		TotalCount int     `json:"TotalCount"`
+	}
+
+	Tasks struct {
+		TaskId          string `json:"TaskId"`
+		CreateTime      int    `json:"CreateTime"`
+		FinishTime      int    `json:"FinishTime"`
+		Status          int    `json:"Status"`
+		InputURL        string `json:"InputURL"`
+		VideoSpace      string `json:"VideoSpace"`
+		Vid             string `json:"Vid"`
+		MaxRecordSecond int    `json:"MaxRecordSecond"`
+		Duration        int    `json:"Duration"`
+		Bucket          string `json:"Bucket"`
+		ObjectKey       string `json:"ObjectKey"`
+	}
+)
