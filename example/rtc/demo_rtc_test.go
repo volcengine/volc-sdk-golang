@@ -25,16 +25,22 @@ const (
 var (
 	roomId     = "Your_roomId"
 	busineseId = "Your_BusinessId"
-	taskId     = appId + "_" + roomId
+	taskId     = appId + "_" + roomId + "_xxx"
+
+	s *rtc.RTC
 )
 
-func TestGetRecordTask(t *testing.T) {
+func TestMain(t *testing.M) {
 	// init rtc service, 初始化一次即可
-	s := rtc.NewInstance()
+	s = rtc.NewInstance()
 	s.Client.SetAccessKey(testAk)
 	s.Client.SetSecretKey(testSk)
 	s.Client.SetHost(rtc.ServiceHost)
 
+	t.Run()
+}
+
+func TestGetRecordTask(t *testing.T) {
 	query := url.Values{}
 	query.Set("AppId", appId)
 	query.Set("RoomId", roomId)
@@ -54,12 +60,6 @@ func TestGetRecordTask(t *testing.T) {
 }
 
 func TestStartRecord(t *testing.T) {
-	// init rtc service
-	s := rtc.NewInstance()
-	s.Client.SetAccessKey(testAk)
-	s.Client.SetSecretKey(testSk)
-	s.Client.SetHost(rtc.ServiceHost)
-
 	req := rtc.StartRecordRequest{
 		AppId:      appId,
 		BusinessId: busineseId,
@@ -92,4 +92,75 @@ func TestStartRecord(t *testing.T) {
 	}
 	fmt.Printf("metaData: %+v\n", res.ResponseMetadata)
 	fmt.Printf("result: %+v\n", res.Result)
+}
+
+func TestStartWebRecord(t *testing.T) {
+	req := rtc.StartWebRecordRequest{
+		AppId:    appId,
+		TaskId:   taskId,
+		InputURL: "http://www.xxx.xxx/xxx/xxx.html",
+		Bucket:   "Your_Bucket",
+	}
+	res, _, err := rtc.StartWebRecord(s, &req)
+	if err != nil {
+		fmt.Printf("err:%v\n", err)
+		return
+	}
+	if res.ResponseMetadata.Error != nil {
+		fmt.Printf("response err:%v\n", res.ResponseMetadata.Error)
+		return
+	}
+	fmt.Printf("metaData: %+v\n", res.ResponseMetadata)
+	fmt.Printf("result: %+v\n", res.Result)
+}
+
+func TestGetWebRecordTask(t *testing.T) {
+	//GetWebRecordTask
+	query := url.Values{}
+	query.Set("AppId", appId)
+	query.Set("TaskId", taskId)
+
+	res, _, err := rtc.GetWebRecordTask(s, query)
+	if err != nil {
+		fmt.Printf("err:%v\n", err)
+		return
+	}
+	if res.ResponseMetadata.Error != nil {
+		fmt.Printf("response err:%v\n", res.ResponseMetadata.Error)
+		return
+	}
+	fmt.Printf("metaData: %+v\n", res.ResponseMetadata)
+	fmt.Printf("result: %+v\n", res.Result)
+
+	//StopWebRecord
+	stop := rtc.StopWebRecordRequest{
+		AppId:  appId,
+		TaskId: taskId,
+	}
+	stopResp, _, err := rtc.StopWebRecord(s, &stop)
+	if err != nil {
+		fmt.Printf("err:%v\n", err)
+		return
+	}
+	if stopResp.ResponseMetadata.Error != nil {
+		fmt.Printf("response err:%v\n", stopResp.ResponseMetadata.Error)
+		return
+	}
+	fmt.Printf("metaData: %+v\n", stopResp.ResponseMetadata)
+	fmt.Printf("result: %+v\n", stopResp.Result)
+
+	//GetWebRecordList
+	queryList := url.Values{}
+	queryList.Set("AppId", appId)
+	list, _, err := rtc.GetWebRecordList(s, queryList)
+	if err != nil {
+		fmt.Printf("err:%v\n", err)
+		return
+	}
+	if list.ResponseMetadata.Error != nil {
+		fmt.Printf("response err:%v\n", list.ResponseMetadata.Error)
+		return
+	}
+	fmt.Printf("metaData: %+v\n", list.ResponseMetadata)
+	fmt.Printf("result: %+v\n", list.Result)
 }
