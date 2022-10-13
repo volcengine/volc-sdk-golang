@@ -333,11 +333,8 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 		Path:     apiInfo.Path,
 		RawQuery: query.Encode(),
 	}
-	var requestBody io.Reader
-	if body != "" {
-		requestBody = strings.NewReader(body)
-	}
-	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), requestBody)
+	requestBody := strings.NewReader(body)
+	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
 	if err != nil {
 		return []byte(""), 500, errors.New("Failed to build request")
 	}
@@ -349,7 +346,13 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 	var resp []byte
 	var code int
 
-	backoff.Retry(func() error {
+	err = backoff.Retry(func() error {
+		_, err = requestBody.Seek(0, io.SeekStart)
+		if err != nil {
+			// if seek failed, stop retry.
+			return backoff.Permanent(err)
+		}
+		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
 		resp, code, err, needRetry = client.makeRequest(ctx, api, req, timeout)
 		if needRetry {
