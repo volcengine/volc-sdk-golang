@@ -7,9 +7,6 @@ import (
 )
 
 func TestSmsSendVerifyCode(t *testing.T) {
-	testAk := "testAK"
-	testSk := "testSk"
-
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 
@@ -43,9 +40,6 @@ func TestSmsSendVerifyCode(t *testing.T) {
 }
 
 func TestSmsCheckVerifyCode(t *testing.T) {
-	testAk := "testAK"
-	testSk := "testSk"
-
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 

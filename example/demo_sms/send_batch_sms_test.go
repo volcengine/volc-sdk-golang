@@ -12,9 +12,6 @@ type sendBatchSmsTemplateParam struct {
 }
 
 func TestSmsBatchSend(t *testing.T) {
-	testAk := "testAK"
-	testSk := "testSk"
-
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 

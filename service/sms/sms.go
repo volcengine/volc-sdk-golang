@@ -2,6 +2,8 @@ package sms
 
 import (
 	"encoding/json"
+	"net/http"
+	"net/url"
 )
 
 func (p *SMS) Send(req *SmsRequest) (*SmsResponse, int, error) {
@@ -61,6 +63,33 @@ func (p *SMS) smsHandler(api string, req interface{}, resp interface{}) (int, er
 	}
 	if statusCode >= 500 {
 		respBody, statusCode, err = p.Client.Json(api, nil, string(reqJ))
+		if err != nil {
+			return statusCode, err
+		}
+	}
+
+	if err := json.Unmarshal(respBody, resp); err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
+func (p *SMS) smsHandlerWithQuery(api string, req interface{}, query url.Values, resp interface{}) (int, error) {
+	var reqJ string
+	if req != nil {
+		reqJByte, err := json.Marshal(req)
+		if err != nil {
+			return http.StatusBadRequest, err
+		}
+		reqJ = string(reqJByte)
+	}
+
+	respBody, statusCode, err := p.Client.Json(api, query, reqJ)
+	if err != nil {
+		return statusCode, err
+	}
+	if statusCode >= 500 {
+		respBody, statusCode, err = p.Client.Json(api, query, reqJ)
 		if err != nil {
 			return statusCode, err
 		}
