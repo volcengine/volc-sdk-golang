@@ -54,7 +54,7 @@ func Test_RetrieveTranscodeResult(t *testing.T) {
 }
 
 //查看任务流状态
-func Test_GetTranscodeStatus(t *testing.T) {
+func Test_GetWorkflowExecution(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
 		AccessKeyID:     "your ak",
@@ -65,11 +65,11 @@ func Test_GetTranscodeStatus(t *testing.T) {
 		RunId: runId,
 	}
 	resp2, code2, err2 := instance.GetWorkflowExecution(query)
-	t.Logf("Test_GetTranscodeStatus resp is %s", resp2)
+	t.Logf("Test_GetWorkflowExecution resp is %s", resp2)
 	if err2 != nil {
 		t.Logf("code is %d\n", code2)
 		t.Logf("err is %s\n", err2)
-		t.Errorf("Test_GetTranscodeStatus err is not nil ,is %s", err2)
+		t.Errorf("Test_GetWorkflowExecution err is not nil ,is %s", err2)
 		t.Fail()
 	}
 	if code2 == 0 || code2 == 200 {
