@@ -2,7 +2,6 @@ package sms
 
 import (
 	"encoding/json"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"testing"
 )
 
@@ -35,9 +34,8 @@ func TestSMS_send(t *testing.T) {
 }
 
 func TestSMS_sendI18n(t *testing.T) {
-	i18nInstance := NewInstanceI18n(base.RegionApSingapore)
-	i18nInstance.Client.SetAccessKey(testAk)
-	i18nInstance.Client.SetSecretKey(testSk)
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
 	c := Code{Code: "111"}
 	cj, _ := json.Marshal(c)
 	req := &SmsRequest{
@@ -48,7 +46,7 @@ func TestSMS_sendI18n(t *testing.T) {
 		PhoneNumbers:  "188xxxxxxxx",
 		Tag:           "tag",
 	}
-	result, statusCode, err := i18nInstance.Send(req)
+	result, statusCode, err := DefaultInstance.Send(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
@@ -89,13 +87,12 @@ func TestSMSVerifyCode_check(t *testing.T) {
 }
 
 func TestSMS_conversion(t *testing.T) {
-	client := NewInstanceI18n("ap-singapore-1")
-	client.Client.SetAccessKey(testAk)
-	client.Client.SetSecretKey(testSk)
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
 	req := &ConversionRequest{
 		MessageIDs: []string{"test_msg_id"},
 	}
-	result, statusCode, err := client.Conversion(req)
+	result, statusCode, err := DefaultInstance.Conversion(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)

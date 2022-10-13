@@ -10,9 +10,6 @@ import (
 return message_ids(the message_ids are the ones in Send/BatchSend response body) which have converted
 */
 func TestSmsConversion(t *testing.T) {
-	testAk := "testAK"
-	testSk := "testSk"
-
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 

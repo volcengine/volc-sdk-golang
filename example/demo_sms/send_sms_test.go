@@ -15,9 +15,6 @@ type sendSmsTemplateParam struct {
 send same content to one/multiple phoneNumbers
 */
 func TestSmsSend(t *testing.T) {
-	testAk := "testAK"
-	testSk := "testSk"
-
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	c := sendSmsTemplateParam{Code: "111"}
