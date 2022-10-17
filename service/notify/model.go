@@ -53,12 +53,12 @@ type CreateTaskRequest struct {
 	StartTime       JsonTime
 	EndTime         JsonTime
 	Concurrency     int32
-	Start           bool
-	MaxRingDuration int32
+	Start           bool  `json:",omitempty"`
+	MaxRingDuration int32 `json:",omitempty"`
 	//max 3
-	RingAgainTimes int32
+	RingAgainTimes int32 `json:",omitempty"`
 	//min 5
-	RingAgainInterval int32
+	RingAgainInterval int32 `json:",omitempty"`
 	Unique            bool
 	ForbidTimeList    []*ForbidTimeItem `json:",omitempty"`
 	NumberPoolNo      string
@@ -66,6 +66,7 @@ type CreateTaskRequest struct {
 	SelectNumberType  int32
 	SelectNumberRule  int32
 	Type              int32
+	FinishWhenListEnd bool `json:",omitempty"`
 }
 
 type FailItem struct {
@@ -121,11 +122,11 @@ type SingleParam struct {
 	SingleOpenId string
 	Phone        string
 	Resource     string
-	TriggerTime  JsonTime
+	TriggerTime  JsonTime `json:",omitempty"`
 	//max 3
-	RingAgainTimes int32
+	RingAgainTimes int32 `json:",omitempty"`
 	//min 5
-	RingAgainInterval int32
+	RingAgainInterval int32 `json:",omitempty"`
 	PhoneParam        map[string]interface{}
 	TtsContent        string
 	Ext               string
@@ -133,6 +134,8 @@ type SingleParam struct {
 	NumberList        []string `json:",omitempty"`
 	NumberType        int32
 	Type              int32
+	SelectNumberRule  int32             `json:",omitempty"`
+	ForbidTimeList    []*ForbidTimeItem `json:",omitempty"`
 }
 
 type SingleAppendRequest struct {
