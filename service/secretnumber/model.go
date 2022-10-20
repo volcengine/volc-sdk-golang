@@ -108,6 +108,7 @@ type UpdateAXBRequest struct {
 	ExpireTime   int64
 	PhoneNoB     string
 	UserData     string
+	OutId        string
 }
 
 type BindAXNRequest struct {
