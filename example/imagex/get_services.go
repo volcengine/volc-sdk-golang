@@ -7,24 +7,17 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
 
-/*
- * fetch image url
- */
+// 获取服务列表
 func main() {
-	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
+	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
-	// call below method if you dont set ak and sk in ～/.volc/config
 	instance.SetCredential(base.Credentials{
 		AccessKeyID:     "ak",
 		SecretAccessKey: "sk",
 	})
 
-	req := &imagex.FetchUrlReq{
-		Url:       "image url",
-		ServiceId: "imagex service id",
-	}
-	resp, err := instance.FetchImageUrl(req)
+	resp, err := instance.GetImageServices("")
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {

@@ -370,108 +370,27 @@ func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
 	return resp, nil
 }
 
-func (c *ImageX) GetImageStyleResult(req *GetImageStyleResultReq) (*GetImageStyleResultResp, error) {
-	query := url.Values{}
-	query.Add("ServiceId", req.ServiceId)
-	resp := new(GetImageStyleResultResp)
-	err := c.ImageXPost("GetImageStyleResult", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetImageOCR(param *GetImageOCRParam) (*GetImageOCRResult, error) {
-	u := url.Values{}
-	u.Set("Scene", param.Scene)
-	u.Set("ServiceId", param.ServiceId)
-	u.Set("StoreUri", param.StoreUri)
-	data, _, err := c.Post("GetImageOCR", u, url.Values{})
-	if err != nil {
-		return nil, fmt.Errorf("fail to request api GetImageOCR, %v", err)
-	}
-	result := new(GetImageOCRResult)
-	if err := UnmarshalResultInto(data, result); err != nil {
-		return nil, err
-	} else {
-		return result, nil
-	}
-}
-
-func (c *ImageX) GetImageBgFill(param *GetImageBgFillParam) (*GetImageBgFillResult, error) {
-	res := new(GetImageBgFillResult)
-	err := c.ImageXPost("GetImageBgFillResult", nil, param, res)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *ImageX) GetImageEnhance(param *GetImageEnhanceParam) (*GetImageEnhanceResult, error) {
-	res := new(GetImageEnhanceResult)
-	err := c.ImageXPost("GetImageEnhanceResult", nil, param, res)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *ImageX) GetImageEraseModel(eraseType int) ([]string, error) {
-	res := new(struct {
-		Models []string `json:"Models"`
-	})
+func (c *ImageX) GetImageUploadFile(param *GetImageUploadFileParam) (*GetImageUploadFileResult, error) {
 	query := make(url.Values)
-	query.Add("Type", fmt.Sprintf("%d", eraseType))
-	err := c.ImageXGet("GetImageEraseModels", query, res)
-	if err != nil {
-		return nil, err
-	}
-	return res.Models, nil
-}
+	query.Add("ServiceId", param.ServiceId)
+	query.Add("StoreUri", param.StoreUri)
 
-func (c *ImageX) GetImageErase(param *GetImageEraseParam) (*GetImageEraseResult, error) {
-	res := new(GetImageEraseResult)
-	err := c.ImageXPost("GetImageEraseResult", nil, param, res)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *ImageX) GetImageSegment(param *GetImageSegmentParam) (*GetImageSegmentResult, error) {
-	query := url.Values{}
-	query.Set("ServiceId", param.ServiceId)
-	res := new(GetImageSegmentResult)
-	err := c.ImageXPost("GetSegmentImage", query, param, res)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *ImageX) GetImageQuality(param *GetImageQualityParam) (*GetImageQualityResult, error) {
-	u := url.Values{}
-	u.Add("ServiceId", param.ServiceId)
-	resp := new(GetImageQualityResult)
-	err := c.ImageXPost("GetImageQuality", u, param, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetImageSuperResolution(param *GetImageSuperResolutionParam) (*GetImageSuperResolutionResp, error) {
-	result := new(GetImageSuperResolutionResp)
-	err := c.ImageXPost("GetImageSuperResolutionResult", nil, param, result)
+	result := new(GetImageUploadFileResult)
+	err := c.ImageXGet("GetImageUploadFile", query, result)
 	if err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-func (c *ImageX) GetImageSmartCrop(param *GetImageSmartCropParam) (*GetImageSmartCropResp, error) {
-	result := new(GetImageSmartCropResp)
-	err := c.ImageXPost("GetImageSmartCropResult", nil, param, result)
+func (c *ImageX) GetImageUploadFiles(param *GetImageUploadFilesParam) (*GetImageUploadFilesResult, error) {
+	query := make(url.Values)
+	query.Add("ServiceId", param.ServiceId)
+	query.Add("Limit", strconv.Itoa(param.Limit))
+	query.Add("Marker", strconv.FormatInt(param.Marker, 10))
+
+	result := new(GetImageUploadFilesResult)
+	err := c.ImageXGet("GetImageUploadFiles", query, result)
 	if err != nil {
 		return nil, err
 	}

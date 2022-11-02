@@ -7,24 +7,21 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
 
-/*
- * update image urls
- */
+// 更新文件 URL 状态
 func main() {
-	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
+	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
-	// call below method if you dont set ak and sk in ～/.volc/config
 	instance.SetCredential(base.Credentials{
 		AccessKeyID:     "ak",
 		SecretAccessKey: "sk",
 	})
 
-	serviceId := "imagex service id"
-	urls := []string{"image url 1"}
+	serviceId := "imagex service id" // 服务 ID
+	urls := []string{"image url 1"}  // 文件的 Store URI
 
 	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
-		Action:    imagex.ActionRefresh,
+		Action:    imagex.ActionRefresh, // 刷新文件
 		ImageUrls: urls,
 	})
 	if err != nil {

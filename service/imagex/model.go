@@ -228,20 +228,30 @@ type GetImageStyleResultResp struct {
 	} `json:"RenderDetail"`
 }
 
-//GetImageOCR
-type GetImageOCRResult struct {
-	Scene     string                          `json:"Scene"`
-	OCRResult map[string]*GetImageOCRTextInfo `json:"OCR_result"`
+// GetImageOCR
+type GetImageOCRLicenseResult struct {
+	Scene     string                                 `json:"Scene"`
+	OCRResult map[string]*GetImageOCRLicenseTextInfo `json:"OCR_result"`
 }
 
-type GetImageOCRTextInfo struct {
+type GetImageOCRLicenseTextInfo struct {
 	Content  string `json:"Content"`
 	Location []int  `json:"Location"`
 }
 
+type GetImageOCRGeneralResult struct {
+	Scene     string                        `json:"Scene"`
+	OCRResult []*GetImageOCRGeneralTextInfo `json:"OCR_result"`
+}
+
+type GetImageOCRGeneralTextInfo struct {
+	Content    string  `json:"Content"`
+	Confidence string  `json:"Confidence"`
+	Location   [][]int `json:"Location"`
+}
+
 type GetImageOCRParam struct {
 	ServiceId string
-	Scene     string
 	StoreUri  string
 }
 
@@ -262,12 +272,13 @@ type GetImageBgFillResult struct {
 
 // GetImageEnhanceResult
 type GetImageEnhanceParam struct {
-	ServiceId    string `json:"ServiceId"`
-	StoreUri     string `json:"StoreUri"`
-	Model        int    `json:"Model"`
-	DisableAr    bool   `json:"DisableAr"`
-	DisableSharp bool   `json:"DisableSharp"`
-	Resolution   string `json:"Resolution"`
+	ServiceId    string   `json:"ServiceId"`
+	StoreUri     string   `json:"StoreUri"`
+	Model        int      `json:"Model"`
+	DisableAr    bool     `json:"DisableAr"`
+	DisableSharp bool     `json:"DisableSharp"`
+	Resolution   string   `json:"Resolution"`
+	Actions      []string `json:"Actions"`
 }
 
 type GetImageEnhanceResult struct {
@@ -309,12 +320,12 @@ type GetImageQualityResult struct {
 // GetImageSegment
 type GetImageSegmentParam struct {
 	ServiceId string
-	Class     string `json:"Class"`
-	Refine    bool   `json:"Refine"`
-	StoreUri  string `json:"StoreUri"`
-	OutFormat string `json:"OutFormat"`
-	TransBg   bool   `json:"TransBg"`
-	Contour   *Contour
+	StoreUri  string   `json:"StoreUri"`
+	Class     string   `json:"Class"`
+	Refine    bool     `json:"Refine"`
+	OutFormat string   `json:"OutFormat"`
+	TransBg   bool     `json:"TransBg"`
+	Contour   *Contour `json:"Contour"`
 }
 
 type Contour struct {
@@ -326,7 +337,7 @@ type GetImageSegmentResult struct {
 	ResUri string `json:"ResUri"`
 }
 
-//GetImageSuperResolutionResult
+// GetImageSuperResolutionResult
 type GetImageSuperResolutionParam struct {
 	ServiceId string  `json:"ServiceId"`
 	StoreUri  string  `json:"StoreUri"`
@@ -337,7 +348,107 @@ type GetImageSuperResolutionResp struct {
 	ResUri string `json:"ResUri"`
 }
 
-//GetImageSmartCropResult
+// GetImageUploadFile
+type GetImageUploadFileParam struct {
+	ServiceId string `json:"ServiceId"`
+	StoreUri  string `json:"StoreUri"`
+}
+
+type GetImageUploadFileResult struct {
+	ServiceId    string `json:"ServiceId"`
+	StoreUri     string `json:"StoreUri"`
+	LastModified string `json:"LastModified"`
+	FileSize     int    `json:"FileSize"`
+	Marker       int64  `json:"Marker"`
+}
+
+// GetImageUploadFiles
+type GetImageUploadFilesParam struct {
+	ServiceId string `json:"ServiceId"`
+	Limit     int    `json:"Limit"`
+	Marker    int64  `json:"Marker"`
+}
+
+type GetImageUploadFilesResult struct {
+	ServiceId   string       `json:"ServiceId"`
+	FileObjects []FileObject `json:"FileObjects"`
+	Status      string       `json:"Status"`
+	HasMore     bool         `json:"hasMore"`
+}
+
+type FileObject struct {
+	StoreUri     string `json:"StoreUri"`
+	Key          string `json:"Key"`
+	LastModified string `json:"LastModified"`
+	FileSize     int    `json:"FileSize"`
+	Marker       int64  `json:"Marker"`
+}
+
+// GetImageDuplicateDetection
+type GetImageDuplicateDetectionParam struct {
+	Urls      []string `json:"Urls"`
+	ServiceId string   `json:"-"`
+}
+
+type GetImageDuplicateDetectionAsyncParam struct {
+	GetImageDuplicateDetectionParam
+	Callback string `json:"Callback"`
+}
+
+type getImageDuplicateDetectionParam struct {
+	Urls     []string `json:"Urls"`
+	Async    bool     `json:"Async"`
+	Callback string   `json:"Callback"`
+}
+
+type GetImageDuplicateDetectionResult struct {
+	Score  string              `json:"Score"`
+	Groups map[string][]string `json:"Groups"`
+}
+
+type GetImageDuplicateDetectionAsyncResult struct {
+	TaskId   string `json:"TaskId"`
+	Callback string `json:"Callback"`
+}
+
+type GetImageDuplicateDetectionCallbackBody struct {
+	Status int                              `json:"Status"`
+	TaskId string                           `json:"TaskId"`
+	Result GetImageDuplicateDetectionResult `json:"Result"`
+}
+
+type GetDedupTaskStatusResult struct {
+	Status int                              `json:"Status"`
+	TaskId string                           `json:"TaskId"`
+	Result GetImageDuplicateDetectionResult `json:"Result"`
+}
+
+// GetDenoisingImage
+type GetDenoisingImageParam struct {
+	ServiceId   string  `json:"-"`
+	StoreUri    string  `json:"StoreUri"`
+	ImageUrl    string  `json:"ImageUrl"`
+	OutFormat   string  `json:"OutFormat"`
+	Intensity   float64 `json:"Intensity"`
+	CanDemotion bool    `json:"CanDemotion"`
+}
+
+type GetDenoisingImageResult struct {
+	ResUri   string `json:"ResUri"`
+	Demotion bool   `json:"Demotion"`
+}
+
+// GetImageComicResult
+type GetImageComicParam struct {
+	ServiceId string `json:"ServiceId"`
+	StoreUri  string `json:"StoreUri"`
+}
+
+type GetImageComicResult struct {
+	ResUri string `json:"ResUri"`
+}
+
+// GetImageSmartCropResult
 type GetImageSmartCropParam struct {
 	ServiceId string  `json:"ServiceId"`
 	StoreUri  string  `json:"StoreUri"`
@@ -348,9 +459,82 @@ type GetImageSmartCropParam struct {
 	Height    int     `json:"Height"`
 }
 
-type GetImageSmartCropResp struct {
-	ResUri     string `json:"ResUri"`
-	Demotioned bool   `json:"Demotioned"`
+type GetImageSmartCropResult struct {
+	ResUri   string `json:"ResUri"`
+	Demotion bool   `json:"Demotion"`
+}
+
+// GetLicensePlateDetection
+type GetLicensePlateDetectionParam struct {
+	ServiceId string `json:"-"`
+	ImageUri  string `json:"ImageUri"`
+}
+
+type LocationsLower struct {
+	X1 int `json:"x1"`
+	X2 int `json:"x2"`
+	Y1 int `json:"y1"`
+	Y2 int `json:"y2"`
+}
+
+type GetLicensePlateDetectionResult struct {
+	Locations []LocationsLower `json:"Locations"`
+}
+
+// GetImagePSDetection
+type GetImagePSDetectionParam struct {
+	ServiceId string `json:"-"`
+	ImageUri  string `json:"ImageUri"`
+	Method    string `json:"Method"`
+}
+
+type GetImagePSDetectionResult struct {
+	ElaImage []byte  `json:"ElaImage"`
+	NaImage  []byte  `json:"NaImage"`
+	HeImage  []byte  `json:"HeImage"`
+	Score    float64 `json:"Score"`
+	Label    int     `json:"Label"`
+}
+
+// GetPrivateImageType
+type GetPrivateImageTypeParam struct {
+	ServiceId  string  `json:"-"`
+	ImageUri   string  `json:"ImageUri"`
+	Method     string  `json:"Method"`
+	ThresFace  float64 `json:"ThresFace"`
+	ThresCloth float64 `json:"ThresCloth"`
+}
+
+type GetPrivateImageTypeResult struct {
+	Face  int `json:"Face"`
+	Cloth int `json:"Cloth"`
+}
+
+// CreateImageHmEmbed
+type CreateImageHmEmbedParam struct {
+	ServiceId     string `json:"ServiceId"`
+	StoreUri      string `json:"StoreUri"`
+	Algorithm     string `json:"Algorithm"`
+	Info          string `json:"Info"`
+	OutFormat     string `json:"OutFormat"`
+	OutQuality    int    `json:"OutQuality"`
+	StrengthLevel string `json:"StrengthLevel"`
+}
+
+type CreateImageHmEmbedResult struct {
+	StoreUri string `json:"StoreUri"`
+}
+
+// CreateImageHmExtract
+type CreateImageHmExtractParam struct {
+	ServiceId string `json:"ServiceId"`
+	StoreUri  string `json:"StoreUri"`
+	Algorithm string `json:"Algorithm"`
+}
+
+type CreateImageHmExtractResult struct {
+	Info       string `json:"Info"`
+	StatusCode int    `json:"StatusCode"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {
