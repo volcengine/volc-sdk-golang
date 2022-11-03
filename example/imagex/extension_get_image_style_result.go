@@ -7,26 +7,25 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
 
-/*
- * render image style
- */
+// 创意魔方
 func main() {
-	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
+	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
-	// call below method if you dont set ak and sk in ～/.volc/config
 	instance.SetCredential(base.Credentials{
 		AccessKeyID:     "ak",
 		SecretAccessKey: "sk",
 	})
 
 	req := &imagex.GetImageStyleResultReq{
-		ServiceId: "imagex service id",
-		StyleId:   "style id",
-		// specify params if you want to dynamically change content of some elements
+		ServiceId: "imagex service id", // 服务 ID
+		StyleId:   "style id",          // 样式编号
+		// 如果您选择的样式支持参数，可以在 Params 中填写对应的参数
 		Params: map[string]string{
-			"element id": "dynamic element content",
+			"参数名": "参数值", // 样式参数
 		},
+		OutputFormat:  "jpeg", // 输出图片格式
+		OutputQuality: 90,     // 输出图片质量
 	}
 	resp, err := instance.GetImageStyleResult(req)
 	if err != nil {

@@ -7,23 +7,20 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
 
-/*
- * image superresolution
- */
+// 超级分辨率
 func main() {
-	// default region cn-north-1, for other region, call imagex.NewInstanceWithRegion(region)
+	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
-	// call below method if you dont set ak and sk in ～/.vcloud/config
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "ak",
+		SecretAccessKey: "sk",
 	})
 
 	param := &imagex.GetImageSuperResolutionParam{
-		ServiceId: "",
-		StoreUri:  "",
-		Multiple:  2.0,
+		ServiceId: "service id", // 服务 ID
+		StoreUri:  "store uri",  // 文件的 Store URI
+		Multiple:  2.0,          // 倍率
 	}
 	resp, err := instance.GetImageSuperResolution(param)
 	if err != nil {

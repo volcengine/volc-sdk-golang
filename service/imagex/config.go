@@ -59,13 +59,28 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
-		// 服务管理
+		"GetImageServiceSubscription": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageServiceSubscription"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageService": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageService"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 		"GetImageService": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageService"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetAllImageServices": {
@@ -73,7 +88,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAllImageServices"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"DeleteImageService": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageService"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateImageAuthKey": {
@@ -81,7 +104,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateImageAuthKey"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageAuthKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAuthKey"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateImageObjectAccess": {
@@ -89,7 +120,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateImageObjectAccess"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateImageMirrorConf": {
@@ -97,16 +128,23 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateImageMirrorConf"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
-		// 域名管理
+		"DelDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DelDomain"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 		"GetServiceDomains": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetServiceDomains"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetDomainConfig": {
@@ -114,7 +152,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetDomainConfig"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"SetDefaultDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetDefaultDomain"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateResponseHeader": {
@@ -122,7 +168,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateResponseHeader"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateRefer": {
@@ -130,7 +176,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateRefer"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateHttps": {
@@ -138,7 +184,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateHttps"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetResponseHeaderValidateKeys": {
@@ -146,16 +192,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetResponseHeaderValidateKeys"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
-		// 模板管理
 		"CreateImageTemplate": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateImageTemplate"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"DeleteImageTemplate": {
@@ -163,7 +208,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteImageTemplate"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageTemplate": {
@@ -171,7 +216,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageTemplate"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetAllImageTemplates": {
@@ -179,16 +224,31 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAllImageTemplates"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
-		// 资源管理相关
-		"DeleteImageUploadFiles": {
+		"GetTemplatesFromBin": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetTemplatesFromBin"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateTemplatesFromBin": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DeleteImageUploadFiles"},
-				"Version": []string{ApiVersion},
+				"Action":  []string{"CreateTemplatesFromBin"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"DeleteTemplatesFromBin": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTemplatesFromBin"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"ApplyImageUpload": {
@@ -196,7 +256,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ApplyImageUpload"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"CommitImageUpload": {
@@ -204,15 +264,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CommitImageUpload"},
-				"Version": []string{ApiVersion},
-			},
-		},
-		"UpdateImageUploadFiles": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateImageUploadFiles"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageUploadFile": {
@@ -220,7 +272,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageUploadFile"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageUploadFiles": {
@@ -228,7 +280,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageUploadFiles"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"DeleteImageUploadFiles": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageUploadFiles"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"PreviewImageUploadFile": {
@@ -236,7 +296,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"PreviewImageUploadFile"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"UpdateImageUploadFiles": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageUploadFiles"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageUpdateFiles": {
@@ -244,7 +312,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageUpdateFiles"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"FetchImageUrl": {
@@ -252,16 +320,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"FetchImageUrl"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
-
-		"GetImageStyleResult": {
+		"UpdateServiceName": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetImageStyleResult"},
-				"Version": []string{ApiVersion},
+				"Action":  []string{"UpdateServiceName"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageOCR": {
@@ -269,39 +336,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageOCR"},
-				"Version": []string{ApiVersion},
-			},
-		},
-		"GetImageBgFillResult": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageBgFillResult"},
-				"Version": []string{ApiVersion},
-			},
-		},
-		"GetImageEnhanceResult": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageEnhanceResult"},
-				"Version": []string{ApiVersion},
-			},
-		},
-		"GetImageEraseModels": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageEraseModels"},
-				"Version": []string{ApiVersion},
-			},
-		},
-		"GetImageEraseResult": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageEraseResult"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageQuality": {
@@ -309,7 +344,55 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageQuality"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageEraseModels": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseModels"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageEnhanceResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEnhanceResult"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageBgFillResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageBgFillResult"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageDuplicateDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageDuplicateDetection"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetDedupTaskStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDedupTaskStatus"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetDenoisingImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDenoisingImage"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetSegmentImage": {
@@ -317,7 +400,15 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetSegmentImage"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageComicResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageComicResult"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageSuperResolutionResult": {
@@ -325,7 +416,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageSuperResolutionResult"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"GetImageSmartCropResult": {
@@ -333,7 +424,63 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageSmartCropResult"},
-				"Version": []string{ApiVersion},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetLicensePlateDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetLicensePlateDetection"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImagePSDetection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImagePSDetection"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetPrivateImageType": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPrivateImageType"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageHmEmbed": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageHmEmbed"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageHmExtract": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageHmExtract"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageEraseResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseResult"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageStyleResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageStyleResult"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 	}
