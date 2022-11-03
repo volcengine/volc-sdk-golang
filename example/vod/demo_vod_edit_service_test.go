@@ -7,11 +7,11 @@ package vod
 import (
 	"encoding/json"
 	"fmt"
-	"testing"
-
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+	"google.golang.org/protobuf/encoding/protojson"
+	"testing"
 )
 
 func Test_SubmitDirectEditTaskAsync(t *testing.T) {
@@ -51,4 +51,25 @@ func Test_GetDirectEditResult(t *testing.T) {
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
+}
+
+func Test_GetDirectEditProgress(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetDirectEditProgressRequest{
+		ReqId: "your ReqId here",
+	}
+
+	resp, status, err := instance.GetDirectEditProgress(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	op := &protojson.MarshalOptions{
+		EmitUnpopulated: true,
+	}
+	format := op.Format(resp)
+	fmt.Println(format)
 }

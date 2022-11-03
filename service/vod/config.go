@@ -350,6 +350,14 @@ var (
 				"Version": []string{"2018-01-01"},
 			},
 		},
+		"GetDirectEditProgress": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDirectEditProgress"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 空间管理
