@@ -91,6 +91,7 @@ type Subscription struct {
 	EnableTime int64
 	ExpireTime int64
 	OutId      string
+	PhoneNoE   string
 }
 
 type UpgradeAXToAXBRequest struct {
@@ -143,25 +144,37 @@ type UpdateAXNRequest struct {
 }
 
 type BindAXNERequest struct {
-	PhoneNoA          string
-	PhoneNoB          string
-	PhoneNoX          string
-	PhoneNoE          string
-	NumberPoolNo      string
-	ExpireTime        int64
-	AudioRecordFlag   int32
-	CityCode          string
-	CityCodeByPhoneNo string
-	DegradeCityList   string
-	UserData          string
+	PhoneNoA             string
+	PhoneNoB             string
+	PhoneNoX             string
+	PhoneNoE             string
+	NumberPoolNo         string
+	ExpireTime           int64
+	AudioRecordFlag      int32
+	CityCode             string
+	CityCodeByPhoneNo    string
+	DegradeCityList      string
+	UserData             string
+	OutId                string
+	AutoCreateFlag       int32
+	AxbNumberPoolNo      string
+	AxbEnableDuration    int32
+	AxbAudioRecordFlag   int32
+	AxbCityCode          string
+	AxbCityCodeByPhoneNo string
+	AxbDegradeCityList   string
 }
 
 type UpdateAXNERequest struct {
-	UpdateType   string
-	NumberPoolNo string
-	SubId        string
-	ExpireTime   int64
-	PhoneNoB     string
+	UpdateType     string
+	NumberPoolNo   string
+	SubId          string
+	PhoneNoA       string
+	PhoneNoB       string
+	ExpireTime     int64
+	UserData       string
+	OutId          string
+	AutoCreateFlag int32
 }
 
 type Click2CallRequest struct {
