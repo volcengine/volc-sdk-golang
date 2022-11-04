@@ -36,10 +36,18 @@ type SecretBindResponse struct {
 }
 
 type SecretBindResult struct {
-	PhoneNoX string
-	PhoneNoE string
-	SubId    string
-	Status   int32
+	PhoneNoX         string
+	PhoneNoE         string
+	SubId            string
+	Status           int32
+	PhoneNoXCityCode string
+	PhoneNoA         string
+	PhoneNoACityCode string
+	PhoneNoB         string
+	PhoneNoBCityCode string
+	PhoneNoY         string
+	YbSubId          string
+	YbStatus         int32
 }
 
 type OperationResponse struct {
@@ -618,4 +626,51 @@ type QueryQualificationData struct {
 type QueryQualificationResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           QueryQualificationData
+}
+
+type BindAxybRequest struct {
+	PhoneNoA           string
+	PhoneNoX           string
+	NumberPoolNo       string
+	ExpireTime         int64
+	AudioRecordFlag    int32
+	CityCode           string
+	CityCodeByPhoneNo  string
+	DegradeCityList    string
+	UserData           string
+	AutoCreateFlag     int32
+	PhoneNoY           string
+	PhoneNoB           string
+	NumberPoolNoY      string
+	YbEnableDuration   int32
+	YbAudioRecordFlag  int32
+	YCityCode          string
+	YCityCodeByPhoneNo string
+	YDegradeCityList   string
+}
+
+type BindYbForAxybRequest struct {
+	ParentSubId       string
+	PhoneNoB          string
+	PhoneNoY          string
+	NumberPoolNo      string
+	EnableDuration    int32
+	AudioRecordFlag   int32
+	CityCode          string
+	CityCodeByPhoneNo string
+	DegradeCityList   string
+	UserData          string
+}
+
+type UpdateAxybRequest struct {
+	UpdateType     string
+	NumberPoolNo   string
+	SubId          string
+	ExpireTime     int64
+	PhoneNoA       string
+	PhoneNoB       string
+	PhoneNoX       string
+	UserData       string
+	AutoCreateFlag int32
+	OutId          string
 }
