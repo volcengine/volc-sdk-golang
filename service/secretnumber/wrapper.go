@@ -151,6 +151,42 @@ func (p *SecretNumber) Click2CallLite(req *Click2CallLiteRequest) (*Click2CallLi
 	}
 }
 
+func (p *SecretNumber) BindAxyb(req *BindAxybRequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.handler("BindAxyb", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *SecretNumber) BindYbForAxyb(req *BindYbForAxybRequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.handler("BindYbForAxyb", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *SecretNumber) UnbindAxyb(req *SpecificSubIdRequest) (*OperationResponse, int, error) {
+	resp := new(OperationResponse)
+	if statusCode, err := p.handler("UnbindAxyb", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *SecretNumber) UpdateAxyb(req *UpdateAxybRequest) (*OperationResponse, int, error) {
+	resp := new(OperationResponse)
+	if statusCode, err := p.handler("UpdateAxyb", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *DataCenter) QueryAudioRecordFileUrl(req *QueryAudioRecordFileUrlRequest) (*QueryAudioRecordFileUrlResponse, int, error) {
 	resp := new(QueryAudioRecordFileUrlResponse)
 	if statusCode, err := p.handler("QueryAudioRecordFileUrl", req, resp); err != nil {

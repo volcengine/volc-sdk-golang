@@ -426,5 +426,37 @@ var (
 				"Version": []string{"2021-09-01"},
 			},
 		},
+		"BindAxyb": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindAxyb"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"BindYbForAxyb": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindYbForAxyb"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"UnbindAxyb": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindAxyb"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
+		"UpdateAxyb": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAxyb"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
 	}
 )

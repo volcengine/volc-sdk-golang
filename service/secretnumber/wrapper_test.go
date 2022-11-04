@@ -178,8 +178,8 @@ func TestSecretNumber_Click2Call(t *testing.T) {
 
 func TestSecretNumber_Click2CallLite(t *testing.T) {
 	req := &Click2CallLiteRequest{
-		Caller: "137XXXX8257",
-		Callee: "158XXXX9130",
+		Caller:       "137XXXX8257",
+		Callee:       "158XXXX9130",
 		NumberPoolNo: "NPXXXXX810901043",
 	}
 	result, statusCode, err := DefaultInstance.Click2CallLite(req)
@@ -453,14 +453,13 @@ func TestConfigService_UpdateQualificationScene(t *testing.T) {
 }
 
 func TestConfigService_QueryQualification(t *testing.T) {
-	
-	qualificationNoList := []string{"QUA164679537228220075"}
 
+	qualificationNoList := []string{"QUA164679537228220075"}
 
 	req := &QueryQualificationRequest{
 		QualificationNoList: qualificationNoList,
-		ApprovalStatus: "2",
-		Limit: 20,
+		ApprovalStatus:      "2",
+		Limit:               20,
 	}
 
 	result, statusCode, err := DefaultConfigServiceInstance.QueryQualification(req)
