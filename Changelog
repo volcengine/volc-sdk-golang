@@ -1,5 +1,8 @@
 ### Change log
 
+2022-11-07 Bumped to version v1.0.68
+- Added apis for security/visual
+
 2022-11-04 Bumped to version v1.0.67
 - Added video_aiot/sami service
 - Updated apis for secretnumber/imagex/vod
