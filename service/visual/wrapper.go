@@ -2,6 +2,7 @@ package visual
 
 import (
 	"encoding/json"
+	"errors"
 	"net/url"
 
 	"github.com/volcengine/volc-sdk-golang/service/visual/model"
@@ -9,6 +10,22 @@ import (
 
 func (p *Visual) commonHandler(api string, form url.Values, resp interface{}) (int, error) {
 	respBody, statusCode, err := p.Client.Post(api, nil, form)
+	if err != nil {
+		errMsg := err.Error()
+		// business error will be shown in resp, request error should be nil here
+		if errMsg[:3] != "api" {
+			return statusCode, err
+		}
+	}
+
+	if err := json.Unmarshal(respBody, resp); err != nil {
+		return statusCode, err
+	}
+	return statusCode, nil
+}
+
+func (p *Visual) commonJsonHandler(api string, jsonStr string, resp interface{}) (int, error) {
+	respBody, statusCode, err := p.Client.Json(api, nil, jsonStr)
 	if err != nil {
 		errMsg := err.Error()
 		// business error will be shown in resp, request error should be nil here
@@ -204,6 +221,28 @@ func (p *Visual) VideoSceneDetect(form url.Values) (*model.VideoSceneDetectResul
 func (p *Visual) OverResolution(form url.Values) (*model.OverResolutionResult, int, error) {
 	resp := new(model.OverResolutionResult)
 	statusCode, err := p.commonHandler("OverResolution", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) OverResolutionV2(imageBase64 []string) (*model.OverResolutionV2Result, int, error) {
+	//处理入参
+	jsonBody := &struct {
+		ReqKey           string   `json:"req_key"`
+		BinaryDataBase64 []string `json:"binary_data_base64"`
+	}{
+		ReqKey:           "lens_vida_nnsr", //算法名称，取固定值为lens_vida_nnsr
+		BinaryDataBase64: imageBase64,      //图片文件，base64编码。此算法可选输入1张图片或多张图片
+	}
+
+	jsonStr, err := json.Marshal(jsonBody)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.OverResolutionV2Result)
+	statusCode, err := p.commonJsonHandler("OverResolutionV2", string(jsonStr), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}

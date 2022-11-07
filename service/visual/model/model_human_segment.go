@@ -5,7 +5,8 @@ import (
 )
 
 type HumanSegmentData struct {
-	Mask string `json:"mask"`
+	Mask            string `json:"mask"`
+	ForegroundImage string `json:"foreground_image"`
 }
 
 type HumanSegmentResult struct {
