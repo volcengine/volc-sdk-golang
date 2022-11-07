@@ -205,6 +205,35 @@ type TextRiskRespV2 struct {
 	Result   []*Label `json:"Result"`
 }
 
+type TextSliceResultResponse struct {
+	RequestId string         `json:"RequestId"`
+	Code      int            `json:"Code"`
+	Message   string         `json:"Message"`
+	VideoResp TextRiskRespV3 `json:"Data"`
+}
+
+type TextRiskRespV3 struct {
+	Decision   string        `json:"Decision"`
+	FinalLabel string        `json:"FinalLabel"`
+	TextCount  int           `json:"TextCount"`
+	Results    []*TextResult `json:"Results"`
+}
+
+type TextResult struct {
+	RiskText   string   `json:"RiskText"`
+	RTStartPos int      `json:"RTStartPos"`
+	RTEndPos   int      `json:"RTEndPos"`
+	Labels     []*Label `json:"Labels"`
+}
+
+func (resp *TextSliceResultResponse) String() string {
+	respJSON, err := json.Marshal(resp)
+	if err != nil {
+		return err.Error()
+	}
+	return string(respJSON)
+}
+
 type Label struct {
 	Label    string    `json:"Label"`
 	SubLabel string    `json:"SubLabel"`

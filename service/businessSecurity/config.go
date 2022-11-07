@@ -270,5 +270,13 @@ var (
 				"Version": []string{"2022-04-13"},
 			},
 		},
+		"TextSliceRisk": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"TextSliceRisk"},
+				"Version": []string{"2022-11-07"},
+			},
+		},
 	}
 )

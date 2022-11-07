@@ -172,6 +172,14 @@ func GetAudioLiveResult(dataId, service string, appId int64) (*AudioResultRespon
 	})
 }
 
+func TextSliceRisk(appId int64, service, params string) (*TextSliceResultResponse, error) {
+	return DefaultInstance.TextSliceRisk(&RiskDetectionRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: params,
+	})
+}
+
 func NewCustomContents(appId int64, service, name, description, decision string, matchType int) (*AsyncRiskDetectionResponse, error) {
 	return DefaultInstance.CreateCustomContents(&NewCustomContentsReq{
 		AppID:       appId,
@@ -320,4 +328,13 @@ func TestAudioResultGet(t *testing.T) {
 		return
 	}
 	t.Logf("%v", *resp)
+}
+
+func TestTextSliceRisk(t *testing.T) {
+	resp, err := TextSliceRisk(334361, "text_risk", "{\"operate_time\":\"1663895098\",\"biztype\":\"kmvkd\",\"text\":\"测试文本\",\"account_id\":\"1663895098507\"}")
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", resp.String())
 }
