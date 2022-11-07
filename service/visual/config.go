@@ -318,6 +318,17 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"OverResolutionV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OverResolutionV2"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 )
 
