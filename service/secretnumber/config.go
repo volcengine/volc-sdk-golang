@@ -394,6 +394,14 @@ var (
 				"Version": []string{"2020-09-01"},
 			},
 		},
+		"BindAXBForAXNE": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindAXBForAXNE"},
+				"Version": []string{"2020-09-01"},
+			},
+		},
 		"UnbindAXNE": {
 			Method: http.MethodPost,
 			Path:   "/",

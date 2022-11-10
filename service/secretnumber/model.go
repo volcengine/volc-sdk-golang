@@ -130,6 +130,20 @@ type BindAXNRequest struct {
 	UserData        string
 }
 
+type BindAXBForAXNERequest struct {
+	ParentSubId       string
+	PhoneNoB          string
+	PhoneNoX          string
+	NumberPoolNo      string
+	EnableDuration    int32
+	AudioRecordFlag   int32
+	CityCode          string
+	CityCodeByPhoneNo string
+	DegradeCityList   string
+	UserData          string
+	OutId             string
+}
+
 type SelectNumberAndBindAXNRequest struct {
 	PhoneNoA          string
 	PhoneNoB          string
