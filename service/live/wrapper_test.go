@@ -69,11 +69,11 @@ func TestDeleteCallback(t *testing.T) {
 
 //done
 func TestCreateDomain(t *testing.T) {
-	DefaultInstance.Client.SetAccessKey(testAk)
-	DefaultInstance.Client.SetSecretKey(testSk)
+	DefaultInstance.Client.SetAccessKey("")
+	DefaultInstance.Client.SetSecretKey("")
 	bodyMap := map[string]interface{}{
-		"Domain": "push-rtmp-testf5go.bytedance.com",
-		"Type":   "push",
+		"Domain": "Domain",
+		"Type":   "Type",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数
@@ -180,8 +180,8 @@ func TestManagerPullPushDomainBind(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 	bodyMap := map[string]interface{}{
-		"PullDomain": "",
-		"PushDomain": "",
+		"PullDomain": "PullDomain",
+		"PushDomain": "PushDomain",
 	}
 	body, _ := json.Marshal(bodyMap)
 	//打印请求参数

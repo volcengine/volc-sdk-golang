@@ -12,8 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/minio/minio-go/v7"
 )
 
 func (v *Verender) commonHandler(api string, query url.Values) (string, int, error) {

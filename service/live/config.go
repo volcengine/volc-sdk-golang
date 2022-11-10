@@ -609,20 +609,212 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
+		"DescribeCDNSnapshotHistory": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCDNSnapshotHistory"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeRecordTaskFileHistory": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeRecordTaskFileHistory"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeLiveStreamInfoByPage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveStreamInfoByPage"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"KillStream": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"KillStream"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeClosedStreamInfoByPage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeClosedStreamInfoByPage"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeLiveStreamState": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveStreamState"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeForbiddenStreamInfoByPage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeForbiddenStreamInfoByPage"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"UpdateRelaySourceV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateRelaySourceV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeleteRelaySourceV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteRelaySourceV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeRelaySourceV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeRelaySourceV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"CreateVQScoreTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateVQScoreTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeVQScoreTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVQScoreTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"ListVQScoreTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVQScoreTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"GeneratePlayURL": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GeneratePlayURL"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"GeneratePushURL": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GeneratePushURL"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"CreatePullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreatePullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"ListPullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListPullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"UpdatePullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdatePullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"StopPullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopPullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"RestartPullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RestartPullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeletePullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeletePullToPushTask"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"UpdateDenyConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDenyConfig"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeDenyConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDenyConfig"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeleteDenyConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteDenyConfig"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
 // DefaultInstance
 var DefaultInstance = NewInstance()
 
-// LIVE .
-type LIVE struct {
-	Client *base.Client
+// Live .
+type Live struct {
+	*base.Client
 }
 
 // NewInstance create a instance
-func NewInstance() *LIVE {
-	instance := &LIVE{}
+func NewInstance() *Live {
+	instance := &Live{}
 	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
 	instance.Client.ServiceInfo.Credentials.Service = ServiceName
 	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
@@ -630,12 +822,12 @@ func NewInstance() *LIVE {
 }
 
 // GetServiceInfo interface
-func (p *LIVE) GetServiceInfo() *base.ServiceInfo {
-	return p.Client.ServiceInfo
+func (p *Live) GetServiceInfo() *base.ServiceInfo {
+	return ServiceInfo
 }
 
 // GetAPIInfo interface
-func (p *LIVE) GetAPIInfo(api string) *base.ApiInfo {
+func (p *Live) GetAPIInfo(api string) *base.ApiInfo {
 	if apiInfo, ok := ApiInfoList[api]; ok {
 		return apiInfo
 	}
@@ -643,16 +835,16 @@ func (p *LIVE) GetAPIInfo(api string) *base.ApiInfo {
 }
 
 // SetHost .
-func (p *LIVE) SetRegion(region string) {
-	p.Client.ServiceInfo.Credentials.Region = region
+func (p *Live) SetRegion(region string) {
+	ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .
-func (p *LIVE) SetHost(host string) {
+func (p *Live) SetHost(host string) {
 	p.Client.ServiceInfo.Host = host
 }
 
 // SetSchema .
-func (p *LIVE) SetSchema(schema string) {
+func (p *Live) SetSchema(schema string) {
 	p.Client.ServiceInfo.Scheme = schema
 }
