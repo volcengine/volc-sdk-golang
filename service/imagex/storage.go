@@ -1,21 +1,66 @@
 package imagex
 
 import (
-	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"hash/crc32"
+	"io"
 	"io/ioutil"
-	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 
+	"github.com/avast/retry-go"
 	"github.com/volcengine/volc-sdk-golang/base"
 )
+
+type uploadTaskSet struct {
+	ctx     context.Context
+	host    string
+	info    []StoreInfo
+	content []io.Reader
+	size    []int64
+
+	lock        sync.Mutex
+	taskChan    chan *uploadTaskElement
+	successOids []string
+}
+
+type uploadTaskElement struct {
+	ctx     context.Context
+	host    string
+	info    StoreInfo
+	content io.Reader
+	size    int64
+}
+
+func (r *uploadTaskSet) init() {
+	r.lock = sync.Mutex{}
+	r.successOids = make([]string, 0)
+
+	r.taskChan = make(chan *uploadTaskElement, len(r.size))
+
+	for idx, _ := range r.size {
+		r.taskChan <- &uploadTaskElement{
+			ctx:     r.ctx,
+			host:    r.host,
+			info:    r.info[idx],
+			content: r.content[idx],
+			size:    r.size[idx],
+		}
+	}
+
+	close(r.taskChan)
+}
+
+func (r *uploadTaskSet) addSuccess(oid string) {
+	r.lock.Lock()
+	r.successOids = append(r.successOids, oid)
+	r.lock.Unlock()
+}
 
 func (c *ImageX) ImageXGet(action string, query url.Values, result interface{}) error {
 	respBody, _, err := c.Client.Query(action, query)
@@ -151,49 +196,112 @@ func (c *ImageX) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploa
 	return result, nil
 }
 
-func (c *ImageX) upload(host string, storeInfo StoreInfo, imageBytes []byte) error {
-	if len(imageBytes) == 0 {
-		return fmt.Errorf("file size is zero")
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
-	defer cancel()
-	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(imageBytes))
-	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
-	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
-	if err != nil {
-		return fmt.Errorf("fail to new put request %s, %v", url, err)
-	}
-	req.Header.Set("Content-CRC32", checkSum)
-	req.Header.Set("Authorization", storeInfo.Auth)
-	req = req.WithContext(ctx)
-
-	rsp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return fmt.Errorf("fail to do request to %s, %v", url, err)
-	}
-
-	body, err := ioutil.ReadAll(rsp.Body)
-	if err != nil {
-		return fmt.Errorf("fail to read response body %s, %v", url, err)
-	}
-
-	if rsp.StatusCode != http.StatusOK {
-		return fmt.Errorf("http status=%v, body=%s, url=%s", rsp.StatusCode, string(body), url)
-	}
-	defer rsp.Body.Close()
-
-	var putResp struct {
-		Success int         `json:"success"`
-		Payload interface{} `json:"payload"`
-	}
-	if err = json.Unmarshal(body, &putResp); err != nil {
-		return fmt.Errorf("fail to unmarshal %s response %s, %v", url, string(body), err)
-	}
-	if putResp.Success != 0 {
-		return fmt.Errorf("put to host %s err:%+v", url, putResp)
+func (c *ImageX) segmentedUpload(item *uploadTaskElement) error {
+	if item.size <= MinChunkSize {
+		//goland:noinspection GoDeprecation
+		bts, err := ioutil.ReadAll(item.content)
+		if err != nil {
+			return err
+		}
+		err = c.directUpload(item.ctx, item.host, item.info, bts)
+		if err != nil {
+			return err
+		}
+	} else {
+		arg := &segmentedUploadParam{
+			host:        item.host,
+			StoreInfo:   item.info,
+			content:     item.content,
+			size:        item.size,
+			isLargeFile: item.size > LargeFileSize,
+		}
+		err := arg.chunkUpload()
+		if err != nil {
+			return err
+		}
 	}
 	return nil
+}
+
+// 上传图片
+// 请确保 content 长度和 size 长度一致
+func (c *ImageX) SegmentedUploadImages(ctx context.Context, params *ApplyUploadImageParam, content []io.Reader, size []int64) (*CommitUploadImageResult, error) {
+	if len(content) != len(size) {
+		return nil, fmt.Errorf("expect len(size) == len(content), but len(size) = %d, len(content) = %d", len(size), len(content))
+	}
+
+	params.UploadNum = len(content)
+
+	for idx, item := range size {
+		if item == 0 {
+			return nil, fmt.Errorf("size[%d] is zero", idx)
+		}
+	}
+
+	// 1. apply
+	applyResp, err := c.ApplyUploadImage(params)
+	if err != nil {
+		return nil, err
+	}
+
+	uploadAddr := applyResp.UploadAddress
+	if len(uploadAddr.UploadHosts) == 0 {
+		return nil, fmt.Errorf("UploadImages: no upload host found, request id %s", applyResp.RequestId)
+	}
+	if len(uploadAddr.StoreInfos) != params.UploadNum {
+		return nil, fmt.Errorf("UploadImages: store infos num %d != upload num %d, request id %s",
+			len(uploadAddr.StoreInfos), params.UploadNum, applyResp.RequestId)
+	}
+
+	// 2. upload
+	host := uploadAddr.UploadHosts[0]
+
+	wg := &sync.WaitGroup{}
+	uploadTaskSet := &uploadTaskSet{
+		ctx:     ctx,
+		host:    host,
+		info:    uploadAddr.StoreInfos,
+		content: content,
+		size:    size,
+	}
+	uploadTaskSet.init()
+
+	for i := 0; i < UploadRoutines; i++ {
+		wg.Add(1)
+		go func() {
+			defer func() {
+				recover()
+				wg.Done()
+			}()
+
+			for item := range uploadTaskSet.taskChan {
+				err := c.segmentedUpload(item)
+				if err == nil {
+					uploadTaskSet.addSuccess(item.info.StoreUri)
+				}
+			}
+		}()
+	}
+	wg.Wait()
+
+	if len(uploadTaskSet.successOids) == 0 {
+		return nil, fmt.Errorf("upload failed, no file uploaded")
+	}
+
+	// 3. commit
+	commitParams := &CommitUploadImageParam{
+		ServiceId:   params.ServiceId,
+		SessionKey:  uploadAddr.SessionKey,
+		SuccessOids: uploadTaskSet.successOids,
+	}
+	if params.CommitParam != nil {
+		commitParams.Functions = params.CommitParam.Functions
+	}
+	commitResp, err := c.CommitUploadImage(commitParams)
+	if err != nil {
+		return nil, err
+	}
+	return commitResp, nil
 }
 
 // 上传图片
@@ -217,15 +325,17 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	success := make([]string, 0)
 	host := uploadAddr.UploadHosts[0]
 	for i, image := range images {
+		imageCopy := image
 		info := uploadAddr.StoreInfos[i]
-		for n := 0; n < 3; n++ {
-			err := c.upload(host, info, image)
-			if err != nil {
-				fmt.Printf("UploadImages: fail to do upload, %v", err)
-			} else {
-				success = append(success, info.StoreUri)
-				break
-			}
+		err = retry.Do(func() error {
+			ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
+			defer cancel()
+			return c.directUpload(ctx, host, info, imageCopy)
+		}, retry.Attempts(3))
+		if err != nil {
+			fmt.Printf("UploadImages: fail to do upload, %v", err)
+		} else {
+			success = append(success, info.StoreUri)
 		}
 	}
 
@@ -288,6 +398,7 @@ func (c *ImageX) GetUploadAuth(serviceIds []string, opt ...UploadAuthOpt) (*base
 	return c.GetUploadAuthWithExpire(serviceIds, time.Hour, opt...)
 }
 
+// 获取上传临时密钥
 func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Duration, opt ...UploadAuthOpt) (*base.SecurityToken2, error) {
 	serviceIdRes := make([]string, 0)
 	if len(serviceIds) == 0 {
