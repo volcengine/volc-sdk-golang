@@ -44,7 +44,7 @@ var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: 5 * time.Second,
-			Host:    "adblocker.volcengineapi.com",
+			Host:    "riskcontrol.volcengineapi.com",
 			Scheme:  "https",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
