@@ -115,6 +115,15 @@ func (p *SecretNumber) BindAXNE(req *BindAXNERequest) (*SecretBindResponse, int,
 	}
 }
 
+func (p *SecretNumber) BindAXBForAXNE(req *BindAXBForAXNERequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.handler("BindAXBForAXNE", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) UnbindAXNE(req *SpecificSubIdRequest) (*OperationResponse, int, error) {
 	resp := new(OperationResponse)
 	if statusCode, err := p.handler("UnbindAXNE", req, resp); err != nil {
