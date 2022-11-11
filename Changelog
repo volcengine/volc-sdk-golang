@@ -1,5 +1,9 @@
 ### Change log
 
+2022-11-10 Bumped to version v1.0.69
+- Added live service
+- Updated apis for imagex/security/secret
+
 2022-11-07 Bumped to version v1.0.68
 - Added apis for security/visual
 
