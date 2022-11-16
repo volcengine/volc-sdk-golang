@@ -18,7 +18,7 @@ func main() {
 	})
 
 	serviceId := "imagex service id" // 服务 ID
-	urls := []string{"image url 1"}  // 文件的 Store URI
+	urls := []string{"image url 1"}  // 待更新的文件 URL 列表（可以通过浏览器访问的完整 URL）
 
 	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
 		Action:    imagex.ActionRefresh, // 刷新文件
