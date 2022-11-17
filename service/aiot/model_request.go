@@ -151,6 +151,8 @@ type ListDevicesRequest struct {
 	DeviceID   string
 	DeviceNSID string
 	DeviceName string
+	PageNumber int
+	PageSize   int
 	Order      string
 }
 
@@ -167,6 +169,13 @@ type UpdateDeviceRequest struct {
 	RtpTransportTcp      *bool              `json:"RtpTransportTcp"` //流传输协议tcp为true，否则默认udp
 	Location             *string            `json:"Location"`        //可以修改设备的地址位置和坐标
 	Coordinates          *Coordinates       `json:"Coordinates"`
+}
+
+type CloudRecordPlayRequest struct {
+	StreamID   string `json:"StreamID"`
+	StartTs    int64  `json:"StartTs"`
+	EndTs      int64  `json:"EndTs"`
+	TokenValid *int   `json:"TokenValid"`
 }
 
 type ListHistoryRequest struct {
@@ -300,6 +309,21 @@ type ListStreamsRequest struct {
 	PageNumber int
 	PageSize   int
 	Order      string
+}
+
+type GetStreamDataRequest struct {
+	StreamID  string
+	StartTime string
+	EndTime   string
+}
+
+type StreamLogsRequest struct {
+	StartTs    string
+	EndTs      string
+	StreamID   string
+	Order      string
+	PageNumber int
+	PageSize   int
 }
 
 type CreateTemplateRequest struct {
@@ -467,13 +491,13 @@ type BatchDeleteCascadeTaskRequest struct {
 }
 
 type ListCascadeTaskRequest struct {
-	PlatformName  string
-	PlatformID    string
-	GroupTreeID   string
-	GroupTreeName string
-	PageNumber    int
-	PageSize      int
-	Order         string
+	PlatformName  string `json:"PlatformName"`
+	PlatformID    string `json:"PlatformID"`
+	GroupTreeID   string `json:"GroupTreeID"`
+	GroupTreeName string `json:"GroupTreeName"`
+	PageNumber    int    `json:"PageNumber"`
+	PageSize      int    `json:"PageSize"`
+	Order         string `json:"Order"`
 }
 
 type ShareGroupNodesRequest struct {
