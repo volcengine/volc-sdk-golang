@@ -22,7 +22,7 @@ import (
  * @param *request.CreateVQScoreTaskRequest
  * @return *response.CreateVQScoreTaskResponse, int, error
  */
-func (p *Live) CreateVQScoreTask(req *request.CreateVQScoreTaskRequest) (*response.CreateVQScoreTaskResponse, int, error) {
+func (p *LIVE) CreateVQScoreTask(req *request.CreateVQScoreTaskRequest) (*response.CreateVQScoreTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -59,7 +59,7 @@ func (p *Live) CreateVQScoreTask(req *request.CreateVQScoreTaskRequest) (*respon
  * @param *request.DescribeVQScoreTaskRequest
  * @return *response.DescribeVQScoreTaskResponse, int, error
  */
-func (p *Live) DescribeVQScoreTask(req *request.DescribeVQScoreTaskRequest) (*response.DescribeVQScoreTaskResponse, int, error) {
+func (p *LIVE) DescribeVQScoreTask(req *request.DescribeVQScoreTaskRequest) (*response.DescribeVQScoreTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -96,7 +96,7 @@ func (p *Live) DescribeVQScoreTask(req *request.DescribeVQScoreTaskRequest) (*re
  * @param *request.ListVQScoreTaskRequest
  * @return *response.ListVQScoreTaskResponse, int, error
  */
-func (p *Live) ListVQScoreTask(req *request.ListVQScoreTaskRequest) (*response.ListVQScoreTaskResponse, int, error) {
+func (p *LIVE) ListVQScoreTask(req *request.ListVQScoreTaskRequest) (*response.ListVQScoreTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

@@ -21,10 +21,9 @@ func Test_UpdateDenyConfig(t *testing.T) {
 	})
 
 	query := &request.UpdateDenyConfigRequest{
-		Vhost:          "your Vhost",
-		Domain:         "your Domain",
-		App:            "your App",
-		DenyConfigList: []string{nil},
+		Vhost:  "your Vhost",
+		Domain: "your Domain",
+		App:    "your App",
 	}
 
 	resp, status, err := instance.UpdateDenyConfig(query)

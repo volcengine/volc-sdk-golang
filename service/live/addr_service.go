@@ -22,7 +22,7 @@ import (
  * @param *request.GeneratePlayURLRequest
  * @return *response.GeneratePlayURLResponse, int, error
  */
-func (p *Live) GeneratePlayURL(req *request.GeneratePlayURLRequest) (*response.GeneratePlayURLResponse, int, error) {
+func (p *LIVE) GeneratePlayURL(req *request.GeneratePlayURLRequest) (*response.GeneratePlayURLResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -59,7 +59,7 @@ func (p *Live) GeneratePlayURL(req *request.GeneratePlayURLRequest) (*response.G
  * @param *request.GeneratePushURLRequest
  * @return *response.GeneratePushURLResponse, int, error
  */
-func (p *Live) GeneratePushURL(req *request.GeneratePushURLRequest) (*response.GeneratePushURLResponse, int, error) {
+func (p *LIVE) GeneratePushURL(req *request.GeneratePushURLRequest) (*response.GeneratePushURLResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

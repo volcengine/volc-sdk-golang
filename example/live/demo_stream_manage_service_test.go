@@ -63,18 +63,18 @@ func Test_ForbidStream(t *testing.T) {
 		SecretAccessKey: "your sk",
 	})
 
-	query := &request.ForbidStreamRequest{
-		Vhost:   "your Vhost",
-		Domain:  "your Domain",
-		App:     "your App",
-		Stream:  "your Stream",
-		EndTime: "your EndTime",
-	}
+	//query := &request.ForbidStreamRequest{
+	//	Vhost:   "your Vhost",
+	//	Domain:  "your Domain",
+	//	App:     "your App",
+	//	Stream:  "your Stream",
+	//	EndTime: "your EndTime",
+	//}
 
-	resp, status, err := instance.ForbidStream(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
+	//resp, status, err := instance.ForbidStream(query)
+	//fmt.Println(status)
+	//fmt.Println(err)
+	//fmt.Println(resp.String())
 }
 
 func Test_DescribeClosedStreamInfoByPage(t *testing.T) {
@@ -151,16 +151,16 @@ func Test_ResumeStream(t *testing.T) {
 		AccessKeyID:     "your ak",
 		SecretAccessKey: "your sk",
 	})
+	//
+	//query := &request.ResumeStreamRequest{
+	//	Vhost:  "your Vhost",
+	//	Domain: "your Domain",
+	//	App:    "your App",
+	//	Stream: "your Stream",
+	//}
 
-	query := &request.ResumeStreamRequest{
-		Vhost:  "your Vhost",
-		Domain: "your Domain",
-		App:    "your App",
-		Stream: "your Stream",
-	}
-
-	resp, status, err := instance.ResumeStream(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
+	//resp, status, err := instance.ResumeStream(query)
+	//fmt.Println(status)
+	//fmt.Println(err)
+	//fmt.Println(resp.String())
 }

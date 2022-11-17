@@ -22,7 +22,7 @@ import (
  * @param *request.CreatePullToPushTaskRequest
  * @return *response.CreatePullToPushTaskResponse, int, error
  */
-func (p *Live) CreatePullToPushTask(req *request.CreatePullToPushTaskRequest) (*response.CreatePullToPushTaskResponse, int, error) {
+func (p *LIVE) CreatePullToPushTask(req *request.CreatePullToPushTaskRequest) (*response.CreatePullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -59,7 +59,7 @@ func (p *Live) CreatePullToPushTask(req *request.CreatePullToPushTaskRequest) (*
  * @param *request.ListPullToPushTaskRequest
  * @return *response.ListPullToPushTaskResponse, int, error
  */
-func (p *Live) ListPullToPushTask(req *request.ListPullToPushTaskRequest) (*response.ListPullToPushTaskResponse, int, error) {
+func (p *LIVE) ListPullToPushTask(req *request.ListPullToPushTaskRequest) (*response.ListPullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -96,7 +96,7 @@ func (p *Live) ListPullToPushTask(req *request.ListPullToPushTaskRequest) (*resp
  * @param *request.UpdatePullToPushTaskRequest
  * @return *response.UpdatePullToPushTaskResponse, int, error
  */
-func (p *Live) UpdatePullToPushTask(req *request.UpdatePullToPushTaskRequest) (*response.UpdatePullToPushTaskResponse, int, error) {
+func (p *LIVE) UpdatePullToPushTask(req *request.UpdatePullToPushTaskRequest) (*response.UpdatePullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -133,7 +133,7 @@ func (p *Live) UpdatePullToPushTask(req *request.UpdatePullToPushTaskRequest) (*
  * @param *request.StopPullToPushTaskRequest
  * @return *response.StopPullToPushTaskResponse, int, error
  */
-func (p *Live) StopPullToPushTask(req *request.StopPullToPushTaskRequest) (*response.StopPullToPushTaskResponse, int, error) {
+func (p *LIVE) StopPullToPushTask(req *request.StopPullToPushTaskRequest) (*response.StopPullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -170,7 +170,7 @@ func (p *Live) StopPullToPushTask(req *request.StopPullToPushTaskRequest) (*resp
  * @param *request.RestartPullToPushTaskRequest
  * @return *response.RestartPullToPushTaskResponse, int, error
  */
-func (p *Live) RestartPullToPushTask(req *request.RestartPullToPushTaskRequest) (*response.RestartPullToPushTaskResponse, int, error) {
+func (p *LIVE) RestartPullToPushTask(req *request.RestartPullToPushTaskRequest) (*response.RestartPullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -207,7 +207,7 @@ func (p *Live) RestartPullToPushTask(req *request.RestartPullToPushTaskRequest) 
  * @param *request.DeletePullToPushTaskRequest
  * @return *response.DeletePullToPushTaskResponse, int, error
  */
-func (p *Live) DeletePullToPushTask(req *request.DeletePullToPushTaskRequest) (*response.DeletePullToPushTaskResponse, int, error) {
+func (p *LIVE) DeletePullToPushTask(req *request.DeletePullToPushTaskRequest) (*response.DeletePullToPushTaskResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

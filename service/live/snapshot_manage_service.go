@@ -22,7 +22,7 @@ import (
  * @param *request.DescribeCDNSnapshotHistoryRequest
  * @return *response.DescribeCDNSnapshotHistoryResponse, int, error
  */
-func (p *Live) DescribeCDNSnapshotHistory(req *request.DescribeCDNSnapshotHistoryRequest) (*response.DescribeCDNSnapshotHistoryResponse, int, error) {
+func (p *LIVE) DescribeCDNSnapshotHistory(req *request.DescribeCDNSnapshotHistoryRequest) (*response.DescribeCDNSnapshotHistoryResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
