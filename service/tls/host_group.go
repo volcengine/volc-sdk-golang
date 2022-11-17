@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (*CreateHostGroupResponse, error) {
+func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (r *CreateHostGroupResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -36,10 +36,9 @@ func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (*CreateHost
 	}
 
 	return response, nil
-
 }
 
-func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -70,7 +69,7 @@ func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (*CommonResp
 	return response, nil
 }
 
-func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -101,7 +100,7 @@ func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (*CommonResp
 	return response, nil
 }
 
-func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (*DescribeHostGroupResponse, error) {
+func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (r *DescribeHostGroupResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -138,7 +137,7 @@ func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (*Descri
 	return response, nil
 }
 
-func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (*DescribeHostGroupsResponse, error) {
+func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *DescribeHostGroupsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -151,6 +150,10 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (*Desc
 
 	if request.HostGroupName != nil {
 		params["HostGroupName"] = *request.HostGroupName
+	}
+
+	if request.HostIdentifier != nil {
+		params["HostIdentifier"] = *request.HostIdentifier
 	}
 
 	if request.PageNumber != 0 {
@@ -185,7 +188,7 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (*Desc
 	return response, nil
 }
 
-func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (*DescribeHostsResponse, error) {
+func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (r *DescribeHostsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -235,7 +238,7 @@ func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (*DescribeHostsR
 	return response, nil
 }
 
-func (c *LsClient) DeleteHost(request *DeleteHostRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteHost(request *DeleteHostRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -266,7 +269,7 @@ func (c *LsClient) DeleteHost(request *DeleteHostRequest) (*CommonResponse, erro
 	return response, nil
 }
 
-func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (*DescribeHostGroupRulesResponse, error) {
+func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (r *DescribeHostGroupRulesResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -301,6 +304,40 @@ func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest
 	}
 
 	var response = &DescribeHostGroupRulesResponse{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *LsClient) ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdateRequest) (r *ModifyHostGroupsAutoUpdateResponse, e error) {
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{}
+
+	bytesBody, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPut, PathModifyHostGroupsAutoUpdate, params, reqHeaders, bytesBody)
+
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &ModifyHostGroupsAutoUpdateResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

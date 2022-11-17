@@ -1,0 +1,83 @@
+package tls
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+	"github.com/volcengine/volc-sdk-golang/service/tls"
+)
+
+func initTestProject(client tls.Client) ( testProjectID string, testTopicID string, err error) {
+	//新建project
+	createResp, err := client.CreateProject(&tls.CreateProjectRequest{
+		ProjectName: testPrefix + uuid.NewString(),
+		Description: "",
+		Region:      testRegion,
+	})
+	if err != nil {
+		return "", "", err
+	}
+	testProjectID = createResp.ProjectID
+
+	// 新建topic
+	// TopicName Description字段规范参考api文档
+	createTopicRequest := &tls.CreateTopicRequest{
+		ProjectID:   testProjectID,
+		TopicName:   testPrefix + uuid.NewString(),
+		Ttl:         30,
+		ShardCount:  2,
+		Description: "topic desc",
+	}
+	topic, err := client.CreateTopic(createTopicRequest)
+	testTopicID = topic.TopicID
+	if err != nil {
+		return "", "", err
+	}
+
+	//新建index，开启全文索引和kv索引
+	createIndexReq := &tls.CreateIndexRequest{
+		TopicID: testTopicID,
+		FullText: &tls.FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+	}
+	_, err = client.CreateIndex(createIndexReq)
+	if err != nil {
+		return "", "", err
+	}
+	return testProjectID, testTopicID, nil 
+}
+
+func main() {
+	//初始化客户端，配置AccessKeyID,AccessKeySecret,region,securityToken;securityToken可以为空
+	client := tls.NewClient(testEndPoint, testAk, testSk, testSessionToken, testRegion)
+
+	var (
+		testProjectID string
+		testTopicID string
+	)
+
+	testProjectID, testTopicID, err := initTestProject(client)
+	if err != nil {
+		fmt.Printf("%v", err)
+		return
+	}
+	
+	fmt.Printf("testProjectID:%s, testTopicID:%s\n", testProjectID, testTopicID)
+
+	// 获取直方图
+	describeHistogramRequest := &tls.DescribeHistogramRequest {
+		TopicID: testTopicID,
+		Query: "*",
+		StartTime: time.Now().UnixNano() / 1e9 - 10,
+		EndTime: time.Now().UnixNano() / 1e9,
+	}
+	describeHistogramResponse, err := client.DescribeHistogram(describeHistogramRequest)
+	if err != nil {
+		return
+	}
+	fmt.Printf("%v\n", describeHistogramResponse)
+}

@@ -23,6 +23,7 @@ type Client interface {
 	PutLogs(request *PutLogsRequest) (response *CommonResponse, err error)
 	DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error)
 	ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error)
+	DescribeLogContext(request *DescribeLogContextRequest) (*DescribeLogContextResponse, error)
 
 	CreateProject(request *CreateProjectRequest) (*CreateProjectResponse, error)
 	DeleteProject(request *DeleteProjectRequest) (*CommonResponse, error)
@@ -60,6 +61,7 @@ type Client interface {
 	DescribeHosts(request *DescribeHostsRequest) (*DescribeHostsResponse, error)
 	DeleteHost(request *DeleteHostRequest) (*CommonResponse, error)
 	DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (*DescribeHostGroupRulesResponse, error)
+	ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdateRequest) (*ModifyHostGroupsAutoUpdateResponse, error)
 
 	CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmResponse, error)
 	DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, error)
@@ -69,4 +71,16 @@ type Client interface {
 	DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest) (*CommonResponse, error)
 	ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest) (*CommonResponse, error)
 	DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsRequest) (*DescribeAlarmNotifyGroupsResponse, error)
+
+	CreateDownloadTask(request *CreateDownloadTaskRequest) (*CreateDownloadTaskResponse, error)
+	DescribeDownloadTasks(request *DescribeDownloadTasksRequest) (*DescribeDownloadTasksResponse, error)
+	DescribeDownloadUrl(request *DescribeDownloadUrlRequest) (*DescribeDownloadUrlResponse, error)
+
+	WebTracks(request *WebTracksRequest) (*WebTracksResponse, error)
+
+	OpenKafkaConsumer(request *OpenKafkaConsumerRequest) (*OpenKafkaConsumerResponse, error)
+	CloseKafkaConsumer(request *CloseKafkaConsumerRequest) (*CloseKafkaConsumerResponse, error)
+	DescribeKafkaConsumer(request *DescribeKafkaConsumerRequest) (*DescribeKafkaConsumerResponse, error)
+
+	DescribeHistogram(request *DescribeHistogramRequest) (*DescribeHistogramResponse, error)
 }

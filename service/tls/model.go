@@ -67,11 +67,14 @@ type ModifyProjectRequest struct {
 }
 
 type CreateTopicRequest struct {
-	ProjectID   string
-	TopicName   string
-	Ttl         uint16
-	Description string
-	ShardCount  int
+	ProjectID      string
+	TopicName      string
+	Ttl            uint16
+	Description    string
+	ShardCount     int
+	MaxSplitShard  *int32 `json:",omitempty"`
+	AutoSplit      bool
+	EnableTracking *bool `json:",omitempty"`
 }
 
 type CreateTopicResponse struct {
@@ -84,10 +87,13 @@ type DeleteTopicRequest struct {
 }
 
 type ModifyTopicRequest struct {
-	TopicID     string  `json:"TopicId"`
-	TopicName   *string `json:"TopicName"`
-	Ttl         *uint16 `json:"Ttl"`
-	Description *string `json:"Description"`
+	TopicID        string  `json:"TopicId"`
+	TopicName      *string `json:"TopicName"`
+	Ttl            *uint16 `json:"Ttl"`
+	Description    *string `json:"Description"`
+	MaxSplitShard  *int32  `json:",omitempty"`
+	AutoSplit      *bool   `json:",omitempty"`
+	EnableTracking *bool   `json:",omitempty"`
 }
 
 type DescribeTopicRequest struct {
@@ -104,6 +110,9 @@ type DescribeTopicResponse struct {
 	ModifyTimestamp string `json:"ModifyTime"`
 	ShardCount      int32  `json:"ShardCount"`
 	Description     string `json:"Description"`
+	MaxSplitShard   int32  `json:"MaxSplitShard"`
+	AutoSplit       bool   `json:"AutoSplit"`
+	EnableTracking  bool   `json:"EnableTracking"`
 }
 
 type DescribeTopicsRequest struct {
@@ -124,6 +133,9 @@ type Topic struct {
 	ModifyTimestamp string `json:"ModifyTime"`
 	ShardCount      int32  `json:"ShardCount"`
 	Description     string `json:"Description"`
+	MaxSplitShard   int32  `json:"MaxSplitShard"`
+	AutoSplit       bool   `json:"AutoSplit"`
+	EnableTracking  bool   `json:"EnableTracking"`
 }
 
 type DescribeTopicsResponse struct {
@@ -199,8 +211,9 @@ type ModifyIndexRequest struct {
 }
 
 type AnalysisResult struct {
-	Schema []string                 `json:"schema"`
-	Data   []map[string]interface{} `json:"data"`
+	Schema []string                 `json:"Schema"`
+	Type   map[string]string        `json:"Type"`
+	Data   []map[string]interface{} `json:"Data"`
 }
 
 type SearchLogsRequest struct {
@@ -243,6 +256,7 @@ type DescribeShardsResponse struct {
 		ExclusiveEndKey   string `json:"ExclusiveEndKey"`
 		Status            string `json:"Status"`
 		ModifyTimestamp   string `json:"ModifyTime"`
+		StopWriteTime     string `json:"StopWriteTime"`
 	} `json:"Shards"`
 
 	Total int `json:"Total"`
@@ -280,6 +294,22 @@ type ConsumeLogsResponse struct {
 	Cursor string //X-Tls-Cursor
 	Count  int    //X-Tls-Count
 	Logs   *pb.LogGroupList
+}
+
+type DescribeLogContextRequest struct {
+	TopicId       string `json:"TopicId"`
+	ContextFlow   string `json:"ContextFlow"`
+	PackageOffset int64  `json:"PackageOffset"`
+	Source        string `json:"Source"`
+	PrevLogs      *int64 `json:",omitempty"`
+	NextLogs      *int64 `json:",omitempty"`
+}
+
+type DescribeLogContextResponse struct {
+	CommonResponse
+	LogContextInfos []map[string]interface{} `json:"LogContextInfos"`
+	PrevOver        bool                     `json:"PrevOver"`
+	NextOver        bool                     `json:"NextOver"`
 }
 
 type CreateRuleRequest struct {
@@ -366,6 +396,8 @@ type ExtractRule struct {
 	// - UnMatchUpLoadSwitch=true和UnMatchLogKey必须成对出现。
 	// - 命名规则同「索引配置」的key名称。
 	UnMatchLogKey string `json:"UnMatchLogKey,omitempty" example:"LogParseFailed"`
+	// 根据日志模板自动提取日志内容。
+	LogTemplate LogTemplate `json:"LogTemplate,omitempty"`
 }
 
 type FilterKeyRegex struct {
@@ -373,6 +405,14 @@ type FilterKeyRegex struct {
 	Key string `json:"Key,omitempty" example:"__content__"`
 	// 过滤字段的日志内容需要匹配的regex。
 	Regex string `json:"Regex,omitempty" example:".*ERROR.*"`
+}
+
+type LogTemplate struct {
+	// 日志模板的类型。
+	// - Nginx：Nginx类型的日志模板；
+	Type string `json:"Type,omitempty" example:"Nginx"`
+	// 日志模板的格式。
+	Format string `json:"Format,omitempty" example:"log_format main  '$remote_addr - $remote_user [$time_local] \"$request\" $request_time $request_length $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\"';"`
 }
 
 type ExcludePath struct {
@@ -388,6 +428,25 @@ type ExcludePath struct {
 type UserDefineRule struct {
 	// 解析路径的规则。
 	ParsePathRule *ParsePathRule `json:"ParsePathRule,omitempty"`
+	// 根据HashKey路由日志分区。
+	ShardHashKey *ShardHashKey `json:"ShardHashKey,omitempty"`
+	// 是否上传原始日志。
+	// - true：上传原始日志。
+	// - false：不上传原始日志。
+	EnableRawLog bool `json:"EnableRawLog,omitempty"`
+	// 添加常量字段
+	// - 最多能够添加5个常量字段
+	// - 键不能重复、不能为空，最多包含128个字符：字母（a-z、A-Z），数字（0-9 ），中划线（-），下划线（_），点（.），斜线（/），但是不能以下划线（_）开头
+	// - 值不能为空，长度最多为512KB
+	Fields map[string]string `json:"Fields,omitempty"`
+}
+
+type ShardHashKey struct {
+	// 路由日志分区的HashKey。
+	// - 长度必须不大于32位；
+	// - 每个字符必须都是16进制（0~9、a~f、A~F）；
+	// - 不能是ffffffffffffffffffffffffffffffff，因为取值范围是：[00000000000000000000000000000000,ffffffffffffffffffffffffffffffff）；
+	HashKey string `json:"HashKey,omitempty"`
 }
 
 type ParsePathRule struct {
@@ -588,6 +647,10 @@ type HostGroupInfo struct {
 	RuleCount                     int    `json:"RuleCount"`
 	CreateTime                    string `json:"CreateTime"`
 	ModifyTime                    string `json:"ModifyTime"`
+	AutoUpdate                    bool   `json:"AutoUpdate"`
+	UpdateStartTime               string `json:"UpdateStartTime"`
+	UpdateEndTime                 string `json:"UpdateEndTime"`
+	AgentLatestVersion            string `json:"AgentLatestVersion"`
 }
 
 type DescribeRulesRequest struct {
@@ -618,6 +681,12 @@ type CreateHostGroupRequest struct {
 	HostIdentifier *string `json:"HostIdentifier" example:"label"`
 	// 机器IP列表。
 	HostIPList *[]string `json:"HostIpList" example:"[\"192.168.0.1\", \"127.0.0.1\"]"`
+	// 机器组服务器中安装的LogCollector是否开启自动升级功能。
+	AutoUpdate *bool `json:",omitempty"`
+	// LogCollector自动升级的开始时间。
+	UpdateStartTime *string `json:",omitempty" example:"00:00"`
+	// LogCollector自动升级的结束时间。
+	UpdateEndTime *string `json:",omitempty" example:"02:00"`
 }
 
 type CreateHostGroupResponse struct {
@@ -661,6 +730,12 @@ type ModifyHostGroupRequest struct {
 	HostIPList *[]string `json:"HostIpList" example:"[\"192.168.0.1\", \"127.0.0.1\"]"`
 	// 机器标识符
 	HostIdentifier *string `json:"HostIdentifier" example:"label"`
+	// 机器组服务器中安装的LogCollector是否开启自动升级功能。
+	AutoUpdate *bool `json:",omitempty"`
+	// LogCollector自动升级的开始时间。
+	UpdateStartTime *string `json:",omitempty" example:"00:00"`
+	// LogCollector自动升级的结束时间。
+	UpdateEndTime *string `json:",omitempty" example:"02:00"`
 }
 
 type DescribeHostGroupRequest struct {
@@ -686,10 +761,11 @@ type HostInfo struct {
 }
 
 type DescribeHostGroupsRequest struct {
-	PageNumber    int
-	PageSize      int
-	HostGroupID   *string
-	HostGroupName *string
+	PageNumber     int
+	PageSize       int
+	HostGroupID    *string
+	HostGroupName  *string
+	HostIdentifier *string `json:",omitempty"`
 }
 
 type DescribeHostGroupsResponse struct {
@@ -729,6 +805,17 @@ type DescribeHostGroupRulesResponse struct {
 	CommonResponse
 	Total     int64       `json:"Total"`
 	RuleInfos []*RuleInfo `json:"RuleInfos"`
+}
+
+type ModifyHostGroupsAutoUpdateRequest struct {
+	HostGroupIds    []string
+	AutoUpdate      *bool   `json:",omitempty"`
+	UpdateStartTime *string `json:",omitempty"`
+	UpdateEndTime   *string `json:",omitempty"`
+}
+
+type ModifyHostGroupsAutoUpdateResponse struct {
+	CommonResponse
 }
 
 type CreateAlarmRequest struct {
@@ -873,12 +960,14 @@ type Receiver struct {
 	ReceiverType ReveiverType `json:"ReceiverType" binding:"required"`
 	// 接收者的名字。这里前端通过list所有用户选择用户，不涉及该限制长度1~64，仅支持英文、数字、下划线、"."、"-"、"@"
 	ReceiverNames []string `json:"ReceiverNames" binding:"required"`
-	// 通知接收渠道，暂仅支持Email和Sms。Email-邮件；Sms-短信。
+	// 通知接收渠道。
 	ReceiverChannels []ReceiverChannel `json:"ReceiverChannels" binding:"required" enums:"Email,Sms"`
 	// 允许接收信息的开始时间。
 	StartTime string `json:"StartTime" binding:"required"`
 	// 允许接收信息的开始时间。
 	EndTime string `json:"EndTime" binding:"required"`
+	// 如果选择了飞书渠道，则必填
+	Webhook string `json:",omitempty"`
 }
 
 type ReveiverType string
@@ -938,6 +1027,106 @@ type DescribeAlarmNotifyGroupsResponse struct {
 	CommonResponse
 	Total             int64               `json:"Total"`
 	AlarmNotifyGroups []*NotifyGroupsInfo `json:"AlarmNotifyGroups"`
+}
+
+type CreateDownloadTaskRequest struct {
+	TopicID     string `json:"TopicId"`
+	TaskName    string
+	Query       string
+	StartTime   int64
+	EndTime     int64
+	Compression string
+	DataFormat  string
+	Limit       int
+	Sort        string
+}
+type CreateDownloadTaskResponse struct {
+	CommonResponse
+	TaskId string
+}
+
+type DescribeDownloadTasksRequest struct {
+	TopicID    string `json:"-"`
+	PageNumber *int   `json:"-"`
+	PageSize   *int   `json:"-"`
+}
+type DownloadTaskResp struct {
+	TaskId      string
+	TaskName    string
+	TopicId     string
+	Query       string
+	StartTime   string
+	EndTime     string
+	LogCount    int64
+	LogSize     int64
+	Compression string
+	DataFormat  string
+	TaskStatus  string
+	CreateTime  string
+}
+type DescribeDownloadTasksResponse struct {
+	CommonResponse
+	Tasks []*DownloadTaskResp
+	Total int64
+}
+
+type DescribeDownloadUrlRequest struct {
+	TaskId string `json:"-"`
+}
+type DescribeDownloadUrlResponse struct {
+	CommonResponse
+	DownloadUrl string
+}
+
+type WebTracksRequest struct {
+	TopicID      string `json:"-"`
+	ProjectID    string `json:"-"`
+	CompressType string `json:"-"`
+	Logs         []map[string]string
+	Source       string `json:"Source,omitempty"`
+}
+type WebTracksResponse struct {
+	CommonResponse
+}
+
+type HistogramInfo struct {
+	Count int64 `json:"Count"`
+	Time  int64 `json:"Time"`
+}
+type DescribeHistogramRequest struct {
+	TopicID   string `json:"TopicId"`
+	Query     string `json:","`
+	StartTime int64  `json:","`
+	EndTime   int64  `json:","`
+	Interval  *int64 `json:",omitempty"`
+}
+type DescribeHistogramResponse struct {
+	CommonResponse
+	HistogramInfos []HistogramInfo `json:"Histogram"`
+	Interval       int64           `json:"Interval"`
+	TotalCount     int64           `json:"TotalCount"`
+	ResultStatus   string          `json:"ResultStatus"`
+}
+
+type OpenKafkaConsumerRequest struct {
+	TopicID string `json:"TopicId"`
+}
+type OpenKafkaConsumerResponse struct {
+	CommonResponse
+}
+type CloseKafkaConsumerRequest struct {
+	TopicID string `json:"TopicId"`
+}
+type CloseKafkaConsumerResponse struct {
+	CommonResponse
+}
+type DescribeKafkaConsumerRequest struct {
+	TopicID string `json:"-"`
+}
+type DescribeKafkaConsumerResponse struct {
+	CommonResponse
+	AllowConsume bool
+	ConsumeTopic string
 }
 
 // FillRequestId 成功返回填充requestId

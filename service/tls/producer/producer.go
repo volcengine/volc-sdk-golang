@@ -3,13 +3,15 @@ package producer
 import (
 	"errors"
 	"fmt"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
-	. "github.com/volcengine/volc-sdk-golang/service/tls"
-	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/log/level"
+	. "github.com/volcengine/volc-sdk-golang/service/tls"
+	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
+	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
 const (
@@ -35,7 +37,7 @@ type producer struct {
 }
 
 func newProducer(producerConfig *Config) *producer {
-	logger := logConfig(producerConfig)
+	logger := innerlogger.NewLogger(&producerConfig.LoggerConfig)
 
 	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret, "", producerConfig.Region)
 	producerConfig = validateProducerConfig(producerConfig)

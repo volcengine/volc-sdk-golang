@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) CreateRule(request *CreateRuleRequest) (*CreateRuleResponse, error) {
+func (c *LsClient) CreateRule(request *CreateRuleRequest) (r *CreateRuleResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -39,7 +39,7 @@ func (c *LsClient) CreateRule(request *CreateRuleRequest) (*CreateRuleResponse, 
 
 }
 
-func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -70,7 +70,7 @@ func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (*CommonResponse, erro
 	return response, nil
 }
 
-func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -101,7 +101,7 @@ func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (*CommonResponse, erro
 	return response, nil
 }
 
-func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (*DescribeRuleResponse, error) {
+func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (r *DescribeRuleResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -135,7 +135,7 @@ func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (*DescribeRuleResp
 
 }
 
-func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (*DescribeRulesResponse, error) {
+func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (r *DescribeRulesResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -193,7 +193,7 @@ func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (*DescribeRulesR
 	return response, nil
 }
 
-func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) (*CommonResponse, error) {
+func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -224,8 +224,7 @@ func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) 
 	return response, nil
 }
 
-func (c *LsClient) DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsRequest) (*CommonResponse, error) {
-
+func (c *LsClient) DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

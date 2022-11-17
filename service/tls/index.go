@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexResponse, error) {
+func (c *LsClient) CreateIndex(request *CreateIndexRequest) (r *CreateIndexResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -39,7 +39,7 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (*CreateIndexRespons
 	return response, nil
 }
 
-func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -73,7 +73,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexResponse, error) {
+func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeIndexResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -109,7 +109,7 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexR
 // ModifyIndex: 更新索引。
 // 由于该接口为全量更新接口，等同于重新创建一个新的索引，因此要注意不要漏填字段
 
-func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -139,7 +139,7 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, error) {
+func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

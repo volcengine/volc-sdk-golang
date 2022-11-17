@@ -16,6 +16,8 @@ import (
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
+	"github.com/go-kit/kit/log/level"
+	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
 var (
@@ -64,7 +66,30 @@ func (c *LsClient) SetTimeout(timeout time.Duration) {
 	defaultHttpClient.Timeout = timeout
 }
 
-func (c *LsClient) Request(method, uri string, params map[string]string, headers map[string]string, body []byte) (*http.Response, error) {
+func (c *LsClient) Request(method, uri string, params map[string]string, headers map[string]string, body []byte) (rsp *http.Response, e error) {
+	defer func() {
+		if e != nil {
+			level.Error(innerlogger.DefaultLogger).Log(
+				"sdk", GetCallerFuncName(3),
+				"uri", fmt.Sprintf("%v", uri),
+				"params", fmt.Sprintf("%+v", params),
+				"headers", fmt.Sprintf("%+v", headers),
+				"body", string(body),
+				"error", e,
+			)
+		}
+		if innerlogger.DefaultLogger.GetLogLevel() <= innerlogger.LogLevelDebug {
+			level.Debug(innerlogger.DefaultLogger).Log(
+				"sdk", GetCallerFuncName(3),
+				"uri", fmt.Sprintf("%v", uri),
+				"params", fmt.Sprintf("%+v", params),
+				"headers", fmt.Sprintf("%+v", headers),
+				"body", string(body),
+				"error", e,
+			)
+		}
+	}()
+
 	var r *http.Response
 	var iErr error
 	var err error
@@ -79,6 +104,10 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 	ctx := context.Background()
 	err = RetryWithCondition(ctx, backoff.NewExponentialBackOff(), func() error {
 		r, iErr = c.realRequest(ctx, method, realUri, headers, body)
+		if iErr != nil {
+			level.Error(innerlogger.DefaultLogger).Log("msg", "Request failed", "reason", iErr)
+			level.Debug(innerlogger.DefaultLogger).Log("method", method, "uri", realUri, "headers", headers, "body", string(body))
+		}
 		return iErr
 	})
 
