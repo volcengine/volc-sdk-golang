@@ -1,17 +1,12 @@
 package producer
 
-import "time"
+import (
+	"time"
+
+	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
+)
 
 const delimiter = "|"
-
-type LoggerConfig struct {
-	LogLevel      string
-	LogFileName   string
-	IsJsonType    bool
-	LogMaxSize    int
-	LogMaxBackups int
-	LogCompress   bool
-}
 
 type ClientConfig struct {
 	Endpoint        string
@@ -19,6 +14,8 @@ type ClientConfig struct {
 	AccessKeySecret string
 	Region          string
 }
+
+type LoggerConfig = innerlogger.LoggerConfig
 
 type Config struct {
 	TotalSizeLnBytes      int64

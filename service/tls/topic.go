@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicResponse, error) {
+func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -50,7 +50,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (*CreateTopicRespons
 	return response, nil
 }
 
-func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -86,7 +86,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (*CommonResponse, er
 
 // ModifyTopic: 更新日志主题信息
 
-func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -133,7 +133,7 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (*CommonResponse, er
 
 // DescribeTopic 获取一个日志项目的信息
 
-func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (*DescribeTopicResponse, error) {
+func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopicResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -168,7 +168,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (*DescribeTopicR
 
 // DescribeTopics: 获取日志主题列表
 
-func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (*DescribeTopicsResponse, error) {
+func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTopicsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

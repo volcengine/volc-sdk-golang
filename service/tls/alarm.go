@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmResponse, error) {
+func (c *LsClient) CreateAlarm(request *CreateAlarmRequest) (r *CreateAlarmResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -38,7 +38,7 @@ func (c *LsClient) CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmRespons
 	return response, nil
 }
 
-func (c *LsClient) DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteAlarm(request *DeleteAlarmRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -69,7 +69,7 @@ func (c *LsClient) DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) ModifyAlarm(request *ModifyAlarmRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyAlarm(request *ModifyAlarmRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -100,7 +100,7 @@ func (c *LsClient) ModifyAlarm(request *ModifyAlarmRequest) (*CommonResponse, er
 	return response, nil
 }
 
-func (c *LsClient) DescribeAlarms(request *DescribeAlarmsRequest) (*DescribeAlarmsResponse, error) {
+func (c *LsClient) DescribeAlarms(request *DescribeAlarmsRequest) (r *DescribeAlarmsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -161,7 +161,7 @@ func (c *LsClient) DescribeAlarms(request *DescribeAlarmsRequest) (*DescribeAlar
 	return response, nil
 }
 
-func (c *LsClient) CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest) (*CreateAlarmNotifyGroupResponse, error) {
+func (c *LsClient) CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest) (r *CreateAlarmNotifyGroupResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -192,7 +192,7 @@ func (c *LsClient) CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest
 	return response, nil
 }
 
-func (c *LsClient) DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -223,7 +223,7 @@ func (c *LsClient) DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest
 	return response, nil
 }
 
-func (c *LsClient) ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -254,7 +254,7 @@ func (c *LsClient) ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest
 	return response, nil
 }
 
-func (c *LsClient) DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsRequest) (*DescribeAlarmNotifyGroupsResponse, error) {
+func (c *LsClient) DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsRequest) (r *DescribeAlarmNotifyGroupsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

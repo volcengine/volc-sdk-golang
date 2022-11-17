@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func (c *LsClient) CreateProject(request *CreateProjectRequest) (*CreateProjectResponse, error) {
+func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjectResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -44,7 +44,7 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (*CreateProjectR
 	return response, nil
 }
 
-func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (*CommonResponse, error) {
+func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -78,7 +78,7 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (*CommonResponse
 	return response, nil
 }
 
-func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (*DescribeProjectResponse, error) {
+func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (r *DescribeProjectResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -111,7 +111,7 @@ func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (*DescribePr
 	return response, nil
 }
 
-func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (*DescribeProjectsResponse, error) {
+func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *DescribeProjectsResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -159,7 +159,7 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (*Describe
 	return response, nil
 }
 
-func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (*CommonResponse, error) {
+func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (r *CommonResponse, e error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

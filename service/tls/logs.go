@@ -3,22 +3,21 @@ package tls
 import (
 	"encoding/json"
 	"errors"
+	"github.com/gogo/protobuf/proto"
+	"github.com/pierrec/lz4"
+	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/gogo/protobuf/proto"
-	"github.com/pierrec/lz4"
-	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
 const (
 	rawBodySizeHeader = "x-tls-bodyrawsize"
 )
 
-func (c *LsClient) PutLogs(request *PutLogsRequest) (*CommonResponse, error) {
+func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error) {
 	if len(request.LogBody.LogGroups) == 0 {
 		return nil, nil
 	}
@@ -103,7 +102,7 @@ func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroup
 	return list, nil
 }
 
-func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error) {
+func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsResponse, e error) {
 	params := map[string]string{
 		"TopicId": request.TopicID,
 		"ShardId": strconv.Itoa(request.ShardID),
@@ -183,7 +182,7 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsRespons
 	return response, nil
 }
 
-func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error) {
+func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (r *DescribeCursorResponse, e error) {
 	params := map[string]string{
 		"TopicId": request.TopicID,
 		"ShardId": strconv.Itoa(request.ShardID),
@@ -214,6 +213,54 @@ func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (*DescribeCurs
 	}
 
 	var response = &DescribeCursorResponse{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *LsClient) DescribeLogContext(request *DescribeLogContextRequest) (r *DescribeLogContextResponse, e error) {
+	params := map[string]string{}
+
+	headers := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]interface{}{
+		"TopicId":       request.TopicId,
+		"ContextFlow":   request.ContextFlow,
+		"PackageOffset": request.PackageOffset,
+		"Source":        request.Source,
+	}
+
+	if request.PrevLogs != nil {
+		reqBody["PrevLogs"] = *request.PrevLogs
+	}
+
+	if request.NextLogs != nil {
+		reqBody["NextLogs"] = *request.NextLogs
+	}
+
+	bytesBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPost, PathDescribeLogContext, params, headers, bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &DescribeLogContextResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

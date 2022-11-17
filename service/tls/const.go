@@ -32,9 +32,10 @@ const (
 
 	PathDescribeShards = "/DescribeShards"
 
-	PathPutLogs        = "/PutLogs"
-	PathDescribeCursor = "/DescribeCursor"
-	PathConsumeLogs    = "/ConsumeLogs"
+	PathPutLogs            = "/PutLogs"
+	PathDescribeCursor     = "/DescribeCursor"
+	PathConsumeLogs        = "/ConsumeLogs"
+	PathDescribeLogContext = "/DescribeLogContext"
 
 	PathCreateRule               = "/CreateRule"
 	PathDeleteRule               = "/DeleteRule"
@@ -44,12 +45,13 @@ const (
 	PathApplyRuleToHostGroups    = "/ApplyRuleToHostGroups"
 	PathDeleteRuleFromHostGroups = "/DeleteRuleFromHostGroups"
 
-	PathCreateHostGroup        = "/CreateHostGroup"
-	PathDeleteHostGroup        = "/DeleteHostGroup"
-	PathModifyHostGroup        = "/ModifyHostGroup"
-	PathDescribeHostGroup      = "/DescribeHostGroup"
-	PathDescribeHostGroups     = "/DescribeHostGroups"
-	PathDescribeHostGroupRules = "/DescribeHostGroupRules"
+	PathCreateHostGroup            = "/CreateHostGroup"
+	PathDeleteHostGroup            = "/DeleteHostGroup"
+	PathModifyHostGroup            = "/ModifyHostGroup"
+	PathDescribeHostGroup          = "/DescribeHostGroup"
+	PathDescribeHostGroups         = "/DescribeHostGroups"
+	PathDescribeHostGroupRules     = "/DescribeHostGroupRules"
+	PathModifyHostGroupsAutoUpdate = "/ModifyHostGroupsAutoUpdate"
 
 	PathDeleteHost    = "/DeleteHost"
 	PathDescribeHosts = "/DescribeHosts"
@@ -62,4 +64,16 @@ const (
 	PathDeleteAlarm               = "/DeleteAlarm"
 	PathModifyAlarm               = "/ModifyAlarm"
 	PathDescribeAlarms            = "/DescribeAlarms"
+
+	PathCreateDownloadTask    = "/CreateDownloadTask"
+	PathDescribeDownloadTasks = "/DescribeDownloadTasks"
+	PathDescribeDownloadUrl   = "/DescribeDownloadUrl"
+
+	PathWebTracks = "/WebTracks"
+
+	PathDescribeHistogram = "/DescribeHistogram"
+
+	PathOpenKafkaConsumer     = "/OpenKafkaConsumer"
+	PathCloseKafkaConsumer    = "/CloseKafkaConsumer"
+	PathDescribeKafkaConsumer = "/DescribeKafkaConsumer"
 )
