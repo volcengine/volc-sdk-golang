@@ -246,6 +246,11 @@ type DeviceResponse struct {
 	Result           IDResponse `json:"Result,omitempty"`
 }
 
+type CloudRecordPlayResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           map[string]interface{} `json:"Result,omitempty"`
+}
+
 type LocalMediaDownloadResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           LocalMediaDownloadResp `json:"Result,omitempty"`
@@ -447,6 +452,37 @@ type ListStreamsResponse struct {
 	Result           ListStreamsResult `json:"Result,omitempty"`
 }
 
+type GetStreamDataResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           GetStreamDataRes `json:"Result,omitempty"`
+}
+
+type GetStreamDataRes struct {
+	BVideo []DataProject
+	BAudio []DataProject
+	FPS    []DataProject
+	Height int
+	Width  int
+}
+
+type StreamLogsResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           ListStreamRecordsResult `json:"Result,omitempty"`
+}
+
+type ListStreamRecordsResult struct {
+	PageResult
+	StreamRecords []*StreamRecord
+}
+
+type StreamRecord struct {
+	RecordID  string `bson:"RecordID"`
+	StreamID  string `bson:"StreamID"`
+	StartTime int    `bson:"StartTime"`
+	EndTime   int    `bson:"EndTime"`
+	Duration  int    `bson:"Duration"`
+}
+
 type ListStreamsResult struct {
 	PageResult
 	Streams []*StreamResp
@@ -624,6 +660,16 @@ type ListCascadePlatformResponse struct {
 type CreateCascadeTaskResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           IDResponse `json:"Result,omitempty"`
+}
+
+type ListCascadeTaskResult struct {
+	PageResult
+	CascadeTasks []*CascadeTask `json:"CascadeTasks"`
+}
+
+type ListCascadeTaskResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           ListCascadeTaskResult `json:"Result,omitempty"`
 }
 
 type CascadeTask struct {

@@ -451,6 +451,8 @@ func (p *AIoT) ListDevices(request *ListDevicesRequest) (*ListDevicesResponse, i
 	if request.Order != "" {
 		query.Add("Order", request.Order)
 	}
+	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
+	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
 	statusCode, err := p.commonHandler("ListDevices", query, resp)
 	if err != nil {
 		return nil, statusCode, err
@@ -476,6 +478,16 @@ func (p *AIoT) UpdateDevice(request *UpdateDeviceRequest) (*DeviceResponse, int,
 		"DeviceID": []string{request.DeviceID},
 	}
 	statusCode, err := p.commonHandlerJson("UpdateDevice", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CloudRecordPlay(request *CloudRecordPlayRequest) (*CloudRecordPlayResponse, int, error) {
+	resp := new(CloudRecordPlayResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CloudRecordPlay", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -766,6 +778,35 @@ func (p *AIoT) ListStreams(request *ListStreamsRequest) (*ListStreamsResponse, i
 		query.Add("Order", request.Order)
 	}
 	statusCode, err := p.commonHandler("ListStreams", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) GetStreamData(request *GetStreamDataRequest) (*GetStreamDataResponse, int, error) {
+	resp := new(GetStreamDataResponse)
+	query := url.Values{}
+	query.Add("StreamID", request.StreamID)
+	query.Add("StartTime", request.StartTime)
+	query.Add("EndTime", request.EndTime)
+	statusCode, err := p.commonHandlerJson("GetStreamData", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) StreamLogs(request *StreamLogsRequest) (*StreamLogsResponse, int, error) {
+	resp := new(StreamLogsResponse)
+	query := url.Values{}
+	query.Add("StreamID", request.StreamID)
+	query.Add("StartTs", request.StartTs)
+	query.Add("EndTs", request.EndTs)
+	query.Add("order", request.Order)
+	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
+	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
+	statusCode, err := p.commonHandler("StreamLogs", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -1164,8 +1205,8 @@ func (p *AIoT) GetCascadeTask(taskID string) (*GetCascadeTaskResponse, int, erro
 	return resp, statusCode, nil
 }
 
-func (p *AIoT) ListCascadeTask(request *ListCascadeTaskRequest) (*ListCascadePlatformResponse, int, error) {
-	resp := new(ListCascadePlatformResponse)
+func (p *AIoT) ListCascadeTask(request *ListCascadeTaskRequest) (*ListCascadeTaskResponse, int, error) {
+	resp := new(ListCascadeTaskResponse)
 	query := url.Values{}
 	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
 	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
