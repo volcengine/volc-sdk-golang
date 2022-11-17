@@ -23,7 +23,7 @@ import (
  * @param *request.DescribeRecordTaskFileHistoryRequest
  * @return *response.DescribeRecordTaskFileHistoryResponse, int, error
  */
-func (p *Live) DescribeRecordTaskFileHistory(req *request.DescribeRecordTaskFileHistoryRequest) (*response.DescribeRecordTaskFileHistoryResponse, int, error) {
+func (p *LIVE) DescribeRecordTaskFileHistory(req *request.DescribeRecordTaskFileHistoryRequest) (*response.DescribeRecordTaskFileHistoryResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

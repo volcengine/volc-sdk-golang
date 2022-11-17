@@ -22,7 +22,7 @@ import (
  * @param *request.UpdateDenyConfigRequest
  * @return *response.UpdateDenyConfigResponse, int, error
  */
-func (p *Live) UpdateDenyConfig(req *request.UpdateDenyConfigRequest) (*response.UpdateDenyConfigResponse, int, error) {
+func (p *LIVE) UpdateDenyConfig(req *request.UpdateDenyConfigRequest) (*response.UpdateDenyConfigResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -59,7 +59,7 @@ func (p *Live) UpdateDenyConfig(req *request.UpdateDenyConfigRequest) (*response
  * @param *request.DescribeDenyConfigRequest
  * @return *response.DescribeDenyConfigResponse, int, error
  */
-func (p *Live) DescribeDenyConfig(req *request.DescribeDenyConfigRequest) (*response.DescribeDenyConfigResponse, int, error) {
+func (p *LIVE) DescribeDenyConfig(req *request.DescribeDenyConfigRequest) (*response.DescribeDenyConfigResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -96,7 +96,7 @@ func (p *Live) DescribeDenyConfig(req *request.DescribeDenyConfigRequest) (*resp
  * @param *request.DeleteDenyConfigRequest
  * @return *response.DeleteDenyConfigResponse, int, error
  */
-func (p *Live) DeleteDenyConfig(req *request.DeleteDenyConfigRequest) (*response.DeleteDenyConfigResponse, int, error) {
+func (p *LIVE) DeleteDenyConfig(req *request.DeleteDenyConfigRequest) (*response.DeleteDenyConfigResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

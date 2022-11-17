@@ -22,7 +22,7 @@ import (
  * @param *request.UpdateRelaySourceRequest
  * @return *response.UpdateRelaySourceResponse, int, error
  */
-func (p *Live) UpdateRelaySourceV2(req *request.UpdateRelaySourceRequest) (*response.UpdateRelaySourceResponse, int, error) {
+func (p *LIVE) UpdateRelaySourceV2(req *request.UpdateRelaySourceRequest) (*response.UpdateRelaySourceResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -59,7 +59,7 @@ func (p *Live) UpdateRelaySourceV2(req *request.UpdateRelaySourceRequest) (*resp
  * @param *request.DeleteRelaySourceRequest
  * @return *response.DeleteRelaySourceResponse, int, error
  */
-func (p *Live) DeleteRelaySourceV2(req *request.DeleteRelaySourceRequest) (*response.DeleteRelaySourceResponse, int, error) {
+func (p *LIVE) DeleteRelaySourceV2(req *request.DeleteRelaySourceRequest) (*response.DeleteRelaySourceResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -96,7 +96,7 @@ func (p *Live) DeleteRelaySourceV2(req *request.DeleteRelaySourceRequest) (*resp
  * @param *request.DescribeRelaySourceRequest
  * @return *response.DescribeRelaySourceResponse, int, error
  */
-func (p *Live) DescribeRelaySourceV2(req *request.DescribeRelaySourceRequest) (*response.DescribeRelaySourceResponse, int, error) {
+func (p *LIVE) DescribeRelaySourceV2(req *request.DescribeRelaySourceRequest) (*response.DescribeRelaySourceResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

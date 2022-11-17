@@ -24,7 +24,6 @@ func Test_UpdateRelaySourceV2(t *testing.T) {
 		Vhost:                 "your Vhost",
 		App:                   "your App",
 		RelaySourceDomainList: []string{"your RelaySourceDomainList"},
-		RelaySourceParams:     []string{nil},
 		RelaySourceProtocol:   "your RelaySourceProtocol",
 	}
 

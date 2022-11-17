@@ -24,7 +24,7 @@ import (
  * @param *request.DescribeLiveStreamInfoByPageRequest
  * @return *response.DescribeLiveStreamInfoByPageResponse, int, error
  */
-func (p *Live) DescribeLiveStreamInfoByPage(req *request.DescribeLiveStreamInfoByPageRequest) (*response.DescribeLiveStreamInfoByPageResponse, int, error) {
+func (p *LIVE) DescribeLiveStreamInfoByPage(req *request.DescribeLiveStreamInfoByPageRequest) (*response.DescribeLiveStreamInfoByPageResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -117,7 +117,7 @@ func (p *Live) DescribeLiveStreamInfoByPage(req *request.DescribeLiveStreamInfoB
  * @param *request.KillStreamRequest
  * @return *response.KillStreamResponse, int, error
  */
-func (p *Live) KillStream(req *request.KillStreamRequest) (*response.KillStreamResponse, int, error) {
+func (p *LIVE) KillStream(req *request.KillStreamRequest) (*response.KillStreamResponse, int, error) {
 	body, err := json.Marshal(req)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
@@ -154,7 +154,7 @@ func (p *Live) KillStream(req *request.KillStreamRequest) (*response.KillStreamR
  * @param *request.DescribeClosedStreamInfoByPageRequest
  * @return *response.DescribeClosedStreamInfoByPageResponse, int, error
  */
-func (p *Live) DescribeClosedStreamInfoByPage(req *request.DescribeClosedStreamInfoByPageRequest) (*response.DescribeClosedStreamInfoByPageResponse, int, error) {
+func (p *LIVE) DescribeClosedStreamInfoByPage(req *request.DescribeClosedStreamInfoByPageRequest) (*response.DescribeClosedStreamInfoByPageResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -247,7 +247,7 @@ func (p *Live) DescribeClosedStreamInfoByPage(req *request.DescribeClosedStreamI
  * @param *request.DescribeLiveStreamInfoByPageRequest
  * @return *response.DescribeLiveStreamStateResponse, int, error
  */
-func (p *Live) DescribeLiveStreamState(req *request.DescribeLiveStreamStateRequest) (*response.DescribeLiveStreamStateResponse, int, error) {
+func (p *LIVE) DescribeLiveStreamState(req *request.DescribeLiveStreamStateRequest) (*response.DescribeLiveStreamStateResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -332,7 +332,7 @@ func (p *Live) DescribeLiveStreamState(req *request.DescribeLiveStreamStateReque
  * @param *request.DescribeForbiddenStreamInfoByPageRequest
  * @return *response.DescribeForbiddenStreamInfoByPageResponse, int, error
  */
-func (p *Live) DescribeForbiddenStreamInfoByPage(req *request.DescribeForbiddenStreamInfoByPageRequest) (*response.DescribeForbiddenStreamInfoByPageResponse, int, error) {
+func (p *LIVE) DescribeForbiddenStreamInfoByPage(req *request.DescribeForbiddenStreamInfoByPageRequest) (*response.DescribeForbiddenStreamInfoByPageResponse, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{

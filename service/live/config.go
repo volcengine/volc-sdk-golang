@@ -807,14 +807,14 @@ var (
 // DefaultInstance
 var DefaultInstance = NewInstance()
 
-// Live .
-type Live struct {
+// LIVE .
+type LIVE struct {
 	*base.Client
 }
 
 // NewInstance create a instance
-func NewInstance() *Live {
-	instance := &Live{}
+func NewInstance() *LIVE {
+	instance := &LIVE{}
 	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
 	instance.Client.ServiceInfo.Credentials.Service = ServiceName
 	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
@@ -822,12 +822,12 @@ func NewInstance() *Live {
 }
 
 // GetServiceInfo interface
-func (p *Live) GetServiceInfo() *base.ServiceInfo {
+func (p *LIVE) GetServiceInfo() *base.ServiceInfo {
 	return ServiceInfo
 }
 
 // GetAPIInfo interface
-func (p *Live) GetAPIInfo(api string) *base.ApiInfo {
+func (p *LIVE) GetAPIInfo(api string) *base.ApiInfo {
 	if apiInfo, ok := ApiInfoList[api]; ok {
 		return apiInfo
 	}
@@ -835,16 +835,16 @@ func (p *Live) GetAPIInfo(api string) *base.ApiInfo {
 }
 
 // SetHost .
-func (p *Live) SetRegion(region string) {
+func (p *LIVE) SetRegion(region string) {
 	ServiceInfo.Credentials.Region = region
 }
 
 // SetHost .
-func (p *Live) SetHost(host string) {
+func (p *LIVE) SetHost(host string) {
 	p.Client.ServiceInfo.Host = host
 }
 
 // SetSchema .
-func (p *Live) SetSchema(schema string) {
+func (p *LIVE) SetSchema(schema string) {
 	p.Client.ServiceInfo.Scheme = schema
 }
