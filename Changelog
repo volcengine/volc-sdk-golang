@@ -1,5 +1,9 @@
 ### Change log
 
+2022-11-18 Bumped to version v1.0.70
+- Added trail service
+- Updated apis for tls/aiot/live
+
 2022-11-10 Bumped to version v1.0.69
 - Added live service
 - Updated apis for imagex/security/secret
