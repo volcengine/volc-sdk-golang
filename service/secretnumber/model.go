@@ -11,6 +11,7 @@ type BindAXBRequest struct {
 	NumberPoolNo    string
 	ExpireTime      int64
 	AudioRecordFlag int32
+	CallDisplayType int32
 	UserData        string
 	OutId           string
 }
@@ -21,6 +22,7 @@ type SelectNumberAndBindAXBRequest struct {
 	NumberPoolNo      string
 	ExpireTime        int64
 	AudioRecordFlag   int32
+	CallDisplayType   int32
 	CityCode          string
 	CityCodeByPhoneNo string
 	DegradeCityList   string
@@ -75,6 +77,8 @@ type QuerySubscriptionForListRequest struct {
 	Offset       int32
 	Limit        int32
 	OutId        string
+	Number       string
+	PhoneNoY     string
 }
 
 type QuerySubscriptionForListResponse struct {
@@ -90,34 +94,42 @@ type SubscriptionList struct {
 }
 
 type Subscription struct {
-	SubId      string
-	PhoneNoA   string
-	PhoneNoB   string
-	PhoneNoX   string
-	Status     int32
-	RecordFlag int32
-	EnableTime int64
-	ExpireTime int64
-	OutId      string
-	PhoneNoE   string
+	SubId               string
+	PhoneNoA            string
+	PhoneNoB            string
+	PhoneNoX            string
+	PhoneNoY            string
+	Status              int32
+	RecordFlag          int32
+	EnableTime          int64
+	ExpireTime          int64
+	CallDisplayType     int32
+	CallDisplayTypeName string
+	UserData            string
+	OutId               string
+	PhoneNoE            string
 }
 
 type UpgradeAXToAXBRequest struct {
-	NumberPoolNo string
-	SubId        string
-	PhoneNoB     string
-	UserData     string
-	OutId        string
+	NumberPoolNo    string
+	SubId           string
+	PhoneNoB        string
+	CallDisplayType int32
+	UserData        string
+	OutId           string
 }
 
 type UpdateAXBRequest struct {
-	UpdateType   string
-	NumberPoolNo string
-	SubId        string
-	ExpireTime   int64
-	PhoneNoB     string
-	UserData     string
-	OutId        string
+	UpdateType     string
+	NumberPoolNo   string
+	SubId          string
+	ExpireTime     int64
+	PhoneNoA       string
+	PhoneNoB       string
+	PhoneNoX       string
+	UserData       string
+	AutoCreateFlag int32
+	OutId          string
 }
 
 type BindAXNRequest struct {
@@ -127,7 +139,9 @@ type BindAXNRequest struct {
 	NumberPoolNo    string
 	ExpireTime      int64
 	AudioRecordFlag int32
+	CallDisplayType int32
 	UserData        string
+	OutId           string
 }
 
 type BindAXBForAXNERequest struct {
@@ -150,19 +164,26 @@ type SelectNumberAndBindAXNRequest struct {
 	NumberPoolNo      string
 	ExpireTime        int64
 	AudioRecordFlag   int32
+	CallDisplayType   int32
 	CityCode          string
 	CityCodeByPhoneNo string
 	DegradeCityList   string
 	UserData          string
+	RandomFlag        int32
+	OutId             string
 }
 
 type UpdateAXNRequest struct {
-	UpdateType   string
-	NumberPoolNo string
-	SubId        string
-	ExpireTime   int64
-	PhoneNoB     string
-	PhoneNoA     string
+	UpdateType     string
+	NumberPoolNo   string
+	SubId          string
+	ExpireTime     int64
+	PhoneNoB       string
+	PhoneNoA       string
+	PhoneNoX       string
+	UserData       string
+	AutoCreateFlag int32
+	OutId          string
 }
 
 type BindAXNERequest struct {
@@ -193,6 +214,7 @@ type UpdateAXNERequest struct {
 	SubId          string
 	PhoneNoA       string
 	PhoneNoB       string
+	PhoneNoX       string
 	ExpireTime     int64
 	UserData       string
 	OutId          string
@@ -346,6 +368,9 @@ type UpdateNumberPoolResponse struct {
 }
 
 type NumberPoolListRequest struct {
+	QueryAccountId string
+	NumberPoolNo   string
+	NumberPoolName string
 	ServiceType    string
 	SubServiceType string
 	Limit          string
@@ -375,6 +400,7 @@ type NumberPoolListResponse struct {
 }
 
 type NumberListRequest struct {
+	QueryAccountId     string
 	Number             string
 	NumberPoolNo       string
 	NumberPoolTypeCode string
@@ -400,6 +426,7 @@ type NumberData struct {
 	ServiceTypeDesc     string
 	QualificationNo     string
 	QualificationEntity string
+	CurrentBindCount    int32
 }
 
 type NumberListPagedResponse struct {
@@ -462,6 +489,8 @@ type NumberApplyRecordData struct {
 	ApplyBillId         string
 	QualificationId     int32
 	QualificationEntity string
+	MobileTypeCode      int32
+	MobileTypeDesc      string
 }
 
 type QueryNumberApplyRecordListPagedResponse struct {
@@ -491,6 +520,7 @@ type CreateNumberApplicationRequest struct {
 	NumberType                    string
 	SubServiceType                string
 	Remark                        string
+	MobileType                    int32
 	NumberApplicationCityItemList []NumberApplicationCityItem
 }
 
@@ -510,12 +540,15 @@ type AddQualificationRequest struct {
 }
 
 type QualificationMainInfoFormDO struct {
+	QualificationId                                int32
+	AccountId                                      string
 	QualificationEntity                            string
 	CertificateThreeInOne                          int32
 	EnterpriseAddress                              string
 	LegalRepresentativeName                        string
 	LegalRepresentativeId                          string
 	LegalRepresentativeFrontIdPhotoFileCode        string
+	LegalRepresentativeBackIdPhotoFileCode         string
 	DocOfNumberApplyPhotoFileCode                  string
 	CommitmentLetterOfNetAccessPhotoFileCode       string
 	UnitSocialCreditCode                           string
@@ -528,15 +561,21 @@ type QualificationMainInfoFormDO struct {
 }
 
 type QualificationAdminInfoFormDO struct {
-	Name                              string
-	ContactNumber                     string
-	IdCardNumber                      string
-	IdCardFrontPhotoFileCode          string
-	IdCardBackPhotoWithPeopleFileCode string
+	QualificationId               int32
+	ApprovalInstanceCode          string
+	AccountId                     string
+	Name                          string
+	ContactNumber                 string
+	IdCardNumber                  string
+	IdCardFrontPhotoFileCode      string
+	IdCardBackPhotoFileCode       string
+	IdCardPhotoWithPeopleFileCode string
 }
 
 type QualificationScenarioInfoFormDO struct {
+	QualificationId   int32
 	QualificationNo   string
+	AccountId         string
 	SceneType         int32
 	Description       string
 	ScenarioOfCalling string
@@ -581,10 +620,12 @@ type UpdateQualificationSceneResponse struct {
 }
 
 type QueryQualificationRequest struct {
-	QualificationNoList []string
-	ApprovalStatus      string
-	Offset              int32
-	Limit               int32
+	AccountId                       string
+	QualificationNoList             []string
+	ApprovalStatus                  string
+	Offset                          int32
+	Limit                           int32
+	QualificationEntityQueryPattern string
 }
 
 type QualificationMainInfoVO struct {
@@ -611,17 +652,25 @@ type QualificationMainInfoVO struct {
 }
 
 type QualificationAdminInfoVO struct {
-	Name                         string
-	ContactNumber                string
-	IdCardNumber                 string
-	IdCardFrontPhotoURL          string
-	IdCardBackPhotoWithPeopleURL string
+	QualificationId          int32
+	ApprovalInstanceCode     string
+	AccountId                string
+	Name                     string
+	ContactNumber            string
+	IdCardNumber             string
+	IdCardFrontPhotoURL      string
+	IdCardBackPhotoURL       string
+	IdCardPhotoWithPeopleURL string
 }
 
 type QualificationScenarioInfoVO struct {
+	QualificationId   int32
+	AccountId         string
 	SceneType         int32
+	SceneTypeStr      string
 	Description       string
 	ScenarioOfCalling string
+	SceneId           int32
 }
 
 type QueryQualificationVO struct {
