@@ -2,10 +2,11 @@ package cdn
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // Warning: these tests may fail when the test interval is less than 2 minutes due to the configuring.
@@ -44,17 +45,17 @@ func TestMain(m *testing.M) {
 func TestCDN_AddCdnDomain(t *testing.T) {
 	resp, err := DefaultInstance.AddCdnDomain(&AddCdnDomainRequest{
 		Domain:      testDomain2,
-		ServiceType: "web",
+		ServiceType: GetStrPtr("web"),
 		Origin: []OriginRule{
-			{OriginAction: OriginAction{
+			{OriginAction: &OriginAction{
 				OriginLines: []OriginLine{
 					{
-						OriginType:   "primary",
-						InstanceType: "ip",
-						Address:      "1.1.1.1",
-						HttpPort:     "80",
-						HttpsPort:    "80",
-						Weight:       "100",
+						OriginType:   GetStrPtr("primary"),
+						InstanceType: GetStrPtr("ip"),
+						Address:      GetStrPtr("1.1.1.1"),
+						HttpPort:     GetStrPtr("80"),
+						HttpsPort:    GetStrPtr("80"),
+						Weight:       GetStrPtr("100"),
 					},
 				},
 			}},
@@ -104,17 +105,17 @@ func TestCDN_DescribeCdnConfig(t *testing.T) {
 
 func TestCDN_UpdateCdnConfig(t *testing.T) {
 	resp, err := DefaultInstance.UpdateCdnConfig(&UpdateCdnConfigRequest{
-		Domain: testDomain2,
+		Domain: &testDomain2,
 		Origin: []OriginRule{
-			{OriginAction: OriginAction{
+			{OriginAction: &OriginAction{
 				OriginLines: []OriginLine{
 					{
-						OriginType:   "primary",
-						InstanceType: "ip",
-						Address:      "1.1.1.1",
-						HttpPort:     "80",
-						HttpsPort:    "80",
-						Weight:       "100",
+						OriginType:   GetStrPtr("primary"),
+						InstanceType: GetStrPtr("ip"),
+						Address:      GetStrPtr("1.1.1.1"),
+						HttpPort:     GetStrPtr("80"),
+						HttpsPort:    GetStrPtr("80"),
+						Weight:       GetStrPtr("100"),
 					},
 				},
 			}},
@@ -179,7 +180,7 @@ func TestCDN_DescribeCdnDataDetail(t *testing.T) {
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.NotEmpty(t, resp.Result.Domain)
+	assert.NotEmpty(t, resp.Result.Name)
 	assert.NotEmpty(t, resp.Result.DataDetails)
 }
 
@@ -188,7 +189,7 @@ func TestCDN_DescribeEdgeStatisticalData(t *testing.T) {
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
 		Metric:    "clientIp",
-		Domain:    exampleDomain,
+		Domain:    &exampleDomain,
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
@@ -246,7 +247,7 @@ func TestCDN_DescribeEdgeTopStatisticalData(t *testing.T) {
 	resp, err := DefaultInstance.DescribeEdgeTopStatisticalData(&DescribeEdgeTopStatisticalDataRequest{
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
-		Metric:    &metric,
+		Metric:    metric,
 		Item:      "url",
 		Domain:    exampleDomain,
 	})
@@ -328,8 +329,8 @@ func TestCDN_SubmitPreloadTask(t *testing.T) {
 func TestCDN_DescribeContentTasks(t *testing.T) {
 	resp, err := DefaultInstance.DescribeContentTasks(&DescribeContentTasksRequest{
 		TaskType:  typeFile,
-		StartTime: testStartTime,
-		EndTime:   testEndTime,
+		StartTime: &testStartTime,
+		EndTime:   &testEndTime,
 	})
 	assert.NoError(t, err)
 	assert.Greater(t, int(resp.Result.Total), 0)
@@ -360,8 +361,8 @@ func TestCDN_SubmitUnblockTask(t *testing.T) {
 func TestCDN_DescribeContentBlockTasks(t *testing.T) {
 	resp, err := DefaultInstance.DescribeContentBlockTasks(&DescribeContentBlockTasksRequest{
 		TaskType:  typeFile,
-		StartTime: testStartTime,
-		EndTime:   testEndTime,
+		StartTime: &testStartTime,
+		EndTime:   &testEndTime,
 	})
 	assert.NoError(t, err)
 	assert.NotEmpty(t, resp.Result.Data)
@@ -387,10 +388,10 @@ func TestCDN_DescribeCdnAccessLog(t *testing.T) {
 
 func TestCDN_DescribeIPInfo(t *testing.T) {
 	resp, err := DefaultInstance.DescribeIPInfo(&DescribeIPInfoRequest{
-		IP: testDomain3,
+		IP: "1.1.1.1",
 	})
 	assert.NoError(t, err)
-	assert.Equal(t, testDomain3, resp.Result.IP)
+	assert.Equal(t, "1.1.1.1", resp.Result.IP)
 }
 
 func TestCDN_DescribeCdnUpperIp(t *testing.T) {
@@ -403,8 +404,8 @@ func TestCDN_DescribeCdnUpperIp(t *testing.T) {
 func TestCDN_AddResourceTags(t *testing.T) {
 	resp, err := DefaultInstance.AddResourceTags(&AddResourceTagsRequest{
 		Resources: []string{"www.example1.com", "www.example2.com"},
-		ResourceTags: []ResourceTagEntry{
-			{Key: "userKey", Value: "userValue"},
+		ResourceTags: []ResourceTag{
+			{Key: GetStrPtr("userKey"), Value: GetStrPtr("userValue")},
 		},
 	})
 	assert.NoError(t, err)
@@ -414,8 +415,8 @@ func TestCDN_AddResourceTags(t *testing.T) {
 func TestCDN_UpdateResourceTags(t *testing.T) {
 	resp, err := DefaultInstance.UpdateResourceTags(&UpdateResourceTagsRequest{
 		Resources: []string{"www.example1.com", "www.example2.com"},
-		ResourceTags: []ResourceTagEntry{
-			{Key: "userKey", Value: "userValue"},
+		ResourceTags: []ResourceTag{
+			{Key: GetStrPtr("userKey"), Value: GetStrPtr("userValue")},
 		},
 	})
 	assert.NoError(t, err)
@@ -432,8 +433,8 @@ func TestCDN_ListResourceTags(t *testing.T) {
 func TestCDN_DeleteResourceTags(t *testing.T) {
 	resp, err := DefaultInstance.DeleteResourceTags(&DeleteResourceTagsRequest{
 		Resources: []string{"www.example1.com", "www.example2.com"},
-		ResourceTags: []ResourceTagEntry{
-			{Key: "userKey", Value: "userValue"},
+		ResourceTags: []ResourceTag{
+			{Key: GetStrPtr("userKey"), Value: GetStrPtr("userValue")},
 		},
 	})
 	assert.NoError(t, err)

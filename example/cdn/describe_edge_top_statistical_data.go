@@ -1,9 +1,10 @@
 package cdn
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/volcengine/volc-sdk-golang/service/cdn"
-	"testing"
 )
 
 func DescribeEdgeTopStatisticalData(t *testing.T) {
@@ -11,7 +12,7 @@ func DescribeEdgeTopStatisticalData(t *testing.T) {
 	resp, err := DefaultInstance.DescribeEdgeTopStatisticalData(&cdn.DescribeEdgeTopStatisticalDataRequest{
 		StartTime: testStartTime,
 		EndTime:   testEndTime,
-		Metric:    &metric,
+		Metric:    metric,
 		Domain:    exampleDomain,
 		Item:      "url",
 	})

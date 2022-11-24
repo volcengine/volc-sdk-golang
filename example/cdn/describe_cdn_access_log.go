@@ -1,9 +1,10 @@
 package cdn
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/volcengine/volc-sdk-golang/service/cdn"
-	"testing"
 )
 
 func DescribeCdnAccessLog(t *testing.T) {

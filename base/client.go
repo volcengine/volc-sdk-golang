@@ -343,6 +343,11 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 		req.Header.Set("Content-Type", ct)
 	}
 
+	if req.UserAgent() == "" {
+		req.Header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
+		fmt.Println(req.UserAgent())
+	}
+
 	var resp []byte
 	var code int
 
