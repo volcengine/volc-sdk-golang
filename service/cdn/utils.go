@@ -59,3 +59,7 @@ func (s *CDN) post(apiName string, requestBody interface{}, responseBody interfa
 	}
 	return
 }
+
+func GetStrPtr(str string) *string {
+	return &str
+}

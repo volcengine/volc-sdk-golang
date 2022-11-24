@@ -2,8 +2,9 @@ package cdn
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type commonResponse struct {

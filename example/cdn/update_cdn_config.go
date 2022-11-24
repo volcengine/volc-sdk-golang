@@ -1,24 +1,25 @@
 package cdn
 
 import (
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/volcengine/volc-sdk-golang/service/cdn"
-	"testing"
 )
 
 func UpdateCdnConfig(t *testing.T) {
 	resp, err := DefaultInstance.UpdateCdnConfig(&cdn.UpdateCdnConfigRequest{
-		Domain: exampleDomain,
+		Domain: &exampleDomain,
 		Origin: []cdn.OriginRule{
-			{OriginAction: cdn.OriginAction{
+			{OriginAction: &cdn.OriginAction{
 				OriginLines: []cdn.OriginLine{
 					{
-						OriginType:   "primary",
-						InstanceType: "domain",
-						Address:      "new-origin.com",
-						HttpPort:     "80",
-						HttpsPort:    "80",
-						Weight:       "100",
+						OriginType:   cdn.GetStrPtr("primary"),
+						InstanceType: cdn.GetStrPtr("ip"),
+						Address:      cdn.GetStrPtr("1.1.1.1"),
+						HttpPort:     cdn.GetStrPtr("80"),
+						HttpsPort:    cdn.GetStrPtr("80"),
+						Weight:       cdn.GetStrPtr("100"),
 					},
 				},
 			}},
