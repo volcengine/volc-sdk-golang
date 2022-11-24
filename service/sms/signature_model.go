@@ -33,6 +33,7 @@ type ApplySmsSignatureRequest struct {
 	SubAccount    string `json:"subAccount"`
 	Content       string `json:"content"`
 	Source        string `json:"source"`
+	Domain        string `json:"domain,omitempty"`
 	Desc          string `json:"desc,omitempty"`
 	UploadFileKey string `json:"uploadFileKey,omitempty"`
 }
