@@ -769,7 +769,7 @@ type GroupTreeNode struct {
 	Device      *GroupDevice     `json:"Device"`
 }
 
-type CreateVoiceTalkResponse struct {
+type StartVoiceTalkResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           StartVoiceTalkResp
 }
@@ -778,7 +778,7 @@ type StartVoiceTalkResp struct {
 	AudioSendUrl string `json:"AudioSendUrl"`
 }
 
-type DeleteVoiceTalkResponse struct {
+type StopVoiceTalkResponse struct {
 	ResponseMetadata base.ResponseMetadata
 }
 
@@ -1133,6 +1133,15 @@ type GetTotalDataRes struct {
 type GetTotalDataResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           GetTotalDataRes `json:"Result,omitempty"`
+}
+
+type GetPushStreamCntResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           GetPushStreamCntRes `json:"Result,omitempty"`
+}
+
+type GetPushStreamCntRes struct {
+	Cnt []DataProject
 }
 
 type ListAlarmNotifyResponse struct {
