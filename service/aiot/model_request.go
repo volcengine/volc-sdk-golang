@@ -435,13 +435,13 @@ type GetDevicesByGroupTreeNodeRequest struct {
 	SearchName string `json:"SearchName"`
 }
 
-type CreateVoiceTalkRequest struct {
+type StartVoiceTalkRequest struct {
 	SpaceID    string
 	DeviceNSID string
 	UseTcp     bool
 }
 
-type DeleteVoiceTalkRequest struct {
+type StopVoiceTalkRequest struct {
 	SpaceID    string
 	DeviceNSID string
 }
@@ -739,6 +739,12 @@ type GetDataProjectWithBindWidthAndFlowRequest struct {
 	StartTime  string
 	EndTime    string
 	Data       string
+}
+
+type GetPushStreamCntRequest struct {
+	SpaceID   string
+	StartTime string
+	EndTime   string
 }
 
 type SetAlarmGuardRequest struct {

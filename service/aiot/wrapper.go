@@ -304,6 +304,20 @@ func (p *AIoT) GetTotalData(t string) (*GetTotalDataResponse, int, error) {
 	return resp, statusCode, nil
 }
 
+func (p *AIoT) GetPushStreamCnt(request *GetPushStreamCntRequest) (*GetPushStreamCntResponse, int, error) {
+	resp := new(GetPushStreamCntResponse)
+	query := url.Values{
+		"SpaceID":   []string{request.SpaceID},
+		"StartTime": []string{request.StartTime},
+		"EndTime":   []string{request.EndTime},
+	}
+	statusCode, err := p.commonHandler("GetPushStreamCnt", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 //device相关
 func (p *AIoT) CreateDevice(request *CreateDeviceRequest) (*CreateDeviceResponse, int, error) {
 	resp := new(CreateDeviceResponse)
@@ -1381,7 +1395,7 @@ func (p *AIoT) GetDevicesByGroupTreeNode(request *GetDevicesByGroupTreeNodeReque
 	return resp, statusCode, nil
 }
 
-func (p *AIoT) CreateVoiceTalk(request *CreateVoiceTalkRequest) (*StartVoiceTalkResp, int, error) {
+func (p *AIoT) StartVoiceTalk(request *StartVoiceTalkRequest) (*StartVoiceTalkResponse, int, error) {
 	transport := "tcp"
 	if !request.UseTcp {
 		transport = "udp"
@@ -1391,26 +1405,26 @@ func (p *AIoT) CreateVoiceTalk(request *CreateVoiceTalkRequest) (*StartVoiceTalk
 		"DeviceNSID": []string{request.DeviceNSID},
 		"transport":  []string{transport},
 	}
-	resp := CreateVoiceTalkResponse{}
-	statusCode, err := p.commonHandler("StartVoiceTalk", query, &resp)
+	resp := &StartVoiceTalkResponse{}
+	statusCode, err := p.commonHandler("StartVoiceTalk", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
-	return &resp.Result, statusCode, nil
+	return resp, statusCode, nil
 }
 
-func (p *AIoT) DeleteVoiceTalk(request *DeleteVoiceTalkRequest) (int, error) {
+func (p *AIoT) StopVoiceTalk(request *StopVoiceTalkRequest) (*StopVoiceTalkResponse, int, error) {
 	query := url.Values{
 		"SpaceID":    []string{request.SpaceID},
 		"DeviceNSID": []string{request.DeviceNSID},
 		"transport":  []string{},
 	}
-	resp := DeleteVoiceTalkResponse{}
-	statusCode, err := p.commonHandler("StopVoiceTalk", query, &resp)
+	resp := &StopVoiceTalkResponse{}
+	statusCode, err := p.commonHandler("StopVoiceTalk", query, resp)
 	if err != nil {
-		return statusCode, err
+		return nil, statusCode, err
 	}
-	return statusCode, nil
+	return resp, statusCode, nil
 }
 
 //慢直播相关
