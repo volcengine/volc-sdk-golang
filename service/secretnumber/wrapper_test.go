@@ -336,11 +336,11 @@ func TestConfigService_AddQualification(t *testing.T) {
 	}
 
 	qualificationAdminInfoFormDO := QualificationAdminInfoFormDO{
-		Name:                              "2",
-		ContactNumber:                     "2",
-		IdCardNumber:                      "2",
-		IdCardFrontPhotoFileCode:          "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
-		IdCardBackPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		Name:                          "2",
+		ContactNumber:                 "2",
+		IdCardNumber:                  "2",
+		IdCardFrontPhotoFileCode:      "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		IdCardPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
 	}
 
 	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
@@ -383,11 +383,11 @@ func TestConfigService_UpdateQualification(t *testing.T) {
 	}
 
 	qualificationAdminInfoFormDO := QualificationAdminInfoFormDO{
-		Name:                              "2",
-		ContactNumber:                     "2",
-		IdCardNumber:                      "2",
-		IdCardFrontPhotoFileCode:          "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
-		IdCardBackPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		Name:                          "2",
+		ContactNumber:                 "2",
+		IdCardNumber:                  "2",
+		IdCardFrontPhotoFileCode:      "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
+		IdCardPhotoWithPeopleFileCode: "21000428220368035c-864c-4309-94d7-fd0f2c5d16efLegalRepresentativeFrontIDPhoto.jpeg",
 	}
 
 	qualificationScenarioInfoFormDOList := []QualificationScenarioInfoFormDO{
