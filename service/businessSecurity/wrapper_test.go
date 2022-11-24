@@ -2,6 +2,7 @@ package businessSecurity
 
 import (
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/base"
 	"testing"
 )
 
@@ -337,4 +338,70 @@ func TestTextSliceRisk(t *testing.T) {
 		return
 	}
 	t.Logf("%v", resp.String())
+}
+
+func TestBusinessSecurity_ElementVerifyEncrypted(t *testing.T) {
+	type fields struct {
+		Client *base.Client
+		retry  bool
+	}
+	type args struct {
+		encryptedType string
+		secretKey     string
+		req           *ElementVerifyRequest
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    *ElementVerifyResponseV2
+		wantErr bool
+	}{
+		{
+			name: "test_element_verity_encrypted_01",
+			fields: fields{
+				Client: DefaultInstance.Client,
+				retry:  true,
+			},
+			args: args{
+				encryptedType: "AES",
+				secretKey:     "your private key",
+				req: &ElementVerifyRequest{
+					AppId:   10067295,
+					Service: "mobile_three_element_verify",
+					// json string
+					Parameters: "{\"operate_time\": 1635321212,\"mobile\":\"18400457239\",\"idcard_name\":\"xxxxx\", \"idcard_no\":\"630105199705251716\",\"bank_acc\":\"6214832935433257\"}",
+				},
+			},
+			want: &ElementVerifyResponseV2{
+				Code: 1012,
+				Data: ElementVerifyDataV2{
+					Status: 0,
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			p := &BusinessSecurity{
+				Client: tt.fields.Client,
+				retry:  tt.fields.retry,
+			}
+			got, err := p.ElementVerifyEncrypted(tt.args.encryptedType, tt.args.secretKey, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ElementVerifyEncrypted() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if got.Code != tt.want.Code {
+				t.Errorf("ElementVerifyEncrypted()  want code = %v, but get %v", tt.want.Code, got.Code)
+				return
+			}
+			if got.Data.Status != tt.want.Data.Status {
+				t.Errorf("ElementVerifyEncrypted()  want status = %v, but get %v", tt.want.Data.Status, got.Data.Status)
+				return
+			}
+			t.Log(got)
+		})
+	}
 }

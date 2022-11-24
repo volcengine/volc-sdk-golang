@@ -259,9 +259,10 @@ type Page struct {
 }
 
 type ElementVerifyRequest struct {
-	AppId      int64  `json:"AppId"`
-	Service    string `json:"Service"`
-	Parameters string `json:"Parameters"`
+	AppId         int64  `json:"AppId"`
+	Service       string `json:"Service"`
+	EncryptedType string `json:"EncryptedType"`
+	Parameters    string `json:"Parameters"`
 }
 
 type ElementVerifyResponse struct {

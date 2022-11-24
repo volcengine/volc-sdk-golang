@@ -262,6 +262,14 @@ var (
 				"Version": []string{"2022-04-13"},
 			},
 		},
+		"ElementVerifyEncrypted": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ElementVerifyEncrypted"},
+				"Version": []string{"2022-11-24"},
+			},
+		},
 		"MobileStatusV2": {
 			Method: http.MethodPost,
 			Path:   "/",
