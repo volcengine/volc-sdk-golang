@@ -1,5 +1,9 @@
 ### Change log
 
+2022-11-24 Bumped to version v1.0.71
+- Updated apis for secretnumber/cdn/sms/aiot
+- Updated version info for base
+
 2022-11-18 Bumped to version v1.0.70
 - Added trail service
 - Updated apis for tls/aiot/live
