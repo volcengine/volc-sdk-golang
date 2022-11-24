@@ -58,7 +58,6 @@ func init() {
 // Client
 type Client struct {
 	Client      *http.Client
-	SdkVersion  string
 	ServiceInfo *ServiceInfo
 	ApiInfoList map[string]*ApiInfo
 }
@@ -86,13 +85,6 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 			}
 		}
 	}
-
-	content, err := ioutil.ReadFile("VERSION")
-	if err == nil {
-		client.SdkVersion = strings.TrimSpace(string(content))
-		client.ServiceInfo.Header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
-	}
-
 	return client
 }
 
@@ -343,10 +335,8 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 		req.Header.Set("Content-Type", ct)
 	}
 
-	if req.UserAgent() == "" {
-		req.Header.Set("User-Agent", strings.Join([]string{"volc-sdk-golang", client.SdkVersion}, "/"))
-		fmt.Println(req.UserAgent())
-	}
+	// Because service info could be changed by SetRegion, so set UA header for every request here.
+	req.Header.Set("User-Agent", strings.Join([]string{SDKName, SDKVersion}, "/"))
 
 	var resp []byte
 	var code int
