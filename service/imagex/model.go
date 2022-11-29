@@ -253,6 +253,7 @@ type GetImageOCRGeneralTextInfo struct {
 type GetImageOCRParam struct {
 	ServiceId string
 	StoreUri  string
+	ImageUrl  string
 }
 
 // GetImageBgFillResult
