@@ -1,5 +1,8 @@
 ### Change log
 
+2022-12-05 Bumped to version v1.0.72
+- Updated apis for imagex/security
+
 2022-11-24 Bumped to version v1.0.71
 - Updated apis for secretnumber/cdn/sms/aiot
 - Updated version info for base
