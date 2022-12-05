@@ -83,16 +83,12 @@ func (c *ImageX) GetImageOCRLicense(param *GetImageOCRParam) (*GetImageOCRLicens
 	u.Set("Scene", "license")
 	u.Set("ServiceId", param.ServiceId)
 	u.Set("StoreUri", param.StoreUri)
-	data, _, err := c.Post("GetImageOCR", u, url.Values{})
+	result := new(GetImageOCRLicenseResult)
+	err := c.ImageXPost("GetImageOCR", u, param, result)
 	if err != nil {
 		return nil, fmt.Errorf("fail to request api GetImageOCR, %v", err)
 	}
-	result := new(GetImageOCRLicenseResult)
-	if err := UnmarshalResultInto(data, result); err != nil {
-		return nil, err
-	} else {
-		return result, nil
-	}
+	return result, nil
 }
 
 func (c *ImageX) GetImageOCRGeneral(param *GetImageOCRParam) (*GetImageOCRGeneralResult, error) {
@@ -100,16 +96,12 @@ func (c *ImageX) GetImageOCRGeneral(param *GetImageOCRParam) (*GetImageOCRGenera
 	u.Set("Scene", "general")
 	u.Set("ServiceId", param.ServiceId)
 	u.Set("StoreUri", param.StoreUri)
-	data, _, err := c.Post("GetImageOCR", u, url.Values{})
+	result := new(GetImageOCRGeneralResult)
+	err := c.ImageXPost("GetImageOCR", u, param, result)
 	if err != nil {
 		return nil, fmt.Errorf("fail to request api GetImageOCR, %v", err)
 	}
-	result := new(GetImageOCRGeneralResult)
-	if err := UnmarshalResultInto(data, result); err != nil {
-		return nil, err
-	} else {
-		return result, nil
-	}
+	return result, nil
 }
 
 func (c *ImageX) GetImageBgFill(param *GetImageBgFillParam) (*GetImageBgFillResult, error) {

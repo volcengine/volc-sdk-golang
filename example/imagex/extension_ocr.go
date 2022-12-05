@@ -20,6 +20,7 @@ func main() {
 	param := &imagex.GetImageOCRParam{
 		ServiceId: "service id", // 服务 ID
 		StoreUri:  "store uri",  // 文件的 Store URI
+		ImageUrl:  "",           //若StoreUri为空则访问url
 	}
 
 	// resp, err := instance.GetImageOCRGeneral(param)
