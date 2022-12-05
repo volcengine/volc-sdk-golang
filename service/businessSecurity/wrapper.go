@@ -339,6 +339,51 @@ func (p *BusinessSecurity) ElementVerifyV2(req *ElementVerifyRequest) (*ElementV
 	return result, nil
 }
 
+// ElementVerifyEncrypted 加密要素验证
+// encryptedType - 加密类型，例如：AES
+// secretKey - 秘钥(需要申请)
+func (p *BusinessSecurity) ElementVerifyEncrypted(encryptedType string, secretKey string, req *ElementVerifyRequest) (*ElementVerifyResponseV2, error) {
+	if encryptedType == "" || secretKey == "" {
+		return nil, fmt.Errorf("ElementVerifyEncrypted: encryptedType or secretKey empty")
+	}
+	if req == nil {
+		return nil, fmt.Errorf("ElementVerifyEncrypted: requset is nil")
+	}
+	req.EncryptedType = encryptedType
+	parameters, err := AesCBCEncryptWithBase64(secretKey, req.Parameters)
+	if err != nil {
+		return nil, fmt.Errorf("ElementVerifyEncrypted: fail encrypt parameters")
+	}
+	req.Parameters = parameters
+
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ElementVerifyEncryptedRequest: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("ElementVerifyEncrypted", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ElementVerifyEncrypted", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ElementVerifyEncrypted: fail to do request, %v", err)
+			}
+			result := new(ElementVerifyResponseV2)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ElementVerifyEncrypted: fail to do request, %v", err)
+	}
+	result := new(ElementVerifyResponseV2)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // text risk detection
 // 内容安全文本实时接口
 func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultResponse, error) {

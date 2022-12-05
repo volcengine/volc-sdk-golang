@@ -1,6 +1,11 @@
 package businessSecurity
 
 import (
+	"bytes"
+	"crypto/aes"
+	"crypto/cipher"
+	"encoding/base64"
+	"fmt"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -33,4 +38,30 @@ func ToUrlValues(i interface{}) (values url.Values) {
 		values.Set(typ.Field(i).Name, v)
 	}
 	return
+}
+
+// pkcs7Padding padding
+func pkcs7Padding(ciphertext []byte) []byte {
+	bs := aes.BlockSize
+	padding := bs - len(ciphertext)%bs
+	paddingText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, paddingText...)
+}
+
+// AesCBCEncryptWithBase64 encrypt
+func AesCBCEncryptWithBase64(secretKey, origData string) (string, error) {
+	if len(secretKey) < aes.BlockSize {
+		return "", fmt.Errorf("key len must be more than 16")
+	}
+	newKey := []byte(secretKey)
+	block, err := aes.NewCipher(newKey)
+	if err != nil {
+		return "", err
+	}
+	newOrigData := []byte(origData)
+	newOrigData = pkcs7Padding(newOrigData)
+	blockMode := cipher.NewCBCEncrypter(block, newKey[:block.BlockSize()])
+	encrypted := make([]byte, len(newOrigData))
+	blockMode.CryptBlocks(encrypted, newOrigData)
+	return base64.StdEncoding.EncodeToString(encrypted), nil
 }
