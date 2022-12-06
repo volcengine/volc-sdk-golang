@@ -828,3 +828,10 @@ type EdgeStatusRequest struct {
 	RTPPort       int
 	IP            string
 }
+
+type GetAIAnalysisResultRequest struct {
+	StreamID string              `json:"StreamID"`
+	StartT   int64               `json:"StartTime"`
+	EndT     int64               `json:"EndTime"`
+	AI       map[string][]string `json:"AI"`
+}

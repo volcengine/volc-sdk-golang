@@ -1952,3 +1952,15 @@ func (p *AIoT) EdgeStatus(streamID string, req *EdgeStatusRequest) (*EdgeRespons
 	}
 	return resp, statusCode, nil
 }
+
+func (p *AIoT) GetAIAnalysisResult(req *GetAIAnalysisResultRequest) (*GetAIAnalysisResultResponse, int, error) {
+	resp := new(GetAIAnalysisResultResponse)
+	query := url.Values{
+		"StreamID": []string{req.StreamID},
+	}
+	statusCode, err := p.commonHandlerJson("GetAIAnalysisResult", query, resp, req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}

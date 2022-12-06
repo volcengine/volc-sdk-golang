@@ -1229,3 +1229,70 @@ type EdgeResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           EdgeResponseDetail `json:"Result,omitempty"`
 }
+
+// ai releated model
+type ParseRecord struct {
+	AccountID   string        `json:"AccountID" bson:"AccountID"` // 账号ID
+	LibID       string        `json:"LibID" bson:"LibID"`         // 车辆库ID
+	ItemID      string        `json:"ItemID" bson:"ItemID"`       // 车辆库车辆 ID
+	AITaskID    string        `json:"AITaskID" bson:"AITaskID"`   // AI 任务ID
+	Plate       string        `json:"Plate" bson:"Plate"`         // 车牌
+	Ts          time.Duration `json:"Ts" bson:"Ts"`               // 时间戳
+	TosKey      string        `json:"TosKey" bson:"TosKey"`       // 车辆截图
+	Score       float32       `json:"Score" bson:"Score"`         // AI识别打分
+	DownloadUrl string        `json:"DownloadUrl,omitempty"`      // 存储网关下载地址
+}
+
+type RectParams struct {
+	Top    int `json:"top"`
+	Left   int `json:"left"`
+	Width  int `json:"width"`
+	Height int `json:"height"`
+}
+
+type VehicleRecord struct {
+	ObjectID       int          `json:"ObjectID,omitempty"`   // 识别ObjectID
+	Plate          string       `json:"Plate,omitempty"`      // 车牌
+	Brand          string       `json:"Brand,omitempty"`      // 品牌
+	Type           string       `json:"Type,omitempty"`       // 车辆类型
+	Color          string       `json:"Color,omitempty"`      // 车颜色
+	Status         string       `json:"Status,omitempty"`     // 车损状态
+	RectParams     *RectParams  `json:"RectParams,omitempty"` // 车辆坐标
+	Score          float32      `json:"Score,omitempty"`      // 打分
+	CarParseRecord *ParseRecord `json:"ParseRecord,omitempty"`
+}
+
+type FaceRecord struct {
+}
+
+type QualityDetection struct {
+	AICapabilityTypeBlackout     *int `json:"blackout"`
+	AICapabilityTypeHinder       *int `json:"hinder"`
+	AICapabilityTypeOverexposure *int `json:"overexposure"`
+	AICapabilityTypeBlur         *int `json:"blur"`
+	AICapabilityTypeNoise        *int `json:"noise"`
+}
+
+type SegInfo struct {
+	SegUrl     string           `json:"SegUrl"`
+	RectParams RectParams       `json:"RectParams"`
+	Vehicle    VehicleRecord    `json:"Vehicle"`
+	Face       FaceRecord       `json:"Face"`
+	VQ         QualityDetection `json:"VQ"`
+}
+
+type AIAnalysisResponse struct {
+	SegInformation []*SegInfo `json:"SegInformation"`
+	OriUrl         string     `json:"Url"`
+	Time           int64      `json:"Time"`
+}
+
+type GetAIAnalysisResult struct {
+	PageResult
+	AiResult []*AIAnalysisResponse
+}
+
+type GetAIAnalysisResultResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           GetAIAnalysisResult `json:"Result,omitempty"`
+}
