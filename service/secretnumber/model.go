@@ -14,6 +14,7 @@ type BindAXBRequest struct {
 	CallDisplayType int32
 	UserData        string
 	OutId           string
+	VerifyFlag      int32
 }
 
 type SelectNumberAndBindAXBRequest struct {
@@ -30,6 +31,7 @@ type SelectNumberAndBindAXBRequest struct {
 	RandomFlag        int32
 	IdempotentId      string
 	OutId             string
+	VerifyFlag        int32
 }
 
 type SecretBindResponse struct {
