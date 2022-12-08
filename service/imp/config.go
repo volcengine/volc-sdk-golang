@@ -38,7 +38,7 @@ func NewInstanceWithRegion(region string) *Imp {
 }
 
 const (
-	Host = "open.volcengineapi.com"
+	Host = "imp.volcengineapi.com"
 )
 
 var (
