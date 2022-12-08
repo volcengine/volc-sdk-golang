@@ -11,6 +11,7 @@ func TestGetSignatureAndOrderList(t *testing.T) {
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.GetSignatureAndOrderListRequest{
 		SubAccount: "smsAccount",
+		Signature:  "sign",
 		PageIndex:  1,
 		PageSize:   10,
 	}

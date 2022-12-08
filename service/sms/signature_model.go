@@ -4,7 +4,7 @@ import "github.com/volcengine/volc-sdk-golang/base"
 
 type GetSignatureAndOrderListRequest struct {
 	SubAccount string `url:"subAccount"`
-	Name       string `url:"name,omitempty"`
+	Signature  string `url:"signature,omitempty"`
 	PageIndex  int    `url:"pageIndex"`
 	PageSize   int    `url:"pageSize"`
 }
