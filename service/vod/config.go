@@ -118,7 +118,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ApplyUploadInfo"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		"CommitUploadInfo": {
@@ -126,7 +126,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CommitUploadInfo"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2022-01-01"},
 			},
 			Timeout: 8 * time.Second,
 		},

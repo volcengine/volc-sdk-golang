@@ -3,11 +3,12 @@ package upload
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/consts"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
 )
@@ -27,9 +28,9 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 	spaceName := "your space"
 	filePath := "material file path"
 
-	snapShotFunc := functions.SnapshotFunc(0.0)
+	snapShotFunc := functions.SnapshotFunc(business.VodUploadFunctionInput{SnapshotTime: 1.3})
 	getMetaFunc := functions.GetMetaFunc()
-	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
 		Title:       "素材测试视频",             // 标题
 		Tags:        "test",               // 多个标签可用逗号隔开
 		Description: "素材测试，视频文件",          // 素材描述信息
@@ -38,7 +39,7 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 		Format:      "mp4",                //格式。若传入 Format 的话，以您传入参数为准，否则以系统识别出的 Format 为准。若遇到特殊文件无法识别，Format 可能为空。
 	})
 
-	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc, snapShotFunc}
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc, snapShotFunc}
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
@@ -80,7 +81,7 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 	filePath := "material file path"
 
 	getMetaFunc := functions.GetMetaFunc()
-	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
 		Title:       "素材测试图片",
 		Tags:        "test",
 		Description: "素材测试，图片文件",
@@ -89,7 +90,7 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 		Format:      "jpg",
 	})
 
-	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc}
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc}
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
@@ -131,7 +132,7 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 	filePath := "material file path"
 
 	getMetaFunc := functions.GetMetaFunc()
-	addOptionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
 		Title:       "素材测试字幕",
 		Tags:        "test",
 		Description: "素材测试，字幕文件",
@@ -140,7 +141,7 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 		Format:      "vtt",
 	})
 
-	vodFunctions := []vod.Function{addOptionFunc, getMetaFunc}
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc}
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{

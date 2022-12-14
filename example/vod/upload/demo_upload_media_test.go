@@ -7,6 +7,7 @@ import (
 
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/upload/functions"
 )
@@ -26,17 +27,17 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 	spaceName := "your space"
 	filePath := "media file path"
 
-	getMetaFunc := functions.GetMetaFunc()                         // 抽取视频元信息&封面功能，如需要则添加
-	snapShotFunc := functions.SnapshotFunc(1.3)                    // 抽取特定时刻的封面截图
-	startWorkFlowFunc := functions.StartWorkflowFunc("templateId") // 如希望上传完成后自动执行转码工作流，可将工作流Id填写在此函数里
-	optionFunc := functions.AddOptionInfoFunc(vod.OptionInfo{
+	getMetaFunc := functions.GetMetaFunc()                                                                      // 抽取视频元信息&封面功能，如需要则添加
+	snapShotFunc := functions.SnapshotFunc(business.VodUploadFunctionInput{SnapshotTime: 1.3})                  // 抽取特定时刻的封面截图
+	startWorkFlowFunc := functions.StartWorkflowFunc(business.VodUploadFunctionInput{TemplateId: "templateId"}) // 如希望上传完成后自动执行转码工作流，可将工作流Id填写在此函数里
+	optionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
 		Title:            "title",     // 视频的标题
 		Tags:             "Go,编程",     // 视频的标签
 		Description:      "Go 语言高级编程", // 视频的描述信息
 		Format:           "MP4",       // 音视频格式
 		ClassificationId: 0,           // 分类 Id，上传时可以指定分类，非必须字段
 	})
-	vodFunctions := []vod.Function{snapShotFunc, getMetaFunc, startWorkFlowFunc, optionFunc}
+	vodFunctions := []business.VodUploadFunction{snapShotFunc, getMetaFunc, startWorkFlowFunc, optionFunc}
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMediaRequset := &request.VodUploadMediaRequest{
