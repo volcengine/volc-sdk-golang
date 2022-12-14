@@ -18,6 +18,7 @@ import (
 
 	"github.com/avast/retry-go"
 	"github.com/volcengine/volc-sdk-golang/base"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -198,7 +199,7 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName())
+	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName(), mediaRequset.StorageClass)
 
 }
 
@@ -212,11 +213,11 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName())
+	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName(), 0)
 }
 
-func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName string) (*response.VodCommitUploadInfoResponse, int, error) {
-	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName)
+func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName string, storageClass int32) (*response.VodCommitUploadInfoResponse, int, error) {
+	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName, storageClass)
 	if err != nil {
 		return nil, code, err
 	}
@@ -248,12 +249,12 @@ func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
 	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
-func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName string) (string, string, error, int) {
+func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName string, storageClass int32) (string, string, error, int) {
 	if size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
 
-	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName}
+	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName, StorageClass: storageClass}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
 	if err != nil {
@@ -284,7 +285,7 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string
 			if err != nil {
 				return "", "", err, http.StatusBadRequest
 			}
-			if err := p.directUpload(tosHost, oid, auth, bts, client); err != nil {
+			if err := p.directUpload(tosHost, oid, auth, bts, client, storageClass); err != nil {
 				return "", "", err, http.StatusBadRequest
 			}
 		} else {
@@ -297,7 +298,7 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string
 			if size > consts.LargeFileSize {
 				isLargeFile = true
 			}
-			if err := p.chunkUpload(rd, uploadPart, client, size, isLargeFile); err != nil {
+			if err := p.chunkUpload(rd, uploadPart, client, size, isLargeFile, storageClass); err != nil {
 				return "", "", err, http.StatusBadRequest
 			}
 		}
@@ -306,7 +307,7 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string
 	return "", "", errors.New("upload address not exist"), http.StatusBadRequest
 }
 
-func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []byte, client *http.Client) error {
+func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []byte, client *http.Client, storageClass int32) error {
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(fileBytes))
 	url := fmt.Sprintf("http://%s/%s", tosHost, oid)
 	req, err := http.NewRequest("PUT", url, bytes.NewReader(fileBytes))
@@ -315,6 +316,10 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", auth)
+
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
+	}
 
 	rsp, err := client.Do(req)
 	if err != nil {
@@ -335,8 +340,8 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	return nil
 }
 
-func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, client *http.Client, size int64, isLargeFile bool) error {
-	uploadID, err := p.initUploadPart(uploadPart.TosHost, uploadPart.Oid, uploadPart.Auth, client, isLargeFile)
+func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, client *http.Client, size int64, isLargeFile bool, storageClass int32) error {
+	uploadID, err := p.initUploadPart(uploadPart.TosHost, uploadPart.Oid, uploadPart.Auth, client, isLargeFile, storageClass)
 	if err != nil {
 		return err
 	}
@@ -360,7 +365,7 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 			partNumber++
 		}
 		err = retry.Do(func() error {
-			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile)
+			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile, storageClass)
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
@@ -381,17 +386,17 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 		lastNum++
 	}
 	err = retry.Do(func() error {
-		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile)
+		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile, storageClass)
 		return err
 	}, retry.Attempts(3))
 	if err != nil {
 		return err
 	}
 	parts = append(parts, part)
-	return p.uploadMergePart(uploadPart, uploadID, parts, client, isLargeFile)
+	return p.uploadMergePart(uploadPart, uploadID, parts, client, isLargeFile, storageClass)
 }
 
-func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *http.Client, isLargeFile bool) (string, error) {
+func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *http.Client, isLargeFile bool, storageClass int32) (string, error) {
 	url := fmt.Sprintf("http://%s/%s?uploads", tosHost, oid)
 	req, err := http.NewRequest("PUT", url, nil)
 	if err != nil {
@@ -400,6 +405,9 @@ func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *ht
 	req.Header.Set("Authorization", auth)
 	if isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
+	}
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
 	}
 	rsp, err := client.Do(req)
 	if err != nil {
@@ -420,7 +428,7 @@ func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *ht
 	return res.PayLoad.UploadID, nil
 }
 
-func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, partNumber int, data []byte, client *http.Client, isLargeFile bool) (string, error) {
+func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, partNumber int, data []byte, client *http.Client, isLargeFile bool, storageClass int32) (string, error) {
 	url := fmt.Sprintf("http://%s/%s?partNumber=%d&uploadID=%s", uploadPart.TosHost, uploadPart.Oid, partNumber, uploadID)
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(data))
 	req, err := http.NewRequest("PUT", url, bytes.NewReader(data))
@@ -431,6 +439,9 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 	req.Header.Set("Authorization", uploadPart.Auth)
 	if isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
+	}
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
 	}
 
 	rsp, err := client.Do(req)
@@ -452,7 +463,7 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 	return checkSum, nil
 }
 
-func (p *Vod) uploadMergePart(uploadPart model.UploadPartCommon, uploadID string, checkSum []string, client *http.Client, isLargeFile bool) error {
+func (p *Vod) uploadMergePart(uploadPart model.UploadPartCommon, uploadID string, checkSum []string, client *http.Client, isLargeFile bool, storageClass int32) error {
 	url := fmt.Sprintf("http://%s/%s?uploadID=%s", uploadPart.TosHost, uploadPart.Oid, uploadID)
 	body, err := p.genMergeBody(checkSum)
 	if err != nil {
@@ -466,6 +477,10 @@ func (p *Vod) uploadMergePart(uploadPart model.UploadPartCommon, uploadID string
 	if isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
 	}
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
+	}
+
 	rsp, err := client.Do(req)
 	if err != nil {
 		return err

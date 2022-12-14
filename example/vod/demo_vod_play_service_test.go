@@ -71,6 +71,7 @@ func Test_GetPlayInfo(t *testing.T) {
 		PlayScene:          "your PlayScene",
 		DrmExpireTimestamp: "your DrmExpireTimestamp",
 		Quality:            "your Quality",
+		PlayConfig:         "your PlayConfig",
 	}
 
 	resp, status, err := instance.GetPlayInfo(query)
