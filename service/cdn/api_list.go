@@ -103,6 +103,14 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DescribeDistrictIspData": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDistrictIspData"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 	"DescribeEdgeStatisticalData": {
 		Method: http.MethodPost,
 		Path:   "/",
