@@ -1,6 +1,9 @@
 ### Change log
 
-2022-12-14 Bumped to version v1.0.73
+2022-12-15 Bumped to version v1.0.75
+- Updated apis for tls/iam/cdn
+
+2022-12-14 Bumped to version v1.0.74
 - Updated apis for vod
 
 2022-12-08 Bumped to version v1.0.73
