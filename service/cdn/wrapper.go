@@ -132,6 +132,17 @@ func (s *CDN) DescribeCdnDataDetail(dto *DescribeCdnDataDetailRequest) (response
 	return
 }
 
+func (s *CDN) DescribeDistrictIspData(dto *DescribeDistrictIspDataRequest) (responseBody *DescribeDistrictIspDataResponse, err error) {
+	responseBody = new(DescribeDistrictIspDataResponse)
+	if err = s.post("DescribeDistrictIspData", &dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeEdgeStatisticalData(dto *DescribeEdgeStatisticalDataRequest) (responseBody *DescribeEdgeStatisticalDataResponse, err error) {
 	responseBody = new(DescribeEdgeStatisticalDataResponse)
 	if err = s.post("DescribeEdgeStatisticalData", &dto, responseBody); err != nil {
