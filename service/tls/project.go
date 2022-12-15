@@ -24,7 +24,7 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjec
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateProject, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateProject, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonRespon
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteProject, nil, reqHeaders, jsonBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteProject, nil, c.assembleHeader(request.CommonRequest, reqHeaders), jsonBody)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (r *Describe
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeProject, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeProject, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *Descri
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeProjects, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeProjects, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -181,7 +181,7 @@ func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (r *CommonRespon
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyProject, nil, reqHeaders, jsonBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyProject, nil, c.assembleHeader(request.CommonRequest, reqHeaders), jsonBody)
 	if err != nil {
 		return nil, err
 	}

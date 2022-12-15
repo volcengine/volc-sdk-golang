@@ -18,7 +18,7 @@ func (c *LsClient) DescribeHistogram(request *DescribeHistogramRequest) (r *Desc
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathDescribeHistogram, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathDescribeHistogram, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

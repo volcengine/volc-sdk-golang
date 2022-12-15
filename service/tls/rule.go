@@ -17,7 +17,7 @@ func (c *LsClient) CreateRule(request *CreateRuleRequest) (r *CreateRuleResponse
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateRule, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateRule, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +49,7 @@ func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (r *CommonResponse, e 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteRule, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteRule, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (r *CommonResponse, e 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyRule, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyRule, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (r *DescribeRuleRe
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeRule, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeRule, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (r *DescribeRule
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeRules, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeRules, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 
 	if err != nil {
 		return nil, err
@@ -203,7 +203,7 @@ func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathApplyRuleToHostGroups, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathApplyRuleToHostGroups, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +234,7 @@ func (c *LsClient) DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsReq
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathDeleteRuleFromHostGroups, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathDeleteRuleFromHostGroups, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

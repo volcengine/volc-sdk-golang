@@ -3,14 +3,15 @@ package tls
 import (
 	"encoding/json"
 	"errors"
-	"github.com/gogo/protobuf/proto"
-	"github.com/pierrec/lz4"
-	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gogo/protobuf/proto"
+	"github.com/pierrec/lz4"
+	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
 const (
@@ -48,7 +49,7 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		"x-tls-compresstype": request.CompressType,
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathPutLogs, params, headers, bodyBytes)
+	rawResponse, err := c.Request(http.MethodPost, PathPutLogs, params, c.assembleHeader(request.CommonRequest, headers), bodyBytes)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +134,7 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathConsumeLogs, params, headers, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathConsumeLogs, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +202,7 @@ func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (r *DescribeCu
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeCursor, params, headers, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeCursor, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +250,7 @@ func (c *LsClient) DescribeLogContext(request *DescribeLogContextRequest) (r *De
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathDescribeLogContext, params, headers, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathDescribeLogContext, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
 	if err != nil {
 		return nil, err
 	}

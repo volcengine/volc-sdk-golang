@@ -18,7 +18,7 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (r *CreateIndexRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateIndex, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateIndex, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +53,7 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteIndex, nil, reqHeaders, jsonBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteIndex, nil, c.assembleHeader(request.CommonRequest, reqHeaders), jsonBody)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +85,7 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeIndex, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeIndex, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyIndex, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyIndex, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathSearchLogs, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathSearchLogs, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

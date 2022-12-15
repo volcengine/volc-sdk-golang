@@ -17,7 +17,7 @@ func (c *LsClient) CreateAlarm(request *CreateAlarmRequest) (r *CreateAlarmRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateAlarm, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateAlarm, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *LsClient) DeleteAlarm(request *DeleteAlarmRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAlarm, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAlarm, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (c *LsClient) ModifyAlarm(request *ModifyAlarmRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyAlarm, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyAlarm, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +140,7 @@ func (c *LsClient) DescribeAlarms(request *DescribeAlarmsRequest) (r *DescribeAl
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeAlarms, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeAlarms, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (c *LsClient) CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateAlarmNotifyGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateAlarmNotifyGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +202,7 @@ func (c *LsClient) DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAlarmNotifyGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAlarmNotifyGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +233,7 @@ func (c *LsClient) ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyAlarmNotifyGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyAlarmNotifyGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func (c *LsClient) DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsR
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeAlarmNotifyGroups, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeAlarmNotifyGroups, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 
 	if err != nil {
 		return nil, err
