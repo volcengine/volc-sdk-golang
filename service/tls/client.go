@@ -3,6 +3,7 @@ package tls
 import (
 	"bytes"
 	"context"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 
 	"crypto/md5"
@@ -115,6 +116,17 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 		return r, err
 	}
 	return r, iErr
+}
+
+func (c *LsClient) assembleHeader(request CommonRequest, headers map[string]string) map[string]string {
+	newHeaders := map[string]string{}
+	for key, value := range request.Headers {
+		newHeaders[key] = value
+	}
+	for key, value := range headers {
+		newHeaders[key] = value
+	}
+	return newHeaders
 }
 
 func appendParam(originalUrl string, params map[string]string) string {

@@ -18,7 +18,7 @@ func (c *LsClient) OpenKafkaConsumer(request *OpenKafkaConsumerRequest) (r *Open
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathOpenKafkaConsumer, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathOpenKafkaConsumer, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *LsClient) CloseKafkaConsumer(request *CloseKafkaConsumerRequest) (r *Cl
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathCloseKafkaConsumer, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathCloseKafkaConsumer, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c *LsClient) DescribeKafkaConsumer(request *DescribeKafkaConsumerRequest) 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeKafkaConsumer, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeKafkaConsumer, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

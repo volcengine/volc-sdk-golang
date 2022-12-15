@@ -17,7 +17,7 @@ func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (r *CreateHo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateHostGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateHostGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +48,7 @@ func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (r *CommonRe
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteHostGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteHostGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (r *CommonRe
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyHostGroup, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyHostGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (r *Desc
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroup, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroup, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *De
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroups, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroups, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +216,7 @@ func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (r *DescribeHost
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeHosts, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHosts, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 
 	if err != nil {
 		return nil, err
@@ -248,7 +248,7 @@ func (c *LsClient) DeleteHost(request *DeleteHostRequest) (r *CommonResponse, e 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteHost, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteHost, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -291,7 +291,7 @@ func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroupRules, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroupRules, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 
 	if err != nil {
 		return nil, err
@@ -325,7 +325,7 @@ func (c *LsClient) ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdat
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyHostGroupsAutoUpdate, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyHostGroupsAutoUpdate, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 
 	if err != nil {
 		return nil, err

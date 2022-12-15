@@ -29,7 +29,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateTopic, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteTopic, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyTopic, nil, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopi
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopic, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopic, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +198,7 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopics, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopics, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

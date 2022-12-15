@@ -27,7 +27,7 @@ func (c *LsClient) DescribeShards(request *DescribeShardsRequest) (r *DescribeSh
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeShards, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeShards, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

@@ -19,7 +19,7 @@ func (c *LsClient) CreateDownloadTask(request *CreateDownloadTaskRequest) (r *Cr
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateDownloadTask, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateDownloadTask, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (c *LsClient) DescribeDownloadTasks(request *DescribeDownloadTasksRequest) 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeDownloadTasks, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeDownloadTasks, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func (c *LsClient) DescribeDownloadUrl(request *DescribeDownloadUrlRequest) (r *
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeDownloadUrl, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeDownloadUrl, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}

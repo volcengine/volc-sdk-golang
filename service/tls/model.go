@@ -12,7 +12,12 @@ type CommonResponse struct {
 	RequestID string `json:"RequestId"`
 }
 
+type CommonRequest struct {
+	Headers map[string]string `json:"-"`
+}
+
 type CreateProjectRequest struct {
+	CommonRequest
 	ProjectName string
 	Description string
 	Region      string
@@ -24,10 +29,12 @@ type CreateProjectResponse struct {
 }
 
 type DeleteProjectRequest struct {
+	CommonRequest
 	ProjectID string `json:"ProjectId"`
 }
 
 type DescribeProjectRequest struct {
+	CommonRequest
 	ProjectID string `json:"ProjectId"`
 }
 
@@ -37,6 +44,7 @@ type DescribeProjectResponse struct {
 }
 
 type DescribeProjectsRequest struct {
+	CommonRequest
 	ProjectName string
 	ProjectID   string
 	PageNumber  int
@@ -61,12 +69,14 @@ type DescribeProjectsResponse struct {
 }
 
 type ModifyProjectRequest struct {
+	CommonRequest
 	ProjectID   string
 	ProjectName *string
 	Description *string
 }
 
 type CreateTopicRequest struct {
+	CommonRequest
 	ProjectID      string
 	TopicName      string
 	Ttl            uint16
@@ -83,10 +93,12 @@ type CreateTopicResponse struct {
 }
 
 type DeleteTopicRequest struct {
+	CommonRequest
 	TopicID string
 }
 
 type ModifyTopicRequest struct {
+	CommonRequest
 	TopicID        string  `json:"TopicId"`
 	TopicName      *string `json:"TopicName"`
 	Ttl            *uint16 `json:"Ttl"`
@@ -97,6 +109,7 @@ type ModifyTopicRequest struct {
 }
 
 type DescribeTopicRequest struct {
+	CommonRequest
 	TopicID string
 }
 
@@ -116,6 +129,7 @@ type DescribeTopicResponse struct {
 }
 
 type DescribeTopicsRequest struct {
+	CommonRequest
 	ProjectID  string
 	PageNumber int
 	PageSize   int
@@ -166,6 +180,7 @@ func (c KeyValueList) Value() (driver.Value, error) {
 }
 
 type CreateIndexRequest struct {
+	CommonRequest
 	TopicID  string          `json:"TopicId"`
 	FullText *FullTextInfo   `json:"FullText"`
 	KeyValue *[]KeyValueInfo `json:"KeyValue"`
@@ -188,10 +203,12 @@ type CreateIndexResponse struct {
 }
 
 type DeleteIndexRequest struct {
+	CommonRequest
 	TopicID string
 }
 
 type DescribeIndexRequest struct {
+	CommonRequest
 	TopicID string
 }
 
@@ -205,6 +222,7 @@ type DescribeIndexResponse struct {
 }
 
 type ModifyIndexRequest struct {
+	CommonRequest
 	TopicID  string          `json:"TopicId"`
 	FullText *FullTextInfo   `json:"FullText"`
 	KeyValue *[]KeyValueInfo `json:"KeyValue"`
@@ -217,6 +235,7 @@ type AnalysisResult struct {
 }
 
 type SearchLogsRequest struct {
+	CommonRequest
 	TopicID   string `json:"TopicId"`
 	Query     string `json:"Query"`
 	StartTime int64  `json:"StartTime"`
@@ -242,6 +261,7 @@ type SearchLogsResponse struct {
 }
 
 type DescribeShardsRequest struct {
+	CommonRequest
 	TopicID    string
 	PageNumber int
 	PageSize   int
@@ -263,6 +283,7 @@ type DescribeShardsResponse struct {
 }
 
 type PutLogsRequest struct {
+	CommonRequest
 	TopicID      string
 	HashKey      string
 	CompressType string
@@ -270,6 +291,7 @@ type PutLogsRequest struct {
 }
 
 type DescribeCursorRequest struct {
+	CommonRequest
 	TopicID string
 	ShardID int
 	From    string
@@ -281,6 +303,7 @@ type DescribeCursorResponse struct {
 }
 
 type ConsumeLogsRequest struct {
+	CommonRequest
 	TopicID       string
 	ShardID       int
 	Cursor        string
@@ -297,6 +320,7 @@ type ConsumeLogsResponse struct {
 }
 
 type DescribeLogContextRequest struct {
+	CommonRequest
 	TopicId       string `json:"TopicId"`
 	ContextFlow   string `json:"ContextFlow"`
 	PackageOffset int64  `json:"PackageOffset"`
@@ -313,6 +337,7 @@ type DescribeLogContextResponse struct {
 }
 
 type CreateRuleRequest struct {
+	CommonRequest
 	// 采集配置所属于的日志主题ID，即TopicID。
 	TopicID string `json:"TopicId" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
 	// 采集配置的名称:
@@ -550,11 +575,13 @@ type CreateRuleResponse struct {
 }
 
 type DeleteRuleRequest struct {
+	CommonRequest
 	// 采集配置的ID。
 	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
 }
 
 type ModifyRuleRequest struct {
+	CommonRequest
 	// 采集配置的ID。
 	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
 	// 采集配置的名称:
@@ -606,6 +633,7 @@ type ModifyRuleRequest struct {
 }
 
 type DescribeRuleRequest struct {
+	CommonRequest
 	RuleID string `json:"RuleId"`
 }
 
@@ -654,6 +682,7 @@ type HostGroupInfo struct {
 }
 
 type DescribeRulesRequest struct {
+	CommonRequest
 	//必选
 	ProjectID string `json:"ProjectId"`
 	// 分页查询时的页码。默认为1，即从第一页数据开始返回。
@@ -673,6 +702,7 @@ type DescribeRulesRequest struct {
 }
 
 type CreateHostGroupRequest struct {
+	CommonRequest
 	// 机器组的名称。
 	HostGroupName string `json:"HostGroupName" binding:"required" example:"mgn1"`
 	// 机器组的类型: IP表示机器IP; Label表示机器标识。
@@ -701,11 +731,13 @@ type DescribeRulesResponse struct {
 }
 
 type DeleteHostGroupRequest struct {
+	CommonRequest
 	// 机器组的Id。
 	HostGroupID string `json:"HostGroupId" binding:"required" example:"c7e0e442-19bf-4fb3-b547-5992fb8b****"`
 }
 
 type ApplyRuleToHostGroupsRequest struct {
+	CommonRequest
 	// 采集配置的ID。
 	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
 	// 机器组的ID列表。
@@ -713,6 +745,7 @@ type ApplyRuleToHostGroupsRequest struct {
 }
 
 type DeleteRuleFromHostGroupsRequest struct {
+	CommonRequest
 	// 采集配置的ID。
 	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
 	// 机器组的ID列表。
@@ -720,6 +753,7 @@ type DeleteRuleFromHostGroupsRequest struct {
 }
 
 type ModifyHostGroupRequest struct {
+	CommonRequest
 	// 机器组Id。
 	HostGroupID string `json:"HostGroupId" binding:"required" example:"0fdaa6b6-3c9f-424c-8664-fc0d222c****"`
 	// 机器组的名称。
@@ -739,6 +773,7 @@ type ModifyHostGroupRequest struct {
 }
 
 type DescribeHostGroupRequest struct {
+	CommonRequest
 	HostGroupID string
 }
 
@@ -761,6 +796,7 @@ type HostInfo struct {
 }
 
 type DescribeHostGroupsRequest struct {
+	CommonRequest
 	PageNumber     int
 	PageSize       int
 	HostGroupID    *string
@@ -775,6 +811,7 @@ type DescribeHostGroupsResponse struct {
 }
 
 type DescribeHostsRequest struct {
+	CommonRequest
 	HostGroupID     string
 	PageNumber      int
 	PageSize        int
@@ -789,6 +826,7 @@ type DescribeHostsResponse struct {
 }
 
 type DeleteHostRequest struct {
+	CommonRequest
 	// 机器组的Id。
 	HostGroupID string `json:"HostGroupId" binding:"required" example:"c7e0e442-19bf-4fb3-b547-5992fb8b****"`
 	// 机器的IP。
@@ -796,6 +834,7 @@ type DeleteHostRequest struct {
 }
 
 type DescribeHostGroupRulesRequest struct {
+	CommonRequest
 	HostGroupID string
 	PageNumber  int
 	PageSize    int
@@ -808,6 +847,7 @@ type DescribeHostGroupRulesResponse struct {
 }
 
 type ModifyHostGroupsAutoUpdateRequest struct {
+	CommonRequest
 	HostGroupIds    []string
 	AutoUpdate      *bool   `json:",omitempty"`
 	UpdateStartTime *string `json:",omitempty"`
@@ -819,6 +859,7 @@ type ModifyHostGroupsAutoUpdateResponse struct {
 }
 
 type CreateAlarmRequest struct {
+	CommonRequest
 	// 告警策略名称。
 	// - 同一个日志项目下，告警策略名称不可重复。
 	// - 只能包括小写字母、数字、-
@@ -855,6 +896,7 @@ type RequestCycle struct {
 }
 
 type QueryRequest struct {
+	CommonRequest
 	// 查询语句，支持的最大长度为1024。
 	Query string `json:"Query" gorm:"Query" binding:"required"`
 	// 告警对象序号；从1开始递增。
@@ -875,11 +917,13 @@ type CreateAlarmResponse struct {
 }
 
 type DeleteAlarmRequest struct {
+	CommonRequest
 	// 创建时返回的告警策略id
 	AlarmID string `json:"AlarmId" binding:"required"`
 }
 
 type ModifyAlarmRequest struct {
+	CommonRequest
 	// 告警策略Id
 	AlarmID string `json:"AlarmId" binding:"required"`
 	// 告警策略名称。
@@ -908,6 +952,7 @@ type ModifyAlarmRequest struct {
 }
 
 type DescribeAlarmsRequest struct {
+	CommonRequest
 	ProjectID     string
 	TopicID       *string
 	TopicName     *string
@@ -975,6 +1020,7 @@ type ReveiverType string
 type ReceiverChannel string
 
 type CreateAlarmNotifyGroupRequest struct {
+	CommonRequest
 	// 告警通知组名称。
 	// - 同一个账户下，通知组名称不可重复。
 	// - 只能包括小写字母、数字、-。
@@ -993,6 +1039,7 @@ type CreateAlarmNotifyGroupResponse struct {
 }
 
 type DeleteAlarmNotifyGroupRequest struct {
+	CommonRequest
 	// 创建时返回的NotifyGroupId
 	AlarmNotifyGroupID string `json:"AlarmNotifyGroupId" binding:"required"`
 }
@@ -1001,6 +1048,7 @@ type DeleteAlarmNotifyGroupResponse struct {
 }
 
 type ModifyAlarmNotifyGroupRequest struct {
+	CommonRequest
 	// 通知组id
 	AlarmNotifyGroupID string `json:"AlarmNotifyGroupId" binding:"required"`
 	// 告警通知组名称。
@@ -1016,6 +1064,7 @@ type ModifyAlarmNotifyGroupRequest struct {
 }
 
 type DescribeAlarmNotifyGroupsRequest struct {
+	CommonRequest
 	GroupName     *string
 	NotifyGroupID *string
 	UserName      *string
@@ -1030,6 +1079,7 @@ type DescribeAlarmNotifyGroupsResponse struct {
 }
 
 type CreateDownloadTaskRequest struct {
+	CommonRequest
 	TopicID     string `json:"TopicId"`
 	TaskName    string
 	Query       string
@@ -1046,6 +1096,7 @@ type CreateDownloadTaskResponse struct {
 }
 
 type DescribeDownloadTasksRequest struct {
+	CommonRequest
 	TopicID    string `json:"-"`
 	PageNumber *int   `json:"-"`
 	PageSize   *int   `json:"-"`
@@ -1071,6 +1122,7 @@ type DescribeDownloadTasksResponse struct {
 }
 
 type DescribeDownloadUrlRequest struct {
+	CommonRequest
 	TaskId string `json:"-"`
 }
 type DescribeDownloadUrlResponse struct {
@@ -1079,6 +1131,7 @@ type DescribeDownloadUrlResponse struct {
 }
 
 type WebTracksRequest struct {
+	CommonRequest
 	TopicID      string `json:"-"`
 	ProjectID    string `json:"-"`
 	CompressType string `json:"-"`
@@ -1094,6 +1147,7 @@ type HistogramInfo struct {
 	Time  int64 `json:"Time"`
 }
 type DescribeHistogramRequest struct {
+	CommonRequest
 	TopicID   string `json:"TopicId"`
 	Query     string `json:","`
 	StartTime int64  `json:","`
@@ -1109,18 +1163,21 @@ type DescribeHistogramResponse struct {
 }
 
 type OpenKafkaConsumerRequest struct {
+	CommonRequest
 	TopicID string `json:"TopicId"`
 }
 type OpenKafkaConsumerResponse struct {
 	CommonResponse
 }
 type CloseKafkaConsumerRequest struct {
+	CommonRequest
 	TopicID string `json:"TopicId"`
 }
 type CloseKafkaConsumerResponse struct {
 	CommonResponse
 }
 type DescribeKafkaConsumerRequest struct {
+	CommonRequest
 	TopicID string `json:"-"`
 }
 type DescribeKafkaConsumerResponse struct {
