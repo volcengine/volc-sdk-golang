@@ -24,29 +24,12 @@ var (
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
-
-		// accessKey
-		"ListAccessKeys": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListAccessKeys"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
+		// Access Key
 		"CreateAccessKey": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateAccessKey"},
-				"Version": []string{ServiceVersion20180101},
-			},
-		},
-		"UpdateAccessKey": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateAccessKey"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
@@ -58,66 +41,96 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-
-		// policy
-		"CreatePolicy": {
+		"ListAccessKeys": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CreatePolicy"},
+				"Action":  []string{"ListAccessKeys"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"GetPolicy": {
+		"UpdateAccessKey": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetPolicy"},
+				"Action":  []string{"UpdateAccessKey"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"ListPolicies": {
+		// User
+		"CreateUser": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListPolicies"},
+				"Action":  []string{"CreateUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"DeletePolicy": {
+		"GetUser": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DeletePolicy"},
+				"Action":  []string{"GetUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"AttachRolePolicy": {
+		"UpdateUser": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"AttachRolePolicy"},
+				"Action":  []string{"UpdateUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"DetachRolePolicy": {
+		"ListUsers": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DetachRolePolicy"},
+				"Action":  []string{"ListUsers"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"ListAttachedRolePolicies": {
+		"DeleteUser": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListAttachedRolePolicies"},
+				"Action":  []string{"DeleteUser"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-
-		// role
+		"CreateLoginProfile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateLoginProfile"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"GetLoginProfile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetLoginProfile"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdateLoginProfile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateLoginProfile"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteLoginProfile": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteLoginProfile"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		// Role
 		"CreateRole": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -190,37 +203,149 @@ var (
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-
-		// User
-		"CreateUser": {
+		"CreateServiceLinkedRole": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CreateUser"},
+				"Action":  []string{"CreateServiceLinkedRole"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"GetUser": {
-			Method: http.MethodGet,
+		// Identity Policy
+		"CreateSAMLProvider": {
+			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetUser"},
+				"Action":  []string{"CreateSAMLProvider"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"ListUsers": {
+		"GetSAMLProvider": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListUsers"},
+				"Action":  []string{"GetSAMLProvider"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
-		"DeleteUser": {
+		"UpdateSAMLProvider": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSAMLProvider"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListSAMLProviders": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DeleteUser"},
+				"Action":  []string{"ListSAMLProviders"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeleteSAMLProvider": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteSAMLProvider"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		// Policy
+		"CreatePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreatePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"GetPolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListPolicies": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListPolicies"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"UpdatePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdatePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DeletePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeletePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"AttachUserPolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AttachUserPolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DetachUserPolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetachUserPolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListAttachedUserPolicies": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAttachedUserPolicies"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"AttachRolePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AttachRolePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"DetachRolePolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetachRolePolicy"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListAttachedRolePolicies": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAttachedRolePolicies"},
+				"Version": []string{ServiceVersion20180101},
+			},
+		},
+		"ListEntitiesForPolicy": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListEntitiesForPolicy"},
 				"Version": []string{ServiceVersion20180101},
 			},
 		},
