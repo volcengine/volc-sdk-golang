@@ -75,7 +75,6 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 				"uri", fmt.Sprintf("%v", uri),
 				"params", fmt.Sprintf("%+v", params),
 				"headers", fmt.Sprintf("%+v", headers),
-				"body", string(body),
 				"error", e,
 			)
 		}
