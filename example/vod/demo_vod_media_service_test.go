@@ -53,6 +53,25 @@ func Test_UpdateMediaPublishStatus(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_UpdateMediaStorageClass(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateMediaStorageClassRequest{
+		Vids:         "your Vids",
+		StorageClass: "your StorageClass",
+		CallbackArgs: "your CallbackArgs",
+	}
+
+	resp, status, err := instance.UpdateMediaStorageClass(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_GetMediaInfos(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
@@ -142,6 +161,7 @@ func Test_GetMediaList(t *testing.T) {
 		Offset:            "your Offset",
 		PageSize:          "your PageSize",
 		ClassificationIds: "your ClassificationIds",
+		TosStorageClasses: "your TosStorageClasses",
 	}
 
 	resp, status, err := instance.GetMediaList(query)
