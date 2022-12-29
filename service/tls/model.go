@@ -159,11 +159,12 @@ type DescribeTopicsResponse struct {
 }
 
 type Value struct {
-	ValueType      string `json:"ValueType"`
-	Delimiter      string `json:"Delimiter"`
-	CasSensitive   bool   `json:"CaseSensitive"`
-	IncludeChinese bool   `json:"IncludeChinese"`
-	SQLFlag        bool   `json:"SqlFlag"`
+	ValueType      string         `json:"ValueType"`
+	Delimiter      string         `json:"Delimiter"`
+	CasSensitive   bool           `json:"CaseSensitive"`
+	IncludeChinese bool           `json:"IncludeChinese"`
+	SQLFlag        bool           `json:"SqlFlag"`
+	JsonKeys       []KeyValueInfo `json:"JsonKeys"`
 }
 
 type KeyValueParam struct {
