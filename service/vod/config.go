@@ -150,6 +150,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"UpdateMediaStorageClass": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateMediaStorageClass"},
+				"Version": []string{"2022-10-01"},
+			},
+		},
 		"GetMediaInfos": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -508,6 +516,22 @@ var (
 			Query: url.Values{
 				"Action":  []string{"DescribeVodDomainTrafficData"},
 				"Version": []string{"2020-08-01"},
+			},
+		},
+		"SubmitBlockTasks": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitBlockTasks"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
+		"GetContentBlockTasks": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetContentBlockTasks"},
+				"Version": []string{"2022-01-01"},
 			},
 		},
 		// **********************************************************************

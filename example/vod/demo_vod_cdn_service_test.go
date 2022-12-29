@@ -256,3 +256,46 @@ func Test_ListCdnPvData(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_SubmitBlockTasks(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodSubmitBlockTasksRequest{
+		FileUrls:  "your FileUrls",
+		Operation: "your Operation",
+	}
+
+	resp, status, err := instance.SubmitBlockTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetContentBlockTasks(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetContentBlockTasksRequest{
+		Url:       "your Url",
+		Domain:    "your Domain",
+		TaskID:    "your TaskID",
+		TaskType:  "your TaskType",
+		Status:    "your Status",
+		StartTime: 0,
+		EndTime:   0,
+		PageNum:   0,
+		PageSize:  0,
+	}
+
+	resp, status, err := instance.GetContentBlockTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
