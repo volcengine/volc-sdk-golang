@@ -25,7 +25,7 @@ producer.ForceClose()
 
 ### 发送日志
 
-参考tls/demo_producer
+参考example/tls/demo_producer
 
 ## producer配置
 
