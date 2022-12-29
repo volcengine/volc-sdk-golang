@@ -111,3 +111,15 @@ func GetWebTracksBody(compressType string, request *WebTracksRequest) ([]byte, i
 
 	return out[:outLen], rawLength, nil
 }
+
+func GetLogsFromMap(logTime int64, logMap map[string]string) *pb.Log {
+	log := &pb.Log{
+		Time: logTime,
+	}
+
+	for k, v := range logMap {
+		log.Contents = append(log.Contents, &pb.LogContent{Key: k, Value: v})
+	}
+
+	return log
+}

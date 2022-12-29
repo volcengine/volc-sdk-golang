@@ -1186,6 +1186,126 @@ type DescribeKafkaConsumerResponse struct {
 	ConsumeTopic string
 }
 
+type CreateConsumerGroupRequest struct {
+	// ProjectID ConsumerGroup所绑定ProjectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// TopicID ConsumerGroup所要消费的TopicID
+	TopicIDList []string `json:"TopicIDList" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
+	// TTL ConsumerGroup的心跳存活时间
+	HeartbeatTTL int `json:"HeartbeatTTL" binding:"required" example:"3"`
+	// OrderedConsume 消费是否严格保序，与shard分裂相关
+	OrderedConsume bool `json:"OrderedConsume" binding:"required" example:"false"`
+}
+
+type CreateConsumerGroupResponse struct {
+	CommonResponse
+}
+
+type DeleteConsumerGroupRequest struct {
+	// ProjectID ConsumerGroup所绑定project
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
+}
+
+type DeleteConsumerGroupResponse struct {
+	CommonResponse
+}
+
+type DescribeConsumerGroupsRequest struct {
+	// ProjectID ConsumerGroup所绑定ProjectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+
+	PageNumber int
+	PageSize   int
+}
+
+type ConsumerGroupResp struct {
+	ProjectID         string `json:"ProjectID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	HeartbeatTTL      int    `json:"HeartbeatTTL"`
+	OrderedConsume    bool   `json:"OrderedConsume"`
+}
+
+type DescribeConsumerGroupsResponse struct {
+	CommonResponse
+	ConsumerGroups []*ConsumerGroupResp `json:"ConsumerGroups"`
+}
+
+type ModifyConsumerGroupRequest struct {
+	// ProjectID ConsumerGroup所绑定ProjectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// TopicID ConsumerGroup所要消费的TopicID
+	TopicIDList *[]string `json:"TopicIDList" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
+	// TTL ConsumerGroup的心跳存活时间
+	HeartbeatTTL *int `json:"HeartbeatTTL" example:"3"`
+	// OrderedConsume 消费是否严格保序，与shard分裂相关
+	OrderedConsume *bool `json:"OrderedConsume" example:"false"`
+}
+
+type ModifyConsumerGroupResponse struct {
+	CommonResponse
+}
+
+type ConsumerHeartbeatRequest struct {
+	// ProjectID ConsumerGroup所绑定ProjectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
+	// ConsumerName Consumer名称，在一个consumerGroup中唯一
+	ConsumerName string `json:"ConsumerName" binding:"required" example:"consumerA"`
+}
+
+type ConsumeShard struct {
+	TopicID string `yaml:"TopicID"`
+	ShardID int    `yaml:"ShardID"`
+}
+
+type ConsumerHeartbeatResponse struct {
+	CommonResponse
+	Shards []*ConsumeShard `json:"Shards"`
+}
+
+type DescribeCheckPointRequest struct {
+	// ProjectID consumerGroup所绑定的projectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// TopicID ConsumerGroup所绑定topicID
+	TopicID string `json:"TopicID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" example:"consumerGroupA"`
+	// ShardID 需要获取checkpoint的shardID
+	ShardID int `json:"ShardID" binding:"required" example:"1"`
+}
+
+type DescribeCheckPointResponse struct {
+	CommonResponse
+	ShardID    int32  `json:"ShardID"`
+	Checkpoint string `json:"Checkpoint"`
+	UpdateTime int    `json:"UpdateTime"`
+	Consumer   string `json:"Consumer"`
+}
+
+type ModifyCheckPointRequest struct {
+	// ProjectID consumerGroup所绑定的projectID
+	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// TopicID ConsumerGroup所绑定topicID
+	TopicID string `json:"TopicID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	// ConsumerGroupName 名称，在一个topic下唯一
+	ConsumerGroupName string `json:"ConsumerGroupName" example:"consumerGroupA"`
+	// ShardID 需要获取checkpoint的shardID
+	ShardID int `json:"ShardID" binding:"required" example:"1"`
+	// Checkpoint 想要设置的checkpoint
+	Checkpoint string `json:"Checkpoint" binding:"required" example:"MTUyNDE1NTM3OTM3MzkwODQ5Ng=="`
+}
+
+type ModifyCheckPointResponse struct {
+	CommonResponse
+}
+
 // FillRequestId 成功返回填充requestId
 func (response *CommonResponse) FillRequestId(httpResponse *http.Response) {
 	response.RequestID = httpResponse.Header.Get(RequestIDHeader)

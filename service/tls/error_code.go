@@ -111,4 +111,7 @@ const (
 
 	// ErrIndexKeyValueNULL 索引关键字为空
 	ErrIndexKeyValueNULL = "IndexKVNULL"
+
+	// ErrConsumerGroupAlreadyExists 消费者组已存在
+	ErrConsumerGroupAlreadyExists = "ConsumerGroupAlreadyExists"
 )

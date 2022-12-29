@@ -83,4 +83,13 @@ type Client interface {
 	DescribeKafkaConsumer(request *DescribeKafkaConsumerRequest) (*DescribeKafkaConsumerResponse, error)
 
 	DescribeHistogram(request *DescribeHistogramRequest) (*DescribeHistogramResponse, error)
+
+	CreateConsumerGroup(request *CreateConsumerGroupRequest) (*CreateConsumerGroupResponse, error)
+	DeleteConsumerGroup(request *DeleteConsumerGroupRequest) (*CommonResponse, error)
+	DescribeConsumerGroups(request *DescribeConsumerGroupsRequest) (*DescribeConsumerGroupsResponse, error)
+	ModifyConsumerGroup(request *ModifyConsumerGroupRequest) (*CommonResponse, error)
+
+	ConsumerHeartbeat(request *ConsumerHeartbeatRequest) (*ConsumerHeartbeatResponse, error)
+	DescribeCheckPoint(request *DescribeCheckPointRequest) (*DescribeCheckPointResponse, error)
+	ModifyCheckPoint(request *ModifyCheckPointRequest) (*CommonResponse, error)
 }

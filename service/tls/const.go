@@ -76,4 +76,14 @@ const (
 	PathOpenKafkaConsumer     = "/OpenKafkaConsumer"
 	PathCloseKafkaConsumer    = "/CloseKafkaConsumer"
 	PathDescribeKafkaConsumer = "/DescribeKafkaConsumer"
+
+	PathCreateConsumerGroup    = "/CreateConsumerGroup"
+	PathDeleteConsumerGroup    = "/DeleteConsumerGroup"
+	PathDescribeConsumerGroups = "/DescribeConsumerGroups"
+	PathModifyConsumerGroup    = "/ModifyConsumerGroup"
+
+	PathConsumerHeartbeat = "/ConsumerHeartbeat"
+
+	PathDescribeCheckPoint = "/DescribeCheckPoint"
+	PathModifyCheckPoint   = "/ModifyCheckPoint"
 )

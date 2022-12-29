@@ -3,6 +3,7 @@ package producer
 import (
 	"time"
 
+	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
@@ -32,13 +33,13 @@ type Config struct {
 	ShardCount            int
 	NoRetryStatusCodeList []int
 
-	LoggerConfig
-	ClientConfig
+	innerlogger.LoggerConfig
+	common.ClientConfig
 }
 
 func GetDefaultProducerConfig() *Config {
 	return &Config{
-		LoggerConfig: LoggerConfig{
+		LoggerConfig: innerlogger.LoggerConfig{
 			LogLevel:      "info",
 			LogFileName:   "",
 			IsJsonType:    false,
