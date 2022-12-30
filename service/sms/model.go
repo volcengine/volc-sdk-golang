@@ -76,6 +76,7 @@ const (
 	SmsChannelTypeCnOTP   SmsChannelType = "CN_OTP"
 	SmsChannelTypeCnNTC   SmsChannelType = "CN_NTC"
 	SmsChannelTypeCnMKT   SmsChannelType = "CN_MKT"
+	SmsChannelTypeCnVms   SmsChannelType = "CN_VMS"
 	SmsChannelTypeI18nOTP SmsChannelType = "I18N_OTP"
 	SmsChannelTypeI18nMKT SmsChannelType = "I18N_MKT"
 )
