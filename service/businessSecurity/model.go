@@ -290,9 +290,13 @@ type ElementVerifyDataV2 struct {
 }
 
 type ElementVerifyDataDetail struct {
-	BankName     string `json:"BankName,omitempty"`
-	CardType     string `json:"CardType,omitempty"`
-	CardCategory string `json:"CardCategory,omitempty"`
+	BankName       string `json:"BankName,omitempty"`
+	CardType       string `json:"CardType,omitempty"`
+	CardCategory   string `json:"CardCategory,omitempty"`
+	EnterpriseCode string `json:"EnterpriseCode,omitempty"`
+	EnterpriseName string `json:"EnterpriseName,omitempty"`
+	IdCardNo       string `json:"IdCardNo,omitempty"`
+	IdCardName     string `json:"IdCardName,omitempty"`
 }
 
 type MobileStatusRequest struct {
