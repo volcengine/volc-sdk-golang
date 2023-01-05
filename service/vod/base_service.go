@@ -12,12 +12,14 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/avast/retry-go"
 	"github.com/volcengine/volc-sdk-golang/base"
+	model_base "github.com/volcengine/volc-sdk-golang/service/base/models/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/response"
@@ -189,8 +191,8 @@ func (p *Vod) GetPlayAuthToken(req *request.VodGetPlayInfoRequest, tokenExpireTi
 	}
 }
 
-func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaRequest) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(mediaRequset.GetFilePath())
+func (p *Vod) UploadObjectWithCallback(filePath string, spaceName string, callbackArgs string, fileName, fileExtension string, funcs string) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(filepath.Clean(filePath))
 	if err != nil {
 		return nil, -1, err
 	}
@@ -199,12 +201,24 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName(), mediaRequset.StorageClass)
+	return p.UploadMediaInner(file, stat.Size(), spaceName, "object", callbackArgs, funcs, fileName, fileExtension, 0)
+}
 
+func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(filepath.Clean(mediaRequset.GetFilePath()))
+	if err != nil {
+		return nil, -1, err
+	}
+	defer file.Close()
+	stat, err := file.Stat()
+	if err != nil {
+		return nil, -1, err
+	}
+	return p.UploadMediaInner(file, stat.Size(), mediaRequset.GetSpaceName(), "", mediaRequset.GetCallbackArgs(), mediaRequset.GetFunctions(), mediaRequset.GetFileName(), mediaRequset.GetFileExtension(), mediaRequset.StorageClass)
 }
 
 func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMaterialRequest) (*response.VodCommitUploadInfoResponse, int, error) {
-	file, err := os.Open(materialRequest.GetFilePath())
+	file, err := os.Open(filepath.Clean(materialRequest.GetFilePath()))
 	if err != nil {
 		return nil, -1, err
 	}
@@ -213,13 +227,13 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 	if err != nil {
 		return nil, -1, err
 	}
-	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName(), 0)
+	return p.UploadMediaInner(file, stat.Size(), materialRequest.GetSpaceName(), materialRequest.GetFileType(), materialRequest.GetCallbackArgs(), materialRequest.GetFunctions(), materialRequest.GetFileName(), materialRequest.GetFileExtension(), 0)
 }
 
-func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName string, storageClass int32) (*response.VodCommitUploadInfoResponse, int, error) {
-	_, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName, storageClass)
+func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileType, callbackArgs string, funcs string, fileName, fileExtension string, storageClass int32) (*response.VodCommitUploadInfoResponse, int, error) {
+	logId, sessionKey, err, code := p.Upload(rd, size, spaceName, fileType, fileName, fileExtension, storageClass)
 	if err != nil {
-		return nil, code, err
+		return p.fillCommitUploadInfoResponseWhenError(logId, err.Error()), code, err
 	}
 
 	commitRequest := &request.VodCommitUploadInfoRequest{
@@ -231,7 +245,7 @@ func (p *Vod) UploadMediaInner(rd io.Reader, size int64, spaceName string, fileT
 
 	commitResp, code, err := p.CommitUploadInfo(commitRequest)
 	if err != nil {
-		return nil, code, err
+		return commitResp, code, err
 	}
 	return commitResp, code, nil
 }
@@ -249,29 +263,41 @@ func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
 	return p.GetUploadAuthWithExpiredTime(time.Hour)
 }
 
-func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName string, storageClass int32) (string, string, error, int) {
+func (p *Vod) fillCommitUploadInfoResponseWhenError(logId, errMsg string) *response.VodCommitUploadInfoResponse {
+	commitUploadInfoRespone := &response.VodCommitUploadInfoResponse{
+		ResponseMetadata: &model_base.ResponseMetadata{
+			RequestId: logId,
+			Service:   "vod",
+			Error:     &model_base.ResponseError{Message: errMsg},
+		},
+	}
+	return commitUploadInfoRespone
+}
+
+func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string, fileName, fileExtension string, storageClass int32) (string, string, error, int) {
 	if size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
 
-	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName, StorageClass: storageClass}
+	applyRequest := &request.VodApplyUploadInfoRequest{SpaceName: spaceName, FileType: fileType, FileName: fileName, FileExtension: fileExtension, StorageClass: storageClass}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
+	logId := resp.GetResponseMetadata().GetRequestId()
 	if err != nil {
-		return "", "", err, code
+		return logId, "", err, code
 	}
 
 	if resp.ResponseMetadata.Error != nil && resp.ResponseMetadata.Error.Code != "0" {
-		return "", "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
+		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
 	}
 
 	uploadAddress := resp.GetResult().GetData().GetUploadAddress()
 	if uploadAddress != nil {
 		if len(uploadAddress.GetUploadHosts()) == 0 {
-			return "", "", fmt.Errorf("no tos host found"), http.StatusBadRequest
+			return logId, "", fmt.Errorf("no tos host found"), http.StatusBadRequest
 		}
 		if len(uploadAddress.GetStoreInfos()) == 0 && (uploadAddress.GetStoreInfos()[0] == nil) {
-			return "", "", fmt.Errorf("no store info found"), http.StatusBadRequest
+			return logId, "", fmt.Errorf("no store info found"), http.StatusBadRequest
 		}
 
 		tosHost := uploadAddress.GetUploadHosts()[0]
@@ -283,10 +309,10 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string
 		if int(size) < consts.MinChunckSize {
 			bts, err := ioutil.ReadAll(rd)
 			if err != nil {
-				return "", "", err, http.StatusBadRequest
+				return logId, "", err, http.StatusBadRequest
 			}
 			if err := p.directUpload(tosHost, oid, auth, bts, client, storageClass); err != nil {
-				return "", "", err, http.StatusBadRequest
+				return logId, "", err, http.StatusBadRequest
 			}
 		} else {
 			uploadPart := model.UploadPartCommon{
@@ -294,17 +320,13 @@ func (p *Vod) Upload(rd io.Reader, size int64, spaceName string, fileType string
 				Oid:     oid,
 				Auth:    auth,
 			}
-			isLargeFile := false
-			if size > consts.LargeFileSize {
-				isLargeFile = true
-			}
-			if err := p.chunkUpload(rd, uploadPart, client, size, isLargeFile, storageClass); err != nil {
-				return "", "", err, http.StatusBadRequest
+			if err := p.chunkUpload(rd, uploadPart, client, size, true, storageClass); err != nil {
+				return logId, "", err, http.StatusBadRequest
 			}
 		}
 		return oid, sessionKey, nil, http.StatusOK
 	}
-	return "", "", errors.New("upload address not exist"), http.StatusBadRequest
+	return logId, "", errors.New("upload address not exist"), http.StatusBadRequest
 }
 
 func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []byte, client *http.Client, storageClass int32) error {

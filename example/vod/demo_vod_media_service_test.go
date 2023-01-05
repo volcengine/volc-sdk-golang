@@ -453,3 +453,20 @@ func Test_ListSnapshots(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ExtractMediaMetaTask(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodExtractMediaMetaTaskRequest{
+		Vid: "your Vid",
+	}
+
+	resp, status, err := instance.ExtractMediaMetaTask(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
