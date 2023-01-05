@@ -553,5 +553,48 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		// **********************************************************************
+		// 计量计费
+		// **********************************************************************
+		"DescribeVodSpaceTranscodeData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceTranscodeData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DescribeVodSpaceAIStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceAIStatisData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DescribeVodSpaceSubtitleStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceSubtitleStatisData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DescribeVodSpaceDetectStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceDetectStatisData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DescribeVodSnapshotData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSnapshotData"},
+				"Version": []string{"2020-08-01"},
+			},
+		},
 	}
 )
