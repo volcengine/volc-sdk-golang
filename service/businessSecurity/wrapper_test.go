@@ -222,6 +222,22 @@ func UploadCustomContents(appId int64, name string, contents []string, modifyTyp
 	})
 }
 
+func AsyncImageRiskV2(appId int64, service, params string) (*AsyncVideoRiskResponse, error) {
+	return DefaultInstance.AsyncImageRiskV2(&AsyncRiskDetectionRequest{
+		AppId:      appId,
+		Service:    service,
+		Parameters: params,
+	})
+}
+
+func TestAsyncImageRiskV2(t *testing.T) {
+	resp, err := AsyncImageRiskV2(5461, "image_content_risk", "")
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(resp)
+}
+
 func TestBusinessSecurity_RiskResult(t *testing.T) {
 	RiskResult(3332, "login", 1615535000, 1615540603, 10, 1)
 }

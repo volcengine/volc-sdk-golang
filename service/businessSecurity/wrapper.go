@@ -249,6 +249,36 @@ func (p *BusinessSecurity) AsyncImageRisk(req *AsyncRiskDetectionRequest) (*Asyn
 	return result, nil
 }
 
+func (p *BusinessSecurity) AsyncImageRiskV2(req *AsyncRiskDetectionRequest) (*AsyncVideoRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncImageRiskV2: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("AsyncImageRiskV2", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncImageRiskV2", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncImageRiskV2: fail to do request, %v", err)
+			}
+			result := new(AsyncVideoRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncImageRiskV2: fail to do request, %v", err)
+	}
+	result := new(AsyncVideoRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // Risk result
 // 风险识别结果获取接口
 func (p *BusinessSecurity) GetImageResult(req *VideoResultRequest) (*ImageResultResponse, error) {
@@ -268,6 +298,31 @@ func (p *BusinessSecurity) GetImageResult(req *VideoResultRequest) (*ImageResult
 			return result, nil
 		}
 		return nil, fmt.Errorf("GetImageResult: fail to do request, %v", err)
+	}
+	result := new(ImageResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetImageResultV2(req *VideoResultRequest) (*ImageResultResponse, error) {
+	respBody, _, err := p.Client.Query("GetImageResultV2", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("GetImageResultV2", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("GetImageResultV2: fail to do request, %v", err)
+			}
+			result := new(ImageResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetImageResultV2: fail to do request, %v", err)
 	}
 	result := new(ImageResultResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {

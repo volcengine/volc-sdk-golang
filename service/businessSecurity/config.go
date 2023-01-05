@@ -134,6 +134,14 @@ var (
 				"Version": []string{"2021-11-29"},
 			},
 		},
+		"AsyncImageRiskV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AsyncImageRisk"},
+				"Version": []string{"2022-08-26"},
+			},
+		},
 		"ImageContentRisk": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -148,6 +156,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetImageResult"},
 				"Version": []string{"2021-11-29"},
+			},
+		},
+		"GetImageResultV2": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageResult"},
+				"Version": []string{"2022-08-26"},
 			},
 		},
 		"AsyncAudioRisk": {
