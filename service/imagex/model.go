@@ -200,9 +200,11 @@ type UpdateImageUrlPayload struct {
 
 // FetchImageUrl
 type FetchUrlReq struct {
-	Url       string `json:"Url"`
-	ServiceId string `json:"ServiceId"`
-	StoreKey  string `json:"StoreKey"`
+	Url           string              `json:"Url"`
+	ServiceId     string              `json:"ServiceId"`
+	StoreKey      string              `json:"StoreKey"`
+	RequestHeader map[string][]string `json:"RequestHeader"`
+	TimeOut       int                 `json:"TimeOut"`
 }
 
 type FetchUrlResp struct {
