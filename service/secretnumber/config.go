@@ -426,6 +426,14 @@ var (
 				"Version": []string{"2021-09-01"},
 			},
 		},
+		"CancelClick2Call": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CancelClick2Call"},
+				"Version": []string{"2021-09-01"},
+			},
+		},
 		"Click2CallLite": {
 			Method: http.MethodPost,
 			Path:   "/",

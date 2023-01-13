@@ -254,6 +254,15 @@ type Click2CallResult struct {
 	CallId string
 }
 
+type CancelClick2CallRequest struct {
+	CallId string
+}
+
+type CancelClick2CallResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           bool
+}
+
 type Click2CallLiteRequest struct {
 	Caller          string
 	Callee          string
