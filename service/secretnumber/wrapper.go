@@ -151,6 +151,15 @@ func (p *SecretNumber) Click2Call(req *Click2CallRequest) (*Click2CallResponse, 
 	}
 }
 
+func (p *SecretNumber) CancelClick2Call(req *CancelClick2CallRequest) (*CancelClick2CallResponse, int, error) {
+	resp := new(CancelClick2CallResponse)
+	if statusCode, err := p.Handler("CancelClick2Call", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *SecretNumber) Click2CallLite(req *Click2CallLiteRequest) (*Click2CallLiteResponse, int, error) {
 	resp := new(Click2CallLiteResponse)
 	if statusCode, err := p.Handler("Click2CallLite", req, resp); err != nil {

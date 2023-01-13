@@ -176,6 +176,16 @@ func TestSecretNumber_Click2Call(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestSecretNumber_CancelClick2Call(t *testing.T) {
+	req := &CancelClick2CallRequest{
+		CallId: "Dccfebdedfe",
+	}
+	result, statusCode, err := DefaultInstance.CancelClick2Call(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestSecretNumber_Click2CallLite(t *testing.T) {
 	req := &Click2CallLiteRequest{
 		Caller:       "137XXXX8257",
@@ -188,7 +198,7 @@ func TestSecretNumber_Click2CallLite(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
-func TestDataCenter_QueryAudioRecordFileUrlClick2Call(t *testing.T) {
+func TestDataCenter_QueryAudioRecordFileUrl(t *testing.T) {
 	req := &QueryAudioRecordFileUrlRequest{
 		CallId: "*",
 	}
