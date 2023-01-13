@@ -189,3 +189,40 @@ func (p *Notify) CommitVoiceResourceUpload(req *UploadVoiceResourceRequest) (*Ba
 	}
 	return resp, statusCode, nil
 }
+
+func (p *Notify) OpenUpdateResource(resourceKey string, name string) (*BasicResourceResponse, int, error) {
+	resp := new(BasicResourceResponse)
+	query := url.Values{}
+	query.Add("ResourceKey", resourceKey)
+	query.Add("Name", name)
+
+	statusCode, err := p.doQuery("OpenUpdateResource", query, resp)
+
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Notify) QueryUsableResource(resourceType string) (*QueryUsableResourceResponse, int, error) {
+	resp := new(QueryUsableResourceResponse)
+	query := url.Values{}
+	query.Add("Type", resourceType)
+
+	statusCode, err := p.doQuery("QueryUsableResource", query, resp)
+
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Notify) QueryOpenGetResource(req *QueryOpenGetResourceRequest) (*QueryOpenGetResourceResponse, int, error) {
+	resp := new(QueryOpenGetResourceResponse)
+	statusCode, err := p.doJson("QueryOpenGetResource", req, resp)
+
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}

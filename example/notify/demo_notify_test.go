@@ -36,3 +36,38 @@ func TestQuerySingleInfo(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestOpenUpdateResource(t *testing.T) {
+	n.DefaultInstance.Client.SetAccessKey(testAk)
+	n.DefaultInstance.Client.SetSecretKey(testSk)
+
+	response, statusCode, err := n.DefaultInstance.OpenUpdateResource("1ca08a45a937411ebd78e572cef87086", "12345.mp3")
+	t.Logf("response = %+v\n", response)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestQueryUsableResource(t *testing.T) {
+	n.DefaultInstance.Client.SetAccessKey(testAk)
+	n.DefaultInstance.Client.SetSecretKey(testSk)
+
+	response, statusCode, err := n.DefaultInstance.QueryUsableResource("0")
+	t.Logf("response = %+v\n", response)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestQueryOpenGetResource(t *testing.T) {
+	n.DefaultInstance.Client.SetAccessKey(testAk)
+	n.DefaultInstance.Client.SetSecretKey(testSk)
+
+	req := &n.QueryOpenGetResourceRequest{
+		Type:   0,
+		Limit:  1,
+		Offset: 2,
+	}
+	response, statusCode, err := n.DefaultInstance.QueryOpenGetResource(req)
+	t.Logf("response = %+v\n", response)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}

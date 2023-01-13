@@ -24,6 +24,7 @@ type SelectNumberAndBindAXBRequest struct {
 	ExpireTime        int64
 	AudioRecordFlag   int32
 	CallDisplayType   int32
+	AxConflictAxbFlag int32
 	CityCode          string
 	CityCodeByPhoneNo string
 	DegradeCityList   string
