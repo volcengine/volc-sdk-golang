@@ -20,7 +20,14 @@ func main() {
 	form := url.Values{}
 	form.Add("image_base64", "")
 
+	// v1
+	form.Add("version", "v1")
 	resp, status, err := visual.DefaultInstance.IDCard(form)
+
+	// v2
+	//form.Add("version", "v2")
+	//resp, status, err := visual.DefaultInstance.IDCardV2(form)
+
 	fmt.Println(status, err)
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
