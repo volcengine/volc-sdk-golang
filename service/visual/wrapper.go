@@ -164,8 +164,26 @@ func (p *Visual) BankCard(form url.Values) (*model.BankCardResult, int, error) {
 	return resp, statusCode, nil
 }
 
+func (p *Visual) BankCardV2(form url.Values) (*model.BankCardResultV2, int, error) {
+	resp := new(model.BankCardResultV2)
+	statusCode, err := p.commonHandler("BankCard", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) IDCard(form url.Values) (*model.IDCardResult, int, error) {
 	resp := new(model.IDCardResult)
+	statusCode, err := p.commonHandler("IDCard", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) IDCardV2(form url.Values) (*model.IDCardResultV2, int, error) {
+	resp := new(model.IDCardResultV2)
 	statusCode, err := p.commonHandler("IDCard", form, resp)
 	if err != nil {
 		return nil, statusCode, err
@@ -176,6 +194,42 @@ func (p *Visual) IDCard(form url.Values) (*model.IDCardResult, int, error) {
 func (p *Visual) OCRNormal(form url.Values) (*model.OCRNormalResult, int, error) {
 	resp := new(model.OCRNormalResult)
 	statusCode, err := p.commonHandler("OCRNormal", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) OCRApi(form url.Values, action string) (*model.OcrApiResult, int, error) {
+	resp := new(model.OcrApiResult)
+	statusCode, err := p.commonHandler(action, form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) DrivingLicense(form url.Values) (*model.DrivingLicenseResult, int, error) {
+	resp := new(model.DrivingLicenseResult)
+	statusCode, err := p.commonHandler("DrivingLicense", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VehicleLicense(form url.Values) (*model.VehicleLicenseResult, int, error) {
+	resp := new(model.VehicleLicenseResult)
+	statusCode, err := p.commonHandler("VehicleLicense", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) Taibao(form url.Values) (*model.TaibaoResult, int, error) {
+	resp := new(model.TaibaoResult)
+	statusCode, err := p.commonHandler("OcrTaibao", form, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}

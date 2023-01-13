@@ -5,31 +5,31 @@ import (
 )
 
 type PointInfo struct {
-	X int `json:"x"`
-	Y int `json:"y"`
+	X float64 `json:"x"`
+	Y float64 `json:"y"`
 }
 
 type CharInfo struct {
-	X      int     `json:"x"`
-	Y      int     `json:"y"`
-	Width  int     `json:"width"`
-	Height int     `json:"height"`
+	X      float64 `json:"x"`
+	Y      float64 `json:"y"`
+	Width  float64 `json:"width"`
+	Height float64 `json:"height"`
 	Score  float64 `json:"score"`
 	Char   string  `json:"char"`
 }
 
 type RectInfo struct {
-	X      int `json:"x"`
-	Y      int `json:"y"`
-	Width  int `json:"width"`
-	Height int `json:"height"`
+	X      float64 `json:"x"`
+	Y      float64 `json:"y"`
+	Width  float64 `json:"width"`
+	Height float64 `json:"height"`
 }
 
 type OCRNormalData struct {
 	LineTexts []string      `json:"line_texts"`
 	LineRects []*RectInfo   `json:"line_rects"`
 	Chars     [][]*CharInfo `json:"chars"`
-	Polygons  [][][]int     `json:"polygons"`
+	Polygons  [][][]float64 `json:"polygons"`
 }
 
 type OCRNormalResult struct {

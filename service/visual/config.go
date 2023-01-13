@@ -134,6 +134,182 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"MultiLanguageOCR": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MultiLanguageOCR"},
+				"Version": []string{"2022-08-31"},
+			},
+		},
+		"DrivingLicense": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DrivingLicense"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"VehicleLicense": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VehicleLicense"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrTaibao": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrTaibao"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrVatInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrVatInvoice"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrTaxiInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrTaxiInvoice"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrQuotaInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrQuotaInvoice"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrTrainTicket": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrTrainTicket"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrFlightInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrFlightInvoice"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrFinance": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrFinance"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrRollInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrRollInvoice"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrPassInvoice": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrPassInvoice"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrFoodProduction": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrFoodProduction"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrFoodBusiness": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrFoodBusiness"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OcrClueLicense": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrClueLicense"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"OCRTrade": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OCRTrade"},
+				"Version": []string{"2020-12-21"},
+			},
+		},
+		"OCRRuanzhu": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OCRRuanzhu"},
+				"Version": []string{"2020-12-21"},
+			},
+		},
+		"OCRCosmeticProduct": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OCRCosmeticProduct"},
+				"Version": []string{"2020-12-21"},
+			},
+		},
+		"OcrSeal": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrSeal"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OcrTextAlignment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OcrTextAlignment"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OCRPdf": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OCRPdf"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
+		"OCRTable": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OCRTable"},
+				"Version": []string{"2021-08-23"},
+			},
+		},
 		"FaceSwap": {
 			Method: http.MethodPost,
 			Path:   "/",
