@@ -142,6 +142,30 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"OpenUpdateResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OpenUpdateResource"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"QueryUsableResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryUsableResource"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"QueryOpenGetResource": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryOpenGetResource"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
 

@@ -189,3 +189,39 @@ type BasicResourceResponse struct {
 	ResponseMetadata *base.ResponseMetadata
 	Result           *BasicResourceResult
 }
+
+type QueryUsableResourceResponse struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           []*Resource
+}
+
+type Resource struct {
+	ResourceKey string
+	Suffix      string
+	Name        string
+	Duration    int32
+	State       int32
+	CreateTime  string
+	Type        int32
+	Remark      string
+}
+
+type GetResourceResult struct {
+	Records []*Resource
+	Total   int32
+	Limit   int32
+	Offset  int32
+}
+
+type QueryOpenGetResourceRequest struct {
+	Type    int32
+	Keyword string `json:",omitempty"`
+	State   int32  `json:",omitempty"`
+	Limit   int32  `json:",omitempty"`
+	Offset  int32  `json:",omitempty"`
+}
+
+type QueryOpenGetResourceResponse struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *GetResourceResult
+}
