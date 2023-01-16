@@ -557,38 +557,46 @@ type ListStructuredViewSpacesRequest struct {
 }
 
 type CreateStructuredViewRequest struct {
-	ID              string                    `json:"ID"`
-	AccountID       string                    `json:"AccountID"`
-	SpaceName       string                    `json:"SpaceName"`
-	ViewNumber      int64                     `json:"ViewNumber"`
-	StoragePeriod   int                       `json:"StoragePeriod"`
-	StorageType     string                    `json:"StorageType"`
-	Region          string                    `json:"Region"`
-	Description     string                    `json:"Description"`
-	SpaceCode       string                    `json:"SpaceCode"`
-	SpaceIP         string                    `json:"SpaceIP"`
-	SpacePort       int                       `json:"SpacePort"`
-	CreateTimestamp int64                     `json:"CreateTimestamp"`
-	UpdateTimestamp int64                     `json:"UpdateTimestamp"`
-	Status          StructuredViewSpaceStatus `json:"Status"`
+	ID               string               ` json:"ID"`
+	AccountID        string               ` json:"AccountID"`
+	ViewName         string               ` json:"ViewName"`
+	ViewType         string               `json:"ViewType"`
+	ViewCode         string               ` json:"ViewCode"`
+	ViewSpaceID      string               ` json:"ViewSpaceID"`
+	ViewSpaceName    string               ` json:"ViewSpaceName"`
+	ViewIP           string               `json:"ViewIP"`
+	ViewPort         int                  ` json:"ViewPort"`
+	Protocol         string               ` json:"Protocol"`
+	Username         string               ` json:"Username"`
+	Password         string               ` json:"Password"`
+	Description      string               ` json:"Description"`
+	Location         string               ` json:"Location"`
+	AdministrativeID string               ` json:"AdministrativeID"`
+	CreateTimestamp  int64                ` json:"CreateTimestamp"`
+	UpdateTimestamp  int64                ` json:"UpdateTimestamp"`
+	Status           StructuredViewStatus ` json:"Status"`
 }
 
 type UpdateStructuredViewRequest struct {
-	ViewID          string
-	ID              string                    `json:"ID"`
-	AccountID       string                    `json:"AccountID"`
-	SpaceName       string                    `json:"SpaceName"`
-	ViewNumber      int64                     `json:"ViewNumber"`
-	StoragePeriod   int                       `json:"StoragePeriod"`
-	StorageType     string                    `json:"StorageType"`
-	Region          string                    `json:"Region"`
-	Description     string                    `json:"Description"`
-	SpaceCode       string                    `json:"SpaceCode"`
-	SpaceIP         string                    `json:"SpaceIP"`
-	SpacePort       int                       `json:"SpacePort"`
-	CreateTimestamp int64                     `json:"CreateTimestamp"`
-	UpdateTimestamp int64                     `json:"UpdateTimestamp"`
-	Status          StructuredViewSpaceStatus `json:"Status"`
+	ViewID           string
+	ID               string               ` json:"ID"`
+	AccountID        string               ` json:"AccountID"`
+	ViewName         string               ` json:"ViewName"`
+	ViewType         string               `json:"ViewType"`
+	ViewCode         string               ` json:"ViewCode"`
+	ViewSpaceID      string               ` json:"ViewSpaceID"`
+	ViewSpaceName    string               ` json:"ViewSpaceName"`
+	ViewIP           string               `json:"ViewIP"`
+	ViewPort         int                  ` json:"ViewPort"`
+	Protocol         string               ` json:"Protocol"`
+	Username         string               ` json:"Username"`
+	Password         string               ` json:"Password"`
+	Description      string               ` json:"Description"`
+	Location         string               ` json:"Location"`
+	AdministrativeID string               ` json:"AdministrativeID"`
+	CreateTimestamp  int64                ` json:"CreateTimestamp"`
+	UpdateTimestamp  int64                ` json:"UpdateTimestamp"`
+	Status           StructuredViewStatus ` json:"Status"`
 }
 
 type ListStructuredViewsRequest struct {
