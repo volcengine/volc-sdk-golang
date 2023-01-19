@@ -16,16 +16,16 @@ import (
 func Test_CreateVQScoreTask(t *testing.T) {
 	instance := live.NewInstance()
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "",
+		SecretAccessKey: "",
 	})
 
 	query := &request.CreateVQScoreTaskRequest{
-		MainAddr:      "your MainAddr",
-		ContrastAddr:  "your ContrastAddr",
+		MainAddr:      "",
+		ContrastAddr:  "",
 		FrameInterval: 0,
 		Duration:      0,
-		Algorithm:     "your Algorithm",
+		Algorithm:     "",
 	}
 
 	resp, status, err := instance.CreateVQScoreTask(query)
@@ -63,7 +63,6 @@ func Test_ListVQScoreTask(t *testing.T) {
 		EndTime:   "your EndTime",
 		PageNum:   0,
 		PageSize:  0,
-		Status:    0,
 	}
 
 	resp, status, err := instance.ListVQScoreTask(query)

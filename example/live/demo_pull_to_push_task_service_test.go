@@ -16,20 +16,20 @@ import (
 func Test_CreatePullToPushTask(t *testing.T) {
 	instance := live.NewInstance()
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "",
+		SecretAccessKey: "",
 	})
 
 	query := &request.CreatePullToPushTaskRequest{
-		Title:       "your Title",
+		Title:       "",
 		StartTime:   0,
 		EndTime:     0,
-		CallbackURL: "your CallbackURL",
+		CallbackURL: "",
 		Type:        0,
 		CycleMode:   0,
-		DstAddr:     "your DstAddr",
-		SrcAddr:     "your SrcAddr",
-		SrcAddrS:    []string{"your SrcAddrS"},
+		DstAddr:     "",
+		SrcAddr:     "",
+		SrcAddrS:    []string{""},
 	}
 
 	resp, status, err := instance.CreatePullToPushTask(query)
@@ -60,21 +60,20 @@ func Test_ListPullToPushTask(t *testing.T) {
 func Test_UpdatePullToPushTask(t *testing.T) {
 	instance := live.NewInstance()
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "",
+		SecretAccessKey: "",
 	})
 
 	query := &request.UpdatePullToPushTaskRequest{
-		Title:       "your Title",
-		TaskId:      "your TaskId",
-		StartTime:   0,
-		EndTime:     0,
-		CallbackURL: "your CallbackURL",
-		Type:        0,
-		CycleMode:   0,
-		DstAddr:     "your DstAddr",
-		SrcAddr:     "your SrcAddr",
-		SrcAddrS:    []string{"your SrcAddrS"},
+		Title:     "",
+		TaskId:    "",
+		StartTime: 0,
+		EndTime:   0,
+		Type:      0,
+		CycleMode: 0,
+		DstAddr:   "",
+		SrcAddr:   "",
+		SrcAddrS:  []string{""},
 	}
 
 	resp, status, err := instance.UpdatePullToPushTask(query)

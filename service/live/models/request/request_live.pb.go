@@ -1543,23 +1543,20 @@ func (x *DescribeRelaySourceRequest) GetVhost() string {
 }
 
 type CreateVQScoreTaskRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
 
 	// 主拉流地址。 支持输入FCDN拉流地址和第三方CDN拉流地址。
-	MainAddr string `protobuf:"bytes,1,opt,name=MainAddr,proto3" json:"MainAddr,omitempty"`
+	MainAddr string `json:"MainAddr"`
 	// 对比拉流地址。
-	ContrastAddr string `protobuf:"bytes,2,opt,name=ContrastAddr,proto3" json:"ContrastAddr,omitempty"`
+	ContrastAddr string `json:"ContrastAddr"`
 	// 抽帧间隔，目前只能密集抽帧模板控制，以模板为主。
-	FrameInterval int64 `protobuf:"varint,3,opt,name=FrameInterval,proto3" json:"FrameInterval,omitempty"`
+	FrameInterval int64 `json:"FrameInterval"`
 	// 测评运行时间
 	// - 支持输入s整数
 	// - 最大支持7*24小时的测评任务
 	// - 最小支持1min的测评任务
-	Duration int64 `protobuf:"varint,4,opt,name=Duration,proto3" json:"Duration,omitempty"`
+	Duration int64 `json:"Duration"`
 	// 测评算法，支持vqscore分数计算
-	Algorithm string `protobuf:"bytes,5,opt,name=Algorithm,proto3" json:"Algorithm,omitempty"`
+	Algorithm string `json:"Algorithm"`
 }
 
 func (x *CreateVQScoreTaskRequest) Reset() {
@@ -1678,20 +1675,16 @@ func (x *DescribeVQScoreTaskRequest) GetID() string {
 }
 
 type ListVQScoreTaskRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
 	// 查询开始时间，UTC时间格式，支持查询最近30天内的数据
-	StartTime string `protobuf:"bytes,1,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
+	StartTime string `json:"StartTime"`
 	// 查询结束时间，UTC时间格式，支持查询最近30天内的数据
-	EndTime string `protobuf:"bytes,2,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
+	EndTime string `json:"EndTime"`
 	// 当前页码，取值范围为 [1,1000]。
-	PageNum int64 `protobuf:"varint,3,opt,name=PageNum,proto3" json:"PageNum,omitempty"`
+	PageNum int64 `json:"PageNum"`
 	// 分页大小，取值范围为 [1,1000]。
-	PageSize int64 `protobuf:"varint,4,opt,name=PageSize,proto3" json:"PageSize,omitempty"`
+	PageSize int64 `json:"PageSize"`
 	// 测评状态，0：全部，1：测试中，2：成功，3：失败
-	Status int64 `protobuf:"varint,5,opt,name=Status,proto3" json:"Status,omitempty"`
+	Status *int64 `json:"Status"`
 }
 
 func (x *ListVQScoreTaskRequest) Reset() {
@@ -1756,32 +1749,28 @@ func (x *ListVQScoreTaskRequest) GetPageSize() int64 {
 
 func (x *ListVQScoreTaskRequest) GetStatus() int64 {
 	if x != nil {
-		return x.Status
+		return *x.Status
 	}
 	return 0
 }
 
 type GeneratePlayURLRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
 	// 域名空间名称
-	Vhost string `protobuf:"bytes,1,opt,name=Vhost,proto3" json:"Vhost,omitempty"`
+	Vhost string `json:"Vhost"`
 	// 拉流域名名称，需要生成拉流地址的域名
-	Domain string `protobuf:"bytes,2,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	Domain string `json:"Domain"`
 	// App名称
-	App string `protobuf:"bytes,3,opt,name=App,proto3" json:"App,omitempty"`
+	App string `json:"App"`
 	// Stream名称
-	Stream string `protobuf:"bytes,4,opt,name=Stream,proto3" json:"Stream,omitempty"`
+	Stream string `json:"Stream"`
 	// 转码流后缀，不填源流
-	Suffix string `protobuf:"bytes,5,opt,name=Suffix,proto3" json:"Suffix,omitempty"`
+	Suffix string `json:"Suffix"`
 	// cdn类型，fcdn/3rd（第二方cdn）二选一填，不填默认fcdn
-	Type string `protobuf:"bytes,6,opt,name=Type,proto3" json:"Type,omitempty"`
+	Type string `json:"Type"`
 	// 生成的地址鉴权的有效时间，单位s，不填默认使用鉴权配置的过期时间，没有鉴权时间则默认7天过期
-	ValidDuration int64 `protobuf:"varint,7,opt,name=ValidDuration,proto3" json:"ValidDuration,omitempty"`
+	ValidDuration *int64 `json:"ValidDuration"`
 	// 绝对有效时间，UTC格式，优先级比ValidDuration低
-	ExpiredTime string `protobuf:"bytes,8,opt,name=ExpiredTime,proto3" json:"ExpiredTime,omitempty"`
+	ExpiredTime string `json:"ExpiredTime"`
 }
 
 func (x *GeneratePlayURLRequest) Reset() {
@@ -1860,7 +1849,7 @@ func (x *GeneratePlayURLRequest) GetType() string {
 
 func (x *GeneratePlayURLRequest) GetValidDuration() int64 {
 	if x != nil {
-		return x.ValidDuration
+		return *x.ValidDuration
 	}
 	return 0
 }
@@ -1873,22 +1862,18 @@ func (x *GeneratePlayURLRequest) GetExpiredTime() string {
 }
 
 type GeneratePushURLRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
 	// 域名空间名称
-	Vhost string `protobuf:"bytes,1,opt,name=Vhost,proto3" json:"Vhost,omitempty"`
+	Vhost string `json:"Vhost"`
 	// 推流域名名称，需要推流地址的域名，不填返回Vhost下所有推流域名生成的地址
-	Domain string `protobuf:"bytes,2,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	Domain string `json:"Domain"`
 	// App名称
-	App string `protobuf:"bytes,3,opt,name=App,proto3" json:"App,omitempty"`
+	App string `json:"App"`
 	// App名称
-	Stream string `protobuf:"bytes,4,opt,name=Stream,proto3" json:"Stream,omitempty"`
+	Stream string `json:"Stream"`
 	// 生成的地址鉴权的有效时间，单位s，不填默认使用鉴权配置的过期时间，没有鉴权时间则默认7天过期
-	ValidDuration int64 `protobuf:"varint,5,opt,name=ValidDuration,proto3" json:"ValidDuration,omitempty"`
+	ValidDuration *int64 `json:"ValidDuration"`
 	// 绝对有效时间，UTC格式，优先级比ValidDuration低
-	ExpiredTime string `protobuf:"bytes,6,opt,name=ExpiredTime,proto3" json:"ExpiredTime,omitempty"`
+	ExpiredTime string `json:"ExpiredTime"`
 }
 
 func (x *GeneratePushURLRequest) Reset() {
@@ -1953,7 +1938,7 @@ func (x *GeneratePushURLRequest) GetStream() string {
 
 func (x *GeneratePushURLRequest) GetValidDuration() int64 {
 	if x != nil {
-		return x.ValidDuration
+		return *x.ValidDuration
 	}
 	return 0
 }
@@ -1966,28 +1951,28 @@ func (x *GeneratePushURLRequest) GetExpiredTime() string {
 }
 
 type CreatePullToPushTaskRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
+	//state         protoimpl.MessageState
+	//sizeCache     protoimpl.SizeCache
+	//unknownFields protoimpl.UnknownFields
 
 	// 标题
-	Title string `protobuf:"bytes,1,opt,name=Title,proto3" json:"Title,omitempty"`
+	Title string `json:"Title"`
 	// 开始时间，unix时间戳，单位s
-	StartTime int64 `protobuf:"varint,2,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
+	StartTime int64 `json:"StartTime"`
 	// 结束时间，unix时间戳，单位s，和开始时间的跨度最大7天
-	EndTime int64 `protobuf:"varint,3,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
+	EndTime int64 `json:"EndTime"`
 	// 回调地址，小于2000字符
-	CallbackURL string `protobuf:"bytes,4,opt,name=CallbackURL,proto3" json:"CallbackURL,omitempty"`
+	CallbackURL string `json:"CallbackURL"`
 	// 拉流转推地址类型，0：直播，1：点播
-	Type int32 `protobuf:"varint,5,opt,name=Type,proto3" json:"Type,omitempty"`
+	Type int32 `json:"Type"`
 	// 点播时，拉流地址的循环模式，Type=1时必选，-1：顺序循环
-	CycleMode int32 `protobuf:"varint,6,opt,name=CycleMode,proto3" json:"CycleMode,omitempty"`
+	CycleMode int32 `json:"CycleMode"`
 	// 推流目标地址
-	DstAddr string `protobuf:"bytes,7,opt,name=DstAddr,proto3" json:"DstAddr,omitempty"`
+	DstAddr string `json:"DstAddr"`
 	// 直播拉流地址,Type=0时必填
-	SrcAddr string `protobuf:"bytes,8,opt,name=SrcAddr,proto3" json:"SrcAddr,omitempty"`
+	SrcAddr string `json:"SrcAddr"`
 	// 点播拉流地址，Type=1时必填
-	SrcAddrS []string `protobuf:"bytes,9,rep,name=SrcAddrS,proto3" json:"SrcAddrS,omitempty"`
+	SrcAddrS []string `json:"SrcAddrS"`
 }
 
 func (x *CreatePullToPushTaskRequest) Reset() {
@@ -2152,30 +2137,26 @@ func (x *ListPullToPushTaskRequest) GetTitle() string {
 }
 
 type UpdatePullToPushTaskRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
 	// 任务标题
-	Title string `protobuf:"bytes,1,opt,name=Title,proto3" json:"Title,omitempty"`
+	Title string `json:"Title"`
 	// 任务ID
-	TaskId string `protobuf:"bytes,2,opt,name=TaskId,proto3" json:"TaskId,omitempty"`
+	TaskId string `json:"TaskId"`
 	// 开始时间，unix时间戳，单位s
-	StartTime int64 `protobuf:"varint,3,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
+	StartTime int64 `json:"StartTime"`
 	// 结束时间，unix时间戳，单位s，与开始时间跨度不超过7天
-	EndTime int64 `protobuf:"varint,4,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
+	EndTime int64 `json:"EndTime"`
 	// 回调地址，长度小于2000
-	CallbackURL string `protobuf:"bytes,5,opt,name=CallbackURL,proto3" json:"CallbackURL,omitempty"`
+	CallbackURL string `json:"CallbackURL"`
 	// 拉流转推地址类型，0：直播，1：点播
-	Type int32 `protobuf:"varint,6,opt,name=Type,proto3" json:"Type,omitempty"`
+	Type int32 `json:"Type"`
 	// 点播时，拉流地址的循环模式，Type=1时必选，-1：顺序循环
-	CycleMode int32 `protobuf:"varint,7,opt,name=CycleMode,proto3" json:"CycleMode,omitempty"`
+	CycleMode int32 `json:"CycleMode"`
 	// 推流目标地址
-	DstAddr string `protobuf:"bytes,8,opt,name=DstAddr,proto3" json:"DstAddr,omitempty"`
+	DstAddr string `json:"DstAddr"`
 	// 直播拉流地址,Type=0时必填
-	SrcAddr string `protobuf:"bytes,9,opt,name=SrcAddr,proto3" json:"SrcAddr,omitempty"`
+	SrcAddr string `json:"SrcAddr"`
 	// 点播拉流地址，Type=1时必填
-	SrcAddrS []string `protobuf:"bytes,10,rep,name=SrcAddrS,proto3" json:"SrcAddrS,omitempty"`
+	SrcAddrS []string `json:"SrcAddrS"`
 }
 
 func (x *UpdatePullToPushTaskRequest) Reset() {
@@ -3397,18 +3378,6 @@ func file_live_request_request_live_proto_init() {
 				return nil
 			}
 		}
-		file_live_request_request_live_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateVQScoreTaskRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 		file_live_request_request_live_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DescribeVQScoreTaskRequest); i {
 			case 0:
@@ -3421,68 +3390,8 @@ func file_live_request_request_live_proto_init() {
 				return nil
 			}
 		}
-		file_live_request_request_live_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListVQScoreTaskRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_live_request_request_live_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneratePlayURLRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_live_request_request_live_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GeneratePushURLRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_live_request_request_live_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreatePullToPushTaskRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 		file_live_request_request_live_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListPullToPushTaskRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_live_request_request_live_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdatePullToPushTaskRequest); i {
 			case 0:
 				return &v.state
 			case 1:
