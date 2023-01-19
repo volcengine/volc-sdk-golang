@@ -1835,7 +1835,7 @@ func (p *AIoT) DisableStructuredViewCascadePlatform(platformID string) (*Structu
 func (p *AIoT) CreateStructuredViewCascadeJob(request *CreateStructuredViewCascadeJobRequest) (*StructuredViewResponse, int, error) {
 	query := url.Values{}
 	resp := &StructuredViewResponse{}
-	statusCode, err := p.commonHandlerJson("DisableStructuredViewCascadePlatform", query, resp, request)
+	statusCode, err := p.commonHandlerJson("CreateStructuredViewCascadeJob", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
