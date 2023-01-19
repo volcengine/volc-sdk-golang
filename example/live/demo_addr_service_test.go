@@ -16,19 +16,18 @@ import (
 func Test_GeneratePlayURL(t *testing.T) {
 	instance := live.NewInstance()
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "",
+		SecretAccessKey: "",
 	})
 
 	query := &request.GeneratePlayURLRequest{
-		Vhost:         "your Vhost",
-		Domain:        "your Domain",
-		App:           "your App",
-		Stream:        "your Stream",
-		Suffix:        "your Suffix",
-		Type:          "your Type",
-		ValidDuration: 0,
-		ExpiredTime:   "your ExpiredTime",
+		Vhost:       "",
+		Domain:      "",
+		App:         "",
+		Stream:      "",
+		Suffix:      "",
+		Type:        "",
+		ExpiredTime: "",
 	}
 
 	resp, status, err := instance.GeneratePlayURL(query)
@@ -40,17 +39,16 @@ func Test_GeneratePlayURL(t *testing.T) {
 func Test_GeneratePushURL(t *testing.T) {
 	instance := live.NewInstance()
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
+		AccessKeyID:     "",
+		SecretAccessKey: "",
 	})
 
 	query := &request.GeneratePushURLRequest{
-		Vhost:         "your Vhost",
-		Domain:        "your Domain",
-		App:           "your App",
-		Stream:        "your Stream",
-		ValidDuration: 0,
-		ExpiredTime:   "your ExpiredTime",
+		Vhost:       "",
+		Domain:      "",
+		App:         "",
+		Stream:      "",
+		ExpiredTime: "",
 	}
 
 	resp, status, err := instance.GeneratePushURL(query)
