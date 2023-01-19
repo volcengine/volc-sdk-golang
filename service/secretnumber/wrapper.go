@@ -232,6 +232,15 @@ func (p *DataCenter) QueryCallRecordMsg(req *QueryCallRecordMsgRequest) (*QueryC
 	}
 }
 
+func (p *DataCenter) QueryCallRecordMsgNew(req *QueryCallRecordMsgRequest) (*QueryCallRecordMsgNewResponse, int, error) {
+	resp := new(QueryCallRecordMsgNewResponse)
+	if statusCode, err := p.Handler("QueryCallRecordMsgNew", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *NumberPool) CreateNumberPool(req *CreateNumberPoolRequest) (*CreateNumberPoolResponse, int, error) {
 	resp := new(CreateNumberPoolResponse)
 	if statusCode, err := Handler("CreateNumberPool", req, resp, *p.Client); err != nil {

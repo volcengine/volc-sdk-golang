@@ -349,6 +349,42 @@ type QueryCallRecordMsgResponse struct {
 	Result           []QueryCallRecordMsg
 }
 
+type QueryCallRecordMsgNew struct {
+	AccountId              string
+	CallId                 string
+	ServiceType            int32
+	SubServiceType         int32
+	Caller                 string
+	CallerCountryIsoCode   string
+	CallerProvinceCode     string
+	CallerCityCode         string
+	Callee                 string
+	CalleeCountryIsoCode   string
+	CalleeProvinceCode     string
+	CalleeCityCode         string
+	BeginCallTime          int64
+	EndTime                int64
+	ReleaseType            int32
+	CallDuration           int32
+	CallResult             int32
+	AudioRecordFlag        int32
+	CdrCreateTime          int64
+	UserData               string
+	CallType               int32
+	CallerShowNumber       string
+	CallerShowNumberPoolNo string
+	CalleeShowNumber       string
+	CalleeShowNumberPoolNo string
+	CallerCallingTime      int64
+	CallerRingingTime      int64
+	CallerDuration         int32
+}
+
+type QueryCallRecordMsgNewResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           []QueryCallRecordMsgNew
+}
+
 type CreateNumberPoolRequest struct {
 	Name           string
 	ServiceType    string
