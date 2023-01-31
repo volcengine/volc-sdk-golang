@@ -429,6 +429,15 @@ func (p *Visual) VideoRetargetingQueryTask(query url.Values) (*model.VideoEditQu
 	return resp, statusCode, nil
 }
 
+func (p *Visual) VideoCoverSelection(form url.Values) (*model.VideoCoverSelectResult, int, error) {
+	resp := new(model.VideoCoverSelectResult)
+	statusCode, err := p.commonHandler("VideoCoverSelection", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) VideoSummarizationSubmitTask(form url.Values) (*model.VideoEditSubmitTaskResult, int, error) {
 	resp := new(model.VideoEditSubmitTaskResult)
 	statusCode, err := p.commonHandler("VideoSummarizationSubmitTask", form, resp)

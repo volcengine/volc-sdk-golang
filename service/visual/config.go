@@ -505,6 +505,14 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"VideoCoverSelection": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VideoCoverSelection"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
 	}
 )
 
