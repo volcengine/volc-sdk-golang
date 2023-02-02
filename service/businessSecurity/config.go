@@ -186,7 +186,7 @@ var (
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"AsyncAudioRisk"},
+				"Action":  []string{"AsyncLiveVideoRisk"},
 				"Version": []string{"2022-04-25"},
 			},
 		},
@@ -194,7 +194,7 @@ var (
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetAudioResult"},
+				"Action":  []string{"GetVideoLiveResult"},
 				"Version": []string{"2022-04-25"},
 			},
 		},
