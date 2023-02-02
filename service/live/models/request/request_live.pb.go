@@ -1680,9 +1680,9 @@ type ListVQScoreTaskRequest struct {
 	// 查询结束时间，UTC时间格式，支持查询最近30天内的数据
 	EndTime string `json:"EndTime"`
 	// 当前页码，取值范围为 [1,1000]。
-	PageNum int64 `json:"PageNum"`
+	PageNum int64 `json:"PageNum,omitempty"`
 	// 分页大小，取值范围为 [1,1000]。
-	PageSize int64 `json:"PageSize"`
+	PageSize int64 `json:"PageSize,omitempty""`
 	// 测评状态，0：全部，1：测试中，2：成功，3：失败
 	Status *int64 `json:"Status"`
 }
