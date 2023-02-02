@@ -132,6 +132,22 @@ var (
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
+		"ApplyVmsTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplyVmsTemplate"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"GetVmsTemplateStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetVmsTemplateStatus"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
 	}
 )
 
