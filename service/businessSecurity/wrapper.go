@@ -683,6 +683,33 @@ func (p *BusinessSecurity) GetVideoLiveResult(req *VideoResultRequest) (*VideoRe
 	return result, nil
 }
 
+// close audio Risk
+// 风险识别异步关闭接口
+func (p *BusinessSecurity) CloseVideoLiveRisk(req *VideoResultRequest) (*AsyncVideoRiskResponse, error) {
+	respBody, _, err := p.Client.Query("CloseVideoLiveRisk", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("CloseVideoLiveRisk", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("CloseVideoLiveRisk: fail to do request, %v", err)
+			}
+			result := new(AsyncVideoRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CloseVideoLiveRisk: fail to do request, %v", err)
+	}
+	result := new(AsyncVideoRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // Asynchronous audio risk detection
 // 内容安全音频异步接口
 func (p *BusinessSecurity) AsyncLiveAudioRisk(req *AsyncRiskDetectionRequest) (*AsyncVideoRiskResponse, error) {
@@ -736,6 +763,33 @@ func (p *BusinessSecurity) GetAudioLiveResult(req *VideoResultRequest) (*AudioRe
 		return nil, fmt.Errorf("GetAudioLiveResult: fail to do request, %v", err)
 	}
 	result := new(AudioResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// close audio Risk
+// 风险识别异步关闭接口
+func (p *BusinessSecurity) CloseAudioLiveRisk(req *VideoResultRequest) (*AsyncVideoRiskResponse, error) {
+	respBody, _, err := p.Client.Query("CloseAudioLiveRisk", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("CloseAudioLiveRisk", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("CloseAudioLiveRisk: fail to do request, %v", err)
+			}
+			result := new(AsyncVideoRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CloseAudioLiveRisk: fail to do request, %v", err)
+	}
+	result := new(AsyncVideoRiskResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

@@ -198,6 +198,14 @@ var (
 				"Version": []string{"2022-04-25"},
 			},
 		},
+		"CloseVideoLiveRisk": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CloseVideoLive"},
+				"Version": []string{"2022-04-25"},
+			},
+		},
 		"AsyncLiveAudioRisk": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -211,6 +219,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAudioLiveResult"},
+				"Version": []string{"2022-04-25"},
+			},
+		},
+		"CloseAudioLiveRisk": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CloseAudioLive"},
 				"Version": []string{"2022-04-25"},
 			},
 		},
