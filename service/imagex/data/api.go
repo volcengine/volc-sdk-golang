@@ -18,10 +18,13 @@ func AddDataModule(c *imagex.ImageX) error {
 		"DescribeImageXEdgeRequest",
 		"DescribeImageXHitRateTrafficData",
 		"DescribeImageXHitRateRequestData",
+		"DescribeImageXCDNTopRequestData",
+		"DescribeImageXSummary",
 	}
 	p := []string{"DescribeImageXMirrorRequestTraffic",
 		"DescribeImageXMirrorRequestBandwidth",
 		"DescribeImageXMirrorRequestHttpCodeByTime",
+		"DescribeImageXMirrorRequestHttpCodeOverview",
 	}
 	for _, i := range g {
 		c.ApiInfoList[i] = &base.ApiInfo{
@@ -193,6 +196,43 @@ func DescribeImageXHitRateRequestData(instance *imagex.ImageX, req *DescribeImag
 
 	resp := &DescribeImageXHitRateRequestDataResp{}
 	err = instance.ImageXGet("DescribeImageXHitRateRequestData", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXCDNTopRequestData(instance *imagex.ImageX, req *DescribeImageXCDNTopRequestDataReq) (*DescribeImageXCDNTopRequestDataResp, error) {
+	query, err := marshalToQuery(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &DescribeImageXCDNTopRequestDataResp{}
+	err = instance.ImageXGet("DescribeImageXCDNTopRequestData", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXSummary(instance *imagex.ImageX, req *DescribeImageXSummaryReq) (*DescribeImageXSummaryResp, error) {
+	query, err := marshalToQuery(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &DescribeImageXSummaryResp{}
+	err = instance.ImageXGet("DescribeImageXSummary", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXMirrorRequestHttpCodeOverview(instance *imagex.ImageX, req *DescribeImageXMirrorRequestHttpCodeOverviewReq) (*DescribeImageXMirrorRequestHttpCodeOverviewResp, error) {
+	resp := &DescribeImageXMirrorRequestHttpCodeOverviewResp{}
+	err := instance.ImageXPost("DescribeImageXMirrorRequestHttpCodeOverview", url.Values{}, req, resp)
 	if err != nil {
 		return nil, err
 	}
