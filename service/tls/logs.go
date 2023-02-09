@@ -113,6 +113,14 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		"Content-Type": "application/json",
 	}
 
+	if request.ConsumerGroupName != nil {
+		headers["ConsumerGroupName"] = *request.ConsumerGroupName
+	}
+
+	if request.ConsumerName != nil {
+		headers["ConsumerName"] = *request.ConsumerName
+	}
+
 	reqBody := map[string]interface{}{
 		"Cursor": request.Cursor,
 	}
@@ -165,16 +173,20 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		}
 	}
 
-	list, err := parseLogList(responseBody, compression, rawSize)
+	parsedCount, err := strconv.ParseInt(rawResponse.Header.Get("x-tls-count"), 10, 64)
 	if err != nil {
 		return nil, err
 	}
 
-	response.Logs = list
+	if parsedCount == 0 {
+		response.Logs = nil
+	} else {
+		list, err := parseLogList(responseBody, compression, rawSize)
+		if err != nil {
+			return nil, err
+		}
 
-	parsedCount, err := strconv.ParseInt(rawResponse.Header.Get("x-tls-count"), 10, 64)
-	if err != nil {
-		return nil, err
+		response.Logs = list
 	}
 
 	response.Count = int(parsedCount)

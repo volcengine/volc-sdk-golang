@@ -15,7 +15,8 @@ import (
 )
 
 var (
-	errBusy = errors.New("server is busy")
+	errBusy             = errors.New("server is busy")
+	errHeartbeatExpired = errors.New("heartbeat expired")
 )
 
 type logConsumer struct {
@@ -23,12 +24,14 @@ type logConsumer struct {
 	client tls.Client
 	logger log.Logger
 
-	conf         *Config
-	statusLock   *sync.RWMutex
-	status       int
-	shard        *tls.ConsumeShard
-	consumeFunc  func(topicID string, shardID int, l *pb.LogGroupList)
-	checkpointCh chan<- *checkpointInfo
+	conf               *Config
+	statusLock         *sync.RWMutex
+	status             int
+	shard              *tls.ConsumeShard
+	consumeFunc        func(topicID string, shardID int, l *pb.LogGroupList)
+	checkpointCh       chan<- *checkpointInfo
+	heartbeatRestartCh chan<- struct{}
+	commitCh           chan<- struct{}
 
 	nextCheckpoint   string
 	currLogGroupList *pb.LogGroupList
@@ -51,6 +54,7 @@ func (lc *logConsumer) run() {
 	case consuming:
 	case backoff:
 		go lc.runWithStatus(lc.backoff, readyToFetch, nop, backoff, backoff)
+	case waitForRestart:
 	}
 }
 
@@ -64,9 +68,12 @@ func (lc *logConsumer) runWithStatus(f func() error, ifDone int, ifErr int, ifPa
 	}()
 
 	if err := f(); err != nil {
-		if errors.Is(err, errBusy) {
+		switch err {
+		case errBusy:
 			lc.setStatus(ifBusy)
-		} else {
+		case errHeartbeatExpired:
+			lc.setStatus(waitForRestart)
+		default:
 			lc.setStatus(ifErr)
 		}
 
@@ -127,17 +134,27 @@ func (lc *logConsumer) init() error {
 }
 
 func (lc *logConsumer) fetchData() error {
+	compressType := tls.CompressLz4
+
 	fetchResp, err := lc.client.ConsumeLogs(&tls.ConsumeLogsRequest{
-		TopicID:       lc.shard.TopicID,
-		ShardID:       lc.shard.ShardID,
-		Cursor:        lc.nextCheckpoint,
-		LogGroupCount: &lc.conf.MaxFetchLogGroupCount,
-		Compression:   nil,
+		TopicID:           lc.shard.TopicID,
+		ShardID:           lc.shard.ShardID,
+		Cursor:            lc.nextCheckpoint,
+		LogGroupCount:     &lc.conf.MaxFetchLogGroupCount,
+		Compression:       &compressType,
+		ConsumerGroupName: &lc.conf.ConsumerGroupName,
+		ConsumerName:      &lc.conf.ConsumerName,
 	})
 	if err != nil {
 		clientErr := tls.NewClientError(err)
 		if clientErr.HTTPCode == http.StatusTooManyRequests {
 			return errBusy
+		}
+
+		if clientErr.Code == tls.ErrConsumerHeartbeatExpired {
+			lc.heartbeatRestartCh <- struct{}{}
+			lc.commitCh <- struct{}{}
+			return errHeartbeatExpired
 		}
 
 		level.Error(lc.logger).Log("error", "fetch data failed, err: "+err.Error())

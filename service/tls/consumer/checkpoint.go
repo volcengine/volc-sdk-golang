@@ -19,6 +19,7 @@ type checkpointManager struct {
 	mapLock       *sync.RWMutex
 	checkpointMap map[string]*checkpointInfo
 	checkpointCh  <-chan *checkpointInfo
+	commitCh      <-chan struct{}
 }
 
 func (c *checkpointManager) run(ctx context.Context, wg *sync.WaitGroup) {
@@ -34,6 +35,8 @@ func (c *checkpointManager) run(ctx context.Context, wg *sync.WaitGroup) {
 			c.uploadCheckpoint()
 
 			return
+		case <-c.commitCh:
+			c.uploadCheckpoint()
 		case <-uploadCheckpointTicker.C:
 			c.uploadCheckpoint()
 		case newCheckpoint := <-c.checkpointCh:
@@ -74,7 +77,7 @@ type checkpointInfo struct {
 }
 
 func newCheckpointManager(logger log.Logger, conf *Config, client tls.Client,
-	checkpointChan <-chan *checkpointInfo) *checkpointManager {
+	checkpointChan <-chan *checkpointInfo, commitCh chan struct{}) *checkpointManager {
 	return &checkpointManager{
 		logger:        logger,
 		conf:          conf,
@@ -82,5 +85,6 @@ func newCheckpointManager(logger log.Logger, conf *Config, client tls.Client,
 		mapLock:       &sync.RWMutex{},
 		checkpointMap: make(map[string]*checkpointInfo),
 		checkpointCh:  checkpointChan,
+		commitCh:      commitCh,
 	}
 }

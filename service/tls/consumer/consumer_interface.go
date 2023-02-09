@@ -7,6 +7,7 @@ import (
 )
 
 type Consumer interface {
+	ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string)
 	Start() error
 	Stop()
 }

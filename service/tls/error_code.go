@@ -114,4 +114,7 @@ const (
 
 	// ErrConsumerGroupAlreadyExists 消费者组已存在
 	ErrConsumerGroupAlreadyExists = "ConsumerGroupAlreadyExists"
+
+	// ErrConsumerHeartbeatExpired ConsumerGroup心跳过期
+	ErrConsumerHeartbeatExpired = "ConsumerHeartbeatExpired"
 )

@@ -5,11 +5,10 @@ import (
 	"regexp"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
-	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
 type Config struct {
-	innerlogger.LoggerConfig
+	common.LoggerConfig
 	common.ClientConfig
 	ProjectID                      string
 	TopicIDList                    []string
@@ -25,7 +24,7 @@ type Config struct {
 
 func GetDefaultConsumerConfig() *Config {
 	return &Config{
-		LoggerConfig: innerlogger.LoggerConfig{
+		LoggerConfig: common.LoggerConfig{
 			LogLevel:      "info",
 			LogFileName:   "",
 			IsJsonType:    false,

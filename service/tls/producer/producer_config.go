@@ -4,19 +4,9 @@ import (
 	"time"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
-	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
 const delimiter = "|"
-
-type ClientConfig struct {
-	Endpoint        string
-	AccessKeyID     string
-	AccessKeySecret string
-	Region          string
-}
-
-type LoggerConfig = innerlogger.LoggerConfig
 
 type Config struct {
 	TotalSizeLnBytes      int64
@@ -33,13 +23,13 @@ type Config struct {
 	ShardCount            int
 	NoRetryStatusCodeList []int
 
-	innerlogger.LoggerConfig
+	common.LoggerConfig
 	common.ClientConfig
 }
 
 func GetDefaultProducerConfig() *Config {
 	return &Config{
-		LoggerConfig: innerlogger.LoggerConfig{
+		LoggerConfig: common.LoggerConfig{
 			LogLevel:      "info",
 			LogFileName:   "",
 			IsJsonType:    false,
