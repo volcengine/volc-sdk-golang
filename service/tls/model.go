@@ -311,6 +311,9 @@ type ConsumeLogsRequest struct {
 	EndCursor     *string
 	LogGroupCount *int
 	Compression   *string
+
+	ConsumerGroupName *string
+	ConsumerName      *string
 }
 
 type ConsumeLogsResponse struct {

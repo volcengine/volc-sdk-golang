@@ -14,4 +14,5 @@ const (
 	readyToConsume
 	consuming
 	backoff
+	waitForRestart
 )

@@ -10,7 +10,7 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	. "github.com/volcengine/volc-sdk-golang/service/tls"
-	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
+	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
@@ -37,7 +37,7 @@ type producer struct {
 }
 
 func newProducer(producerConfig *Config) *producer {
-	logger := innerlogger.NewLogger(&producerConfig.LoggerConfig)
+	logger := common.LogConfig(producerConfig.LoggerConfig)
 
 	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret, "", producerConfig.Region)
 	producerConfig = validateProducerConfig(producerConfig)
