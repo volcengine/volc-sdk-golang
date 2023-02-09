@@ -242,3 +242,81 @@ type DescribeImageXHitRateRequestDataReq struct {
 type DescribeImageXHitRateRequestDataResp struct {
 	HitRateData []ServiceDomainDataItem `json:"HitRateData"`
 }
+
+// DescribeImageXCDNTopRequestData
+// Method: GET
+
+type DescribeImageXCDNTopRequestDataReq struct {
+	ServiceIds  string `query:"ServiceIds"`  // 传入多个用英文逗号分隔
+	DomainNames string `query:"DomainNames"` // 传入多个用英文逗号分隔
+	StartTime   string `query:"StartTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime     string `query:"EndTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
+	KeyType     string `query:"KeyType"`     // 需要Top的对象
+	ValueType   string `query:"ValueType"`   // 单选Traffic/RequestCnt，代表按流量/请求次数排序 (KeyType=Domain时，只能为Traffic)
+	IPVersion   string `query:"IPVersion"`   // 单选IPv4/IPv6，不传为不限制； KeyType=Domain时无效
+	Country     string `query:"Country"`
+	Limit       string `query:"Limit"`  // 分页Limit，默认为0，即返回所有
+	Offset      string `query:"Offset"` // 分页Offset，默认为0
+}
+
+type DescribeImageXCDNTopRequestDataResp struct {
+	Count      int            `json:"Count"`
+	TopValue   []TopValueItem `json:"TopValue"`
+	TotalValue float64        `json:"TotalValue"`
+}
+
+type TopValueItem struct {
+	Key   string  `json:"Key"`
+	Value float64 `json:"Value"`
+}
+
+// DescribeImageXSummary
+// Method: GET
+
+type DescribeImageXSummaryReq struct {
+	ServiceIds string `query:"ServiceIds"` // 传入多个用英文逗号分隔
+	Timestamp  string `query:"Timestamp"`
+}
+
+type DescribeImageXSummaryResp struct {
+	StorageData      SummaryFloatItem `json:"StorageData"`
+	CdnBandwidthData SummaryFloatItem `json:"CdnBandwidthData"`
+	CdnTrafficData   SummaryIntItem   `json:"CdnTrafficData"`
+	RequestCntData   SummaryIntItem   `json:"RequestCntData"`
+	BaseOpData       SummaryIntItem   `json:"BaseOpData"`
+}
+
+type SummaryFloatItem struct {
+	Value float64 `json:"Value"`
+}
+
+type SummaryIntItem struct {
+	Value int64 `json:"Value"`
+}
+
+// DescribeImageXMirrorRequestHttpCodeOverview
+// Method: POST
+
+type DescribeImageXMirrorRequestHttpCodeOverviewReq struct {
+	ServiceIds    []string `json:"ServiceIds"`
+	DomainNames   []string `json:"DomainNames"`
+	StartTime     string   `json:"StartTime"` // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime       string   `json:"EndTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
+	AggregateCode string   `json:"AggregateCode"`
+	Granularity   string   `json:"Granularity"`
+}
+
+type DescribeImageXMirrorRequestHttpCodeOverviewResp struct {
+	Data []MirrorHttpCodeRespItem `json:"Data"`
+}
+
+type MirrorHttpCodeRespItem struct {
+	Domain  string                      `json:"Domain"`
+	Count   int64                       `json:"Count"`
+	Details []MirrorHttpCodeDetailsItem `json:"Details"`
+}
+
+type MirrorHttpCodeDetailsItem struct {
+	HttpCode string `json:"HttpCode"`
+	Value    int64  `json:"Value"`
+}
