@@ -346,6 +346,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"GetWorkflowExecutionResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetWorkflowExecutionResult"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 视频编辑

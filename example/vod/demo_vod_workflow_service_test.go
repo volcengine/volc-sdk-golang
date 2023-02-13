@@ -27,6 +27,7 @@ func Test_StartWorkflow(t *testing.T) {
 		Priority:          0,
 		CallbackArgs:      "your CallbackArgs",
 		EnableLowPriority: false,
+		DirectUrl:         nil,
 	}
 
 	resp, status, err := instance.StartWorkflow(query)
@@ -66,6 +67,23 @@ func Test_GetWorkflowExecution(t *testing.T) {
 	}
 
 	resp, status, err := instance.GetWorkflowExecution(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetWorkflowExecutionResult(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetWorkflowResultRequest{
+		RunId: "your RunId",
+	}
+
+	resp, status, err := instance.GetWorkflowExecutionResult(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
