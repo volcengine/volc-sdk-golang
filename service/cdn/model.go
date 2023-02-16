@@ -23,11 +23,7 @@ type AddCdnCertificateRequest struct {
 
 type AddCdnCertificateResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
-	Result           AddCdnCertificateResult
-}
-
-type AddCdnCertificateResult struct {
-	AddCdnCertificateResult string
+	Result           string
 }
 
 type AddCdnDomainRequest struct {
@@ -68,6 +64,7 @@ type AddCdnDomainRequest struct {
 	ServiceType        *string              `json:",omitempty"`
 	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
 	Sparrow            *Sparrow             `json:",omitempty"`
+	Timeout            *TimeoutArg          `json:",omitempty"`
 	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
 	VideoDrag          *VideoDrag           `json:",omitempty"`
 }
@@ -487,12 +484,15 @@ type DescribeContentQuotaResponse struct {
 }
 
 type DescribeContentQuotaResult struct {
-	PreloadQuota     int64
-	PreloadRemain    int64
-	RefreshDirQuota  int64
-	RefreshDirRemain int64
-	RefreshQuota     int64
-	RefreshRemain    int64
+	PreloadLimit      int64
+	PreloadQuota      int64
+	PreloadRemain     int64
+	RefreshDirLimit   int64
+	RefreshDirQuota   int64
+	RefreshDirRemain  int64
+	RefreshQuota      int64
+	RefreshQuotaLimit int64
+	RefreshRemain     int64
 }
 
 type DescribeContentTasksRequest struct {
@@ -818,6 +818,7 @@ type DomainVolcanoDetail struct {
 	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
 	Sparrow            *Sparrow             `json:",omitempty"`
 	Status             *string              `json:",omitempty"`
+	Timeout            *TimeoutArg          `json:",omitempty"`
 	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
 	UpdateTime         *int64               `json:",omitempty"`
 	VideoDrag          *VideoDrag           `json:",omitempty"`
@@ -1065,6 +1066,7 @@ type NegativeCache struct {
 
 type NegativeCacheAction struct {
 	Action     *string `json:",omitempty"`
+	IgnoreCase *bool   `json:",omitempty"`
 	StatusCode *string `json:",omitempty"`
 	Ttl        *int64  `json:",omitempty"`
 }
@@ -1114,14 +1116,15 @@ type OriginArgRule struct {
 }
 
 type OriginLine struct {
-	Address             *string `json:",omitempty"`
-	HttpPort            *string `json:",omitempty"`
-	HttpsPort           *string `json:",omitempty"`
-	InstanceType        *string `json:",omitempty"`
-	OriginHost          *string `json:",omitempty"`
-	OriginType          *string `json:",omitempty"`
-	PrivateBucketAccess *bool   `json:",omitempty"`
-	Weight              *string `json:",omitempty"`
+	Address             *string            `json:",omitempty"`
+	HttpPort            *string            `json:",omitempty"`
+	HttpsPort           *string            `json:",omitempty"`
+	InstanceType        *string            `json:",omitempty"`
+	OriginHost          *string            `json:",omitempty"`
+	OriginType          *string            `json:",omitempty"`
+	PrivateBucketAccess *bool              `json:",omitempty"`
+	PrivateBucketAuth   *PrivateBucketAuth `json:",omitempty"`
+	Weight              *string            `json:",omitempty"`
 }
 
 type OriginRule struct {
@@ -1132,6 +1135,17 @@ type OriginRule struct {
 type OriginSni struct {
 	SniDomain *string `json:",omitempty"`
 	Switch    *bool   `json:",omitempty"`
+}
+
+type OriginTimeoutAction struct {
+	HttpTimeout *int64 `json:",omitempty"`
+	TcpTimeout  *int64 `json:",omitempty"`
+}
+
+type PrivateBucketAuth struct {
+	AuthType           *string             `json:",omitempty"`
+	Switch             *bool               `json:",omitempty"`
+	TosAuthInformation *TosAuthInformation `json:",omitempty"`
 }
 
 type QueryStringComponents struct {
@@ -1385,6 +1399,16 @@ type TimeOutAction struct {
 	Time   *int64  `json:",omitempty"`
 }
 
+type TimeoutArg struct {
+	Switch       *bool `json:",omitempty"`
+	TimeoutRules []TimeoutRule
+}
+
+type TimeoutRule struct {
+	Condition     *Condition           `json:",omitempty"`
+	TimeoutAction *OriginTimeoutAction `json:",omitempty"`
+}
+
 type TimestampValue struct {
 	Timestamp int64
 	Value     float64
@@ -1428,6 +1452,13 @@ type TopStatusCodeDetail struct {
 	ItemKey        string
 }
 
+type TosAuthInformation struct {
+	RoleAccountId     *string `json:",omitempty"`
+	RoleName          *string `json:",omitempty"`
+	RolePassAccountId *string `json:",omitempty"`
+	RolePassName      *string `json:",omitempty"`
+}
+
 type UpdateCdnConfigRequest struct {
 	AreaAccessRule     *AreaAccessRule `json:",omitempty"`
 	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
@@ -1464,6 +1495,7 @@ type UpdateCdnConfigRequest struct {
 	ServiceType        *string              `json:",omitempty"`
 	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
 	Sparrow            *Sparrow             `json:",omitempty"`
+	Timeout            *TimeoutArg          `json:",omitempty"`
 	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
 	VideoDrag          *VideoDrag           `json:",omitempty"`
 }
