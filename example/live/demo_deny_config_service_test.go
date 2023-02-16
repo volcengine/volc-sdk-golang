@@ -10,6 +10,7 @@ import (
 
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/live"
+	"github.com/volcengine/volc-sdk-golang/service/live/models/business"
 	"github.com/volcengine/volc-sdk-golang/service/live/models/request"
 )
 
@@ -46,6 +47,69 @@ func Test_DescribeDenyConfig(t *testing.T) {
 	}
 
 	resp, status, err := instance.DescribeDenyConfig(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateDenyConfigV2(t *testing.T) {
+	instance := live.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.UpdateDenyConfigV2Request{
+		Vhost:  "your Vhost",
+		Domain: "your Domain",
+		DenyConfigList: []*business.DenyConfigDetailV2{
+			{
+				Type:   "deny",
+				IPList: []string{"1.1.1.1"},
+			},
+			{
+				Type: "allow",
+			},
+		},
+	}
+
+	resp, status, err := instance.UpdateDenyConfigV2(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeDenyConfigV2(t *testing.T) {
+	instance := live.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeDenyConfigV2Request{
+		Vhost:  "your Vhost",
+		Domain: "your Domain",
+	}
+
+	resp, status, err := instance.DescribeDenyConfigV2(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DeleteDenyConfigV2(t *testing.T) {
+	instance := live.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DeleteDenyConfigV2Request{
+		Vhost:  "your Vhost",
+		Domain: "your Domain",
+	}
+
+	resp, status, err := instance.DeleteDenyConfigV2(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())

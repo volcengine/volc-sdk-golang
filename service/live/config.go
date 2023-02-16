@@ -801,6 +801,30 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
+		"UpdateDenyConfigV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDenyConfigV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DescribeDenyConfigV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDenyConfigV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
+		"DeleteDenyConfigV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteDenyConfigV2"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
