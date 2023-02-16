@@ -127,3 +127,114 @@ func (p *LIVE) DeleteDenyConfig(req *request.DeleteDenyConfigRequest) (*response
 	}
 	return output, status, nil
 }
+
+// UpdateDenyConfigV2
+/*
+ * @param *request.UpdateDenyConfigV2Request
+ * @return *response.UpdateDenyConfigV2Response, int, error
+ */
+func (p *LIVE) UpdateDenyConfigV2(req *request.UpdateDenyConfigV2Request) (*response.UpdateDenyConfigV2Response, int, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, http.StatusBadRequest, err
+	}
+	respBody, status, err := p.Json("UpdateDenyConfigV2", url.Values{}, string(body))
+	output := &response.UpdateDenyConfigV2Response{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// DescribeDenyConfigV2
+/*
+ * @param *request.DescribeDenyConfigV2Request
+ * @return *response.DescribeDenyConfigV2Response, int, error
+ */
+func (p *LIVE) DescribeDenyConfigV2(req *request.DescribeDenyConfigV2Request) (*response.DescribeDenyConfigV2Response, int, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, http.StatusBadRequest, err
+	}
+	respBody, status, err := p.Json("DescribeDenyConfigV2", url.Values{}, string(body))
+	output := &response.DescribeDenyConfigV2Response{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// DeleteDenyConfigV2
+/*
+ * @param *request.DeleteDenyConfigV2Request
+ * @return *response.DeleteDenyConfigV2Response, int, error
+ */
+func (p *LIVE) DeleteDenyConfigV2(req *request.DeleteDenyConfigV2Request) (*response.DeleteDenyConfigV2Response, int, error) {
+	body, err := json.Marshal(req)
+	if err != nil {
+		return nil, http.StatusBadRequest, err
+	}
+	respBody, status, err := p.Json("DeleteDenyConfigV2", url.Values{}, string(body))
+	output := &response.DeleteDenyConfigV2Response{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
