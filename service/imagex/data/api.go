@@ -20,6 +20,9 @@ func AddDataModule(c *imagex.ImageX) error {
 		"DescribeImageXHitRateRequestData",
 		"DescribeImageXCDNTopRequestData",
 		"DescribeImageXSummary",
+		"DescribeImageXEdgeRequestBandwidth",
+		"DescribeImageXEdgeRequestTraffic",
+		"DescribeImageXEdgeRequestRegions",
 	}
 	p := []string{"DescribeImageXMirrorRequestTraffic",
 		"DescribeImageXMirrorRequestBandwidth",
@@ -233,6 +236,48 @@ func DescribeImageXSummary(instance *imagex.ImageX, req *DescribeImageXSummaryRe
 func DescribeImageXMirrorRequestHttpCodeOverview(instance *imagex.ImageX, req *DescribeImageXMirrorRequestHttpCodeOverviewReq) (*DescribeImageXMirrorRequestHttpCodeOverviewResp, error) {
 	resp := &DescribeImageXMirrorRequestHttpCodeOverviewResp{}
 	err := instance.ImageXPost("DescribeImageXMirrorRequestHttpCodeOverview", url.Values{}, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXEdgeRequestBandwidth(instance *imagex.ImageX, req *DescribeImageXEdgeRequestBandwidthReq) (*DescribeImageXEdgeRequestBandwidthResp, error) {
+	query, err := marshalToQuery(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &DescribeImageXEdgeRequestBandwidthResp{}
+	err = instance.ImageXGet("DescribeImageXEdgeRequestBandwidth", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXEdgeRequestTraffic(instance *imagex.ImageX, req *DescribeImageXEdgeRequestTrafficReq) (*DescribeImageXEdgeRequestTrafficResp, error) {
+	query, err := marshalToQuery(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &DescribeImageXEdgeRequestTrafficResp{}
+	err = instance.ImageXGet("DescribeImageXEdgeRequestTraffic", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func DescribeImageXEdgeRequestRegions(instance *imagex.ImageX, req *DescribeImageXEdgeRequestRegionsReq) (*DescribeImageXEdgeRequestRegionsResp, error) {
+	query, err := marshalToQuery(req)
+	if err != nil {
+		return nil, err
+	}
+
+	resp := &DescribeImageXEdgeRequestRegionsResp{}
+	err = instance.ImageXGet("DescribeImageXEdgeRequestRegions", query, resp)
 	if err != nil {
 		return nil, err
 	}
