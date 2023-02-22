@@ -243,7 +243,7 @@ type VodGetPlayInfoRequest struct {
 	Format string `protobuf:"bytes,2,opt,name=Format,proto3" json:"Format,omitempty"`
 	// 编码格式，支持 mp3、aac、opus、H264、H265、H266, 视频默认H264，音频默认aac
 	Codec string `protobuf:"bytes,3,opt,name=Codec,proto3" json:"Codec,omitempty"`
-	// 视频流清晰度，支持：240p,360p,480p,540p,720p,1080p,2k,4k.默认返回全部
+	// 视频流清晰度，支持：240p,360p,480p,540p,720p,1080p,2k,4k,od,oe.默认返回全部
 	Definition string `protobuf:"bytes,4,opt,name=Definition,proto3" json:"Definition,omitempty"`
 	// 流文件类型,支持:
 	// 加密视频流evideo，加密音频流传eaudio,非加密视频流video,普通音频音频流audio.默认video
@@ -5238,7 +5238,7 @@ type VodGetSmartStrategyLitePlayInfoRequest struct {
 	// 唯一性标识信息
 	UnionInfo string `protobuf:"bytes,10,opt,name=UnionInfo,proto3" json:"UnionInfo,omitempty"`
 	// HDR清晰度，默认不查询，支持：all,
-	// 240p，360p, 420p，480p，540p，720p，1080p, 2k, 4k
+	// 240p，360p, 420p，480p，540p，720p，1080p, 2k, 4k, od, oe
 	HDRDefinition string `protobuf:"bytes,11,opt,name=HDRDefinition,proto3" json:"HDRDefinition,omitempty"`
 }
 
