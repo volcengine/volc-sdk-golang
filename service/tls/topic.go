@@ -13,18 +13,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]interface{}{
-		"ProjectId":   request.ProjectID,
-		"TopicName":   request.TopicName,
-		"Ttl":         request.Ttl,
-		"Description": request.Description,
-	}
-
-	if request.ShardCount != 0 {
-		reqBody["ShardCount"] = request.ShardCount
-	}
-
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
@@ -91,23 +80,7 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, 
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]interface{}{
-		"TopicId": request.TopicID,
-	}
-
-	if request.TopicName != nil {
-		reqBody["TopicName"] = *request.TopicName
-	}
-
-	if request.Ttl != nil {
-		reqBody["Ttl"] = *request.Ttl
-	}
-
-	if request.Description != nil {
-		reqBody["Description"] = *request.Description
-	}
-
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}

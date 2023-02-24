@@ -77,14 +77,14 @@ type ModifyProjectRequest struct {
 
 type CreateTopicRequest struct {
 	CommonRequest
-	ProjectID      string
-	TopicName      string
-	Ttl            uint16
-	Description    string
-	ShardCount     int
+	ProjectID      string `json:"ProjectId"`
+	TopicName      string `json:","`
+	Ttl            uint16 `json:","`
+	Description    string `json:","`
+	ShardCount     int    `json:","`
 	MaxSplitShard  *int32 `json:",omitempty"`
-	AutoSplit      bool
-	EnableTracking *bool `json:",omitempty"`
+	AutoSplit      bool   `json:","`
+	EnableTracking *bool  `json:",omitempty"`
 }
 
 type CreateTopicResponse struct {
@@ -100,9 +100,9 @@ type DeleteTopicRequest struct {
 type ModifyTopicRequest struct {
 	CommonRequest
 	TopicID        string  `json:"TopicId"`
-	TopicName      *string `json:"TopicName"`
-	Ttl            *uint16 `json:"Ttl"`
-	Description    *string `json:"Description"`
+	TopicName      *string `json:",omitempty"`
+	Ttl            *uint16 `json:",omitempty"`
+	Description    *string `json:",omitempty"`
 	MaxSplitShard  *int32  `json:",omitempty"`
 	AutoSplit      *bool   `json:",omitempty"`
 	EnableTracking *bool   `json:",omitempty"`
