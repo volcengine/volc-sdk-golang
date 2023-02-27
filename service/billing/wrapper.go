@@ -52,3 +52,19 @@ func (p *Billing) ListBillOverviewByProd(query url.Values) (*BillOverviewByProdL
 		return output, status, nil
 	}
 }
+
+// ListSplitBillDetail 分页查询分账账单明细
+func (p *Billing) ListSplitBillDetail(query url.Values) (*SplitBillDetailListResp, int, error) {
+	respBody, status, err := p.Client.Query("ListSplitBillDetail", query)
+	if err != nil {
+		return nil, status, err
+	}
+
+	output := new(SplitBillDetailListResp)
+	if err := json.Unmarshal(respBody, output); err != nil {
+		return nil, status, err
+	} else {
+		output.ResponseMetadata.Service = ServiceName
+		return output, status, nil
+	}
+}
