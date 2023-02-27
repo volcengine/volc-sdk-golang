@@ -26,6 +26,11 @@ type ServiceDomainDataItem struct {
 	Data       []TSFloatItem `json:"Data"`
 }
 
+type DomainDataItem struct {
+	DomainName string        `json:"DomainName,omitempty"`
+	Data       []TSFloatItem `json:"Data"`
+}
+
 // query: Query参数; json: JSON参数
 
 // DescribeImageXDomainTrafficData
@@ -139,13 +144,19 @@ type CompressDataItem struct {
 // Method: GET
 
 type DescribeImageXEdgeRequestReq struct {
-	ServiceIds  string `query:"ServiceIds"`  // 传入多个用英文逗号分隔
-	DomainNames string `query:"DomainNames"` // 传入多个用英文逗号分隔
-	DataTypes   string `query:"DataTypes"`   // 状态码过滤。传入多个用英文逗号分隔。支持2xx,3xx,4xx,5xx,req_cnt
-	GroupBy     string `query:"GroupBy"`     // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持DomainName,DataType
-	StartTime   string `query:"StartTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
-	EndTime     string `query:"EndTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
-	Interval    string `query:"Interval"`    // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+	ServiceIds   string `query:"ServiceIds"`   // 传入多个用英文逗号分隔
+	DomainNames  string `query:"DomainNames"`  // 传入多个用英文逗号分隔
+	Regions      string `query:"Regions"`      // cdn区域。支持参数：中国大陆、亚太一区、亚太二区、亚太三区、欧洲区、北美区、南美区、中东区。传入多个用英文逗号分割。不传表示不过滤。
+	UserCountry  string `query:"UserCountry"`  // 客户端国家。支持参数：中国、海外、美国等。传入多个用英文逗号分割。不传表示不过滤。
+	UserProvince string `query:"UserProvince"` // 客户端省份。传入多个用英文逗号分割。不传表示不过滤。
+	Protocols    string `query:"Protocols"`    // 过滤网络协议。支持参数：HTTP、HTTPS。传入多个用英文逗号分割。不传为不过滤。
+	Isp          string `query:"Isp"`          // 过滤运营商。传入多个用英文逗号分割。不传为不过滤。
+	DataTypes    string `query:"DataTypes"`    // 状态码过滤。传入多个用英文逗号分隔。支持2xx,3xx,4xx,5xx,req_cnt
+	GroupBy      string `query:"GroupBy"`      // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持DomainName,DataType
+	StartTime    string `query:"StartTime"`    // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime      string `query:"EndTime"`      // YYYY-MM-DDThh:mm:ss±hh:mm
+	Interval     string `query:"Interval"`     // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+	DetailedCode string `query:"DetailedCode"` // 是否拆分状态码。不传默认为false，表示不拆分。
 }
 
 type DescribeImageXEdgeRequestResp struct {
@@ -319,4 +330,59 @@ type MirrorHttpCodeRespItem struct {
 type MirrorHttpCodeDetailsItem struct {
 	HttpCode string `json:"HttpCode"`
 	Value    int64  `json:"Value"`
+}
+
+// DescribeImageXEdgeRequestBandwidth
+// Method: GET
+
+type DescribeImageXEdgeRequestBandwidthReq struct {
+	ServiceIds   string `query:"ServiceIds"`   // 传入多个用英文逗号分隔
+	DomainNames  string `query:"DomainNames"`  // 传入多个用英文逗号分隔
+	Regions      string `query:"Regions"`      // cdn区域。支持参数：中国大陆、亚太一区、亚太二区、亚太三区、欧洲区、北美区、南美区、中东区。传入多个用英文逗号分割。不传表示不过滤。
+	UserCountry  string `query:"UserCountry"`  // 客户端国家。支持参数：中国、海外、美国等。传入多个用英文逗号分割。不传表示不过滤。
+	UserProvince string `query:"UserProvince"` // 客户端省份。传入多个用英文逗号分割。不传表示不过滤。
+	Protocols    string `query:"Protocols"`    // 过滤网络协议。支持参数：HTTP、HTTPS。传入多个用英文逗号分割。不传为不过滤。
+	Isp          string `query:"Isp"`          // 过滤运营商。传入多个用英文逗号分割。不传为不过滤。
+	GroupBy      string `query:"GroupBy"`      // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持DomainName
+	StartTime    string `query:"StartTime"`    // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime      string `query:"EndTime"`      // YYYY-MM-DDThh:mm:ss±hh:mm
+	Interval     string `query:"Interval"`     // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+}
+
+type DescribeImageXEdgeRequestBandwidthResp struct {
+	BpsData []DomainDataItem `json:"BpsData"`
+}
+
+// DescribeImageXEdgeRequestTraffic
+// Method: GET
+
+type DescribeImageXEdgeRequestTrafficReq struct {
+	ServiceIds   string `query:"ServiceIds"`   // 传入多个用英文逗号分隔
+	DomainNames  string `query:"DomainNames"`  // 传入多个用英文逗号分隔
+	Regions      string `query:"Regions"`      // cdn区域。支持参数：中国大陆、亚太一区、亚太二区、亚太三区、欧洲区、北美区、南美区、中东区。传入多个用英文逗号分割。不传表示不过滤。
+	UserCountry  string `query:"UserCountry"`  // 客户端国家。支持参数：中国、海外、美国等。传入多个用英文逗号分割。不传表示不过滤。
+	UserProvince string `query:"UserProvince"` // 客户端省份。传入多个用英文逗号分割。不传表示不过滤。
+	Protocols    string `query:"Protocols"`    // 过滤网络协议。支持参数：HTTP、HTTPS。传入多个用英文逗号分割。不传为不过滤。
+	Isp          string `query:"Isp"`          // 过滤运营商。传入多个用英文逗号分割。不传为不过滤。
+	GroupBy      string `query:"GroupBy"`      // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持DomainName
+	StartTime    string `query:"StartTime"`    // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime      string `query:"EndTime"`      // YYYY-MM-DDThh:mm:ss±hh:mm
+	Interval     string `query:"Interval"`     // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+}
+
+type DescribeImageXEdgeRequestTrafficResp struct {
+	TrafficData []DomainDataItem `json:"TrafficData"`
+}
+
+// DescribeImageXEdgeRequestRegions
+// Method: GET
+
+type DescribeImageXEdgeRequestRegionsReq struct {
+	StartTime string `query:"StartTime"` // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime   string `query:"EndTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
+}
+
+type DescribeImageXEdgeRequestRegionsResp struct {
+	UserProvince []string `json:"UserProvince"`
+	UserCountry  []string `json:"UserCountry"`
 }
