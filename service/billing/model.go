@@ -132,3 +132,62 @@ type BillOverviewByProdListResp struct {
 	ResponseMetadata *base.ResponseMetadata
 	Result           *BillOverviewByProdList `json:",omitempty"`
 }
+
+type SplitBillDetail struct {
+	BillPeriod             string
+	ExpenseTime            string
+	PayerUserName          string
+	SellerUserName         string
+	OwnerUserName          string
+	Product                string
+	ProductZh              string
+	BusinessMode           string
+	BillingMode            string
+	UseDuration            string
+	UseDurationUnit        string
+	TradeTime              string
+	BillID                 string
+	BillCategory           string
+	SettlementType         string
+	InstanceNo             string
+	InstanceName           string
+	ConfigName             string
+	Element                string
+	Region                 string
+	Zone                   string
+	Factor                 string
+	ExpandField            string
+	SplitItemID            string
+	SplitItemName          string
+	Price                  string
+	PriceUnit              string
+	SplitItemAmount        string
+	Unit                   string
+	SplitItemRatio         string
+	DeductionCount         string
+	SolutionZh             string
+	OriginalBillAmount     string
+	PreferentialBillAmount string
+	DiscountBillAmount     string
+	CouponDeductionAmount  string
+	PayableAmount          string
+	PaidAmount             string
+	UnpaidAmount           string
+	Currency               string
+	Project                string
+	Tag                    string
+	SellingMode            string
+	SubjectName            string
+}
+
+type SplitBillDetailList struct {
+	List   []*SplitBillDetail
+	Total  int
+	Limit  int
+	Offset int
+}
+
+type SplitBillDetailListResp struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *SplitBillDetailList `json:",omitempty"`
+}

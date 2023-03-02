@@ -85,3 +85,29 @@ func TestListListBillOverviewByProd(t *testing.T) {
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
+
+func TestListSplitBillDetail(t *testing.T) {
+	billing.DefaultInstance.Client.SetAccessKey(testAk)
+	billing.DefaultInstance.Client.SetSecretKey(testSk)
+
+	//
+	query := url.Values{}
+	query.Add("GroupPeriod", "0")
+	query.Add("BillPeriod", "2022-01")
+	query.Add("Limit", "10")
+	query.Add("Offset", "0")
+	//
+	query.Add("Product", "")
+	query.Add("BillingMode", "")
+	query.Add("BillCategory", "")
+	query.Add("InstanceNo", "")
+	query.Add("SplitItemID", "")
+	query.Add("IgnoreZero", "0")
+	query.Add("NeedRecordNum", "0")
+	resp, status, err := billing.DefaultInstance.ListSplitBillDetail(query)
+	assert.NoError(t, err)
+	assert.Equal(t, status, http.StatusOK)
+	assert.NotNil(t, resp)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
