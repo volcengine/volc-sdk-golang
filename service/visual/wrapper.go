@@ -303,6 +303,322 @@ func (p *Visual) OverResolutionV2(imageBase64 []string) (*model.OverResolutionV2
 	return resp, statusCode, nil
 }
 
+func (p *Visual) ImageScoreV2(imageBase64 []string) (*model.ImageScoreV2Result, int, error) {
+	//处理入参
+	jsonBody := &struct {
+		ReqKey           string   `json:"req_key"`
+		BinaryDataBase64 []string `json:"binary_data_base64"`
+	}{
+		ReqKey:           "lens_vida_single_pic", //算法名称，取固定值为lens_vida_nnsr
+		BinaryDataBase64: imageBase64,            //图片文件，base64编码。此算法可选输入1张图片或多张图片
+	}
+
+	jsonStr, err := json.Marshal(jsonBody)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.ImageScoreV2Result)
+	statusCode, err := p.commonJsonHandler("ImageScoreV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageCorrection(imageBase64 []string) (*model.ImageCorrectionResult, int, error) {
+	//处理入参
+	jsonBody := &struct {
+		ReqKey           string   `json:"req_key"`
+		BinaryDataBase64 []string `json:"binary_data_base64"`
+	}{
+		ReqKey:           "image_correction", //算法名称，取固定值为lens_vida_nnsr
+		BinaryDataBase64: imageBase64,        //图片文件，base64编码。此算法可选输入1张图片或多张图片
+	}
+
+	jsonStr, err := json.Marshal(jsonBody)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.ImageCorrectionResult)
+	statusCode, err := p.commonJsonHandler("ImageCorrection", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) EnhancePhotoV2(req *model.EnhancePhotoV2Request) (*model.EnhancePhotoV2Result, int, error) {
+	if req.ResolutionBoundary == "" {
+		req.ResolutionBoundary = "720p"
+	}
+	if req.JpgQuality == 0 {
+		req.JpgQuality = 95
+	}
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.EnhancePhotoV2Result)
+	statusCode, err := p.commonJsonHandler("EnhancePhotoV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) T2ILDM(req *model.T2ILDMRequest) (*model.T2ILDMResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.T2ILDMResult)
+	statusCode, err := p.commonJsonHandler("T2ILDM", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) Img2ImgStyle(req *model.Img2ImgStyleRequest) (*model.Img2ImgStyleResult, int, error) {
+	if req.Strength == 0.0 {
+		req.Strength = 0.5
+	}
+	if req.Seed == 0 {
+		req.Seed = -1
+	}
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.Img2ImgStyleResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgStyle", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) Img2ImgAnime(req *model.Img2ImgAnimeRequest) (*model.Img2ImgAnimeResult, int, error) {
+	if req.Strength == 0.0 {
+		req.Strength = 0.5
+	}
+	if req.Seed == 0 {
+		req.Seed = -1
+	}
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.Img2ImgAnimeResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgAnime", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) BodyDetection(req *model.BodyDetectionRequest) (*model.BodyDetectionResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.BodyDetectionResult)
+	statusCode, err := p.commonJsonHandler("BodyDetection", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) AllAgeGeneration(req *model.AllAgeGenerationRequest) (*model.AllAgeGenerationResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.AllAgeGenerationResult)
+	statusCode, err := p.commonJsonHandler("AllAgeGeneration", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoOverResolutionSubmitTaskV2(req *model.VideoOverResolutionSubmitTaskV2Request) (*model.VideoOverResolutionSubmitTaskV2Result, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.VideoOverResolutionSubmitTaskV2Result)
+	statusCode, err := p.commonJsonHandler("VideoOverResolutionSubmitTaskV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) VideoOverResolutionQueryTaskV2(req *model.VideoOverResolutionQueryTaskV2Request) (*model.VideoOverResolutionQueryTaskV2Result, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.VideoOverResolutionQueryTaskV2Result)
+	statusCode, err := p.commonJsonHandler("VideoOverResolutionQueryTaskV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) FaceFusionMovieSubmitTask(req *model.FaceFusionMovieSubmitTaskRequest) (*model.FaceFusionMovieSubmitTaskResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceFusionMovieSubmitTaskResult)
+	statusCode, err := p.commonJsonHandler("FaceFusionMovieSubmitTask", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) FaceFusionMovieGetResult(req *model.FaceFusionMovieGetResultRequest) (*model.FaceFusionMovieGetResultResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceFusionMovieGetResultResult)
+	statusCode, err := p.commonJsonHandler("FaceFusionMovieGetResult", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CertToken(req *model.CertTokenRequest) (*model.CertTokenResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.CertTokenResult)
+	statusCode, err := p.commonJsonHandler("CertToken", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CertConfigInit(req *model.CertConfigInitRequest) (*model.CertConfigInitResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.CertConfigInitResult)
+	statusCode, err := p.commonJsonHandler("CertConfigInit", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) CertVerifyQuery(req *model.CertVerifyQueryRequest) (*model.CertVerifyQueryResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.CertVerifyQueryResult)
+	statusCode, err := p.commonJsonHandler("CertVerifyQuery", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageStyleConversion(form url.Values) (*model.ImageStyleConversionResult, int, error) {
+	resp := new(model.ImageStyleConversionResult)
+	statusCode, err := p.commonHandler("ImageStyleConversion", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) PotraitEffect(form url.Values) (*model.PotraitEffectResult, int, error) {
+	resp := new(model.PotraitEffectResult)
+	statusCode, err := p.commonHandler("PotraitEffect", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ImageAnimation(form url.Values) (*model.ImageAnimationResult, int, error) {
+	resp := new(model.ImageAnimationResult)
+	statusCode, err := p.commonHandler("ImageAnimation", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) FacePretty(form url.Values) (*model.FacePrettyResult, int, error) {
+	resp := new(model.FacePrettyResult)
+	statusCode, err := p.commonHandler("FacePretty", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) HairStyle(form url.Values) (*model.HairStyleResult, int, error) {
+	resp := new(model.HairStyleResult)
+	statusCode, err := p.commonHandler("HairStyle", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) DollyZoom(form url.Values) (*model.DollyZoomResult, int, error) {
+	resp := new(model.DollyZoomResult)
+	statusCode, err := p.commonHandler("DollyZoom", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) ThreeDGameCartoon(form url.Values) (*model.ThreeDGameCartoonResult, int, error) {
+	resp := new(model.ThreeDGameCartoonResult)
+	statusCode, err := p.commonHandler("ThreeDGameCartoon", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) HairSegment(form url.Values) (*model.HairSegmentResult, int, error) {
+	resp := new(model.HairSegmentResult)
+	statusCode, err := p.commonHandler("HairSegment", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) GoodsSegment(form url.Values) (*model.GoodsSegmentResult, int, error) {
 	resp := new(model.GoodsSegmentResult)
 	statusCode, err := p.commonHandler("GoodsSegment", form, resp)
