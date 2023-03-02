@@ -796,9 +796,8 @@ func (p *BusinessSecurity) CloseAudioLiveRisk(req *VideoResultRequest) (*AsyncVi
 	return result, nil
 }
 
-// create custom contents
-// 创建文本自定义库
-func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*AsyncRiskDetectionResponse, error) {
+// CreateCustomContents 创建自定义库
+func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("CreateCustomContents: fail to marshal request, %v", err)
@@ -813,7 +812,7 @@ func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*Asy
 			if err != nil {
 				return nil, fmt.Errorf("CreateCustomContents: fail to do request, %v", err)
 			}
-			result := new(AsyncRiskDetectionResponse)
+			result := new(CustomContentResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -821,16 +820,15 @@ func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*Asy
 		}
 		return nil, fmt.Errorf("CreateCustomContents: fail to do request, %v", err)
 	}
-	result := new(AsyncRiskDetectionResponse)
+	result := new(CustomContentResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-// enable custom contents
-// 启用文本自定义库
-func (p *BusinessSecurity) EnableCustomContents(req *UpdateContentReq) (*AsyncRiskDetectionResponse, error) {
+// EnableCustomContents 启用文本自定义库
+func (p *BusinessSecurity) EnableCustomContents(req *UpdateContentReq) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("EnableCustomContents: fail to marshal request, %v", err)
@@ -845,7 +843,7 @@ func (p *BusinessSecurity) EnableCustomContents(req *UpdateContentReq) (*AsyncRi
 			if err != nil {
 				return nil, fmt.Errorf("EnableCustomContents: fail to do request, %v", err)
 			}
-			result := new(AsyncRiskDetectionResponse)
+			result := new(CustomContentResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -853,7 +851,7 @@ func (p *BusinessSecurity) EnableCustomContents(req *UpdateContentReq) (*AsyncRi
 		}
 		return nil, fmt.Errorf("EnableCustomContents: fail to do request, %v", err)
 	}
-	result := new(AsyncRiskDetectionResponse)
+	result := new(CustomContentResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -893,8 +891,8 @@ func (p *BusinessSecurity) DisableCustomContents(req *UpdateContentReq) (*AsyncR
 }
 
 // delete custom contents
-// 禁用文本自定义库
-func (p *BusinessSecurity) DeleteCustomContents(req *UpdateContentReq) (*AsyncRiskDetectionResponse, error) {
+// 删除文本自定义库内容
+func (p *BusinessSecurity) DeleteCustomContents(req *ModifyTextContent) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("DeleteCustomContents: fail to marshal request, %v", err)
@@ -909,7 +907,7 @@ func (p *BusinessSecurity) DeleteCustomContents(req *UpdateContentReq) (*AsyncRi
 			if err != nil {
 				return nil, fmt.Errorf("DeleteCustomContents: fail to do request, %v", err)
 			}
-			result := new(AsyncRiskDetectionResponse)
+			result := new(CustomContentResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -917,7 +915,7 @@ func (p *BusinessSecurity) DeleteCustomContents(req *UpdateContentReq) (*AsyncRi
 		}
 		return nil, fmt.Errorf("DisableCustomContents: fail to do request, %v", err)
 	}
-	result := new(AsyncRiskDetectionResponse)
+	result := new(CustomContentResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -925,8 +923,8 @@ func (p *BusinessSecurity) DeleteCustomContents(req *UpdateContentReq) (*AsyncRi
 }
 
 // upload custom contents
-// 上传文本自定义库文本
-func (p *BusinessSecurity) UploadCustomContents(req *UpdateContentReq) (*AsyncRiskDetectionResponse, error) {
+// 上传文本自定义库内容
+func (p *BusinessSecurity) UploadCustomContents(req *ModifyTextContent) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("UploadCustomContents: fail to marshal request, %v", err)
@@ -941,7 +939,7 @@ func (p *BusinessSecurity) UploadCustomContents(req *UpdateContentReq) (*AsyncRi
 			if err != nil {
 				return nil, fmt.Errorf("UploadCustomContents: fail to do request, %v", err)
 			}
-			result := new(AsyncRiskDetectionResponse)
+			result := new(CustomContentResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -949,7 +947,7 @@ func (p *BusinessSecurity) UploadCustomContents(req *UpdateContentReq) (*AsyncRi
 		}
 		return nil, fmt.Errorf("UploadCustomContents: fail to do request, %v", err)
 	}
-	result := new(AsyncRiskDetectionResponse)
+	result := new(CustomContentResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

@@ -181,44 +181,53 @@ func TextSliceRisk(appId int64, service, params string) (*TextSliceResultRespons
 	})
 }
 
-func NewCustomContents(appId int64, service, name, description, decision string, matchType int) (*AsyncRiskDetectionResponse, error) {
+func NewCustomContents(appId int64, service, name, description, libType, decision, matchType string) (*CustomContentResponse, error) {
 	return DefaultInstance.CreateCustomContents(&NewCustomContentsReq{
 		AppID:       appId,
 		Service:     service,
 		Name:        name,
 		Description: description,
+		LibType:     libType,
 		Decision:    decision,
 		MatchType:   matchType,
 	})
 }
 
-func EnableCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
+func EnableCustomContents(appId int64, name, service, libType string) (*CustomContentResponse, error) {
 	return DefaultInstance.EnableCustomContents(&UpdateContentReq{
-		AppID: appId,
-		Name:  name,
+		AppID:   appId,
+		Name:    name,
+		Service: service,
+		LibType: libType,
+		Status:  2,
 	})
 }
 
-func DisableCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
+func DisableCustomContents(appId int64, name, service, libType string) (*AsyncRiskDetectionResponse, error) {
 	return DefaultInstance.DisableCustomContents(&UpdateContentReq{
-		AppID: appId,
-		Name:  name,
+		AppID:   appId,
+		Name:    name,
+		Service: service,
+		LibType: libType,
+		Status:  1,
 	})
 }
 
-func DeleteCustomContents(appId int64, name string) (*AsyncRiskDetectionResponse, error) {
-	return DefaultInstance.DeleteCustomContents(&UpdateContentReq{
-		AppID: appId,
-		Name:  name,
+func DeleteCustomContents(appId int64, name, service string, data []string) (*CustomContentResponse, error) {
+	return DefaultInstance.DeleteCustomContents(&ModifyTextContent{
+		AppID:   appId,
+		Name:    name,
+		Service: service,
+		Data:    data,
 	})
 }
 
-func UploadCustomContents(appId int64, name string, contents []string, modifyType int) (*AsyncRiskDetectionResponse, error) {
-	return DefaultInstance.UploadCustomContents(&UpdateContentReq{
-		AppID:      appId,
-		Name:       name,
-		Contents:   contents,
-		ModifyType: modifyType,
+func UploadCustomContents(appId int64, name, service string, data []string) (*CustomContentResponse, error) {
+	return DefaultInstance.UploadCustomContents(&ModifyTextContent{
+		AppID:   appId,
+		Name:    name,
+		Service: service,
+		Data:    data,
 	})
 }
 
@@ -312,7 +321,7 @@ func TestBusinessSecurity_MobileStatusV2(t *testing.T) {
 }
 
 func TestNewCustomContents(t *testing.T) {
-	resp, err := NewCustomContents(5461, "text_risk", "text", "text", "BLOCK1", 1)
+	resp, err := NewCustomContents(430921, "text_risk", "test_text_lib", "text", "text_lib", "BLOCK", "exact")
 	if err != nil {
 		t.Errorf("%v", err)
 		return
@@ -321,7 +330,34 @@ func TestNewCustomContents(t *testing.T) {
 }
 
 func TestEnableCustomContents(t *testing.T) {
-	resp, err := NewCustomContents(5461, "text_risk", "", "是的是的", "BLOCK", 1)
+	resp, err := EnableCustomContents(430921, "test_text_lib", "text_risk", "text_lib")
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestDisableCustomContents(t *testing.T) {
+	resp, err := DisableCustomContents(430921, "test_text_lib", "text_risk", "text_lib")
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestUploadCustomContents(t *testing.T) {
+	resp, err := UploadCustomContents(430921, "test_text_lib", "text_risk", []string{"测试文本1", "测试文本2"})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+
+func TestDeleteCustomContents(t *testing.T) {
+	resp, err := DeleteCustomContents(430921, "test_text_lib", "text_risk", []string{"测试文本1", "测试文本2"})
 	if err != nil {
 		t.Errorf("%v", err)
 		return
