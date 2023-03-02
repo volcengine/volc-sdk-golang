@@ -20,7 +20,6 @@ type ApplyVmsTemplateRequest struct {
 	Theme       string         `json:"theme"`
 	Signature   string         `json:"signature"`
 	Contents    []VmsElement   `json:"contents"`
-	Caller      string         `json:"caller"`
 }
 
 type VmsElement struct {

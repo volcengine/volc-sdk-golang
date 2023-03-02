@@ -21,7 +21,6 @@ func (p *SMS) ApplyVmsTemplate(req *ApplyVmsTemplateRequest) (*ApplyVmsTemplateR
 	if req.ChannelType == "" {
 		req.ChannelType = "CN_VMS"
 	}
-	req.Caller = "sdk"
 	statusCode, err := p.smsHandler("ApplyVmsTemplate", req, resp)
 	if err != nil {
 		return nil, statusCode, err
