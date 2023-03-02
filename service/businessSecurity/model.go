@@ -21,9 +21,15 @@ type RiskDetectionResponse struct {
 }
 
 type DecisionData struct {
-	Score  int      `json:"Score"`
-	Tags   []string `json:"Tags"`
-	Detail string   `json:"Detail"`
+	Score      int        `json:"Score"`
+	Tags       []string   `json:"Tags"`
+	Detail     string     `json:"Detail"`
+	DeviceInfo DeviceInfo `json:"DeviceInfo"`
+}
+
+type DeviceInfo struct {
+	DevSecID      string `json:"DevSecID"`
+	TokenCreateTs int64  `json:"TokenCreateTs"`
 }
 
 type AsyncRiskDetectionRequest struct {
