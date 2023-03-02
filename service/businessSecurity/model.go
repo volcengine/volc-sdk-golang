@@ -351,21 +351,38 @@ func (r *VideoResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }
 
+type CustomContentResponse struct {
+	LogId     string      `json:"log_id"`
+	ErrCode   int         `json:"err_code"`
+	ErrMsg    string      `json:"err_msg"`
+	Timestamp int         `json:"timestamp"`
+	Data      interface{} `json:"data"`
+}
+
 type NewCustomContentsReq struct {
 	AppID       int64  `json:"app_id" form:"app_id" query:"app_id"`
 	Service     string `json:"service" form:"service" query:"service"`
 	Name        string `json:"name" form:"name" query:"name"`
 	Description string `json:"description" form:"description" query:"description"`
 	Decision    string `json:"decision" form:"decision" query:"decision"`
-	MatchType   int    `json:"match_type" form:"match_type" query:"match_type"`
+	MatchType   string `json:"match_type" form:"match_type" query:"match_type"`
+	LibType     string `json:"lib_type" form:"lib_type" query:"lib_type"`
+	Biztypes    string `json:"biztypes" form:"biztypes" query:"biztypes"`
 }
 
 type UpdateContentReq struct {
-	Contents   []string `json:"contents" form:"contents" query:"contents"`
-	ModifyType int      `json:"modify_type" form:"modify_type" query:"modify_type"`
-	AppID      int64    `json:"app_id" form:"app_id" query:"app_id"`
-	Name       string   `json:"name" form:"name" query:"name"`
-	IsFile     bool     `json:"is_file" form:"is_file" query:"is_file"`
+	AppID   int64  `json:"app_id" form:"app_id" query:"app_id"`
+	Service string `json:"service" form:"service" query:"service"`
+	LibType string `json:"lib_type" form:"lib_type" query:"lib_type"`
+	Name    string `json:"name" form:"name" query:"name"`
+	Status  int    `json:"status" form:"status" query:"status"`
+}
+
+type ModifyTextContent struct {
+	Data    []string `json:"data" form:"data" query:"data"`
+	AppID   int64    `json:"app_id" form:"app_id" query:"app_id"`
+	Service string   `json:"service" form:"service" query:"service"`
+	Name    string   `json:"name" form:"name" query:"name"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {
