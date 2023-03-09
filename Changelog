@@ -1,5 +1,8 @@
 ### Change log
 
+2023-03-09 Bumped to version v1.0.87
+- Updated apis for vod
+
 2023-03-02 Bumped to version v1.0.86
 - Updated apis for security/billing/imagex/visual
 - Added service mcdn
