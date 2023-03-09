@@ -375,7 +375,9 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 	lastNum := int(num) - 1
 
 	// 读 n-1 片并上传上去
+	objectContentType := ""
 	var part string
+	var ct string
 	for i := 0; i < lastNum; i++ {
 		n, err := io.ReadFull(rd, cur)
 		if err != nil {
@@ -387,7 +389,10 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 			partNumber++
 		}
 		err = retry.Do(func() error {
-			part, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile, storageClass)
+			part, ct, err = p.uploadPart(uploadPart, uploadID, partNumber, cur, client, isLargeFile, storageClass)
+			if partNumber == 1 && err == nil {
+				objectContentType = ct
+			}
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
@@ -408,13 +413,14 @@ func (p *Vod) chunkUpload(rd io.Reader, uploadPart model.UploadPartCommon, clien
 		lastNum++
 	}
 	err = retry.Do(func() error {
-		part, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile, storageClass)
+		part, ct, err = p.uploadPart(uploadPart, uploadID, lastNum, bts, client, isLargeFile, storageClass)
 		return err
 	}, retry.Attempts(3))
 	if err != nil {
 		return err
 	}
 	parts = append(parts, part)
+	uploadPart.ObjectContentType = objectContentType
 	return p.uploadMergePart(uploadPart, uploadID, parts, client, isLargeFile, storageClass)
 }
 
@@ -440,7 +446,7 @@ func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *ht
 	if err != nil {
 		return "", err
 	}
-	res := &model.UploadPartResponse{}
+	res := &model.InitPartResponse{}
 	if err := json.Unmarshal(b, res); err != nil {
 		return "", err
 	}
@@ -450,12 +456,12 @@ func (p *Vod) initUploadPart(tosHost string, oid string, auth string, client *ht
 	return res.PayLoad.UploadID, nil
 }
 
-func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, partNumber int, data []byte, client *http.Client, isLargeFile bool, storageClass int32) (string, error) {
+func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, partNumber int, data []byte, client *http.Client, isLargeFile bool, storageClass int32) (string, string, error) {
 	url := fmt.Sprintf("http://%s/%s?partNumber=%d&uploadID=%s", uploadPart.TosHost, uploadPart.Oid, partNumber, uploadID)
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(data))
 	req, err := http.NewRequest("PUT", url, bytes.NewReader(data))
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", uploadPart.Auth)
@@ -468,21 +474,21 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 
 	rsp, err := client.Do(req)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	b, err := ioutil.ReadAll(rsp.Body)
 	defer rsp.Body.Close()
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 	res := &model.UploadPartResponse{}
 	if err := json.Unmarshal(b, res); err != nil {
-		return "", err
+		return "", "", err
 	}
 	if res.Success != 0 {
-		return "", errors.New(res.Error.Message)
+		return "", "", errors.New(res.Error.Message)
 	}
-	return checkSum, nil
+	return checkSum, res.PayLoad.Meta.ObjectContentType, nil
 }
 
 func (p *Vod) uploadMergePart(uploadPart model.UploadPartCommon, uploadID string, checkSum []string, client *http.Client, isLargeFile bool, storageClass int32) error {
@@ -501,6 +507,11 @@ func (p *Vod) uploadMergePart(uploadPart model.UploadPartCommon, uploadID string
 	}
 	if storageClass == int32(business.StorageClassType_Archive) {
 		req.Header.Set("X-Upload-Storage-Class", "archive")
+		if uploadPart.ObjectContentType != "" {
+			q := req.URL.Query()
+			q.Add("ObjectContentType", uploadPart.ObjectContentType)
+			req.URL.RawQuery = q.Encode()
+		}
 	}
 
 	rsp, err := client.Do(req)
