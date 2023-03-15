@@ -506,6 +506,22 @@ func (p *Visual) FaceFusionMovieGetResult(req *model.FaceFusionMovieGetResultReq
 }
 
 func (p *Visual) CertToken(req *model.CertTokenRequest) (*model.CertTokenResult, int, error) {
+	if req.LivenessTimeout == 0 {
+		req.LivenessTimeout = 10
+	}
+	if req.MotionList == nil {
+		req.MotionList = []string{"0", "1", "2", "3"}
+	}
+	if req.FixedMotionList == nil {
+		req.FixedMotionList = []string{"0", "1"}
+	}
+	if req.MotionCount == 0 {
+		req.MotionCount = 2
+	}
+	if req.MaxLivenessTrial == 0 {
+		req.MaxLivenessTrial = 10
+	}
+
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
@@ -520,6 +536,22 @@ func (p *Visual) CertToken(req *model.CertTokenRequest) (*model.CertTokenResult,
 }
 
 func (p *Visual) CertConfigInit(req *model.CertConfigInitRequest) (*model.CertConfigInitResult, int, error) {
+	if req.TokenApiConfig.LivenessTimeout == 0 {
+		req.TokenApiConfig.LivenessTimeout = 10
+	}
+	if req.TokenApiConfig.MotionList == nil {
+		req.TokenApiConfig.MotionList = []string{"0", "1", "2", "3"}
+	}
+	if req.TokenApiConfig.FixedMotionList == nil {
+		req.TokenApiConfig.FixedMotionList = []string{"0", "1"}
+	}
+	if req.TokenApiConfig.MotionCount == 0 {
+		req.TokenApiConfig.MotionCount = 2
+	}
+	if req.TokenApiConfig.MaxLivenessTrial == 0 {
+		req.TokenApiConfig.MaxLivenessTrial = 10
+	}
+
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
@@ -541,6 +573,33 @@ func (p *Visual) CertVerifyQuery(req *model.CertVerifyQueryRequest) (*model.Cert
 	}
 	resp := new(model.CertVerifyQueryResult)
 	statusCode, err := p.commonJsonHandler("CertVerifyQuery", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) Img2Video3D(req *model.Img2Video3DRequest) (*model.Img2Video3DResult, int, error) {
+	if req.RenderSpec.LongSide == 0 {
+		req.RenderSpec.LongSide = 960
+	}
+	if req.RenderSpec.FrameNum == 0 {
+		req.RenderSpec.FrameNum = 90
+	}
+	if req.RenderSpec.Fps == 0 {
+		req.RenderSpec.Fps = 30
+	}
+	if req.RenderSpec.SpeedShift == nil {
+		req.RenderSpec.SpeedShift = []float64{}
+	}
+
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.Img2Video3DResult)
+	statusCode, err := p.commonJsonHandler("Img2Video3D", string(jsonStr), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
