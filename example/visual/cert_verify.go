@@ -47,16 +47,16 @@ func main() {
 		//	Endpoint: "",
 		//	Region:   "",
 		//},
-		RefSource:        "1",
-		LivenessType:     "",
-		IdCardName:       "",
-		IdCardNo:         "",
-		RefImage:         "", // 无源比对时必选，输入图片的base64数组，在无源比对时需要传入1张用户的基准图，有源比对无需传入
-		LivenessTimeout:  10,
-		MotionList:       []string{""},
-		FixedMotionList:  []string{""},
-		MotionCount:      2,
-		MaxLivenessTrial: 10,
+		RefSource:    "1",
+		LivenessType: "",
+		IdCardName:   "",
+		IdCardNo:     "",
+		RefImage:     "", // 无源比对时必选，输入图片的base64数组，在无源比对时需要传入1张用户的基准图，有源比对无需传入
+		//LivenessTimeout:  10,
+		//MotionList:       []string{""},
+		//FixedMotionList:  []string{""},
+		//MotionCount:      2,
+		//MaxLivenessTrial: 10,
 		//CallbackInfo: &struct {
 		//	Switch     bool   `json:"switch"`
 		//	Block      bool   `json:"block"`

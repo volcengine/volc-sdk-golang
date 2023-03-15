@@ -95,7 +95,8 @@ type CertTokenData struct {
 		StatusMessage string `json:"status_message"`
 	} `json:"algorithm_base_resp"`
 	BinaryDataBase64 []string `json:"binary_data_base64"`
-	TaskId           string   `json:"task_id"`
+	BytedToken       string   `json:"byted_token"`
+	ClientConfig     string   `json:"client_config"`
 }
 
 type CertTokenResult struct {
