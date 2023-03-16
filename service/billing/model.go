@@ -7,6 +7,9 @@ type Bill struct {
 	PayerID                string
 	PayerUserName          string
 	PayerCustomerName      string
+	SellerID               string
+	SellerUserName         string
+	SellerCustomerName     string
 	OwnerID                string
 	OwnerUserName          string
 	OwnerCustomerName      string
@@ -29,6 +32,7 @@ type Bill struct {
 	UnpaidAmount           string
 	Currency               string
 	PayStatus              string
+	SettlementType         string
 }
 
 type BillList struct {
@@ -49,6 +53,9 @@ type BillDetail struct {
 	PayerID                string
 	PayerUserName          string
 	PayerCustomerName      string
+	SellerID               string
+	SellerUserName         string
+	SellerCustomerName     string
 	OwnerID                string
 	OwnerUserName          string
 	OwnerCustomerName      string
@@ -84,6 +91,11 @@ type BillDetail struct {
 	PaidAmount             string
 	UnpaidAmount           string
 	Currency               string
+	SettlementType         string
+	Project                string
+	Tag                    string
+	SellingMode            string
+	SolutionZh             string
 }
 
 type BillDetailList struct {
@@ -103,6 +115,9 @@ type BillOverviewByProd struct {
 	PayerID                string
 	PayerUserName          string
 	PayerCustomerName      string
+	SellerID               string
+	SellerUserName         string
+	SellerCustomerName     string
 	OwnerID                string
 	OwnerUserName          string
 	OwnerCustomerName      string
@@ -119,6 +134,7 @@ type BillOverviewByProd struct {
 	PayableAmount          string
 	PaidAmount             string
 	UnpaidAmount           string
+	SettlementType         string
 }
 
 type BillOverviewByProdList struct {
