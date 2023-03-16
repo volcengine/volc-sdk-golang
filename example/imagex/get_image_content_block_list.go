@@ -7,22 +7,21 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
 
-// 更新文件 URL 状态
+// 刷新/预热/禁用/解禁
+// 获取禁用 URL 列表详情
 func main() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
 	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "ak",
+		AccessKeyID:     "aK",
 		SecretAccessKey: "sk",
 	})
 
-	serviceId := "imagex service id" // 服务 ID
-	urls := []string{"image url 1"}  // 待更新的文件 URL 列表（可以通过浏览器访问的完整 URL）
-
-	resp, err := instance.UpdateImageUrls(serviceId, &imagex.UpdateImageUrlPayload{
-		Action:    imagex.ActionRefresh, // 刷新文件
-		ImageUrls: urls,
+	resp, err := instance.GetImageContentBlockList(&imagex.GetImageContentBlockListReq{
+		ServiceId: "",
+		StartTime: 0,
+		EndTime:   2147483647,
 	})
 	if err != nil {
 		fmt.Printf("error %v", err)

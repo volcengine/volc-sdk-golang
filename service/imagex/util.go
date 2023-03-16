@@ -1,4 +1,4 @@
-package data
+package imagex
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ func SkipEmptyValue() QueryMarshalFilter {
 	}
 }
 
-func marshalToQuery(model interface{}, filters ...QueryMarshalFilter) (url.Values, error) {
+func MarshalToQuery(model interface{}, filters ...QueryMarshalFilter) (url.Values, error) {
 	ret := url.Values{}
 	if model == nil {
 		return ret, nil

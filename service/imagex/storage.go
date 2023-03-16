@@ -427,49 +427,46 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	return c.Client.SignSts2(inlinePolicy, expire)
 }
 
-func (c *ImageX) UpdateImageUrls(serviceId string, req *UpdateImageUrlPayload) ([]string, error) {
-	query := url.Values{}
-	query.Add("ServiceId", serviceId)
-
-	bts, err := json.Marshal(req)
+func (c *ImageX) CreateImageContentTask(req *CreateImageContentTaskReq) (*CreateImageContentTaskResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
 	if err != nil {
-		return nil, fmt.Errorf("updateImageUrls: fail to marshal request, %v", err)
-	}
-
-	respBody, _, err := c.Client.Json("UpdateImageUploadFiles", query, string(bts))
-	if err != nil {
-		return nil, fmt.Errorf("updateImageUrls: fail to do request, %v", err)
-	}
-
-	result := new(UpdateImageUrlPayload)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
-	return result.ImageUrls, nil
+
+	resp := &CreateImageContentTaskResp{}
+	err = c.ImageXPost("CreateImageContentTask", query, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
 }
 
-func (c *ImageX) RefreshImageUrls(serviceId string, urls []string) ([]string, error) {
-	req := &UpdateImageUrlPayload{
-		Action:    ActionRefresh,
-		ImageUrls: urls,
+func (c *ImageX) GetImageContentTaskDetail(req *GetImageContentTaskDetailReq) (*GetImageContentTaskDetailResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
 	}
-	return c.UpdateImageUrls(serviceId, req)
+
+	resp := &GetImageContentTaskDetailResp{}
+	err = c.ImageXPost("GetImageContentTaskDetail", query, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
 }
 
-func (c *ImageX) EnableImageUrls(serviceId string, urls []string) ([]string, error) {
-	req := &UpdateImageUrlPayload{
-		Action:    ActionEnable,
-		ImageUrls: urls,
+func (c *ImageX) GetImageContentBlockList(req *GetImageContentBlockListReq) (*GetImageContentBlockListResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
 	}
-	return c.UpdateImageUrls(serviceId, req)
-}
 
-func (c *ImageX) DisableImageUrls(serviceId string, urls []string) ([]string, error) {
-	req := &UpdateImageUrlPayload{
-		Action:    ActionDisable,
-		ImageUrls: urls,
+	resp := &GetImageContentBlockListResp{}
+	err = c.ImageXPost("GetImageContentBlockList", query, req, resp)
+	if err != nil {
+		return nil, err
 	}
-	return c.UpdateImageUrls(serviceId, req)
+	return resp, err
 }
 
 func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {

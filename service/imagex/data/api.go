@@ -53,7 +53,7 @@ func AddDataModule(c *imagex.ImageX) error {
 }
 
 func DescribeImageXDomainTrafficData(instance *imagex.ImageX, req *DescribeImageXDomainTrafficDataReq) (*DescribeImageXDomainTrafficDataResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +67,7 @@ func DescribeImageXDomainTrafficData(instance *imagex.ImageX, req *DescribeImage
 }
 
 func DescribeImageXDomainBandwidthData(instance *imagex.ImageX, req *DescribeImageXDomainBandwidthDataReq) (*DescribeImageXDomainBandwidthDataResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func DescribeImageXDomainBandwidthData(instance *imagex.ImageX, req *DescribeIma
 }
 
 func DescribeImageXBucketUsage(instance *imagex.ImageX, req *DescribeImageXBucketUsageReq) (*DescribeImageXBucketUsageResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func DescribeImageXBucketUsage(instance *imagex.ImageX, req *DescribeImageXBucke
 }
 
 func DescribeImageXRequestCntUsage(instance *imagex.ImageX, req *DescribeImageXRequestCntUsageReq) (*DescribeImageXRequestCntUsageResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func DescribeImageXRequestCntUsage(instance *imagex.ImageX, req *DescribeImageXR
 }
 
 func DescribeImageXBaseOpUsage(instance *imagex.ImageX, req *DescribeImageXBaseOpUsageReq) (*DescribeImageXBaseOpUsageResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func DescribeImageXBaseOpUsage(instance *imagex.ImageX, req *DescribeImageXBaseO
 }
 
 func DescribeImageXCompressUsage(instance *imagex.ImageX, req *DescribeImageXCompressUsageReq) (*DescribeImageXCompressUsageResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func DescribeImageXCompressUsage(instance *imagex.ImageX, req *DescribeImageXCom
 }
 
 func DescribeImageXEdgeRequest(instance *imagex.ImageX, req *DescribeImageXEdgeRequestReq) (*DescribeImageXEdgeRequestResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ func DescribeImageXMirrorRequestHttpCodeByTime(instance *imagex.ImageX, req *Des
 }
 
 func DescribeImageXHitRateTrafficData(instance *imagex.ImageX, req *DescribeImageXHitRateTrafficDataReq) (*DescribeImageXHitRateTrafficDataResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func DescribeImageXHitRateTrafficData(instance *imagex.ImageX, req *DescribeImag
 }
 
 func DescribeImageXHitRateRequestData(instance *imagex.ImageX, req *DescribeImageXHitRateRequestDataReq) (*DescribeImageXHitRateRequestDataResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func DescribeImageXHitRateRequestData(instance *imagex.ImageX, req *DescribeImag
 }
 
 func DescribeImageXCDNTopRequestData(instance *imagex.ImageX, req *DescribeImageXCDNTopRequestDataReq) (*DescribeImageXCDNTopRequestDataResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func DescribeImageXCDNTopRequestData(instance *imagex.ImageX, req *DescribeImage
 }
 
 func DescribeImageXSummary(instance *imagex.ImageX, req *DescribeImageXSummaryReq) (*DescribeImageXSummaryResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +243,7 @@ func DescribeImageXMirrorRequestHttpCodeOverview(instance *imagex.ImageX, req *D
 }
 
 func DescribeImageXEdgeRequestBandwidth(instance *imagex.ImageX, req *DescribeImageXEdgeRequestBandwidthReq) (*DescribeImageXEdgeRequestBandwidthResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func DescribeImageXEdgeRequestBandwidth(instance *imagex.ImageX, req *DescribeIm
 }
 
 func DescribeImageXEdgeRequestTraffic(instance *imagex.ImageX, req *DescribeImageXEdgeRequestTrafficReq) (*DescribeImageXEdgeRequestTrafficResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +271,7 @@ func DescribeImageXEdgeRequestTraffic(instance *imagex.ImageX, req *DescribeImag
 }
 
 func DescribeImageXEdgeRequestRegions(instance *imagex.ImageX, req *DescribeImageXEdgeRequestRegionsReq) (*DescribeImageXEdgeRequestRegionsResp, error) {
-	query, err := marshalToQuery(req)
+	query, err := imagex.MarshalToQuery(req, imagex.SkipEmptyValue())
 	if err != nil {
 		return nil, err
 	}

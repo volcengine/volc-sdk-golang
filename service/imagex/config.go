@@ -303,11 +303,27 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
-		"UpdateImageUploadFiles": {
+		"CreateImageContentTask": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UpdateImageUploadFiles"},
+				"Action":  []string{"CreateImageContentTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageContentTaskDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageContentTaskDetail"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageContentBlockList": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageContentBlockList"},
 				"Version": []string{"2018-08-01"},
 			},
 		},
