@@ -10,6 +10,7 @@ import (
 
 const (
 	DefaultRegion          = "cn-north-1"
+	ServiceVersion20230101 = "2023-01-01"
 	ServiceVersion20200801 = "2020-08-01"
 	ServiceVersion20180101 = "2018-01-01"
 	ServiceName            = "live"
@@ -30,7 +31,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCommonTransPresetDetail"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateCallback": {
@@ -38,7 +39,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateCallback"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeCallback": {
@@ -46,7 +47,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCallback"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteCallback": {
@@ -54,7 +55,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteCallback"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateDomain": {
@@ -62,7 +63,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateDomain"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteDomain": {
@@ -70,7 +71,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteDomain"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListDomainDetail": {
@@ -78,7 +79,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListDomainDetail"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeDomain": {
@@ -86,7 +87,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeDomain"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"EnableDomain": {
@@ -94,7 +95,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"EnableDomain"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DisableDomain": {
@@ -102,7 +103,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DisableDomain"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ManagerPullPushDomainBind": {
@@ -110,7 +111,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ManagerPullPushDomainBind"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateAuthKey": {
@@ -118,7 +119,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateAuthKey"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeAuth": {
@@ -126,7 +127,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeAuth"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ForbidStream": {
@@ -134,7 +135,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ForbidStream"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ResumeStream": {
@@ -142,7 +143,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ResumeStream"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListCert": {
@@ -150,7 +151,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateCert": {
@@ -158,7 +159,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateCert": {
@@ -166,7 +167,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"BindCert": {
@@ -174,7 +175,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"BindCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UnbindCert": {
@@ -182,7 +183,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UnbindCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteCert": {
@@ -190,7 +191,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteCert"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateReferer": {
@@ -198,7 +199,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateReferer"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteReferer": {
@@ -206,7 +207,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteReferer"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeReferer": {
@@ -214,7 +215,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeReferer"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateRecordPreset": {
@@ -222,7 +223,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateRecordPreset": {
@@ -230,7 +231,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteRecordPreset": {
@@ -238,7 +239,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListVhostRecordPreset": {
@@ -246,7 +247,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostRecordPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateTranscodePreset": {
@@ -254,7 +255,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateTranscodePreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateTranscodePreset": {
@@ -262,7 +263,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateTranscodePreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteTranscodePreset": {
@@ -270,7 +271,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteTranscodePreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListVhostTransCodePreset": {
@@ -278,7 +279,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostTransCodePreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateSnapshotPreset": {
@@ -286,7 +287,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateSnapshotPreset": {
@@ -294,7 +295,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteSnapshotPreset": {
@@ -302,7 +303,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListVhostSnapshotPreset": {
@@ -310,7 +311,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostSnapshotPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribePullToPushBandwidthData": {
@@ -454,7 +455,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSnapshotAuditPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateSnapshotAuditPreset": {
@@ -462,7 +463,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotAuditPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteSnapshotAuditPreset": {
@@ -470,7 +471,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteSnapshotAuditPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListVhostSnapshotAuditPreset": {
@@ -478,7 +479,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostSnapshotAuditPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeLiveAuditData": {
@@ -574,7 +575,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostWatermarkPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListWatermarkPreset": {
@@ -582,7 +583,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListWatermarkPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateWatermarkPreset": {
@@ -590,7 +591,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateWatermarkPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateWatermarkPreset": {
@@ -598,7 +599,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateWatermarkPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteWatermarkPreset": {
@@ -606,7 +607,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteWatermarkPreset"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeCDNSnapshotHistory": {
@@ -614,7 +615,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCDNSnapshotHistory"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeRecordTaskFileHistory": {
@@ -622,7 +623,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeRecordTaskFileHistory"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeLiveStreamInfoByPage": {
@@ -630,7 +631,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveStreamInfoByPage"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"KillStream": {
@@ -638,7 +639,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"KillStream"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeClosedStreamInfoByPage": {
@@ -646,7 +647,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeClosedStreamInfoByPage"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeLiveStreamState": {
@@ -654,7 +655,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveStreamState"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeForbiddenStreamInfoByPage": {
@@ -662,7 +663,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeForbiddenStreamInfoByPage"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateRelaySourceV2": {
@@ -670,7 +671,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateRelaySourceV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteRelaySourceV2": {
@@ -678,7 +679,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteRelaySourceV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeRelaySourceV2": {
@@ -686,7 +687,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeRelaySourceV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreateVQScoreTask": {
@@ -694,7 +695,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateVQScoreTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeVQScoreTask": {
@@ -702,7 +703,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVQScoreTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListVQScoreTask": {
@@ -710,7 +711,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVQScoreTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"GeneratePlayURL": {
@@ -718,7 +719,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GeneratePlayURL"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"GeneratePushURL": {
@@ -726,7 +727,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GeneratePushURL"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"CreatePullToPushTask": {
@@ -734,7 +735,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreatePullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"ListPullToPushTask": {
@@ -742,7 +743,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListPullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdatePullToPushTask": {
@@ -750,7 +751,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdatePullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"StopPullToPushTask": {
@@ -758,7 +759,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"StopPullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"RestartPullToPushTask": {
@@ -766,7 +767,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"RestartPullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeletePullToPushTask": {
@@ -774,7 +775,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeletePullToPushTask"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateDenyConfig": {
@@ -782,7 +783,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateDenyConfig"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeDenyConfig": {
@@ -790,7 +791,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeDenyConfig"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteDenyConfig": {
@@ -798,7 +799,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteDenyConfig"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"UpdateDenyConfigV2": {
@@ -806,7 +807,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateDenyConfigV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DescribeDenyConfigV2": {
@@ -814,7 +815,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeDenyConfigV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 		"DeleteDenyConfigV2": {
@@ -822,7 +823,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteDenyConfigV2"},
-				"Version": []string{ServiceVersion20200801},
+				"Version": []string{ServiceVersion20230101},
 			},
 		},
 	}
