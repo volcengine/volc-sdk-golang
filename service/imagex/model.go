@@ -8,12 +8,6 @@ import (
 )
 
 const (
-	ActionRefresh    = 0
-	ActionDisable    = 1
-	ActionEnable     = 2
-	ActionPreload    = 4
-	ActionRefreshDir = 5
-
 	SEGMENT_CLASS_GENERAL    = "general"
 	SEGMENT_CLASS_HUMAN      = "human"
 	SEGMENT_CLASS_PRODUCT    = "product"
@@ -192,10 +186,74 @@ type ImageInfo struct {
 	Duration    int    `json:"Duration"`
 }
 
-// UpdateImageUploadFiles
-type UpdateImageUrlPayload struct {
-	Action    int      `json:"Action"`
-	ImageUrls []string `json:"ImageUrls"`
+// CreateImageContentTask
+type CreateImageContentTaskReq struct {
+	ServiceId string   `query:"ServiceId" json:"-"`
+	TaskType  string   `json:"TaskType"`
+	Urls      []string `json:"Urls"`
+}
+
+type CreateImageContentTaskResp struct {
+	Msg string `json:"Msg"`
+}
+
+// GetImageContentTaskDetail
+type GetImageContentTaskDetailReq struct {
+	ServiceId string `query:"ServiceId" json:"-"`
+	TaskType  string `json:"TaskType"`
+	State     string `json:"State"`
+	Order     string `json:"Order"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	Url       string `json:"Url"`
+	PageNum   int    `json:"PageNum"`
+	PageSize  int    `json:"PageSize"`
+}
+
+type GetImageContentTaskDetailResp struct {
+	PageNum  int                                 `json:"PageNum"`
+	PageSize int                                 `json:"PageSize"`
+	Total    int                                 `json:"Total"`
+	Data     []GetImageContentTaskDetailRespData `json:"Data"`
+}
+
+type GetImageContentTaskDetailRespData struct {
+	Url        string `json:"Url"`
+	State      string `json:"State"`
+	Process    string `json:"Process"`
+	TaskType   string `json:"TaskType"`
+	CreateTime int64  `json:"CreateTime"`
+	UpdateTime int64  `json:"UpdateTime"`
+	Msg        string `json:"Msg"`
+}
+
+// GetImageContentBlockList
+type GetImageContentBlockListReq struct {
+	ServiceId string `query:"ServiceId" json:"-"`
+	State     string `json:"State"`
+	Order     string `json:"Order"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	Url       string `json:"Url"`
+	PageNum   int    `json:"PageNum"`
+	PageSize  int    `json:"PageSize"`
+}
+
+type GetImageContentBlockListResp struct {
+	PageNum  int                                `json:"PageNum"`
+	PageSize int                                `json:"PageSize"`
+	Total    int                                `json:"Total"`
+	Data     []GetImageContentBlockListRespData `json:"Data"`
+}
+
+type GetImageContentBlockListRespData struct {
+	Url        string `json:"Url"`
+	State      string `json:"State"`
+	Process    string `json:"Process"`
+	TaskType   string `json:"TaskType"`
+	CreateTime int64  `json:"CreateTime"`
+	UpdateTime int64  `json:"UpdateTime"`
+	Msg        string `json:"Msg"`
 }
 
 // FetchImageUrl

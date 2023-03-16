@@ -23,7 +23,7 @@ func main() {
 		Algorithm:     "default",    // 算法模型
 		Info:          "info",       // 盲水印的內容
 		OutFormat:     "jpeg",       // 输出图片格式
-		OutQuality:    "90",         // 输出图片质量
+		OutQuality:    90,           // 输出图片质量
 		StrengthLevel: "medium",     // 算法强度
 	}
 
