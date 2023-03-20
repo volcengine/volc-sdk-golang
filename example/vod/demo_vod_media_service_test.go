@@ -470,3 +470,57 @@ func Test_ExtractMediaMetaTask(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_SubmitBlockMediaTask(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodSubmitBlockMediaTaskRequest{
+		SpaceName: "your SpaceName",
+		Vids:      "your Vids",
+	}
+
+	resp, status, err := instance.SubmitBlockMediaTask(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_SubmitUnblockMediaTask(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodSubmitUnblockMediaTaskRequest{
+		SpaceName: "your SpaceName",
+		Vids:      "your Vids",
+	}
+
+	resp, status, err := instance.SubmitUnblockMediaTask(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_QueryMediaBlockStatus(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodQueryMediaBlockStatusRequest{
+		SpaceName: "your SpaceName",
+		Vids:      "your Vids",
+	}
+
+	resp, status, err := instance.QueryMediaBlockStatus(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

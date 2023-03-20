@@ -2265,6 +2265,7 @@ type SnapshotResult struct {
 
 	Type string `protobuf:"bytes,1,opt,name=Type,proto3" json:"Type,omitempty"`
 	// Types that are assignable to SnapshotParams:
+	//
 	//	*SnapshotResult_Poster
 	//	*SnapshotResult_Dynpost
 	//	*SnapshotResult_AnimatedPoster
