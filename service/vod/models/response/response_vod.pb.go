@@ -4020,6 +4020,228 @@ func (x *DescribeVodSnapshotDataResponse) GetResult() *business.DescribeVodSnaps
 	return nil
 }
 
+// 工作量明细用量
+type DescribeVodSpaceWorkflowDetailDataResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                             `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.DescribeVodSpaceWorkflowDetailDataResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *DescribeVodSpaceWorkflowDetailDataResponse) Reset() {
+	*x = DescribeVodSpaceWorkflowDetailDataResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DescribeVodSpaceWorkflowDetailDataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeVodSpaceWorkflowDetailDataResponse) ProtoMessage() {}
+
+func (x *DescribeVodSpaceWorkflowDetailDataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeVodSpaceWorkflowDetailDataResponse.ProtoReflect.Descriptor instead.
+func (*DescribeVodSpaceWorkflowDetailDataResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *DescribeVodSpaceWorkflowDetailDataResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *DescribeVodSpaceWorkflowDetailDataResponse) GetResult() *business.DescribeVodSpaceWorkflowDetailDataResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+// 媒资封禁相关
+type VodSubmitBlockMediaTaskResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                  `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.VodSubmitBlockMediaTaskResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *VodSubmitBlockMediaTaskResponse) Reset() {
+	*x = VodSubmitBlockMediaTaskResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodSubmitBlockMediaTaskResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodSubmitBlockMediaTaskResponse) ProtoMessage() {}
+
+func (x *VodSubmitBlockMediaTaskResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodSubmitBlockMediaTaskResponse.ProtoReflect.Descriptor instead.
+func (*VodSubmitBlockMediaTaskResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *VodSubmitBlockMediaTaskResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodSubmitBlockMediaTaskResponse) GetResult() *business.VodSubmitBlockMediaTaskResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type VodSubmitUnblockMediaTaskResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                    `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.VodSubmitUnblockMediaTaskResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *VodSubmitUnblockMediaTaskResponse) Reset() {
+	*x = VodSubmitUnblockMediaTaskResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[76]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodSubmitUnblockMediaTaskResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodSubmitUnblockMediaTaskResponse) ProtoMessage() {}
+
+func (x *VodSubmitUnblockMediaTaskResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[76]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodSubmitUnblockMediaTaskResponse.ProtoReflect.Descriptor instead.
+func (*VodSubmitUnblockMediaTaskResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *VodSubmitUnblockMediaTaskResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodSubmitUnblockMediaTaskResponse) GetResult() *business.VodSubmitUnblockMediaTaskResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type VodQueryMediaBlockStatusResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                   `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"`
+	Result           *business.VodQueryMediaBlockStatusResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`
+}
+
+func (x *VodQueryMediaBlockStatusResponse) Reset() {
+	*x = VodQueryMediaBlockStatusResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_vod_response_response_vod_proto_msgTypes[77]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodQueryMediaBlockStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodQueryMediaBlockStatusResponse) ProtoMessage() {}
+
+func (x *VodQueryMediaBlockStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_vod_response_response_vod_proto_msgTypes[77]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodQueryMediaBlockStatusResponse.ProtoReflect.Descriptor instead.
+func (*VodQueryMediaBlockStatusResponse) Descriptor() ([]byte, []int) {
+	return file_vod_response_response_vod_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *VodQueryMediaBlockStatusResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodQueryMediaBlockStatusResponse) GetResult() *business.VodQueryMediaBlockStatusResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
 var File_vod_response_response_vod_proto protoreflect.FileDescriptor
 
 var file_vod_response_response_vod_proto_rawDesc = []byte{
@@ -4947,21 +5169,76 @@ var file_vod_response_response_vod_proto_rawDesc = []byte{
 	0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
 	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65,
 	0x56, 0x6f, 0x64, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42, 0xcc, 0x01,
-	0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64,
-	0x65, 0x6c, 0x2e, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0b, 0x56, 0x6f, 0x64,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x50, 0x01, 0x5a, 0x41, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e,
-	0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e,
-	0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xa0, 0x01, 0x01,
-	0xd8, 0x01, 0x01, 0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
-	0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01,
+	0x0a, 0x2a, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f,
+	0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd3, 0x01, 0x0a, 0x1f, 0x56, 0x6f,
+	0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69,
+	0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
+	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x55, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62,
+	0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73,
+	0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
+	0xd7, 0x01, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x55, 0x6e, 0x62,
+	0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73,
+	0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x12, 0x57, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x3f, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f,
+	0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
+	0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x55, 0x6e, 0x62, 0x6c, 0x6f,
+	0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd5, 0x01, 0x0a, 0x20, 0x56, 0x6f,
+	0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
+	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x56, 0x0a, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3e, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x42, 0xcc, 0x01, 0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64,
+	0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42,
+	0x0b, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x50, 0x01, 0x5a, 0x41,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67,
+	0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f,
+	0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x5c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c,
+	0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -4976,7 +5253,7 @@ func file_vod_response_response_vod_proto_rawDescGZIP() []byte {
 	return file_vod_response_response_vod_proto_rawDescData
 }
 
-var file_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 74)
+var file_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 78)
 var file_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodGetAllPlayInfoResponse)(nil),                               // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse
 	(*VodGetPlayInfoResponse)(nil),                                  // 1: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse
@@ -5052,204 +5329,220 @@ var file_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*DescribeVodSpaceSubtitleStatisDataResponse)(nil),              // 71: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse
 	(*DescribeVodSpaceDetectStatisDataResponse)(nil),                // 72: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse
 	(*DescribeVodSnapshotDataResponse)(nil),                         // 73: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse
-	(*base.ResponseMetadata)(nil),                                   // 74: Volcengine.Base.Models.Base.ResponseMetadata
-	(*business.VodAllPlayInfoResult)(nil),                           // 75: Volcengine.Vod.Models.Business.VodAllPlayInfoResult
-	(*business.VodPlayInfoModel)(nil),                               // 76: Volcengine.Vod.Models.Business.VodPlayInfoModel
-	(*business.VodGetOriginalPlayInfoResult)(nil),                   // 77: Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
-	(*business.VodGetPrivateDrmPlayAuthResult)(nil),                 // 78: Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
-	(*business.VodGetHlsDecryptionKeyResult)(nil),                   // 79: Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
-	(*business.VodGetPlayInfoWithLiveTimeShiftSceneResult)(nil),     // 80: Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
-	(*business.VodCommitData)(nil),                                  // 81: Volcengine.Vod.Models.Business.VodCommitData
-	(*business.VodQueryData)(nil),                                   // 82: Volcengine.Vod.Models.Business.VodQueryData
-	(*business.VodUrlResponseData)(nil),                             // 83: Volcengine.Vod.Models.Business.VodUrlResponseData
-	(*business.VodApplyUploadInfoResult)(nil),                       // 84: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
-	(*business.VodCommitUploadInfoResult)(nil),                      // 85: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
-	(*business.VodGetMediaInfosData)(nil),                           // 86: Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	(*business.VodGetRecPosterData)(nil),                            // 87: Volcengine.Vod.Models.Business.VodGetRecPosterData
-	(*business.VodUpdateMediaStorageClassData)(nil),                 // 88: Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
-	(*business.VodDeleteMediaData)(nil),                             // 89: Volcengine.Vod.Models.Business.VodDeleteMediaData
-	(*business.VodDeleteTranscodesData)(nil),                        // 90: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
-	(*business.VodGetMediaListData)(nil),                            // 91: Volcengine.Vod.Models.Business.VodGetMediaListData
-	(*business.VodGetSubtitleInfoListData)(nil),                     // 92: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
-	(*business.VodUpdateSubtitleStatusData)(nil),                    // 93: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
-	(*business.VodGetFramesForAuditResult)(nil),                     // 94: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	(*business.VodGetBetterFramesForAuditResult)(nil),               // 95: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
-	(*business.VodGetAudioInfoForAuditResult)(nil),                  // 96: Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
-	(*business.VodGetAutomaticSpeechRecognitionForAuditResult)(nil), // 97: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
-	(*business.VodGetAudioEventDetectionForAuditResult)(nil),        // 98: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
-	(*business.VodCreateVideoClassificationData)(nil),               // 99: Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
-	(*business.VodVideoClassificationsData)(nil),                    // 100: Volcengine.Vod.Models.Business.VodVideoClassificationsData
-	(*business.VodSnapshotData)(nil),                                // 101: Volcengine.Vod.Models.Business.VodSnapshotData
-	(*business.VodStartWorkflowResult)(nil),                         // 102: Volcengine.Vod.Models.Business.VodStartWorkflowResult
-	(*business.TranscodeResult)(nil),                                // 103: Volcengine.Vod.Models.Business.TranscodeResult
-	(*business.VodListWorkflowExecutionResult)(nil),                 // 104: Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
-	(*business.VodGetWorkflowExecutionDetailResult)(nil),            // 105: Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
-	(*business.WorkflowExecution)(nil),                              // 106: Volcengine.Vod.Models.Business.WorkflowExecution
-	(*business.VodWorkflowResult)(nil),                              // 107: Volcengine.Vod.Models.Business.VodWorkflowResult
-	(*business.SubmitDirectEditTaskAsyncResult)(nil),                // 108: Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
-	(*business.GetDirectEditProgress)(nil),                          // 109: Volcengine.Vod.Models.Business.GetDirectEditProgress
-	(*business.GetDirectEditResult)(nil),                            // 110: Volcengine.Vod.Models.Business.GetDirectEditResult
-	(*business.VodSpaceInfo)(nil),                                   // 111: Volcengine.Vod.Models.Business.VodSpaceInfo
-	(*business.VodDescribeVodSpaceStorageDataResult)(nil),           // 112: Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
-	(*business.VodDomainConfigInfo)(nil),                            // 113: Volcengine.Vod.Models.Business.VodDomainConfigInfo
-	(*business.VodCreateCdnTaskResult)(nil),                         // 114: Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	(*business.VodCdnTaskResult)(nil),                               // 115: Volcengine.Vod.Models.Business.VodCdnTaskResult
-	(*business.VodListCdnAccessLogResult)(nil),                      // 116: Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
-	(*business.VodListCdnTopAccessUrlResult)(nil),                   // 117: Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
-	(*business.VodDescribeVodDomainBandwidthDataResult)(nil),        // 118: Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
-	(*business.VodCdnStatisticsCommonResult)(nil),                   // 119: Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
-	(*business.VodCdnIpInfo)(nil),                                   // 120: Volcengine.Vod.Models.Business.VodCdnIpInfo
-	(*business.VodDescribeVodDomainTrafficDataResult)(nil),          // 121: Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
-	(*business.VodSubmitBlockTasksResult)(nil),                      // 122: Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
-	(*business.VodGetContentBlockTasksResult)(nil),                  // 123: Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
-	(*business.VodGetSmartStrategyLitePlayInfoResult)(nil),          // 124: Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
-	(*business.VodGetAppInfoResult)(nil),                            // 125: Volcengine.Vod.Models.Business.VodGetAppInfoResult
-	(*business.DescribeVodSpaceTranscodeDataResult)(nil),            // 126: Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
-	(*business.DescribeVodSpaceAIStatisDataResult)(nil),             // 127: Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
-	(*business.DescribeVodSpaceSubtitleStatisDataResult)(nil),       // 128: Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
-	(*business.DescribeVodSpaceDetectStatisDataResult)(nil),         // 129: Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
-	(*business.DescribeVodSnapshotDataResult)(nil),                  // 130: Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
+	(*DescribeVodSpaceWorkflowDetailDataResponse)(nil),              // 74: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse
+	(*VodSubmitBlockMediaTaskResponse)(nil),                         // 75: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse
+	(*VodSubmitUnblockMediaTaskResponse)(nil),                       // 76: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse
+	(*VodQueryMediaBlockStatusResponse)(nil),                        // 77: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse
+	(*base.ResponseMetadata)(nil),                                   // 78: Volcengine.Base.Models.Base.ResponseMetadata
+	(*business.VodAllPlayInfoResult)(nil),                           // 79: Volcengine.Vod.Models.Business.VodAllPlayInfoResult
+	(*business.VodPlayInfoModel)(nil),                               // 80: Volcengine.Vod.Models.Business.VodPlayInfoModel
+	(*business.VodGetOriginalPlayInfoResult)(nil),                   // 81: Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
+	(*business.VodGetPrivateDrmPlayAuthResult)(nil),                 // 82: Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
+	(*business.VodGetHlsDecryptionKeyResult)(nil),                   // 83: Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
+	(*business.VodGetPlayInfoWithLiveTimeShiftSceneResult)(nil),     // 84: Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
+	(*business.VodCommitData)(nil),                                  // 85: Volcengine.Vod.Models.Business.VodCommitData
+	(*business.VodQueryData)(nil),                                   // 86: Volcengine.Vod.Models.Business.VodQueryData
+	(*business.VodUrlResponseData)(nil),                             // 87: Volcengine.Vod.Models.Business.VodUrlResponseData
+	(*business.VodApplyUploadInfoResult)(nil),                       // 88: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
+	(*business.VodCommitUploadInfoResult)(nil),                      // 89: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
+	(*business.VodGetMediaInfosData)(nil),                           // 90: Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	(*business.VodGetRecPosterData)(nil),                            // 91: Volcengine.Vod.Models.Business.VodGetRecPosterData
+	(*business.VodUpdateMediaStorageClassData)(nil),                 // 92: Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
+	(*business.VodDeleteMediaData)(nil),                             // 93: Volcengine.Vod.Models.Business.VodDeleteMediaData
+	(*business.VodDeleteTranscodesData)(nil),                        // 94: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
+	(*business.VodGetMediaListData)(nil),                            // 95: Volcengine.Vod.Models.Business.VodGetMediaListData
+	(*business.VodGetSubtitleInfoListData)(nil),                     // 96: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
+	(*business.VodUpdateSubtitleStatusData)(nil),                    // 97: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
+	(*business.VodGetFramesForAuditResult)(nil),                     // 98: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	(*business.VodGetBetterFramesForAuditResult)(nil),               // 99: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
+	(*business.VodGetAudioInfoForAuditResult)(nil),                  // 100: Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
+	(*business.VodGetAutomaticSpeechRecognitionForAuditResult)(nil), // 101: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
+	(*business.VodGetAudioEventDetectionForAuditResult)(nil),        // 102: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
+	(*business.VodCreateVideoClassificationData)(nil),               // 103: Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
+	(*business.VodVideoClassificationsData)(nil),                    // 104: Volcengine.Vod.Models.Business.VodVideoClassificationsData
+	(*business.VodSnapshotData)(nil),                                // 105: Volcengine.Vod.Models.Business.VodSnapshotData
+	(*business.VodStartWorkflowResult)(nil),                         // 106: Volcengine.Vod.Models.Business.VodStartWorkflowResult
+	(*business.TranscodeResult)(nil),                                // 107: Volcengine.Vod.Models.Business.TranscodeResult
+	(*business.VodListWorkflowExecutionResult)(nil),                 // 108: Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
+	(*business.VodGetWorkflowExecutionDetailResult)(nil),            // 109: Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
+	(*business.WorkflowExecution)(nil),                              // 110: Volcengine.Vod.Models.Business.WorkflowExecution
+	(*business.VodWorkflowResult)(nil),                              // 111: Volcengine.Vod.Models.Business.VodWorkflowResult
+	(*business.SubmitDirectEditTaskAsyncResult)(nil),                // 112: Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
+	(*business.GetDirectEditProgress)(nil),                          // 113: Volcengine.Vod.Models.Business.GetDirectEditProgress
+	(*business.GetDirectEditResult)(nil),                            // 114: Volcengine.Vod.Models.Business.GetDirectEditResult
+	(*business.VodSpaceInfo)(nil),                                   // 115: Volcengine.Vod.Models.Business.VodSpaceInfo
+	(*business.VodDescribeVodSpaceStorageDataResult)(nil),           // 116: Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
+	(*business.VodDomainConfigInfo)(nil),                            // 117: Volcengine.Vod.Models.Business.VodDomainConfigInfo
+	(*business.VodCreateCdnTaskResult)(nil),                         // 118: Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	(*business.VodCdnTaskResult)(nil),                               // 119: Volcengine.Vod.Models.Business.VodCdnTaskResult
+	(*business.VodListCdnAccessLogResult)(nil),                      // 120: Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
+	(*business.VodListCdnTopAccessUrlResult)(nil),                   // 121: Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
+	(*business.VodDescribeVodDomainBandwidthDataResult)(nil),        // 122: Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
+	(*business.VodCdnStatisticsCommonResult)(nil),                   // 123: Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
+	(*business.VodCdnIpInfo)(nil),                                   // 124: Volcengine.Vod.Models.Business.VodCdnIpInfo
+	(*business.VodDescribeVodDomainTrafficDataResult)(nil),          // 125: Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
+	(*business.VodSubmitBlockTasksResult)(nil),                      // 126: Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
+	(*business.VodGetContentBlockTasksResult)(nil),                  // 127: Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
+	(*business.VodGetSmartStrategyLitePlayInfoResult)(nil),          // 128: Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
+	(*business.VodGetAppInfoResult)(nil),                            // 129: Volcengine.Vod.Models.Business.VodGetAppInfoResult
+	(*business.DescribeVodSpaceTranscodeDataResult)(nil),            // 130: Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
+	(*business.DescribeVodSpaceAIStatisDataResult)(nil),             // 131: Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
+	(*business.DescribeVodSpaceSubtitleStatisDataResult)(nil),       // 132: Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
+	(*business.DescribeVodSpaceDetectStatisDataResult)(nil),         // 133: Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
+	(*business.DescribeVodSnapshotDataResult)(nil),                  // 134: Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
+	(*business.DescribeVodSpaceWorkflowDetailDataResult)(nil),       // 135: Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
+	(*business.VodSubmitBlockMediaTaskResult)(nil),                  // 136: Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
+	(*business.VodSubmitUnblockMediaTaskResult)(nil),                // 137: Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
+	(*business.VodQueryMediaBlockStatusResult)(nil),                 // 138: Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
 }
 var file_vod_response_response_vod_proto_depIdxs = []int32{
-	74,  // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	75,  // 1: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodAllPlayInfoResult
-	74,  // 2: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	76,  // 3: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPlayInfoModel
-	74,  // 4: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	77,  // 5: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
-	74,  // 6: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	78,  // 7: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
-	74,  // 8: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	79,  // 9: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
-	74,  // 10: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	80,  // 11: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
-	74,  // 12: Volcengine.Vod.Models.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	81,  // 13: Volcengine.Vod.Models.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitData
-	74,  // 14: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	82,  // 15: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryData
-	74,  // 16: Volcengine.Vod.Models.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	83,  // 17: Volcengine.Vod.Models.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUrlResponseData
-	74,  // 18: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	84,  // 19: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
-	74,  // 20: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	85,  // 21: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
-	74,  // 22: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	86,  // 23: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	74,  // 24: Volcengine.Vod.Models.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 25: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	87,  // 26: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetRecPosterData
-	74,  // 27: Volcengine.Vod.Models.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 28: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	88,  // 29: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
-	74,  // 30: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	89,  // 31: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaData
-	74,  // 32: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	90,  // 33: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteTranscodesData
-	74,  // 34: Volcengine.Vod.Models.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	91,  // 35: Volcengine.Vod.Models.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaListData
-	74,  // 36: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	92,  // 37: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
-	74,  // 38: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	93,  // 39: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
-	74,  // 40: Volcengine.Vod.Models.Response.VodUpdateSubtitleInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 41: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	94,  // 42: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	74,  // 43: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	94,  // 44: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	74,  // 45: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	95,  // 46: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
-	74,  // 47: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	96,  // 48: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
-	74,  // 49: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	97,  // 50: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
-	74,  // 51: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	98,  // 52: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
-	74,  // 53: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	99,  // 54: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
-	74,  // 55: Volcengine.Vod.Models.Response.VodUpdateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 56: Volcengine.Vod.Models.Response.VodDeleteVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 57: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	100, // 58: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVideoClassificationsData
-	74,  // 59: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	101, // 60: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSnapshotData
-	74,  // 61: Volcengine.Vod.Models.Response.VodGetFileListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	86,  // 62: Volcengine.Vod.Models.Response.VodGetFileListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	74,  // 63: Volcengine.Vod.Models.Response.VodExtractMediaMetaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 64: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	102, // 65: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodStartWorkflowResult
-	74,  // 66: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	103, // 67: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.TranscodeResult
-	74,  // 68: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	104, // 69: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
-	74,  // 70: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	105, // 71: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
-	74,  // 72: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	106, // 73: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.WorkflowExecution
-	74,  // 74: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	107, // 75: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowResult
-	74,  // 76: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	108, // 77: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
-	74,  // 78: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	109, // 79: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditProgress
-	74,  // 80: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	110, // 81: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditResult
-	74,  // 82: Volcengine.Vod.Models.Response.VodCreateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 83: Volcengine.Vod.Models.Response.VodListSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	111, // 84: Volcengine.Vod.Models.Response.VodListSpaceResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
-	74,  // 85: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	111, // 86: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
-	74,  // 87: Volcengine.Vod.Models.Response.VodUpdateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 88: Volcengine.Vod.Models.Response.VodUpdateSpaceUploadConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 89: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	112, // 90: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
-	74,  // 91: Volcengine.Vod.Models.Response.VodListDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	113, // 92: Volcengine.Vod.Models.Response.VodListDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDomainConfigInfo
-	74,  // 93: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	114, // 94: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	74,  // 95: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	114, // 96: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	74,  // 97: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	115, // 98: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnTaskResult
-	74,  // 99: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	116, // 100: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
-	74,  // 101: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	117, // 102: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
-	74,  // 103: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	118, // 104: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
-	74,  // 105: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	119, // 106: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
-	74,  // 107: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	120, // 108: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnIpInfo
-	74,  // 109: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	121, // 110: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
-	74,  // 111: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	122, // 112: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
-	74,  // 113: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	123, // 114: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
-	74,  // 115: Volcengine.Vod.Models.Response.VodCreateDomainV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 116: Volcengine.Vod.Models.Response.VodUpdateDomainExpireV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 117: Volcengine.Vod.Models.Response.VodUpdateDomainAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 118: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 119: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	74,  // 120: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	124, // 121: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
-	74,  // 122: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	125, // 123: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAppInfoResult
-	74,  // 124: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	126, // 125: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
-	74,  // 126: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	127, // 127: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
-	74,  // 128: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	128, // 129: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
-	74,  // 130: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	129, // 131: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
-	74,  // 132: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	130, // 133: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
-	134, // [134:134] is the sub-list for method output_type
-	134, // [134:134] is the sub-list for method input_type
-	134, // [134:134] is the sub-list for extension type_name
-	134, // [134:134] is the sub-list for extension extendee
-	0,   // [0:134] is the sub-list for field type_name
+	78,  // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	79,  // 1: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodAllPlayInfoResult
+	78,  // 2: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	80,  // 3: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPlayInfoModel
+	78,  // 4: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	81,  // 5: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
+	78,  // 6: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	82,  // 7: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
+	78,  // 8: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	83,  // 9: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
+	78,  // 10: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	84,  // 11: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
+	78,  // 12: Volcengine.Vod.Models.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	85,  // 13: Volcengine.Vod.Models.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitData
+	78,  // 14: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	86,  // 15: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryData
+	78,  // 16: Volcengine.Vod.Models.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	87,  // 17: Volcengine.Vod.Models.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUrlResponseData
+	78,  // 18: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	88,  // 19: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
+	78,  // 20: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	89,  // 21: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
+	78,  // 22: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	90,  // 23: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	78,  // 24: Volcengine.Vod.Models.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 25: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	91,  // 26: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetRecPosterData
+	78,  // 27: Volcengine.Vod.Models.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 28: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	92,  // 29: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
+	78,  // 30: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	93,  // 31: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaData
+	78,  // 32: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	94,  // 33: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteTranscodesData
+	78,  // 34: Volcengine.Vod.Models.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	95,  // 35: Volcengine.Vod.Models.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaListData
+	78,  // 36: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	96,  // 37: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
+	78,  // 38: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	97,  // 39: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
+	78,  // 40: Volcengine.Vod.Models.Response.VodUpdateSubtitleInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 41: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	98,  // 42: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	78,  // 43: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	98,  // 44: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	78,  // 45: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	99,  // 46: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
+	78,  // 47: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	100, // 48: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
+	78,  // 49: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	101, // 50: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
+	78,  // 51: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	102, // 52: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
+	78,  // 53: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	103, // 54: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
+	78,  // 55: Volcengine.Vod.Models.Response.VodUpdateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 56: Volcengine.Vod.Models.Response.VodDeleteVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 57: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	104, // 58: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVideoClassificationsData
+	78,  // 59: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	105, // 60: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSnapshotData
+	78,  // 61: Volcengine.Vod.Models.Response.VodGetFileListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	90,  // 62: Volcengine.Vod.Models.Response.VodGetFileListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	78,  // 63: Volcengine.Vod.Models.Response.VodExtractMediaMetaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 64: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	106, // 65: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodStartWorkflowResult
+	78,  // 66: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	107, // 67: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.TranscodeResult
+	78,  // 68: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	108, // 69: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
+	78,  // 70: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	109, // 71: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
+	78,  // 72: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	110, // 73: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.WorkflowExecution
+	78,  // 74: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	111, // 75: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowResult
+	78,  // 76: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	112, // 77: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
+	78,  // 78: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	113, // 79: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditProgress
+	78,  // 80: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	114, // 81: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditResult
+	78,  // 82: Volcengine.Vod.Models.Response.VodCreateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 83: Volcengine.Vod.Models.Response.VodListSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	115, // 84: Volcengine.Vod.Models.Response.VodListSpaceResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
+	78,  // 85: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	115, // 86: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
+	78,  // 87: Volcengine.Vod.Models.Response.VodUpdateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 88: Volcengine.Vod.Models.Response.VodUpdateSpaceUploadConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 89: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	116, // 90: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
+	78,  // 91: Volcengine.Vod.Models.Response.VodListDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	117, // 92: Volcengine.Vod.Models.Response.VodListDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDomainConfigInfo
+	78,  // 93: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	118, // 94: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	78,  // 95: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	118, // 96: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	78,  // 97: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	119, // 98: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnTaskResult
+	78,  // 99: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	120, // 100: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
+	78,  // 101: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	121, // 102: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
+	78,  // 103: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	122, // 104: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
+	78,  // 105: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	123, // 106: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
+	78,  // 107: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	124, // 108: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnIpInfo
+	78,  // 109: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	125, // 110: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
+	78,  // 111: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	126, // 112: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
+	78,  // 113: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	127, // 114: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
+	78,  // 115: Volcengine.Vod.Models.Response.VodCreateDomainV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 116: Volcengine.Vod.Models.Response.VodUpdateDomainExpireV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 117: Volcengine.Vod.Models.Response.VodUpdateDomainAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 118: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 119: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	78,  // 120: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	128, // 121: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
+	78,  // 122: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	129, // 123: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAppInfoResult
+	78,  // 124: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	130, // 125: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
+	78,  // 126: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	131, // 127: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
+	78,  // 128: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	132, // 129: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
+	78,  // 130: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	133, // 131: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
+	78,  // 132: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	134, // 133: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
+	78,  // 134: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	135, // 135: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
+	78,  // 136: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	136, // 137: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
+	78,  // 138: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	137, // 139: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
+	78,  // 140: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	138, // 141: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
+	142, // [142:142] is the sub-list for method output_type
+	142, // [142:142] is the sub-list for method input_type
+	142, // [142:142] is the sub-list for extension type_name
+	142, // [142:142] is the sub-list for extension extendee
+	0,   // [0:142] is the sub-list for field type_name
 }
 
 func init() { file_vod_response_response_vod_proto_init() }
@@ -6146,6 +6439,54 @@ func file_vod_response_response_vod_proto_init() {
 				return nil
 			}
 		}
+		file_vod_response_response_vod_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DescribeVodSpaceWorkflowDetailDataResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitBlockMediaTaskResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitUnblockMediaTaskResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_vod_response_response_vod_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodQueryMediaBlockStatusResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -6153,7 +6494,7 @@ func file_vod_response_response_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_vod_response_response_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   74,
+			NumMessages:   78,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

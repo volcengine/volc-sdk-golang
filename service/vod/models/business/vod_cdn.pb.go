@@ -1836,16 +1836,14 @@ type ContentTask struct {
 	unknownFields protoimpl.UnknownFields
 
 	Url string `protobuf:"bytes,1,opt,name=Url,proto3" json:"Url,omitempty"` //代表一个内容 URL。
-	//
-	//代表一个内容 URL 的状态。该参数的可用值如下：
-	//complete：已完成。
-	//running：执行中。
-	//failed：执行失败。
+	// 代表一个内容 URL 的状态。该参数的可用值如下：
+	// complete：已完成。
+	// running：执行中。
+	// failed：执行失败。
 	Status string `protobuf:"bytes,2,opt,name=Status,proto3" json:"Status,omitempty"`
-	//
-	//代表一个任务类型。该参数的可用值如下：：
-	//block_url：封禁任务。
-	//unblock_url：解封任务。
+	// 代表一个任务类型。该参数的可用值如下：：
+	// block_url：封禁任务。
+	// unblock_url：解封任务。
 	TaskType   string `protobuf:"bytes,3,opt,name=TaskType,proto3" json:"TaskType,omitempty"`
 	CreateTime int64  `protobuf:"varint,4,opt,name=CreateTime,proto3" json:"CreateTime,omitempty"` //代表一个任务的提交时间。时间格式是 Unix 时间戳。
 	TaskID     string `protobuf:"bytes,5,opt,name=TaskID,proto3" json:"TaskID,omitempty"`          //代表一个任务 ID。

@@ -318,6 +318,30 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"SubmitBlockMediaTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitBlockMediaTask"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
+		"SubmitUnblockMediaTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitUnblockMediaTask"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
+		"QueryMediaBlockStatus": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryMediaBlockStatus"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 转码
@@ -610,6 +634,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSnapshotData"},
 				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DescribeVodSpaceWorkflowDetailData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceWorkflowDetailData"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 	}
