@@ -31,3 +31,12 @@ func (p *SMS) GetSubAccountDetail(req *GetSubAccountDetailRequest) (*GetSubAccou
 	}
 	return resp, statusCode, nil
 }
+
+func (p *SMS) InsertSmsSubAccount(req *InsertSmsSubAccountReq) (*InsertSmsSubAccountResponse, int, error) {
+	resp := new(InsertSmsSubAccountResponse)
+	statusCode, err := p.smsHandler("InsertSubAccount", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}

@@ -46,3 +46,12 @@ type SmsSubAccountDetail struct {
 	Desc        string `json:"desc"`
 	CreatedTime int64  `json:"createdTime"`
 }
+
+type InsertSmsSubAccountReq struct {
+	SubAccountName string `json:"subAccountName"`
+	Desc           string `json:"desc"`
+}
+type InsertSmsSubAccountResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
