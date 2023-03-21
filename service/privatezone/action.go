@@ -37,6 +37,31 @@ func (c *Client) ListRegions(ctx context.Context, data *ListRegionsRequest) (*Li
 	return &payload, nil
 }
 
+func (c *Client) ListAvailabilityZones(ctx context.Context, data *ListAvailabilityZonesRequest) (*ListAvailabilityZonesResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListAvailabilityZones", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListAvailabilityZonesResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
 // Group: PrivateZones
 // 私有域名管理
 
@@ -531,4 +556,107 @@ func (c *Client) UpdateRecordSet(ctx context.Context, data *UpdateRecordSetReque
 		return nil, err
 	}
 	return &payload, nil
+}
+
+// Group: Statistics
+// 统计量API
+
+func (c *Client) ListDomainStatistics(ctx context.Context, data *ListDomainStatisticsRequest) (*ListDomainStatisticsResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListDomainStatistics", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListDomainStatisticsResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) ListZoneStatistics(ctx context.Context, data *ListZoneStatisticsRequest) (*ListZoneStatisticsResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListZoneStatistics", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListZoneStatisticsResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) QueryDomainStatistics(ctx context.Context, data *QueryDomainStatisticsRequest) (QueryDomainStatisticsResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=QueryDomainStatistics", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload QueryDomainStatisticsResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return payload, nil
+}
+
+func (c *Client) QueryZoneStatistics(ctx context.Context, data *QueryZoneStatisticsRequest) (QueryZoneStatisticsResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=QueryZoneStatistics", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload QueryZoneStatisticsResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return payload, nil
 }

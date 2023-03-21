@@ -2,8 +2,17 @@
 
 package privatezone
 
+type ListAvailabilityZonesRequest struct {
+	Region *string `form:"Region" json:"Region,omitempty"`
+}
+
+type ListAvailabilityZonesResponse struct {
+	AZs []AZ `form:"AZs" json:"AZs,omitempty"`
+}
+
 type ListRegionsRequest struct {
 	Tag *string `form:"Tag" json:"Tag,omitempty"`
+	Env *string `form:"Env" json:"Env,omitempty"`
 }
 
 type ListRegionsResponse struct {
@@ -82,7 +91,7 @@ type QueryPrivateZoneResponse struct {
 }
 
 type UpdatePrivateZoneRequest struct {
-	LineMode      *int64  `form:"LineMode" json:"LineMode,omitempty"`
+	LoadBalance   *bool   `form:"LoadBalance" json:"LoadBalance,omitempty"`
 	RecursionMode *bool   `form:"RecursionMode" json:"RecursionMode,omitempty"`
 	Remark        *string `form:"Remark" json:"Remark,omitempty"`
 	ZID           *int64  `form:"ZID" json:"ZID,omitempty"`
@@ -212,6 +221,61 @@ type UpdateRecordSetResponse struct {
 	WeightEnabled *bool   `form:"WeightEnabled" json:"WeightEnabled,omitempty"`
 }
 
+type ListDomainStatisticsRequest struct {
+	End        *int64  `form:"End" json:"End,omitempty"`
+	Name       *string `form:"Name" json:"Name,omitempty"`
+	Page       *int64  `form:"Page" json:"Page,omitempty"`
+	SearchMode *string `form:"SearchMode" json:"SearchMode,omitempty"`
+	Size       *int64  `form:"Size" json:"Size,omitempty"`
+	Start      *int64  `form:"Start" json:"Start,omitempty"`
+	ZID        *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
+type ListDomainStatisticsResponse struct {
+	Data  []TopGroupStat `form:"Data" json:"Data,omitempty"`
+	Page  *int64         `form:"Page" json:"Page,omitempty"`
+	Size  *int64         `form:"Size" json:"Size,omitempty"`
+	Total *int64         `form:"Total" json:"Total,omitempty"`
+}
+
+type ListZoneStatisticsRequest struct {
+	End        *int64  `form:"End" json:"End,omitempty"`
+	Name       *string `form:"Name" json:"Name,omitempty"`
+	Page       *int64  `form:"Page" json:"Page,omitempty"`
+	SearchMode *string `form:"SearchMode" json:"SearchMode,omitempty"`
+	Size       *int64  `form:"Size" json:"Size,omitempty"`
+	Start      *int64  `form:"Start" json:"Start,omitempty"`
+}
+
+type ListZoneStatisticsResponse struct {
+	Data       []TopGroupStat `form:"Data" json:"Data,omitempty"`
+	PageNumber *int64         `form:"PageNumber" json:"PageNumber,omitempty"`
+	PageSize   *int64         `form:"PageSize" json:"PageSize,omitempty"`
+	Total      *int64         `form:"Total" json:"Total,omitempty"`
+}
+
+type QueryDomainStatisticsRequest struct {
+	End   *int64  `form:"End" json:"End,omitempty"`
+	Name  *string `form:"Name" json:"Name,omitempty"`
+	Start *int64  `form:"Start" json:"Start,omitempty"`
+	ZID   *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
+type QueryDomainStatisticsResponse []TopStat
+
+type QueryZoneStatisticsRequest struct {
+	End   *int64 `form:"End" json:"End,omitempty"`
+	Start *int64 `form:"Start" json:"Start,omitempty"`
+	ZID   *int64 `form:"ZID" json:"ZID,omitempty"`
+}
+
+type QueryZoneStatisticsResponse []TopStat
+
+type AZ struct {
+	AzID   *string `form:"AzID" json:"AzID,omitempty"`
+	AzName *string `form:"AzName" json:"AzName,omitempty"`
+}
+
 type Region struct {
 	Code *string `form:"Code" json:"Code,omitempty"`
 	Name *string `form:"Name" json:"Name,omitempty"`
@@ -281,4 +345,16 @@ type Record struct {
 	Value        *string `form:"Value" json:"Value,omitempty"`
 	Weight       *int64  `form:"Weight" json:"Weight,omitempty"`
 	ZID          *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
+type TopGroupStat struct {
+	Name      *string `form:"Name" json:"Name,omitempty"`
+	Timestamp *int64  `form:"Timestamp" json:"Timestamp,omitempty"`
+	Total     *int64  `form:"Total" json:"Total,omitempty"`
+	ZID       *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
+type TopStat struct {
+	Timestamp *int64 `form:"Timestamp" json:"Timestamp,omitempty"`
+	Total     *int64 `form:"Total" json:"Total,omitempty"`
 }
