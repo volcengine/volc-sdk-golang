@@ -73,9 +73,14 @@ type DataReportResponse struct {
 }
 
 type AsyncVideoRiskResponse struct {
-	RequestId string `json:"RequestId"`
-	Code      int    `json:"Code"`
-	Message   string `json:"Message"`
+	RequestId string      `json:"RequestId"`
+	Code      int         `json:"Code"`
+	Message   string      `json:"Message"`
+	Data      RequestData `json:"Data"`
+}
+
+type RequestData struct {
+	PassThrough interface{} `json:"PassThrough"`
 }
 
 type VideoResultRequest struct {
@@ -95,17 +100,19 @@ type VideoResp struct {
 	DataId       string        `json:"DataId"`
 	VideoResult  VideoResult   `json:"VideoResults"`
 	AudioResults AudioResultV2 `json:"AudioResults"`
+	PassThrough  interface{}   `json:"PassThrough"`
 }
 
 type AudioResultV2 struct {
-	Decision string           `json:"Decision"`
-	DataId   string           `json:"DataId"`
-	Details  []*AudioDetailV2 `json:"Details"`
+	Decision    string           `json:"Decision"`
+	DataId      string           `json:"DataId"`
+	Details     []*AudioDetailV2 `json:"Details"`
+	PassThrough interface{}      `json:"PassThrough"`
 }
 
 type AudioDetailV2 struct {
-	StartTime    float64          `json:"StartTime"`
-	EndTime      float64          `json:"EndTime"`
+	StartTime    int              `json:"StartTime"`
+	EndTime      int              `json:"EndTime"`
 	FrameUrl     string           `json:"FrameUrl"`
 	AudioText    string           `json:"AudioText"`
 	FrameResults []*FrameResultV2 `json:"FrameResults"`
