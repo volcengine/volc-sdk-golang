@@ -167,8 +167,8 @@ type ImageContentRiskTag struct {
 }
 
 type ImageContentFrame struct {
-	//Id float64 `json:"id"`
-	//Url   string  `json:"url"`
+	Id  float64 `json:"id"`
+	Url string  `json:"url"`
 	//Score float64 `json:"score"`
 }
 
