@@ -80,7 +80,7 @@ type AsyncVideoRiskResponse struct {
 }
 
 type RequestData struct {
-	PassThrough interface{} `json:"PassThrough"`
+	PassThrough string `json:"PassThrough"`
 }
 
 type VideoResultRequest struct {
@@ -100,14 +100,14 @@ type VideoResp struct {
 	DataId       string        `json:"DataId"`
 	VideoResult  VideoResult   `json:"VideoResults"`
 	AudioResults AudioResultV2 `json:"AudioResults"`
-	PassThrough  interface{}   `json:"PassThrough"`
+	PassThrough  string        `json:"PassThrough"`
 }
 
 type AudioResultV2 struct {
 	Decision    string           `json:"Decision"`
 	DataId      string           `json:"DataId"`
 	Details     []*AudioDetailV2 `json:"Details"`
-	PassThrough interface{}      `json:"PassThrough"`
+	PassThrough string           `json:"PassThrough"`
 }
 
 type AudioDetailV2 struct {
