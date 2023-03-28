@@ -111,3 +111,23 @@ func TestListSplitBillDetail(t *testing.T) {
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
+
+func TestUnsubscribeInstance(t *testing.T) {
+	billing.DefaultInstance.Client.SetAccessKey(testAk)
+	billing.DefaultInstance.Client.SetSecretKey(testSk)
+
+	req := &billing.UnsubscribeInstanceReq{
+		Product:                    "on_line",              // product code
+		InstanceID:                 "taozhuangceshi00003",  // instance id
+		UnsubscribeRelatedInstance: true,                   // Whether to unsubscribe the associated instance
+		ClientToken:                "CT-10238-410921-0003", // the idempotent key
+	}
+
+	resp, status, err := billing.DefaultInstance.UnsubscribeInstance(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, status, http.StatusOK)
+	assert.NotNil(t, resp)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}

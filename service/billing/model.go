@@ -207,3 +207,25 @@ type SplitBillDetailListResp struct {
 	ResponseMetadata *base.ResponseMetadata
 	Result           *SplitBillDetailList `json:",omitempty"`
 }
+
+type UnsubscribeInstanceReq struct {
+	Product                    string `json:"Product"`
+	InstanceID                 string `json:"InstanceID"`
+	UnsubscribeRelatedInstance bool   `json:"UnsubscribeRelatedInstance"`
+	ClientToken                string `json:"ClientToken"`
+}
+
+type UnsubscribeInstanceResp struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *UnsubscribeInstanceResult `json:",omitempty"`
+}
+
+type UnsubscribeInstanceResult struct {
+	OrderID              string                 `json:"OrderID"`
+	SuccessInstanceInfos []*SuccessInstanceInfo `json:"SuccessInstanceInfos"`
+}
+
+type SuccessInstanceInfo struct {
+	Product    string `json:"Product"`
+	InstanceID string `json:"InstanceID"`
+}
