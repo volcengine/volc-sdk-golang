@@ -58,6 +58,14 @@ var (
 				"Version": []string{ServiceVersion20220101},
 			},
 		},
+		"UnsubscribeInstance": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnsubscribeInstance"},
+				"Version": []string{ServiceVersion20220101},
+			},
+		},
 	}
 )
 

@@ -2,6 +2,8 @@ package billing
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/http"
 	"net/url"
 )
 
@@ -61,6 +63,27 @@ func (p *Billing) ListSplitBillDetail(query url.Values) (*SplitBillDetailListRes
 	}
 
 	output := new(SplitBillDetailListResp)
+	if err := json.Unmarshal(respBody, output); err != nil {
+		return nil, status, err
+	} else {
+		output.ResponseMetadata.Service = ServiceName
+		return output, status, nil
+	}
+}
+
+// UnsubscribeInstance 退订实例
+func (p *Billing) UnsubscribeInstance(req *UnsubscribeInstanceReq) (*UnsubscribeInstanceResp, int, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, http.StatusBadRequest, fmt.Errorf("UnsubscribeInstance: fail to marshal request, %v", err)
+	}
+
+	respBody, status, err := p.Client.Json("UnsubscribeInstance", nil, string(reqData))
+	if err != nil {
+		return nil, status, err
+	}
+
+	output := new(UnsubscribeInstanceResp)
 	if err := json.Unmarshal(respBody, output); err != nil {
 		return nil, status, err
 	} else {
