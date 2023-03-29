@@ -530,3 +530,91 @@ func NewInstanceWithRegion(region string) *ImageX {
 	}
 	return instance
 }
+
+func init() {
+	g := []string{"DescribeImageXDomainTrafficData",
+		"DescribeImageXDomainBandwidthData",
+		"DescribeImageXBucketUsage",
+		"DescribeImageXRequestCntUsage",
+		"DescribeImageXBaseOpUsage",
+		"DescribeImageXCompressUsage",
+		"DescribeImageXEdgeRequest",
+		"DescribeImageXHitRateTrafficData",
+		"DescribeImageXHitRateRequestData",
+		"DescribeImageXCDNTopRequestData",
+		"DescribeImageXSummary",
+		"DescribeImageXEdgeRequestBandwidth",
+		"DescribeImageXEdgeRequestTraffic",
+		"DescribeImageXEdgeRequestRegions",
+		"DescribeImageXServiceQuality",
+		"GetImageXQueryApps",
+		"GetImageXQueryRegions",
+		"GetImageXQueryDims",
+		"GetImageXQueryVals",
+	}
+	p := []string{"DescribeImageXMirrorRequestTraffic",
+		"DescribeImageXMirrorRequestBandwidth",
+		"DescribeImageXMirrorRequestHttpCodeByTime",
+		"DescribeImageXMirrorRequestHttpCodeOverview",
+		"DescribeImageXUploadSuccessRateByTime",
+		"DescribeImageXUploadErrorCodeAll",
+		"DescribeImageXUploadErrorCodeByTime",
+		"DescribeImageXUploadCountByTime",
+		"DescribeImageXUploadFileSize",
+		"DescribeImageXUploadSpeed",
+		"DescribeImageXUploadDuration",
+		"DescribeImageXUploadSegmentSpeedByTime",
+		"DescribeImageXCdnSuccessRateByTime",
+		"DescribeImageXCdnSuccessRateAll",
+		"DescribeImageXCdnErrorCodeByTime",
+		"DescribeImageXCdnErrorCodeAll",
+		"DescribeImageXCdnDurationDetailByTime",
+		"DescribeImageXCdnDurationAll",
+		"DescribeImageXCdnReuseRateByTime",
+		"DescribeImageXCdnReuseRateAll",
+		"DescribeImageXCdnProtocolRateByTime",
+		"DescribeImageXClientErrorCodeAll",
+		"DescribeImageXClientErrorCodeByTime",
+		"DescribeImageXClientDecodeSuccessRateByTime",
+		"DescribeImageXClientDecodeDurationByTime",
+		"DescribeImageXClientQueueDurationByTime",
+		"DescribeImageXClientLoadDurationAll",
+		"DescribeImageXClientLoadDuration",
+		"DescribeImageXClientFailureRate",
+		"DescribeImageXClientSdkVerByTime",
+		"DescribeImageXClientFileSize",
+		"DescribeImageXClientTopFileSize",
+		"DescribeImageXClientCountByTime",
+		"DescribeImageXClientScoreByTime",
+		"DescribeImageXClientDemotionRateByTime",
+		"DescribeImageXClientTopDemotionURL",
+		"DescribeImageXClientQualityRateByTime",
+		"DescribeImageXClientTopQualityURL",
+		"DescribeImageXSensibleCountByTime",
+		"DescribeImageXSensibleCacheHitRateByTime",
+		"DescribeImageXSensibleTopSizeURL",
+		"DescribeImageXSensibleTopRamURL",
+		"DescribeImageXSensibleTopResolutionURL",
+		"DescribeImageXSensibleTopUnknownURL",
+	}
+	for _, i := range g {
+		ApiInfoList[i] = &base.ApiInfo{
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{i},
+				"Version": []string{"2018-08-01"},
+			},
+		}
+	}
+	for _, i := range p {
+		ApiInfoList[i] = &base.ApiInfo{
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{i},
+				"Version": []string{"2018-08-01"},
+			},
+		}
+	}
+}
