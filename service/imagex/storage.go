@@ -43,7 +43,7 @@ func (r *uploadTaskSet) init() {
 
 	r.taskChan = make(chan *uploadTaskElement, len(r.size))
 
-	for idx, _ := range r.size {
+	for idx := range r.size {
 		r.taskChan <- &uploadTaskElement{
 			ctx:     r.ctx,
 			host:    r.host,
