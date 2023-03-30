@@ -64,6 +64,7 @@ func Test_UpdateMediaStorageClass(t *testing.T) {
 		Vids:         "your Vids",
 		StorageClass: "your StorageClass",
 		CallbackArgs: "your CallbackArgs",
+		FileIds:      "your FileIds",
 	}
 
 	resp, status, err := instance.UpdateMediaStorageClass(query)
