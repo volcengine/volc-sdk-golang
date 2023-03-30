@@ -155,7 +155,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateMediaStorageClass"},
-				"Version": []string{"2022-10-01"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 		"GetMediaInfos": {
