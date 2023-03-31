@@ -478,6 +478,20 @@ func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
 	return resp, nil
 }
 
+func (c *ImageX) GetUrlFetchTask(req *GetUrlFetchTaskReq) (*GetUrlFetchTaskResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
+	}
+
+	resp := new(GetUrlFetchTaskResp)
+	err = c.ImageXGet("GetUrlFetchTask", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (c *ImageX) GetImageUploadFile(param *GetImageUploadFileParam) (*GetImageUploadFileResult, error) {
 	query := make(url.Values)
 	query.Add("ServiceId", param.ServiceId)

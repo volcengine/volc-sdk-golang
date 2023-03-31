@@ -258,17 +258,48 @@ type GetImageContentBlockListRespData struct {
 
 // FetchImageUrl
 type FetchUrlReq struct {
-	Url           string              `json:"Url"`
-	ServiceId     string              `json:"ServiceId"`
-	StoreKey      string              `json:"StoreKey"`
-	RequestHeader map[string][]string `json:"RequestHeader"`
-	TimeOut       int                 `json:"TimeOut"`
+	Url              string              `json:"Url"`
+	ServiceId        string              `json:"ServiceId"`
+	StoreKey         string              `json:"StoreKey"`
+	RequestHeader    map[string][]string `json:"RequestHeader"`
+	TimeOut          int                 `json:"TimeOut"`
+	Async            bool                `json:"Async"`
+	Callback         string              `json:"Callback"`
+	Host             string              `json:"Host"`
+	MD5              string              `json:"MD5"`
+	CallbackBodyType string              `json:"CallbackBodyType"`
+	CallbackBody     string              `json:"CallbackBody"`
+	CallbackHost     string              `json:"CallbackHost"`
+	IgnoreSameKey    bool                `json:"IgnoreSameKey"`
 }
 
 type FetchUrlResp struct {
-	Url      string `json:"Url"`
-	StoreUri string `json:"StoreUri"`
-	FSize    int    `json:"FSize"`
+	Url         string `json:"Url"`
+	StoreUri    string `json:"StoreUri"`
+	FSize       int    `json:"FSize"`
+	ImageWidth  int    `json:"ImageWidth,omitempty"`
+	ImageHeight int    `json:"ImageHeight,omitempty"`
+	Duration    int    `json:"Duration,omitempty"`
+	FrameCnt    int    `json:"FrameCnt,omitempty"`
+	ImageFormat string `json:"ImageFormat,omitempty"`
+	TaskId      string `json:"TaskId"`
+}
+
+// GetUrlFetchTask
+type GetUrlFetchTaskReq struct {
+	Id string `query:"Id"`
+}
+
+type GetUrlFetchTaskResp struct {
+	Id               string `json:"Id"`
+	Status           string `json:"Status"`
+	Url              string `json:"Url"`
+	StoreUri         string `json:"StoreUri"`
+	Callback         string `json:"Callback"`
+	CallbackBody     string `json:"CallbackBody"`
+	CallbackBodyType string `json:"CallbackBodyType"`
+	Err              string `json:"Err"`
+	Code             string `json:"Code"`
 }
 
 // GetImageStyleResult
