@@ -9,6 +9,153 @@ import (
 	"net/http"
 )
 
+// Group: CustomLines
+// 自定义线路
+
+func (c *Client) BatchDeleteCustomerLine(ctx context.Context, data *BatchDeleteCustomerLineRequest) (*BatchDeleteCustomerLineResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=BatchDeleteCustomerLine", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload BatchDeleteCustomerLineResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) CreateCustomerLine(ctx context.Context, data *CreateCustomerLineRequest) (*CreateCustomerLineResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateCustomerLine", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload CreateCustomerLineResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) ListCustomerLines(ctx context.Context, data *ListCustomerLinesRequest) (*ListCustomerLinesResponse, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListCustomerLines", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	if v := data.IPSegment; v != nil {
+		q.Add("IPSegment", *v)
+	}
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
+	}
+	if v := data.PageNumber; v != nil {
+		q.Add("PageNumber", *v)
+	}
+	if v := data.SearchMode; v != nil {
+		q.Add("SearchMode", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
+	if v := data.NameCN; v != nil {
+		q.Add("NameCN", *v)
+	}
+	if v := data.Remark; v != nil {
+		q.Add("Remark", *v)
+	}
+	req.URL.RawQuery = q.Encode()
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListCustomerLinesResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) ListRecordDigestByLine(ctx context.Context, data *ListRecordDigestByLineRequest) (*ListRecordDigestByLineResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListRecordDigestByLine", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListRecordDigestByLineResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) UpdateCustomerLine(ctx context.Context, data *UpdateCustomerLineRequest) (*UpdateCustomerLineResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateCustomerLine", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload UpdateCustomerLineResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
 // Group: Others
 // 其他
 
@@ -28,11 +175,13 @@ func (c *Client) ListLines(ctx context.Context, data *ListLinesRequest) (*ListLi
 	if v := data.Hierarchy; v != nil {
 		q.Add("Hierarchy", *v)
 	}
-	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
 	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
+	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -59,10 +208,6 @@ func (c *Client) ListRecordAttributes(ctx context.Context, data *ListRecordAttri
 		q.Add("ZID", *v)
 	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -92,10 +237,6 @@ func (c *Client) CreateRecord(ctx context.Context, data *CreateRecordRequest) (*
 		return nil, err
 	}
 
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
 	resp, err := c.do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -119,10 +260,6 @@ func (c *Client) DeleteRecord(ctx context.Context, data *DeleteRecordRequest) er
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=DeleteRecord", bytes.NewReader(body))
 	if err != nil {
 		return err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)
@@ -161,10 +298,6 @@ func (c *Client) ListRecordSets(ctx context.Context, data *ListRecordSetsRequest
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
 	resp, err := c.do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -186,41 +319,37 @@ func (c *Client) ListRecords(ctx context.Context, data *ListRecordsRequest) (*Li
 	}
 
 	q := req.URL.Query()
-	if v := data.PageNumber; v != nil {
-		q.Add("PageNumber", *v)
-	}
-	if v := data.Line; v != nil {
-		q.Add("Line", *v)
-	}
-	if v := data.PageSize; v != nil {
-		q.Add("PageSize", *v)
-	}
-	if v := data.Type; v != nil {
-		q.Add("Type", *v)
-	}
-	if v := data.RecordSetID; v != nil {
-		q.Add("RecordSetID", *v)
-	}
-	if v := data.ZID; v != nil {
-		q.Add("ZID", *v)
-	}
-	if v := data.Value; v != nil {
-		q.Add("Value", *v)
-	}
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
 	}
 	if v := data.SearchOrder; v != nil {
 		q.Add("SearchOrder", *v)
 	}
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
+	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
+	if v := data.Value; v != nil {
+		q.Add("Value", *v)
+	}
+	if v := data.PageNumber; v != nil {
+		q.Add("PageNumber", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
+	if v := data.RecordSetID; v != nil {
+		q.Add("RecordSetID", *v)
+	}
 	if v := data.Host; v != nil {
 		q.Add("Host", *v)
 	}
-	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
 	}
+	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -236,6 +365,77 @@ func (c *Client) ListRecords(ctx context.Context, data *ListRecordsRequest) (*Li
 	return &payload, nil
 }
 
+func (c *Client) ListRecordsAdvance(ctx context.Context, data *ListRecordsAdvanceRequest) (*ListRecordsAdvanceResponse, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListRecordsAdvance", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	if v := data.SubPageSize; v != nil {
+		q.Add("SubPageSize", *v)
+	}
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
+	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
+	if v := data.Value; v != nil {
+		q.Add("Value", *v)
+	}
+	if v := data.SearchMode; v != nil {
+		q.Add("SearchMode", *v)
+	}
+	if v := data.SubPageNumber; v != nil {
+		q.Add("SubPageNumber", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
+	if v := data.LastOperator; v != nil {
+		q.Add("LastOperator", *v)
+	}
+	if v := data.Name; v != nil {
+		q.Add("Name", *v)
+	}
+	if v := data.SearchOrder; v != nil {
+		q.Add("SearchOrder", *v)
+	}
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
+	}
+	if v := data.Host; v != nil {
+		q.Add("Host", *v)
+	}
+	if v := data.TTL; v != nil {
+		q.Add("TTL", *v)
+	}
+	if v := data.PageNumber; v != nil {
+		q.Add("PageNumber", *v)
+	}
+	if v := data.OrderKey; v != nil {
+		q.Add("OrderKey", *v)
+	}
+	if v := data.Enable; v != nil {
+		q.Add("Enable", *v)
+	}
+	req.URL.RawQuery = q.Encode()
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListRecordsAdvanceResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
 func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*QueryRecordResponse, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=QueryRecord", nil)
 	if err != nil {
@@ -243,26 +443,25 @@ func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*Qu
 	}
 
 	q := req.URL.Query()
+	if v := data.RecordID; v != nil {
+		q.Add("RecordID", *v)
+	}
+	if v := data.FQDN; v != nil {
+		q.Add("FQDN", *v)
+	}
+	if v := data.PQDN; v != nil {
+		q.Add("PQDN", *v)
+	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
 	if v := data.Value; v != nil {
 		q.Add("Value", *v)
 	}
 	if v := data.Line; v != nil {
 		q.Add("Line", *v)
 	}
-	if v := data.RecordID; v != nil {
-		q.Add("RecordID", *v)
-	}
-	if v := data.Host; v != nil {
-		q.Add("Host", *v)
-	}
-	if v := data.Type; v != nil {
-		q.Add("Type", *v)
-	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -278,19 +477,15 @@ func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*Qu
 	return &payload, nil
 }
 
-func (c *Client) SyncFullRecords(ctx context.Context, data *SyncFullRecordsRequest) (*SyncFullRecordsResponse, error) {
+func (c *Client) SyncFullRecordsV2(ctx context.Context, data *SyncFullRecordsV2Request) (*SyncFullRecordsV2Response, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=SyncFullRecords", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=SyncFullRecordsV2", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)
@@ -299,7 +494,7 @@ func (c *Client) SyncFullRecords(ctx context.Context, data *SyncFullRecordsReque
 	}
 	defer resp.Body.Close()
 
-	var payload SyncFullRecordsResponse
+	var payload SyncFullRecordsV2Response
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -316,10 +511,6 @@ func (c *Client) UpdateRecord(ctx context.Context, data *UpdateRecordRequest) (*
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateRecord", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)
@@ -347,10 +538,6 @@ func (c *Client) UpdateRecordSet(ctx context.Context, data *UpdateRecordSetReque
 		return nil, err
 	}
 
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
 	resp, err := c.do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -374,10 +561,6 @@ func (c *Client) UpdateRecordStatus(ctx context.Context, data *UpdateRecordStatu
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateRecordStatus", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)
@@ -404,15 +587,6 @@ func (c *Client) ListDomainStatistics(ctx context.Context, data *ListDomainStati
 	}
 
 	q := req.URL.Query()
-	if v := data.PageSize; v != nil {
-		q.Add("PageSize", *v)
-	}
-	if v := data.ZID; v != nil {
-		q.Add("ZID", *v)
-	}
-	if v := data.Name; v != nil {
-		q.Add("Name", *v)
-	}
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
 	}
@@ -428,11 +602,16 @@ func (c *Client) ListDomainStatistics(ctx context.Context, data *ListDomainStati
 	if v := data.PageNumber; v != nil {
 		q.Add("PageNumber", *v)
 	}
-	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
 	}
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
+	}
+	if v := data.Name; v != nil {
+		q.Add("Name", *v)
+	}
+	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -478,10 +657,6 @@ func (c *Client) ListZoneStatistics(ctx context.Context, data *ListZoneStatistic
 	}
 	req.URL.RawQuery = q.Encode()
 
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
 	resp, err := c.do(ctx, req)
 	if err != nil {
 		return nil, err
@@ -503,6 +678,9 @@ func (c *Client) QueryDomainStatistics(ctx context.Context, data *QueryDomainSta
 	}
 
 	q := req.URL.Query()
+	if v := data.Start; v != nil {
+		q.Add("Start", *v)
+	}
 	if v := data.End; v != nil {
 		q.Add("End", *v)
 	}
@@ -512,14 +690,7 @@ func (c *Client) QueryDomainStatistics(ctx context.Context, data *QueryDomainSta
 	if v := data.Name; v != nil {
 		q.Add("Name", *v)
 	}
-	if v := data.Start; v != nil {
-		q.Add("Start", *v)
-	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -542,20 +713,16 @@ func (c *Client) QueryZoneStatistics(ctx context.Context, data *QueryZoneStatist
 	}
 
 	q := req.URL.Query()
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
+	}
 	if v := data.Start; v != nil {
 		q.Add("Start", *v)
 	}
 	if v := data.End; v != nil {
 		q.Add("End", *v)
 	}
-	if v := data.ZID; v != nil {
-		q.Add("ZID", *v)
-	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -571,137 +738,33 @@ func (c *Client) QueryZoneStatistics(ctx context.Context, data *QueryZoneStatist
 	return payload, nil
 }
 
-// Group: Trades
-// 交易订单管理
-
-func (c *Client) CalculatePrice(ctx context.Context, data *CalculatePriceRequest) (*CalculatePriceResponse, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=CalculatePrice", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	q := req.URL.Query()
-	if v := data.InstanceID; v != nil {
-		q.Add("InstanceID", *v)
-	}
-	if v := data.Times; v != nil {
-		q.Add("Times", *v)
-	}
-	if v := data.CouponID; v != nil {
-		q.Add("CouponID", *v)
-	}
-	if v := data.OrderType; v != nil {
-		q.Add("OrderType", *v)
-	}
-	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
-	resp, err := c.do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var payload CalculatePriceResponse
-	d := json.NewDecoder(resp.Body)
-	if err := d.Decode(&payload); err != nil {
-		return nil, err
-	}
-	return &payload, nil
-}
-
-func (c *Client) CreateNewPreorder(ctx context.Context, data *CreateNewPreorderRequest) (*CreateNewPreorderResponse, error) {
-	body, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateNewPreorder", bytes.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
-	resp, err := c.do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var payload CreateNewPreorderResponse
-	d := json.NewDecoder(resp.Body)
-	if err := d.Decode(&payload); err != nil {
-		return nil, err
-	}
-	return &payload, nil
-}
-
-func (c *Client) CreateRenewPreorder(ctx context.Context, data *CreateRenewPreorderRequest) (*CreateRenewPreorderResponse, error) {
-	body, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateRenewPreorder", bytes.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
-	resp, err := c.do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var payload CreateRenewPreorderResponse
-	d := json.NewDecoder(resp.Body)
-	if err := d.Decode(&payload); err != nil {
-		return nil, err
-	}
-	return &payload, nil
-}
-
-func (c *Client) CreateTerminatePreorder(ctx context.Context, data *CreateTerminatePreorderRequest) (*CreateTerminatePreorderResponse, error) {
-	body, err := json.Marshal(data)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateTerminatePreorder", bytes.NewReader(body))
-	if err != nil {
-		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
-	resp, err := c.do(ctx, req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var payload CreateTerminatePreorderResponse
-	d := json.NewDecoder(resp.Body)
-	if err := d.Decode(&payload); err != nil {
-		return nil, err
-	}
-	return &payload, nil
-}
-
 // Group: Zones
 // 域名管理
+
+func (c *Client) CheckRetrieveZone(ctx context.Context, data *CheckRetrieveZoneRequest) (*CheckRetrieveZoneResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CheckRetrieveZone", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload CheckRetrieveZoneResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
 
 func (c *Client) CreateZone(ctx context.Context, data *CreateZoneRequest) (*CreateZoneResponse, error) {
 	body, err := json.Marshal(data)
@@ -712,10 +775,6 @@ func (c *Client) CreateZone(ctx context.Context, data *CreateZoneRequest) (*Crea
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateZone", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)
@@ -743,10 +802,6 @@ func (c *Client) DeleteZone(ctx context.Context, data *DeleteZoneRequest) error 
 		return err
 	}
 
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
-
 	resp, err := c.do(ctx, req)
 	if err != nil {
 		return err
@@ -763,8 +818,17 @@ func (c *Client) ListZones(ctx context.Context, data *ListZonesRequest) (*ListZo
 	}
 
 	q := req.URL.Query()
+	if v := data.SearchMode; v != nil {
+		q.Add("SearchMode", *v)
+	}
+	if v := data.Remark; v != nil {
+		q.Add("Remark", *v)
+	}
 	if v := data.PageSize; v != nil {
 		q.Add("PageSize", *v)
+	}
+	if v := data.AboutToExpire; v != nil {
+		q.Add("AboutToExpire", *v)
 	}
 	if v := data.PageNumber; v != nil {
 		q.Add("PageNumber", *v)
@@ -772,14 +836,19 @@ func (c *Client) ListZones(ctx context.Context, data *ListZonesRequest) (*ListZo
 	if v := data.Key; v != nil {
 		q.Add("Key", *v)
 	}
-	if v := data.SearchMode; v != nil {
-		q.Add("SearchMode", *v)
+	if v := data.OrderKey; v != nil {
+		q.Add("OrderKey", *v)
+	}
+	if v := data.TradeCode; v != nil {
+		q.Add("TradeCode", *v)
+	}
+	if v := data.Stage; v != nil {
+		q.Add("Stage", *v)
+	}
+	if v := data.SearchOrder; v != nil {
+		q.Add("SearchOrder", *v)
 	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -795,6 +864,32 @@ func (c *Client) ListZones(ctx context.Context, data *ListZonesRequest) (*ListZo
 	return &payload, nil
 }
 
+func (c *Client) ListZonesNameServer(ctx context.Context, data *ListZonesNameServerRequest) (*ListZonesNameServerResponse, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListZonesNameServer", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	if v := data.ZIDs; v != nil {
+		q.Add("ZIDs", *v)
+	}
+	req.URL.RawQuery = q.Encode()
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload ListZonesNameServerResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
 func (c *Client) QueryZone(ctx context.Context, data *QueryZoneRequest) (*QueryZoneResponse, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=QueryZone", nil)
 	if err != nil {
@@ -802,14 +897,13 @@ func (c *Client) QueryZone(ctx context.Context, data *QueryZoneRequest) (*QueryZ
 	}
 
 	q := req.URL.Query()
-	if v := data.ZIDrequired; v != nil {
-		q.Add("ZID,required", *v)
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
+	}
+	if v := data.UseAllocateNameServer; v != nil {
+		q.Add("UseAllocateNameServer", *v)
 	}
 	req.URL.RawQuery = q.Encode()
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
-	}
 
 	resp, err := c.do(ctx, req)
 	if err != nil {
@@ -818,6 +912,31 @@ func (c *Client) QueryZone(ctx context.Context, data *QueryZoneRequest) (*QueryZ
 	defer resp.Body.Close()
 
 	var payload QueryZoneResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
+func (c *Client) RetrieveZone(ctx context.Context, data *RetrieveZoneRequest) (*RetrieveZoneResponse, error) {
+	body, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=RetrieveZone", bytes.NewReader(body))
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload RetrieveZoneResponse
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -834,10 +953,6 @@ func (c *Client) UpdateZone(ctx context.Context, data *UpdateZoneRequest) (*Upda
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateZone", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
-	}
-
-	if v, ok := ctx.Value("K_LOGID").(string); ok {
-		req.Header.Set("X-TT-LOGID", v)
 	}
 
 	resp, err := c.do(ctx, req)

@@ -2,10 +2,68 @@
 
 package dns
 
+type BatchDeleteCustomerLineRequest struct {
+	Lines []string `form:"Lines" json:"Lines,omitempty"`
+}
+
+type BatchDeleteCustomerLineResponse struct {
+	TotalCount *int64 `form:"TotalCount" json:"TotalCount,omitempty"`
+}
+
+type CreateCustomerLineRequest struct {
+	IpSegments []string `form:"IpSegments" json:"IpSegments,omitempty"`
+	NameCN     *string  `form:"NameCN" json:"NameCN,omitempty"`
+	Remark     *string  `form:"Remark" json:"Remark,omitempty"`
+}
+
+type CreateCustomerLineResponse struct {
+	Line *string `form:"Line" json:"Line,omitempty"`
+}
+
+type ListCustomerLinesRequest struct {
+	IPSegment  *string `form:"-" json:"-"`
+	Line       *string `form:"-" json:"-"`
+	NameCN     *string `form:"-" json:"-"`
+	PageNumber *string `form:"-" json:"-"`
+	PageSize   *string `form:"-" json:"-"`
+	Remark     *string `form:"-" json:"-"`
+	SearchMode *string `form:"-" json:"-"`
+}
+
+type ListCustomerLinesResponse struct {
+	CustomerLines  []CustomerLine `form:"CustomerLines" json:"CustomerLines,omitempty"`
+	IPSegmentCount *int64         `form:"IPSegmentCount" json:"IPSegmentCount,omitempty"`
+	PageNumber     *int64         `form:"PageNumber" json:"PageNumber,omitempty"`
+	PageSize       *int64         `form:"PageSize" json:"PageSize,omitempty"`
+	TotalCount     *int64         `form:"TotalCount" json:"TotalCount,omitempty"`
+}
+
+type ListRecordDigestByLineRequest struct {
+	Line *string `form:"Line" json:"Line,omitempty"`
+}
+
+type ListRecordDigestByLineResponse struct {
+	Line          *string        `form:"Line" json:"Line,omitempty"`
+	RecordDigests []RecordDigest `form:"RecordDigests" json:"RecordDigests,omitempty"`
+}
+
+type UpdateCustomerLineRequest struct {
+	IpSegments []string `form:"IpSegments" json:"IpSegments,omitempty"`
+	Line       *string  `form:"Line" json:"Line,omitempty"`
+	NameCN     *string  `form:"NameCN" json:"NameCN,omitempty"`
+	Remark     *string  `form:"Remark" json:"Remark,omitempty"`
+}
+
+type UpdateCustomerLineResponse struct {
+	Line *string `form:"Line" json:"Line,omitempty"`
+}
+
 type ListLinesRequest struct {
 	Hierarchy  *string `form:"-" json:"-"`
 	PageNumber *string `form:"-" json:"-"`
 	PageSize   *string `form:"-" json:"-"`
+	Type       *string `form:"-" json:"-"`
+	ZID        *string `form:"-" json:"-"`
 }
 
 type ListLinesResponse struct {
@@ -20,13 +78,20 @@ type ListRecordAttributesRequest struct {
 }
 
 type ListRecordAttributesResponse struct {
-	TTLs  []int64  `form:"TTLs" json:"TTLs,omitempty"`
-	Types []string `form:"Types" json:"Types,omitempty"`
+	BackupSchedules       []int64  `form:"BackupSchedules" json:"BackupSchedules,omitempty"`
+	LineLevelLimit        []int64  `form:"LineLevelLimit" json:"LineLevelLimit,omitempty"`
+	LoadBalancerLimit     *int64   `form:"LoadBalancerLimit" json:"LoadBalancerLimit,omitempty"`
+	RecordStatisticsLimit *bool    `form:"RecordStatisticsLimit" json:"RecordStatisticsLimit,omitempty"`
+	RecordTierLimit       *int64   `form:"RecordTierLimit" json:"RecordTierLimit,omitempty"`
+	TTLs                  []int64  `form:"TTLs" json:"TTLs,omitempty"`
+	Types                 []string `form:"Types" json:"Types,omitempty"`
+	WeightLimit           *int64   `form:"WeightLimit" json:"WeightLimit,omitempty"`
 }
 
 type CreateRecordRequest struct {
 	Host   *string `form:"Host" json:"Host,omitempty"`
 	Line   *string `form:"Line" json:"Line,omitempty"`
+	Remark *string `form:"Remark" json:"Remark,omitempty"`
 	TTL    *int64  `form:"TTL" json:"TTL,omitempty"`
 	Type   *string `form:"Type" json:"Type,omitempty"`
 	Value  *string `form:"Value" json:"Value,omitempty"`
@@ -41,6 +106,7 @@ type CreateRecordResponse struct {
 	Host        *string  `form:"Host" json:"Host,omitempty"`
 	Line        *string  `form:"Line" json:"Line,omitempty"`
 	Operators   []string `form:"Operators" json:"Operators,omitempty"`
+	PQDN        *string  `form:"PQDN" json:"PQDN,omitempty"`
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
@@ -90,9 +156,37 @@ type ListRecordsResponse struct {
 	TotalCount *int64              `form:"TotalCount" json:"TotalCount,omitempty"`
 }
 
+type ListRecordsAdvanceRequest struct {
+	Enable        *string `form:"-" json:"-"`
+	Host          *string `form:"-" json:"-"`
+	LastOperator  *string `form:"-" json:"-"`
+	Line          *string `form:"-" json:"-"`
+	Name          *string `form:"-" json:"-"`
+	OrderKey      *string `form:"-" json:"-"`
+	PageNumber    *string `form:"-" json:"-"`
+	PageSize      *string `form:"-" json:"-"`
+	SearchMode    *string `form:"-" json:"-"`
+	SearchOrder   *string `form:"-" json:"-"`
+	SubPageNumber *string `form:"-" json:"-"`
+	SubPageSize   *string `form:"-" json:"-"`
+	TTL           *string `form:"-" json:"-"`
+	Type          *string `form:"-" json:"-"`
+	Value         *string `form:"-" json:"-"`
+	ZID           *string `form:"-" json:"-"`
+}
+
+type ListRecordsAdvanceResponse struct {
+	PageNumber       *int64         `form:"PageNumber" json:"PageNumber,omitempty"`
+	PageSize         *int64         `form:"PageSize" json:"PageSize,omitempty"`
+	SubDomains       []TopSubDomain `form:"SubDomains" json:"SubDomains,omitempty"`
+	TotalCount       *int64         `form:"TotalCount" json:"TotalCount,omitempty"`
+	TotalRecordCount *int64         `form:"TotalRecordCount" json:"TotalRecordCount,omitempty"`
+}
+
 type QueryRecordRequest struct {
-	Host     *string `form:"-" json:"-"`
+	FQDN     *string `form:"-" json:"-"`
 	Line     *string `form:"-" json:"-"`
+	PQDN     *string `form:"-" json:"-"`
 	RecordID *string `form:"-" json:"-"`
 	Type     *string `form:"-" json:"-"`
 	Value    *string `form:"-" json:"-"`
@@ -105,6 +199,7 @@ type QueryRecordResponse struct {
 	Host        *string  `form:"Host" json:"Host,omitempty"`
 	Line        *string  `form:"Line" json:"Line,omitempty"`
 	Operators   []string `form:"Operators" json:"Operators,omitempty"`
+	PQDN        *string  `form:"PQDN" json:"PQDN,omitempty"`
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
@@ -114,15 +209,17 @@ type QueryRecordResponse struct {
 	Weight      *int64   `form:"Weight" json:"Weight,omitempty"`
 }
 
-type SyncFullRecordsRequest struct {
-	Await              *bool                                                                `form:"Await" json:"Await,omitempty"`
-	DomainWeightEnable *bool                                                                `form:"DomainWeightEnable" json:"DomainWeightEnable,omitempty"`
-	IncludeTypes       *string                                                              `form:"IncludeTypes" json:"IncludeTypes,omitempty"`
-	SyncConf           *string                                                              `form:"SyncConf" json:"SyncConf,omitempty"`
-	Zones              map[string]map[string]map[string]map[string]map[string]AddressConfig `form:"Zones" json:"Zones,omitempty"`
+type SyncFullRecordsV2Request struct {
+	Await                 *bool                                                                `form:"Await" json:"Await,omitempty"`
+	DomainWeightEnable    *bool                                                                `form:"DomainWeightEnable" json:"DomainWeightEnable,omitempty"`
+	IncludeTypes          *string                                                              `form:"IncludeTypes" json:"IncludeTypes,omitempty"`
+	RecordSetWeightEnable *bool                                                                `form:"RecordSetWeightEnable" json:"RecordSetWeightEnable,omitempty"`
+	SyncAll               *bool                                                                `form:"SyncAll" json:"SyncAll,omitempty"`
+	SyncConf              *string                                                              `form:"SyncConf" json:"SyncConf,omitempty"`
+	Zones                 map[string]map[string]map[string]map[string]map[string]AddressConfig `form:"Zones" json:"Zones,omitempty"`
 }
 
-type SyncFullRecordsResponse struct {
+type SyncFullRecordsV2Response struct {
 	TaskID      *string `form:"TaskID" json:"TaskID,omitempty"`
 	TotalRecord *int64  `form:"TotalRecord" json:"TotalRecord,omitempty"`
 }
@@ -144,6 +241,7 @@ type UpdateRecordResponse struct {
 	Host        *string  `form:"Host" json:"Host,omitempty"`
 	Line        *string  `form:"Line" json:"Line,omitempty"`
 	Operators   []string `form:"Operators" json:"Operators,omitempty"`
+	PQDN        *string  `form:"PQDN" json:"PQDN,omitempty"`
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
@@ -163,6 +261,7 @@ type UpdateRecordSetResponse struct {
 	Host          *string `form:"Host" json:"Host,omitempty"`
 	ID            *string `form:"ID" json:"ID,omitempty"`
 	Line          *string `form:"Line" json:"Line,omitempty"`
+	PQDN          *string `form:"PQDN" json:"PQDN,omitempty"`
 	Type          *string `form:"Type" json:"Type,omitempty"`
 	WeightEnabled *bool   `form:"WeightEnabled" json:"WeightEnabled,omitempty"`
 }
@@ -179,6 +278,7 @@ type UpdateRecordStatusResponse struct {
 	Host        *string  `form:"Host" json:"Host,omitempty"`
 	Line        *string  `form:"Line" json:"Line,omitempty"`
 	Operators   []string `form:"Operators" json:"Operators,omitempty"`
+	PQDN        *string  `form:"PQDN" json:"PQDN,omitempty"`
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
@@ -200,10 +300,10 @@ type ListDomainStatisticsRequest struct {
 }
 
 type ListDomainStatisticsResponse struct {
-	Data  []GroupStat `form:"data" json:"data,omitempty"`
-	Page  *int64      `form:"page" json:"page,omitempty"`
-	Size  *int64      `form:"size" json:"size,omitempty"`
-	Total *int64      `form:"total" json:"total,omitempty"`
+	Data  []TopGroupStat `form:"Data" json:"Data,omitempty"`
+	Page  *int64         `form:"Page" json:"Page,omitempty"`
+	Size  *int64         `form:"Size" json:"Size,omitempty"`
+	Total *int64         `form:"Total" json:"Total,omitempty"`
 }
 
 type ListZoneStatisticsRequest struct {
@@ -217,10 +317,10 @@ type ListZoneStatisticsRequest struct {
 }
 
 type ListZoneStatisticsResponse struct {
-	Data  []GroupStat `form:"data" json:"data,omitempty"`
-	Page  *int64      `form:"page" json:"page,omitempty"`
-	Size  *int64      `form:"size" json:"size,omitempty"`
-	Total *int64      `form:"total" json:"total,omitempty"`
+	Data       []TopGroupStat `form:"Data" json:"Data,omitempty"`
+	PageNumber *int64         `form:"PageNumber" json:"PageNumber,omitempty"`
+	PageSize   *int64         `form:"PageSize" json:"PageSize,omitempty"`
+	Total      *int64         `form:"Total" json:"Total,omitempty"`
 }
 
 type QueryDomainStatisticsRequest struct {
@@ -230,7 +330,7 @@ type QueryDomainStatisticsRequest struct {
 	ZID   *string `form:"-" json:"-"`
 }
 
-type QueryDomainStatisticsResponse []Stat
+type QueryDomainStatisticsResponse []TopStat
 
 type QueryZoneStatisticsRequest struct {
 	End   *string `form:"-" json:"-"`
@@ -240,41 +340,12 @@ type QueryZoneStatisticsRequest struct {
 
 type QueryZoneStatisticsResponse []Stat
 
-type CalculatePriceRequest struct {
-	CouponID   *string `form:"-" json:"-"`
-	InstanceID *string `form:"-" json:"-"`
-	OrderType  *string `form:"-" json:"-"`
-	Times      *string `form:"-" json:"-"`
+type CheckRetrieveZoneRequest struct {
+	ZoneName *string `form:"ZoneName" json:"ZoneName,omitempty"`
 }
 
-type CalculatePriceResponse struct {
-	PayableAmount *int64 `form:"PayableAmount" json:"PayableAmount,omitempty"`
-}
-
-type CreateNewPreorderRequest struct {
-	Times *int64 `form:"Times" json:"Times,omitempty"`
-	ZID   *int64 `form:"ZID" json:"ZID,omitempty"`
-}
-
-type CreateNewPreorderResponse struct {
-	PreOrderNumber *string `form:"PreOrderNumber" json:"PreOrderNumber,omitempty"`
-}
-
-type CreateRenewPreorderRequest struct {
-	InstanceID *string `form:"InstanceID" json:"InstanceID,omitempty"`
-	Times      *int64  `form:"Times" json:"Times,omitempty"`
-}
-
-type CreateRenewPreorderResponse struct {
-	PreOrderNumber *string `form:"PreOrderNumber" json:"PreOrderNumber,omitempty"`
-}
-
-type CreateTerminatePreorderRequest struct {
-	InstanceID *string `form:"InstanceID" json:"InstanceID,omitempty"`
-}
-
-type CreateTerminatePreorderResponse struct {
-	PreOrderNumber *string `form:"PreOrderNumber" json:"PreOrderNumber,omitempty"`
+type CheckRetrieveZoneResponse struct {
+	Success *string `form:"Success" json:"Success,omitempty"`
 }
 
 type CreateZoneRequest struct {
@@ -283,6 +354,7 @@ type CreateZoneRequest struct {
 }
 
 type CreateZoneResponse struct {
+	CacheStage        *int64  `form:"CacheStage" json:"CacheStage,omitempty"`
 	ConfigurationCode *string `form:"ConfigurationCode" json:"ConfigurationCode,omitempty"`
 	CreatedAt         *string `form:"CreatedAt" json:"CreatedAt,omitempty"`
 	ExpiredTime       *int64  `form:"ExpiredTime" json:"ExpiredTime,omitempty"`
@@ -290,6 +362,7 @@ type CreateZoneResponse struct {
 	LastOperator      *string `form:"LastOperator" json:"LastOperator,omitempty"`
 	RecordCount       *int64  `form:"RecordCount" json:"RecordCount,omitempty"`
 	Remark            *string `form:"Remark" json:"Remark,omitempty"`
+	TradeCode         *string `form:"TradeCode" json:"TradeCode,omitempty"`
 	UpdatedAt         *string `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	ZID               *int64  `form:"ZID" json:"ZID,omitempty"`
 	ZoneName          *string `form:"ZoneName" json:"ZoneName,omitempty"`
@@ -300,10 +373,16 @@ type DeleteZoneRequest struct {
 }
 
 type ListZonesRequest struct {
-	Key        *string `form:"-" json:"-"`
-	PageNumber *string `form:"-" json:"-"`
-	PageSize   *string `form:"-" json:"-"`
-	SearchMode *string `form:"-" json:"-"`
+	AboutToExpire *string `form:"-" json:"-"`
+	Key           *string `form:"-" json:"-"`
+	OrderKey      *string `form:"-" json:"-"`
+	PageNumber    *string `form:"-" json:"-"`
+	PageSize      *string `form:"-" json:"-"`
+	Remark        *string `form:"-" json:"-"`
+	SearchMode    *string `form:"-" json:"-"`
+	SearchOrder   *string `form:"-" json:"-"`
+	Stage         *string `form:"-" json:"-"`
+	TradeCode     *string `form:"-" json:"-"`
 }
 
 type ListZonesResponse struct {
@@ -311,17 +390,43 @@ type ListZonesResponse struct {
 	Zones []TopZoneResponse `form:"Zones" json:"Zones,omitempty"`
 }
 
+type ListZonesNameServerRequest struct {
+	ZIDs *string `form:"-" json:"-"`
+}
+
+type ListZonesNameServerResponse struct {
+	ZonesNameServer []ZoneNameServerInfo `form:"ZonesNameServer" json:"ZonesNameServer,omitempty"`
+}
+
 type QueryZoneRequest struct {
-	ZIDrequired *string `form:"-" json:"-"`
+	UseAllocateNameServer *string `form:"-" json:"-"`
+	ZID                   *string `form:"-" json:"-"`
 }
 
 type QueryZoneResponse struct {
-	ConfigurationCode *string `form:"ConfigurationCode" json:"ConfigurationCode,omitempty"`
-	ExpiredTime       *int64  `form:"ExpiredTime" json:"ExpiredTime,omitempty"`
-	InstanceNo        *string `form:"InstanceNo" json:"InstanceNo,omitempty"`
-	Remark            *string `form:"Remark" json:"Remark,omitempty"`
-	Status            *int64  `form:"Status" json:"Status,omitempty"`
-	ZoneName          *string `form:"ZoneName" json:"ZoneName,omitempty"`
+	AllocateDNSServerList []string `form:"AllocateDNSServerList" json:"AllocateDNSServerList,omitempty"`
+	ConfigurationCode     *string  `form:"ConfigurationCode" json:"ConfigurationCode,omitempty"`
+	ExpiredTime           *int64   `form:"ExpiredTime" json:"ExpiredTime,omitempty"`
+	InstanceNo            *string  `form:"InstanceNo" json:"InstanceNo,omitempty"`
+	IsNSCorrect           *bool    `form:"IsNSCorrect" json:"IsNSCorrect,omitempty"`
+	RealDNSServerList     []string `form:"RealDNSServerList" json:"RealDNSServerList,omitempty"`
+	RecordCount           *int64   `form:"RecordCount" json:"RecordCount,omitempty"`
+	Remark                *string  `form:"Remark" json:"Remark,omitempty"`
+	Stage                 *int64   `form:"Stage" json:"Stage,omitempty"`
+	Status                *int64   `form:"Status" json:"Status,omitempty"`
+	TradeCode             *string  `form:"TradeCode" json:"TradeCode,omitempty"`
+	UpdatedAt             *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
+	ZoneName              *string  `form:"ZoneName" json:"ZoneName,omitempty"`
+}
+
+type RetrieveZoneRequest struct {
+	ZoneName *string `form:"ZoneName" json:"ZoneName,omitempty"`
+}
+
+type RetrieveZoneResponse struct {
+	Host     *string `form:"Host" json:"Host,omitempty"`
+	Txt      *string `form:"Txt" json:"Txt,omitempty"`
+	ZoneName *string `form:"ZoneName" json:"ZoneName,omitempty"`
 }
 
 type UpdateZoneRequest struct {
@@ -330,6 +435,7 @@ type UpdateZoneRequest struct {
 }
 
 type UpdateZoneResponse struct {
+	CacheStage        *int64  `form:"CacheStage" json:"CacheStage,omitempty"`
 	ConfigurationCode *string `form:"ConfigurationCode" json:"ConfigurationCode,omitempty"`
 	CreatedAt         *string `form:"CreatedAt" json:"CreatedAt,omitempty"`
 	ExpiredTime       *int64  `form:"ExpiredTime" json:"ExpiredTime,omitempty"`
@@ -337,15 +443,36 @@ type UpdateZoneResponse struct {
 	LastOperator      *string `form:"LastOperator" json:"LastOperator,omitempty"`
 	RecordCount       *int64  `form:"RecordCount" json:"RecordCount,omitempty"`
 	Remark            *string `form:"Remark" json:"Remark,omitempty"`
+	TradeCode         *string `form:"TradeCode" json:"TradeCode,omitempty"`
 	UpdatedAt         *string `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	ZID               *int64  `form:"ZID" json:"ZID,omitempty"`
 	ZoneName          *string `form:"ZoneName" json:"ZoneName,omitempty"`
 }
 
+type CustomerLine struct {
+	CreatedAt  *string  `form:"CreatedAt" json:"CreatedAt,omitempty"`
+	IPSegments []string `form:"IPSegments" json:"IPSegments,omitempty"`
+	Line       *string  `form:"Line" json:"Line,omitempty"`
+	NameCN     *string  `form:"NameCN" json:"NameCN,omitempty"`
+	Remark     *string  `form:"Remark" json:"Remark,omitempty"`
+	UpdatedAt  *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
+}
+
+type RecordDigest struct {
+	LineNameCN *string `form:"LineNameCN" json:"LineNameCN,omitempty"`
+	Name       *string `form:"Name" json:"Name,omitempty"`
+	Type       *string `form:"Type" json:"Type,omitempty"`
+}
+
 type TopLineResponse struct {
 	Children    []TopLineResponse `form:"Children" json:"Children,omitempty"`
 	FatherValue *string           `form:"FatherValue" json:"FatherValue,omitempty"`
+	ID          *string           `form:"ID" json:"ID,omitempty"`
+	IpSegment   *string           `form:"IpSegment" json:"IpSegment,omitempty"`
+	Level       *int64            `form:"Level" json:"Level,omitempty"`
 	Name        *string           `form:"Name" json:"Name,omitempty"`
+	PartName    *string           `form:"PartName" json:"PartName,omitempty"`
+	Type        *int64            `form:"Type" json:"Type,omitempty"`
 	Value       *string           `form:"Value" json:"Value,omitempty"`
 }
 
@@ -354,6 +481,7 @@ type TopRecordSetResp struct {
 	Host          *string `form:"Host" json:"Host,omitempty"`
 	ID            *string `form:"ID" json:"ID,omitempty"`
 	Line          *string `form:"Line" json:"Line,omitempty"`
+	PQDN          *string `form:"PQDN" json:"PQDN,omitempty"`
 	Type          *string `form:"Type" json:"Type,omitempty"`
 	WeightEnabled *bool   `form:"WeightEnabled" json:"WeightEnabled,omitempty"`
 }
@@ -365,6 +493,7 @@ type TopRecordResponse struct {
 	Host        *string  `form:"Host" json:"Host,omitempty"`
 	Line        *string  `form:"Line" json:"Line,omitempty"`
 	Operators   []string `form:"Operators" json:"Operators,omitempty"`
+	PQDN        *string  `form:"PQDN" json:"PQDN,omitempty"`
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
@@ -374,20 +503,44 @@ type TopRecordResponse struct {
 	Weight      *int64   `form:"Weight" json:"Weight,omitempty"`
 }
 
-type AddressConfig struct {
-	Disable *bool  `form:"disable" json:"disable,omitempty"`
-	TTL     *int64 `form:"ttl" json:"ttl,omitempty"`
-	Weight  *int64 `form:"weight" json:"weight,omitempty"`
+type TopSubDomain struct {
+	HasNext       *bool               `form:"HasNext" json:"HasNext,omitempty"`
+	Host          *string             `form:"Host" json:"Host,omitempty"`
+	LastOperator  *string             `form:"LastOperator" json:"LastOperator,omitempty"`
+	Line          *string             `form:"Line" json:"Line,omitempty"`
+	LineNameCN    *string             `form:"LineNameCN" json:"LineNameCN,omitempty"`
+	Name          *string             `form:"Name" json:"Name,omitempty"`
+	Records       []TopRecordResponse `form:"Records" json:"Records,omitempty"`
+	TTL           *int64              `form:"TTL" json:"TTL,omitempty"`
+	Type          *string             `form:"Type" json:"Type,omitempty"`
+	UpdatedAt     *string             `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
+	WeightEnabled *bool               `form:"WeightEnabled" json:"WeightEnabled,omitempty"`
 }
 
-type GroupStat struct {
-	ZID       *int64  `form:"ZID" json:"ZID,omitempty"`
-	Error     *int64  `form:"error" json:"error,omitempty"`
-	Name      *string `form:"name" json:"name,omitempty"`
-	NotExists *int64  `form:"not_exists" json:"not_exists,omitempty"`
-	Success   *int64  `form:"success" json:"success,omitempty"`
-	Timestamp *int64  `form:"timestamp" json:"timestamp,omitempty"`
-	Total     *int64  `form:"total" json:"total,omitempty"`
+type AddressConfig struct {
+	RecordID *int64 `form:"RecordID" json:"RecordID,omitempty"`
+	Disable  *bool  `form:"disable" json:"disable,omitempty"`
+	TTL      *int64 `form:"ttl" json:"ttl,omitempty"`
+	Weight   *int64 `form:"weight" json:"weight,omitempty"`
+}
+
+type TopGroupStat struct {
+	CacheStage *int64  `form:"CacheStage" json:"CacheStage,omitempty"`
+	Error      *int64  `form:"Error" json:"Error,omitempty"`
+	Name       *string `form:"Name" json:"Name,omitempty"`
+	NotExists  *int64  `form:"NotExists" json:"NotExists,omitempty"`
+	Success    *int64  `form:"Success" json:"Success,omitempty"`
+	Timestamp  *int64  `form:"Timestamp" json:"Timestamp,omitempty"`
+	Total      *int64  `form:"Total" json:"Total,omitempty"`
+	ZID        *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
+type TopStat struct {
+	Error     *int64 `form:"Error" json:"Error,omitempty"`
+	NotExists *int64 `form:"NotExists" json:"NotExists,omitempty"`
+	Success   *int64 `form:"Success" json:"Success,omitempty"`
+	Timestamp *int64 `form:"Timestamp" json:"Timestamp,omitempty"`
+	Total     *int64 `form:"Total" json:"Total,omitempty"`
 }
 
 type Stat struct {
@@ -399,6 +552,7 @@ type Stat struct {
 }
 
 type TopZoneResponse struct {
+	CacheStage        *int64  `form:"CacheStage" json:"CacheStage,omitempty"`
 	ConfigurationCode *string `form:"ConfigurationCode" json:"ConfigurationCode,omitempty"`
 	CreatedAt         *string `form:"CreatedAt" json:"CreatedAt,omitempty"`
 	ExpiredTime       *int64  `form:"ExpiredTime" json:"ExpiredTime,omitempty"`
@@ -406,7 +560,17 @@ type TopZoneResponse struct {
 	LastOperator      *string `form:"LastOperator" json:"LastOperator,omitempty"`
 	RecordCount       *int64  `form:"RecordCount" json:"RecordCount,omitempty"`
 	Remark            *string `form:"Remark" json:"Remark,omitempty"`
+	TradeCode         *string `form:"TradeCode" json:"TradeCode,omitempty"`
 	UpdatedAt         *string `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	ZID               *int64  `form:"ZID" json:"ZID,omitempty"`
 	ZoneName          *string `form:"ZoneName" json:"ZoneName,omitempty"`
+}
+
+type ZoneNameServerInfo struct {
+	AllocateDNSServerList []string `form:"AllocateDNSServerList" json:"AllocateDNSServerList,omitempty"`
+	IsNSCorrect           *bool    `form:"IsNSCorrect" json:"IsNSCorrect,omitempty"`
+	Name                  *string  `form:"Name" json:"Name,omitempty"`
+	RealDNSServerList     []string `form:"RealDNSServerList" json:"RealDNSServerList,omitempty"`
+	Stage                 *int64   `form:"Stage" json:"Stage,omitempty"`
+	ZID                   *int64   `form:"ZID" json:"ZID,omitempty"`
 }
