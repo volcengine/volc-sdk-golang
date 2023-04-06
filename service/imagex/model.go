@@ -617,3 +617,30 @@ func UnmarshalResultInto(data []byte, result interface{}) error {
 	}
 	return nil
 }
+
+// DescribeImageVolcCdnAccessLog
+type DescribeImageVolcCdnAccessLogReq struct {
+	ServiceId string `query:"ServiceId"`
+	Domain    string `json:"Domain"`
+	Region    string `json:"Region"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	PageNum   int    `json:"PageNum"`
+	PageSize  int    `json:"PageSize"`
+}
+
+type DescribeImageVolcCdnAccessLogResp struct {
+	Domain     string                                 `json:"Domain"`
+	PageSize   int                                    `json:"PageSize"`
+	PageNum    int                                    `json:"PageNum"`
+	TotalCount int                                    `json:"TotalCount"`
+	Logs       []DescribeImageVolcCdnAccessLogRespLog `json:"Logs"`
+}
+
+type DescribeImageVolcCdnAccessLogRespLog struct {
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	LogName   string `json:"LogName"`
+	LogPath   string `json:"LogPath"`
+	LogSize   int64  `json:"LogSize"`
+}

@@ -503,6 +503,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"DescribeImageVolcCdnAccessLog": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageVolcCdnAccessLog"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 	}
 )
 
