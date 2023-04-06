@@ -128,6 +128,28 @@ func Test_DescribeVodSpaceWorkflowDetailData(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_DescribeVodSpaceEditDetailData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodSpaceEditDetailDataRequest{
+		Region:    "your Region",
+		Space:     "your Space",
+		StartTime: "your StartTime",
+		EndTime:   "your EndTime",
+		PageSize:  0,
+		PageNum:   0,
+	}
+
+	resp, status, err := instance.DescribeVodSpaceEditDetailData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_DescribeVodSnapshotData(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

@@ -644,5 +644,13 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"DescribeVodSpaceEditDetailData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceEditDetailData"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
 	}
 )

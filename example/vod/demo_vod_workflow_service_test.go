@@ -28,6 +28,7 @@ func Test_StartWorkflow(t *testing.T) {
 		CallbackArgs:      "your CallbackArgs",
 		EnableLowPriority: false,
 		DirectUrl:         nil,
+		TaskListId:        "your TaskListId",
 	}
 
 	resp, status, err := instance.StartWorkflow(query)
