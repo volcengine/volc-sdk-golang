@@ -343,6 +343,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"GetUrlFetchTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetUrlFetchTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 		"UpdateServiceName": {
 			Method: http.MethodPost,
 			Path:   "/",

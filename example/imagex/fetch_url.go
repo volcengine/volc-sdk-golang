@@ -22,11 +22,21 @@ func main() {
 
 		ServiceId: "service id", // 想将文件迁移到哪一个服务
 		StoreKey:  "store key",  // 迁移后的存储名为
+		// Async: true,
 	}
 	resp, err := instance.FetchImageUrl(req)
 	if err != nil {
-		fmt.Printf("error %v", err)
+		fmt.Printf("error %v\n", err)
 	} else {
-		fmt.Printf("success %v", resp)
+		fmt.Printf("success %v\n", resp)
+	}
+
+	if req.Async {
+		resp, err := instance.GetUrlFetchTask(&imagex.GetUrlFetchTaskReq{Id: resp.TaskId})
+		if err != nil {
+			fmt.Printf("error %v\n", err)
+		} else {
+			fmt.Printf("success %v\n", resp)
+		}
 	}
 }
