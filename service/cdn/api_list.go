@@ -343,4 +343,12 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DescribeAccountingSummary": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeAccountingSummary"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 }
