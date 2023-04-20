@@ -302,6 +302,15 @@ type GetUrlFetchTaskResp struct {
 	Code             string `json:"Code"`
 }
 
+// UpdateImageStorageTTL
+type UpdateImageStorageTTLReq struct {
+	ServiceId string `json:"ServiceId"`
+	TTL       int    `json:"TTL"`
+}
+
+type UpdateImageStorageTTLResp struct {
+}
+
 // GetImageStyleResult
 type GetImageStyleResultReq struct {
 	ServiceId     string

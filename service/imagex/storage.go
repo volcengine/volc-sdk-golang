@@ -518,3 +518,12 @@ func (c *ImageX) GetImageUploadFiles(param *GetImageUploadFilesParam) (*GetImage
 	}
 	return result, nil
 }
+
+func (c *ImageX) UpdateImageStorageTTL(req *UpdateImageStorageTTLReq) (*UpdateImageStorageTTLResp, error) {
+	resp := new(UpdateImageStorageTTLResp)
+	err := c.ImageXPost("UpdateImageStorageTTL", nil, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

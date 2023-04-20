@@ -359,6 +359,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"UpdateImageStorageTTL": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageStorageTTL"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 		"GetImageOCR": {
 			Method: http.MethodPost,
 			Path:   "/",
