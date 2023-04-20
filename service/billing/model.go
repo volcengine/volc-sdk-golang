@@ -229,3 +229,158 @@ type SuccessInstanceInfo struct {
 	Product    string `json:"Product"`
 	InstanceID string `json:"InstanceID"`
 }
+
+type ListAmortizedCostBillDetailReq struct {
+	BillPeriod     string `json:"BillPeriod"`
+	AmortizedMonth string `json:"AmortizedMonth"`
+	AmortizedDay   string `json:"AmortizedDay"`
+	Product        string `json:"Product"`
+	InstanceNo     string `json:"InstanceNo"`
+	BillingMode    string `json:"BillingMode"`
+	BillCategory   string `json:"BillCategory"`
+	AmortizedType  string `json:"AmortizedType"`
+	IgnoreZero     string `json:"IgnoreZero"`
+	NeedRecordNum  string `json:"NeedRecordNum"`
+	Offset         string `json:"Offset"`
+	Limit          string `json:"Limit"`
+}
+
+type CostBillDetail struct {
+	CostID                      string
+	AmortizedMonth              string
+	AmortizedDay                string
+	BillPeriod                  string
+	BusiPeriod                  string
+	PayerID                     string
+	PayerUserName               string
+	PayerCustomerName           string
+	SellerID                    string
+	SellerUserName              string
+	SellerCustomerName          string
+	OwnerID                     string
+	OwnerUserName               string
+	OwnerCustomerName           string
+	Product                     string
+	ProductZh                   string
+	BusinessMode                string
+	BillingMode                 string
+	BillCategory                string
+	AmortizedType               string
+	AmortizedBeginTime          string
+	AmortizedEndTime            string
+	BillID                      string
+	InstanceNo                  string
+	InstanceName                string
+	Element                     string
+	Region                      string
+	Zone                        string
+	Factor                      string
+	ExpandField                 string
+	ExpenseBeginTime            string
+	ExpenseEndTime              string
+	TradeTime                   string
+	Price                       string
+	PriceUnit                   string
+	Count                       string
+	Unit                        string
+	UseDuration                 string
+	UseDurationUnit             string
+	CouponAmount                string
+	PayableAmount               string
+	DailyAmortizedCouponAmount  string
+	DailyAmortizedPayableAmount string
+	Currency                    string
+	Project                     string
+	Tag                         string
+	SubjectName                 string
+}
+
+type CostBillDetailList struct {
+	List   []*CostBillDetail
+	Total  int
+	Limit  int
+	Offset int
+}
+
+type ListAmortizedCostBillDetailResp struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *CostBillDetailList `json:",omitempty"`
+}
+
+type ListAmortizedCostBillMonthlyReq struct {
+	BillPeriod     string `json:"BillPeriod"`
+	AmortizedMonth string `json:"AmortizedMonth"`
+	Product        string `json:"Product"`
+	InstanceNo     string `json:"InstanceNo"`
+	BillingMode    string `json:"BillingMode"`
+	BillCategory   string `json:"BillCategory"`
+	AmortizedType  string `json:"AmortizedType"`
+	IgnoreZero     string `json:"IgnoreZero"`
+	NeedRecordNum  string `json:"NeedRecordNum"`
+	Offset         string `json:"Offset"`
+	Limit          string `json:"Limit"`
+}
+
+type CostBillMonthly struct {
+	AmortizedMonth               string
+	BillPeriod                   string
+	BusiPeriod                   string
+	PayerID                      string
+	PayerUserName                string
+	PayerCustomerName            string
+	SellerID                     string
+	SellerUserName               string
+	SellerCustomerName           string
+	OwnerID                      string
+	OwnerUserName                string
+	OwnerCustomerName            string
+	Product                      string
+	ProductZh                    string
+	BusinessMode                 string
+	BillingMode                  string
+	BillCategory                 string
+	AmortizedType                string
+	AmortizedBeginTime           string
+	AmortizedEndTime             string
+	AmortizedDayNum              string
+	BillID                       string
+	InstanceNo                   string
+	InstanceName                 string
+	Element                      string
+	Region                       string
+	Zone                         string
+	Factor                       string
+	ExpandField                  string
+	Price                        string
+	PriceUnit                    string
+	Count                        string
+	Unit                         string
+	UseDuration                  string
+	UseDurationUnit              string
+	CouponAmount                 string
+	PayableAmount                string
+	DailyAmortizedCouponAmount   string
+	DailyAmortizedPayableAmount  string
+	BeforeAmortizedCouponAmount  string
+	BeforeAmortizedPayableAmount string
+	NowAmortizedCouponAmount     string
+	NowAmortizedPayableAmount    string
+	UnamortizedCouponAmount      string
+	UnamortizedPayableAmount     string
+	Currency                     string
+	Project                      string
+	Tag                          string
+	SubjectName                  string
+}
+
+type CostBillMonthlyList struct {
+	List   []*CostBillMonthly
+	Total  int
+	Limit  int
+	Offset int
+}
+
+type ListAmortizedCostBillMonthlyResp struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *CostBillMonthlyList `json:",omitempty"`
+}

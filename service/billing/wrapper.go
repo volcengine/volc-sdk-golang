@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 // ListBillDetail 分页查询账单明细
@@ -85,6 +86,56 @@ func (p *Billing) UnsubscribeInstance(req *UnsubscribeInstanceReq) (*Unsubscribe
 
 	output := new(UnsubscribeInstanceResp)
 	if err := json.Unmarshal(respBody, output); err != nil {
+		return nil, status, err
+	} else {
+		output.ResponseMetadata.Service = ServiceName
+		return output, status, nil
+	}
+}
+
+// ListAmortizedCostBillDetail 查询成本账单明细
+func (p *Billing) ListAmortizedCostBillDetail(req *ListAmortizedCostBillDetailReq) (*ListAmortizedCostBillDetailResp, int, error) {
+	query := make(url.Values)
+	reflectType := reflect.TypeOf(*req)
+	reflectValue := reflect.ValueOf(*req)
+	for i := 0; i < reflectType.NumField(); i++ {
+		field := reflectType.Field(i)
+		tag := field.Tag.Get("json")
+		value := reflectValue.Field(i).Interface()
+		query.Add(tag, value.(string))
+	}
+	respBody, status, err := p.Client.Query("ListAmortizedCostBillDetail", query)
+	if err != nil {
+		return nil, status, err
+	}
+
+	output := new(ListAmortizedCostBillDetailResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
+		return nil, status, err
+	} else {
+		output.ResponseMetadata.Service = ServiceName
+		return output, status, nil
+	}
+}
+
+// ListAmortizedCostBillMonthly 查询成本账单总览
+func (p *Billing) ListAmortizedCostBillMonthly(req *ListAmortizedCostBillMonthlyReq) (*ListAmortizedCostBillMonthlyResp, int, error) {
+	query := make(url.Values)
+	reflectType := reflect.TypeOf(*req)
+	reflectValue := reflect.ValueOf(*req)
+	for i := 0; i < reflectType.NumField(); i++ {
+		field := reflectType.Field(i)
+		tag := field.Tag.Get("json")
+		value := reflectValue.Field(i).Interface()
+		query.Add(tag, value.(string))
+	}
+	respBody, status, err := p.Client.Query("ListAmortizedCostBillMonthly", query)
+	if err != nil {
+		return nil, status, err
+	}
+
+	output := new(ListAmortizedCostBillMonthlyResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
 		return nil, status, err
 	} else {
 		output.ResponseMetadata.Service = ServiceName
