@@ -131,3 +131,58 @@ func TestUnsubscribeInstance(t *testing.T) {
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
+
+func TestListAmortizedCostBillDetail(t *testing.T) {
+	billing.DefaultInstance.Client.SetAccessKey(testAk)
+	billing.DefaultInstance.Client.SetSecretKey(testSk)
+
+	req := &billing.ListAmortizedCostBillDetailReq{
+		BillPeriod:     "",
+		AmortizedMonth: "2023-04",
+		AmortizedDay:   "",
+		Product:        "",
+		InstanceNo:     "",
+		BillingMode:    "",
+		BillCategory:   "",
+		AmortizedType:  "",
+		IgnoreZero:     "0",
+		NeedRecordNum:  "1",
+		Offset:         "0",
+		Limit:          "10",
+	}
+
+	resp, status, err := billing.DefaultInstance.ListAmortizedCostBillDetail(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, status, http.StatusOK)
+	assert.NotNil(t, resp)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestListAmortizedCostBillMonthly(t *testing.T) {
+	billing.DefaultInstance.Client.SetAccessKey(testAk)
+	billing.DefaultInstance.Client.SetSecretKey(testSk)
+
+	req := &billing.ListAmortizedCostBillMonthlyReq{
+		BillPeriod:     "",
+		AmortizedMonth: "2023-04",
+		Product:        "",
+		InstanceNo:     "",
+		BillingMode:    "",
+		BillCategory:   "",
+		AmortizedType:  "",
+		IgnoreZero:     "0",
+		NeedRecordNum:  "1",
+		Offset:         "0",
+		Limit:          "10",
+	}
+
+	resp, status, err := billing.DefaultInstance.ListAmortizedCostBillMonthly(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, status, http.StatusOK)
+	assert.NotNil(t, resp)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}

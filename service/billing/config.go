@@ -66,6 +66,22 @@ var (
 				"Version": []string{ServiceVersion20220101},
 			},
 		},
+		"ListAmortizedCostBillDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAmortizedCostBillDetail"},
+				"Version": []string{ServiceVersion20220101},
+			},
+		},
+		"ListAmortizedCostBillMonthly": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAmortizedCostBillMonthly"},
+				"Version": []string{ServiceVersion20220101},
+			},
+		},
 	}
 )
 
