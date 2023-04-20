@@ -7,6 +7,10 @@ import (
 )
 
 func (c *LsClient) OpenKafkaConsumer(request *OpenKafkaConsumerRequest) (r *OpenKafkaConsumerResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -39,6 +43,10 @@ func (c *LsClient) OpenKafkaConsumer(request *OpenKafkaConsumerRequest) (r *Open
 }
 
 func (c *LsClient) CloseKafkaConsumer(request *CloseKafkaConsumerRequest) (r *CloseKafkaConsumerResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -71,6 +79,10 @@ func (c *LsClient) CloseKafkaConsumer(request *CloseKafkaConsumerRequest) (r *Cl
 }
 
 func (c *LsClient) DescribeKafkaConsumer(request *DescribeKafkaConsumerRequest) (r *DescribeKafkaConsumerResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

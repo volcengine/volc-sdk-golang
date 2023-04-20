@@ -21,6 +21,7 @@ type Client interface {
 	SetTimeout(timeout time.Duration)
 
 	PutLogs(request *PutLogsRequest) (response *CommonResponse, err error)
+	PutLogsV2(request *PutLogsV2Request) (response *CommonResponse, err error)
 	DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error)
 	ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error)
 	DescribeLogContext(request *DescribeLogContextRequest) (*DescribeLogContextResponse, error)

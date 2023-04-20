@@ -9,6 +9,10 @@ import (
 )
 
 func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjectResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -45,6 +49,10 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjec
 }
 
 func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -79,6 +87,10 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonRespon
 }
 
 func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (r *DescribeProjectResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -112,6 +124,10 @@ func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (r *Describe
 }
 
 func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *DescribeProjectsResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -160,6 +176,10 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *Descri
 }
 
 func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

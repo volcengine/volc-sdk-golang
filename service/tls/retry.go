@@ -2,66 +2,83 @@ package tls
 
 import (
 	"context"
-	"time"
-
-	"github.com/cenkalti/backoff/v4"
 	"github.com/pkg/errors"
+	"math"
+	"math/rand"
+	"net"
+	"sync/atomic"
+	"time"
 )
 
 type ConditionOperation func() error
 
-const (
-	FlowControlSleepTime = time.Second * 1
-)
-
-func needRetry(statusCode int32) bool {
-	if statusCode == 200 {
+func needRetry(err *Error) bool {
+	if err == nil {
 		return false
 	}
-
-	if statusCode == 500 || statusCode == 502 || statusCode == 503 {
+	if err.HTTPCode == 429 || err.HTTPCode == 500 || err.HTTPCode == 502 || err.HTTPCode == 503 {
 		return true
 	}
-
 	return false
 }
 
-func needFlowControl(statusCode int32) bool {
-	return statusCode == 429
-}
-
-func RetryWithCondition(ctx context.Context, b backoff.BackOff, o ConditionOperation) error {
-	ticker := backoff.NewTicker(b)
-	defer ticker.Stop()
+func RetryWithCondition(ctx context.Context, o ConditionOperation) error {
+	var tryCount = 0
 	var err error
+	var expectedQuitTime = time.Now().Add(defaultRequestTimeout)
 	for {
 		select {
 		case <-ctx.Done():
 			return errors.Wrapf(ctx.Err(), "stopped retrying err: %v", err)
 		default:
-			select {
-			case _, ok := <-ticker.C:
-				if !ok {
+			err = o()
+			tryCount += 1
+			Err, ok := err.(*Error)
+			if !ok {
+				if timeoutErr, ok := err.(net.Error); ok && timeoutErr.Timeout() {
+					// 超时错误, 需要重试
+				} else {
+					// 预期之外的错误, 直接返回
 					return err
 				}
-
-				err = o()
-
-				Err, ok := err.(Error)
-				if !ok {
+			} else {
+				if !needRetry(Err) {
+					// 预期之内的请求成功, 不需要重试, 计数减后直接返回
+					for {
+						curr := atomic.LoadInt32(&defaultRetryCounter)
+						if curr <= 0 {
+							break
+						}
+						if atomic.CompareAndSwapInt32(&defaultRetryCounter, curr, curr-1) {
+							break // 操作成功，退出循环
+						}
+					}
 					return err
 				}
+			}
 
-				if !needRetry(Err.HTTPCode) {
-					return err
+			// 进入重试逻辑
+			for {
+				// 计数器+1
+				curr := atomic.LoadInt32(&defaultRetryCounter)
+				if curr >= defaultRetryCounterMaximum {
+					break
 				}
-
-				if needFlowControl(Err.HTTPCode) {
-					time.Sleep(FlowControlSleepTime)
+				if atomic.CompareAndSwapInt32(&defaultRetryCounter, curr, curr+1) {
+					break // 操作成功，退出循环
 				}
+			}
 
-			case <-ctx.Done():
-				return errors.Wrapf(ctx.Err(), "stopped retrying err: %v", err)
+			var retrySleepInterval = time.Duration(math.Floor(rand.Float64() * float64(defaultRetryCounter) * float64(defaultRetryInterval)))
+			var maxSleepInterval = time.Until(expectedQuitTime)
+			if retrySleepInterval > maxSleepInterval {
+				retrySleepInterval = maxSleepInterval
+			}
+			time.Sleep(retrySleepInterval)
+
+			if tryCount >= 5 || defaultRetryCounterMaximum <= 0 || time.Now().After(expectedQuitTime) {
+				// 重试超过5次或已经超出预期超时, 直接返回最近一次请求结果
+				return err
 			}
 		}
 	}

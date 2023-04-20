@@ -9,6 +9,10 @@ import (
 )
 
 func (c *LsClient) CreateIndex(request *CreateIndexRequest) (r *CreateIndexResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -40,6 +44,10 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (r *CreateIndexRespo
 }
 
 func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -74,6 +82,10 @@ func (c *LsClient) DeleteIndex(request *DeleteIndexRequest) (r *CommonResponse, 
 }
 
 func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeIndexResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -110,6 +122,10 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 // 由于该接口为全量更新接口，等同于重新创建一个新的索引，因此要注意不要漏填字段
 
 func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -140,6 +156,10 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, 
 }
 
 func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

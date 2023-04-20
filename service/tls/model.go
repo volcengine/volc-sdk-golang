@@ -3,6 +3,7 @@ package tls
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
@@ -23,6 +24,16 @@ type CreateProjectRequest struct {
 	Region      string
 }
 
+func (v *CreateProjectRequest) CheckValidation() error {
+	if len(v.ProjectName) <= 0 {
+		return errors.New("Invalid argument, empty ProjectName")
+	}
+	if len(v.Region) <= 0 {
+		return errors.New("Invalid argument, empty Region")
+	}
+	return nil
+}
+
 type CreateProjectResponse struct {
 	CommonResponse
 	ProjectID string `json:"ProjectId"`
@@ -33,9 +44,23 @@ type DeleteProjectRequest struct {
 	ProjectID string `json:"ProjectId"`
 }
 
+func (v *DeleteProjectRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty Region")
+	}
+	return nil
+}
+
 type DescribeProjectRequest struct {
 	CommonRequest
 	ProjectID string `json:"ProjectId"`
+}
+
+func (v *DescribeProjectRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
 }
 
 type DescribeProjectResponse struct {
@@ -50,6 +75,10 @@ type DescribeProjectsRequest struct {
 	PageNumber  int
 	PageSize    int
 	IsFullName  bool
+}
+
+func (v *DescribeProjectsRequest) CheckValidation() error {
+	return nil
 }
 
 type ProjectInfo struct {
@@ -71,8 +100,15 @@ type DescribeProjectsResponse struct {
 type ModifyProjectRequest struct {
 	CommonRequest
 	ProjectID   string
-	ProjectName *string
-	Description *string
+	ProjectName *string `json:",omitempty"`
+	Description *string `json:",omitempty"`
+}
+
+func (v *ModifyProjectRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
 }
 
 type CreateTopicRequest struct {
@@ -87,6 +123,22 @@ type CreateTopicRequest struct {
 	EnableTracking *bool  `json:",omitempty"`
 }
 
+func (v *CreateTopicRequest) CheckValidation() error {
+	if len(v.TopicName) <= 0 {
+		return errors.New("Invalid argument, empty TopicName")
+	}
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if v.Ttl <= 0 {
+		return errors.New("Invalid Ttl, must be bigger than 0")
+	}
+	if v.ShardCount <= 0 {
+		return errors.New("Invalid ShardCount, must be bigger than 0")
+	}
+	return nil
+}
+
 type CreateTopicResponse struct {
 	CommonResponse
 	TopicID string `json:"TopicID"`
@@ -95,6 +147,13 @@ type CreateTopicResponse struct {
 type DeleteTopicRequest struct {
 	CommonRequest
 	TopicID string
+}
+
+func (v *DeleteTopicRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type ModifyTopicRequest struct {
@@ -108,9 +167,23 @@ type ModifyTopicRequest struct {
 	EnableTracking *bool   `json:",omitempty"`
 }
 
+func (v *ModifyTopicRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
 type DescribeTopicRequest struct {
 	CommonRequest
 	TopicID string
+}
+
+func (v *DescribeTopicRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type DescribeTopicResponse struct {
@@ -136,6 +209,13 @@ type DescribeTopicsRequest struct {
 	TopicName  string
 	TopicID    string
 	IsFullName bool
+}
+
+func (v *DescribeTopicsRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
 }
 
 type Topic struct {
@@ -183,8 +263,15 @@ func (c KeyValueList) Value() (driver.Value, error) {
 type CreateIndexRequest struct {
 	CommonRequest
 	TopicID  string          `json:"TopicId"`
-	FullText *FullTextInfo   `json:"FullText"`
-	KeyValue *[]KeyValueInfo `json:"KeyValue"`
+	FullText *FullTextInfo   `json:",omitempty"`
+	KeyValue *[]KeyValueInfo `json:",omitempty"`
+}
+
+func (v *CreateIndexRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type FullTextInfo struct {
@@ -208,9 +295,23 @@ type DeleteIndexRequest struct {
 	TopicID string
 }
 
+func (v *DeleteIndexRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
 type DescribeIndexRequest struct {
 	CommonRequest
 	TopicID string
+}
+
+func (v *DescribeIndexRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type DescribeIndexResponse struct {
@@ -225,8 +326,15 @@ type DescribeIndexResponse struct {
 type ModifyIndexRequest struct {
 	CommonRequest
 	TopicID  string          `json:"TopicId"`
-	FullText *FullTextInfo   `json:"FullText"`
-	KeyValue *[]KeyValueInfo `json:"KeyValue"`
+	FullText *FullTextInfo   `json:",omitempty"`
+	KeyValue *[]KeyValueInfo `json:",omitempty"`
+}
+
+func (v *ModifyIndexRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type AnalysisResult struct {
@@ -245,6 +353,16 @@ type SearchLogsRequest struct {
 	HighLight bool   `json:"HighLight"`
 	Context   string `json:"Context"`
 	Sort      string `json:"Sort"`
+}
+
+func (v *SearchLogsRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if v.EndTime < v.StartTime {
+		return errors.New("Invalid argument EndTime < StartTime")
+	}
+	return nil
 }
 
 type SearchLogsResponse struct {
@@ -266,6 +384,13 @@ type DescribeShardsRequest struct {
 	TopicID    string
 	PageNumber int
 	PageSize   int
+}
+
+func (v *DescribeShardsRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type DescribeShardsResponse struct {
@@ -291,11 +416,37 @@ type PutLogsRequest struct {
 	LogBody      *pb.LogGroupList
 }
 
+func (v *PutLogsRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if v.LogBody == nil {
+		return errors.New("Invalid argument, empty LogBody")
+	}
+	for idx := range v.LogBody.LogGroups {
+		if len(v.LogBody.LogGroups[idx].Logs) > 10000 {
+			return errors.New("Invalid logs count more than 10000 in one single logGroup")
+		}
+	}
+	return nil
+}
+
 type DescribeCursorRequest struct {
 	CommonRequest
 	TopicID string
 	ShardID int
 	From    string
+}
+
+func (v *DescribeCursorRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if len(v.From) <= 0 {
+		return errors.New("Invalid argument, empty From")
+	}
+	// ShardId is okay to be set 0, ignore
+	return nil
 }
 
 type DescribeCursorResponse struct {
@@ -308,12 +459,19 @@ type ConsumeLogsRequest struct {
 	TopicID       string
 	ShardID       int
 	Cursor        string
-	EndCursor     *string
-	LogGroupCount *int
-	Compression   *string
+	EndCursor     *string `json:",omitempty"`
+	LogGroupCount *int    `json:",omitempty"`
+	Compression   *string `json:",omitempty"`
 
-	ConsumerGroupName *string
-	ConsumerName      *string
+	ConsumerGroupName *string `json:",omitempty"`
+	ConsumerName      *string `json:",omitempty"`
+}
+
+func (v *ConsumeLogsRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
 }
 
 type ConsumeLogsResponse struct {
@@ -333,6 +491,17 @@ type DescribeLogContextRequest struct {
 	NextLogs      *int64 `json:",omitempty"`
 }
 
+func (v *DescribeLogContextRequest) CheckValidation() error {
+	if len(v.TopicId) <= 0 {
+		return errors.New("Invalid argument, empty TopicId")
+	}
+	if len(v.ContextFlow) <= 0 {
+		return errors.New("Invalid arguemnt, empty ContextFlow")
+	}
+	// PackageOffset and Source is okay to be set 0, ignore.
+	return nil
+}
+
 type DescribeLogContextResponse struct {
 	CommonResponse
 	LogContextInfos []map[string]interface{} `json:"LogContextInfos"`
@@ -342,303 +511,142 @@ type DescribeLogContextResponse struct {
 
 type CreateRuleRequest struct {
 	CommonRequest
-	// 采集配置所属于的日志主题ID，即TopicID。
-	TopicID string `json:"TopicId" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// 采集配置的名称:
-	// - 在一个Topic中唯一;
-	// - 长度限制为3-63个字符，只能包含小写字母、数字和短划线（-），必须以小写字母或者数字开头和结尾。
-	RuleName string `json:"RuleName" binding:"required" example:"testName"`
-	// 采集路径列表:
-	// - 最多能够创建10个采集路径;
-	// - 采集路径必须是一个绝对路径;
-	// 当InputType=0时:
-	// - 采集路径支持完整匹配和通配符模式匹配，通配符只支持"**"、"*"、"?"，但是最多只能配置1个"**"通配符.
-	// 当InputType=1时:
-	// - 不允许配置采集路径列表
-	// 当InputType=2时:
-	// - 采集路径支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”，不支持“**”。
-	Paths *[]string `json:"Paths" binding:"required" example:"[\"/data/nginx/log/**/access.log\"]"`
-	// 采集的日志类型:
-	// - minimalist_log代表极简日志；
-	// - delimiter_log代表分隔符格式日志；
-	// - json_log代表json格式日志；
-	// - multiline_log代表多行日志；
-	// - fullregex_log代表完整正则日志；
-	// - 当创建采集配置时，如果用户没有配置采集的日志类型，那么采集的日志类型默认值是minimalist_log。
-	LogType *string `json:"LogType" enums:"minimalist_log,delimiter_log,json_log,multiline_log,fullregex_log" example:"delimiter_log"`
-	// 提取规则: 如果配置非minimalist_log或者非json_log的采集的日志类型，那么必须同时配置提取规则。
-	ExtractRule *ExtractRule `json:"ExtractRule"`
-	// 采集黑名单列表: 最多能够创建10个采集黑名单。
-	// 当InputType=0时:
-	// - 当Type是Path时，Value表示一个目录。支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”，不支持“**”通配符。
-	// - 当Type是File时，Value表示一个文件名称。支持完整匹配和通配符模式匹配，通配符只支持“**”、“*”、“?”，但是最多只能配置1个“**”通配符。
-	// 当InputType=1时:
-	// - 不允许配置采集黑名单列表。
-	// 当InputType=2时：
-	// - 当Type是Path时，Value表示一个目录。仅支持完整匹配，不支持通配符模式匹配。
-	// - 当Type是File时，Value表示一个文件名称。目录部分仅支持完整匹配，不支持通配符模式匹配。文件名称部分支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”。
-	ExcludePaths *[]ExcludePath `json:"ExcludePaths"`
-	// 用户自定义的采集规则。
+	TopicID        string          `json:"TopicId"`
+	RuleName       string          `json:"RuleName"`
+	Paths          *[]string       `json:"Paths"`
+	LogType        *string         `json:"LogType"`
+	ExtractRule    *ExtractRule    `json:"ExtractRule"`
+	ExcludePaths   *[]ExcludePath  `json:"ExcludePaths"`
 	UserDefineRule *UserDefineRule `json:"UserDefineRule"`
-	// 日志样例：日志样例的长度必须不大于3000个字符
-	LogSample *string `json:"LogSample" example:"xxxxxx"`
-	// 采集类型：
-	// - 0：宿主机日志文件
-	// - 1：k8s容器标准输出
-	// - 2：k8s容器内日志文件
-	// 当创建采集配置时，如果用户没有配置采集的类型，那么采集的类型默认值是0。
-	InputType *int `json:"InputType"`
-	// 容器采集规则
-	ContainerRule *ContainerRule `json:"ContainerRule"`
+	LogSample      *string         `json:"LogSample"`
+	InputType      *int            `json:"InputType"`
+	ContainerRule  *ContainerRule  `json:"ContainerRule"`
+}
+
+func (v *CreateRuleRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if len(v.RuleName) <= 0 {
+		return errors.New("Invalid argument, empty RuleName")
+	}
+	return nil
 }
 
 type ExtractRule struct {
-	// 分隔符;\n当且仅当采集的日志类型为delimiter_log时有效
-	Delimiter string `json:"Delimiter,omitempty" example:"#"`
-	// 第一行日志需要匹配的regex;\n当且仅当采集的日志类型为multiline_log时有效;\n必须是合法的正则表达式;
-	BeginRegex string `json:"BeginRegex,omitempty" example:"\\[(\\d+-\\d+-\\w+:\\d+:\\d+,\\d+)\\]\\s\\[(\\w+)\\]\\s(.*)"`
-	// 整条日志需要匹配的regex;当且仅当采集的日志类型为fullregex_log时有效;必须是合法的正则表达式。
-	LogRegex string `json:"LogRegex,omitempty" example:"\\[(\\d+-\\d+-\\w+:\\d+:\\d+,\\d+)\\]\\s\\[(\\w+)\\]\\s(.*)"`
-	// 用户自定义的每个字段的名字key列表;当且仅当采集的日志类型为delimiter_log或fullregex_log时有效。
-	// - 最多能够配置100个名字key。
-	// - 命名规则同「索引配置」的key名称。
-	// - 当采集的日志类型为delimiter_log时, 不能配置非空、重复的名字key，不能全部配置为空的名字key。
-	// - 当采集的日志类型为fullregex_log时，不能配置重复的名字key， 不能配置空的名字key。
-	Keys []string `json:"Keys,omitempty"`
-	// 时间字段的名字key。
-	// - TimeKey和TimeFormat必须成对出现。
-	// - 命名规则同「索引配置」的key名称。
-	TimeKey string `json:"TimeKey,omitempty" example:"time"`
-	// 时间字段的格式。
-	// - TimeKey和TimeFormat必须成对出现。
-	// - 参考c语言的strftime函数对于format参数的说明：https://man7.org/linux/man-pages/man3/strftime.3.html
-	TimeFormat string `json:"TimeFormat,omitempty" example:"%Y-%m-%dT%H:%M:%S,%f"`
-	// 过滤规则列表。
-	// - 当采集的日志类型为minimalist_log或multiline_log时, 最多能够配置1条过滤规则，并且过滤字段的名字key必须为__content__。
-	// - 当采集的日志类型为delimiter_log、json_log或fullregex_log时, 最多能够配置5条过滤规则，并且过滤字段的名字key不能重复、不能为空，命名规则同「索引配置」的key名称。过滤字段的日志内容需要匹配的regex必须是合法的正则表达式，并且长度限制是256个字符。
-	FilterKeyRegex []FilterKeyRegex `json:"FilterKeyRegex,omitempty"`
-	// 是否上传解析失败的日志。
-	// - UnMatchUpLoadSwitch=true和UnMatchLogKey必须成对出现。
-	// - true表示上传解析失败的日志，false表示不上传解析失败的日志。
-	UnMatchUpLoadSwitch bool `json:"UnMatchUpLoadSwitch,omitempty" example:"true"`
-	// 当上传解析失败的日志时，解析失败的日志的key名称。
-	// - UnMatchUpLoadSwitch=true和UnMatchLogKey必须成对出现。
-	// - 命名规则同「索引配置」的key名称。
-	UnMatchLogKey string `json:"UnMatchLogKey,omitempty" example:"LogParseFailed"`
-	// 根据日志模板自动提取日志内容。
-	LogTemplate LogTemplate `json:"LogTemplate,omitempty"`
+	Delimiter           string           `json:"Delimiter,omitempty"`
+	BeginRegex          string           `json:"BeginRegex,omitempty"`
+	LogRegex            string           `json:"LogRegex,omitempty"`
+	Keys                []string         `json:"Keys,omitempty"`
+	TimeKey             string           `json:"TimeKey,omitempty"`
+	TimeFormat          string           `json:"TimeFormat,omitempty"`
+	FilterKeyRegex      []FilterKeyRegex `json:"FilterKeyRegex,omitempty"`
+	UnMatchUpLoadSwitch bool             `json:"UnMatchUpLoadSwitch"`
+	UnMatchLogKey       string           `json:"UnMatchLogKey,omitempty"`
+	LogTemplate         LogTemplate      `json:"LogTemplate,omitempty"`
 }
 
 type FilterKeyRegex struct {
-	// 过滤字段的名字key。
-	Key string `json:"Key,omitempty" example:"__content__"`
-	// 过滤字段的日志内容需要匹配的regex。
-	Regex string `json:"Regex,omitempty" example:".*ERROR.*"`
+	Key   string `json:"Key,omitempty"`
+	Regex string `json:"Regex,omitempty"`
 }
 
 type LogTemplate struct {
-	// 日志模板的类型。
-	// - Nginx：Nginx类型的日志模板；
-	Type string `json:"Type,omitempty" example:"Nginx"`
-	// 日志模板的格式。
-	Format string `json:"Format,omitempty" example:"log_format main  '$remote_addr - $remote_user [$time_local] \"$request\" $request_time $request_length $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\"';"`
+	Type   string `json:"Type,omitempty"`
+	Format string `json:"Format,omitempty"`
 }
 
 type ExcludePath struct {
-	// 类型，File或Path。
-	Type string `json:"Type,omitempty"`
-	// 当Type是Path时，Value表示一个目录。
-	// - Value必须是一个绝对路径；支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”，不支持“**”通配符。
-	// 当Type是File时，Value表示一个文件名称。
-	// - Value必须是一个绝对路径；  - 支持完整匹配和通配符模式匹配，通配符只支持“**”、“*”、“?”，但是最多只能配置1个“**”通配符。
+	Type  string `json:"Type,omitempty"`
 	Value string `json:"Value,omitempty"`
 }
 
 type UserDefineRule struct {
-	// 解析路径的规则。
-	ParsePathRule *ParsePathRule `json:"ParsePathRule,omitempty"`
-	// 根据HashKey路由日志分区。
-	ShardHashKey *ShardHashKey `json:"ShardHashKey,omitempty"`
-	// 是否上传原始日志。
-	// - true：上传原始日志。
-	// - false：不上传原始日志。
-	EnableRawLog bool `json:"EnableRawLog,omitempty"`
-	// 添加常量字段
-	// - 最多能够添加5个常量字段
-	// - 键不能重复、不能为空，最多包含128个字符：字母（a-z、A-Z），数字（0-9 ），中划线（-），下划线（_），点（.），斜线（/），但是不能以下划线（_）开头
-	// - 值不能为空，长度最多为512KB
-	Fields map[string]string `json:"Fields,omitempty"`
+	ParsePathRule *ParsePathRule    `json:"ParsePathRule,omitempty"`
+	ShardHashKey  *ShardHashKey     `json:"ShardHashKey,omitempty"`
+	EnableRawLog  bool              `json:"EnableRawLog,omitempty"`
+	Fields        map[string]string `json:"Fields,omitempty"`
 }
 
 type ShardHashKey struct {
-	// 路由日志分区的HashKey。
-	// - 长度必须不大于32位；
-	// - 每个字符必须都是16进制（0~9、a~f、A~F）；
-	// - 不能是ffffffffffffffffffffffffffffffff，因为取值范围是：[00000000000000000000000000000000,ffffffffffffffffffffffffffffffff）；
 	HashKey string `json:"HashKey,omitempty"`
 }
 
 type ParsePathRule struct {
-	// 路径样例。
-	//- 路径样例必须是一个绝对路径。
-	//- 路径样例不能包含通配符*、?、**。
-	PathSample string `json:"PathSample,omitempty"`
-	//路径样例需要匹配的regex。
-	//- 必须是合法的正则表达式。
-	Regex string `json:"Regex,omitempty"`
-	//解析出来的路径字段的名字key列表。
-	//- 最多配置100个名字key
-	//- 不能配置重复的名字key。
-	//- 不能配置空的名字key。
-	//- 命名规则同「索引配置」的key名称。
-	Keys []string `json:"Keys,omitempty"`
+	PathSample string   `json:"PathSample,omitempty"`
+	Regex      string   `json:"Regex,omitempty"`
+	Keys       []string `json:"Keys,omitempty"`
 }
 
 type ContainerRule struct {
-	// stdout-采集容器标准输出stdout。
-	// stderr-采集容器标准错stderr。
-	// all-采集容器标准输出stdout和容器标准错stderr。
-	// 默认值是all
-	Stream string `json:"Stream,omitempty" enums:"stdout,stderr,all"`
-	// 通过容器名称指定待采集的容器，支持正则匹配。例如设置为"ContainerNameRegex":"^(container-test)$"，表示匹配所有名为container-test的容器。
-	ContainerNameRegex string `json:"ContainerNameRegex,omitempty"`
-	// 通过容器Label白名单指定待采集的容器。
-	// 如果要设置容器Label白名单，则Key必填。
-	// - 如果Value不为空，则只采集在容器Label中包含Key=Value的容器。
-	// - 如果Value为空，则采集所有在容器Label中包含Key的容器。
-	// 说明：
-	// - 多个键值对之间为或关系，即只要容器Label满足任一键值对即可被采集。
-	// - Value默认为字符串匹配，即只有Value和容器Label完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配，例如：Value配置为^(kube-system|istio-system)$，可同时匹配kube-system和istio-system。
-	// - 请勿设置相同的Key，如果重名只生效一个。
+	Stream                     string            `json:"Stream,omitempty"`
+	ContainerNameRegex         string            `json:"ContainerNameRegex,omitempty"`
 	IncludeContainerLabelRegex map[string]string `json:"IncludeContainerLabelRegex,omitempty"`
-	// 通过容器Label黑名单排除不采集的容器。
-	// 如果要设置容器Label黑名单，则Key必填。
-	// - 如果Value不为空，则只排除在容器Label中包含Key=Value的容器。
-	// - 如果Value为空，则排除所有在容器Label中包含Key的容器。
-	// 说明：
-	// - 多个键值对之间为或关系，即只要容器Label满足任一键值对即不被采集。
-	// - Value默认为字符串匹配，即只有Value和容器Label完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配，例如：Value配置为^(kube-system|istio-system)$，可同时匹配kube-system和istio-system。
-	// - 请勿设置相同的Key，如果重名只生效一个。
 	ExcludeContainerLabelRegex map[string]string `json:"ExcludeContainerLabelRegex,omitempty"`
-	// 通过容器环境变量白名单指定待采集的容器。
-	// 如果要设置容器环境变量白名单，则Key必填。
-	// - 如果Value不为空，则只采集在容器环境变量中包含Key=Value的容器。
-	// - 如果Value为空，则采集所有在容器环境变量中包含Key的容器。
-	// 说明：
-	// - 多个键值对之间为或关系，即只要容器环境变量满足任一键值对即可被采集。
-	// - Value默认为字符串匹配，即只有Value和容器环境变量完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配，例如：Value配置为^(kube-system|istio-system)$，可同时匹配kube-system和istio-system。
-	IncludeContainerEnvRegex map[string]string `json:"IncludeContainerEnvRegex,omitempty"`
-	// 通过容器环境变量黑名单排除不采集的容器。
-	// 如果要容器设置环境变量黑名单，则Key必填。
-	// - 如果Value不为空，则只排除在容器环境变量中包含Key=Value的容器。
-	// - 如果Value为空，则排除所有在容器环境变量中包含Key的容器。
-	// 说明：
-	// - 多个键值对之间为或关系，即只要容器环境变量满足任一键值对即不被采集。
-	// - Value默认为字符串匹配，即只有Value和容器环境变量完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配，例如：Value配置为^(kube-system|istio-system)$，可同时匹配kube-system和istio-system。
-	ExcludeContainerEnvRegex map[string]string `json:"ExcludeContainerEnvRegex,omitempty"`
-	// 设置环境变量日志标签后，日志服务将在日志中新增环境变量相关字段。例如设置EnvKey为VERSION，设置EnvValue为env_version，当容器中包含环境变量VERSION=v1.0.0时，会将该信息添加到日志中，即添加字段__tag__env_version__: v1.0.0。
-	EnvTag map[string]string `json:"EnvTag,omitempty"`
-	// Kubernetes容器的采集规则
-	KubernetesRule KubernetesRule `json:"KubernetesRule,omitempty"`
+	IncludeContainerEnvRegex   map[string]string `json:"IncludeContainerEnvRegex,omitempty"`
+	ExcludeContainerEnvRegex   map[string]string `json:"ExcludeContainerEnvRegex,omitempty"`
+	EnvTag                     map[string]string `json:"EnvTag,omitempty"`
+	KubernetesRule             KubernetesRule    `json:"KubernetesRule,omitempty"`
 }
 
 type KubernetesRule struct {
-	// 通过Namespace名称指定采集的容器，支持正则匹配。例如设置为"NamespaceNameRegex":"^(default|nginx)$"，表示匹配nginx命名空间、default命名空间下的所有容器。
-	NamespaceNameRegex string `json:"NamespaceNameRegex,omitempty"`
-	// 通过工作负载的类型指定采集的容器。例如设置为"WorkloadType":"Deployment"，表示匹配Deployment类型工作负载下的所有容器。
-	// - Deployment: 无状态
-	// - StatefulSet: 有状态
-	// - DaemonSet: 守护进程
-	// - Job: 任务
-	// - CronJob: 定时任务
-	WorkloadType string `json:"WorkloadType,omitempty" enums:"Deployment,StatefulSet,DaemonSet,Job,CronJob"`
-	// 通过工作负载名称指定采集的容器，支持正则匹配。例如设置为"WorkloadNameRegex":"^(nginx-deployment.*)$"，表示匹配以nginx-deployment开头的工作负载下的所有容器。
-	WorkloadNameRegex string `json:"WorkloadNameRegex,omitempty"`
-	// 通过Pod Label白名单指定待采集的容器。如果您要设置Pod Label白名单，那么Key必填，Value可选填。
-	// - 如果Value为空，则Pod Label中包含Key的Pod下的容器都匹配。
-	// - 如果Value不为空，则Pod Label中包含Key=Value的Pod下的容器才匹配。
-	// - Value默认为字符串匹配，即只有Value和Pod Label的值完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配。例如设置Key为app，设置Value为^(test1|test2)$，表示匹配Pod Label中包含app:test1、app:test2的Pod下的容器。
-	// 多个白名单之间为或关系，即只要Pod的Label满足任一白名单即可匹配。
-	PodNameRegex string `json:"PodNameRegex,omitempty"`
-	// 通过Pod Label黑名单排除不采集的容器。如果您要设置Pod Label黑名单，那么Key必填，Value可选填。
-	// - 如果Value为空，则Pod Label中包含Key的Pod下的容器都被排除。
-	// - 如果Value不为空，则Pod Label中包含Key=Value的Pod下的容器才会被排除。
-	// - Value默认为字符串匹配，即只有Value和Pod Label的值完全相同才会匹配。如果该值以^开头并且以$结尾，则为正则匹配。例如设置Key为app，设置Value为^(test1|test2)$，表示匹配Pod Label中包含app:test1、app:test2的Pod下的容器。
-	// 多个黑名单之间为或关系，即只要容器Label满足任一黑名单对即可被排除。
+	NamespaceNameRegex   string            `json:"NamespaceNameRegex,omitempty"`
+	WorkloadType         string            `json:"WorkloadType,omitempty"`
+	WorkloadNameRegex    string            `json:"WorkloadNameRegex,omitempty"`
+	PodNameRegex         string            `json:"PodNameRegex,omitempty"`
 	IncludePodLabelRegex map[string]string `json:"IncludePodLabelRegex,omitempty"`
-	// 通过Pod名称指定待采集的容器，支持正则匹配。例如设置为"PodNameRegex":"^(nginx-log-demo.*)$"，表示匹配以nginx-log-demo开头的Pod下的所有容器。
 	ExcludePodLabelRegex map[string]string `json:"ExcludePodLabelRegex,omitempty"`
-	// 设置Kubernetes Label日志标签后，日志服务将在日志中新增Kubernetes Label相关字段。例如设置LabelKey为app，设置LabelValue为k8s_label_app，当Kubernetes中包含Label app=serviceA时，会将该信息添加到日志中，即添加字段__tag__k8s_label_app__: serviceA。
-	LabelTag map[string]string `json:"LabelTag,omitempty"`
+	LabelTag             map[string]string `json:"LabelTag,omitempty"`
 }
 
 type CreateRuleResponse struct {
 	CommonResponse
-	// 采集配置的ID
-	RuleID string `json:"RuleId" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
+	RuleID string `json:"RuleId"`
 }
 
 type DeleteRuleRequest struct {
 	CommonRequest
-	// 采集配置的ID。
-	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
+	RuleID string `json:"RuleId"`
+}
+
+func (v *DeleteRuleRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	return nil
 }
 
 type ModifyRuleRequest struct {
 	CommonRequest
-	// 采集配置的ID。
-	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
-	// 采集配置的名称:
-	// - 在一个Topic中唯一;
-	// - 长度限制为3-63个字符，只能包含小写字母、数字和短划线（-），必须以小写字母或者数字开头和结尾。
-	RuleName *string `json:"RuleName" example:"testName"`
-	// 采集路径列表:
-	// - 最多能够创建10个采集路径;
-	// - 采集路径必须是一个绝对路径;
-	// 当InputType=0时:
-	// - 采集路径支持完整匹配和通配符模式匹配，通配符只支持"**"、"*"、"?"，但是最多只能配置1个"**"通配符.
-	// 当InputType=1时:
-	// - 不允许配置采集路径列表
-	// 当InputType=2时:
-	// - 采集路径支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”，不支持“**”。
-	Paths *[]string `json:"Paths" example:"[\"/data/nginx/log/**/access.log\"]"`
-	// 采集的日志类型:
-	// - minimalist_log代表极简日志；
-	// - delimiter_log代表分隔符格式日志；
-	// - json_log代表json格式日志；
-	// - multiline_log代表多行日志；
-	// - fullregex_log代表完整正则日志；
-	// 只要修改提取规则，无论是否修改采集的日志类型，采集的日志类型必须配置。
-	LogType *string `json:"LogType" enums:"minimalist_log,delimiter_log,json_log,multiline_log,fullregex_log" example:"delimiter_log"`
-	// 提取规则: 如果配置非minimalist_log或者非json_log的采集的日志类型，那么必须同时配置提取规则。
-	ExtractRule *ExtractRule `json:"ExtractRule"`
-	// 采集黑名单列表: 最多能够创建10个采集黑名单。
-	// 当InputType=0时：
-	// - 当Type是Path时，Value表示一个目录。支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”，不支持“**”通配符。
-	// - 当Type是File时，Value表示一个文件名称。支持完整匹配和通配符模式匹配，通配符只支持“**”、“*”、“?”，但是最多只能配置1个“**”通配符。
-	// 当InputType=1时：
-	// - 不允许配置采集黑名单列表。
-	// 当InputType=2时：
-	// - 当Type是Path时，Value表示一个目录。仅支持完整匹配，不支持通配符模式匹配。
-	// - 当Type是File时，Value表示一个文件名称。目录部分仅支持完整匹配，不支持通配符模式匹配。文件名称部分支持完整匹配和通配符模式匹配，通配符只支持“*”、“?”。
-	ExcludePaths *[]ExcludePath `json:"ExcludePaths"`
-	// 用户自定义的采集规则。
-	UserDefineRule *UserDefineRule `json:"UserDefineRule"`
-	// 日志样例: 日志样例的长度必须不大于3000个字符
-	LogSample *string `json:"LogSample" example:"xxxxxx"`
-	// 采集类型：
-	// - 0：宿主机日志文件
-	// - 1：k8s容器标准输出
-	// - 2：k8s容器内日志文件
-	// 只要修改容器采集规则，无论是否修改采集的类型，采集的类型必须配置。
-	InputType *int `json:"InputType"`
-	// 容器采集规则
-	ContainerRule *ContainerRule `json:"ContainerRule"`
+	RuleID         string          `json:"RuleId,omitempty"`
+	RuleName       *string         `json:"RuleName,omitempty"`
+	Paths          *[]string       `json:"Paths,omitempty"`
+	LogType        *string         `json:"LogType,omitempty"`
+	ExtractRule    *ExtractRule    `json:"ExtractRule,omitempty"`
+	ExcludePaths   *[]ExcludePath  `json:"ExcludePaths,omitempty"`
+	UserDefineRule *UserDefineRule `json:"UserDefineRule,omitempty"`
+	LogSample      *string         `json:"LogSample,omitempty"`
+	InputType      *int            `json:"InputType,omitempty"`
+	ContainerRule  *ContainerRule  `json:"ContainerRule,omitempty"`
+}
+
+func (v *ModifyRuleRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	return nil
 }
 
 type DescribeRuleRequest struct {
 	CommonRequest
 	RuleID string `json:"RuleId"`
+}
+
+func (v *DescribeRuleRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	return nil
 }
 
 type DescribeRuleResponse struct {
@@ -657,7 +665,7 @@ type RuleInfo struct {
 	RuleID         string         `json:"RuleId"`
 	RuleName       string         `json:"RuleName"`
 	Paths          []string       `json:"Paths"`
-	LogType        string         `json:"LogType" enums:"minimalist_log,delimiter_log,json_log,multiline_log,fullregex_log"`
+	LogType        string         `json:"LogType"`
 	ExtractRule    ExtractRule    `json:"ExtractRule"`
 	ExcludePaths   []ExcludePath  `json:"ExcludePaths"`
 	UserDefineRule UserDefineRule `json:"UserDefineRule"`
@@ -671,7 +679,7 @@ type RuleInfo struct {
 type HostGroupInfo struct {
 	HostGroupID                   string `json:"HostGroupId"`
 	HostGroupName                 string `json:"HostGroupName"`
-	HostGroupType                 string `json:"HostGroupType" enums:"IP,Label"`
+	HostGroupType                 string `json:"HostGroupType"`
 	HostIdentifier                string `json:"HostIdentifier"`
 	HostCount                     int    `json:"HostCount"`
 	NormalHeartbeatStatusNumber   int    `json:"NormalHeartbeatStatusCount"`
@@ -687,40 +695,41 @@ type HostGroupInfo struct {
 
 type DescribeRulesRequest struct {
 	CommonRequest
-	//必选
-	ProjectID string `json:"ProjectId"`
-	// 分页查询时的页码。默认为1，即从第一页数据开始返回。
+	ProjectID  string  `json:"ProjectId"`
+	PageNumber int     `json:"PageNumber"`
+	PageSize   int     `json:"PageSize"`
+	TopicID    *string `json:"TopicId,omitempty"`
+	TopicName  *string `json:"TopicName,omitempty"`
+	RuleID     *string `json:"RuleId,omitempty"`
+	RuleName   *string `json:"RuleName,omitempty"`
+}
 
-	//可选
-	PageNumber int `json:"PageNumber"`
-	// 分页大小。默认为20，最大为100。
-	PageSize int `json:"PageSize"`
-	// 采集配置的ID关键词，支持模糊搜索。
-	TopicID *string `json:"TopicId"`
-	// 日志主题的名称关键词，支持模糊搜索。
-	TopicName *string `json:"TopicName"`
-	// 日志主题的ID关键词，支持模糊搜索。
-	RuleID *string `json:"RuleId"`
-	// 采集配置的名称关键词，支持模糊搜索。
-	RuleName *string `json:"RuleName"`
+func (v *DescribeRulesRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
 }
 
 type CreateHostGroupRequest struct {
 	CommonRequest
-	// 机器组的名称。
-	HostGroupName string `json:"HostGroupName" binding:"required" example:"mgn1"`
-	// 机器组的类型: IP表示机器IP; Label表示机器标识。
-	HostGroupType string `json:"HostGroupType" binding:"required" example:"IP" enums:"IP,Label"`
-	// 机器标识符。
-	HostIdentifier *string `json:"HostIdentifier" example:"label"`
-	// 机器IP列表。
-	HostIPList *[]string `json:"HostIpList" example:"[\"192.168.0.1\", \"127.0.0.1\"]"`
-	// 机器组服务器中安装的LogCollector是否开启自动升级功能。
-	AutoUpdate *bool `json:",omitempty"`
-	// LogCollector自动升级的开始时间。
-	UpdateStartTime *string `json:",omitempty" example:"00:00"`
-	// LogCollector自动升级的结束时间。
-	UpdateEndTime *string `json:",omitempty" example:"02:00"`
+	HostGroupName   string    `json:"HostGroupName"`
+	HostGroupType   string    `json:"HostGroupType"`
+	HostIdentifier  *string   `json:"HostIdentifier"`
+	HostIPList      *[]string `json:"HostIpList"`
+	AutoUpdate      *bool     `json:",omitempty"`
+	UpdateStartTime *string   `json:",omitempty"`
+	UpdateEndTime   *string   `json:",omitempty"`
+}
+
+func (v *CreateHostGroupRequest) CheckValidation() error {
+	if len(v.HostGroupName) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupName")
+	}
+	if len(v.HostGroupType) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupType")
+	}
+	return nil
 }
 
 type CreateHostGroupResponse struct {
@@ -736,44 +745,65 @@ type DescribeRulesResponse struct {
 
 type DeleteHostGroupRequest struct {
 	CommonRequest
-	// 机器组的Id。
-	HostGroupID string `json:"HostGroupId" binding:"required" example:"c7e0e442-19bf-4fb3-b547-5992fb8b****"`
+	HostGroupID string `json:"HostGroupId"`
+}
+
+func (v *DeleteHostGroupRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
 }
 
 type ApplyRuleToHostGroupsRequest struct {
 	CommonRequest
-	// 采集配置的ID。
-	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
-	// 机器组的ID列表。
-	HostGroupIDs []string `json:"HostGroupIds" binding:"required" example:"[\"bcb20377-7e48-4e90-968b-922eb259****\",\"6622a14b-770f-4171-a385-3b68486f****\"]"`
+	RuleID       string   `json:"RuleId"`
+	HostGroupIDs []string `json:"HostGroupIds"`
+}
+
+func (v *ApplyRuleToHostGroupsRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	if len(v.HostGroupIDs) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupIDs")
+	}
+	return nil
 }
 
 type DeleteRuleFromHostGroupsRequest struct {
 	CommonRequest
-	// 采集配置的ID。
-	RuleID string `json:"RuleId" binding:"required" example:"faf6d529-e75e-457f-a23a-9c4203a6dff3xx"`
-	// 机器组的ID列表。
-	HostGroupIDs []string `json:"HostGroupIds" binding:"required" example:"[\"bcb20377-7e48-4e90-968b-922eb259****\",\"6622a14b-770f-4171-a385-3b68486f****\"]"`
+	RuleID       string   `json:"RuleId"`
+	HostGroupIDs []string `json:"HostGroupIds"`
+}
+
+func (v *DeleteRuleFromHostGroupsRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	if len(v.HostGroupIDs) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupIDs")
+	}
+	return nil
 }
 
 type ModifyHostGroupRequest struct {
 	CommonRequest
-	// 机器组Id。
-	HostGroupID string `json:"HostGroupId" binding:"required" example:"0fdaa6b6-3c9f-424c-8664-fc0d222c****"`
-	// 机器组的名称。
-	HostGroupName *string `json:"HostGroupName" example:"mgn1"`
-	// 机器组的类型：IP表示机器IP；Label表示机器标识。
-	HostGroupType *string `json:"HostGroupType" example:"IP" enums:"IP,Label"`
-	// 机器IP列表。
-	HostIPList *[]string `json:"HostIpList" example:"[\"192.168.0.1\", \"127.0.0.1\"]"`
-	// 机器标识符
-	HostIdentifier *string `json:"HostIdentifier" example:"label"`
-	// 机器组服务器中安装的LogCollector是否开启自动升级功能。
-	AutoUpdate *bool `json:",omitempty"`
-	// LogCollector自动升级的开始时间。
-	UpdateStartTime *string `json:",omitempty" example:"00:00"`
-	// LogCollector自动升级的结束时间。
-	UpdateEndTime *string `json:",omitempty" example:"02:00"`
+	HostGroupID     string    `json:"HostGroupId"`
+	HostGroupName   *string   `json:"HostGroupName,omitempty"`
+	HostGroupType   *string   `json:"HostGroupType,omitempty"`
+	HostIPList      *[]string `json:"HostIpList,omitempty"`
+	HostIdentifier  *string   `json:"HostIdentifier,omitempty"`
+	AutoUpdate      *bool     `json:",omitempty"`
+	UpdateStartTime *string   `json:",omitempty"`
+	UpdateEndTime   *string   `json:",omitempty"`
+}
+
+func (v *ModifyHostGroupRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
 }
 
 type DescribeHostGroupRequest struct {
@@ -781,12 +811,18 @@ type DescribeHostGroupRequest struct {
 	HostGroupID string
 }
 
+func (v *DescribeHostGroupRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
+}
+
 type DescribeHostGroupResponse struct {
 	CommonResponse
 	HostGroupHostsRulesInfo *HostGroupHostsRulesInfo `json:"HostGroupHostsRulesInfo"`
 }
 
-// HostGroupHostsRulesInfo 展示层对象
 type HostGroupHostsRulesInfo struct {
 	HostGroupInfo *HostGroupInfo `json:"HostGroupInfo"`
 	HostInfos     []*HostInfo    `json:"HostInfos"`
@@ -803,9 +839,13 @@ type DescribeHostGroupsRequest struct {
 	CommonRequest
 	PageNumber     int
 	PageSize       int
-	HostGroupID    *string
-	HostGroupName  *string
+	HostGroupID    *string `json:",omitempty"`
+	HostGroupName  *string `json:",omitempty"`
 	HostIdentifier *string `json:",omitempty"`
+}
+
+func (v *DescribeHostGroupsRequest) CheckValidation() error {
+	return nil
 }
 
 type DescribeHostGroupsResponse struct {
@@ -823,6 +863,13 @@ type DescribeHostsRequest struct {
 	HeartbeatStatus *int
 }
 
+func (v *DescribeHostsRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
+}
+
 type DescribeHostsResponse struct {
 	CommonResponse
 	Total     int64       `json:"Total"`
@@ -831,10 +878,18 @@ type DescribeHostsResponse struct {
 
 type DeleteHostRequest struct {
 	CommonRequest
-	// 机器组的Id。
-	HostGroupID string `json:"HostGroupId" binding:"required" example:"c7e0e442-19bf-4fb3-b547-5992fb8b****"`
-	// 机器的IP。
-	IP string `json:"Ip" binding:"required" example:"1.1.1.1"`
+	HostGroupID string `json:"HostGroupId"`
+	IP          string `json:"Ip"`
+}
+
+func (v *DeleteHostRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty Host")
+	}
+	if len(v.IP) <= 0 {
+		return errors.New("Invalid arguemnt, empty IP")
+	}
+	return nil
 }
 
 type DescribeHostGroupRulesRequest struct {
@@ -842,6 +897,13 @@ type DescribeHostGroupRulesRequest struct {
 	HostGroupID string
 	PageNumber  int
 	PageSize    int
+}
+
+func (v *DescribeHostGroupRulesRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
 }
 
 type DescribeHostGroupRulesResponse struct {
@@ -858,61 +920,74 @@ type ModifyHostGroupsAutoUpdateRequest struct {
 	UpdateEndTime   *string `json:",omitempty"`
 }
 
+func (v *ModifyHostGroupsAutoUpdateRequest) CheckValidation() error {
+	if len(v.HostGroupIds) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupIds")
+	}
+	return nil
+}
+
 type ModifyHostGroupsAutoUpdateResponse struct {
 	CommonResponse
 }
 
 type CreateAlarmRequest struct {
 	CommonRequest
-	// 告警策略名称。
-	// - 同一个日志项目下，告警策略名称不可重复。
-	// - 只能包括小写字母、数字、-
-	// - 必须以小写字母或者数字开头和结尾。
-	// - 长度为3-63字符。
-	AlarmName string `json:"AlarmName" binding:"required" example:"test-alarm"`
-	// 告警策略所属的ProjectId
-	ProjectID string `json:"ProjectId" binding:"required"`
-	// 是否开启告警策略。默认值为true
-	Status *bool `json:"Status" example:"true"`
-	// 查询或者分析命令，支持1-3条
-	QueryRequest QueryRequests `json:"QueryRequest" binding:"required" `
-	// 查询或分析请求的执行周期
-	RequestCycle RequestCycle `json:"RequestCycle" binding:"required"`
-	// 告警触发条件，参考告警条件表达式：https://bytedance.feishu.cn/wiki/wikcnxhR5kkc31qgQGdMiOPuFle
-	Condition string `json:"Condition" binding:"required"`
-	// 持续周期。持续满足触发条件TriggerPeriod个周期后，再进行告警；最小值为1，最大值为10，默认为1。
-	TriggerPeriod int `json:"TriggerPeriod" binding:"required"`
-	// 告警重复的周期。单位是分钟。取值范围是0~1440。
-	AlarmPeriod int `json:"AlarmPeriod" binding:"required"`
-	// 告警对应的通知列表
-	AlarmNotifyGroup []string `json:"AlarmNotifyGroup" binding:"required"`
-	// 用户自定义告警内容
-	UserDefineMsg *string `json:"UserDefineMsg"`
+	AlarmName        string        `json:"AlarmName"`
+	ProjectID        string        `json:"ProjectId"`
+	Status           *bool         `json:"Status,omitempty"`
+	QueryRequest     QueryRequests `json:"QueryRequest"`
+	RequestCycle     RequestCycle  `json:"RequestCycle"`
+	Condition        string        `json:"Condition"`
+	TriggerPeriod    int           `json:"TriggerPeriod"`
+	AlarmPeriod      int           `json:"AlarmPeriod"`
+	AlarmNotifyGroup []string      `json:"AlarmNotifyGroup"`
+	UserDefineMsg    *string       `json:"UserDefineMsg,omitempty"`
+}
+
+func (v *CreateAlarmRequest) CheckValidation() error {
+	if len(v.AlarmName) <= 0 {
+		return errors.New("Invalid argument, empty AlarmName")
+	}
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.QueryRequest) <= 0 {
+		return errors.New("Invalid argument, empty QueryRequest")
+	}
+	if len(v.RequestCycle.Type) <= 0 {
+		return errors.New("Invalid argument, empty RequestCycle.Type")
+	}
+	if v.RequestCycle.Time <= 0 {
+		return errors.New("Invalid argument, RequestCycle.Time <= 0")
+	}
+	if v.AlarmPeriod <= 0 {
+		return errors.New("Invalid argument, empty AlarmPeriod")
+	}
+	if len(v.AlarmNotifyGroup) <= 0 {
+		return errors.New("Invalid argument, empty AlarmNotifyGroup")
+	}
+	if len(v.Condition) <= 0 {
+		return errors.New("Invalid argument, empty Condition")
+	}
+	return nil
 }
 
 type QueryRequests []QueryRequest
 
 type RequestCycle struct {
-	// 可选值：Period-周期执行；Fixed-定期执行。
-	Type string `json:"Type" binding:"required" enums:"Period,Fixed"`
-	// 执行的周期，或者定制执行的时间节点。单位为分钟，取值范围为1~1440。
-	Time int `json:"Time"`
+	Type string `json:"Type"`
+	Time int    `json:"Time"`
 }
 
 type QueryRequest struct {
 	CommonRequest
-	// 查询语句，支持的最大长度为1024。
-	Query string `json:"Query" gorm:"Query" binding:"required"`
-	// 告警对象序号；从1开始递增。
-	Number uint8 `json:"Number" gorm:"Number" binding:"required"`
-	// 告警策略执行的topicId。
-	TopicID string `json:"TopicId" gorm:"-" binding:"required"`
-	// 告警策略执行的TopicName。
-	TopicName string `json:"TopicName,omitempty" gorm:"-"`
-	// 查询范围起始时间相对当前的历史时间，单位为分钟，取值为非正，最大值为0，最小值为-1440。
-	StartTimeOffset int `json:"StartTimeOffset" gorm:"StartTimeOffset" binding:"required"`
-	// 查询范围终止时间相对当前的历史时间，单位为分钟，取值为非正，须大于StartTimeOffset，最大值为0，最小值为-1440。
-	EndTimeOffset int `json:"EndTimeOffset" gorm:"EndTimeOffset" binding:"required"`
+	Query           string `json:"Query"`
+	Number          uint8  `json:"Number"`
+	TopicID         string `json:"TopicId"`
+	TopicName       string `json:"TopicName,omitempty"`
+	StartTimeOffset int    `json:"StartTimeOffset"`
+	EndTimeOffset   int    `json:"EndTimeOffset"`
 }
 
 type CreateAlarmResponse struct {
@@ -922,37 +997,35 @@ type CreateAlarmResponse struct {
 
 type DeleteAlarmRequest struct {
 	CommonRequest
-	// 创建时返回的告警策略id
-	AlarmID string `json:"AlarmId" binding:"required"`
+	AlarmID string `json:"AlarmId"`
+}
+
+func (v *DeleteAlarmRequest) CheckValidation() error {
+	if len(v.AlarmID) <= 0 {
+		return errors.New("Invalid argument, empty AlarmID")
+	}
+	return nil
 }
 
 type ModifyAlarmRequest struct {
 	CommonRequest
-	// 告警策略Id
-	AlarmID string `json:"AlarmId" binding:"required"`
-	// 告警策略名称。
-	// - 同一个日志项目下，告警策略名称不可重复。
-	// - 只能包括小写字母、数字、-
-	// - 必须以小写字母或者数字开头和结尾。
-	// - 长度为3-63字符。
-	AlarmName *string `json:"AlarmName"`
-	// 是否开启告警策略。默认值为true
-	Status *bool `json:"Status" example:"true"`
-	// 查询或者分析命令，支持1-3条
-	QueryRequest *QueryRequests `json:"QueryRequest"`
-	// 查询或分析请求的执行周期
-	RequestCycle *RequestCycle `json:"RequestCycle"`
-	// 告警触发条件
-	Condition *string `json:"Condition"`
-	// 持续周期。持续满足触发条件TriggerPeriod个周期后，再进行告警；最小值为1，最大值为10，默认为1。
-	TriggerPeriod *int `json:"TriggerPeriod"`
-	// 告警重复的周期。单位是分钟。取值范围是10~1440。
-	// 一个手机号码每天最多收到50条告警短信，且与火山引擎其他消息通知服务共用短信额度
-	AlarmPeriod *int `json:"AlarmPeriod"`
-	// 告警对应的通知列表
-	AlarmNotifyGroup *[]string `json:"AlarmNotifyGroup"`
-	// 用户自定义告警内容
-	UserDefineMsg *string `json:"UserDefineMsg"`
+	AlarmID          string         `json:"AlarmId"`
+	AlarmName        *string        `json:"AlarmName"`
+	Status           *bool          `json:"Status"`
+	QueryRequest     *QueryRequests `json:"QueryRequest"`
+	RequestCycle     *RequestCycle  `json:"RequestCycle"`
+	Condition        *string        `json:"Condition"`
+	TriggerPeriod    *int           `json:"TriggerPeriod"`
+	AlarmPeriod      *int           `json:"AlarmPeriod"`
+	AlarmNotifyGroup *[]string      `json:"AlarmNotifyGroup"`
+	UserDefineMsg    *string        `json:"UserDefineMsg"`
+}
+
+func (v *ModifyAlarmRequest) CheckValidation() error {
+	if len(v.AlarmID) <= 0 {
+		return errors.New("Invalid argument, empty AlarmID")
+	}
+	return nil
 }
 
 type DescribeAlarmsRequest struct {
@@ -965,6 +1038,13 @@ type DescribeAlarmsRequest struct {
 	Status        *bool
 	PageNumber    int
 	PageSize      int
+}
+
+func (v *DescribeAlarmsRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
 }
 
 type DescribeAlarmsResponse struct {
@@ -1005,18 +1085,12 @@ type NoticeType string
 type Receivers []Receiver
 
 type Receiver struct {
-	// 接受者类型。可选值：User-用户ID;暂不支持其余接收者类型。
-	ReceiverType ReveiverType `json:"ReceiverType" binding:"required"`
-	// 接收者的名字。这里前端通过list所有用户选择用户，不涉及该限制长度1~64，仅支持英文、数字、下划线、"."、"-"、"@"
-	ReceiverNames []string `json:"ReceiverNames" binding:"required"`
-	// 通知接收渠道。
-	ReceiverChannels []ReceiverChannel `json:"ReceiverChannels" binding:"required" enums:"Email,Sms"`
-	// 允许接收信息的开始时间。
-	StartTime string `json:"StartTime" binding:"required"`
-	// 允许接收信息的开始时间。
-	EndTime string `json:"EndTime" binding:"required"`
-	// 如果选择了飞书渠道，则必填
-	Webhook string `json:",omitempty"`
+	ReceiverType     ReveiverType      `json:"ReceiverType"`
+	ReceiverNames    []string          `json:"ReceiverNames"`
+	ReceiverChannels []ReceiverChannel `json:"ReceiverChannels"`
+	StartTime        string            `json:"StartTime"`
+	EndTime          string            `json:"EndTime"`
+	Webhook          string            `json:",omitempty"`
 }
 
 type ReveiverType string
@@ -1025,16 +1099,22 @@ type ReceiverChannel string
 
 type CreateAlarmNotifyGroupRequest struct {
 	CommonRequest
-	// 告警通知组名称。
-	// - 同一个账户下，通知组名称不可重复。
-	// - 只能包括小写字母、数字、-。
-	// - 必须以小写字母或者数字开头和结尾。
-	// - 长度为3-63字符。
-	GroupName string `json:"AlarmNotifyGroupName" binding:"required" example:"test-alarm-nofify"`
-	// 告警通知的类型。可选值，选择一个或者多个：Trigger-告警触发;Recovery-告警恢复。
-	NoticeType NoticeTypes `json:"NotifyType" binding:"required"`
-	// 告警对应的通知列表，最少1一个，最大支持10个。
-	Receivers Receivers `json:"Receivers" binding:"required"`
+	GroupName  string      `json:"AlarmNotifyGroupName"`
+	NoticeType NoticeTypes `json:"NotifyType"`
+	Receivers  Receivers   `json:"Receivers"`
+}
+
+func (v *CreateAlarmNotifyGroupRequest) CheckValidation() error {
+	if len(v.GroupName) <= 0 {
+		return errors.New("Invalid argument, empty GroupName")
+	}
+	if len(v.NoticeType) <= 0 {
+		return errors.New("Invalid argument, empty NotifyType")
+	}
+	if len(v.Receivers) <= 0 {
+		return errors.New("Invalid argument, empty Receivers")
+	}
+	return nil
 }
 
 type CreateAlarmNotifyGroupResponse struct {
@@ -1044,8 +1124,14 @@ type CreateAlarmNotifyGroupResponse struct {
 
 type DeleteAlarmNotifyGroupRequest struct {
 	CommonRequest
-	// 创建时返回的NotifyGroupId
-	AlarmNotifyGroupID string `json:"AlarmNotifyGroupId" binding:"required"`
+	AlarmNotifyGroupID string `json:"AlarmNotifyGroupId"`
+}
+
+func (v *DeleteAlarmNotifyGroupRequest) CheckValidation() error {
+	if len(v.AlarmNotifyGroupID) <= 0 {
+		return errors.New("AlarmNotifyGroupID")
+	}
+	return nil
 }
 
 type DeleteAlarmNotifyGroupResponse struct {
@@ -1053,18 +1139,17 @@ type DeleteAlarmNotifyGroupResponse struct {
 
 type ModifyAlarmNotifyGroupRequest struct {
 	CommonRequest
-	// 通知组id
-	AlarmNotifyGroupID string `json:"AlarmNotifyGroupId" binding:"required"`
-	// 告警通知组名称。
-	// - 同一个账户下，通知组名称不可重复。
-	// - 只能包括小写字母、数字、-。
-	// - 必须以小写字母或者数字开头和结尾。
-	// - 长度为3-63字符。
-	AlarmNotifyGroupName *string `json:"AlarmNotifyGroupName"`
-	// 告警通知的类型。可选值，选择一个或者多个：Trigger-告警触发;Recovery-告警恢复。
-	NoticeType *NoticeTypes `json:"NotifyType" enums:"Trigger,Recovery"`
-	// 告警对应的通知列表。
-	Receivers *Receivers `json:"Receivers"`
+	AlarmNotifyGroupID   string       `json:"AlarmNotifyGroupId"`
+	AlarmNotifyGroupName *string      `json:"AlarmNotifyGroupName,omitempty"`
+	NoticeType           *NoticeTypes `json:"NotifyType,omitempty"`
+	Receivers            *Receivers   `json:"Receivers,omitempty"`
+}
+
+func (v *ModifyAlarmNotifyGroupRequest) CheckValidation() error {
+	if len(v.AlarmNotifyGroupID) <= 0 {
+		return errors.New("Invalid argument, empty AlarmNotifyGroupID")
+	}
+	return nil
 }
 
 type DescribeAlarmNotifyGroupsRequest struct {
@@ -1074,6 +1159,10 @@ type DescribeAlarmNotifyGroupsRequest struct {
 	UserName      *string
 	PageNumber    int
 	PageSize      int
+}
+
+func (v *DescribeAlarmNotifyGroupsRequest) CheckValidation() error {
+	return nil
 }
 
 type DescribeAlarmNotifyGroupsResponse struct {
@@ -1094,6 +1183,32 @@ type CreateDownloadTaskRequest struct {
 	Limit       int
 	Sort        string
 }
+
+func (v *CreateDownloadTaskRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if len(v.TaskName) <= 0 {
+		return errors.New("Invalid argument, empty TaskName")
+	}
+	if v.EndTime < v.StartTime {
+		return errors.New("Invalid argument, EndTime < StartTime")
+	}
+	if len(v.DataFormat) <= 0 {
+		return errors.New("Invalid argument, empty DataFormat")
+	}
+	if len(v.Sort) <= 0 {
+		return errors.New("Invalid argument, empty Sort")
+	}
+	if v.Limit <= 0 {
+		return errors.New("Invalid argument, empty Limit")
+	}
+	if len(v.Compression) <= 0 {
+		return errors.New("Invalid argument, empty Compression")
+	}
+	return nil
+}
+
 type CreateDownloadTaskResponse struct {
 	CommonResponse
 	TaskId string
@@ -1105,6 +1220,14 @@ type DescribeDownloadTasksRequest struct {
 	PageNumber *int   `json:"-"`
 	PageSize   *int   `json:"-"`
 }
+
+func (v *DescribeDownloadTasksRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("TopicID")
+	}
+	return nil
+}
+
 type DownloadTaskResp struct {
 	TaskId      string
 	TaskName    string
@@ -1129,6 +1252,14 @@ type DescribeDownloadUrlRequest struct {
 	CommonRequest
 	TaskId string `json:"-"`
 }
+
+func (v *DescribeDownloadUrlRequest) CheckValidation() error {
+	if len(v.TaskId) <= 0 {
+		return errors.New("Invalid argument, empty TaskId")
+	}
+	return nil
+}
+
 type DescribeDownloadUrlResponse struct {
 	CommonResponse
 	DownloadUrl string
@@ -1142,6 +1273,20 @@ type WebTracksRequest struct {
 	Logs         []map[string]string
 	Source       string `json:"Source,omitempty"`
 }
+
+func (v *WebTracksRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if len(v.Logs) > 10000 {
+		return errors.New("Invalid argument, log count more than 10000 in a single logGroup")
+	}
+	return nil
+}
+
 type WebTracksResponse struct {
 	CommonResponse
 }
@@ -1158,6 +1303,18 @@ type DescribeHistogramRequest struct {
 	EndTime   int64  `json:","`
 	Interval  *int64 `json:",omitempty"`
 }
+
+func (v *DescribeHistogramRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if v.EndTime < v.StartTime {
+		return errors.New("Invalid argument, EndTime < StartTime")
+	}
+	// Query is okay to be empty, ignore.
+	return nil
+}
+
 type DescribeHistogramResponse struct {
 	CommonResponse
 	HistogramInfos []HistogramInfo `json:"Histogram"`
@@ -1170,6 +1327,14 @@ type OpenKafkaConsumerRequest struct {
 	CommonRequest
 	TopicID string `json:"TopicId"`
 }
+
+func (v *OpenKafkaConsumerRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
 type OpenKafkaConsumerResponse struct {
 	CommonResponse
 }
@@ -1177,6 +1342,14 @@ type CloseKafkaConsumerRequest struct {
 	CommonRequest
 	TopicID string `json:"TopicId"`
 }
+
+func (v *CloseKafkaConsumerRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
 type CloseKafkaConsumerResponse struct {
 	CommonResponse
 }
@@ -1184,6 +1357,14 @@ type DescribeKafkaConsumerRequest struct {
 	CommonRequest
 	TopicID string `json:"-"`
 }
+
+func (v *DescribeKafkaConsumerRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
 type DescribeKafkaConsumerResponse struct {
 	CommonResponse
 	AllowConsume bool
@@ -1191,16 +1372,11 @@ type DescribeKafkaConsumerResponse struct {
 }
 
 type CreateConsumerGroupRequest struct {
-	// ProjectID ConsumerGroup所绑定ProjectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// TopicID ConsumerGroup所要消费的TopicID
-	TopicIDList []string `json:"TopicIDList" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
-	// TTL ConsumerGroup的心跳存活时间
-	HeartbeatTTL int `json:"HeartbeatTTL" binding:"required" example:"3"`
-	// OrderedConsume 消费是否严格保序，与shard分裂相关
-	OrderedConsume bool `json:"OrderedConsume" binding:"required" example:"false"`
+	ProjectID         string   `json:"ProjectID"`
+	TopicIDList       []string `json:"TopicIDList"`
+	ConsumerGroupName string   `json:"ConsumerGroupName"`
+	HeartbeatTTL      int      `json:"HeartbeatTTL"`
+	OrderedConsume    bool     `json:"OrderedConsume"`
 }
 
 type CreateConsumerGroupResponse struct {
@@ -1208,10 +1384,8 @@ type CreateConsumerGroupResponse struct {
 }
 
 type DeleteConsumerGroupRequest struct {
-	// ProjectID ConsumerGroup所绑定project
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
+	ProjectID         string `json:"ProjectID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
 }
 
 type DeleteConsumerGroupResponse struct {
@@ -1219,8 +1393,7 @@ type DeleteConsumerGroupResponse struct {
 }
 
 type DescribeConsumerGroupsRequest struct {
-	// ProjectID ConsumerGroup所绑定ProjectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
+	ProjectID string `json:"ProjectID"`
 
 	PageNumber int
 	PageSize   int
@@ -1239,16 +1412,11 @@ type DescribeConsumerGroupsResponse struct {
 }
 
 type ModifyConsumerGroupRequest struct {
-	// ProjectID ConsumerGroup所绑定ProjectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// TopicID ConsumerGroup所要消费的TopicID
-	TopicIDList *[]string `json:"TopicIDList" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
-	// TTL ConsumerGroup的心跳存活时间
-	HeartbeatTTL *int `json:"HeartbeatTTL" example:"3"`
-	// OrderedConsume 消费是否严格保序，与shard分裂相关
-	OrderedConsume *bool `json:"OrderedConsume" example:"false"`
+	ProjectID         string    `json:"ProjectID"`
+	TopicIDList       *[]string `json:"TopicIDList"`
+	ConsumerGroupName string    `json:"ConsumerGroupName"`
+	HeartbeatTTL      *int      `json:"HeartbeatTTL"`
+	OrderedConsume    *bool     `json:"OrderedConsume"`
 }
 
 type ModifyConsumerGroupResponse struct {
@@ -1256,12 +1424,9 @@ type ModifyConsumerGroupResponse struct {
 }
 
 type ConsumerHeartbeatRequest struct {
-	// ProjectID ConsumerGroup所绑定ProjectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" binding:"required" example:"consumerGroupA"`
-	// ConsumerName Consumer名称，在一个consumerGroup中唯一
-	ConsumerName string `json:"ConsumerName" binding:"required" example:"consumerA"`
+	ProjectID         string `json:"ProjectID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	ConsumerName      string `json:"ConsumerName"`
 }
 
 type ConsumeShard struct {
@@ -1275,14 +1440,10 @@ type ConsumerHeartbeatResponse struct {
 }
 
 type DescribeCheckPointRequest struct {
-	// ProjectID consumerGroup所绑定的projectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// TopicID ConsumerGroup所绑定topicID
-	TopicID string `json:"TopicID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" example:"consumerGroupA"`
-	// ShardID 需要获取checkpoint的shardID
-	ShardID int `json:"ShardID" binding:"required" example:"1"`
+	ProjectID         string `json:"ProjectID"`
+	TopicID           string `json:"TopicID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	ShardID           int    `json:"ShardID"`
 }
 
 type DescribeCheckPointResponse struct {
@@ -1294,23 +1455,35 @@ type DescribeCheckPointResponse struct {
 }
 
 type ModifyCheckPointRequest struct {
-	// ProjectID consumerGroup所绑定的projectID
-	ProjectID string `json:"ProjectID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// TopicID ConsumerGroup所绑定topicID
-	TopicID string `json:"TopicID" binding:"required" example:"4a9bd4bd-53f1-43ff-b88a-64ee1be5****"`
-	// ConsumerGroupName 名称，在一个topic下唯一
-	ConsumerGroupName string `json:"ConsumerGroupName" example:"consumerGroupA"`
-	// ShardID 需要获取checkpoint的shardID
-	ShardID int `json:"ShardID" binding:"required" example:"1"`
-	// Checkpoint 想要设置的checkpoint
-	Checkpoint string `json:"Checkpoint" binding:"required" example:"MTUyNDE1NTM3OTM3MzkwODQ5Ng=="`
+	ProjectID         string `json:"ProjectID"`
+	TopicID           string `json:"TopicID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	ShardID           int    `json:"ShardID"`
+	Checkpoint        string `json:"Checkpoint"`
 }
 
 type ModifyCheckPointResponse struct {
 	CommonResponse
 }
 
-// FillRequestId 成功返回填充requestId
 func (response *CommonResponse) FillRequestId(httpResponse *http.Response) {
 	response.RequestID = httpResponse.Header.Get(RequestIDHeader)
+}
+
+type LogContent struct {
+	Key   string
+	Value string
+}
+type Log struct {
+	Contents []LogContent
+	Time     int64 // 可以不填, 默认使用当前时间
+}
+type PutLogsV2Request struct {
+	CommonRequest
+	TopicID      string
+	HashKey      string
+	CompressType string
+	Source       string
+	FileName     string
+	Logs         []Log
 }

@@ -8,6 +8,10 @@ import (
 )
 
 func (c *LsClient) CreateDownloadTask(request *CreateDownloadTaskRequest) (r *CreateDownloadTaskResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -40,6 +44,10 @@ func (c *LsClient) CreateDownloadTask(request *CreateDownloadTaskRequest) (r *Cr
 }
 
 func (c *LsClient) DescribeDownloadTasks(request *DescribeDownloadTasksRequest) (r *DescribeDownloadTasksResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -80,6 +88,10 @@ func (c *LsClient) DescribeDownloadTasks(request *DescribeDownloadTasksRequest) 
 }
 
 func (c *LsClient) DescribeDownloadUrl(request *DescribeDownloadUrlRequest) (r *DescribeDownloadUrlResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

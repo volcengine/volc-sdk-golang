@@ -6,6 +6,10 @@ import (
 )
 
 func (c *LsClient) WebTracks(request *WebTracksRequest) (r *WebTracksResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	params := map[string]string{
 		"TopicId":   request.TopicID,
 		"ProjectId": request.ProjectID,
