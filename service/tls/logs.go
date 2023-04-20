@@ -19,6 +19,10 @@ const (
 )
 
 func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	if len(request.LogBody.LogGroups) == 0 {
 		return nil, nil
 	}
@@ -40,6 +44,9 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 	bodyBytes, originalLength, err := GetPutLogsBody(request.CompressType, request.LogBody)
 	if err != nil {
 		return nil, err
+	}
+	if len(bodyBytes) >= 5*1024*1024 {
+		return nil, NewClientError(errors.New("LogGroupList size too big, should be smaller than 5M"))
 	}
 
 	headers := map[string]string{
@@ -68,6 +75,43 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 	response.FillRequestId(rawResponse)
 
 	return response, nil
+}
+
+func (c *LsClient) PutLogsV2(request *PutLogsV2Request) (r *CommonResponse, e error) {
+	var realRequest = &PutLogsRequest{
+		TopicID:      request.TopicID,
+		HashKey:      request.HashKey,
+		CompressType: request.CompressType,
+	}
+	for idx := range request.Logs {
+		if request.Logs[idx].Time <= 0 {
+			request.Logs[idx].Time = time.Now().UnixNano() / 1e6
+		}
+	}
+	realRequest.LogBody = &pb.LogGroupList{
+		LogGroups: []*pb.LogGroup{
+			{
+				Source:   request.Source,
+				FileName: request.FileName,
+				Logs: func() []*pb.Log {
+					var v = make([]*pb.Log, 0)
+					for i := range request.Logs {
+						var log = &pb.Log{}
+						log.Time = request.Logs[i].Time
+						for _, logValue := range request.Logs[i].Contents {
+							log.Contents = append(log.Contents, &pb.LogContent{
+								Key:   logValue.Key,
+								Value: logValue.Value,
+							})
+						}
+						v = append(v, log)
+					}
+					return v
+				}(),
+			},
+		},
+	}
+	return c.PutLogs(realRequest)
 }
 
 func lz4Decompress(input []byte, rawLength int64) ([]byte, error) {
@@ -104,6 +148,10 @@ func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroup
 }
 
 func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	params := map[string]string{
 		"TopicId": request.TopicID,
 		"ShardId": strconv.Itoa(request.ShardID),
@@ -196,6 +244,10 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 }
 
 func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (r *DescribeCursorResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	params := map[string]string{
 		"TopicId": request.TopicID,
 		"ShardId": strconv.Itoa(request.ShardID),
@@ -236,6 +288,10 @@ func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (r *DescribeCu
 }
 
 func (c *LsClient) DescribeLogContext(request *DescribeLogContextRequest) (r *DescribeLogContextResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	params := map[string]string{}
 
 	headers := map[string]string{

@@ -15,7 +15,7 @@ type SDKRuleTestSuite struct {
 	cli     Client
 	project string
 	topic   string
-	rule	string
+	rule    string
 }
 
 func (suite *SDKRuleTestSuite) SetupTest() {

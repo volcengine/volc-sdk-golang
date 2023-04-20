@@ -8,6 +8,10 @@ import (
 )
 
 func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (r *CreateHostGroupResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -39,6 +43,10 @@ func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (r *CreateHo
 }
 
 func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -70,6 +78,10 @@ func (c *LsClient) DeleteHostGroup(request *DeleteHostGroupRequest) (r *CommonRe
 }
 
 func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -101,6 +113,10 @@ func (c *LsClient) ModifyHostGroup(request *ModifyHostGroupRequest) (r *CommonRe
 }
 
 func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (r *DescribeHostGroupResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -138,6 +154,10 @@ func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (r *Desc
 }
 
 func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *DescribeHostGroupsResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -189,6 +209,10 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *De
 }
 
 func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (r *DescribeHostsResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -239,6 +263,10 @@ func (c *LsClient) DescribeHosts(request *DescribeHostsRequest) (r *DescribeHost
 }
 
 func (c *LsClient) DeleteHost(request *DeleteHostRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -270,6 +298,10 @@ func (c *LsClient) DeleteHost(request *DeleteHostRequest) (r *CommonResponse, e 
 }
 
 func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (r *DescribeHostGroupRulesResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -314,6 +346,10 @@ func (c *LsClient) DescribeHostGroupRules(request *DescribeHostGroupRulesRequest
 }
 
 func (c *LsClient) ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdateRequest) (r *ModifyHostGroupsAutoUpdateResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

@@ -8,6 +8,10 @@ import (
 )
 
 func (c *LsClient) CreateRule(request *CreateRuleRequest) (r *CreateRuleResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -40,6 +44,10 @@ func (c *LsClient) CreateRule(request *CreateRuleRequest) (r *CreateRuleResponse
 }
 
 func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -71,6 +79,10 @@ func (c *LsClient) DeleteRule(request *DeleteRuleRequest) (r *CommonResponse, e 
 }
 
 func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -102,6 +114,10 @@ func (c *LsClient) ModifyRule(request *ModifyRuleRequest) (r *CommonResponse, e 
 }
 
 func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (r *DescribeRuleResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -136,6 +152,10 @@ func (c *LsClient) DescribeRule(request *DescribeRuleRequest) (r *DescribeRuleRe
 }
 
 func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (r *DescribeRulesResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -194,6 +214,10 @@ func (c *LsClient) DescribeRules(request *DescribeRulesRequest) (r *DescribeRule
 }
 
 func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -225,6 +249,10 @@ func (c *LsClient) ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) 
 }
 
 func (c *LsClient) DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsRequest) (r *CommonResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}

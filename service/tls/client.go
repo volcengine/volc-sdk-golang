@@ -3,6 +3,7 @@ package tls
 import (
 	"bytes"
 	"context"
+	"errors"
 
 	"github.com/volcengine/volc-sdk-golang/base"
 
@@ -16,13 +17,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cenkalti/backoff/v4"
 	"github.com/go-kit/kit/log/level"
 	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
 var (
-	defaultHttpClient *http.Client
+	defaultHttpClient          *http.Client
+	defaultRetryInterval       time.Duration
+	defaultRetryCounter        int32
+	defaultRetryCounterMaximum int32
+	defaultRequestTimeout      time.Duration
 )
 
 func init() {
@@ -39,6 +43,10 @@ func init() {
 			}).DialContext,
 		},
 	}
+	defaultRetryCounter = 0
+	defaultRetryCounterMaximum = 50
+	defaultRetryInterval = 100 * time.Millisecond
+	defaultRequestTimeout = time.Second * 30
 }
 
 type LsClient struct {
@@ -65,6 +73,15 @@ func (c *LsClient) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityTok
 
 func (c *LsClient) SetTimeout(timeout time.Duration) {
 	defaultHttpClient.Timeout = timeout
+	defaultRequestTimeout = timeout
+}
+
+func (c *LsClient) SetRetryIntervalMs(interval time.Duration) {
+	defaultRetryInterval = interval
+}
+
+func (c *LsClient) SetRetryCounterMaximum(maximum int32) {
+	defaultRetryCounterMaximum = maximum
 }
 
 func (c *LsClient) Request(method, uri string, params map[string]string, headers map[string]string, body []byte) (rsp *http.Response, e error) {
@@ -95,6 +112,16 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 	var err error
 	var realUri string = uri
 
+	// 检查是否正确配置了 Region/AK/SK/Endpoint
+	{
+		if len(c.Region) <= 0 {
+			return nil, NewClientError(errors.New("Empty Region; 请在初始化时填入 Region"))
+		}
+		if len(c.Endpoint) <= 0 {
+			return nil, NewClientError(errors.New("Empty Endpoint; 请在初始化时填入 Endpoint"))
+		}
+	}
+
 	if len(params) != 0 {
 		realUri = appendParam(uri, params)
 	} else {
@@ -102,7 +129,7 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 	}
 
 	ctx := context.Background()
-	err = RetryWithCondition(ctx, backoff.NewExponentialBackOff(), func() error {
+	err = RetryWithCondition(ctx, func() error {
 		r, iErr = c.realRequest(ctx, method, realUri, headers, body)
 		if iErr != nil {
 			level.Error(innerlogger.DefaultLogger).Log("msg", "Request failed", "reason", iErr)

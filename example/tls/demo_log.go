@@ -89,6 +89,23 @@ func main() {
 		},
 	})
 
+	// PutLogsV2
+	_, err := client.PutLogsV2(&tls.PutLogsV2Request{
+		TopicID:  "a840e288-2077-425c-800b-950424ef66cf",
+		Source:   "My Source",
+		FileName: "My Filename",
+		Logs: []tls.Log{
+			{
+				Contents: []tls.LogContent{
+					{
+						Key:   "TestKey",
+						Value: "TestValue",
+					},
+				},
+			},
+		},
+	})
+
 	// 索引类型为全文索引
 	_, _ = client.PutLogs(&tls.PutLogsRequest{
 		TopicID:      testTopicID,
