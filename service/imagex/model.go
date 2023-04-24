@@ -117,6 +117,8 @@ type ApplyUploadImageParam struct {
 	UploadNum   int
 	StoreKeys   []string
 	CommitParam *CommitUploadImageParam
+	SkipMeta    bool
+	SkipCommit  bool
 }
 
 type ApplyUploadImageResult struct {
@@ -141,6 +143,7 @@ type CommitUploadImageParam struct {
 	SessionKey  string     `json:"SessionKey"`
 	SuccessOids []string   `json:"SuccessOids"`
 	Functions   []Function `json:"Functions"`
+	SkipMeta    bool       `json:"-"`
 }
 
 type Function struct {
