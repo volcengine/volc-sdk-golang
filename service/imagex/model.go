@@ -194,13 +194,15 @@ type CreateImageContentTaskReq struct {
 }
 
 type CreateImageContentTaskResp struct {
-	Msg string `json:"Msg"`
+	Msg    string `json:"Msg"`
+	TaskId string `json:"TaskId"`
 }
 
 // GetImageContentTaskDetail
 type GetImageContentTaskDetailReq struct {
 	ServiceId string `query:"ServiceId" json:"-"`
 	TaskType  string `json:"TaskType"`
+	TaskId    string `json:"TaskId"`
 	State     string `json:"State"`
 	Order     string `json:"Order"`
 	StartTime int64  `json:"StartTime"`
@@ -225,6 +227,7 @@ type GetImageContentTaskDetailRespData struct {
 	CreateTime int64  `json:"CreateTime"`
 	UpdateTime int64  `json:"UpdateTime"`
 	Msg        string `json:"Msg"`
+	TaskId     string `json:"TaskId"`
 }
 
 // GetImageContentBlockList
