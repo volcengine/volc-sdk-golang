@@ -329,19 +329,10 @@ type GetImageStyleResultResp struct {
 }
 
 // GetImageOCR
-type GetImageOCRLicenseResult struct {
-	Scene     string                                 `json:"Scene"`
-	OCRResult map[string]*GetImageOCRLicenseTextInfo `json:"OCR_result"`
-}
-
-type GetImageOCRLicenseTextInfo struct {
-	Content  string `json:"Content"`
-	Location []int  `json:"Location"`
-}
-
-type GetImageOCRGeneralResult struct {
-	Scene     string                        `json:"Scene"`
-	OCRResult []*GetImageOCRGeneralTextInfo `json:"OCR_result"`
+type GetImageOCRResult struct {
+	Scene         string                                  `json:"Scene"`
+	GeneralResult *[]*GetImageOCRGeneralTextInfo          `json:"GeneralResult"`
+	LicenseResult *map[string]*GetImageOCRLicenseTextInfo `json:"LicenseResult"`
 }
 
 type GetImageOCRGeneralTextInfo struct {
@@ -350,10 +341,16 @@ type GetImageOCRGeneralTextInfo struct {
 	Location   [][]int `json:"Location"`
 }
 
+type GetImageOCRLicenseTextInfo struct {
+	Content  string `json:"Content"`
+	Location []int  `json:"Location"`
+}
+
 type GetImageOCRParam struct {
-	ServiceId string
-	StoreUri  string
-	ImageUrl  string
+	ServiceId string `json:"-"`
+	StoreUri  string `json:"StoreUri"`
+	ImageUrl  string `json:"ImageUrl"`
+	Scene     string `json:"Scene"`
 }
 
 // GetImageBgFillResult

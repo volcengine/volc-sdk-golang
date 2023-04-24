@@ -367,11 +367,11 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
-		"GetImageOCR": {
+		"GetImageOCRV2": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetImageOCR"},
+				"Action":  []string{"GetImageOCRV2"},
 				"Version": []string{"2018-08-01"},
 			},
 		},
