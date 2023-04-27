@@ -1,6 +1,7 @@
 package base
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
@@ -8,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"net/url"
 	"os"
@@ -31,7 +33,11 @@ const (
 	defaultScheme = "http"
 )
 
-var _GlobalClient *http.Client
+var (
+	_GlobalClient   *http.Client
+	emptyBytes      []byte
+	emptyReadSeeker = bytes.Buffer{}
+)
 
 func volcProxy() func(req *http.Request) (*url.URL, error) {
 	c := &httpproxy.Config{
@@ -241,7 +247,7 @@ func (client *Client) Query(api string, query url.Values) ([]byte, int, error) {
 }
 
 func (client *Client) CtxQuery(ctx context.Context, api string, query url.Values) ([]byte, int, error) {
-	return client.request(ctx, api, query, "", "")
+	return client.request(ctx, api, query, emptyBytes, "")
 }
 
 // Json Initiate a Json post request
@@ -250,7 +256,7 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 }
 
 func (client *Client) CtxJson(ctx context.Context, api string, query url.Values, body string) ([]byte, int, error) {
-	return client.request(ctx, api, query, body, "application/json")
+	return client.request(ctx, api, query, emptyBytes, "application/json")
 }
 func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
 	return client.CtxPostWithContentType(context.Background(), api, query, body, ct)
@@ -258,7 +264,7 @@ func (client *Client) PostWithContentType(api string, query url.Values, body str
 
 // CtxPostWithContentType Initiate a post request with a custom Content-Type, Content-Type cannot be empty
 func (client *Client) CtxPostWithContentType(ctx context.Context, api string, query url.Values, body string, ct string) ([]byte, int, error) {
-	return client.request(ctx, api, query, body, ct)
+	return client.request(ctx, api, query, []byte(body), ct)
 }
 
 func (client *Client) Post(api string, query url.Values, form url.Values) ([]byte, int, error) {
@@ -269,7 +275,24 @@ func (client *Client) Post(api string, query url.Values, form url.Values) ([]byt
 func (client *Client) CtxPost(ctx context.Context, api string, query url.Values, form url.Values) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 	form = mergeQuery(form, apiInfo.Form)
-	return client.request(ctx, api, query, form.Encode(), "application/x-www-form-urlencoded")
+	return client.request(ctx, api, query, []byte(form.Encode()), "application/x-www-form-urlencoded")
+}
+
+func (client *Client) CtxMultiPart(ctx context.Context, api string, query url.Values, form []*MultiPartItem) ([]byte, int, error) {
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+	for _, item := range form {
+		part, err := writer.CreatePart(item.header)
+		if err != nil {
+			return nil, 400, err
+		}
+		_, err = io.Copy(part, item.data)
+		if err != nil {
+			return nil, 400, err
+		}
+	}
+	writer.Close()
+	return client.request(ctx, api, query, body.Bytes(), "multipart/form-data; boundary="+writer.Boundary())
 }
 
 func (client *Client) makeRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool) {
@@ -308,7 +331,7 @@ func (client *Client) makeRequest(inputContext context.Context, api string, req 
 	return body, resp.StatusCode, nil, false
 }
 
-func (client *Client) request(ctx context.Context, api string, query url.Values, body string, ct string) ([]byte, int, error) {
+func (client *Client) request(ctx context.Context, api string, query url.Values, body []byte, ct string) ([]byte, int, error) {
 	apiInfo := client.ApiInfoList[api]
 
 	if apiInfo == nil {
@@ -325,7 +348,7 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 		Path:     apiInfo.Path,
 		RawQuery: query.Encode(),
 	}
-	requestBody := strings.NewReader(body)
+	requestBody := bytes.NewReader(body)
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
 	if err != nil {
 		return []byte(""), 500, errors.New("Failed to build request")

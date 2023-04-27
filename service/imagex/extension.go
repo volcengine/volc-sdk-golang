@@ -1,17 +1,45 @@
 package imagex
 
 import (
+	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/url"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 func (c *ImageX) GetImageEnhance(param *GetImageEnhanceParam) (*GetImageEnhanceResult, error) {
+	query := url.Values{}
+	query.Set("ServiceId", param.ServiceId)
 	res := new(GetImageEnhanceResult)
-	err := c.ImageXPost("GetImageEnhanceResult", nil, param, res)
+	err := c.ImageXPost("GetImageEnhanceResult", query, param, res)
 	if err != nil {
 		return nil, err
 	}
 	return res, nil
+}
+
+func (c *ImageX) GetImageEnhanceWithData(param *GetImageEnhanceParam, data io.Reader) ([]byte, error) {
+	query := url.Values{}
+	query.Set("ServiceId", param.ServiceId)
+	paramStr, err := json.Marshal(param)
+	if err != nil {
+		return nil, err
+	}
+	fieldItem := base.CreateMultiPartItemFormField("Input", string(paramStr))
+	fileItem := base.CreateMultiPartItemFormFile("Data", "img", data)
+	resp, _, err := c.CtxMultiPart(context.Background(), "GetImageEnhanceResultWithData", query, []*base.MultiPartItem{fieldItem, fileItem})
+	if err != nil {
+		return nil, err
+	}
+	result := ""
+	if err := UnmarshalResultInto(resp, &result); err != nil {
+		return nil, err
+	}
+	return base64.RawStdEncoding.DecodeString(result)
 }
 
 func (c *ImageX) GetImageEraseModel(eraseType int) ([]string, error) {
