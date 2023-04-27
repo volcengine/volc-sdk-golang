@@ -1,8 +1,12 @@
 package base
 
 import (
+	"fmt"
+	"io"
 	"net/http"
+	"net/textproto"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -141,4 +145,38 @@ type SignRequest struct {
 	ContentType    string
 	XContentSha256 string
 	Authorization  string
+}
+
+var quoteEscaper = strings.NewReplacer("\\", "\\\\", `"`, "\\\"")
+
+func escapeQuotes(s string) string {
+	return quoteEscaper.Replace(s)
+}
+
+type MultiPartItem struct {
+	header textproto.MIMEHeader
+	data   io.Reader
+}
+
+func CreateMultiPartItem(header textproto.MIMEHeader, data io.Reader) *MultiPartItem {
+	return &MultiPartItem{
+		header: header,
+		data:   data,
+	}
+}
+
+func CreateMultiPartItemFormFile(fieldname, filename string, data io.Reader) *MultiPartItem {
+	h := make(textproto.MIMEHeader)
+	h.Set("Content-Disposition",
+		fmt.Sprintf(`form-data; name="%s"; filename="%s"`,
+			escapeQuotes(fieldname), escapeQuotes(filename)))
+	h.Set("Content-Type", "application/octet-stream")
+	return CreateMultiPartItem(h, data)
+}
+
+func CreateMultiPartItemFormField(fieldname string, data string) *MultiPartItem {
+	h := make(textproto.MIMEHeader)
+	h.Set("Content-Disposition",
+		fmt.Sprintf(`form-data; name="%s"`, escapeQuotes(fieldname)))
+	return CreateMultiPartItem(h, strings.NewReader(data))
 }

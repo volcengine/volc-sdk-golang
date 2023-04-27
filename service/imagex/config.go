@@ -527,6 +527,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"GetImageEnhanceResultWithData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEnhanceResultWithData"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 	}
 )
 
