@@ -21,10 +21,10 @@ func main() {
 		ServiceId: "service id", // 服务 ID
 		StoreUri:  "store uri",  // 文件的 Store URI
 		ImageUrl:  "",           //若StoreUri为空则访问url
+		Scene:     "general",    // 识别场景
 	}
 
-	// resp, err := instance.GetImageOCRGeneral(param)
-	resp, err := instance.GetImageOCRLicense(param)
+	resp, err := instance.GetImageOCRV2(param)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
