@@ -256,7 +256,7 @@ func (client *Client) Json(api string, query url.Values, body string) ([]byte, i
 }
 
 func (client *Client) CtxJson(ctx context.Context, api string, query url.Values, body string) ([]byte, int, error) {
-	return client.request(ctx, api, query, emptyBytes, "application/json")
+	return client.request(ctx, api, query, []byte(body), "application/json")
 }
 func (client *Client) PostWithContentType(api string, query url.Values, body string, ct string) ([]byte, int, error) {
 	return client.CtxPostWithContentType(context.Background(), api, query, body, ct)
@@ -292,7 +292,7 @@ func (client *Client) CtxMultiPart(ctx context.Context, api string, query url.Va
 		}
 	}
 	writer.Close()
-	return client.request(ctx, api, query, body.Bytes(), "multipart/form-data; boundary="+writer.Boundary())
+	return client.request(ctx, api, query, body.Bytes(), writer.FormDataContentType())
 }
 
 func (client *Client) makeRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool) {
