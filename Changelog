@@ -1,5 +1,8 @@
 ### Change log
 
+2023-05-11 Bumped to version v1.0.99
+- Updated apis for vod/dns/sms
+
 2023-05-05 Bumped to version v1.0.98
 - Retract v1.0.97 and Updated base client
 - Updated apis for vod
