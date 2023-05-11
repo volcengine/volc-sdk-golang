@@ -652,5 +652,13 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"DescribeVodPlayFileLogByDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodPlayFileLogByDomain"},
+				"Version": []string{"2022-12-01"},
+			},
+		},
 	}
 )
