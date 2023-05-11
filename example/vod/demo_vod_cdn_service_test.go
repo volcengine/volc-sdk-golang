@@ -168,6 +168,7 @@ func Test_ListCdnUsageData(t *testing.T) {
 		EndTimestamp:   0,
 		DataType:       "your DataType",
 		Metric:         "your Metric",
+		NeedDetail:     false,
 	}
 
 	resp, status, err := instance.ListCdnUsageData(query)
@@ -190,9 +191,32 @@ func Test_ListCdnStatusData(t *testing.T) {
 		EndTimestamp:   0,
 		DataType:       "your DataType",
 		Metric:         "your Metric",
+		NeedDetail:     false,
 	}
 
 	resp, status, err := instance.ListCdnStatusData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListCdnHitrateData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnHitrateDataRequest{
+		Domains:        "your Domains",
+		Interval:       "your Interval",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		Metric:         "your Metric",
+		NeedDetail:     false,
+	}
+
+	resp, status, err := instance.ListCdnHitrateData(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
@@ -249,6 +273,7 @@ func Test_ListCdnPvData(t *testing.T) {
 		StartTimestamp: 0,
 		EndTimestamp:   0,
 		DataType:       "your DataType",
+		NeedDetail:     false,
 	}
 
 	resp, status, err := instance.ListCdnPvData(query)

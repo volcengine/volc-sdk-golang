@@ -87,10 +87,11 @@ func Test_CommitUploadInfo(t *testing.T) {
 	})
 
 	query := &request.VodCommitUploadInfoRequest{
-		SpaceName:    "your SpaceName",
-		SessionKey:   "your SessionKey",
-		CallbackArgs: "your CallbackArgs",
-		Functions:    "your Functions",
+		SpaceName:       "your SpaceName",
+		SessionKey:      "your SessionKey",
+		CallbackArgs:    "your CallbackArgs",
+		Functions:       "your Functions",
+		VodUploadSource: "your VodUploadSource",
 	}
 
 	resp, status, err := instance.CommitUploadInfo(query)
