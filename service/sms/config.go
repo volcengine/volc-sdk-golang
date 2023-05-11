@@ -21,6 +21,7 @@ var (
 		DefaultRegion: {
 			Timeout: 5 * time.Second,
 			Host:    "sms.volcengineapi.com",
+			Scheme:  "https",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
