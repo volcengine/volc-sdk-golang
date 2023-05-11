@@ -2,25 +2,25 @@
 
 package dns
 
-type BatchDeleteCustomerLineRequest struct {
+type BatchDeleteCustomLineRequest struct {
 	Lines []string `form:"Lines" json:"Lines,omitempty"`
 }
 
-type BatchDeleteCustomerLineResponse struct {
+type BatchDeleteCustomLineResponse struct {
 	TotalCount *int64 `form:"TotalCount" json:"TotalCount,omitempty"`
 }
 
-type CreateCustomerLineRequest struct {
+type CreateCustomLineRequest struct {
 	IpSegments []string `form:"IpSegments" json:"IpSegments,omitempty"`
 	NameCN     *string  `form:"NameCN" json:"NameCN,omitempty"`
 	Remark     *string  `form:"Remark" json:"Remark,omitempty"`
 }
 
-type CreateCustomerLineResponse struct {
+type CreateCustomLineResponse struct {
 	Line *string `form:"Line" json:"Line,omitempty"`
 }
 
-type ListCustomerLinesRequest struct {
+type ListCustomLinesRequest struct {
 	IPSegment  *string `form:"-" json:"-"`
 	Line       *string `form:"-" json:"-"`
 	NameCN     *string `form:"-" json:"-"`
@@ -30,7 +30,7 @@ type ListCustomerLinesRequest struct {
 	SearchMode *string `form:"-" json:"-"`
 }
 
-type ListCustomerLinesResponse struct {
+type ListCustomLinesResponse struct {
 	CustomerLines  []CustomerLine `form:"CustomerLines" json:"CustomerLines,omitempty"`
 	IPSegmentCount *int64         `form:"IPSegmentCount" json:"IPSegmentCount,omitempty"`
 	PageNumber     *int64         `form:"PageNumber" json:"PageNumber,omitempty"`
@@ -47,14 +47,14 @@ type ListRecordDigestByLineResponse struct {
 	RecordDigests []RecordDigest `form:"RecordDigests" json:"RecordDigests,omitempty"`
 }
 
-type UpdateCustomerLineRequest struct {
+type UpdateCustomLineRequest struct {
 	IpSegments []string `form:"IpSegments" json:"IpSegments,omitempty"`
 	Line       *string  `form:"Line" json:"Line,omitempty"`
 	NameCN     *string  `form:"NameCN" json:"NameCN,omitempty"`
 	Remark     *string  `form:"Remark" json:"Remark,omitempty"`
 }
 
-type UpdateCustomerLineResponse struct {
+type UpdateCustomLineResponse struct {
 	Line *string `form:"Line" json:"Line,omitempty"`
 }
 
@@ -110,6 +110,7 @@ type CreateRecordResponse struct {
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
+	Tags        []string `form:"Tags" json:"Tags,omitempty"`
 	Type        *string  `form:"Type" json:"Type,omitempty"`
 	UpdatedAt   *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	Value       *string  `form:"Value" json:"Value,omitempty"`
@@ -157,22 +158,23 @@ type ListRecordsResponse struct {
 }
 
 type ListRecordsAdvanceRequest struct {
-	Enable        *string `form:"-" json:"-"`
-	Host          *string `form:"-" json:"-"`
-	LastOperator  *string `form:"-" json:"-"`
-	Line          *string `form:"-" json:"-"`
-	Name          *string `form:"-" json:"-"`
-	OrderKey      *string `form:"-" json:"-"`
-	PageNumber    *string `form:"-" json:"-"`
-	PageSize      *string `form:"-" json:"-"`
-	SearchMode    *string `form:"-" json:"-"`
-	SearchOrder   *string `form:"-" json:"-"`
-	SubPageNumber *string `form:"-" json:"-"`
-	SubPageSize   *string `form:"-" json:"-"`
-	TTL           *string `form:"-" json:"-"`
-	Type          *string `form:"-" json:"-"`
-	Value         *string `form:"-" json:"-"`
-	ZID           *string `form:"-" json:"-"`
+	Enable          *string `form:"-" json:"-"`
+	GTMDomainFilter *string `form:"-" json:"-"`
+	Host            *string `form:"-" json:"-"`
+	LastOperator    *string `form:"-" json:"-"`
+	Line            *string `form:"-" json:"-"`
+	Name            *string `form:"-" json:"-"`
+	OrderKey        *string `form:"-" json:"-"`
+	PageNumber      *string `form:"-" json:"-"`
+	PageSize        *string `form:"-" json:"-"`
+	SearchMode      *string `form:"-" json:"-"`
+	SearchOrder     *string `form:"-" json:"-"`
+	SubPageNumber   *string `form:"-" json:"-"`
+	SubPageSize     *string `form:"-" json:"-"`
+	TTL             *string `form:"-" json:"-"`
+	Type            *string `form:"-" json:"-"`
+	Value           *string `form:"-" json:"-"`
+	ZID             *string `form:"-" json:"-"`
 }
 
 type ListRecordsAdvanceResponse struct {
@@ -203,6 +205,7 @@ type QueryRecordResponse struct {
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
+	Tags        []string `form:"Tags" json:"Tags,omitempty"`
 	Type        *string  `form:"Type" json:"Type,omitempty"`
 	UpdatedAt   *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	Value       *string  `form:"Value" json:"Value,omitempty"`
@@ -245,6 +248,7 @@ type UpdateRecordResponse struct {
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
+	Tags        []string `form:"Tags" json:"Tags,omitempty"`
 	Type        *string  `form:"Type" json:"Type,omitempty"`
 	UpdatedAt   *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	Value       *string  `form:"Value" json:"Value,omitempty"`
@@ -282,6 +286,7 @@ type UpdateRecordStatusResponse struct {
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
+	Tags        []string `form:"Tags" json:"Tags,omitempty"`
 	Type        *string  `form:"Type" json:"Type,omitempty"`
 	UpdatedAt   *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	Value       *string  `form:"Value" json:"Value,omitempty"`
@@ -497,6 +502,7 @@ type TopRecordResponse struct {
 	RecordID    *string  `form:"RecordID" json:"RecordID,omitempty"`
 	RecordSetID *string  `form:"RecordSetID" json:"RecordSetID,omitempty"`
 	TTL         *int64   `form:"TTL" json:"TTL,omitempty"`
+	Tags        []string `form:"Tags" json:"Tags,omitempty"`
 	Type        *string  `form:"Type" json:"Type,omitempty"`
 	UpdatedAt   *string  `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
 	Value       *string  `form:"Value" json:"Value,omitempty"`
@@ -506,6 +512,7 @@ type TopRecordResponse struct {
 type TopSubDomain struct {
 	HasNext       *bool               `form:"HasNext" json:"HasNext,omitempty"`
 	Host          *string             `form:"Host" json:"Host,omitempty"`
+	IsGTMDomain   *bool               `form:"IsGTMDomain" json:"IsGTMDomain,omitempty"`
 	LastOperator  *string             `form:"LastOperator" json:"LastOperator,omitempty"`
 	Line          *string             `form:"Line" json:"Line,omitempty"`
 	LineNameCN    *string             `form:"LineNameCN" json:"LineNameCN,omitempty"`

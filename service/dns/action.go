@@ -12,13 +12,13 @@ import (
 // Group: CustomLines
 // 自定义线路
 
-func (c *Client) BatchDeleteCustomerLine(ctx context.Context, data *BatchDeleteCustomerLineRequest) (*BatchDeleteCustomerLineResponse, error) {
+func (c *Client) BatchDeleteCustomLine(ctx context.Context, data *BatchDeleteCustomLineRequest) (*BatchDeleteCustomLineResponse, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=BatchDeleteCustomerLine", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=BatchDeleteCustomLine", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func (c *Client) BatchDeleteCustomerLine(ctx context.Context, data *BatchDeleteC
 	}
 	defer resp.Body.Close()
 
-	var payload BatchDeleteCustomerLineResponse
+	var payload BatchDeleteCustomLineResponse
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -37,13 +37,13 @@ func (c *Client) BatchDeleteCustomerLine(ctx context.Context, data *BatchDeleteC
 	return &payload, nil
 }
 
-func (c *Client) CreateCustomerLine(ctx context.Context, data *CreateCustomerLineRequest) (*CreateCustomerLineResponse, error) {
+func (c *Client) CreateCustomLine(ctx context.Context, data *CreateCustomLineRequest) (*CreateCustomLineResponse, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateCustomerLine", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=CreateCustomLine", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (c *Client) CreateCustomerLine(ctx context.Context, data *CreateCustomerLin
 	}
 	defer resp.Body.Close()
 
-	var payload CreateCustomerLineResponse
+	var payload CreateCustomLineResponse
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -62,13 +62,22 @@ func (c *Client) CreateCustomerLine(ctx context.Context, data *CreateCustomerLin
 	return &payload, nil
 }
 
-func (c *Client) ListCustomerLines(ctx context.Context, data *ListCustomerLinesRequest) (*ListCustomerLinesResponse, error) {
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListCustomerLines", nil)
+func (c *Client) ListCustomLines(ctx context.Context, data *ListCustomLinesRequest) (*ListCustomLinesResponse, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListCustomLines", nil)
 	if err != nil {
 		return nil, err
 	}
 
 	q := req.URL.Query()
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
+	if v := data.NameCN; v != nil {
+		q.Add("NameCN", *v)
+	}
+	if v := data.Remark; v != nil {
+		q.Add("Remark", *v)
+	}
 	if v := data.IPSegment; v != nil {
 		q.Add("IPSegment", *v)
 	}
@@ -81,15 +90,6 @@ func (c *Client) ListCustomerLines(ctx context.Context, data *ListCustomerLinesR
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
 	}
-	if v := data.Line; v != nil {
-		q.Add("Line", *v)
-	}
-	if v := data.NameCN; v != nil {
-		q.Add("NameCN", *v)
-	}
-	if v := data.Remark; v != nil {
-		q.Add("Remark", *v)
-	}
 	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.do(ctx, req)
@@ -98,7 +98,7 @@ func (c *Client) ListCustomerLines(ctx context.Context, data *ListCustomerLinesR
 	}
 	defer resp.Body.Close()
 
-	var payload ListCustomerLinesResponse
+	var payload ListCustomLinesResponse
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -131,13 +131,13 @@ func (c *Client) ListRecordDigestByLine(ctx context.Context, data *ListRecordDig
 	return &payload, nil
 }
 
-func (c *Client) UpdateCustomerLine(ctx context.Context, data *UpdateCustomerLineRequest) (*UpdateCustomerLineResponse, error) {
+func (c *Client) UpdateCustomLine(ctx context.Context, data *UpdateCustomLineRequest) (*UpdateCustomLineResponse, error) {
 	body, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateCustomerLine", bytes.NewReader(body))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, "/?Action=UpdateCustomLine", bytes.NewReader(body))
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +148,7 @@ func (c *Client) UpdateCustomerLine(ctx context.Context, data *UpdateCustomerLin
 	}
 	defer resp.Body.Close()
 
-	var payload UpdateCustomerLineResponse
+	var payload UpdateCustomLineResponse
 	d := json.NewDecoder(resp.Body)
 	if err := d.Decode(&payload); err != nil {
 		return nil, err
@@ -166,6 +166,9 @@ func (c *Client) ListLines(ctx context.Context, data *ListLinesRequest) (*ListLi
 	}
 
 	q := req.URL.Query()
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
 	if v := data.PageSize; v != nil {
 		q.Add("PageSize", *v)
 	}
@@ -177,9 +180,6 @@ func (c *Client) ListLines(ctx context.Context, data *ListLinesRequest) (*ListLi
 	}
 	if v := data.ZID; v != nil {
 		q.Add("ZID", *v)
-	}
-	if v := data.Type; v != nil {
-		q.Add("Type", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -278,15 +278,6 @@ func (c *Client) ListRecordSets(ctx context.Context, data *ListRecordSetsRequest
 	}
 
 	q := req.URL.Query()
-	if v := data.PageSize; v != nil {
-		q.Add("PageSize", *v)
-	}
-	if v := data.PageNumber; v != nil {
-		q.Add("PageNumber", *v)
-	}
-	if v := data.ZID; v != nil {
-		q.Add("ZID", *v)
-	}
 	if v := data.Host; v != nil {
 		q.Add("Host", *v)
 	}
@@ -295,6 +286,15 @@ func (c *Client) ListRecordSets(ctx context.Context, data *ListRecordSetsRequest
 	}
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
+	}
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
+	}
+	if v := data.PageNumber; v != nil {
+		q.Add("PageNumber", *v)
+	}
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -319,35 +319,35 @@ func (c *Client) ListRecords(ctx context.Context, data *ListRecordsRequest) (*Li
 	}
 
 	q := req.URL.Query()
+	if v := data.PageNumber; v != nil {
+		q.Add("PageNumber", *v)
+	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
+	}
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
 	}
 	if v := data.SearchOrder; v != nil {
 		q.Add("SearchOrder", *v)
 	}
+	if v := data.Host; v != nil {
+		q.Add("Host", *v)
+	}
 	if v := data.ZID; v != nil {
 		q.Add("ZID", *v)
-	}
-	if v := data.Type; v != nil {
-		q.Add("Type", *v)
 	}
 	if v := data.Value; v != nil {
 		q.Add("Value", *v)
 	}
-	if v := data.PageNumber; v != nil {
-		q.Add("PageNumber", *v)
-	}
-	if v := data.Line; v != nil {
-		q.Add("Line", *v)
-	}
 	if v := data.RecordSetID; v != nil {
 		q.Add("RecordSetID", *v)
 	}
-	if v := data.Host; v != nil {
-		q.Add("Host", *v)
-	}
 	if v := data.PageSize; v != nil {
 		q.Add("PageSize", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -372,50 +372,53 @@ func (c *Client) ListRecordsAdvance(ctx context.Context, data *ListRecordsAdvanc
 	}
 
 	q := req.URL.Query()
-	if v := data.SubPageSize; v != nil {
-		q.Add("SubPageSize", *v)
-	}
-	if v := data.ZID; v != nil {
-		q.Add("ZID", *v)
-	}
-	if v := data.Type; v != nil {
-		q.Add("Type", *v)
-	}
-	if v := data.Value; v != nil {
-		q.Add("Value", *v)
-	}
-	if v := data.SearchMode; v != nil {
-		q.Add("SearchMode", *v)
+	if v := data.SearchOrder; v != nil {
+		q.Add("SearchOrder", *v)
 	}
 	if v := data.SubPageNumber; v != nil {
 		q.Add("SubPageNumber", *v)
 	}
-	if v := data.Line; v != nil {
-		q.Add("Line", *v)
-	}
 	if v := data.LastOperator; v != nil {
 		q.Add("LastOperator", *v)
 	}
-	if v := data.Name; v != nil {
-		q.Add("Name", *v)
+	if v := data.ZID; v != nil {
+		q.Add("ZID", *v)
 	}
-	if v := data.SearchOrder; v != nil {
-		q.Add("SearchOrder", *v)
+	if v := data.OrderKey; v != nil {
+		q.Add("OrderKey", *v)
 	}
-	if v := data.PageSize; v != nil {
-		q.Add("PageSize", *v)
-	}
-	if v := data.Host; v != nil {
-		q.Add("Host", *v)
+	if v := data.SearchMode; v != nil {
+		q.Add("SearchMode", *v)
 	}
 	if v := data.TTL; v != nil {
 		q.Add("TTL", *v)
 	}
+	if v := data.GTMDomainFilter; v != nil {
+		q.Add("GTMDomainFilter", *v)
+	}
+	if v := data.Name; v != nil {
+		q.Add("Name", *v)
+	}
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
+	}
+	if v := data.SubPageSize; v != nil {
+		q.Add("SubPageSize", *v)
+	}
+	if v := data.Host; v != nil {
+		q.Add("Host", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
 	if v := data.PageNumber; v != nil {
 		q.Add("PageNumber", *v)
 	}
-	if v := data.OrderKey; v != nil {
-		q.Add("OrderKey", *v)
+	if v := data.Value; v != nil {
+		q.Add("Value", *v)
+	}
+	if v := data.Type; v != nil {
+		q.Add("Type", *v)
 	}
 	if v := data.Enable; v != nil {
 		q.Add("Enable", *v)
@@ -443,6 +446,12 @@ func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*Qu
 	}
 
 	q := req.URL.Query()
+	if v := data.Value; v != nil {
+		q.Add("Value", *v)
+	}
+	if v := data.Line; v != nil {
+		q.Add("Line", *v)
+	}
 	if v := data.RecordID; v != nil {
 		q.Add("RecordID", *v)
 	}
@@ -454,12 +463,6 @@ func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*Qu
 	}
 	if v := data.Type; v != nil {
 		q.Add("Type", *v)
-	}
-	if v := data.Value; v != nil {
-		q.Add("Value", *v)
-	}
-	if v := data.Line; v != nil {
-		q.Add("Line", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -587,6 +590,9 @@ func (c *Client) ListDomainStatistics(ctx context.Context, data *ListDomainStati
 	}
 
 	q := req.URL.Query()
+	if v := data.Name; v != nil {
+		q.Add("Name", *v)
+	}
 	if v := data.SearchMode; v != nil {
 		q.Add("SearchMode", *v)
 	}
@@ -607,9 +613,6 @@ func (c *Client) ListDomainStatistics(ctx context.Context, data *ListDomainStati
 	}
 	if v := data.ZID; v != nil {
 		q.Add("ZID", *v)
-	}
-	if v := data.Name; v != nil {
-		q.Add("Name", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -634,15 +637,6 @@ func (c *Client) ListZoneStatistics(ctx context.Context, data *ListZoneStatistic
 	}
 
 	q := req.URL.Query()
-	if v := data.Start; v != nil {
-		q.Add("Start", *v)
-	}
-	if v := data.End; v != nil {
-		q.Add("End", *v)
-	}
-	if v := data.Threshold; v != nil {
-		q.Add("Threshold", *v)
-	}
 	if v := data.PageNumber; v != nil {
 		q.Add("PageNumber", *v)
 	}
@@ -654,6 +648,15 @@ func (c *Client) ListZoneStatistics(ctx context.Context, data *ListZoneStatistic
 	}
 	if v := data.Name; v != nil {
 		q.Add("Name", *v)
+	}
+	if v := data.Start; v != nil {
+		q.Add("Start", *v)
+	}
+	if v := data.End; v != nil {
+		q.Add("End", *v)
+	}
+	if v := data.Threshold; v != nil {
+		q.Add("Threshold", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -678,6 +681,9 @@ func (c *Client) QueryDomainStatistics(ctx context.Context, data *QueryDomainSta
 	}
 
 	q := req.URL.Query()
+	if v := data.Name; v != nil {
+		q.Add("Name", *v)
+	}
 	if v := data.Start; v != nil {
 		q.Add("Start", *v)
 	}
@@ -686,9 +692,6 @@ func (c *Client) QueryDomainStatistics(ctx context.Context, data *QueryDomainSta
 	}
 	if v := data.ZID; v != nil {
 		q.Add("ZID", *v)
-	}
-	if v := data.Name; v != nil {
-		q.Add("Name", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
@@ -818,17 +821,26 @@ func (c *Client) ListZones(ctx context.Context, data *ListZonesRequest) (*ListZo
 	}
 
 	q := req.URL.Query()
-	if v := data.SearchMode; v != nil {
-		q.Add("SearchMode", *v)
+	if v := data.TradeCode; v != nil {
+		q.Add("TradeCode", *v)
+	}
+	if v := data.OrderKey; v != nil {
+		q.Add("OrderKey", *v)
+	}
+	if v := data.SearchOrder; v != nil {
+		q.Add("SearchOrder", *v)
 	}
 	if v := data.Remark; v != nil {
 		q.Add("Remark", *v)
 	}
-	if v := data.PageSize; v != nil {
-		q.Add("PageSize", *v)
+	if v := data.Stage; v != nil {
+		q.Add("Stage", *v)
 	}
 	if v := data.AboutToExpire; v != nil {
 		q.Add("AboutToExpire", *v)
+	}
+	if v := data.PageSize; v != nil {
+		q.Add("PageSize", *v)
 	}
 	if v := data.PageNumber; v != nil {
 		q.Add("PageNumber", *v)
@@ -836,17 +848,8 @@ func (c *Client) ListZones(ctx context.Context, data *ListZonesRequest) (*ListZo
 	if v := data.Key; v != nil {
 		q.Add("Key", *v)
 	}
-	if v := data.OrderKey; v != nil {
-		q.Add("OrderKey", *v)
-	}
-	if v := data.TradeCode; v != nil {
-		q.Add("TradeCode", *v)
-	}
-	if v := data.Stage; v != nil {
-		q.Add("Stage", *v)
-	}
-	if v := data.SearchOrder; v != nil {
-		q.Add("SearchOrder", *v)
+	if v := data.SearchMode; v != nil {
+		q.Add("SearchMode", *v)
 	}
 	req.URL.RawQuery = q.Encode()
 
