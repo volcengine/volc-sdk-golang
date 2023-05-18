@@ -363,6 +363,38 @@ func (p *BusinessSecurity) ImageContentRisk(req *RiskDetectionRequest) (*ImageRe
 	return result, nil
 }
 
+// image risk deteciton
+// 内容安全图片实时接口
+func (p *BusinessSecurity) ImageContentRiskV2(req *RiskDetectionRequest) (*ImageResultResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ImageContentRiskV2: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ImageContentRiskV2", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ImageContentRiskV2", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ImageContentRiskV2: fail to do request, %v", err)
+			}
+			result := new(ImageResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ImageContentRiskV2: fail to do request, %v", err)
+	}
+	result := new(ImageResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // 要素验证
 func (p *BusinessSecurity) ElementVerifyV2(req *ElementVerifyRequest) (*ElementVerifyResponseV2, error) {
 	reqData, err := json.Marshal(req)
