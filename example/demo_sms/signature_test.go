@@ -22,13 +22,24 @@ func TestGetSignatureAndOrderList(t *testing.T) {
 }
 
 func TestApplySmsSignature(t *testing.T) {
+	fileBase64String, _ := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.ApplySmsSignatureRequest{
 		Desc:       "测试 SDK",
 		SubAccount: "smsAccount",
 		Content:    "sign",
-		Source:     "公司全称/简称",
+		Domain:     "http://www.xxx.com",
+		Source:     sms.SignSourceTypeBrand,
+		UploadFileList: []sms.SignAuthFile{
+			{
+				FileType:    sms.DocTypeThreeInOne,
+				FileContent: fileBase64String,
+				FileSuffix:  "jpg",
+			},
+		},
+		Purpose: sms.SignPurposeForOwn,
 	}
 	result, statusCode, err := sms.DefaultInstance.ApplySmsSignature(req)
 	t.Logf("result = %+v\n", result)
