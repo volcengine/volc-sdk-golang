@@ -21,7 +21,10 @@ func Test_ListDomain(t *testing.T) {
 	})
 
 	query := &request.VodListDomainRequest{
-		SpaceName: "your SpaceName",
+		SpaceName:         "your SpaceName",
+		DomainType:        "your DomainType",
+		SourceStationType: 0,
+		Offset:            0,
 	}
 
 	resp, status, err := instance.ListDomain(query)
