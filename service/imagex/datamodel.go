@@ -104,12 +104,13 @@ type ClientTopItem struct {
 // Method: GET
 
 type DescribeImageXDomainTrafficDataReq struct {
-	ServiceIds  string `query:"ServiceIds"`  // 传入多个用英文逗号分隔
-	DomainNames string `query:"DomainNames"` // 传入多个用英文逗号分隔
-	GroupBy     string `query:"GroupBy"`     // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持ServiceId,DomainName
-	StartTime   string `query:"StartTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
-	EndTime     string `query:"EndTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
-	Interval    string `query:"Interval"`    // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+	ServiceIds    string `query:"ServiceIds"`    // 传入多个用英文逗号分隔
+	DomainNames   string `query:"DomainNames"`   // 传入多个用英文逗号分隔
+	BillingRegion string `query:"BillingRegion"` // 过滤计费区域
+	GroupBy       string `query:"GroupBy"`       // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持ServiceId,DomainName
+	StartTime     string `query:"StartTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime       string `query:"EndTime"`       // YYYY-MM-DDThh:mm:ss±hh:mm
+	Interval      string `query:"Interval"`      // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
 }
 
 type DescribeImageXDomainTrafficDataResp struct {
@@ -120,12 +121,13 @@ type DescribeImageXDomainTrafficDataResp struct {
 // Method: GET
 
 type DescribeImageXDomainBandwidthDataReq struct {
-	ServiceIds  string `query:"ServiceIds"`  // 传入多个用英文逗号分隔
-	DomainNames string `query:"DomainNames"` // 传入多个用英文逗号分隔
-	GroupBy     string `query:"GroupBy"`     // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持ServiceId,DomainName
-	StartTime   string `query:"StartTime"`   // YYYY-MM-DDThh:mm:ss±hh:mm
-	EndTime     string `query:"EndTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
-	Interval    string `query:"Interval"`    // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
+	ServiceIds    string `query:"ServiceIds"`    // 传入多个用英文逗号分隔
+	DomainNames   string `query:"DomainNames"`   // 传入多个用英文逗号分隔
+	BillingRegion string `query:"BillingRegion"` // 过滤计费区域
+	GroupBy       string `query:"GroupBy"`       // 维度拆分的维度值。不传表示不拆分维度。传入多个用英文逗号分隔。支持ServiceId,DomainName
+	StartTime     string `query:"StartTime"`     // YYYY-MM-DDThh:mm:ss±hh:mm
+	EndTime       string `query:"EndTime"`       // YYYY-MM-DDThh:mm:ss±hh:mm
+	Interval      string `query:"Interval"`      // 时间粒度，单位秒。支持300,3600,86400。不传默认查询时间段全部数据
 }
 
 type DescribeImageXDomainBandwidthDataResp struct {
