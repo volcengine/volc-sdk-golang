@@ -150,6 +150,14 @@ var (
 				"Version": []string{"2021-11-29"},
 			},
 		},
+		"ImageContentRiskV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImageContentRiskV2"},
+				"Version": []string{"2021-11-29"},
+			},
+		},
 		"GetImageResult": {
 			Method: http.MethodGet,
 			Path:   "/",
