@@ -1,10 +1,10 @@
-package notify
+package vms
 
 import (
 	"testing"
 	"time"
 
-	n "github.com/volcengine/volc-sdk-golang/service/notify"
+	n "github.com/volcengine/volc-sdk-golang/service/vms"
 )
 
 const (
@@ -18,7 +18,7 @@ func TestCreateTask(t *testing.T) {
 
 	phoneParam := &n.PhoneParam{Phone: "1990000000"}
 	request := &n.CreateTaskRequest{Name: "kaede1", PhoneList: []*n.PhoneParam{phoneParam}, Resource: "1c9c65e4ea50417b8dfe234963350218",
-		StartTime: n.JsonTime(time.Now()), EndTime: n.JsonTime(time.Now().Add(time.Duration(1) * time.Hour)), Start: true, MaxRingDuration: 20, RingAgainInterval: 5,
+		StartTime: &n.JsonTime{Time: time.Now()}, EndTime: &n.JsonTime{Time: time.Now().Add(time.Duration(1) * time.Hour)}, Start: true, MaxRingDuration: 20, RingAgainInterval: 5,
 		RingAgainTimes: 0, Unique: false, NumberPoolNo: "NP162160143010909069", SelectNumberType: 0, Type: 0}
 
 	response, statusCode, err := n.DefaultInstance.CreateTask(request)

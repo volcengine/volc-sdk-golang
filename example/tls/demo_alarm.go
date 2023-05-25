@@ -29,7 +29,7 @@ func main() {
 	})
 	testTopicID := topic.TopicID
 
-	//create alarm notify group
+	//create alarm vms group
 	createAlarmGroupReq := &tls.CreateAlarmNotifyGroupRequest{
 		GroupName:  testPrefix + uuid.NewString(),
 		NoticeType: tls.NoticeTypes{"Recovery", "Trigger"},
