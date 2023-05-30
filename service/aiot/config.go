@@ -304,7 +304,7 @@ var (
 			Query:  url.Values{"Action": []string{"DeleteSpace"}, "Version": []string{ServiceVersion20210101}},
 		},
 		"DeleteSpaceDomain": {
-			Method: http.MethodGet,
+			Method: http.MethodPost,
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"DeleteSpaceDomain"}, "Version": []string{ServiceVersion20210101}},
 		},
