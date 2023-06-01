@@ -29,6 +29,31 @@ type uploadTaskSet struct {
 	successOids []string
 }
 
+func (r *uploadTaskSet) GetResult() []Result {
+	failedOids := make(map[string]struct{})
+	for _, item := range r.info {
+		failedOids[item.StoreUri] = struct{}{}
+	}
+	ret := make([]Result, 0)
+	for _, item := range r.successOids {
+		delete(failedOids, item)
+		ret = append(ret, Result{
+			Uri:        item,
+			UriStatus:  2000,
+			Encryption: Encryption{},
+		})
+	}
+	for item, _ := range failedOids {
+		ret = append(ret, Result{
+			Uri:        item,
+			UriStatus:  2001,
+			Encryption: Encryption{},
+		})
+	}
+
+	return ret
+}
+
 type uploadTaskElement struct {
 	ctx     context.Context
 	host    string
@@ -40,9 +65,7 @@ type uploadTaskElement struct {
 func (r *uploadTaskSet) init() {
 	r.lock = sync.Mutex{}
 	r.successOids = make([]string, 0)
-
 	r.taskChan = make(chan *uploadTaskElement, len(r.size))
-
 	for idx := range r.size {
 		r.taskChan <- &uploadTaskElement{
 			ctx:     r.ctx,
@@ -52,7 +75,6 @@ func (r *uploadTaskSet) init() {
 			size:    r.size[idx],
 		}
 	}
-
 	close(r.taskChan)
 }
 
@@ -178,6 +200,7 @@ func (c *ImageX) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 func (c *ImageX) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploadImageResult, error) {
 	query := url.Values{}
 	query.Add("ServiceId", params.ServiceId)
+	query.Add("SkipMeta", fmt.Sprintf("%v", params.SkipMeta))
 
 	bts, err := json.Marshal(params)
 	if err != nil {
@@ -283,16 +306,21 @@ func (c *ImageX) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 		}()
 	}
 	wg.Wait()
-
 	if len(uploadTaskSet.successOids) == 0 {
 		return nil, fmt.Errorf("upload failed, no file uploaded")
 	}
 
 	// 3. commit
+	if params.SkipCommit {
+		return &CommitUploadImageResult{
+			Results: uploadTaskSet.GetResult(),
+		}, nil
+	}
 	commitParams := &CommitUploadImageParam{
 		ServiceId:   params.ServiceId,
 		SessionKey:  uploadAddr.SessionKey,
 		SuccessOids: uploadTaskSet.successOids,
+		SkipMeta:    params.SkipMeta,
 	}
 	if params.CommitParam != nil {
 		commitParams.Functions = params.CommitParam.Functions
@@ -322,8 +350,15 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	}
 
 	// 2. upload
-	success := make([]string, 0)
 	host := uploadAddr.UploadHosts[0]
+	uploadTaskSet := &uploadTaskSet{
+		ctx:     context.Background(),
+		host:    host,
+		info:    uploadAddr.StoreInfos,
+		content: make([]io.Reader, 0),
+		size:    make([]int64, 0),
+	}
+	uploadTaskSet.init()
 	for i, image := range images {
 		imageCopy := image
 		info := uploadAddr.StoreInfos[i]
@@ -335,15 +370,24 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		if err != nil {
 			fmt.Printf("UploadImages: fail to do upload, %v", err)
 		} else {
-			success = append(success, info.StoreUri)
+			uploadTaskSet.addSuccess(info.StoreUri)
 		}
+	}
+	if len(uploadTaskSet.successOids) == 0 {
+		return nil, fmt.Errorf("upload failed, no file uploaded")
 	}
 
 	// 3. commit
+	if params.SkipCommit {
+		return &CommitUploadImageResult{
+			Results: uploadTaskSet.GetResult(),
+		}, nil
+	}
 	commitParams := &CommitUploadImageParam{
 		ServiceId:   params.ServiceId,
 		SessionKey:  uploadAddr.SessionKey,
-		SuccessOids: success,
+		SuccessOids: uploadTaskSet.successOids,
+		SkipMeta:    params.SkipMeta,
 	}
 	if params.CommitParam != nil {
 		commitParams.Functions = params.CommitParam.Functions
