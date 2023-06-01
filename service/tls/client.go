@@ -58,8 +58,12 @@ type LsClient struct {
 	SecurityToken   string
 	UserAgent       string
 	RequestTimeOut  time.Duration
-	RetryTimeOut    time.Duration
 	Region          string
+	APIVersion      string
+}
+
+func (c *LsClient) SetAPIVersion(version string) {
+	c.APIVersion = version
 }
 
 // ResetAccessKeyToken reset client's access key token
@@ -182,6 +186,10 @@ func appendParam(originalUrl string, params map[string]string) string {
 
 func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers map[string]string, body []byte) (*http.Response, error) {
 	headers[AgentHeader] = defaultLogUserAgent
+	// 如果header没有配置api version，增加默认的api version 0.2.0
+	if _, ok := headers[HeaderAPIVersion]; !ok {
+		headers[HeaderAPIVersion] = c.APIVersion
+	}
 
 	if body != nil {
 		bodyMD5 := fmt.Sprintf("%X", md5.Sum(body))

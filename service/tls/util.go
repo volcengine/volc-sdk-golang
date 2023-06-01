@@ -3,6 +3,7 @@ package tls
 import (
 	"encoding/json"
 	"runtime"
+	"strings"
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/pierrec/lz4"
@@ -122,4 +123,12 @@ func GetLogsFromMap(logTime int64, logMap map[string]string) *pb.Log {
 	}
 
 	return log
+}
+
+func ReplaceWhiteSpaceCharacter(str string) string {
+	replaceMap := map[string]string{"\r": "\\r", "\n": "\\n", "\t": "\\t"}
+	for origin, new := range replaceMap {
+		str = strings.ReplaceAll(str, origin, new)
+	}
+	return str
 }

@@ -86,4 +86,8 @@ const (
 
 	PathDescribeCheckPoint = "/DescribeCheckPoint"
 	PathModifyCheckPoint   = "/ModifyCheckPoint"
+
+	HeaderAPIVersion = "x-tls-apiversion"
+	APIVersion2      = "0.2.0"
+	APIVersion3      = "0.3.0"
 )

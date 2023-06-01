@@ -1,6 +1,8 @@
 package test
 
 import (
+	"fmt"
+	"github.com/stretchr/testify/assert"
 	. "github.com/volcengine/volc-sdk-golang/service/tls"
 	"os"
 	"testing"
@@ -138,5 +140,29 @@ func TestSearchIndex(t *testing.T) {
 
 	if len(searchResult.Logs) == 0 {
 		t.Error("empty result")
+	}
+}
+
+func TestSearchIndexV2(t *testing.T) {
+	client := NewClient(os.Getenv("LOG_TEST_ENDPOINT"), os.Getenv("LOG_TEST_ACCESS_KEY_ID"),
+		os.Getenv("LOG_TEST_ACCESS_KEY_SECRET"), os.Getenv("LOG_TEST_SECURITY_TOKEN"),
+		os.Getenv("LOG_TEST_REGION"))
+	topicID := os.Getenv("LOG_TEST_TOPIC")
+	//检索语法规则（Lucene）
+	resp, err := client.SearchLogsV2(&SearchLogsRequest{
+		TopicID:   topicID,
+		Query:     "*",
+		StartTime: 1630000000,
+		EndTime:   2630454400,
+		Limit:     100,
+		HighLight: false,
+		Context:   "",
+		Sort:      "",
+	})
+	fmt.Printf("v2 search result len %d", len(resp.Logs))
+	assert.True(t, len(resp.Logs) > 0)
+	if err != nil {
+		t.Error(err.Error())
+		return
 	}
 }
