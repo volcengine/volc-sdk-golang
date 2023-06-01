@@ -6,6 +6,7 @@ import (
 )
 
 func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
+	apiVersion := APIVersion2
 	return &LsClient{
 		Endpoint:        endpoint,
 		accessLock:      &sync.RWMutex{},
@@ -13,12 +14,14 @@ func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region str
 		AccessKeySecret: accessKeySecret,
 		SecurityToken:   securityToken,
 		Region:          region,
+		APIVersion:      apiVersion,
 	}
 }
 
 type Client interface {
 	ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string)
 	SetTimeout(timeout time.Duration)
+	SetAPIVersion(version string)
 
 	PutLogs(request *PutLogsRequest) (response *CommonResponse, err error)
 	PutLogsV2(request *PutLogsV2Request) (response *CommonResponse, err error)
@@ -43,6 +46,7 @@ type Client interface {
 	DescribeIndex(request *DescribeIndexRequest) (*DescribeIndexResponse, error)
 	ModifyIndex(request *ModifyIndexRequest) (*CommonResponse, error)
 	SearchLogs(request *SearchLogsRequest) (*SearchLogsResponse, error)
+	SearchLogsV2(request *SearchLogsRequest) (*SearchLogsResponse, error)
 
 	DescribeShards(request *DescribeShardsRequest) (*DescribeShardsResponse, error)
 

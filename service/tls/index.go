@@ -114,7 +114,15 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
-
+	if response.FullText != nil && len(response.FullText.Delimiter) > 0 {
+		response.FullText.Delimiter = ReplaceWhiteSpaceCharacter(response.FullText.Delimiter)
+	}
+	if len(*response.KeyValue) > 0 {
+		for k, v := range *response.KeyValue {
+			v.Value.Delimiter = ReplaceWhiteSpaceCharacter(v.Value.Delimiter)
+			(*response.KeyValue)[k] = v
+		}
+	}
 	return response, nil
 }
 
@@ -156,12 +164,16 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, 
 }
 
 func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
-
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
+	}
+
+	return c.search(request, reqHeaders)
+}
+
+func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]string) (*SearchLogsResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
 	}
 
 	reqBody := map[string]interface{}{
@@ -201,4 +213,14 @@ func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse
 		return nil, err
 	}
 	return response, nil
+}
+
+// SearchLogsV2 搜索按照0.3.0api版本进行，和默认的0.2.0版本区别见文档https://www.volcengine.com/docs/6470/112170
+func (c *LsClient) SearchLogsV2(request *SearchLogsRequest) (*SearchLogsResponse, error) {
+	reqHeaders := map[string]string{
+		"Content-Type":   "application/json",
+		HeaderAPIVersion: APIVersion3,
+	}
+
+	return c.search(request, reqHeaders)
 }

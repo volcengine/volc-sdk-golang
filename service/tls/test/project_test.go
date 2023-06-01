@@ -90,7 +90,7 @@ func TestListProject(t *testing.T) {
 
 		ProjectID:   "project-id",
 		ProjectName: "project-name",
-		PageNumber:  5,
+		PageNumber:  1,
 		PageSize:    10,
 	}
 
