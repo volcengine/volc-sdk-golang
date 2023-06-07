@@ -606,6 +606,48 @@ func (p *Visual) Img2Video3D(req *model.Img2Video3DRequest) (*model.Img2Video3DR
 	return resp, statusCode, nil
 }
 
+func (p *Visual) ConvertPhotoV2(req *model.ConvertPhotoV2Request) (*model.ConvertPhotoV2Result, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.ConvertPhotoV2Result)
+	statusCode, err := p.commonJsonHandler("ConvertPhotoV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) LensVidaVideoSubmitTaskV2(req *model.LensVidaVideoSubmitTaskV2Request) (*model.LensVidaVideoSubmitTaskV2Result, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.LensVidaVideoSubmitTaskV2Result)
+	statusCode, err := p.commonJsonHandler("LensVidaVideoSubmitTaskV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *Visual) LensVidaVideoGetResultV2(req *model.LensVidaVideoGetResultV2Request) (*model.LensVidaVideoGetResultV2Result, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.LensVidaVideoGetResultV2Result)
+	statusCode, err := p.commonJsonHandler("LensVidaVideoGetResultV2", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) ImageStyleConversion(form url.Values) (*model.ImageStyleConversionResult, int, error) {
 	resp := new(model.ImageStyleConversionResult)
 	statusCode, err := p.commonHandler("ImageStyleConversion", form, resp)
