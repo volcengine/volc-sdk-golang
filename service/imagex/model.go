@@ -293,7 +293,8 @@ type FetchUrlResp struct {
 
 // GetUrlFetchTask
 type GetUrlFetchTaskReq struct {
-	Id string `query:"Id"`
+	Id        string `query:"Id"`
+	ServiceId string `query:"ServiceId"`
 }
 
 type GetUrlFetchTaskResp struct {
