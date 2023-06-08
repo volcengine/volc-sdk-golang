@@ -48,6 +48,7 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 		FileName:        "",            // 设置文件名，无格式长度限制，用户可自定义,目前文件名不支持空格、+ 字符,如果要使用此字段，请联系技术支持配置白名单，非必须字段
 		FileExtension:   ".mp4",        // 设置文件后缀，以 . 开头，不超过8位
 		VodUploadSource: "upload",      // 设置上传来源，值为枚举值
+		ParallelNum:     2,             // 开启2协程进行分片上传，不配置时默认单协程，可根据机器 cpu 内存配置进行协程数设置
 	}
 
 	resp, _, err := instance.UploadMediaWithCallback(vodUploadMediaRequset)
