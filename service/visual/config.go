@@ -753,6 +753,39 @@ var (
 				"Version": []string{ServiceVersion20200826},
 			},
 		},
+		"ConvertPhotoV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ConvertPhotoV2"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"LensVidaVideoSubmitTaskV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"LensVidaVideoSubmitTaskV2"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"LensVidaVideoGetResultV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"LensVidaVideoGetResultV2"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 )
 
