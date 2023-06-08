@@ -32,7 +32,11 @@ func main() {
 	}
 
 	if req.Async {
-		resp, err := instance.GetUrlFetchTask(&imagex.GetUrlFetchTaskReq{Id: resp.TaskId})
+		req2 := &imagex.GetUrlFetchTaskReq{
+			Id:        resp.TaskId,
+			ServiceId: req.ServiceId,
+		}
+		resp, err := instance.GetUrlFetchTask(req2)
 		if err != nil {
 			fmt.Printf("error %v\n", err)
 		} else {
