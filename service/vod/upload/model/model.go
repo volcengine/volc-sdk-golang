@@ -1,5 +1,7 @@
 package model
 
+import "io"
+
 type UploadPartCommonResponse struct {
 	Version string          `json:"Version"`
 	Success int             `json:"success,omitempty"`
@@ -13,7 +15,9 @@ type InitPartResponse struct {
 
 type UploadPartResponse struct {
 	UploadPartCommonResponse
-	PayLoad UploadPartPayLoad `json:"payload,omitempty"`
+	PayLoad    UploadPartPayLoad `json:"payload,omitempty"`
+	PartNumber int
+	CheckSum   string
 }
 
 type Meta struct {
@@ -53,4 +57,31 @@ type UploadPartCommon struct {
 	Oid               string
 	Auth              string
 	ObjectContentType string
+}
+
+type VodUploadFuncRequest struct {
+	FilePath      string
+	Rd            io.Reader
+	Size          int64
+	ParallelNum   int
+	SpaceName     string
+	FileType      string
+	FileName      string
+	FileExtension string
+	StorageClass  int32
+}
+
+type VodUploadMediaInnerFuncRequest struct {
+	FilePath        string
+	Rd              io.Reader
+	Size            int64
+	ParallelNum     int
+	SpaceName       string
+	FileType        string
+	CallbackArgs    string
+	Funcs           string
+	FileName        string
+	FileExtension   string
+	StorageClass    int32
+	VodUploadSource string
 }
