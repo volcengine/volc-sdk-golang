@@ -402,6 +402,9 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	if storageClass == int32(business.StorageClassType_Archive) {
 		req.Header.Set("X-Upload-Storage-Class", "archive")
 	}
+	if storageClass == int32(business.StorageClassType_IA) {
+		req.Header.Set("X-Upload-Storage-Class", "ia")
+	}
 
 	rsp, err := client.Do(req)
 	if err != nil {
@@ -605,8 +608,13 @@ func (p *Vod) UploadMergePart(uploadPart model.UploadPartCommon, uploadID string
 	req.Header.Set("Authorization", uploadPart.Auth)
 	req.Header.Set("X-Storage-Mode", "gateway")
 
-	if storageClass == int32(business.StorageClassType_Archive) {
-		req.Header.Set("X-Upload-Storage-Class", "archive")
+	if storageClass == int32(business.StorageClassType_Archive) || storageClass == int32(business.StorageClassType_IA) {
+		if storageClass == int32(business.StorageClassType_Archive) {
+			req.Header.Set("X-Upload-Storage-Class", "archive")
+		}
+		if storageClass == int32(business.StorageClassType_IA) {
+			req.Header.Set("X-Upload-Storage-Class", "ia")
+		}
 		if uploadPart.ObjectContentType != "" {
 			q := req.URL.Query()
 			q.Add("ObjectContentType", uploadPart.ObjectContentType)
@@ -658,6 +666,9 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 	if storageClass == int32(business.StorageClassType_Archive) {
 		req.Header.Set("X-Upload-Storage-Class", "archive")
 	}
+	if storageClass == int32(business.StorageClassType_IA) {
+		req.Header.Set("X-Upload-Storage-Class", "ia")
+	}
 
 	rsp, err := client.Do(req)
 	if err != nil {
@@ -693,6 +704,10 @@ func (p *Vod) InitUploadPart(tosHost string, oid string, auth string, client *ht
 	if storageClass == int32(business.StorageClassType_Archive) {
 		req.Header.Set("X-Upload-Storage-Class", "archive")
 	}
+	if storageClass == int32(business.StorageClassType_IA) {
+		req.Header.Set("X-Upload-Storage-Class", "ia")
+	}
+
 	rsp, err := client.Do(req)
 	if err != nil {
 		return "", err

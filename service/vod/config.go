@@ -163,7 +163,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetMediaInfos"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 		"GetRecommendedPoster": {
@@ -195,7 +195,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetMediaList"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 		"GetSubtitleInfoList": {
