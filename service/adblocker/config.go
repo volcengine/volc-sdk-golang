@@ -51,24 +51,6 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "AdBlocker"},
 		},
-		base.RegionApSingapore: {
-			Timeout: 5 * time.Second,
-			Host:    "open-ap-singapore-1.volcengineapi.com",
-			Scheme:  "https",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "AdBlocker"},
-		},
-		base.RegionUsEast1: {
-			Timeout: 5 * time.Second,
-			Host:    "open-us-east-1.volcengineapi.com",
-			Scheme:  "https",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "AdBlocker"},
-		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
@@ -78,6 +60,15 @@ var (
 			Query: url.Values{
 				"Action":  []string{"AdBlock"},
 				"Version": []string{"2021-01-06"},
+			},
+		},
+		"SimpleRiskStat": {
+			Method:  http.MethodGet,
+			Path:    "/",
+			Timeout: 10 * time.Second,
+			Query: url.Values{
+				"Action":  []string{"SimpleRiskStat"},
+				"Version": []string{"2022-12-23"},
 			},
 		},
 	}

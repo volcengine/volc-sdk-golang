@@ -985,3 +985,69 @@ func (p *BusinessSecurity) UploadCustomContents(req *ModifyTextContent) (*Custom
 	}
 	return result, nil
 }
+
+func handleSimpleRiskStatResp(respBody []byte) (*SimpleProductStatisticsResult, error) {
+	resultTmp := new(SimpleRiskStatResponse)
+	if err := json.Unmarshal(respBody, resultTmp); err != nil {
+		return nil, err
+	}
+	if resultTmp.Result.Code != 0 {
+		return nil, resultTmp.Result.GetErr()
+	}
+	return resultTmp.Result.Data, nil
+}
+
+func (p *BusinessSecurity) SimpleRiskStat(req *CommonProductStatisticsReq) (*SimpleProductStatisticsResult, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("SimpleRiskStat: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("SimpleRiskStat", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("SimpleRiskStat", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("SimpleRiskStat: fail to do request, %v", err)
+			}
+			return handleSimpleRiskStatResp(respBody)
+		}
+		return nil, fmt.Errorf("SimpleRiskStat: fail to do request, %v", err)
+	}
+	return handleSimpleRiskStatResp(respBody)
+}
+
+func handleContentRiskStatResp(respBody []byte) (*ContentProductStatisticsResult, error) {
+	resultTmp := new(ContentRiskStatResponse)
+	if err := json.Unmarshal(respBody, resultTmp); err != nil {
+		return nil, err
+	}
+	if resultTmp.Result.Code != 0 {
+		return nil, resultTmp.Result.GetErr()
+	}
+	return resultTmp.Result.Data, nil
+}
+
+func (p *BusinessSecurity) ContentRiskStat(req *CommonProductStatisticsReq) (*ContentProductStatisticsResult, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ContentRiskStat: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ContentRiskStat", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ContentRiskStat", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ContentRiskStat: fail to do request, %v", err)
+			}
+			return handleContentRiskStatResp(respBody)
+		}
+		return nil, fmt.Errorf("ContentRiskStat: fail to do request, %v", err)
+	}
+	return handleContentRiskStatResp(respBody)
+}

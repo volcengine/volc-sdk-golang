@@ -2,6 +2,7 @@ package businessSecurity
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/url"
@@ -416,4 +417,105 @@ func UnmarshalResultInto(data []byte, result interface{}) error {
 		return fmt.Errorf("fail to unmarshal result, %v", err)
 	}
 	return nil
+}
+
+// openapi
+type SimpleRiskStatResponse struct {
+	Result *SimpleRiskStatResult `json:"Result"`
+}
+
+type ContentRiskStatResponse struct {
+	Result *ContentRiskStatResult `json:"Result"`
+}
+
+type OpenResult struct {
+	RequestId string `json:"RequestId"`
+	Code      int    `json:"Code"`
+	Message   string `json:"Message"`
+}
+
+type SimpleRiskStatResult struct {
+	OpenResult
+	Data *SimpleProductStatisticsResult `json:"Data"`
+}
+
+type ContentRiskStatResult struct {
+	OpenResult
+	Data *ContentProductStatisticsResult `json:"Data"`
+}
+
+func (result *OpenResult) GetErr() error {
+	return errors.New(fmt.Sprintf("err msg is %s, reqId is %s", result.Message, result.RequestId))
+}
+
+type CommonProductStatisticsReq struct {
+	Product    string  `json:"Product" form:"Product" query:"Product"`
+	UnitType   string  `json:"UnitType" form:"UnitType" query:"UnitType"`
+	Parameters string  `json:"Parameters" form:"Parameters" query:"Parameters"`
+	AppId      *int64  `json:"AppId" form:"AppId" query:"AppId"`
+	Service    *string `json:"Service" form:"Service" query:"Service"`
+}
+type CommonProductStatisticsParams struct {
+	StartDate     string `json:"start_date"`
+	EndDate       string `json:"end_date"`
+	NeedAppDetail bool   `json:"need_app_detail"`
+	OperateTime   int64  `json:"operate_time"`
+}
+type SimpleProductStatisticsParams struct {
+	CommonProductStatisticsParams
+	NeedServiceDetail bool `json:"need_service_detail"`
+}
+type ContentProductStatisticsParams struct {
+	CommonProductStatisticsParams
+	Biztype            string `json:"biztype"`
+	NeedBizTypeDetail  bool   `json:"need_biz_type_detail"`
+	RiskType           string `json:"risk_type"`
+	NeedRiskTypeDetail bool   `json:"need_risk_type_detail"`
+}
+
+type SimpleProductStatisticsResult struct {
+	Total  *SimpleProductStatisticsResultTotal    `json:"Total"`
+	Detail []*SimpleProductStatisticsResultDetail `json:"Detail"`
+}
+
+type ContentProductStatisticsResult struct {
+	Total  *ContentProductStatisticsResultTotal    `json:"Total"`
+	Detail []*ContentProductStatisticsResultDetail `json:"Detail"`
+}
+
+type CommonProductStatisticsResultTotal struct {
+	AccountId        int64  `json:"AccountId"`
+	RequestCnt       int64  `json:"RequestCnt"`
+	ChargeRequestCnt *int64 `json:"ChargeRequestCnt,omitempty"`
+}
+
+type CommonProductStatisticsResultDetail struct {
+	AccountId  int64  `json:"AccountId"`
+	RequestCnt int64  `json:"RequestCnt"`
+	DateTime   string `json:"DateTime"`
+
+	ChargeRequestCnt *int64  `json:"ChargeRequestCnt,omitempty"`
+	Service          *string `json:"Service,omitempty"`
+	AppId            *int64  `json:"AppId,omitempty"`
+	AppName          *string `json:"AppName,omitempty"`
+}
+
+type SimpleProductStatisticsResultTotal CommonProductStatisticsResultTotal
+type SimpleProductStatisticsResultDetail CommonProductStatisticsResultDetail
+
+type ContentProductStatisticsResultTotal struct {
+	CommonProductStatisticsResultTotal
+
+	RequestWordCnt  *int64   `json:"RequestWordCnt,omitempty"`
+	RequestFrameCnt *int64   `json:"RequestFrameCnt,omitempty"`
+	RequestDuration *float64 `json:"RequestAudioDuration,omitempty"`
+}
+
+type ContentProductStatisticsResultDetail struct {
+	CommonProductStatisticsResultDetail
+	Biztype         *string  `json:"Biztype,omitempty"`
+	RequestWordCnt  *int64   `json:"RequestWordCnt,omitempty"`
+	RiskType        *string  `json:"RiskType,omitempty"`
+	RequestFrameCnt *int64   `json:"RequestFrameCnt,omitempty"`
+	RequestDuration *float64 `json:"RequestAudioDuration,omitempty"`
 }

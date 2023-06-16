@@ -51,22 +51,6 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "BusinessSecurity"},
 		},
-		base.RegionApSingapore: {
-			Timeout: 5 * time.Second,
-			Host:    "open-ap-singapore-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionApSingapore, Service: "BusinessSecurity"},
-		},
-		base.RegionUsEast1: {
-			Timeout: 5 * time.Second,
-			Host:    "open-us-east-1.volcengineapi.com",
-			Header: http.Header{
-				"Accept": []string{"application/json"},
-			},
-			Credentials: base.Credentials{Region: base.RegionUsEast1, Service: "BusinessSecurity"},
-		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
@@ -324,6 +308,24 @@ var (
 			Query: url.Values{
 				"Action":  []string{"TextSliceRisk"},
 				"Version": []string{"2022-11-07"},
+			},
+		},
+		"SimpleRiskStat": {
+			Method:  http.MethodGet,
+			Path:    "/",
+			Timeout: 10 * time.Second,
+			Query: url.Values{
+				"Action":  []string{"SimpleRiskStat"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"ContentRiskStat": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ContentRiskStat"},
+				"Version": []string{"2022-12-23"},
 			},
 		},
 	}
