@@ -1,14 +1,16 @@
 package businessSecurity
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"testing"
+	"time"
 )
 
 const (
-	Ak = "ak" // write your access key
-	Sk = "sk" // write your secret key
+	Ak = "" // write your access key
+	Sk = "" // write your secret key
 )
 
 func init() {
@@ -455,5 +457,67 @@ func TestBusinessSecurity_ElementVerifyEncrypted(t *testing.T) {
 			}
 			t.Log(got)
 		})
+	}
+}
+
+func TestSimpleRiskStat(t *testing.T) {
+	params := new(SimpleProductStatisticsParams)
+	params.StartDate = "2023-05-07"
+	params.EndDate = "2023-05-09"
+	params.NeedServiceDetail = true
+	params.NeedAppDetail = true
+	params.OperateTime = time.Now().Unix()
+	paramsStr, err := json.Marshal(params)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+
+	req := new(CommonProductStatisticsReq)
+	req.Product = PrdElemVerify
+	req.UnitType = DAILY
+	req.Parameters = string(paramsStr)
+
+	result, err := DefaultInstance.SimpleRiskStat(req)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("total: %+v", result.Total)
+	for idx, detail := range result.Detail {
+		t.Logf("detail %d: %+v", idx, detail)
+	}
+}
+
+func TestContentRiskStat(t *testing.T) {
+	params := new(ContentProductStatisticsParams)
+	params.StartDate = "2023-05-07"
+	params.EndDate = "2023-05-09"
+	params.NeedRiskTypeDetail = true
+	params.NeedBizTypeDetail = true
+	//params.NeedAppDetail = true
+	params.OperateTime = time.Now().Unix()
+	params.RiskType = RiskTypeText
+	paramsStr, err := json.Marshal(params)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+
+	req := new(CommonProductStatisticsReq)
+	req.Product = PRDContentRisk
+	req.UnitType = DAILY
+	service := ServiceContentImageContentRisk
+	req.Service = &service
+	req.Parameters = string(paramsStr)
+
+	result, err := DefaultInstance.ContentRiskStat(req)
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("total: %+v", result.Total)
+	for idx, detail := range result.Detail {
+		t.Logf("detail %d: %+v", idx, detail)
 	}
 }
