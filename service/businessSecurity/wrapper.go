@@ -986,18 +986,15 @@ func (p *BusinessSecurity) UploadCustomContents(req *ModifyTextContent) (*Custom
 	return result, nil
 }
 
-func handleSimpleRiskStatResp(respBody []byte) (*SimpleProductStatisticsResult, error) {
+func handleSimpleRiskStatResp(respBody []byte) (*SimpleRiskStatResponse, error) {
 	resultTmp := new(SimpleRiskStatResponse)
 	if err := json.Unmarshal(respBody, resultTmp); err != nil {
 		return nil, err
 	}
-	if resultTmp.Result.Code != 0 {
-		return nil, resultTmp.Result.GetErr()
-	}
-	return resultTmp.Result.Data, nil
+	return resultTmp, nil
 }
 
-func (p *BusinessSecurity) SimpleRiskStat(req *CommonProductStatisticsReq) (*SimpleProductStatisticsResult, error) {
+func (p *BusinessSecurity) SimpleRiskStat(req *CommonProductStatisticsReq) (*SimpleRiskStatResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("SimpleRiskStat: fail to marshal request, %v", err)
@@ -1019,18 +1016,15 @@ func (p *BusinessSecurity) SimpleRiskStat(req *CommonProductStatisticsReq) (*Sim
 	return handleSimpleRiskStatResp(respBody)
 }
 
-func handleContentRiskStatResp(respBody []byte) (*ContentProductStatisticsResult, error) {
+func handleContentRiskStatResp(respBody []byte) (*ContentRiskStatResponse, error) {
 	resultTmp := new(ContentRiskStatResponse)
 	if err := json.Unmarshal(respBody, resultTmp); err != nil {
 		return nil, err
 	}
-	if resultTmp.Result.Code != 0 {
-		return nil, resultTmp.Result.GetErr()
-	}
-	return resultTmp.Result.Data, nil
+	return resultTmp, nil
 }
 
-func (p *BusinessSecurity) ContentRiskStat(req *CommonProductStatisticsReq) (*ContentProductStatisticsResult, error) {
+func (p *BusinessSecurity) ContentRiskStat(req *CommonProductStatisticsReq) (*ContentRiskStatResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("ContentRiskStat: fail to marshal request, %v", err)

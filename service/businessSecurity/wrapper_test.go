@@ -483,21 +483,21 @@ func TestSimpleRiskStat(t *testing.T) {
 		t.Errorf("%v", err)
 		return
 	}
-	t.Logf("total: %+v", result.Total)
-	for idx, detail := range result.Detail {
+	t.Logf("total: %+v", result.Result.Data.Total)
+	for idx, detail := range result.Result.Data.Detail {
 		t.Logf("detail %d: %+v", idx, detail)
 	}
 }
 
 func TestContentRiskStat(t *testing.T) {
 	params := new(ContentProductStatisticsParams)
-	params.StartDate = "2023-05-07"
-	params.EndDate = "2023-05-09"
+	params.StartDate = "2023-02"
+	params.EndDate = "2023-05"
 	params.NeedRiskTypeDetail = true
 	params.NeedBizTypeDetail = true
 	//params.NeedAppDetail = true
 	params.OperateTime = time.Now().Unix()
-	params.RiskType = RiskTypeText
+	//params.RiskType = RiskTypeText
 	paramsStr, err := json.Marshal(params)
 	if err != nil {
 		t.Errorf("%v", err)
@@ -506,8 +506,8 @@ func TestContentRiskStat(t *testing.T) {
 
 	req := new(CommonProductStatisticsReq)
 	req.Product = PRDContentRisk
-	req.UnitType = DAILY
-	service := ServiceContentImageContentRisk
+	req.UnitType = MONTHLY
+	service := ServiceContentVideoRisk
 	req.Service = &service
 	req.Parameters = string(paramsStr)
 
@@ -516,8 +516,8 @@ func TestContentRiskStat(t *testing.T) {
 		t.Errorf("%v", err)
 		return
 	}
-	t.Logf("total: %+v", result.Total)
-	for idx, detail := range result.Detail {
+	t.Logf("total: %+v", result.Result.Data.Total)
+	for idx, detail := range result.Result.Data.Detail {
 		t.Logf("detail %d: %+v", idx, detail)
 	}
 }
