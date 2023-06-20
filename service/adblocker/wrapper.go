@@ -36,18 +36,15 @@ func (p *AdBlocker) AdBlock(req *AdBlockRequest) (*AdBlockResponse, error) {
 	return nil, fmt.Errorf("AdBlock: fail to do request, %v", err)
 }
 
-func handleSimpleRiskStatResp(respBody []byte) (*SimpleProductStatisticsResult, error) {
+func handleSimpleRiskStatResp(respBody []byte) (*SimpleRiskStatResponse, error) {
 	resultTmp := new(SimpleRiskStatResponse)
 	if err := json.Unmarshal(respBody, resultTmp); err != nil {
 		return nil, err
 	}
-	if resultTmp.Result.Code != 0 {
-		return nil, resultTmp.Result.GetErr()
-	}
-	return resultTmp.Result.Data, nil
+	return resultTmp, nil
 }
 
-func (p *AdBlocker) SimpleRiskStat(req *CommonProductStatisticsReq) (*SimpleProductStatisticsResult, error) {
+func (p *AdBlocker) SimpleRiskStat(req *CommonProductStatisticsReq) (*SimpleRiskStatResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("SimpleRiskStat: fail to marshal request, %v", err)

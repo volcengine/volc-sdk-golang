@@ -59,7 +59,7 @@ type OpenResult struct {
 
 type SimpleRiskStatResult struct {
 	OpenResult
-	Data *SimpleProductStatisticsResult `json:"data"`
+	Data *SimpleProductStatisticsResult `json:"Data"`
 }
 
 func (result *OpenResult) GetErr() error {

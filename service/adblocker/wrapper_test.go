@@ -57,8 +57,9 @@ func TestSimpleRiskStat(t *testing.T) {
 		t.Errorf("%v", err)
 		return
 	}
-	t.Logf("total: %+v", result.Total)
-	for idx, detail := range result.Detail {
+	t.Logf("open : %+v", result.Result.OpenResult)
+	t.Logf("total: %+v", result.Result.Data.Total)
+	for idx, detail := range result.Result.Data.Detail {
 		t.Logf("detail %d: %+v", idx, detail)
 	}
 }
