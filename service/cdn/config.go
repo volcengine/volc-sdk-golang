@@ -3,6 +3,7 @@ package cdn
 import (
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -54,6 +55,13 @@ func (s *CDN) GetAPIInfo(api string) *base.ApiInfo {
 	return nil
 }
 
+func (s *CDN) GetMethod(api string) string {
+	if apiInfo, ok := ApiInfoList[api]; ok {
+		return apiInfo.Method
+	}
+	return ""
+}
+
 func (s *CDN) SetRegion(region string) {
 	s.Client.ServiceInfo.Credentials.Region = region
 }
@@ -65,4 +73,12 @@ func (s *CDN) SetHost(host string) {
 // SetSchema .
 func (s *CDN) SetSchema(schema string) {
 	s.Client.ServiceInfo.Scheme = schema
+}
+
+func (s *CDN) SetMethod(api, method string) bool {
+	if _, ok := ApiInfoList[api]; ok {
+		ApiInfoList[api].Method = strings.ToUpper(method)
+		return true
+	}
+	return false
 }
