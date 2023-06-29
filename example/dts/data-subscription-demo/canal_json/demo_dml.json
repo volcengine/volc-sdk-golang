@@ -1,0 +1,34 @@
+{
+  "id":0,
+  "database":"dts_test",
+  "table":"test",
+  "pkNames":[
+    "id"
+  ],
+  "isDdl":false,
+  "type":"INSERT",
+  "es":1682578770000,
+  "ts":1682578770185,
+  "sql":"",
+  "sqlType":{
+    "id":4,
+    "message":2005,
+    "name":1
+  },
+  "mysqlType":{
+    "id":"int(11)",
+    "message":"longtext",
+    "name":"char(255)"
+  },
+  "data":[
+    {
+      "id":"1",
+      "message":"This is a longtext",
+      "name":"Bob"
+    }
+  ],
+  "old":null,
+  "pgType":{
+
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id":0,
+  "database":"dts_test",
+  "table":"test",
+  "pkNames":null,
+  "isDdl":true,
+  "type":"CREATE",
+  "es":1682578031000,
+  "ts":1682578031120,
+  "sql":"CREATE TABLE test (id INT NOT NULL PRIMARY KEY, name CHAR(255), message LONGTEXT)",
+  "sqlType":null,
+  "mysqlType":null,
+  "data":null,
+  "old":null,
+  "pgType":null
+}
