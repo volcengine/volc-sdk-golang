@@ -15,4 +15,13 @@ func DescribeCdnData(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.NotEmpty(t, resp.Result.Resources)
+
+	resp, err = DefaultInstance.DescribeCdnData(&cdn.DescribeCdnDataRequest{
+		StartTime: testStartTime,
+		EndTime:   testEndTime,
+		Metric:    "flux",
+	}, cdn.UseGet())
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.Resources)
 }

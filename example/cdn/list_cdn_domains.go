@@ -7,7 +7,14 @@ import (
 )
 
 func ListCdnDomains(t *testing.T) {
-	resp, err := DefaultInstance.ListCdnDomains(&cdn.ListCdnDomainsRequest{Domain: &exampleDomain})
+	var a, b = int64(10), int64(1)
+	resp, err := DefaultInstance.ListCdnDomains(&cdn.ListCdnDomainsRequest{PageSize: &a, PageNum: &b})
+	assert.NoError(t, err)
+	assert.NotNil(t, resp)
+	assert.NotEmpty(t, resp.Result.Data)
+
+	// use get method
+	resp, err = DefaultInstance.ListCdnDomains(&cdn.ListCdnDomainsRequest{PageSize: &a, PageNum: &b}, cdn.UseGet())
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
 	assert.NotEmpty(t, resp.Result.Data)
