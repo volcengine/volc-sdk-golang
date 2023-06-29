@@ -523,7 +523,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListCdnUsageData"},
-				"Version": []string{"2022-01-01"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 		"ListCdnStatusData": {
