@@ -172,6 +172,12 @@ func Test_ListCdnUsageData(t *testing.T) {
 		DataType:       "your DataType",
 		Metric:         "your Metric",
 		NeedDetail:     false,
+		Area:           "your Area",
+		Region:         "your Region",
+		Isp:            "your Isp",
+		Protocol:       "your Protocol",
+		IpVersion:      "your IpVersion",
+		BillingRegion:  "your BillingRegion",
 	}
 
 	resp, status, err := instance.ListCdnUsageData(query)
