@@ -152,6 +152,7 @@ type SimpleTemplate struct {
 	TemplateName     string `json:"TemplateName"`
 	ApplyToALLStream bool   `json:"-"`
 	BindTime         string `json:"BindTime"`
+	FCDNTemplateName string `json:"FCDNTemplateName,omitempty"`
 }
 
 type SpaceView struct {
@@ -169,9 +170,10 @@ type SpaceView struct {
 	SipServer     *SipServer             `json:"SipServer"`
 	CallbackURL   *string                `json:"CallbackURL"`
 	Template      struct {
-		Screenshot SimpleTemplate `json:"Screenshot"`
-		Record     SimpleTemplate `json:"Record"`
-		AI         SimpleTemplate `json:"AI"`
+		Screenshot SimpleTemplate   `json:"Screenshot"`
+		Record     SimpleTemplate   `json:"Record"`
+		AI         SimpleTemplate   `json:"AI"`
+		Trans      []SimpleTemplate `bson:"Trans"`
 	} `bson:"Template"`
 }
 
@@ -218,27 +220,38 @@ type Coordinates struct {
 	Latitude  *float64 `json:"Latitude"`  //纬度
 }
 
+type CommonCount struct {
+	OnlineCount int64 `json:"OnlineCount"`
+	AllCount    int64 `json:"AllCount"`
+}
+
 type DeviceView struct {
-	SpaceID              string                    `json:"SpaceID"`
-	Type                 string                    `json:"Type"`
-	DeviceName           string                    `json:"DeviceName"`
-	DeviceID             string                    `json:"DeviceID"`
-	DeviceNSID           string                    `json:"DeviceNSID"`
-	Username             string                    `json:"Username"`
-	Password             string                    `json:"Password"`
-	Description          string                    `json:"Description"`
-	AutoPullAfterRegiter bool                      `json:"AutoPullAfterRegiter"`
-	CreatedAt            string                    `json:"CreatedAt"`
-	UpdatedAt            string                    `json:"UpdatedAt"`
-	Manufactory          string                    `json:"Manufactory"`
-	AlertNotification    *AlertNotification        `json:"AlertNotification"`
-	DeviceStreams        map[string]*DeviceStreams `json:"DeviceStreams"`
-	Status               string                    `json:"Status"`
-	ChannelNum           int                       `json:"ChannelNum"`
-	RtpTransportTcp      bool                      `json:"RtpTransportTcp"` //流传输协议tcp为true，否则默认udp
-	ContactCount         int                       `json:"ContactCount"`    //Device的contact数量, 用于前端提示多device注册同一个账号
-	Location             string                    `json:"Location"`
-	Coordinates          *Coordinates              `json:"Coordinates"`
+	SpaceID              string                      `json:"SpaceID"`
+	SpaceName            string                      `json:"SpaceName"`
+	Type                 string                      `json:"Type"`
+	DeviceName           string                      `json:"DeviceName"`
+	DeviceID             string                      `json:"DeviceID"`
+	DeviceNSID           string                      `json:"DeviceNSID"`
+	Username             string                      `json:"Username"`
+	Password             string                      `json:"Password"`
+	Description          string                      `json:"Description"`
+	AutoPullAfterRegiter bool                        `json:"AutoPullAfterRegiter"`
+	CreatedAt            string                      `json:"CreatedAt"`
+	UpdatedAt            string                      `json:"UpdatedAt"`
+	Manufactory          string                      `json:"Manufactory"`
+	AlertNotification    *AlertNotification          `json:"AlertNotification"`
+	DeviceStreams        map[string]*DeviceStreams   `json:"DeviceStreams"`
+	DeviceSubStreams     map[string][]*DeviceStreams `json:"DeviceSubStreams"`
+	Status               string                      `json:"Status"`
+	ChannelNum           int                         `json:"ChannelNum"`
+	RtpTransportTcp      bool                        `json:"RtpTransportTcp"` //流传输协议tcp为true，否则默认udp
+	ContactCount         int                         `json:"ContactCount"`    //Device的contact数量, 用于前端提示多device注册同一个账号
+
+	Location     string       `json:"Location"`
+	Coordinates  *Coordinates `json:"Coordinates"`
+	DeviceIP     string       `json:"DeviceIP"`
+	CommonCount  *CommonCount `json:"CommonCount,omitempty" bson:"CommonCount,omitempty"`
+	UseSubStream bool         `json:"UseSubStream"` // 是否启用子码流
 }
 
 type DeviceResponse struct {
@@ -320,6 +333,7 @@ type DeviceItemWithStream struct {
 	DeviceItem DeviceItem `json:"DeviceItem"`
 	StreamID   string     `json:"StreamID"`
 	CreateAt   string     `json:"CreateAt"`
+	SubStreams []string   `json:"SubStreams"`
 }
 
 type CatalogItemInfo struct {
@@ -370,13 +384,15 @@ type RecordList struct {
 }
 
 type RecordItem struct {
-	DeviceID  string `json:"DeviceID"`
-	Name      string `json:"Name"`
-	StartTime string `json:"StartTime"`
-	EndTime   string `json:"EndTime"`
-	Secrecy   string `json:"Secrecy"`
-	Type      string `json:"Type"`
-	FileSize  string `json:"FileSize"`
+	DeviceID       string `json:"DeviceID"`
+	Name           string `json:"Name"`
+	StartTime      string `json:"StartTime"`
+	EndTime        string `json:"EndTime"`
+	StartTimestamp int64  `json:"StartTimeStamp"`
+	EndTimestamp   int64  `json:"EndTimeStamp"`
+	Secrecy        string `json:"Secrecy"`
+	Type           string `json:"Type"`
+	FileSize       string `json:"FileSize"`
 }
 
 type GetRecordListResponse struct {
@@ -416,30 +432,32 @@ type LogView struct {
 }
 
 type StreamView struct {
-	AccountID       string         `json:"AccountID,omitempty"`
-	SpaceID         string         `json:"SpaceID"`
-	SIPID           string         `json:"SIPID"`
-	StreamName      string         `json:"StreamName"`
-	StreamID        string         `json:"StreamID"`
-	SpaceAccessType string         `json:"SpaceAccessType"`
-	DeviceID        string         `json:"DeviceID"`
-	DeviceNSID      string         `json:"DeviceNSID"`
-	ChannelID       string         `json:"ChannelID"`
-	Status          string         `json:"Status"`
-	Description     string         `json:"Description"`
-	Screenshot      StreamTemplate `json:"Screenshot"`
-	Record          StreamTemplate `json:"Record"`
-	AI              StreamTemplate `json:"AI"`
-	CreatedAt       string         `json:"CreatedAt"`
-	UpdatedAt       string         `json:"UpdatedAt"`
-	PushUrlDDL      int64          `json:"PushUrlDDL,omitempty"`
-	PushUrl         string         `json:"PushUrl,omitempty"`
-	PullUrls        []string       `json:"PullUrls"`
-	FailedTimes     int            `json:"FailedTimes"`
-	RecentPushTs    string         `json:"RecentPushTs"`    //最近推流时间
-	StreamLogs      LogViews       `json:"StreamLogs"`      //stream日志
-	RtpTransportTcp bool           `json:"RtpTransportTcp"` //rtp传输协议是否使用tcp
-	DemandLive      bool           `json:"DemandLive"`
+	AccountID       string              `json:"AccountID,omitempty"`
+	SpaceID         string              `json:"SpaceID"`
+	SIPID           string              `json:"SIPID"`
+	StreamName      string              `json:"StreamName"`
+	StreamID        string              `json:"StreamID"`
+	SpaceAccessType string              `json:"SpaceAccessType"`
+	DeviceID        string              `json:"DeviceID"`
+	DeviceNSID      string              `json:"DeviceNSID"`
+	ChannelID       string              `json:"ChannelID"`
+	Status          string              `json:"Status"`
+	Description     string              `json:"Description"`
+	Screenshot      StreamTemplate      `json:"Screenshot"`
+	Record          StreamTemplate      `json:"Record"`
+	AI              StreamTemplate      `json:"AI"`
+	CreatedAt       string              `json:"CreatedAt"`
+	UpdatedAt       string              `json:"UpdatedAt"`
+	PushUrlDDL      int64               `json:"PushUrlDDL,omitempty"`
+	PushUrl         string              `json:"PushUrl,omitempty"`
+	PullUrls        []string            `json:"PullUrls"`
+	TransPullUrls   map[string][]string `json:"TransPullUrls"`
+	FailedTimes     int                 `json:"FailedTimes"`
+	RecentPushTs    string              `json:"RecentPushTs"`    //最近推流时间
+	StreamLogs      LogViews            `json:"StreamLogs"`      //stream日志
+	RtpTransportTcp bool                `json:"RtpTransportTcp"` //rtp传输协议是否使用tcp
+	DemandLive      bool                `json:"DemandLive"`
+	Resolution      string              `json:"Resolution"` // 通道支持的分辨率列表, 分辨率列表由‘/’隔开，国标协议样例: 6/3
 }
 
 type StreamTemplate struct {
@@ -494,9 +512,10 @@ type GetSpaceTemplateResponse struct {
 }
 
 type SpaceTemplate struct {
-	Screenshot SimpleTemplate `json:"Screenshot"`
-	Record     SimpleTemplate `json:"Record"`
-	AI         SimpleTemplate `json:"AI"`
+	Screenshot SimpleTemplate   `json:"Screenshot"`
+	Record     SimpleTemplate   `json:"Record"`
+	AI         SimpleTemplate   `json:"AI"`
+	Trans      []SimpleTemplate `bson:"Trans"`
 }
 
 type TemplateResponse struct {
@@ -527,6 +546,7 @@ type Template struct {
 	Screenshot   *ScreenshotTemplate `json:"Screenshot,omitempty"`
 	Record       *RecordTemplate     `json:"Record,omitempty"`
 	AI           *AITemplate         `json:"AI,omitempty"`
+	Trans        *TransTemplate      `json:"Trans,omitempty"`
 	CreatedAt    string              `json:"CreatedAt"`
 	UpdatedAt    string              `json:"UpdatedAt"`
 	Status       string              `json:"-"`
@@ -547,17 +567,22 @@ type TemplateBucketConfig struct {
 type TemplateTTLConfig struct {
 	Days int `json:"Days"`
 }
+
 type ScreenshotType string
+
 type ScreenshotTypeInt int32
+
 type RecordTemplate struct {
-	RecordDuration int                  `json:"RecordDuration"` // ms
-	SliceDuration  int                  `json:"SliceDuration"`
-	TTL            TemplateTTLConfig    `json:"TTL"`
-	Type           string               `json:"Type"`
-	Format         string               `json:"Format"`
-	Path           string               `json:"-"`
-	Bucket         TemplateBucketConfig `json:"-"`
+	RecordDuration int                  `bson:"RecordDuration"` // ms
+	SliceDuration  int                  `bson:"SliceDuration"`
+	TTL            TemplateTTLConfig    `bson:"TTL"`
+	Type           string               `bson:"Type"`
+	Format         string               `bson:"Format"`
+	Path           string               `bson:"Path" json:"-"`
+	Bucket         TemplateBucketConfig `bson:"Bucket"`
+	EnableTimes    *EnableTimes         `bson:"EnableTimes"`
 }
+
 type AITemplate struct {
 	CapabilitySet []string                  `json:"CapabilitySet"`
 	TemplateItems map[string]AITemplateItem `json:"TemplateItems"`
@@ -579,6 +604,23 @@ type EnableTime struct {
 	EnableTo   string
 }
 type EnableTimes []EnableTime
+
+type TransTemplate struct {
+	SuffixName   *string `json:"SuffixName"`
+	VideoBitrate *int    `json:"VideoBitrate,omitempty"`
+	Vcodec       *string `json:"Vcodec"`
+	AudioBitrate *int    `json:"AudioBitrate,omitempty"`
+	Acodec       *string `json:"Acodec"`
+	FPS          *int    `json:"FPS,omitempty"`
+	GOP          *int    `json:"GOP"`
+	Width        *int    `json:"Width"`
+	Height       *int    `json:"Height"`
+	As           *string `json:"As,omitempty"`
+	ShortSide    *int    `json:"ShortSide,omitempty"`
+	LongSide     *int    `json:"LongSide,omitempty"`
+	BFrames      *int    `json:"BFrames,omitempty"`
+	Roi          *bool   `json:"Roi"`
+}
 
 type ListHistoryResponse struct {
 	ResponseMetadata base.ResponseMetadata
@@ -1295,4 +1337,86 @@ type GetAIAnalysisResult struct {
 type GetAIAnalysisResultResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           GetAIAnalysisResult `json:"Result,omitempty"`
+}
+
+type RecordPlanView struct {
+	PlanID       string `bson:"PlanID"`
+	PlanName     string `bson:"PlanName"`
+	Description  string `bson:"Description"`
+	Status       string `bson:"Status"`
+	CreatedAt    int64  `bson:"CreatedAt"`
+	UpdatedAt    int64  `bson:"UpdatedAt"`
+	BindTemplate string `bson:"BindTemplate"`
+}
+
+type RecordPlanResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *RecordPlanView
+}
+
+type BindChannel struct {
+	ChannelID string `json:"ChannelID"`
+}
+
+type CreateRecordPlanRequest struct {
+	PlanName       string                    `json:"PlanName"`
+	Description    string                    `json:"Description"`
+	Status         string                    `json:"Status"`
+	BindTemplate   string                    `json:"BindTemplate"`
+	StreamingIndex int                       `json:"StreamingIndex"`
+	Resolution     string                    `json:"Resolution"`
+	BindChannels   map[string][]*BindChannel `json:"BindChannels"`
+	BindStreams    []string                  `json:"BindStreams"`
+}
+
+type UpdateRecordPlanList struct {
+	StreamingIndex int                       `json:"StreamingIndex"`
+	Resolution     string                    `json:"Resolution"`
+	Devices        map[string][]*BindChannel `json:"Devices"`
+	Streams        []string                  `json:"Streams"`
+}
+
+type UpdateRecordPlanRequest struct {
+	PlanID       string                `json:"PlanID"`
+	PlanName     string                `json:"PlanName"`
+	Description  string                `json:"Description"`
+	BindTemplate string                `json:"BindTemplate"`
+	Status       string                `json:"Status"`
+	AddList      *UpdateRecordPlanList `json:"AddList"`
+	DelList      *UpdateRecordPlanList `json:"DelList"`
+}
+
+type ListRecordPlanResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListRecordPlanResp
+}
+
+type ListRecordPlanResp struct {
+	PageResult PageResult        `json:"PageResult"`
+	List       []*RecordPlanView `json:"List"`
+}
+
+type StreamingType = string //码流类型
+
+type RecordPlanStreamView struct {
+	ChannelID     string        `json:"ChannelID"`
+	StreamingType StreamingType `json:"StreamingType"`
+	StreamID      string        `json:"StreamID"`
+	StreamName    string        `json:"StreamName"`
+	PullUrls      []string      `json:"PullUrls"`
+}
+
+type ListRecordPlanChannelResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *ListRecordPlanChannelResp
+}
+
+type ListRecordPlanChannelResp struct {
+	PageResult
+	List []*RecordPlanStreamView `json:"List"`
+}
+
+type RecordPlanResultResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           IDResponse `json:"Result,omitempty"`
 }

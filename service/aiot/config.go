@@ -158,6 +158,11 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"CreateScreenshotTemplate"}, "Version": []string{ServiceVersion20210101}},
 		},
+		"CreateTransTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CreateTransTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
 		"CreateSlowLive": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -292,6 +297,11 @@ var (
 			Method: http.MethodPost,
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"DeleteScreenshotTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"DeleteTransTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteTransTemplate"}, "Version": []string{ServiceVersion20210101}},
 		},
 		"DeleteSlowLive": {
 			Method: http.MethodPost,
@@ -523,6 +533,11 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"GetScreenshotTemplate"}, "Version": []string{ServiceVersion20210101}},
 		},
+		"GetTransTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetTransTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
 		"GetSlowLive": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -692,6 +707,11 @@ var (
 			Method: http.MethodGet,
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"ListScreenshotTemplates"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"ListTransTemplates": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListTransTemplates"}, "Version": []string{ServiceVersion20210101}},
 		},
 		"ListSlowLive": {
 			Method: http.MethodGet,
@@ -988,6 +1008,11 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"UpdateScreenshotTemplate"}, "Version": []string{ServiceVersion20210101}},
 		},
+		"UpdateTransTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"UpdateTransTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
 		"UpdateSlowLive": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1067,6 +1092,51 @@ var (
 			Method: http.MethodPost,
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"EdgeStatus"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"AiotPlayBackControl": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"AiotPlayBackControl"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"AiotPlayBackStart": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"AiotPlayBackStart"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"AiotPlayBackStop": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"AiotPlayBackStop"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"CreateRecordPlan": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CreateRecordPlan"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"UpdateRecordPlan": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"UpdateRecordPlan"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"ListRecordPlans": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListRecordPlans"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"ListRecordPlanChannels": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListRecordPlanChannels"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"GetRecordPlan": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetRecordPlan"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"DeleteRecordPlan": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteRecordPlan"}, "Version": []string{ServiceVersion20210101}},
 		},
 	}
 )

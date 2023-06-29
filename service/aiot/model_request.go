@@ -61,7 +61,9 @@ type CancelBindTemplateRequest struct {
 type SetSpaceTemplateRequest struct {
 	SpaceID      string
 	TemplateType string
-	TemplateID   string `json:"TemplateID"`
+
+	TemplateID      string   `json:"TemplateID"`
+	TemplateTransID []string `json:"TemplateTransID"`
 }
 
 type CreateDeviceRequest struct {
@@ -79,6 +81,7 @@ type CreateDeviceRequest struct {
 	Location              *string            `json:"Location"`
 	Coordinates           *Coordinates       `json:"Coordinates"`
 	AlertNotification     *AlertNotification `json:"AlertNotification"`
+	UseSubStream          *bool              `json:"UseSubStream"`
 }
 
 type DeviceRequest struct {
@@ -187,6 +190,12 @@ type ListHistoryRequest struct {
 	EndTs      string `json:"EndTs"`
 }
 
+type AiotPlayBackControlRequest struct {
+	StreamName string `json:"StreamName"`
+	Ntp        string `json:"Ntp"`
+	Scale      int    `json:"Scale"`
+}
+
 type CreateDeviceArg struct {
 	Type                 string             `json:"Type"`
 	DeviceName           string             `json:"DeviceName"`
@@ -201,6 +210,7 @@ type CreateDeviceArg struct {
 	Location             *string            `json:"Location"`
 	Coordinates          *Coordinates       `json:"Coordinates"`
 	AlertNotification    *AlertNotification `json:"AlertNotification"`
+	UseSubStream         *bool              `json:"UseSubStream"`
 }
 
 type UpdateDeviceArg struct {
@@ -218,6 +228,7 @@ type UpdateDeviceArg struct {
 	Location             *string            `json:"Location"`        //可以修改设备的地址位置和坐标
 	Coordinates          *Coordinates       `json:"Coordinates"`
 	OnChannelNum         *int               `json:"-"`
+	UseSubStream         *bool              `json:"UseSubStream"`
 }
 
 type CloudControlRequest struct {
@@ -300,7 +311,15 @@ type UpdateStreamRequest struct {
 }
 
 type StreamRequest struct {
-	StreamID string
+	StreamID string `json:"StreamID"`
+}
+
+type StartStreamRequest struct {
+	StreamID   string `json:"StreamID,omitempty"`
+	DeviceNSID string `json:"DeviceNSID,omitempty"` // 设备国标ID
+	ChannelID  string `json:"ChannelID,omitempty"`  // 通道国标ID
+	StreamType int    `json:"StreamType,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
+	Resolution string `json:"Resolution,omitempty"` // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
 }
 
 type ListStreamsRequest struct {
@@ -331,6 +350,7 @@ type CreateTemplateRequest struct {
 	Screenshot   *ScreenshotTemplate `json:"Screenshot"`
 	Record       *RecordTemplate     `json:"Record"`
 	AI           *AITemplate         `json:"AI"`
+	Trans        *TransTemplate      `json:"Trans"`
 }
 
 type DeleteTemplateRequest struct {
@@ -354,6 +374,7 @@ type UpdateTemplateRequest struct {
 	Screenshot   *ScreenshotTemplate `json:"Screenshot"`
 	Record       *RecordTemplate     `json:"Record"`
 	AI           *AITemplate         `json:"AI"`
+	Trans        *TransTemplate      `json:"Trans"`
 	Enable       *bool               `json:"enable"`
 }
 

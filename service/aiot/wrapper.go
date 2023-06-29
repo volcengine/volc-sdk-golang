@@ -15,6 +15,13 @@ func (p *AIoT) commonHandler(api string, query url.Values, resp interface{}) (in
 
 	respBody, statusCode, err := p.Client.Query(api, query)
 	if err != nil {
+		if string(respBody) != "" {
+			if err := json.Unmarshal(respBody, resp); err != nil {
+				return statusCode, err
+			} else {
+				return statusCode, nil
+			}
+		}
 		return statusCode, err
 	}
 	if err := json.Unmarshal(respBody, resp); err != nil {
@@ -28,11 +35,21 @@ func (p *AIoT) commonHandlerJson(api string, query url.Values, resp interface{},
 		query = it(api, query)
 	}
 
-	body, _ := json.Marshal(req)
-	payload := string(body)
+	payload := ""
+	if req != nil {
+		body, _ := json.Marshal(req)
+		payload = string(body)
+	}
 
 	respBody, statusCode, err := p.Client.Json(api, query, payload)
 	if err != nil {
+		if string(respBody) != "" {
+			if err := json.Unmarshal(respBody, resp); err != nil {
+				return statusCode, err
+			} else {
+				return statusCode, nil
+			}
+		}
 		return statusCode, err
 	}
 	if err := json.Unmarshal(respBody, resp); err != nil {
@@ -679,6 +696,36 @@ func (p *AIoT) DeleteAlarmNotifyAll(spaceID, deviceID string) (*RawResponse, int
 	return resp, statusCode, nil
 }
 
+func (p *AIoT) AiotPlayBackStart(request *PlayBackStartRequest) (*PlayBackStartResponse, int, error) {
+	resp := new(PlayBackStartResponse)
+	statusCode, err := p.commonHandlerJson("AiotPlayBackStart", url.Values{}, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) AiotPlayBackStop(request *StreamRequest) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{
+		"StreamName": []string{request.StreamID},
+	}
+	statusCode, err := p.commonHandlerJson("AiotPlayBackStop", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) AiotPlayBackControl(request *AiotPlayBackControlRequest) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	statusCode, err := p.commonHandlerJson("AiotPlayBackControl", url.Values{}, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 //stream相关
 
 func (p *AIoT) CreateStream(request *CreateStreamRequest) (*StreamResponse, int, error) {
@@ -711,7 +758,19 @@ func (p *AIoT) StartStream(request *StreamRequest) (*StreamResponse, int, error)
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
-	statusCode, err := p.commonHandlerJson("StartStream", query, resp, "")
+	statusCode, err := p.commonHandlerJson("StartStream", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) StartStreamWithParameters(request *StartStreamRequest) (*StreamResponse, int, error) {
+	resp := new(StreamResponse)
+	query := url.Values{
+		"StreamID": []string{request.StreamID},
+	}
+	statusCode, err := p.commonHandlerJson("StartStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -859,6 +918,16 @@ func (p *AIoT) CreateAITemplate(request *CreateTemplateRequest) (*TemplateRespon
 	return resp, statusCode, nil
 }
 
+func (p *AIoT) CreateTransTemplate(request *CreateTemplateRequest) (*TemplateResponse, int, error) {
+	resp := new(TemplateResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CreateTransTemplate", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *AIoT) DeleteScreenshotTemplate(request *DeleteTemplateRequest) (*TemplateResponse, int, error) {
 	resp := new(TemplateResponse)
 	query := url.Values{}
@@ -883,6 +952,16 @@ func (p *AIoT) DeleteAITemplate(request *DeleteTemplateRequest) (*TemplateRespon
 	resp := new(TemplateResponse)
 	query := url.Values{}
 	statusCode, err := p.commonHandlerJson("DeleteAITemplate", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) DeleteTransTemplate(request *DeleteTemplateRequest) (*TemplateResponse, int, error) {
+	resp := new(TemplateResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("DeleteTransTemplate", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -919,6 +998,18 @@ func (p *AIoT) GetAITemplate(request *TemplateRequest) (*GetTemplateResponse, in
 		"TemplateID": []string{request.TemplateID},
 	}
 	statusCode, err := p.commonHandler("GetAITemplate", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) GetTransTemplate(request *TemplateRequest) (*GetTemplateResponse, int, error) {
+	resp := new(GetTemplateResponse)
+	query := url.Values{
+		"TemplateID": []string{request.TemplateID},
+	}
+	statusCode, err := p.commonHandler("GetTransTemplate", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -970,6 +1061,21 @@ func (p *AIoT) ListAITemplates(request *ListTemplateRequest) (*ListTemplateRespo
 	return resp, statusCode, nil
 }
 
+func (p *AIoT) ListTransTemplates(request *ListTemplateRequest) (*ListTemplateResponse, int, error) {
+	resp := new(ListTemplateResponse)
+	query := url.Values{}
+	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
+	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
+	if request.Order != "" {
+		query.Add("Order", request.Order)
+	}
+	statusCode, err := p.commonHandler("ListTransTemplates", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *AIoT) UpdateScreenshotTemplate(request *UpdateTemplateRequest) (*TemplateResponse, int, error) {
 	resp := new(TemplateResponse)
 	query := url.Values{
@@ -995,6 +1101,18 @@ func (p *AIoT) UpdateRecordTemplate(request *UpdateTemplateRequest) (*TemplateRe
 }
 
 func (p *AIoT) UpdateAITemplate(request *UpdateTemplateRequest) (*TemplateResponse, int, error) {
+	resp := new(TemplateResponse)
+	query := url.Values{
+		"TemplateID": []string{request.TemplateID},
+	}
+	statusCode, err := p.commonHandlerJson("UpdateAITemplate", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) UpdateTransTemplate(request *UpdateTemplateRequest) (*TemplateResponse, int, error) {
 	resp := new(TemplateResponse)
 	query := url.Values{
 		"TemplateID": []string{request.TemplateID},
@@ -1959,6 +2077,77 @@ func (p *AIoT) GetAIAnalysisResult(req *GetAIAnalysisResultRequest) (*GetAIAnaly
 		"StreamID": []string{req.StreamID},
 	}
 	statusCode, err := p.commonHandlerJson("GetAIAnalysisResult", query, resp, req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CreateRecordPlan(req *CreateRecordPlanRequest) (*RecordPlanResultResponse, int, error) {
+	resp := new(RecordPlanResultResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CreateRecordPlan", query, resp, req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) UpdateRecordPlan(req *UpdateRecordPlanRequest) (*RecordPlanResultResponse, int, error) {
+	resp := new(RecordPlanResultResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("UpdateRecordPlan", query, resp, req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) ListRecordPlans(pageNumber, pageSize int) (*ListRecordPlanResponse, int, error) {
+	resp := new(ListRecordPlanResponse)
+	query := url.Values{
+		"PageNumber": []string{fmt.Sprintf("%d", pageNumber)},
+		"PageSize":   []string{fmt.Sprintf("%d", pageSize)},
+	}
+	statusCode, err := p.commonHandlerJson("ListRecordPlans", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) ListRecordPlanChannels(planID string, pageNumber, pageSize int) (*ListRecordPlanChannelResponse, int, error) {
+	resp := new(ListRecordPlanChannelResponse)
+	query := url.Values{
+		"PlanID":     []string{planID},
+		"PageNumber": []string{fmt.Sprintf("%d", pageNumber)},
+		"PageSize":   []string{fmt.Sprintf("%d", pageSize)},
+	}
+	statusCode, err := p.commonHandler("ListRecordPlanChannels", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) GetRecordPlan(planID string) (*RecordPlanResponse, int, error) {
+	resp := new(RecordPlanResponse)
+	query := url.Values{
+		"PlanID": []string{planID},
+	}
+	statusCode, err := p.commonHandlerJson("GetRecordPlan", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) DeleteRecordPlan(planID string) (*RecordPlanResultResponse, int, error) {
+	resp := new(RecordPlanResultResponse)
+	query := url.Values{
+		"PlanID": []string{planID},
+	}
+	statusCode, err := p.commonHandlerJson("DeleteRecordPlan", query, resp, nil)
 	if err != nil {
 		return nil, statusCode, err
 	}
