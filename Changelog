@@ -1,5 +1,8 @@
 ### Change log
 
+2023-07-04 Bumped to version v1.0.107
+- Updated apis for vod
+
 2023-06-29 Bumped to version v1.0.106
 - Updated apis for aiot/vedbm/cdn/vod
 - Added service maas
