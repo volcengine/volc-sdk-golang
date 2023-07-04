@@ -389,3 +389,1398 @@ func (p *Vod) GetWorkflowExecutionResult(req *request.VodGetWorkflowResultReques
 	}
 	return output, status, nil
 }
+
+// CreateTaskTemplate
+/*
+ * @param *request.VodCreateTaskTemplateRequest
+ * @return *response.VodCreateTaskTemplateResponse, int, error
+ */
+func (p *Vod) CreateTaskTemplate(req *request.VodCreateTaskTemplateRequest) (*response.VodCreateTaskTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("CreateTaskTemplate", url.Values{}, form)
+
+	output := &response.VodCreateTaskTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// UpdateTaskTemplate
+/*
+ * @param *request.VodUpdateTaskTemplateRequest
+ * @return *response.VodUpdateTaskTemplateResponse, int, error
+ */
+func (p *Vod) UpdateTaskTemplate(req *request.VodUpdateTaskTemplateRequest) (*response.VodUpdateTaskTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("UpdateTaskTemplate", url.Values{}, form)
+
+	output := &response.VodUpdateTaskTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// GetTaskTemplate
+/*
+ * @param *request.VodGetTaskTemplateRequest
+ * @return *response.VodGetTaskTemplateResponse, int, error
+ */
+func (p *Vod) GetTaskTemplate(req *request.VodGetTaskTemplateRequest) (*response.VodGetTaskTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("GetTaskTemplate", query)
+
+	output := &response.VodGetTaskTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// ListTaskTemplate
+/*
+ * @param *request.VodListTaskTemplateRequest
+ * @return *response.VodListTaskTemplateResponse, int, error
+ */
+func (p *Vod) ListTaskTemplate(req *request.VodListTaskTemplateRequest) (*response.VodListTaskTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("ListTaskTemplate", query)
+
+	output := &response.VodListTaskTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// DeleteTaskTemplate
+/*
+ * @param *request.VodDeleteTaskTemplateRequest
+ * @return *response.VodDeleteTaskTemplateResponse, int, error
+ */
+func (p *Vod) DeleteTaskTemplate(req *request.VodDeleteTaskTemplateRequest) (*response.VodDeleteTaskTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("DeleteTaskTemplate", url.Values{}, form)
+
+	output := &response.VodDeleteTaskTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// CreateWorkflowTemplate
+/*
+ * @param *request.VodCreateWorkflowTemplateRequest
+ * @return *response.VodCreateWorkflowTemplateResponse, int, error
+ */
+func (p *Vod) CreateWorkflowTemplate(req *request.VodCreateWorkflowTemplateRequest) (*response.VodCreateWorkflowTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("CreateWorkflowTemplate", url.Values{}, form)
+
+	output := &response.VodCreateWorkflowTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// UpdateWorkflowTemplate
+/*
+ * @param *request.VodUpdateWorkflowTemplateRequest
+ * @return *response.VodUpdateWorkflowTemplateResponse, int, error
+ */
+func (p *Vod) UpdateWorkflowTemplate(req *request.VodUpdateWorkflowTemplateRequest) (*response.VodUpdateWorkflowTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("UpdateWorkflowTemplate", url.Values{}, form)
+
+	output := &response.VodUpdateWorkflowTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// GetWorkflowTemplate
+/*
+ * @param *request.VodGetWorkflowTemplateRequest
+ * @return *response.VodGetWorkflowTemplateResponse, int, error
+ */
+func (p *Vod) GetWorkflowTemplate(req *request.VodGetWorkflowTemplateRequest) (*response.VodGetWorkflowTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("GetWorkflowTemplate", query)
+
+	output := &response.VodGetWorkflowTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// ListWorkflowTemplate
+/*
+ * @param *request.VodListWorkflowTemplateRequest
+ * @return *response.VodListWorkflowTemplateResponse, int, error
+ */
+func (p *Vod) ListWorkflowTemplate(req *request.VodListWorkflowTemplateRequest) (*response.VodListWorkflowTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("ListWorkflowTemplate", query)
+
+	output := &response.VodListWorkflowTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// DeleteWorkflowTemplate
+/*
+ * @param *request.VodDeleteWorkflowTemplateRequest
+ * @return *response.VodDeleteWorkflowTemplateResponse, int, error
+ */
+func (p *Vod) DeleteWorkflowTemplate(req *request.VodDeleteWorkflowTemplateRequest) (*response.VodDeleteWorkflowTemplateResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("DeleteWorkflowTemplate", url.Values{}, form)
+
+	output := &response.VodDeleteWorkflowTemplateResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// CreateWatermarkTemplate
+/*
+ * @param *request.VodCreateWatermarkRequest
+ * @return *response.VodCreateWatermarkResponse, int, error
+ */
+func (p *Vod) CreateWatermarkTemplate(req *request.VodCreateWatermarkRequest) (*response.VodCreateWatermarkResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("CreateWatermarkTemplate", url.Values{}, form)
+
+	output := &response.VodCreateWatermarkResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// UpdateWatermarkTemplate
+/*
+ * @param *request.VodUpdateWatermarkRequest
+ * @return *response.VodUpdateWatermarkResponse, int, error
+ */
+func (p *Vod) UpdateWatermarkTemplate(req *request.VodUpdateWatermarkRequest) (*response.VodUpdateWatermarkResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("UpdateWatermarkTemplate", url.Values{}, form)
+
+	output := &response.VodUpdateWatermarkResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// GetWatermarkTemplate
+/*
+ * @param *request.VodGetWatermarkRequest
+ * @return *response.VodGetWatermarkResponse, int, error
+ */
+func (p *Vod) GetWatermarkTemplate(req *request.VodGetWatermarkRequest) (*response.VodGetWatermarkResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("GetWatermarkTemplate", query)
+
+	output := &response.VodGetWatermarkResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// ListWatermarkTemplate
+/*
+ * @param *request.VodListWatermarkRequest
+ * @return *response.VodListWatermarkResponse, int, error
+ */
+func (p *Vod) ListWatermarkTemplate(req *request.VodListWatermarkRequest) (*response.VodListWatermarkResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Query("ListWatermarkTemplate", query)
+
+	output := &response.VodListWatermarkResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
+// DeleteWatermarkTemplate
+/*
+ * @param *request.VodDeleteWatermarkRequest
+ * @return *response.VodDeleteWatermarkResponse, int, error
+ */
+func (p *Vod) DeleteWatermarkTemplate(req *request.VodDeleteWatermarkRequest) (*response.VodDeleteWatermarkResponse, int, error) {
+	query := url.Values{}
+	form := url.Values{}
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	reqMap := map[string]interface{}{}
+	err := json.Unmarshal([]byte(jsonData), &reqMap)
+	if err != nil {
+		return nil, 0, err
+	}
+	for k, v := range reqMap {
+		var sv string
+		switch ov := v.(type) {
+		case string:
+			sv = ov
+		case int:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int8:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint8:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int16:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint16:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int32:
+			sv = strconv.FormatInt(int64(ov), 10)
+		case uint32:
+			sv = strconv.FormatUint(uint64(ov), 10)
+		case int64:
+			sv = strconv.FormatInt(ov, 10)
+		case uint64:
+			sv = strconv.FormatUint(ov, 10)
+		case bool:
+			sv = strconv.FormatBool(ov)
+		case float32:
+			sv = strconv.FormatFloat(float64(ov), 'f', -1, 32)
+		case float64:
+			sv = strconv.FormatFloat(ov, 'f', -1, 64)
+		case []byte:
+			sv = string(ov)
+		default:
+			v2, e2 := json.Marshal(ov)
+			if e2 != nil {
+				return nil, 0, e2
+			}
+			sv = string(v2)
+		}
+		query.Set(k, sv)
+		form.Add(k, sv)
+	}
+
+	respBody, status, err := p.Post("DeleteWatermarkTemplate", url.Values{}, form)
+
+	output := &response.VodDeleteWatermarkResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}

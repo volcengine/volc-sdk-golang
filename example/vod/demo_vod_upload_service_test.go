@@ -10,34 +10,8 @@ import (
 
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
-	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
-
-func Test_UploadMediaByUrl(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	urlSets := make([]*business.VodUrlUploadURLSet, 0)
-	urlSet := &business.VodUrlUploadURLSet{
-		SourceUrl:     "",
-		CallbackArgs:  "my callback args",
-		FileExtension: ".mp4",
-	}
-	urlSets = append(urlSets, urlSet)
-	query := &request.VodUrlUploadRequest{
-		SpaceName: "your SpaceName",
-		URLSets:   urlSets,
-	}
-
-	resp, status, err := instance.UploadMediaByUrl(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
 
 func Test_QueryUploadTaskInfo(t *testing.T) {
 	instance := vod.NewInstance()
@@ -47,7 +21,7 @@ func Test_QueryUploadTaskInfo(t *testing.T) {
 	})
 
 	query := &request.VodQueryUploadTaskInfoRequest{
-		JobIds: "",
+		JobIds: "your JobIds",
 	}
 
 	resp, status, err := instance.QueryUploadTaskInfo(query)
