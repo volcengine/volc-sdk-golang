@@ -378,6 +378,126 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"GetTaskTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetTaskTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"CreateTaskTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateTaskTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateTaskTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateTaskTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"ListTaskTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListTaskTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DeleteTaskTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTaskTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"GetWorkflowTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetWorkflowTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"CreateWorkflowTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateWorkflowTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateWorkflowTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateWorkflowTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"ListWorkflowTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListWorkflowTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DeleteWorkflowTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteWorkflowTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"GetWatermarkTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetWatermarkTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"CreateWatermarkTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateWatermarkTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateWatermarkTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateWatermarkTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"ListWatermarkTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListWatermarkTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DeleteWatermarkTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteWatermarkTemplate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 视频编辑

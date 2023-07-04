@@ -89,3 +89,312 @@ func Test_GetWorkflowExecutionResult(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_CreateTaskTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodCreateTaskTemplateRequest{
+		SpaceName:                "your SpaceName",
+		Name:                     "your Name",
+		Description:              "your Description",
+		TaskType:                 "your TaskType",
+		TranscodeVideoTaskParams: nil,
+		ByteHDTaskParams:         nil,
+		TranscodeAudioTaskParams: nil,
+		SnapshotTaskParams:       nil,
+	}
+
+	resp, status, err := instance.CreateTaskTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateTaskTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateTaskTemplateRequest{
+		TemplateId:               "your TemplateId",
+		Name:                     "your Name",
+		Description:              "your Description",
+		TaskType:                 "your TaskType",
+		TranscodeVideoTaskParams: nil,
+		ByteHDTaskParams:         nil,
+		TranscodeAudioTaskParams: nil,
+		SnapshotTaskParams:       nil,
+	}
+
+	resp, status, err := instance.UpdateTaskTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetTaskTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetTaskTemplateRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.GetTaskTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListTaskTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListTaskTemplateRequest{
+		SpaceName:  "your SpaceName",
+		TemplateId: "your TemplateId",
+		Name:       "your Name",
+		TaskType:   "your TaskType",
+		Type:       "your Type",
+		Limit:      0,
+		Offset:     0,
+		OrderByKey: "your OrderByKey",
+		Order:      "your Order",
+	}
+
+	resp, status, err := instance.ListTaskTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DeleteTaskTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDeleteTaskTemplateRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.DeleteTaskTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_CreateWorkflowTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodCreateWorkflowTemplateRequest{
+		SpaceName:   "your SpaceName",
+		Name:        "your Name",
+		Description: "your Description",
+		Activities:  nil,
+	}
+
+	resp, status, err := instance.CreateWorkflowTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateWorkflowTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateWorkflowTemplateRequest{
+		TemplateId:  "your TemplateId",
+		Name:        "your Name",
+		Description: "your Description",
+		Activities:  nil,
+	}
+
+	resp, status, err := instance.UpdateWorkflowTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetWorkflowTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetWorkflowTemplateRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.GetWorkflowTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListWorkflowTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListWorkflowTemplateRequest{
+		SpaceName:  "your SpaceName",
+		TemplateId: "your TemplateId",
+		Name:       "your Name",
+		Type:       "your Type",
+		Limit:      0,
+		Offset:     0,
+		OrderByKey: "your OrderByKey",
+		Order:      "your Order",
+	}
+
+	resp, status, err := instance.ListWorkflowTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DeleteWorkflowTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDeleteWorkflowTemplateRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.DeleteWorkflowTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_CreateWatermarkTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodCreateWatermarkRequest{
+		SpaceName:       "your SpaceName",
+		Name:            "your Name",
+		Description:     "your Description",
+		LogoType:        "your LogoType",
+		Logos:           nil,
+		Concats:         nil,
+		HiddenWatermark: nil,
+	}
+
+	resp, status, err := instance.CreateWatermarkTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateWatermarkTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateWatermarkRequest{
+		TemplateId:      "your TemplateId",
+		Name:            "your Name",
+		Description:     "your Description",
+		LogoType:        "your LogoType",
+		Logos:           nil,
+		Concats:         nil,
+		HiddenWatermark: nil,
+	}
+
+	resp, status, err := instance.UpdateWatermarkTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_GetWatermarkTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetWatermarkRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.GetWatermarkTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListWatermarkTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListWatermarkRequest{
+		SpaceName:  "your SpaceName",
+		TemplateId: "your TemplateId",
+		Name:       "your Name",
+		Type:       "your Type",
+		Limit:      0,
+		Offset:     0,
+		OrderByKey: "your OrderByKey",
+		Order:      "your Order",
+	}
+
+	resp, status, err := instance.ListWatermarkTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DeleteWatermarkTemplate(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDeleteWatermarkRequest{
+		TemplateId: "your TemplateId",
+	}
+
+	resp, status, err := instance.DeleteWatermarkTemplate(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
