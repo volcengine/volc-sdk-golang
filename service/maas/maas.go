@@ -71,6 +71,12 @@ func NewInstance(host, region string) *MaaS {
 // POST method
 // Chat ...
 func (cli *MaaS) Chat(req *api.ChatReq) (*api.ChatResp, int, error) {
+	return cli.ChatWithCtx(context.Background(), req)
+}
+
+// POST method
+// Chat ...
+func (cli *MaaS) ChatWithCtx(ctx context.Context, req *api.ChatReq) (*api.ChatResp, int, error) {
 	req.Stream = false
 
 	bts, err := json.Marshal(req)
@@ -78,7 +84,7 @@ func (cli *MaaS) Chat(req *api.ChatReq) (*api.ChatResp, int, error) {
 		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
 	}
 
-	return cli.chatImpl(context.Background(), bts)
+	return cli.chatImpl(ctx, bts)
 }
 
 // POST method
@@ -86,6 +92,14 @@ func (cli *MaaS) Chat(req *api.ChatReq) (*api.ChatResp, int, error) {
 //  1. if any error returned, a channel=`nil` is returned;
 //  2. if no error returned, the channel are closed after all responses processed.
 func (cli *MaaS) StreamChat(req *api.ChatReq) (ch <-chan *api.ChatResp, err error) {
+	return cli.StreamChatWithCtx(context.Background(), req)
+}
+
+// POST method
+// StreamChat make stream chat request
+//  1. if any error returned, a channel=`nil` is returned;
+//  2. if no error returned, the channel are closed after all responses processed.
+func (cli *MaaS) StreamChatWithCtx(ctx context.Context, req *api.ChatReq) (ch <-chan *api.ChatResp, err error) {
 	req.Stream = true
 
 	bts, err := json.Marshal(req)
@@ -93,7 +107,7 @@ func (cli *MaaS) StreamChat(req *api.ChatReq) (ch <-chan *api.ChatResp, err erro
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
 	}
 
-	return cli.streamChatImpl(context.Background(), bts)
+	return cli.streamChatImpl(ctx, bts)
 }
 
 func (cli *MaaS) chatImpl(ctx context.Context, body []byte) (*api.ChatResp, int, error) {
@@ -140,13 +154,13 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 	}
 
 	if resp.StatusCode != 200 { // fast fail
-		err := &api.Error{}
-		if er := json.NewDecoder(resp.Body).Decode(err); er != nil {
-			err = api.NewClientSDKRequestError(fmt.Sprintf("failed to call service: http status_code=%d", resp.StatusCode))
+		res := &api.ChatResp{}
+		if er := json.NewDecoder(resp.Body).Decode(res); er != nil {
+			res.Error = api.NewClientSDKRequestError(fmt.Sprintf("failed to call service: http status_code=%d", resp.StatusCode))
 		}
 		cancel()
 		_ = resp.Body.Close()
-		return nil, err
+		return nil, res.Error
 	}
 
 	// parse response
