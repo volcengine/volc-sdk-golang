@@ -462,6 +462,17 @@ func (s *CDN) BatchDeployCert(dto *BatchDeployCertRequest) (responseBody *BatchD
 	return
 }
 
+func (s *CDN) DeleteCdnCertificate(dto *DeleteCdnCertificateRequest) (responseBody *DeleteCdnCertificateResponse, err error) {
+	responseBody = new(DeleteCdnCertificateResponse)
+	if err = s.post("DeleteCdnCertificate", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeAccountingSummary(dto *DescribeAccountingSummaryRequest) (responseBody *DescribeAccountingSummaryResponse, err error) {
 	responseBody = new(DescribeAccountingSummaryResponse)
 	if err = s.post("DescribeAccountingSummary", dto, responseBody); err != nil {

@@ -40,6 +40,7 @@ type AddCdnDomainRequest struct {
 	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
 	BrowserCache       []BrowserCacheControlRule
 	Cache              []CacheControlRule
+	CacheHost          *CacheHost `json:",omitempty"`
 	CacheKey           []CacheKeyGenerationRule
 	Compression        *Compression     `json:",omitempty"`
 	CustomErrorPage    *CustomErrorPage `json:",omitempty"`
@@ -118,6 +119,7 @@ type AuthModeConfig struct {
 type AuthRequestHeaderRule struct {
 	RequestHeaderComponents *RequestHeaderComponent `json:",omitempty"`
 	RequestHeaderInstances  []RequestHeaderInstance
+	RequestHost             *string `json:",omitempty"`
 }
 
 type AuthResponseConfig struct {
@@ -140,6 +142,7 @@ type BandwidthLimitAction struct {
 	BandwidthThreshold *int64  `json:",omitempty"`
 	LimitType          *string `json:",omitempty"`
 	SpeedLimitRate     *int64  `json:",omitempty"`
+	SpeedLimitRateMax  *int64  `json:",omitempty"`
 }
 
 type BandwidthLimitRule struct {
@@ -178,6 +181,20 @@ type CacheControlRule struct {
 	Condition   *Condition   `json:",omitempty"`
 }
 
+type CacheHost struct {
+	CacheHostRule []CacheHostRule
+	Switch        *bool `json:",omitempty"`
+}
+
+type CacheHostAction struct {
+	CacheHost *string `json:",omitempty"`
+}
+
+type CacheHostRule struct {
+	CacheHostAction *CacheHostAction `json:",omitempty"`
+	Condition       *Condition       `json:",omitempty"`
+}
+
 type CacheKeyAction struct {
 	CacheKeyComponents []CacheKeyComponent
 }
@@ -195,21 +212,23 @@ type CacheKeyGenerationRule struct {
 }
 
 type CertInfo struct {
-	CertId           *string      `json:",omitempty"`
-	CertName         *string      `json:",omitempty"`
-	Certificate      *Certificate `json:",omitempty"`
-	ConfiguredDomain *string      `json:",omitempty"`
-	Desc             *string      `json:",omitempty"`
-	DnsName          *string      `json:",omitempty"`
-	EffectiveTime    *int64       `json:",omitempty"`
-	ExpireTime       *int64       `json:",omitempty"`
-	Source           *string      `json:",omitempty"`
-	Status           *string      `json:",omitempty"`
+	CertId        *string      `json:",omitempty"`
+	CertName      *string      `json:",omitempty"`
+	Certificate   *Certificate `json:",omitempty"`
+	Desc          *string      `json:",omitempty"`
+	EffectiveTime *int64       `json:",omitempty"`
+	ExpireTime    *int64       `json:",omitempty"`
+	Source        *string      `json:",omitempty"`
 }
 
 type Certificate struct {
 	Certificate *string `json:",omitempty"`
 	PrivateKey  *string `json:",omitempty"`
+}
+
+type CommonReferType struct {
+	IgnoreCase *bool `json:",omitempty"`
+	Referers   []string
 }
 
 type Compression struct {
@@ -241,14 +260,15 @@ type ConditionRule struct {
 }
 
 type ContentTask struct {
-	CreateTime int64
-	Delete     bool
-	Process    string
-	Remark     string
-	Status     string
-	TaskID     string
-	TaskType   string
-	Url        string
+	CreateTime    int64
+	Delete        bool
+	Process       string
+	RefreshPrefix bool
+	Remark        string
+	Status        string
+	TaskID        string
+	TaskType      string
+	Url           string
 }
 
 type CustomErrorPage struct {
@@ -269,6 +289,14 @@ type CustomVariableRules struct {
 type DataPoint struct {
 	TimeStamp int64
 	Value     float64
+}
+
+type DeleteCdnCertificateRequest struct {
+	CertId string
+}
+
+type DeleteCdnCertificateResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
 }
 
 type DeleteCdnDomainRequest struct {
@@ -483,20 +511,21 @@ type DescribeCertConfigResponse struct {
 }
 
 type DescribeCertConfigResult struct {
-	CertNotConfig       []DomainCertResult
+	CertNotConfig       []DomainNoCertResult
 	OtherCertConfig     []DomainCertResult
 	SpecifiedCertConfig []DomainCertResult
 }
 
 type DescribeContentBlockTasksRequest struct {
-	EndTime   *int64  `json:",omitempty"`
-	PageNum   *int64  `json:",omitempty"`
-	PageSize  *int64  `json:",omitempty"`
-	StartTime *int64  `json:",omitempty"`
-	Status    *string `json:",omitempty"`
-	TaskID    *string `json:",omitempty"`
-	TaskType  string
-	URL       *string `json:",omitempty"`
+	DomainName *string `json:",omitempty"`
+	EndTime    *int64  `json:",omitempty"`
+	PageNum    *int64  `json:",omitempty"`
+	PageSize   *int64  `json:",omitempty"`
+	StartTime  *int64  `json:",omitempty"`
+	Status     *string `json:",omitempty"`
+	TaskID     *string `json:",omitempty"`
+	TaskType   string
+	URL        *string `json:",omitempty"`
 }
 
 type DescribeContentBlockTasksResponse struct {
@@ -512,11 +541,12 @@ type DescribeContentBlockTasksResult struct {
 }
 
 type DescribeContentBlockTasksTaskInfo struct {
-	CreateTime int64
-	Status     string
-	TaskID     string
-	TaskType   string
-	Url        string
+	BlockReason string
+	CreateTime  int64
+	Status      string
+	TaskID      string
+	TaskType    string
+	Url         string
 }
 
 type DescribeContentQuotaResponse struct {
@@ -661,6 +691,7 @@ type DescribeEdgeTopStatisticalDataRequest struct {
 	Item      string
 	Metric    string
 	StartTime int64
+	UaType    *string `json:",omitempty"`
 }
 
 type DescribeEdgeTopStatisticalDataResponse struct {
@@ -808,12 +839,22 @@ type DomainCertResult struct {
 	Status    string
 }
 
+type DomainLock struct {
+	Remark string
+	Status string
+}
+
 type DomainLogDetail struct {
 	EndTime   int64
 	LogName   string
 	LogPath   string
 	LogSize   int64
 	StartTime int64
+}
+
+type DomainNoCertResult struct {
+	Domain string
+	Status string
 }
 
 type DomainNrtDetailData struct {
@@ -827,6 +868,7 @@ type DomainVolcanoDetail struct {
 	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
 	BrowserCache       []BrowserCacheControlRule
 	Cache              []CacheControlRule
+	CacheHost          *CacheHost `json:",omitempty"`
 	CacheKey           []CacheKeyGenerationRule
 	Cname              *string             `json:",omitempty"`
 	Compression        *Compression        `json:",omitempty"`
@@ -997,7 +1039,7 @@ type ListCdnCertInfoResponse struct {
 }
 
 type ListCdnCertInfoResult struct {
-	CertInfo      []CertInfo
+	CertInfo      []ListCertInfo
 	ExpiringCount int64
 	PageNum       int64
 	PageSize      int64
@@ -1005,20 +1047,26 @@ type ListCdnCertInfoResult struct {
 }
 
 type ListCdnDomainDomain struct {
-	BackupOrigin   []string
-	Cname          string
-	CreateTime     int64
-	Domain         string
-	HTTPS          bool
-	IPv6           bool
-	OriginProtocol string
-	PrimaryOrigin  []string
-	Project        string
-	ResourceTags   []ResourceTag
-	ServiceRegion  string
-	ServiceType    string
-	Status         string
-	UpdateTime     int64
+	BackupOrigin          []string
+	CacheShared           string
+	CacheSharedTargetHost string
+	Cname                 string
+	ConfigStatus          string
+	CreateTime            int64
+	Domain                string
+	DomainLock            DomainLock
+	HTTPS                 bool
+	IPv6                  bool
+	IsConflictDomain      bool
+	OriginProtocol        string
+	PrimaryOrigin         []string
+	Project               string
+	ResourceTags          []ResourceTag
+	ServiceRegion         string
+	ServiceType           string
+	SparrowList           []string
+	Status                string
+	UpdateTime            int64
 }
 
 type ListCdnDomainsRequest struct {
@@ -1026,6 +1074,7 @@ type ListCdnDomainsRequest struct {
 	ExactMatch     *bool   `json:",omitempty"`
 	HTTPS          *bool   `json:",omitempty"`
 	IPv6           *bool   `json:",omitempty"`
+	NeedSparrows   *bool   `json:",omitempty"`
 	OriginProtocol *string `json:",omitempty"`
 	PageNum        *int64  `json:",omitempty"`
 	PageSize       *int64  `json:",omitempty"`
@@ -1050,13 +1099,28 @@ type ListCdnDomainsResult struct {
 	Total    int64
 }
 
+type ListCertInfo struct {
+	CertId           string
+	CertName         string
+	ConfiguredDomain string
+	Desc             string
+	DnsName          string
+	EffectiveTime    int64
+	ExpireTime       int64
+	Source           string
+	Status           string
+}
+
 type ListCertInfoRequest struct {
-	Name          *string `json:",omitempty"`
-	PageNum       *int64  `json:",omitempty"`
-	PageSize      *int64  `json:",omitempty"`
-	SetPagination *bool   `json:",omitempty"`
-	Source        *string `json:",omitempty"`
-	Status        *string `json:",omitempty"`
+	CertId           *string `json:",omitempty"`
+	ConfiguredDomain *string `json:",omitempty"`
+	FuzzyMatch       *bool   `json:",omitempty"`
+	Name             *string `json:",omitempty"`
+	PageNum          *int64  `json:",omitempty"`
+	PageSize         *int64  `json:",omitempty"`
+	SetPagination    *bool   `json:",omitempty"`
+	Source           *string `json:",omitempty"`
+	Status           *string `json:",omitempty"`
 }
 
 type ListCertInfoResponse struct {
@@ -1065,7 +1129,7 @@ type ListCertInfoResponse struct {
 }
 
 type ListCertInfoResult struct {
-	CertInfo      []CertInfo
+	CertInfo      []ListCertInfo
 	ExpiringCount int64
 	PageNum       int64
 	PageSize      int64
@@ -1139,8 +1203,10 @@ type NrtDataDetails struct {
 
 type NrtDataResource struct {
 	BillingRegion string
+	Isp           string
 	Metrics       []MetricTimestampValue
 	Name          string
+	Region        string
 }
 
 type NrtDataSummaryResource struct {
@@ -1151,6 +1217,7 @@ type NrtDataSummaryResource struct {
 
 type OriginAccessRule struct {
 	AllowEmpty *bool `json:",omitempty"`
+	IgnoreCase *bool `json:",omitempty"`
 	Origins    []string
 	RuleType   *string `json:",omitempty"`
 	Switch     *bool   `json:",omitempty"`
@@ -1263,10 +1330,20 @@ type RedirectionRule struct {
 }
 
 type RefererAccessRule struct {
-	AllowEmpty *bool `json:",omitempty"`
-	Referers   []string
-	RuleType   *string `json:",omitempty"`
-	Switch     *bool   `json:",omitempty"`
+	AllowEmpty   *bool `json:",omitempty"`
+	Referers     []string
+	ReferersType *ReferersType `json:",omitempty"`
+	RuleType     *string       `json:",omitempty"`
+	Switch       *bool         `json:",omitempty"`
+}
+
+type RefererType struct {
+	Referers []string
+}
+
+type ReferersType struct {
+	CommonType  *CommonReferType `json:",omitempty"`
+	RegularType *RefererType     `json:",omitempty"`
 }
 
 type RemoteAuth struct {
@@ -1439,6 +1516,7 @@ type SubmitPreloadTaskResult struct {
 
 type SubmitRefreshTaskRequest struct {
 	Delete *bool   `json:",omitempty"`
+	Prefix *bool   `json:",omitempty"`
 	Type   *string `json:",omitempty"`
 	Urls   string
 }
@@ -1496,6 +1574,7 @@ type TopInstanceDetail struct {
 	BillingData      string
 	BillingDesc      string
 	CreateTime       string
+	FreeTimePeriods  []int64
 	InstanceCategory string
 	InstanceType     string
 	MetricType       string
@@ -1505,15 +1584,23 @@ type TopInstanceDetail struct {
 }
 
 type TopNrtDataDetail struct {
-	Bandwidth         float64
-	BandwidthPeakTime int64
-	Flux              float64
-	FluxRatio         float64
-	ItemKey           string
-	ItemKeyCN         string
-	PV                float64
-	PVRatio           float64
-	Quic              int64
+	Bandwidth                float64
+	BandwidthPeakTime        int64
+	DynamicRequest           int64
+	DynamicRequestRatio      float64
+	Flux                     float64
+	FluxRatio                float64
+	InboundBandwidth         float64
+	InboundBandwidthPeakTime int64
+	InboundFlux              float64
+	InboundFluxRatio         float64
+	ItemKey                  string
+	ItemKeyCN                string
+	PV                       float64
+	PVRatio                  float64
+	Quic                     int64
+	StaticRequest            int64
+	StaticRequestRatio       float64
 }
 
 type TopStatusCodeDetail struct {
@@ -1543,6 +1630,7 @@ type UpdateCdnConfigRequest struct {
 	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
 	BrowserCache       []BrowserCacheControlRule
 	Cache              []CacheControlRule
+	CacheHost          *CacheHost `json:",omitempty"`
 	CacheKey           []CacheKeyGenerationRule
 	Compression        *Compression        `json:",omitempty"`
 	CustomErrorPage    *CustomErrorPage    `json:",omitempty"`
@@ -1597,6 +1685,7 @@ type UpdateResourceTagsResponse struct {
 
 type UserAgentAccessRule struct {
 	AllowEmpty *bool   `json:",omitempty"`
+	IgnoreCase *bool   `json:",omitempty"`
 	RuleType   *string `json:",omitempty"`
 	Switch     *bool   `json:",omitempty"`
 	UserAgent  []string
