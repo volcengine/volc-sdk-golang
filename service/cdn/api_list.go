@@ -343,6 +343,14 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DeleteCdnCertificate": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DeleteCdnCertificate"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 	"DescribeAccountingSummary": {
 		Method: http.MethodPost,
 		Path:   "/",
