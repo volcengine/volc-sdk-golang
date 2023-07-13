@@ -215,8 +215,9 @@ type TextResultResponse struct {
 }
 
 type TextRiskRespV2 struct {
-	Decision string   `json:"Decision"`
-	Result   []*Label `json:"Result"`
+	Decision       string   `json:"Decision"`
+	DecisionDetail string   `json:"DecisionDetail"`
+	Result         []*Label `json:"Result"`
 }
 
 type TextSliceResultResponse struct {
@@ -227,10 +228,11 @@ type TextSliceResultResponse struct {
 }
 
 type TextRiskRespV3 struct {
-	Decision   string        `json:"Decision"`
-	FinalLabel string        `json:"FinalLabel"`
-	TextCount  int           `json:"TextCount"`
-	Results    []*TextResult `json:"Results"`
+	Decision       string        `json:"Decision"`
+	DecisionDetail string        `json:"DecisionDetail"`
+	FinalLabel     string        `json:"FinalLabel"`
+	TextCount      int           `json:"TextCount"`
+	Results        []*TextResult `json:"Results"`
 }
 
 type TextResult struct {
