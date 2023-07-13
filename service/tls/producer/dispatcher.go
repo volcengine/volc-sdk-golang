@@ -48,7 +48,7 @@ func initDispatcher(config *Config, sender *Sender, logger log.Logger, threadPoo
 		forceQuitCh:    make(chan struct{}),
 		newLogRecvChan: make(chan *BatchLog, batchQueueSize),
 		logGroupData:   make(map[string]*Batch),
-		retryQueue:     newRetryQueue(),
+		retryQueue:     sender.retryQueue,
 		lock:           &sync.RWMutex{},
 		producerConfig: config,
 		sender:         sender,
