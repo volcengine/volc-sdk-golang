@@ -230,6 +230,7 @@ type BindAXNERequest struct {
 	DegradeCityList      string
 	UserData             string
 	OutId                string
+	RandomFlag           int32
 	AutoCreateFlag       int32
 	AxbNumberPoolNo      string
 	AxbEnableDuration    int32
@@ -777,6 +778,7 @@ type BindAxybRequest struct {
 	CityCodeByPhoneNo  string
 	DegradeCityList    string
 	UserData           string
+	RandomFlag         int32
 	AutoCreateFlag     int32
 	PhoneNoY           string
 	PhoneNoB           string
@@ -786,6 +788,7 @@ type BindAxybRequest struct {
 	YCityCode          string
 	YCityCodeByPhoneNo string
 	YDegradeCityList   string
+	RandomFlagY        int32
 }
 
 type BindYbForAxybRequest struct {
