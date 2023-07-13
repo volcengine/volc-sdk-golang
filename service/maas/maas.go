@@ -21,8 +21,7 @@ const (
 	APIChat       = "chat"
 	APIStreamChat = "stream_chat"
 
-	ServiceTimeout       = 30 * time.Second
-	APIStreamChatTimeout = time.Minute
+	ServiceTimeout = time.Minute
 
 	maxBufferSize  = 4096
 	respBufferSize = 32
@@ -59,9 +58,8 @@ func NewInstance(host, region string) *MaaS {
 			Path:   "/api/v1/chat",
 		},
 		APIStreamChat: {
-			Method:  http.MethodPost,
-			Path:    "/api/v1/chat",
-			Timeout: APIStreamChatTimeout,
+			Method: http.MethodPost,
+			Path:   "/api/v1/chat",
 		},
 	})
 
