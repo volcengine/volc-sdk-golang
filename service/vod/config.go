@@ -694,6 +694,38 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"CreateDomain": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateDomain"},
+				"Version": []string{"2023-02-01"},
+			},
+		},
+		"UpdateDomainExpire": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDomainExpire"},
+				"Version": []string{"2023-02-01"},
+			},
+		},
+		"UpdateDomainAuthConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDomainAuthConfig"},
+				"Version": []string{"2023-02-01"},
+			},
+		},
+		"ListCdnHitrateData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnHitrateData"},
+				"Version": []string{"2022-01-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************

@@ -217,11 +217,11 @@ func Test_ListCdnHitrateData(t *testing.T) {
 	})
 
 	query := &request.VodListCdnHitrateDataRequest{
-		Domains:        "your Domains",
-		Interval:       "your Interval",
-		StartTimestamp: 0,
-		EndTimestamp:   0,
-		Metric:         "your Metric",
+		Domains:        "your domain",
+		Interval:       "auto",
+		StartTimestamp: 1689414058,
+		EndTimestamp:   1689759658,
+		Metric:         "hitrate",
 		NeedDetail:     false,
 	}
 
@@ -329,6 +329,72 @@ func Test_GetContentBlockTasks(t *testing.T) {
 	}
 
 	resp, status, err := instance.GetContentBlockTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_CreateDomain(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodCreateDomainV2Request{
+		SpaceName:                "your SpaceName",
+		DomainType:               "your DomainType",
+		Domain:                   "your Domain",
+		SourceStationType:        0,
+		SourceStationAddressType: 0,
+		Origins:                  "your Origins",
+		Area:                     "your Area",
+		BucketName:               "your BucketName",
+	}
+
+	resp, status, err := instance.CreateDomain(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateDomainExpire(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateDomainExpireV2Request{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+		Expire:     0,
+	}
+
+	resp, status, err := instance.UpdateDomainExpire(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateDomainAuthConfig(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateDomainAuthConfigV2Request{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+		MainKey:    "your MainKey",
+		BackupKey:  "your BackupKey",
+		Status:     "your Status",
+	}
+
+	resp, status, err := instance.UpdateDomainAuthConfig(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
