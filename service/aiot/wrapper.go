@@ -620,9 +620,7 @@ func (p *AIoT) PlayBackControl(request *PlayBackControlRequest) (*RawResponse, i
 
 func (p *AIoT) CruiseControl(request *CruiseControlRequest) (*RawResponse, int, error) {
 	resp := new(RawResponse)
-	query := url.Values{
-		"SipID": []string{request.SipID},
-	}
+	query := url.Values{}
 	statusCode, err := p.commonHandlerJson("CruiseControl", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
@@ -2148,6 +2146,90 @@ func (p *AIoT) DeleteRecordPlan(planID string) (*RecordPlanResultResponse, int, 
 		"PlanID": []string{planID},
 	}
 	statusCode, err := p.commonHandlerJson("DeleteRecordPlan", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// SetCruiseTrack 设置巡航轨迹
+func (p *AIoT) SetCruiseTrack(args *SetCruiseTrackArgs) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("SetCruiseTrack", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// QueryCruiseTrack 查询通道巡航轨迹
+func (p *AIoT) QueryCruiseTrack(deviceNSID, channelID string, trackID uint8) (*QueryCruiseTrackResponse, int, error) {
+	resp := new(QueryCruiseTrackResponse)
+	query := url.Values{
+		"DeviceNSID": []string{deviceNSID},
+		"ChannelID":  []string{channelID},
+		"TrackID":    []string{fmt.Sprintf("%d", trackID)},
+	}
+	statusCode, err := p.commonHandlerJson("QueryCruiseTrack", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// ListCruiseTrack 查询通道巡航轨迹列表
+func (p *AIoT) ListCruiseTrack(deviceNSID, channelID string) (*ListCruiseTrackResponse, int, error) {
+	resp := new(ListCruiseTrackResponse)
+	query := url.Values{
+		"DeviceNSID": []string{deviceNSID},
+		"ChannelID":  []string{channelID},
+	}
+	statusCode, err := p.commonHandlerJson("ListCruiseTrack", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// DeleteCruiseTrack 删除巡航轨迹
+func (p *AIoT) DeleteCruiseTrack(args *DeleteCruiseTrackArgs) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("DeleteCruiseTrack", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// StartCruiseTrack 开始巡航
+func (p *AIoT) StartCruiseTrack(args *StartCruiseTrackArgs) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("StartCruiseTrack", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// StopCruiseTrack 停止巡航
+func (p *AIoT) StopCruiseTrack(args *StopCruiseTrackArgs) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("StopCruiseTrack", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) GetNssInfoList() (*NssInfoListResp, int, error) {
+	resp := new(NssInfoListResp)
+	query := url.Values{}
+	query.Add("type", "relay")
+	statusCode, err := p.commonHandler("GetNssInfoList", query, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}

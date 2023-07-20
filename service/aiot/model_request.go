@@ -276,13 +276,13 @@ type PlayBackControlRequest struct {
 }
 
 type CruiseControlRequest struct {
-	SipID     string `json:"SipID"`
-	Action    string `json:"Action"`
-	DeviceID  string `json:"DeviceID"`
-	ChannelID string `json:"ChannelID"`
-	GroupID   uint8  `json:"GroupID"`
-	PresetID  uint8  `json:"PresetID"`
-	Para      uint8  `json:"Para"`
+	DeviceNSID  string `json:"DeviceNSID"`
+	ChannelID   string `json:"ChannelID"`
+	Action      string `json:"Action"`
+	TrackID     uint8  `json:"TrackID"`     // 巡航轨迹组ID
+	PresetID    uint8  `json:"PresetID"`    // 预置位ID
+	Speed       uint32 `json:"Speed"`       // 巡航速度
+	StaySeconds uint32 `json:"StaySeconds"` // 巡航停留时间
 }
 
 type CreateStreamRequest struct {

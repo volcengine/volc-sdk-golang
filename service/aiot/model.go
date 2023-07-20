@@ -365,11 +365,11 @@ type DeviceItem struct {
 
 type PresetList struct {
 	Num   int          `json:"Num"`
-	Items []PresetItem `json:"Item"`
+	Items []PresetItem `json:"Items"`
 }
 
 type PresetItem struct {
-	PresetID   string `json:"PresetID"`
+	PresetID   int    `json:"PresetID"`
 	PresetName string `json:"PresetName"`
 }
 
@@ -630,12 +630,12 @@ type ListHistoryResponse struct {
 type HistoryResult struct {
 	Type         string        `json:"Type"`
 	Path         string        `json:"Path"`
-	FileSize     float64       `json:"-"`
-	ScreenResult *ScreenResult `json:"ScreenResult,omitempty"`
-	RecordResult *RecordResult `json:"RecordResult,omitempty"`
+	ScreenResult *ScreenResult `json:"Screenshot,omitempty"`
+	RecordResult *RecordResult `json:"Record,omitempty"`
 }
 
 type ScreenResult struct {
+	BornTs string `json:"BornTs"`
 }
 
 type RecordResult struct {
@@ -1399,6 +1399,7 @@ type ListRecordPlanResp struct {
 type StreamingType = string //码流类型
 
 type RecordPlanStreamView struct {
+	DeviceNSID    string        `json:"DeviceNSID"`
 	ChannelID     string        `json:"ChannelID"`
 	StreamingType StreamingType `json:"StreamingType"`
 	StreamID      string        `json:"StreamID"`
@@ -1413,10 +1414,93 @@ type ListRecordPlanChannelResponse struct {
 
 type ListRecordPlanChannelResp struct {
 	PageResult
-	List []*RecordPlanStreamView `json:"List"`
+	List map[string][]*RecordPlanStreamView `json:"List"`
 }
 
 type RecordPlanResultResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           IDResponse `json:"Result,omitempty"`
+}
+
+type CruisePoint struct {
+	PresetID   uint8  `json:"PresetID" bson:"PresetID"` // 预置点编号(1~255)
+	PresetName string `json:"PresetName" bson:"PresetName"`
+}
+
+type CruiseTrack struct {
+	DeviceNSID  string        `json:"DeviceNSID"`
+	ChannelID   string        `json:"ChannelID"`
+	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
+	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
+	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
+	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
+}
+
+type SetCruiseTrackArgs struct {
+	DeviceNSID  string        `json:"DeviceNSID"`
+	ChannelID   string        `json:"ChannelID"`
+	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
+	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
+	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
+	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
+}
+
+type DeleteCruiseTrackArgs struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type StartCruiseTrackArgs struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type StopCruiseTrackArgs struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+}
+
+type QueryCruiseTrackResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           CruiseTrack `json:"Result,omitempty"`
+}
+
+type ListCruiseTrackResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           []CruiseTrack `json:"Result,omitempty"`
+}
+
+type Resource struct {
+	Mem  int64 `bson:"Mem"`
+	Cpu  int64 `bson:"Cpu"`
+	Disk int64 `bson:"Disk"`
+}
+
+type NSSArg struct {
+	Addr             string            `bson:"Addr"`
+	IPv4             string            `bson:"IPv4"`
+	IPv6             string            `bson:"IPv6"`
+	EnableRecord     bool              `bson:"EnableRecord"`     //true表示录制集群
+	EnableRelay      bool              `bson:"EnableRelay"`      //true表示支持relay
+	RecordConfigHost string            `bson:"RecordConfigHost"` //aiot_nss heartbeat请求的路径
+	ScanDurationSec  int               `bson:"ScanDurationSec"`  //nss扫描的时间间隔
+	QuotaKey         string            `bson:"QuotaKey"`         //Quota key
+	WantStatus       string            `bson:"WantStatus"`
+	Version          string            `bson:"Version"`          //配置的版本
+	StatusUpdateTime int64             `bson:"StatusUpdateTime"` //状态更新时间
+	OnTime           int64             `bson:"OnTime"`
+	Resource         *Resource         `bson:"Resource"`
+	Env              map[string]string `bson:"Env"`
+}
+
+type NssInfoListResp struct {
+	PageResult
+	NssInfo []*NSSArg `json:"NssInfo"`
+}
+
+type NssInfoListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           NssInfoListResp `json:"Result,omitempty"`
 }
