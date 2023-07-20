@@ -505,6 +505,20 @@ func (p *Visual) FaceFusionMovieGetResult(req *model.FaceFusionMovieGetResultReq
 	return resp, statusCode, nil
 }
 
+func (p *Visual) FaceFusionMovie(req *model.FaceFusionMovieRequest) (*model.FaceFusionMovieResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceFusionMovieResult)
+	statusCode, err := p.commonJsonHandler("FaceFusionMovie", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) CertToken(req *model.CertTokenRequest) (*model.CertTokenResult, int, error) {
 	if req.LivenessTimeout == 0 {
 		req.LivenessTimeout = 10

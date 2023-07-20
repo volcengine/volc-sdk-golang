@@ -58,3 +58,21 @@ func TestVisual_LensVidaVideoGetResultV2(t *testing.T) {
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 }
+
+func TestVisual_FaceFusionMovie(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	reqBody := &model.FaceFusionMovieRequest{
+		ReqKey:             "facefusionmovie_standard", // 固定值
+		ImageUrl:           "xxx",
+		VideoUrl:           "xxx",
+		EnableFaceBeautify: true,
+		RefImgUrl:          "xxx",
+	}
+
+	resp, status, err := DefaultInstance.FaceFusionMovie(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}

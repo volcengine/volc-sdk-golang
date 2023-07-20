@@ -9,11 +9,21 @@ type FaceFusionMovieSubmitTaskRequest struct {
 	ImageUrl           string `json:"image_url"`
 	VideoUrl           string `json:"video_url"`
 	EnableFaceBeautify bool   `json:"enable_face_beautify"`
+	RefImgUrl          string `json:"ref_img_url"`
 }
 
 type FaceFusionMovieGetResultRequest struct {
 	ReqKey string `json:"req_key"`
 	TaskId string `json:"task_id"`
+}
+
+type FaceFusionMovieRequest struct {
+	ReqKey             string   `json:"req_key"`
+	BinaryDataBase64   []string `json:"binary_data_base64"`
+	ImageUrl           string   `json:"image_url"`
+	VideoUrl           string   `json:"video_url"`
+	EnableFaceBeautify bool     `json:"enable_face_beautify"`
+	RefImgUrl          string   `json:"ref_img_url"`
 }
 
 // 响应参数
@@ -48,6 +58,16 @@ type FaceFusionMovieGetResultData struct {
 }
 
 type FaceFusionMovieGetResultResult struct {
+	ResponseMetadata *base.ResponseMetadata        `json:",omitempty"`
+	RequestId        string                        `json:"request_id"`
+	Code             int                           `json:"code"`
+	Message          string                        `json:"message"`
+	Status           int                           `json:"status"`
+	TimeElapsed      string                        `json:"time_elapsed"`
+	Data             *FaceFusionMovieGetResultData `json:"data"`
+}
+
+type FaceFusionMovieResult struct {
 	ResponseMetadata *base.ResponseMetadata        `json:",omitempty"`
 	RequestId        string                        `json:"request_id"`
 	Code             int                           `json:"code"`
