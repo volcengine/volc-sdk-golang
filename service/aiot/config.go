@@ -1138,6 +1138,41 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"DeleteRecordPlan"}, "Version": []string{ServiceVersion20210101}},
 		},
+		"SetCruiseTrack": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"SetCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"QueryCruiseTrack": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"QueryCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"ListCruiseTrack": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"DeleteCruiseTrack": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"StartCruiseTrack": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"StartCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"StopCruiseTrack": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"StopCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"GetNssInfoList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetNssInfoList"}, "Version": []string{ServiceVersion20210101}},
+		},
 	}
 )
 
