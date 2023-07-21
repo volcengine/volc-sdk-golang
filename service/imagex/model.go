@@ -262,6 +262,39 @@ type GetImageContentBlockListRespData struct {
 	Msg        string `json:"Msg"`
 }
 
+type CreateImageCompressTaskReq struct {
+	ServiceId string
+	FileList  []UncompressFileInfo
+	IndexFile string
+	Output    string
+	Callback  string
+	ZipMode   int
+}
+
+type UncompressFileInfo struct {
+	Url    string
+	Alias  string
+	Folder string
+}
+
+type CreateImageCompressTaskResp struct {
+	TaskId string
+}
+
+type GetImageCompressTaskInfoReq struct {
+	ServiceId string
+	TaskId    string
+}
+
+type GetImageCompressTaskInfoResp struct {
+	Status       string
+	TaskId       string
+	ProcessCount int
+	OutputUri    string
+	ErrMsg       string
+	ErrCode      int
+}
+
 // FetchImageUrl
 type FetchUrlReq struct {
 	Url              string              `json:"Url"`
