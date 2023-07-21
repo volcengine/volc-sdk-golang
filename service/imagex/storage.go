@@ -571,3 +571,26 @@ func (c *ImageX) UpdateImageStorageTTL(req *UpdateImageStorageTTLReq) (*UpdateIm
 	}
 	return resp, nil
 }
+
+func (c *ImageX) CreateImageCompressTask(req *CreateImageCompressTaskReq) (*CreateImageCompressTaskResp, error) {
+	query := make(url.Values)
+	query.Add("ServiceId", req.ServiceId)
+	resp := new(CreateImageCompressTaskResp)
+	err := c.ImageXPost("CreateImageCompressTask", query, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *ImageX) GetImageCompressTaskInfo(req *GetImageCompressTaskInfoReq) (*GetImageCompressTaskInfoResp, error) {
+	query := make(url.Values)
+	query.Add("ServiceId", req.ServiceId)
+	query.Add("TaskId", req.TaskId)
+	resp := new(GetImageCompressTaskInfoResp)
+	err := c.ImageXGet("GetCompressTaskInfo", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

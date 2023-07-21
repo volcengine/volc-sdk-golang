@@ -535,6 +535,22 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"GetCompressTaskInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCompressTaskInfo"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageCompressTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageCompressTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 	}
 )
 
