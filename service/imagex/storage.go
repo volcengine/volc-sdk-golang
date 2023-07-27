@@ -183,6 +183,7 @@ func (c *ImageX) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 	for _, key := range params.StoreKeys {
 		query.Add("StoreKeys", key)
 	}
+	query.Add("Overwrite", strconv.FormatBool(params.Overwrite))
 
 	respBody, _, err := c.Client.Query("ApplyImageUpload", query)
 	if err != nil {
@@ -428,12 +429,19 @@ func (c *ImageX) GetUploadAuthToken(query url.Values) (string, error) {
 type UploadAuthOpt func(option *uploadAuthOption)
 
 type uploadAuthOption struct {
-	keyPtn string
+	keyPtn     string
+	conditions map[string]string
 }
 
 func WithUploadKeyPtn(ptn string) UploadAuthOpt {
 	return func(o *uploadAuthOption) {
 		o.keyPtn = ptn
+	}
+}
+
+func WithUploadOverwrite(overwrite bool) UploadAuthOpt {
+	return func(op *uploadAuthOption) {
+		op.conditions["UploadOverwrite"] = strconv.FormatBool(overwrite)
 	}
 }
 
@@ -452,7 +460,9 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 			serviceIdRes = append(serviceIdRes, fmt.Sprintf(ResourceServiceIdTRN, sid))
 		}
 	}
-	op := new(uploadAuthOption)
+	op := &uploadAuthOption{
+		conditions: map[string]string{},
+	}
 	for _, o := range opt {
 		o(op)
 	}
@@ -467,6 +477,9 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{
 		"ImageX:CommitImageUpload",
 	}, serviceIdRes))
+	for k, v := range op.conditions {
+		inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{k}, []string{v}))
+	}
 
 	return c.Client.SignSts2(inlinePolicy, expire)
 }

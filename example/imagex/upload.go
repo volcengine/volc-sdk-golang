@@ -21,6 +21,7 @@ func main() {
 	params := &imagex.ApplyUploadImageParam{
 		ServiceId: "service id", // 服务 ID
 		// StoreKeys: []string{"example.jpg"}, // 指定文件存储名
+		Overwrite: false, //是否进行上传覆盖
 	}
 
 	// 读取文件
