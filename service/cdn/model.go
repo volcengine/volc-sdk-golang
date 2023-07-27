@@ -1501,7 +1501,13 @@ type SubmitBlockTaskResult struct {
 }
 
 type SubmitPreloadTaskRequest struct {
-	ConcurrentLimit *int64 `json:",omitempty"`
+	Area            *string `json:",omitempty"`
+	ConcurrentLimit *int64  `json:",omitempty"`
+	Deduplicate     *bool   `json:",omitempty"`
+	Isp             *string `json:",omitempty"`
+	Layer           *string `json:",omitempty"`
+	Region          *string `json:",omitempty"`
+	SubArea         *string `json:",omitempty"`
 	Urls            string
 }
 
