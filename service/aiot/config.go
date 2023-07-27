@@ -1143,10 +1143,10 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"SetCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
 		},
-		"QueryCruiseTrack": {
+		"GetCruiseTrack": {
 			Method: http.MethodGet,
 			Path:   "/",
-			Query:  url.Values{"Action": []string{"QueryCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+			Query:  url.Values{"Action": []string{"GetCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
 		},
 		"ListCruiseTrack": {
 			Method: http.MethodGet,

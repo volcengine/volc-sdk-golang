@@ -2163,15 +2163,15 @@ func (p *AIoT) SetCruiseTrack(args *SetCruiseTrackArgs) (*RawResponse, int, erro
 	return resp, statusCode, nil
 }
 
-// QueryCruiseTrack 查询通道巡航轨迹
-func (p *AIoT) QueryCruiseTrack(deviceNSID, channelID string, trackID uint8) (*QueryCruiseTrackResponse, int, error) {
-	resp := new(QueryCruiseTrackResponse)
+// GetCruiseTrack 查询通道巡航轨迹
+func (p *AIoT) GetCruiseTrack(deviceNSID, channelID string, trackID uint8) (*GetCruiseTrackResponse, int, error) {
+	resp := new(GetCruiseTrackResponse)
 	query := url.Values{
 		"DeviceNSID": []string{deviceNSID},
 		"ChannelID":  []string{channelID},
 		"TrackID":    []string{fmt.Sprintf("%d", trackID)},
 	}
-	statusCode, err := p.commonHandlerJson("QueryCruiseTrack", query, resp, nil)
+	statusCode, err := p.commonHandlerJson("GetCruiseTrack", query, resp, nil)
 	if err != nil {
 		return nil, statusCode, err
 	}

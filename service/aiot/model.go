@@ -1462,7 +1462,7 @@ type StopCruiseTrackArgs struct {
 	ChannelID  string `json:"ChannelID"`
 }
 
-type QueryCruiseTrackResponse struct {
+type GetCruiseTrackResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           CruiseTrack `json:"Result,omitempty"`
 }
