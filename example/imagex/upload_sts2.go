@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/imagex"
 )
@@ -22,7 +21,8 @@ func main() {
 	// 默认超时时间为 1小时，如果有需要，请调用 imagex.GetUploadAuthWithExpire() 来设置超时时间
 	// 您可以使用 imagex.WithUploadKeyPtn("表达式") 来限制上传的存储名格式
 	//     如: "test/*" 表示上传的文件必须包含 "test/" 前缀
-	token, err := instance.GetUploadAuth(serviceIds)
+	//使用imagex.WithUploadOverwrite() 来设置sts中「上传覆盖」选项
+	token, err := instance.GetUploadAuth(serviceIds, imagex.WithUploadOverwrite(false))
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {

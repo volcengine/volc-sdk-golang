@@ -119,6 +119,7 @@ type ApplyUploadImageParam struct {
 	CommitParam *CommitUploadImageParam
 	SkipMeta    bool
 	SkipCommit  bool
+	Overwrite   bool
 }
 
 type ApplyUploadImageResult struct {
