@@ -96,6 +96,7 @@ type BillDetail struct {
 	Tag                    string
 	SellingMode            string
 	SolutionZh             string
+	ReservationInstance    string
 }
 
 type BillDetailList struct {
@@ -194,6 +195,7 @@ type SplitBillDetail struct {
 	Tag                    string
 	SellingMode            string
 	SubjectName            string
+	ReservationInstance    string
 }
 
 type SplitBillDetailList struct {
