@@ -135,6 +135,27 @@ func Test_ListCdnTopAccessUrl(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_ListCdnTopAccess(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListCdnTopAccessRequest{
+		Domains:        "your Domains",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		SortType:       "your SortType",
+		Item:           "your Item",
+	}
+
+	resp, status, err := instance.ListCdnTopAccess(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
@@ -217,11 +238,11 @@ func Test_ListCdnHitrateData(t *testing.T) {
 	})
 
 	query := &request.VodListCdnHitrateDataRequest{
-		Domains:        "your domain",
-		Interval:       "auto",
-		StartTimestamp: 1689414058,
-		EndTimestamp:   1689759658,
-		Metric:         "hitrate",
+		Domains:        "your Domains",
+		Interval:       "your Interval",
+		StartTimestamp: 0,
+		EndTimestamp:   0,
+		Metric:         "your Metric",
 		NeedDetail:     false,
 	}
 
