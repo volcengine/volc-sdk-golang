@@ -630,6 +630,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"ListCdnTopAccess": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCdnTopAccess"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"DescribeVodDomainBandwidthData": {
 			Method: http.MethodGet,
 			Path:   "/",

@@ -464,7 +464,7 @@ type Jobs struct {
 }
 
 func worker(p *Vod, jobs <-chan *Jobs, results chan<- *model.UploadPartResponse, errChan chan<- *model.UploadPartResponse, quit *int, objectContentType *string, wg *sync.WaitGroup) {
-	wg.Done()
+	defer wg.Done()
 	for job := range jobs {
 		if *quit != 0 {
 			continue
@@ -550,7 +550,7 @@ func (p *Vod) chunkUpload(filePath string, uploadPartCommon model.UploadPartComm
 
 	chJobs := make(chan *Jobs, totalNum)
 	chUploadPartRes := make(chan *model.UploadPartResponse, totalNum)
-	errChan := make(chan *model.UploadPartResponse)
+	errChan := make(chan *model.UploadPartResponse, totalNum)
 	quitSig := 0
 	wg := sync.WaitGroup{}
 	wg.Add(parallelNum)
