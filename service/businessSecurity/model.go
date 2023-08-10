@@ -107,6 +107,7 @@ type VideoResp struct {
 type AudioResultV2 struct {
 	Decision    string           `json:"Decision"`
 	DataId      string           `json:"DataId"`
+	AudioText   string           `json:"AudioText"`
 	Details     []*AudioDetailV2 `json:"Details"`
 	PassThrough string           `json:"PassThrough"`
 }

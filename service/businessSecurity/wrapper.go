@@ -656,6 +656,37 @@ func (p *BusinessSecurity) GetAudioResult(req *VideoResultRequest) (*AudioResult
 	return result, nil
 }
 
+// audio Risk
+// 风险识别接口
+func (p *BusinessSecurity) AudioRisk(req *RiskDetectionRequest) (*AudioResultResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AudioRisk: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("AudioRisk", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AudioRisk", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AudioRisk: fail to do request, %v", err)
+			}
+			result := new(AudioResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AudioRisk: fail to do request, %v", err)
+	}
+	result := new(AudioResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // Asynchronous video risk detection
 // 内容安全图片异步接口
 func (p *BusinessSecurity) AsyncLiveVideoRisk(req *AsyncRiskDetectionRequest) (*AsyncVideoRiskResponse, error) {
