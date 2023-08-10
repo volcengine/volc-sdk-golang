@@ -347,17 +347,17 @@ type DeviceItem struct {
 	Event        string          `json:"Event,omitempty"`
 	Name         string          `json:"Name"`
 	Manufacturer string          `json:"Manufacturer,omitempty"`
-	Model        string          `json:"Model"`
+	Model        string          `json:"Model,omitempty"`
 	Owner        string          `json:"Owner,omitempty"`
 	CivilCode    string          `json:"CivilCode,omitempty"`
-	Address      string          `json:"Address"`
+	Address      string          `json:"Address,omitempty"`
 	Parental     string          `json:"Parental,omitempty"`
-	ParentID     string          `json:"ParentID"`
+	ParentID     string          `json:"ParentID,omitempty"`
 	RegisterWay  string          `json:"RegisterWay,omitempty"`
 	Secrecy      string          `json:"Secrecy,omitempty"`
 	StreamNum    string          `json:"StreamNum,omitempty"`
 	IPAddress    string          `json:"IPAddress,omitempty"`
-	Port         string          `json:"Port"`
+	Port         string          `json:"Port,omitempty"`
 	Password     string          `json:"Password,omitempty"`
 	Status       string          `json:"Status"`
 	Info         CatalogItemInfo `json:"Info,omitempty"`
@@ -1503,4 +1503,23 @@ type NssInfoListResp struct {
 type NssInfoListResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           NssInfoListResp `json:"Result,omitempty"`
+}
+
+type GetDeviceChannelsMode string
+
+const (
+	GetDeviceChannelsModeBrief  GetDeviceChannelsMode = "brief"
+	GetDeviceChannelsModeDetail GetDeviceChannelsMode = "detail"
+)
+
+type getDeviceChannelsOptions struct {
+	Mode GetDeviceChannelsMode
+}
+
+type GetDeviceChannelsOption func(*getDeviceChannelsOptions)
+
+func WithGetDeviceChannelsMode(mode GetDeviceChannelsMode) GetDeviceChannelsOption {
+	return func(c *getDeviceChannelsOptions) {
+		c.Mode = mode
+	}
 }
