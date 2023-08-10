@@ -491,11 +491,21 @@ func (p *AIoT) ListDevices(request *ListDevicesRequest) (*ListDevicesResponse, i
 	return resp, statusCode, nil
 }
 
-func (p *AIoT) GetDeviceChannels(request *DeviceRequest) (*GetDeviceChannelsResponse, int, error) {
+func (p *AIoT) GetDeviceChannels(request *DeviceRequest, options ...GetDeviceChannelsOption) (*GetDeviceChannelsResponse, int, error) {
 	resp := new(GetDeviceChannelsResponse)
+	opts := getDeviceChannelsOptions{}
+	for _, option := range options {
+		option(&opts)
+	}
+
 	query := url.Values{
 		"DeviceID": []string{request.DeviceID},
 	}
+
+	if opts.Mode != "" {
+		query.Add("QueryMode", string(opts.Mode))
+	}
+
 	statusCode, err := p.commonHandler("GetDeviceChannels", query, resp)
 	if err != nil {
 		return nil, statusCode, err
