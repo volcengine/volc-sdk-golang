@@ -174,6 +174,14 @@ var (
 				"Version": []string{"2022-04-01"},
 			},
 		},
+		"AudioRisk": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AudioRisk"},
+				"Version": []string{"2022-04-01"},
+			},
+		},
 		"AsyncLiveVideoRisk": {
 			Method: http.MethodPost,
 			Path:   "/",
