@@ -10,8 +10,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 )
 
-const modelName = "${YOUR_MODEL_NAME}"
-
 func main() {
 	r := maas.NewInstance("maas-api.ml-platform-cn-beijing.volces.com", "cn-beijing")
 
@@ -21,7 +19,7 @@ func main() {
 
 	req := &api.ChatReq{
 		Model: &api.Model{
-			Name: modelName,
+			Name: "${YOUR_MODEL_NAME}",
 		},
 		Messages: []*api.Message{
 			{
@@ -42,11 +40,11 @@ func main() {
 			Temperature:  0.8,
 		},
 	}
-	TestChat(r, req)
+	TestNormalChat(r, req)
 	TestStreamChat(r, req)
 }
 
-func TestChat(r *maas.MaaS, req *api.ChatReq) {
+func TestNormalChat(r *maas.MaaS, req *api.ChatReq) {
 	got, status, err := r.Chat(req)
 	if err != nil {
 		errVal := &api.Error{}
@@ -60,7 +58,6 @@ func TestChat(r *maas.MaaS, req *api.ChatReq) {
 
 func TestStreamChat(r *maas.MaaS, req *api.ChatReq) {
 	ch, err := r.StreamChat(req)
-
 	if err != nil {
 		errVal := &api.Error{}
 		if errors.As(err, &errVal) { // the returned error always type of *api.Error

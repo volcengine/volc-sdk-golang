@@ -7,10 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 
+	"github.com/gogo/protobuf/proto"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
@@ -18,6 +18,7 @@ import (
 
 const (
 	ServiceName   = "ml_maas"
+	APICert       = "cert"
 	APIChat       = "chat"
 	APIStreamChat = "stream_chat"
 
@@ -61,6 +62,10 @@ func NewInstance(host, region string) *MaaS {
 			Method: http.MethodPost,
 			Path:   "/api/v1/chat",
 		},
+		APICert: {
+			Method: http.MethodPost,
+			Path:   "/api/v1/cert",
+		},
 	})
 
 	return instance
@@ -73,7 +78,7 @@ func (cli *MaaS) Chat(req *api.ChatReq) (*api.ChatResp, int, error) {
 }
 
 // POST method
-// Chat ...
+// ChatWithCtx ...
 func (cli *MaaS) ChatWithCtx(ctx context.Context, req *api.ChatReq) (*api.ChatResp, int, error) {
 	req.Stream = false
 
@@ -83,6 +88,75 @@ func (cli *MaaS) ChatWithCtx(ctx context.Context, req *api.ChatReq) (*api.ChatRe
 	}
 
 	return cli.chatImpl(ctx, bts)
+}
+
+// POST method
+// SecretChat is like `Chat`, except its messages are encrypted
+// to ensure that messages are not intercepted by receivers other than the model.
+func (cli *MaaS) SecretChat(req *api.ChatReq) (*api.ChatResp, int, error) {
+	return cli.SecretChatWithCtx(context.Background(), req)
+}
+
+// POST method
+// SecretChatWithCtx is like `ChatWithCtx`, except its messages are encrypted
+// to ensure that messages are not intercepted by receivers other than the model.
+func (cli *MaaS) SecretChatWithCtx(ctx context.Context, req *api.ChatReq) (*api.ChatResp, int, error) {
+	key, nonce, req, err := cli.encryptChatRequest(req)
+	if err != nil {
+		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to encrypt chat request: %v", err))
+	}
+
+	output, status, err := cli.ChatWithCtx(ctx, req)
+	if err != nil {
+		return nil, status, err
+	}
+
+	output, err = cli.decryptChatResponse(key, nonce, output)
+	if err != nil {
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to decrypt chat response: %v", err))
+	}
+	return output, status, nil
+}
+
+// POST method
+// SecretStreamChat is like `StreamChat`, except its messages are encrypted
+// to ensure that messages are not intercepted by receivers other than the model.
+func (cli *MaaS) SecretStreamChat(req *api.ChatReq) (ch <-chan *api.ChatResp, err error) {
+	return cli.SecretStreamChatWithCtx(context.Background(), req)
+}
+
+// POST method
+// SecretStreamChatWithCtx is like `StreamChatWithCtx`, except its messages are encrypted
+// to ensure that messages are not intercepted by receivers other than the model.
+func (cli *MaaS) SecretStreamChatWithCtx(ctx context.Context, req *api.ChatReq) (ch <-chan *api.ChatResp, err error) {
+	key, nonce, req, err := cli.encryptChatRequest(req)
+	if err != nil {
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to encrypt chat request: %v", err))
+	}
+
+	resps, err := cli.StreamChatWithCtx(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+
+	outputs := make(chan *api.ChatResp, respBufferSize)
+	go func() {
+		defer func() {
+			_ = recover()
+			close(outputs)
+		}()
+
+		for resp := range resps {
+			output, err := cli.decryptChatResponse(key, nonce, resp)
+			if err != nil {
+				resp.Error = api.NewClientSDKRequestError(fmt.Sprintf("failed to decrypt chat response: %v", err))
+				outputs <- resp
+				continue
+			}
+			outputs <- output
+		}
+	}()
+	return outputs, nil
 }
 
 // POST method
@@ -109,7 +183,7 @@ func (cli *MaaS) StreamChatWithCtx(ctx context.Context, req *api.ChatReq) (ch <-
 }
 
 func (cli *MaaS) chatImpl(ctx context.Context, body []byte) (*api.ChatResp, int, error) {
-	respBody, status, err := cli.Client.Json(APIChat, nil, string(body))
+	respBody, status, err := cli.Client.CtxJson(ctx, APIChat, nil, string(body))
 	if err != nil {
 		errVal := &api.ChatResp{}
 		if er := json.Unmarshal(respBody, errVal); er != nil {
@@ -136,7 +210,7 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 	if err != nil {
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err))
 	}
-	req.Body = ioutil.NopCloser(bytes.NewReader(body))
+	req.Body = io.NopCloser(bytes.NewReader(body))
 	timeout := getTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 
 	req = cli.ServiceInfo.Credentials.Sign(req)
@@ -207,4 +281,67 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 	}()
 
 	return ch, nil
+}
+
+func (r *MaaS) initCertByReq(req *api.ChatReq) (*KeyAgreementClient, error) {
+	certReq := &api.CertReq{
+		Model: req.Model,
+	}
+	body, err := json.Marshal(certReq)
+	if err != nil {
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
+	}
+	respBody, _, err := r.Client.Json(APICert, nil, string(body))
+	if err != nil {
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to get CA from proxy: %s", err.Error()))
+	}
+	output := new(api.CertResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()))
+	}
+
+	// use returned model
+	req.Model = output.Model
+
+	// todo: check chain
+	return NewP256KeyAgreementClient(output.Cert)
+}
+
+func (cli *MaaS) encryptChatRequest(req *api.ChatReq) ([]byte, []byte, *api.ChatReq, error) {
+	req = proto.Clone(req).(*api.ChatReq)
+
+	ka, err := cli.initCertByReq(req)
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("failed to init cert: %w", err)
+	}
+	key, nonce, token, err := ka.GenerateECIESKeyPair()
+	if err != nil {
+		return nil, nil, nil, fmt.Errorf("failed to generate session token: %w", err)
+	}
+
+	req.CryptoToken = token
+
+	for i := range req.Messages {
+		content := req.Messages[i].GetContent()
+		if content != "" {
+			secret, err := AesGcmEncryptBase64String(key, nonce, req.Messages[i].Content)
+			if err != nil {
+				return nil, nil, nil, fmt.Errorf("failed to encrypt message: %w", err)
+			}
+			req.Messages[i].Content = secret
+		}
+	}
+
+	return key, nonce, req, nil
+}
+
+func (cli *MaaS) decryptChatResponse(key, nonce []byte, resp *api.ChatResp) (*api.ChatResp, error) {
+	if secret := resp.GetChoice().GetMessage().GetContent(); secret != "" {
+		plain, err := AesGcmDecryptBase64String(key, nonce, secret)
+		if err != nil {
+			return nil, err
+		}
+		resp.GetChoice().GetMessage().Content = plain
+	}
+	return resp, nil
 }
