@@ -1,1229 +1,1103 @@
 package verender
 
 import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"math"
-	"net/url"
-	"os"
-	"path"
-	"path/filepath"
-	"strconv"
-	"strings"
-	"time"
+    "encoding/json"
+    "fmt"
+    "net/url"
+    "os"
+    "path/filepath"
+    "strings"
+    "time"
+
+    "github.com/volcengine/volc-sdk-golang/base"
 )
 
-func (v *Verender) commonHandler(api string, query url.Values) (string, int, error) {
-	respBody, statusCode, err := v.Client.Query(api, query)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func checkResponseOK(err Error) bool {
+    if err.CodeN != CodeOK {
+        return false
+    }
+
+    return true
 }
 
-func packErrorInfo(data ResponseMetaData) error {
-	return fmt.Errorf("RequestId=%s Error=%v", data.RequestId, data.Error)
+func packError(resp *ResponseMetadata) error {
+    errDetail, _ := json.Marshal(resp)
+    return fmt.Errorf(string(errDetail))
 }
 
-func (v *Verender) commonHandlerJson(api string, query url.Values, body string) (string, int, error) {
-	respBody, statusCode, err := v.Client.Json(api, query, body)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func toSlash(filename string) (string, error) {
+    newName := strings.ReplaceAll(filename, ":\\", "/")
+    newName = strings.ReplaceAll(newName, "\\", "/")
+
+    return newName, nil
 }
 
-func (w *Workspace) commonHandler(api string, query url.Values) (string, int, error) {
-	respBody, statusCode, err := w.Client.Query(api, query)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func getStatInfo(fileName string) (os.FileInfo, error) {
+    stat, err := os.Stat(fileName)
+    if err != nil {
+        return nil, err
+    }
+    return stat, nil
 }
 
-func (w *Workspace) commonHandlerJson(api string, query url.Values, body string) (string, int, error) {
-	respBody, statusCode, err := w.Client.Json(api, query, body)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func listLocalDir(dir string, depth int) ([]string, error) {
+    if depth <= 0 {
+        return nil, fmt.Errorf("dir is too deep")
+    }
+
+    var files []string
+
+    fs, err := os.ReadDir(dir)
+    if err != nil {
+        return nil, err
+    }
+
+    if len(fs) <= 0 {
+        return []string{dir}, nil
+    }
+
+    for _, f := range fs {
+        if f.IsDir() {
+            subDir, err := listLocalDir(filepath.Join(dir, f.Name()), depth-1)
+            if err != nil {
+                return nil, err
+            }
+
+            files = append(files, subDir...)
+        } else {
+            files = append(files, filepath.Join(dir, f.Name()))
+        }
+    }
+
+    return files, nil
 }
 
-func (j *Job) commonHandler(api string, query url.Values) (string, int, error) {
-	respBody, statusCode, err := j.Client.Query(api, query)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func NewVerenderInstance() *Verender {
+    v := Verender{}
+    v.Client = base.NewClient(ServiceInfo, APIInfoList)
+    v.Client.ServiceInfo.Credentials.Service = ServiceName
+    v.Client.ServiceInfo.Credentials.Region = DefaultRegion
+
+    return &v
 }
 
-func (j *Job) commonHandlerJson(api string, query url.Values, body string) (string, int, error) {
-	respBody, statusCode, err := j.Client.Json(api, query, body)
-	if err != nil {
-		return string(respBody), statusCode, err
-	}
-	return string(respBody), statusCode, nil
+func (v *Verender) queryHandler(api string, query url.Values) ([]byte, int, error) {
+    return v.Client.Query(api, query)
 }
 
-func (v *Verender) GetCurrentUser() (*UserInfo, error) {
-	body, _, err := v.commonHandler("GetCurrentUser", nil)
-	if err != nil {
-		return nil, err
-	}
-
-	resp := &GetUserInfoResult{}
-	err = json.Unmarshal([]byte(body), resp)
-	if err != nil {
-		return nil, err
-	}
-
-	return &resp.User, nil
+func (v *Verender) jsonHandler(api string, query url.Values, body string) ([]byte, int, error) {
+    return v.Client.Json(api, query, body)
 }
 
-// PurchaseWorkspace 需要指定WorkspaceName, Description, StorageTotal, ResourcePoolId, CpsId
-func (v *Verender) PurchaseWorkspace(w *Workspace) (*Workspace, error) {
-	data, err := json.Marshal(w)
-	if err != nil {
-		return nil, err
-	}
-
-	body, _, err := v.commonHandlerJson("PurchaseWorkspace", nil, string(data))
-	if err != nil {
-		return nil, err
-	}
-
-	resp := PurchaseWorkspaceResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.WorkspaceInfo, nil
+func (w *Workspace) queryHandler(api string, query url.Values) ([]byte, int, error) {
+    return w.Client.Query(api, query)
 }
 
-// UpdateWorkspace 只能修改WorkspaceName, Description, StorageTotal, 其中StorageTotal不能比当前小
-func (v *Verender) UpdateWorkspace(w *Workspace) (*Workspace, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	data, err := json.Marshal(w)
-	if err != nil {
-		return nil, err
-	}
-
-	body, _, err := v.commonHandlerJson("UpdateWorkspace", query, string(data))
-	if err != nil {
-		return nil, err
-	}
-
-	resp := PurchaseWorkspaceResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.WorkspaceInfo, nil
+func (w *Workspace) jsonHandler(api string, query url.Values, body string) ([]byte, int, error) {
+    return w.Client.Json(api, query, body)
 }
 
-func (v *Verender) DeleteWorkspace(w *Workspace) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
+func (v *Verender) ListWorkspace(r *ListWorkspaceRequest) (*WorkspaceList, error) {
+    if r == nil {
+        return nil, ErrInvalidArgs
+    }
 
-	body, _, err := v.commonHandler("DeleteWorkspace", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    if r.WorkspaceID > 0 {
+        q.Set("WorkspaceId", fmt.Sprintf("%d", r.WorkspaceID))
+    }
+    if r.WorkspaceName != "" {
+        q.Set("WorkspaceName", r.WorkspaceName)
+    }
+    if r.StartPurchaseTime != "" {
+        q.Set("StartPurchaseTime", r.StartPurchaseTime)
+    }
+    if r.EndPurchaseTime != "" {
+        q.Set("EndPurchaseTime", r.EndPurchaseTime)
+    }
+    if r.FuzzyWorkspaceName != "" {
+        q.Set("FuzzyWorkspaceName", r.FuzzyWorkspaceName)
+    }
+    if r.FuzzySearchContent != "" {
+        q.Set("FuzzySearchContent", r.FuzzySearchContent)
+    }
+    if r.PageNum > 0 {
+        q.Set("PageNum", fmt.Sprintf("%d", r.PageNum))
+    } else {
+        q.Set("PageNum", DefaultPageNum)
+    }
+    if r.PageSize > 0 {
+        q.Set("PageSize", fmt.Sprintf("%d", r.PageSize))
+    } else {
+        q.Set("PageSize", DefaultPageSize)
+    }
+    if r.ListScope != "" {
+        q.Set("ListScope", r.ListScope)
+    }
+    orderType, ok := ValidOrderTypeWorkspace[r.OrderType]
+    if !ok {
+        q.Set("OrderType", DefaultOrderTypeWorkspace)
+    } else {
+        q.Set("OrderType", orderType)
+    }
+    if _, ok := ValidOrderFieldWorkspace[r.OrderField]; !ok {
+        q.Set("OrderBy", DefaultOrderFieldWorkspace)
+    } else {
+        q.Set("OrderBy", r.OrderField)
+    }
 
-	resp := DeleteWorkspaceResp{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    body, code, err := v.queryHandler("ListWorkspace", q)
+    if err != nil {
+        return nil, err
+    }
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return packErrorInfo(resp.MetaData)
-	}
+    if code != HTTPStatusOK {
+        return nil, fmt.Errorf("invalid response status: %d", code)
+    }
 
-	return nil
+    var resp ListWorkspaceResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return &resp.Result, nil
 }
 
-// ListResourcePools 此接口用于购买工作区时指定ResourcePoolId和CpsId参数
-func (v *Verender) ListResourcePools() (*[]ResourcePool, error) {
-	body, _, err := v.commonHandler("ListResourcePools", nil)
-	if err != nil {
-		return nil, err
-	}
+func (v *Verender) GetCurrentUser() (*User, error) {
+    body, status, err := v.queryHandler("GetCurrentUser", nil)
+    if err != nil {
+        return nil, err
+    }
 
-	resp := ListResourcePoolResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    if status != HTTPStatusOK {
+        return nil, fmt.Errorf("invalid response status: %d", status)
+    }
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
+    var resp GetCurrentUserResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
 
-	return &resp.ResourcePools, nil
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result, nil
 }
 
-// GetWorkspaceLimit 返回当前登录用户可创建的工作区个数和单个工作区可使用的存储空间上限
-func (v *Verender) GetWorkspaceLimit() (*WorkspaceLimit, error) {
-	body, _, err := v.commonHandler("GetWorkspaceLimit", nil)
-	if err != nil {
-		return nil, err
-	}
+func (v *Verender) GetWorkspace(workspaceID int64) (*Workspace, error) {
+    r := ListWorkspaceRequest{
+        WorkspaceID: workspaceID,
+    }
 
-	resp := GetWorkspaceLimitResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    resp, err := v.ListWorkspace(&r)
+    if err != nil {
+        return nil, err
+    }
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
+    if resp.Total != 1 {
+        return nil, fmt.Errorf("workspace not found")
+    }
 
-	return &resp.WorkspaceLimit, nil
+    w := resp.Workspaces[0]
+    w.Client = v.Client
+
+    w.StorageAccess, err = w.getStorageAccess()
+    if err != nil {
+        return nil, err
+    }
+
+    return w, nil
 }
 
-func (v *Verender) GetHardwareSpecifications(workspaceId int) (*[]WorkspaceHardwareSpecification, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(workspaceId))
-	body, _, err := v.commonHandler("GetHardwareSpecifications", query)
-	if err != nil {
-		return nil, err
-	}
+func (w *Workspace) getStorageAccess() (*StorageAccess, error) {
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := GetWorkspaceHardwareSpecificationResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    body, status, err := w.queryHandler("GetStorageAccess", q)
+    if err != nil {
+        return nil, err
+    }
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
+    if status != HTTPStatusOK {
+        return nil, fmt.Errorf("invalid response status: %d", status)
+    }
 
-	return &resp.HardwareSpecs, nil
+    var resp GetStorageAccessResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    cli, err := NewFtransClient(resp.Result.BucketName, DefaultIsp, resp.Result.FtransS10Server,
+        resp.Result.FtransCertName, resp.Result.FtransSecurityToken, resp.Result.FtransCert, resp.Result.FtransKey)
+    if err != nil {
+        return nil, err
+    }
+    resp.Result.FtransClient = cli
+    return &resp.Result, nil
 }
 
-func checkTimeType(r *StatisticsRequest) error {
-	if r.TimeType == "" {
-		return fmt.Errorf("TimeType can't be null")
-	}
-	//TODO 根据时间范围设置合适的粒度, 需要和API协商后制定
-	return nil
+func (w *Workspace) UploadFile(src, des string) (*FileInfo, error) {
+    stat, err := getStatInfo(src)
+    if err != nil {
+        return nil, err
+    }
+
+    if stat.Size() > MaxObjectSize {
+        return nil, fmt.Errorf("file %s is bigger than %d", src, MaxObjectSize)
+    }
+
+    target, err := toSlash(des)
+    if err != nil {
+        return nil, err
+    }
+
+    if target[0] == '/' {
+        target = target[1:]
+    }
+
+    r := FtransUploadFileRequest{
+        LocalFilePath:    src,
+        RemoteFilePath:   target,
+        PartSize:         FtransDefaultPartSize,
+        ConsistencyCheck: true,
+        Md5Check:         false,
+    }
+
+    info, err := w.StorageAccess.FtransClient.UploadFile(&r)
+    if err != nil {
+        return nil, err
+    }
+
+    fi := FileInfo{
+        Key:           info.Name,
+        ContentLength: info.Size,
+        LastModified:  time.UnixMicro(info.MTime),
+    }
+
+    return &fi, nil
 }
 
-func (v *Verender) GetAccountStatistics(r *StatisticsRequest) (*AccountStatistics, error) {
-	if err := checkTimeType(r); err != nil {
-		return nil, err
-	}
+func (w *Workspace) UploadFolder(srcFolder, desFolder string) ([]*FileInfo, error) {
+    if _, err := os.Stat(srcFolder); err != nil {
+        return nil, err
+    }
 
-	query := url.Values{}
-	query.Set("TimeType", r.TimeType)
-	if r.StartTime != "" && r.EndTime != "" {
-		query.Set("StartTime", r.StartTime)
-		query.Set("EndTime", r.EndTime)
-	}
+    files, err := listLocalDir(srcFolder, DefaultListDirMaxDepth)
+    if err != nil {
+        return nil, err
+    }
 
-	data, err := json.Marshal(r.Filter)
-	if err != nil {
-		return nil, err
-	}
+    var fileObjects []*FileInfo
+    for _, f := range files {
+        remoteFileName := filepath.Join(desFolder, f[len(srcFolder):])
+        fi, err := w.UploadFile(f, remoteFileName)
+        if err != nil {
+            return fileObjects, fmt.Errorf("upload file %s failed %s", f, err.Error())
+        }
+        fileObjects = append(fileObjects, fi)
+    }
 
-	body, _, err := v.commonHandlerJson("GetAccountStatistics", query, string(data))
-	if err != nil {
-		return nil, err
-	}
-
-	resp := GetAccountStatisticsResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.AccountStat, nil
+    return fileObjects, nil
 }
 
-func (v *Verender) GetAccountStatisticDetails(r *StatisticsRequest) (*AccountStatisticDetails, error) {
-	query := url.Values{}
-	query.Set("StartTime", r.StartTime)
-	query.Set("EndTime", r.EndTime)
+func (w *Workspace) DownloadFile(src, dst string) error {
+    r := FtransDownloadFileRequest{
+        LocalFilePath:    dst,
+        RemoteFilePath:   src,
+        PartSize:         FtransDefaultPartSize,
+        ConsistencyCheck: true,
+        Md5Check:         false,
+    }
 
-	if r.PageSize > 0 {
-		query.Set("PageNum", strconv.FormatInt(r.PageNum, 10))
-		query.Set("PageSize", strconv.FormatInt(r.PageSize, 10))
-	} else {
-		query.Set("PageNum", "1")
-		query.Set("PageSize", "10")
-	}
-	if r.OrderField != "" {
-		query.Set("OrderField", r.OrderField)
-	}
-	if r.OrderBy != "" {
-		query.Set("OrderBy", r.OrderBy)
-	}
+    _, err := w.StorageAccess.FtransClient.DownloadFile(&r)
+    if err != nil {
+        return err
+    }
 
-	data, err := json.Marshal(r.Filter)
-	if err != nil {
-		return nil, err
-	}
-
-	body, _, err := v.commonHandlerJson("GetAccountStatisticDetails", query, string(data))
-	if err != nil {
-		return nil, err
-	}
-
-	resp := GetAccountStatisticDetailsResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.Details, nil
+    return nil
 }
 
-func (v *Verender) DownloadStatisticDetails(r *StatisticsRequest) error {
-	query := url.Values{}
-	if r.StartTime != "" {
-		query.Set("StartTime", r.StartTime)
-	}
-	if r.EndTime != "" {
-		query.Set("EndTime", r.EndTime)
-	}
-	if r.PageSize > 0 {
-		query.Set("PageNum", strconv.FormatInt(r.PageNum, 10))
-		query.Set("PageSize", strconv.FormatInt(r.PageSize, 10))
-	} else {
-		query.Set("PageNum", "1")
-		query.Set("PageSize", "10")
-	}
-	if r.OrderField != "" {
-		query.Set("OrderField", r.OrderField)
-	}
-	if r.OrderBy != "" {
-		query.Set("OrderBy", r.OrderBy)
-	}
-
-	resp, _, err := v.commonHandler("DownloadStatisticDetails", query)
-	if err != nil {
-		return err
-	}
-
-	f, err := os.OpenFile(r.FileName, os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	_, err = f.WriteString(resp)
-	if err != nil {
-		return err
-	}
-	return nil
+func (w *Workspace) RemoveFile(filename string) error {
+    return w.StorageAccess.FtransClient.RemoveFile(filename)
 }
 
-func (v *Verender) GetJobOverallStatistics() (*JobOverallStatistics, error) {
-	body, _, err := v.commonHandler("GetJobOverallStatistics", nil)
-	if err != nil {
-		return nil, err
-	}
+// ListFile 返回指定目录下的所有子目录以及文件列表 不递归子文件夹
+func (w *Workspace) ListFile(prefix, filter, orderType, orderFiled string, pageNum, pageSize int64) (
+    []*FileInfo, []*FileInfo, error) {
 
-	resp := GetJobOverallStatisticsResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    var files []*FileInfo
+    var subDirs []*FileInfo
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
+    cli := w.StorageAccess.FtransClient
+    r := FtransListFileRequest{
+        Prefix:     prefix,
+        FilterIn:   filter,
+        OrderType:  orderType,
+        OrderField: orderFiled,
+        PageSize:   pageSize,
+        PageNum:    pageNum,
+    }
+    resp, err := cli.ListFile(&r)
+    if err != nil {
+        return nil, nil, err
+    }
 
-	return &resp.Stat, nil
+    for _, elem := range resp.Records {
+        lm, _ := time.Parse(elem.LastModified, time.RFC3339)
+        fileInfo := FileInfo{
+            Key:           elem.Name,
+            ContentLength: elem.Size,
+            LastModified:  lm,
+        }
+        if elem.Type == "dir" {
+            subDirs = append(subDirs, &fileInfo)
+        } else {
+            files = append(files, &fileInfo)
+        }
+    }
+
+    return subDirs, files, nil
 }
 
-func (v *Verender) ListWorkspaces(r *ListWorkspaceRequest) (*WorkspaceList, error) {
-	query := url.Values{}
-	if r.WorkspaceId > 0 {
-		query.Set("WorkspaceId", strconv.FormatInt(r.WorkspaceId, 10))
-	}
+func (w *Workspace) StatFile(filename string) (*FileInfo, error) {
+    r := FtransStatFileRequest{
+        FileName: filename,
+        WithMd5:  false,
+    }
 
-	if r.WorkspaceName != "" {
-		query.Set("WorkspaceName", r.WorkspaceName)
-	}
+    fi, err := w.StorageAccess.FtransClient.StatFile(&r)
 
-	if r.PageSize > 0 {
-		query.Set("PageNum", strconv.FormatInt(r.PageNum, 10))
-		query.Set("PageSize", strconv.FormatInt(r.PageSize, 10))
-	}
-	if r.OrderBy != "" {
-		query.Set("OrderBy", r.OrderBy)
-	}
-	if r.OrderType != "" {
-		query.Set("OrderType", r.OrderType)
-	}
-	if r.StartPurchaseTime != "" {
-		query.Set("StartPurchaseTime", r.StartPurchaseTime)
-	}
-	if r.EndPurchaseTime != "" {
-		query.Set("EndPurchaseTime", r.EndPurchaseTime)
-	}
-	if r.FuzzyWorkspaceName != "" {
-		query.Set("FuzzyWorkspaceName", r.FuzzyWorkspaceName)
-	}
-	if r.FuzzySearchContent != "" {
-		query.Set("FuzzySearchContent", r.FuzzySearchContent)
-	}
+    if err != nil {
+        return nil, err
+    }
 
-	resBody, _, err := v.commonHandler("ListWorkspaces", query)
-	if err != nil {
-		return nil, err
-	}
+    fo := FileInfo{
+        Key:           fi.Name,
+        ContentLength: fi.Size,
+        LastModified:  time.UnixMicro(fi.MTime),
+    }
 
-	resp := ListWorkspaceResponse{}
-	if err = json.Unmarshal([]byte(resBody), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.Workspaces, nil
+    return &fo, nil
 }
 
-func (v *Verender) GetWorkspace(workspaceId int64) (*Workspace, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.FormatInt(workspaceId, 10))
-	resp, _, err := v.commonHandler("GetStorageAccess", query)
-	if err != nil {
-		return nil, err
-	}
-	res := GetStorageAccessResponse{}
-	err = json.Unmarshal([]byte(resp), &res)
-	if err != nil {
-		return nil, err
-	}
-	if res.Error.CodeN != 0 {
-		return nil, fmt.Errorf("%v", res.Error)
-	}
-	cli, err := GetMinioClient(res.AccessKey, res.SecretKey, res.BucketToken, res.ClusterEndpoint)
-	if err != nil {
-		return nil, err
-	}
-	return &Workspace{
-		WorkspaceId:     res.WorkspaceId,
-		ClusterEndpoint: res.ClusterEndpoint,
-		BucketName:      res.BucketName,
-		BucketToken:     res.BucketToken,
-		VolumeName:      res.VolumeName,
-		ClusterName:     res.ClusterName,
-		AccessKey:       res.AccessKey,
-		SecretKey:       res.SecretKey,
-		Time:            time.Now(),
-		MinioClient:     cli,
-		Client:          v.Client,
-	}, nil
+func (w *Workspace) ListCellSpec() ([]*CellSpec, error) {
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+
+    body, status, err := w.queryHandler("ListCellSpec", q)
+    if err != nil {
+        return nil, err
+    }
+
+    if status != HTTPStatusOK {
+        return nil, fmt.Errorf("invalid response status: %d", status)
+    }
+
+    var resp ListCellSpecResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result.CellSpecs, nil
 }
 
-func (w *Workspace) GetStorageAccess() Workspace {
-	return *w
+func (w *Workspace) AddRenderSetting(rs *RenderSetting) (*AddRenderSettingResult, error) {
+    if rs == nil {
+        return nil, ErrInvalidArgs
+    }
+
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+
+    data, err := json.Marshal(rs)
+    if err != nil {
+        return nil, err
+    }
+
+    body, status, err := w.jsonHandler("AddRenderSetting", q, string(data))
+    if err != nil {
+        return nil, err
+    }
+
+    if status != HTTPStatusOK {
+        return nil, fmt.Errorf("invalid response status: %d", status)
+    }
+
+    var resp AddRenderSettingResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result, nil
 }
 
-func listLocalDir(dir string) ([]string, error) {
-	var files []string
-	var walkFunc = func(path string, info os.FileInfo, err error) error {
-		if !info.IsDir() {
-			files = append(files, path)
-		}
+func (w *Workspace) UpdateRenderSetting(rs *RenderSetting) error {
+    if rs == nil {
+        return ErrInvalidArgs
+    }
 
-		return nil
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("RenderSettingId", fmt.Sprintf("%d", rs.Id))
 
-	err := filepath.Walk(dir, walkFunc)
+    data, err := json.Marshal(rs)
+    if err != nil {
+        return err
+    }
 
-	return files, err
+    body, status, err := w.jsonHandler("UpdateRenderSetting", q, string(data))
+    if err != nil {
+        return err
+    }
+
+    if status != HTTPStatusOK {
+        return fmt.Errorf("invalid response status: %d", status)
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func getBucketPath(localPath string, fileName string) string {
-	// 将windows的目录 c:\abc\1.ma 改为 c:/abc/1.ma
-	localPath = filepath.ToSlash(localPath)
-	fileName = filepath.ToSlash(fileName)
+func (w *Workspace) DeleteRenderSetting(settingId int64) error {
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("RenderSettingId", fmt.Sprintf("%d", settingId))
 
-	lastPath := localPath
-	segs := strings.Split(localPath, "/")
-	if len(segs) > 1 {
-		lastPath = segs[len(segs)-1]
-	}
+    body, status, err := w.queryHandler("DeleteRenderSetting", q)
+    if err != nil {
+        return err
+    }
 
-	ok := strings.HasPrefix(fileName, localPath)
-	if ok {
-		fileName = fileName[len(localPath)+1:]
-	}
+    if status != HTTPStatusOK {
+        return fmt.Errorf("invalid response status: %d", status)
+    }
 
-	// 保留文件夹最后一级目录 + 子目录 + 文件名作为objectName
-	if lastPath[len(lastPath)-1] != '/' && fileName[0] != '/' {
-		return lastPath + "/" + fileName
-	} else if lastPath[len(lastPath)-1] == '/' && fileName[0] == '/' {
-		return lastPath + fileName[1:]
-	}
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
 
-	return lastPath + fileName
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func getPartSize(fileName string) (uint64, error) {
-	info, err := os.Stat(fileName)
-	if err != nil {
-		return MINPARTSIZE, fmt.Errorf("Stat file %s Error %s", fileName, err.Error())
-	}
+func (v *Verender) ListDccs() ([]Dcc, error) {
+    q := url.Values{}
 
-	fileSize := info.Size()
-	if fileSize > MAXOBJECTSIZE {
-		return MINPARTSIZE, fmt.Errorf("File %s too large, size=%d limit=%d", fileName, fileSize, MAXOBJECTSIZE)
-	}
-	if fileSize <= MINPARTSIZE {
-		return MINPARTSIZE, nil
-	}
-	// 分片大小为MINPARTSIZE的整数倍
-	partSize := float64(fileSize) / MAXPARTS
-	partSize = math.Ceil(float64(partSize)/MINPARTSIZE) * MINPARTSIZE
+    body, status, err := v.queryHandler("ListDccs", q)
+    if err != nil {
+        return nil, err
+    }
 
-	return uint64(partSize), nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp ListDccsResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result.Dccs, nil
 }
 
-// UploadFolder 上传本地目录(包括子目录和文件)到边缘存储, 且保留目录层级信息
-func (w *Workspace) UploadFolder(localPath string, suffix string) ([]string, error) {
-	var res []string
+func (v *Verender) ListAccountDccPlugins(r *ListAccountDccPluginsReq) ([]DccPlugin, error) {
+    if r == nil {
+        return nil, ErrInvalidArgs
+    }
 
-	if w == nil {
-		return res, fmt.Errorf("invalid workspace")
-	}
+    q := url.Values{}
+    q.Set("SpecTemplateId", fmt.Sprintf("%d", r.SpecTemplateId))
+    if r.Dcc != "" {
+        q.Set("Dcc", r.Dcc)
+    }
+    if r.DccVersion != "" {
+        q.Set("DccVersion", r.DccVersion)
+    }
+    if r.RegionId > 0 {
+        q.Set("RegionId", fmt.Sprintf("%d", r.RegionId))
+    }
 
-	_, err := os.Stat(localPath)
-	if err != nil {
-		return res, err
-	}
+    body, status, err := v.queryHandler("ListAccountDccPlugins", q)
+    if err != nil {
+        return nil, err
+    }
 
-	files, _ := listLocalDir(localPath)
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
 
-	for _, file := range files {
-		if "" != suffix && !strings.HasSuffix(file, suffix) {
-			continue
-		}
+    var resp ListAccountDccPluginsResp
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
 
-		partSize, err := getPartSize(file)
-		if err != nil {
-			return res, fmt.Errorf("upload file %s error %s", file, err.Error())
-		}
-		object := getBucketPath(localPath, file)
-		info, err := w.MinioClient.FPutObject(context.Background(), w.BucketName, object,
-			file, minio.PutObjectOptions{PartSize: partSize})
-		if err != nil {
-			return res, fmt.Errorf("upload file %s error %s", file, err.Error())
-		}
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
 
-		location := info.Location
-		if location == "" {
-			location = w.MinioClient.EndpointURL().String() + "/" + w.BucketName + "/" + info.Key
-		}
-		res = append(res, location)
-	}
-
-	return res, nil
+    return resp.Result.Plugins, nil
 }
 
-// UploadFile 上传本地文件到边缘存储的根目录，只保留文件名
-func (w *Workspace) UploadFile(filePath string, fileType string) (string, error) {
-	if fileType == "" {
-		fileType = "asset"
-	}
-	_, ok := AllowedFileTypes[fileType]
-	if !ok {
-		return "", fmt.Errorf("fileType must be one of %v", AllowedFileTypes)
-	}
-	partSize, err := getPartSize(filePath)
-	if err != nil {
-		return "", fmt.Errorf("upload file %s error %s", filePath, err.Error())
-	}
-	object := path.Base(filepath.ToSlash(filePath))
-	info, err := w.MinioClient.FPutObject(context.Background(), w.BucketName, object, filePath,
-		minio.PutObjectOptions{PartSize: partSize})
-	if err != nil {
-		return "", err
-	}
+func (w *Workspace) ListRenderSetting(dcc string) ([]*RenderSetting, error) {
+    q := url.Values{}
+    q.Set("AccountId", fmt.Sprintf("%d", w.AccountID))
+    q.Set("UserId", fmt.Sprintf("%d", w.UserID))
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("Dcc", dcc)
 
-	location := info.Location
-	if location == "" {
-		location = w.MinioClient.EndpointURL().String() + "/" + w.BucketName + "/" + info.Key
-	}
+    body, status, err := w.queryHandler("ListRenderSetting", q)
+    if err != nil {
+        return nil, err
+    }
 
-	return location, nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp ListRenderSettingResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result[dcc], nil
 }
 
-func (w *Workspace) DownloadFile(local string, target string) error {
-	err := w.MinioClient.FGetObject(context.Background(), w.BucketName, target, local, minio.GetObjectOptions{})
-	if err != nil {
-		return err
-	}
+func (w *Workspace) GetRenderSetting(settingID int64) (*RenderSetting, error) {
+    q := url.Values{}
+    q.Set("AccountId", fmt.Sprintf("%d", w.AccountID))
+    q.Set("UserId", fmt.Sprintf("%d", w.UserID))
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("CheckUserId", "false")
+    q.Set("Id", fmt.Sprintf("%d", settingID))
+    q.Set("WithDeleted", "true")
 
-	return nil
+    body, status, err := w.queryHandler("GetRenderSetting", q)
+    if err != nil {
+        return nil, err
+    }
+
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp GetRenderSettingResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    if resp.Result == nil || len(resp.Result.Settings) == 0 {
+        return nil, fmt.Errorf("render setting not found")
+    }
+
+    return resp.Result.Settings[0], nil
 }
 
-func (w *Workspace) StatObject(key string) (*ObjectInfo, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+func (w *Workspace) CreateRenderJob(j *RenderJob) (*RenderJob, error) {
+    if j == nil {
+        return nil, fmt.Errorf("invalid args j")
+    }
 
-	obj, err := w.MinioClient.StatObject(ctx, w.BucketName, key, minio.StatObjectOptions{})
-	if err != nil {
-		return nil, err
-	}
+    data, err := json.Marshal(j)
+    if err != nil {
+        return nil, err
+    }
 
-	objInfo := &ObjectInfo{
-		Etag:          obj.ETag,
-		Key:           obj.Key,
-		ContentLength: obj.Size,
-		ContentType:   obj.ContentType,
-		LastModified:  obj.LastModified,
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", j.WorkspaceID))
+    body, status, err := w.jsonHandler("CreateRenderJob", q, string(data))
+    if err != nil {
+        return nil, err
+    }
 
-	return objInfo, nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp CreateRenderJobResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result.RenderJob, nil
 }
 
-func (w *Workspace) ListObject(prefix, startAfter string, maxKeys int) (*[]string, *[]string, string, error) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+func (w *Workspace) ListRenderJob(r *ListRenderJobRequest) (*ListRenderJobResult, error) {
+    if r == nil {
+        return nil, ErrInvalidArgs
+    }
 
-	var files []string
-	var subDirectories []string
+    q := url.Values{}
+    q.Set("AccountId", fmt.Sprintf("%d", w.AccountID))
+    q.Set("UserId", fmt.Sprintf("%d", w.UserID))
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    if r.PageNum > 0 {
+        q.Set("PageNum", fmt.Sprintf("%d", r.PageNum))
+    } else {
+        q.Set("PageNum", DefaultPageNum)
+    }
+    if r.PageSize > 0 {
+        q.Set("PageSize", fmt.Sprintf("%d", r.PageSize))
+    } else {
+        q.Set("PageSize", DefaultPageSize)
+    }
+    orderType, ok := ValidOrderTypeRenderJob[r.OrderType]
+    if !ok {
+        q.Set("OrderBy", DefaultOrderTypeRenderJob)
+    } else {
+        q.Set("OrderBy", orderType)
+    }
 
-	objectCh := w.MinioClient.ListObjects(ctx, w.BucketName, minio.ListObjectsOptions{
-		Prefix:     prefix,
-		MaxKeys:    maxKeys, // don't take effect now
-		Recursive:  false,
-		StartAfter: startAfter,
-	})
+    if _, ok := ValidOrderFieldRenderJob[r.OrderField]; !ok {
+        q.Set("OrderField", DefaultOrderFieldRenderJob)
+    } else {
+        q.Set("OrderField", r.OrderField)
+    }
+    q.Set("Keyword", r.Keyword)
+    q.Set("Status", strings.Join(r.Status, ","))
+    var renderSettings []string
+    for _, id := range r.RenderSettings {
+        renderSettings = append(renderSettings, fmt.Sprintf("%d", id))
+    }
+    q.Set("RenderSetting", strings.Join(renderSettings, ","))
 
-	nextStart := ""
-	for obj := range objectCh {
-		if obj.Err != nil {
-			continue
-		}
-		if obj.Key[len(obj.Key)-1] == '/' {
-			subDirectories = append(subDirectories, obj.Key)
-		} else {
-			files = append(files, obj.Key)
-		}
-		nextStart = obj.Key
-	}
+    body, status, err := w.queryHandler("ListRenderJob", q)
+    if err != nil {
+        return nil, err
+    }
 
-	return &files, &subDirectories, nextStart, nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp ListRenderJobResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result, nil
 }
 
-func (w *Workspace) GetJob(jobId string) (*Job, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
-	respBody, _, err := w.commonHandler("GetRenderJob", query)
-	if err != nil {
-		return nil, err
-	}
+func (w *Workspace) GetRenderJob(jobID string) (*RenderJob, error) {
+    q := url.Values{}
+    q.Set("AccountId", fmt.Sprintf("%d", w.AccountID))
+    q.Set("UserId", fmt.Sprintf("%d", w.UserID))
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("RenderJobId", jobID)
 
-	res := GetJobResponse{}
-	if err = json.Unmarshal([]byte(respBody), &res); err != nil {
-		return nil, err
-	}
+    body, status, err := w.queryHandler("GetRenderJob", q)
+    if err != nil {
+        return nil, err
+    }
 
-	if res.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(res.ResponseMetaData)
-	}
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
 
-	job := &Job{
-		JobInfo: res.Job,
-		Client:  w.Client,
-	}
+    var resp GetRenderJobResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
 
-	return job, err
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result.Job, nil
 }
 
-func (w *Workspace) ListJobs(r *ListJobRequest) (*JobList, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	orderBy, ok := OrderTypeMap[r.OrderBy]
-	if !ok {
-		orderBy = "1"
-	}
-	query.Set("OrderBy", orderBy)
-	if r.PageSize > 0 {
-		query.Set("PageNum", strconv.Itoa(r.PageNum))
-		query.Set("PageSize", strconv.Itoa(r.PageSize))
-	} else {
-		query.Set("PageNum", "1")
-		query.Set("PageSize", "10")
-	}
-	query.Set("Tryout", strconv.Itoa(r.Tryout))
-	query.Set("Keyword", r.Keyword)
-	query.Set("Status", r.Status)
-	// JobType支持maya_redshift, maya_arnold, c4d_redshift, blender, octane, 多个任务类型之间使用英文逗号分隔
-	query.Set("JobType", r.JobType)
+func (w *Workspace) RetryRenderJob(r *RetryJobRequest) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("ListJobs", query)
-	if err != nil {
-		return nil, err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("RenderJobId", r.JobID)
 
-	resp := &ListJobResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
+    body, status, err := w.jsonHandler("RetryRenderJob", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return &resp.JobsData, nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-// CreateJob 创建任务之前需要先上传工程文件到边缘存储
-func (w *Workspace) CreateJob(job *JobInfo) (*JobInfo, error) {
-	jobString, err := json.Marshal(job)
-	if err != nil {
-		return nil, err
-	}
+func (w *Workspace) ResumeRenderJobs(r *BatchJobIDList) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	body, _, err := w.commonHandlerJson("CreateJob", query, string(jobString))
-	if err != nil {
-		return nil, err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := &CreateJobResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Metadata.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.Metadata)
-	}
+    body, status, err := w.jsonHandler("ResumeRenderJobs", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return &resp.JobDetail.Job, nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func (w *Workspace) PauseJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) StopRenderJobs(r *BatchJobIDList) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("PauseJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("StopRenderJobs", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func (w *Workspace) ResumeJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) DeleteRenderJobs(r *BatchJobIDList) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("StartJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("DeleteRenderJobs", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func (w *Workspace) StopJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) FullSpeedRenderJobs(r *BatchJobIDList) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("StopJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("FullSpeedRenderJobs", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func (w *Workspace) DeleteJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) AutoFullSpeedRenderJobs(r *BatchJobIDList) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("DeleteJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("AutoFullSpeedRenderJobs", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-func (w *Workspace) RetryJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) UpdateRenderJobsPriority(r *BatchJobPriority) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("RetryJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("UpdateRenderJobsPriority", q, string(data))
+    if err != nil {
+        return err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+
+    return nil
 }
 
-// FullSpeedJob 试渲染完成后, 需要继续渲染剩余帧时使用FullSpeedJob
-func (w *Workspace) FullSpeedJob(jobId string) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
+func (w *Workspace) ListJobOutput(r *ListJobOutputRequest) (*ListJobOutputResult, error) {
+    if r == nil {
+        return nil, ErrInvalidArgs
+    }
 
-	body, _, err := w.commonHandler("FullSpeedJob", query)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("AccountId", fmt.Sprintf("%d", w.AccountID))
+    q.Set("UserId", fmt.Sprintf("%d", w.UserID))
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return nil, err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
+    body, status, err := w.jsonHandler("ListJobOutput", q, string(data))
+    if err != nil {
+        return nil, err
+    }
 
-	return nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp ListJobOutputResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result, nil
 }
 
-func (w *Workspace) EditJob(job *JobInfo) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", job.JobId)
+func (w *Workspace) GetJobOutput(r *GetJobOutputRequest) (*GetJobOutputResult, error) {
+    if r == nil {
+        return nil, ErrInvalidArgs
+    }
 
-	jobString, err := json.Marshal(job)
-	if err != nil {
-		return err
-	}
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("JobId", r.JobID)
 
-	body, _, err := w.commonHandlerJson("EditJob", query, string(jobString))
-	if err != nil {
-		return err
-	}
+    data, err := json.Marshal(r)
+    if err != nil {
+        return nil, err
+    }
 
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
+    body, status, err := w.jsonHandler("GetJobOutput", q, string(data))
+    if err != nil {
+        return nil, err
+    }
 
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-	return nil
+    if status != HTTPStatusOK {
+        return nil, ErrInvalidResponseStatus
+    }
+
+    var resp GetJobOutputResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return nil, err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return nil, packError(&resp.ResponseMetadata)
+    }
+
+    return resp.Result, nil
 }
 
-func (w *Workspace) UpdateJobPriority(jobId string, priority int) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", jobId)
-	query.Set("Priority", strconv.Itoa(priority))
-
-	body, _, err := w.commonHandler("SetJobPriority", query)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-	return nil
-}
-
-func (w *Workspace) PauseJobs(r *BatchJobRequest) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := w.commonHandlerJson("PauseJobs", query, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (w *Workspace) ResumeJobs(r *BatchJobRequest) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := w.commonHandlerJson("ResumeJobs", query, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (w *Workspace) StopJobs(r *BatchJobRequest) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := w.commonHandlerJson("StopJobs", query, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return err
-	}
-
-	return nil
-}
-
-func (w *Workspace) DeleteJobs(r *BatchJobRequest) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := w.commonHandlerJson("DeleteJobs", query, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (w *Workspace) FullSpeedJobs(r *BatchJobRequest) error {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := w.commonHandlerJson("FullSpeedJobs", query, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (w *Workspace) GetLayerFrames(r *GetLayerFramesRequest) (*[]LayerFrameList, error) {
-	query := url.Values{}
-	query.Set("WorkspaceId", strconv.Itoa(w.WorkspaceId))
-	query.Set("RenderJobId", r.RenderJobId)
-
-	data, err := json.Marshal(r)
-	if err != nil {
-		return nil, err
-	}
-
-	body, _, err := w.commonHandlerJson("GetLayerFrames", query, string(data))
-	if err != nil {
-		return nil, err
-	}
-
-	resp := GetLayerFramesResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.LayerFrames, nil
-}
-
-func (v *Verender) ListMyMessages(r *ListMessageRequest) (*MessageList, error) {
-	query := url.Values{}
-	if r.PageSize > 0 {
-		query.Set("PageNum", strconv.FormatInt(r.PageNum, 10))
-		query.Set("PageSize", strconv.FormatInt(r.PageSize, 10))
-	} else {
-		query.Set("PageNum", "1")
-		query.Set("PageSize", "10")
-	}
-
-	body, _, err := v.commonHandler("ListMyMessages", query)
-	if err != nil {
-		return nil, err
-	}
-
-	resp := ListMessageResponse{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return nil, err
-	}
-
-	if resp.MetaData.Error.CodeN != StatusOk {
-		return nil, packErrorInfo(resp.MetaData)
-	}
-
-	return &resp.Messages, nil
-}
-
-func (v *Verender) MarkMessageAsRead(id int) error {
-	query := url.Values{}
-	query.Set("MessageId", strconv.Itoa(id))
-
-	body, _, err := v.commonHandler("MarkMessageAsRead", query)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (v *Verender) BatchMarkMessagesAsRead(r *MessageIdList) error {
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := v.commonHandlerJson("BatchMarkMessagesAsRead", nil, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (v *Verender) MarkAllMessagesAsRead() error {
-	body, _, err := v.commonHandler("MarkAllMessagesAsRead", nil)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return err
-	}
-
-	return nil
-}
-
-func (v *Verender) DeleteMessage(id int) error {
-	query := url.Values{}
-	query.Set("MessageId", strconv.Itoa(id))
-	body, _, err := v.commonHandler("DeleteMessage", query)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (v *Verender) BatchDeleteMessages(r *MessageIdList) error {
-	data, err := json.Marshal(r)
-	if err != nil {
-		return err
-	}
-
-	body, _, err := v.commonHandlerJson("BatchDeleteMessages", nil, string(data))
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (v *Verender) DeleteAllMessages() error {
-	body, _, err := v.commonHandler("DeleteAllMessages", nil)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (v *Verender) DeleteAllReadMessages() error {
-	body, _, err := v.commonHandler("DeleteAllReadMessages", nil)
-	if err != nil {
-		return err
-	}
-
-	resp := ResponseMetaData{}
-	if err = json.Unmarshal([]byte(body), &resp); err != nil {
-		return err
-	}
-
-	if resp.Error.CodeN != StatusOk {
-		return packErrorInfo(resp)
-	}
-
-	return nil
-}
-
-func (j *Job) GetJobInfo() Job {
-	return *j
+func (w *Workspace) UpdateJobOutput(r *UpdateJobOutputRequest) error {
+    if r == nil {
+        return ErrInvalidArgs
+    }
+
+    q := url.Values{}
+    q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
+    q.Set("JobId", r.JobID)
+
+    r.AccountID = w.AccountID
+    r.UserID = w.UserID
+    r.WorkspaceID = w.Id
+
+    data, err := json.Marshal(r)
+    if err != nil {
+        return err
+    }
+
+    body, status, err := w.jsonHandler("UpdateJobOutput", q, string(data))
+    if err != nil {
+        return err
+    }
+
+    if status != HTTPStatusOK {
+        return ErrInvalidResponseStatus
+    }
+
+    var resp VoidResponse
+    if err := json.Unmarshal(body, &resp); err != nil {
+        return err
+    }
+
+    if !checkResponseOK(resp.ResponseMetadata.Error) {
+        return packError(&resp.ResponseMetadata)
+    }
+    return nil
 }

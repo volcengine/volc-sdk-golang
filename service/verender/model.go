@@ -1,506 +1,445 @@
 package verender
 
 import (
-	"time"
+    "time"
 
-	"github.com/minio/minio-go/v7"
-	"github.com/volcengine/volc-sdk-golang/base"
+    "github.com/volcengine/volc-sdk-golang/base"
 )
 
-type GetStorageAccessResponse struct {
-	ResponseMetaData `json:"ResponseMetaData"`
-	WorkspaceResult  `json:"Result"`
-	Time             time.Time `json:"Time"`
+type Verender struct {
+    Client *base.Client
 }
 
 type Error struct {
-	CodeN   int    `json:"CodeN"`
-	Code    string `json:"Code"`
-	Message string `json:"Message"`
+    CodeN   int    `json:"CodeN"`
+    Code    string `json:"Code"`
+    Message string `json:"Message"`
 }
 
-type ResponseMetaData struct {
-	RequestId string `json:"RequestId"`
-	Action    string `json:"Action"`
-	Version   string `json:"Version"`
-	Service   string `json:"Service"`
-	Region    string `json:"Region"`
-	Error     Error  `json:"Error"`
+type ResponseMetadata struct {
+    RequestID string `json:"RequestId"`
+    Action    string `json:"Action"`
+    Version   string `json:"Version"`
+    Service   string `json:"Service"`
+    Region    string `json:"Region"`
+    Error     Error  `json:"Error"`
 }
 
-type WorkspaceResult struct {
-	ClusterEndpoint string `json:"cluster_endpoint"`
-	BucketName      string `json:"bucket_name"`
-	BucketToken     string `json:"bucket_token"`
-	VolumeName      string `json:"volume_name"`
-	ClusterName     string `json:"cluster_name"`
-	AccessKey       string `json:"access_key"`
-	SecretKey       string `json:"secret_key"`
-	WorkspaceId     int    `json:"workspace_id"`
-}
-
-type Resolutions struct {
-	Width  int `json:"Width"`
-	Height int `json:"Height"`
-}
-
-type FrameSettings struct {
-	Start int `json:"Start"`
-	End   int `json:"End"`
-	Step  int `json:"Step"`
-}
-
-type FrameProcess struct {
-	Total      int `json:"total"`
-	Waiting    int `json:"waiting"`
-	Processing int `json:"processing"`
-	Success    int `json:"success"`
-	Failed     int `json:"failed"`
-	Stopped    int `json:"stopped"`
-	Paused     int `json:"paused"`
-	ToStart    int `json:"to_start"`
-}
-
-type LayerInformation struct {
-	LayerIndex   int          `json:"layer_index"`
-	FrameProcess FrameProcess `json:"frame_process"`
-	Cost         float64      `json:"cost"`
-}
-
-type Statistics struct {
-	CpuTime int     `json:"CpuTime"`
-	GpuTime int     `json:"GpuTime"`
-	Cost    float64 `json:"Cost"`
-}
-
-type Progress struct {
-	Finished int `json:"Finished"`
-	Total    int `json:"Total"`
-}
-
-type OutputImageTemple struct {
-	Padding         int    `json:"Padding"`
-	ImageNameTemple string `json:"ImageNameTemple"`
-	SceneName       string `json:"SceneName"`
-	Extension       string `json:"Extension"`
+type Specification struct {
+    ID               int64     `json:"Id"`
+    StorageAvailable int64     `json:"StorageAvailable"`
+    StorageTotal     int64     `json:"StorageTotal"`
+    ValidStartTime   time.Time `json:"ValidStartTime"`
 }
 
 type CellSpec struct {
-	ComputerResourceType  string `json:"ComputerResourceType"`
-	ComputerResourceCount int    `json:"ComputerResourceCount"`
-	ID                    int64  `json:"id"`
+    ID             int64   `json:"id"`
+    CPUCount       int64   `json:"cpu_count"`
+    CPUType        string  `json:"cpu_type"`
+    GPUCount       int64   `json:"gpu_count"`
+    GPUType        string  `json:"gpu_type"`
+    SystemInfo     string  `json:"system_info"`
+    CellType       string  `json:"cell_type"`
+    ResourcePoolID int64   `json:"resource_pool_id"`
+    UintPrice      float64 `json:"unit_price"`
 }
 
-type JobInfo struct {
-	// request
-	UserId                int64              `json:"UserId,omitempty"`
-	AccountId             int64              `json:"AccountId,omitempty"`
-	UserName              string             `json:"UserName"`
-	WorkspaceId           int64              `json:"WorkspaceId,omitempty"`
-	Title                 string             `json:"Title"`
-	Description           string             `json:"Description,omitempty"`
-	DccTool               string             `json:"DccTool"`
-	DccToolVersion        string             `json:"DccToolVersion,omitempty"`
-	Renderer              string             `json:"Renderer"`
-	RendererVersion       string             `json:"RendererVersion,omitempty"`
-	Tryout                bool               `json:"Tryout"`
-	TryoutFrameNumbers    []string           `json:"TryoutFrameNumbers,omitempty"`
-	SceneFile             string             `json:"SceneFile"`
-	OutputFormat          string             `json:"OutputFormat,omitempty"`
-	Resolutions           []Resolutions      `json:"Resolutions,omitempty"`
-	PathMapping           map[string]string  `json:"PathMapping,omitempty"`
-	FrameSettings         FrameSettings      `json:"FrameSettings,omitempty"`
-	Cameras               []string           `json:"Cameras,omitempty"`
-	Layers                []string           `json:"Layers,omitempty"`
-	LayerInformationList  []LayerInformation `json:"LayerInformationList,omitempty"`
-	TimeoutReminder       int64              `json:"TimeoutReminder,omitempty"`
-	TimeoutStopper        int64              `json:"TimeoutStopper,omitempty"`
-	FrameProcess          FrameProcess       `json:"FrameProcess,omitempty"`
-	OutputImageTemple     OutputImageTemple  `json:"OutputImageTemple,omitempty"`
-	WantedCellSpecs       []CellSpec         `json:"WantedCellSpecs,omitempty"`
-	UseLegacyRenderLayers *bool              `json:"UseLegacyRenderLayers,omitempty"`
-	RenderImageTag        *string            `json:"RenderImageTag,omitempty"`
-	Environment           map[string]string  `json:"Environment,omitempty"`
-	CallbackTarget        *string            `json:"CallbackTarget,omitempty"`
-	UserData              *string            `json:"UserData,omitempty"`
-
-	// response
-	JobId               string      `json:"JobId,omitempty"`
-	Priority            int         `json:"Priority,omitempty"`
-	CreatedAt           string      `json:"CreatedAt,omitempty"`
-	StoppedAt           string      `json:"StoppedAt,omitempty"`
-	Stage               string      `json:"Stage,omitempty"`
-	Statistics          Statistics  `json:"Statistics,omitempty"`
-	Error               string      `json:"Error,omitempty"`
-	ResultBucket        string      `json:"ResultBucket,omitempty"`
-	ResultDirectoryPath string      `json:"ResultDirectoryPath,omitempty"`
-	FrameList           []FrameInfo `json:"FrameList,omitempty"`
-	Paused              bool        `json:"Paused,omitempty"`
-	CompletionAt        string      `json:"CompletionAt,omitempty"`
-	OutputBytes         int64       `json:"OutputBytes,omitempty"`
-	Progress            *Progress   `json:"Progress,omitempty"`
+type Dcc struct {
+    Dcc        string `json:"Dcc"`
+    DccVersion string `json:"DccVersion"`
 }
 
-type JobResult struct {
-	Job JobInfo `json:"Job"`
+type ListDccsResult struct {
+    Dccs []Dcc `json:"Dccs"`
 }
 
-type GetJobResponse struct {
-	ResponseMetaData `json:"ResponseMetaData"`
-	JobResult        `json:"Result"`
+type ListDccsResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
+    Result           *ListDccsResult  `json:"Result"`
 }
 
-type ListWorkspaceRequest struct {
-	WorkspaceId        int64
-	WorkspaceName      string
-	PageNum            int64
-	PageSize           int64
-	StartPurchaseTime  string
-	EndPurchaseTime    string
-	OrderBy            string
-	OrderType          string
-	FuzzyWorkspaceName string
-	FuzzySearchContent string
+type ListAccountDccPluginsReq struct {
+    SpecTemplateId int64  `json:"SpecTemplateId"`
+    Dcc            string `json:"Dcc,omitempty"`
+    DccVersion     string `json:"DccVersion"`
+    RegionId       int64  `json:"RegionId"`
 }
 
-type WorkspaceList struct {
-	Total      int         `json:"Total"`
-	Workspaces []Workspace `json:"Workspaces"`
+type DccPlugin struct {
+    Id             int64  `json:"Id"`
+    Dcc            string `json:"Dcc"`
+    DccVersion     string `json:"DccVersion"`
+    Plugin         string `json:"Plugin"`
+    PluginVersion  string `json:"PluginVersion"`
+    NeedLicense    bool   `json:"NeedLicense"`
+    RendererPlugin bool   `json:"RendererPlugin"`
+    DccLicense     bool   `json:"DccLicense"`
 }
 
-type ListWorkspaceResponse struct {
-	MetaData   ResponseMetaData `json:"ResponseMetadata"`
-	Workspaces WorkspaceList    `json:"Result,omitempty"`
+type ListAccountDccPluginsResult struct {
+    Plugins []DccPlugin `json:"Plugins"`
 }
 
-type ListJobRequest struct {
-	OrderBy  string
-	PageNum  int
-	PageSize int
-	Tryout   int
-	Keyword  string
-	Status   string
-	JobType  string
+type ListAccountDccPluginsResp struct {
+    ResponseMetadata ResponseMetadata            `json:"ResponseMetadata"`
+    Result           ListAccountDccPluginsResult `json:"Result"`
 }
 
-type JobList struct {
-	Jobs      []JobInfo `json:"Jobs"`
-	TotalJobs int       `json:"TotalJobs"`
+type ResourceSpec struct {
+    SpecId         int64  `json:"SpecId"`
+    CpuCount       int    `json:"CpuCount"`
+    CpuType        string `json:"CpuType"`
+    GpuCount       int    `json:"GpuCount"`
+    GpuType        string `json:"GpuType"`
+    Memory         int    `json:"Memory"`
+    SystemInfo     string `json:"SystemInfo"`
+    SpecType       string `json:"SpecType"`
+    SpecTemplateId int64  `json:"SpecTemplateId"`
 }
 
-type ListJobResponse struct {
-	MetaData ResponseMetaData `json:"ResponseMetadata"`
-	JobsData JobList          `json:"Result,omitempty"`
+type ResourceSpecification struct {
+    RegionId   int64          `json:"RegionId"`
+    RegionName string         `json:"RegionName"`
+    SupportCpu string         `json:"SupportCpu"`
+    SupportGpu string         `json:"SupportGpu"`
+    Specs      []ResourceSpec `json:"Specs"`
 }
 
-type UserInfo struct {
-	AccountId int    `json:"AccountId,omitempty"`
-	UserId    int    `json:"UserId"`
-	UserName  string `json:"UserName"`
+type ListResourceSpecificationsResp struct {
+    ResponseMetadata ResponseMetadata        `json:"ResponseMetadata"`
+    Result           []ResourceSpecification `json:"Result"`
 }
 
-type GetUserInfoResult struct {
-	MetaData ResponseMetaData `json:"ResponseMetadata"`
-	User     UserInfo         `json:"Result,omitempty"`
+type StorageAccess struct {
+    BucketName          string        `json:"bucket_name"`
+    FtransAclToken      string        `json:"ftrans_acl_token"`
+    FtransSecurityToken string        `json:"ftrans_security_token"`
+    FtransQuicServer    string        `json:"ftrans_quic_server"`
+    FtransCertName      string        `json:"ftrans_cert_name"`
+    FtransS10Server     string        `json:"ftrans_s10_server"`
+    FtransCert          string        `json:"cert_pem"`
+    FtransKey           string        `json:"private_key_pem"`
+    FtransClient        *FtransClient `json:"-"`
 }
 
-type RenderJobInfo struct {
-	Job JobInfo `json:"RenderJob"`
-}
-
-type CreateJobResponse struct {
-	Metadata  ResponseMetaData `json:"ResponseMetadata"`
-	JobDetail RenderJobInfo    `json:"Result,omitempty"`
-}
-
-type BatchJobRequest struct {
-	JobIds []string `json:"JobIds"`
-}
-
-type GetFramesRequest struct {
-	RenderJobId string
-	PageNum     int
-	PageSize    int
-}
-
-type FrameInfo struct {
-	Start        int    `json:"Start"`
-	End          int    `json:"End"`
-	Status       string `json:"Status"`
-	CpuTime      int64  `json:"CpuTime"`
-	GpuTime      int64  `json:"GpuTime"`
-	StartingTime string `json:"StartingTime"`
-	FinishedTime string `json:"FinishedTime"`
-	ExitCode     int32  `json:"ExitCode,omitempty"`
-	Error        string `json:"Error,omitempty"`
-}
-
-type FrameList struct {
-	Frames      []FrameInfo `json:"FrameList"`
-	TotalFrames int         `json:"TotalFrames"`
-}
-
-type GetFramesResponse struct {
-	MetaData ResponseMetaData `json:"ResponseMetadata"`
-	Frames   FrameList        `json:"Result"`
-}
-
-type LayerRequest struct {
-	LayerIndex int   `json:"LayerIndex"`
-	PageNum    int   `json:"PageNum,omitempty"`
-	PageSize   int   `json:"PageSize,omitempty"`
-	Statuses   []int `json:"Statuses,omitempty"`
-}
-
-type GetLayerFramesRequest struct {
-	RenderJobId   string         `json:"RenderJobId"`
-	LayerRequests []LayerRequest `json:"LayerRequests"`
-}
-
-type LayerFrameInfo struct {
-	FrameNumber  int     `json:"frame_number"`
-	Status       int     `json:"status"`
-	StartingTime string  `json:"starting_time,omitempty"`
-	FinishedTime string  `json:"finished_time,omitempty"`
-	CpuTime      int64   `json:"cpu_time,omitempty"`
-	GpuTime      int64   `json:"gpu_time,omitempty"`
-	Cost         float64 `json:"cost,omitempty"`
-}
-
-type LayerFrameList struct {
-	LayerFrameList []LayerFrameInfo `json:"FrameInformationList"`
-	Summary        FrameProcess     `json:"FrameProcess"`
-	CpuTime        int64            `json:"CpuTime"`
-	GpuTime        int64            `json:"GpuTime"`
-	Cost           float64          `json:"Cost"`
-	Total          int              `json:"Total"`
-}
-
-type GetLayerFramesResponse struct {
-	MetaData    ResponseMetaData `json:"ResponseMetadata"`
-	LayerFrames []LayerFrameList `json:"Result"`
+type HardwareSpecification struct {
+    SupportCpu string `json:"SupportCpu"`
+    SupportGpu string `json:"SupportGpu"`
+    RegionName string `json:"RegionName"`
+    RegionId   int64  `json:"RegionId"`
 }
 
 type Workspace struct {
-	ClusterEndpoint       string        `json:"-"`
-	BucketName            string        `json:"-"`
-	BucketToken           string        `json:"-"`
-	VolumeName            string        `json:"-"`
-	ClusterName           string        `json:"-"`
-	AccessKey             string        `json:"-"`
-	SecretKey             string        `json:"-"`
-	Time                  time.Time     `json:"-"`
-	MinioClient           *minio.Client `json:"-"`
-	Client                *base.Client  `json:"-"`
-	WorkspaceId           int           `json:"Id,omitempty"`
-	WorkspaceName         string        `json:"Name,omitempty"`
-	Description           string        `json:"Description,omitempty"`
-	ResourcePoolId        int           `json:"ResourcePoolId,omitempty"`
-	CpsId                 int           `json:"CpsId,omitempty"`
-	StorageTotal          int64         `json:"StorageTotal,omitempty"`
-	AccountId             int           `json:"AccountId,omitempty"`
-	UserId                int           `json:"UserId,omitempty"`
-	AccountUserName       string        `json:"AccountUserName,omitempty"`
-	CreatedAt             string        `json:"CreatedAt,omitempty"`
-	UpdateAt              string        `json:"UpdateAt,omitempty"`
-	Specification         *StorageSpec  `json:"Specification,omitempty"`
-	Status                string        `json:"Status,omitempty"`
-	HardwareSpecification *HardwareSpec `json:"HardwareSpecification,omitempty"`
-}
-
-type ResourcePool struct {
-	ResourcePoolId     int    `json:"ResourcePoolId"`
-	ResourcePoolName   string `json:"ResourcePoolName"`
-	ResourcePoolRegion string `json:"ResourcePoolRegion"`
-	CpsId              int    `json:"CpsId"`
-	CpsName            string `json:"CpsName"`
-	SupportCpu         string `json:"SupportCpu"`
-	SupportGpu         string `json:"SupportGpu"`
-}
-
-type ListResourcePoolResponse struct {
-	MetaData      ResponseMetaData `json:"ResponseMetadata"`
-	ResourcePools []ResourcePool   `json:"Result"`
-}
-
-type GetWorkspaceLimitResponse struct {
-	MetaData       ResponseMetaData `json:"ResponseMetadata"`
-	WorkspaceLimit WorkspaceLimit   `json:"Result"`
+    Id                    int64                 `json:"Id"`
+    CreatedAt             time.Time             `json:"CreatedAt"`
+    Name                  string                `json:"Name"`
+    Description           string                `json:"Description"`
+    AccountID             int64                 `json:"AccountId"`
+    UserID                int64                 `json:"UserId"`
+    AccountUserName       string                `json:"AccountUserName"`
+    RegionId              int64                 `json:"RegionId"`
+    SpecIdList            []int64               `json:"SpecIdList"`
+    Status                string                `json:"Status"`
+    Specification         Specification         `json:"Specification,omitempty"`
+    HardwareSpecification HardwareSpecification `json:"HardwareSpecification"`
+    Client                *base.Client          `json:"-"`
+    StorageAccess         *StorageAccess        `json:"-"`
 }
 
 type WorkspaceLimit struct {
-	WorkspaceSizeUpperLimit   int `json:"WorkspaceSizeUpperLimit"`
-	WorkspaceAmountUpperLimit int `json:"WorkspaceAmountUpperLimit"`
+    WorkspaceSizeUpperLimit   int
+    WorkspaceAmountUpperLimit int
 }
 
-type HardwareSpec struct {
-	ResourcePoolId     int    `json:"ResourcePoolId,omitempty"`
-	ResourcePoolName   string `json:"ResourcePoolName,omitempty"`
-	ResourcePoolRegion string `json:"ResourcePoolRegion,omitempty"`
-	CpsId              int    `json:"CpsId,omitempty"`
-	CpsName            string `json:"CpsName,omitempty"`
-	SupportCpu         string `json:"SupportCpu,omitempty"`
-	SupportGpu         string `json:"SupportGpu,omitempty"`
+type FileInfo struct {
+    Key           string    `json:"Key"` // needed in CreateRenderJob
+    ContentLength int64     `json:"ContentLength"`
+    LastModified  time.Time `json:"LastModified"`
 }
 
-type StorageSpec struct {
-	Id               int    `json:"Id,omitempty"`
-	StorageTotal     int64  `json:"StorageTotal,omitempty"`
-	StorageAvailable int64  `json:"StorageAvailable,omitempty"`
-	ValidStartTime   string `json:"ValidStartTime,omitempty"`
+type Plugin struct {
+    PluginName     string `json:"Plugin,omitempty"`
+    PluginVersion  string `json:"PluginVersion"`
+    Name           string `json:"Name,omitempty"`
+    Version        string `json:"Version,omitempty"`
+    NeedLicense    bool   `json:"NeedLicense"`
+    RendererPlugin bool   `json:"RendererPlugin"`
 }
 
-type PurchaseWorkspaceResponse struct {
-	MetaData      ResponseMetaData `json:"ResponseMetadata"`
-	WorkspaceInfo Workspace        `json:"Result"`
+type RenderSetting struct {
+    AccountID          int64     `json:"AccountId,omitempty"`
+    UserID             int64     `json:"UserId,omitempty"`
+    WorkspaceID        int64     `json:"WorkspaceId,omitempty"`
+    Name               string    `json:"Name,omitempty"`
+    Dcc                string    `json:"Dcc,omitempty"`
+    DccVersion         string    `json:"DccVersion,omitempty"`
+    Plugins            []*Plugin `json:"Plugins,omitempty"`
+    RenderLayerMode    string    `json:"RenderLayerMode,omitempty"`
+    ProjectPath        string    `json:"ProjectPath,omitempty"`
+    FramesCountOneCell int8      `json:"FramesCountOneCell,omitempty"`
+    CellSpecID         int64     `json:"CellSpecId,omitempty"`
+    Id                 int64     `json:"Id,omitempty"`
+    IsDeleted          bool      `json:"IsDeleted,omitempty"`
 }
 
-type Job struct {
-	JobInfo
-	Client *base.Client
+type User struct {
+    AccountID int64  `json:"AccountId"`
+    UserID    int64  `json:"UserId"`
+    UserName  string `json:"UserName"`
 }
 
-type GetWorkspaceHardwareSpecificationResponse struct {
-	MetaData      ResponseMetaData                 `json:"ResponseMetaData"`
-	HardwareSpecs []WorkspaceHardwareSpecification `json:"Result"`
+type ListWorkspaceRequest struct {
+    WorkspaceID        int64  `json:"WorkspaceId"`
+    WorkspaceName      string `json:"WorkspaceName"`
+    PageNum            int64  `json:"PageNum"`
+    PageSize           int64  `json:"PageSize"`
+    StartPurchaseTime  string `json:"StartPurchaseTime"`
+    EndPurchaseTime    string `json:"EndPurchaseTime"`
+    OrderType          string `json:"OrderType"`
+    OrderField         string `json:"OrderField"`
+    FuzzyWorkspaceName string `json:"FuzzyWorkspaceName"`
+    FuzzySearchContent string `json:"FuzzySearchContent"`
+    ListScope          string `json:"ListScope"`
 }
 
-type WorkspaceHardwareSpecification struct {
-	Type   string `json:"Type"`
-	Count  int    `json:"Count"`
-	SpecID int    `json:"SpecId"`
+type WorkspaceList struct {
+    Total      int          `json:"Total"`
+    Workspaces []*Workspace `json:"Workspaces"`
 }
 
-type StatisticsFilter struct {
-	WorkspaceIds []int    `json:"WorkspaceIds,omitempty"`
-	UserIds      []int    `json:"UserIds,omitempty"`
-	JobTypes     []string `json:"JobTypes,omitempty"`
-	Keyword      string   `json:"Keyword,omitempty"`
+type ListWorkspaceResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
+    Result           WorkspaceList    `json:"Result"`
 }
 
-type StatisticsRequest struct {
-	StartTime  string           `json:"StartTime,omitempty"`
-	EndTime    string           `json:"EndTime,omitempty"`
-	TimeType   string           `json:"TimeType,omitempty"`
-	PageNum    int64            `json:"PageNum,omitempty"`
-	PageSize   int64            `json:"PageSize,omitempty"`
-	OrderField string           `json:"OrderField,omitempty"`
-	OrderBy    string           `json:"OrderBy,omitempty"`
-	FileName   string           `json:"FileName,omitempty"`
-	Filter     StatisticsFilter `json:"-"`
+type GetStorageAccessResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
+    Result           StorageAccess    `json:"Result"`
 }
 
-type StatisticsSummary struct {
-	TotalCost    float64 `json:"TotalCost"`
-	TotalJobs    int64   `json:"TotalJobs"`
-	CpuTime      int64   `json:"CpuTime"`
-	GpuTime      int64   `json:"GpuTime"`
-	TotalFrames  int64   `json:"TotalFrames"`
-	TotalBytes   int64   `json:"TotalBytes"`
-	TotalJobTime int64   `json:"TotalJobTime"`
+type GetCurrentUserResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
+    Result           *User            `json:"Result"`
 }
 
-type StatisticsRecord struct {
-	StartTime     string  `json:"StartTime"`
-	EndTime       string  `json:"EndTime"`
-	JobType       string  `json:"JobType"`
-	CpuTime       int64   `json:"CpuTime"`
-	GpuTime       int64   `json:"GpuTime"`
-	JobTime       int64   `json:"JobTime"`
-	TotalFrames   int64   `json:"TotalFrames"`
-	TotalJobs     int64   `json:"TotalJobs"`
-	TotalBytes    int64   `json:"TotalBytes,omitempty"`
-	TotalCost     float64 `json:"TotalCost,omitempty"`
-	JobId         string  `json:"JobId,omitempty"`
-	JobName       string  `json:"JobName,omitempty"`
-	JobDesc       string  `json:"JobDescription,omitempty"`
-	WorkspaceId   int     `json:"WorkspaceId,omitempty"`
-	WorkspaceName string  `json:"WorkspaceName,omitempty"`
-	UserId        int     `json:"UserId,omitempty"`
-	UserName      string  `json:"UserName,omitempty"`
+type CellSpecList struct {
+    CellSpecs []*CellSpec `json:"cell_specs"`
 }
 
-type AccountStatistics struct {
-	Summary    StatisticsSummary  `json:"Summary"`
-	Statistics []StatisticsRecord `json:"Statistics"`
-	Workspaces []WorkspaceInfo    `json:"Workspaces"`
-	Users      []UserInfo         `json:"Users"`
+type ListCellSpecResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
+    Result           *CellSpecList    `json:"Result"`
 }
 
-type GetAccountStatisticsResponse struct {
-	MetaData    ResponseMetaData  `json:"ResponseMetadata"`
-	AccountStat AccountStatistics `json:"Result"`
+type AddRenderSettingResult struct {
+    RenderSettingName string `json:"RenderSettingName"`
+    RenderSettingID   int64  `json:"RenderSettingId"`
 }
 
-type WorkspaceInfo struct {
-	WorkspaceId   int    `json:"WorkspaceId"`
-	WorkspaceName string `json:"WorkspaceName"`
+type AddRenderSettingResponse struct {
+    ResponseMetadata ResponseMetadata        `json:"ResponseMetadata"`
+    Result           *AddRenderSettingResult `json:"Result"`
 }
 
-type AccountStatisticDetails struct {
-	Total      int64              `json:"Total"`
-	Items      []StatisticsRecord `json:"Items"`
-	Workspaces []WorkspaceInfo    `json:"Workspaces"`
-	Users      []UserInfo         `json:"Users"`
-	JobTypes   []string           `json:"JobTypes"`
+type VoidResponse struct {
+    ResponseMetadata ResponseMetadata `json:"ResponseMetadata"`
 }
 
-type GetAccountStatisticDetailsResponse struct {
-	MetaData ResponseMetaData        `json:"ResponseMetadata"`
-	Details  AccountStatisticDetails `json:"Result"`
+type ListRenderSettingResponse struct {
+    ResponseMetadata ResponseMetadata            `json:"ResponseMetadata"`
+    Result           map[string][]*RenderSetting `json:"Result"`
 }
 
-type JobOverallStatistics struct {
-	Failed  int64 `json:"Failed"`
-	Running int64 `json:"Running"`
-	Success int64 `json:"Success"`
-	Waiting int64 `json:"Waiting"`
+type RenderSettingList struct {
+    Settings []*RenderSetting `json:"Settings"`
 }
 
-type GetJobOverallStatisticsResponse struct {
-	MetaData ResponseMetaData     `json:"ResponseMetadata"`
-	Stat     JobOverallStatistics `json:"Result"`
+type GetRenderSettingResponse struct {
+    ResponseMetadata ResponseMetadata   `json:"ResponseMetadata"`
+    Result           *RenderSettingList `json:"Result"`
 }
 
-type MessageInfo struct {
-	Id             int    `json:"Id"`
-	Publisher      string `json:"Publisher"`
-	MessageType    string `json:"MessageType"`
-	MessageSubType string `json:"MessageSubType"`
-	Title          string `json:"Title"`
-	Content        string `json:"Content"`
-	MarkAsRead     bool   `json:"MarkAsRead"`
-	CreatedAt      string `json:"CreatedAt"`
+type OutputImageTemplate struct {
+    Padding         int8   `json:"Padding"`
+    ImageNameTemple string `json:"ImageNameTemple"`
+    SceneName       string `json:"SceneName"`
+    Extension       string `json:"Extension"`
 }
 
-type MessageList struct {
-	Messages    []MessageInfo `json:"Messages"`
-	Total       int64         `json:"Total"`
-	TotalUnread int64         `json:"TotalUnread"`
+type Resolution struct {
+    Height int64 `json:"Height"`
+    Width  int64 `json:"Width"`
 }
 
-type ListMessageResponse struct {
-	MetaData ResponseMetaData `json:"ResponseMetadata"`
-	Messages MessageList      `json:"Result"`
+type Frame struct {
+    Start         float64  `json:"Start"`
+    End           float64  `json:"End"`
+    Step          float64  `json:"Step"`
+    RenumberStart *float64 `json:"RenumberStart,omitempty"`
 }
 
-type ListMessageRequest struct {
-	PageNum  int64 `json:"PageNum,omitempty"`
-	PageSize int64 `json:"PageSize,omitempty"`
+type LayerConfig struct {
+    LayerIndex  int8       `json:"LayerIndex"`
+    LayerName   string     `json:"LayerName"`
+    Frame       Frame      `json:"Frame"`
+    Resolutions Resolution `json:"Resolutions"`
+    Cameras     []string   `json:"Cameras"`
 }
 
-type MessageIdList struct {
-	MessageIds []int `json:"MessageIds"`
+type RenderJob struct {
+    // request
+    AccountID                int64             `json:"AccountId"`
+    UserID                   int64             `json:"UserId"`
+    UserName                 string            `json:"UserName"`
+    WorkspaceID              int64             `json:"WorkspaceId"`
+    Title                    string            `json:"Title,omitempty"`
+    Description              string            `json:"Description,omitempty"`
+    Tryout                   bool              `json:"Tryout"`
+    TryoutFrameNumbers       []string          `json:"TryoutFrameNumbers"`
+    SceneFile                string            `json:"SceneFile"`
+    PathMapping              map[string]string `json:"PathMapping"`
+    TimeoutReminderEachFrame int64             `json:"TimeoutReminderEachFrame"`
+    TimeoutStopperEachFrame  int64             `json:"TimeoutStopperEachFrame"`
+    LayerConfig              []*LayerConfig    `json:"LayerConfig"`
+    RenderSetting            *RenderSetting    `json:"RenderSetting"`
+    FramesCountEachCell      int64             `json:"FramesCountEachCell"`
+    PluginData               string            `json:"PluginData"`
+    Renderer                 string            `json:"Renderer"`
+    DeviceName               string            `json:"DeviceName"`
+    AutoRetryNumber          int64             `json:"AutoRetryNumber"`
+
+    // response
+    JobID             string    `json:"JobId,omitempty"`
+    Priority          int64     `json:"Priority,omitempty"`
+    CreatedAt         string    `json:"CreatedAt,omitempty"`
+    StoppedAt         string    `json:"StoppedAt,omitempty"`
+    CompletionAt      string    `json:"CompletionAt"`
+    Stage             string    `json:"Stage,omitempty"`
+    Error             string    `json:"Error,omitempty"`
+    RenderSettingID   int64     `json:"RenderSettingId"`
+    RenderSettingName string    `json:"RenderSettingName"`
+    Plugins           []*Plugin `json:"Plugins"`
 }
 
-type ObjectInfo struct {
-	Etag          string
-	Key           string
-	ContentLength int64
-	ContentType   string
-	LastModified  time.Time
+type CreateRenderJobResult struct {
+    RenderJob *RenderJob `json:"RenderJob"`
 }
 
-type DeleteWorkspaceResp struct {
-	MetaData ResponseMetaData `json:"ResponseMetadata"`
+type CreateRenderJobResponse struct {
+    ResponseMetadata ResponseMetadata       `json:"ResponseMetadata"`
+    Result           *CreateRenderJobResult `json:"Result"`
+}
+
+type ListRenderJobRequest struct {
+    PageNum        int64    `json:"PageNum"`
+    PageSize       int64    `json:"PageSize"`
+    OrderType      string   `json:"OrderType"`
+    OrderField     string   `json:"OrderField"`
+    Keyword        string   `json:"Keyword"`
+    Status         []string `json:"Status"`
+    RenderSettings []int64  `json:"RenderSetting"`
+    DeviceName     string   `json:"DeviceName"`
+    UserId         int64    `json:"UserId"`
+}
+
+type ListRenderJobResult struct {
+    TotalJobs      int64                     `json:"TotalJobs"`
+    Jobs           []*RenderJob              `json:"Jobs"`
+    RenderSettings []*AddRenderSettingResult `json:"RenderSettings"`
+}
+
+type ListRenderJobResponse struct {
+    ResponseMetadata ResponseMetadata     `json:"ResponseMetadata"`
+    Result           *ListRenderJobResult `json:"Result"`
+}
+
+type GetRenderJobResult struct {
+    Job *RenderJob `json:"Job"`
+}
+
+type GetRenderJobResponse struct {
+    ResponseMetadata ResponseMetadata    `json:"ResponseMetadata"`
+    Result           *GetRenderJobResult `json:"Result"`
+}
+
+type RetryLayerFrame struct {
+    LayerIndex   int64  `json:"LayerIndex"`
+    FrameIndexes string `json:"FrameIndexes"`
+}
+
+type RetryJobRequest struct {
+    JobID           string             `json:"JobId"`
+    AllFailedFrames bool               `json:"AllFailedFrames"`
+    CustomFrames    []*RetryLayerFrame `json:"CustomFrames"`
+}
+
+type BatchJobIDList struct {
+    JobIDList []string `json:"JobIds"`
+}
+
+type BatchJobPriority struct {
+    JobIDList []string `json:"JobIds"`
+    Priority  int8     `json:"Priority"`
+}
+
+type ListJobOutputRequest struct {
+    StartTime  string   `json:"start_time"`
+    EndTime    string   `json:"end_time"`
+    PageNum    int      `json:"page_num"`
+    PageSize   int      `json:"page_size"`
+    Type       string   `json:"type"`
+    Status     string   `json:"status"`
+    OrderType  string   `json:"order_type"`
+    OrderField string   `json:"order_field"`
+    JobIDList  []string `json:"job_id_list"`
+}
+
+type ListJobOutputResult struct {
+    Total int64    `json:"Total"`
+    Files []string `json:"Files"`
+}
+
+type ListJobOutputResponse struct {
+    ResponseMetadata ResponseMetadata     `json:"ResponseMetadata"`
+    Result           *ListJobOutputResult `json:"Result"`
+}
+
+type FrameOutputFilter struct {
+    Frames       []float64 `json:"frames"`
+    IncludeThumb bool      `json:"include_thumb"`
+    IncludeImage bool      `json:"include_image"`
+}
+
+type GetJobOutputFilter struct {
+    IncludeLog bool                          `json:"include_log"`
+    Layers     map[string]*FrameOutputFilter `json:"layers"`
+}
+
+type GetJobOutputRequest struct {
+    JobID  string `json:"job_id"`
+    Filter *GetJobOutputFilter
+}
+
+type FrameOutput struct {
+    Frame  float64  `json:"frame"`
+    Images []string `json:"images"`
+    Thumb  string   `json:"thumb"`
+}
+
+type GetJobOutputResult struct {
+    ImageList map[string][]*FrameOutput `json:"image_list"`
+    LogList   []string                  `json:"log_list"`
+}
+
+type GetJobOutputResponse struct {
+    ResponseMetadata ResponseMetadata    `json:"ResponseMetadata"`
+    Result           *GetJobOutputResult `json:"Result"`
+}
+
+type UpdateJobOutputRequest struct {
+    AccountID   int64    `json:"account_id"`
+    UserID      int64    `json:"user_id"`
+    WorkspaceID int64    `json:"workspace_id"`
+    JobID       string   `json:"job_id"`
+    Files       []string `json:"files"`
 }
