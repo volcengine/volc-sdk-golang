@@ -97,6 +97,13 @@ type BillDetail struct {
 	SellingMode            string
 	SolutionZh             string
 	ReservationInstance    string
+	BillDetailId           string
+	ElementCode            string
+	RegionCode             string
+	ZoneCode               string
+	FactorCode             string
+	ConfigurationCode      string
+	DeductionUseDuration   string
 }
 
 type BillDetailList struct {
@@ -196,6 +203,12 @@ type SplitBillDetail struct {
 	SellingMode            string
 	SubjectName            string
 	ReservationInstance    string
+	SplitBillDetailId      string
+	ElementCode            string
+	RegionCode             string
+	ZoneCode               string
+	FactorCode             string
+	ConfigurationCode      string
 }
 
 type SplitBillDetailList struct {
