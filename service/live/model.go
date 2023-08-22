@@ -586,3 +586,66 @@ type UpdateWatermarkPresetResp struct {
 type DeleteWatermarkPresetResp struct {
 	ResponseMetadata base.ResponseMetadata
 }
+
+type Region struct {
+	Area     string
+	Country  string
+	Province string
+}
+
+type DescribeLiveMetricTrafficDataReq struct {
+	DomainList     []string `json:"DomainList,omitempty"`
+	Domain         string   `json:"Domain,omitempty"`
+	App            string   `json:"App,omitempty"`
+	Stream         string   `json:"Stream,omitempty"`
+	ProtocolList   []string `json:"ProtocolList,omitempty"`
+	ISPList        []string `json:"ISPList,omitempty"`
+	RegionList     []Region `json:"RegionList,omitempty"`
+	UserRegionList []Region `json:"UserRegionList,omitempty"`
+	IPList         []string `json:"IPList,omitempty"`
+	StartTime      string   `json:"StartTime"`
+	EndTime        string   `json:"EndTime"`
+	Aggregation    int      `json:"Aggregation"`
+	ShowDetail     bool     `json:"ShowDetail,omitempty"`
+}
+
+type DescribeLiveMetricTrafficDataResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           DescribeLiveMetricTrafficDataResult
+}
+
+type DescribeLiveMetricTrafficDataResult struct {
+	DomainList            []string            `json:"DomainList,omitempty"`
+	Domain                string              `json:"Domain,omitempty"`
+	App                   string              `json:"App,omitempty"`
+	Stream                string              `json:"Stream,omitempty"`
+	ProtocolList          []string            `json:"ProtocolList,omitempty"`
+	ISPList               []string            `json:"ISPList,omitempty"`
+	RegionList            []Region            `json:"RegionList,omitempty"`
+	UserRegionList        []Region            `json:"UserRegionList,omitempty"`
+	IPList                []string            `json:"IPList,omitempty"`
+	StartTime             string              `json:"StartTime,omitempty"`
+	EndTime               string              `json:"EndTime,omitempty"`
+	Aggregation           int                 `json:"Aggregation"`
+	ShowDetail            bool                `json:"ShowDetail,omitempty"`
+	TotalUpTraffic        float64             `json:"TotalUpTraffic"`
+	TotalDownTraffic      float64             `json:"TotalDownTraffic"`
+	TrafficDataList       []TrafficData       `json:"TrafficDataList,omitempty"`
+	TrafficDetailDataList []TrafficDetailData `json:"TrafficDetailDataList,omitempty"`
+}
+
+type TrafficData struct {
+	TimeStamp   string  `json:"TimeStamp"`
+	UpTraffic   float64 `json:"UpTraffic"`
+	DownTraffic float64 `json:"DownTraffic"`
+}
+
+type TrafficDetailData struct {
+	Domain           string        `json:"Domain,omitempty"`
+	Protocol         string        `json:"Protocol,omitempty"`
+	ISP              string        `json:"ISP,omitempty"`
+	IP               string        `json:"IP,omitempty"`
+	TotalUpTraffic   float64       `json:"TotalUpTraffic"`
+	TotalDownTraffic float64       `json:"TotalDownTraffic"`
+	TrafficDataList  []TrafficData `json:"TrafficDataList,omitempty"`
+}

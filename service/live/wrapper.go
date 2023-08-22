@@ -37,8 +37,10 @@ func (p *LIVE) ListCommonTransPresetDetail(query url.Values, body string) (*List
 	return resp, statusCode, nil
 }
 
-/**
+/*
+*
 通过入参messageType区分不同服务：
+
 	设置直播推流回调 - push
 	设置直播断流回调 - push_end
 	设置录制回调  - record
@@ -53,8 +55,10 @@ func (p *LIVE) UpdateCallback(query url.Values, body string) (*UpdateCallbackRes
 	return resp, statusCode, nil
 }
 
-/**
+/*
+*
 通过入参messageType区分不同服务：
+
 	查询直播推流回调
 	查询直播断流回调
 	查询录制回调
@@ -69,8 +73,10 @@ func (p *LIVE) DescribeCallback(query url.Values, body string) (*DescribeCallbac
 	return resp, statusCode, nil
 }
 
-/**
+/*
+*
 通过入参messageType区分不同服务：
+
 	删除直播推流回调
 	删除直播断流回调
 	删除录制回调
@@ -100,7 +106,8 @@ func (p *LIVE) CreateDomain(query url.Values, body string) (*CreateDomainResp, i
 	return resp, statusCode, nil
 }
 
-/**
+/*
+*
 删除域名
 */
 func (p *LIVE) DeleteDomain(query url.Values, body string) (*DeleteDomainResp, int, error) {
@@ -112,7 +119,8 @@ func (p *LIVE) DeleteDomain(query url.Values, body string) (*DeleteDomainResp, i
 	return resp, statusCode, nil
 }
 
-/**
+/*
+*
 查询域名列表
 */
 func (p *LIVE) ListDomainDetail(query url.Values, body string) (*ListDomainDetailResp, int, error) {
@@ -124,7 +132,8 @@ func (p *LIVE) ListDomainDetail(query url.Values, body string) (*ListDomainDetai
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 查询域名信息
 */
 func (p *LIVE) DescribeDomain(query url.Values, body string) (*DescribeDomainResp, int, error) {
@@ -136,7 +145,8 @@ func (p *LIVE) DescribeDomain(query url.Values, body string) (*DescribeDomainRes
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 启用域名
 */
 func (p *LIVE) EnableDomain(query url.Values, body string) (*EnableDomainResp, int, error) {
@@ -148,7 +158,8 @@ func (p *LIVE) EnableDomain(query url.Values, body string) (*EnableDomainResp, i
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 停用域名
 */
 func (p *LIVE) DisableDomain(query url.Values, body string) (*DisableDomainResp, int, error) {
@@ -160,8 +171,10 @@ func (p *LIVE) DisableDomain(query url.Values, body string) (*DisableDomainResp,
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 通过请求参数区分这两个服务
+
 	拉流域名绑定推流域名
 	删除拉流域名绑定推流域名
 */
@@ -211,7 +224,8 @@ func (p *LIVE) ForbidStream(query url.Values, body string) (*ForbidStreamResp, i
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 恢复禁播直播流
 */
 func (p *LIVE) ResumeStream(query url.Values, body string) (*ResumeStreamResp, int, error) {
@@ -238,7 +252,8 @@ func (p *LIVE) ListCert(query url.Values, body string) (*ListCertConsoleResp, in
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 2. 上传第三方证书
 */
 func (p *LIVE) CreateCert(query url.Values, body string) (*CreateCertConsoleResp, int, error) {
@@ -250,7 +265,8 @@ func (p *LIVE) CreateCert(query url.Values, body string) (*CreateCertConsoleResp
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 4. 更新某个证书
 */
 func (p *LIVE) UpdateCert(query url.Values, body string) (*UpdateCertConsoleResp, int, error) {
@@ -262,7 +278,8 @@ func (p *LIVE) UpdateCert(query url.Values, body string) (*UpdateCertConsoleResp
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 5. 为某个domain绑定证书
 */
 func (p *LIVE) BindCert(query url.Values, body string) (*BindCertConsoleResp, int, error) {
@@ -274,7 +291,8 @@ func (p *LIVE) BindCert(query url.Values, body string) (*BindCertConsoleResp, in
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 6. 为这个domain解绑证书
 */
 func (p *LIVE) UnbindCert(query url.Values, body string) (*UnbindCertConsoleResp, int, error) {
@@ -286,7 +304,8 @@ func (p *LIVE) UnbindCert(query url.Values, body string) (*UnbindCertConsoleResp
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 7. 删除一个证书
 */
 func (p *LIVE) DeleteCert(query url.Values, body string) (*DeleteCertConsoleResp, int, error) {
@@ -313,7 +332,8 @@ func (p *LIVE) UpdateReferer(query url.Values, body string) (*UpdateRefererResp,
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 2. 关闭防盗链
 */
 func (p *LIVE) DeleteReferer(query url.Values, body string) (*DeleteRefererResp, int, error) {
@@ -325,7 +345,8 @@ func (p *LIVE) DeleteReferer(query url.Values, body string) (*DeleteRefererResp,
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 3. 查询防盗链内容
 */
 func (p *LIVE) DescribeReferer(query url.Values, body string) (*DescribeRefererResp, int, error) {
@@ -352,7 +373,8 @@ func (p *LIVE) CreateRecordPreset(query url.Values, body string) (*CreateRecordP
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 2。
 */
 func (p *LIVE) UpdateRecordPreset(query url.Values, body string) (*UpdateRecordPresetResp, int, error) {
@@ -377,7 +399,8 @@ func (p *LIVE) DeleteRecordPreset(query url.Values, body string) (*DeleteRecordP
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 6。
 */
 func (p *LIVE) ListVhostRecordPreset(query url.Values, body string) (*ListVhostRecordPresetResp, int, error) {
@@ -404,7 +427,8 @@ func (p *LIVE) CreateTranscodePreset(query url.Values, body string) (*CreateTran
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 2。
 */
 func (p *LIVE) UpdateTranscodePreset(query url.Values, body string) (*UpdateTranscodePresetResp, int, error) {
@@ -416,7 +440,8 @@ func (p *LIVE) UpdateTranscodePreset(query url.Values, body string) (*UpdateTran
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 3。
 */
 func (p *LIVE) DeleteTranscodePreset(query url.Values, body string) (*DeleteTranscodePresetResp, int, error) {
@@ -437,7 +462,8 @@ func (p *LIVE) ListVhostTransCodePreset(query url.Values, body string) (*ListVho
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 截图相关的
 */
 func (p *LIVE) CreateSnapshotPreset(query url.Values, body string) (*CreateSnapshotPresetResp, int, error) {
@@ -473,7 +499,8 @@ func (p *LIVE) ListVhostSnapshotPreset(query url.Values, body string) (*ListVhos
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 用量查询相关
 */
 func (p *LIVE) DescribePullToPushBandwidthData(query url.Values, body string) (*DescribePullToPushBandwidthDataResp, int, error) {
@@ -485,7 +512,7 @@ func (p *LIVE) DescribePullToPushBandwidthData(query url.Values, body string) (*
 	return resp, statesCode, nil
 }
 
-//CreateSnapshotAuditPreset 创建截图审核模板
+// CreateSnapshotAuditPreset 创建截图审核模板
 func (p *LIVE) CreateSnapshotAuditPreset(query url.Values, body string) (*CreateAuditPresetResponse, int, error) {
 	resp := new(CreateAuditPresetResponse)
 	statesCode, err := p.commonHandlerJson("CreateSnapshotAuditPreset", query, resp, body)
@@ -495,7 +522,7 @@ func (p *LIVE) CreateSnapshotAuditPreset(query url.Values, body string) (*Create
 	return resp, statesCode, nil
 }
 
-//UpdateSnapshotAuditPreset 更新截图审核模板
+// UpdateSnapshotAuditPreset 更新截图审核模板
 func (p *LIVE) UpdateSnapshotAuditPreset(query url.Values, body string) (*UpdateAuditPresetResponse, int, error) {
 	resp := new(UpdateAuditPresetResponse)
 	statesCode, err := p.commonHandlerJson("UpdateSnapshotAuditPreset", query, resp, body)
@@ -505,7 +532,7 @@ func (p *LIVE) UpdateSnapshotAuditPreset(query url.Values, body string) (*Update
 	return resp, statesCode, nil
 }
 
-//DeleteSnapshotAuditPreset 删除截图审核模板
+// DeleteSnapshotAuditPreset 删除截图审核模板
 func (p *LIVE) DeleteSnapshotAuditPreset(query url.Values, body string) (*DeleteAuditPresetResponse, int, error) {
 	resp := new(DeleteAuditPresetResponse)
 	statesCode, err := p.commonHandlerJson("DeleteSnapshotAuditPreset", query, resp, body)
@@ -515,7 +542,7 @@ func (p *LIVE) DeleteSnapshotAuditPreset(query url.Values, body string) (*Delete
 	return resp, statesCode, nil
 }
 
-//ListVhostSnapshotAuditPreset 查询截图审核模板
+// ListVhostSnapshotAuditPreset 查询截图审核模板
 func (p *LIVE) ListVhostSnapshotAuditPreset(query url.Values, body string) (*ListVhostAuditPresetResponse, int, error) {
 	resp := new(ListVhostAuditPresetResponse)
 	statesCode, err := p.commonHandlerJson("ListVhostSnapshotAuditPreset", query, resp, body)
@@ -525,7 +552,8 @@ func (p *LIVE) ListVhostSnapshotAuditPreset(query url.Values, body string) (*Lis
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 截图审核用量相关
 */
 func (p *LIVE) DescribeLiveAuditData(query url.Values, body string) (*DescribeLiveAuditDataResp, int, error) {
@@ -537,7 +565,8 @@ func (p *LIVE) DescribeLiveAuditData(query url.Values, body string) (*DescribeLi
 	return resp, statesCode, nil
 }
 
-/**
+/*
+*
 直播水印相关
 */
 func (p *LIVE) ListVhostWatermarkPreset(query url.Values, body string) (*ListVhostWatermarkPresetResp, int, error) {
@@ -579,6 +608,15 @@ func (p *LIVE) UpdateWatermarkPreset(query url.Values, body string) (*UpdateWate
 func (p *LIVE) DeleteWatermarkPreset(query url.Values, body string) (*DeleteWatermarkPresetResp, int, error) {
 	resp := new(DeleteWatermarkPresetResp)
 	statusCode, err := p.commonHandlerJson("DeleteWatermarkPreset", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *LIVE) DescribeLiveMetricTrafficData(query url.Values, body string) (*DescribeLiveMetricTrafficDataResp, int, error) {
+	resp := new(DescribeLiveMetricTrafficDataResp)
+	statusCode, err := p.commonHandlerJson("DescribeLiveMetricTrafficData", query, resp, body)
 	if err != nil {
 		return nil, statusCode, err
 	}

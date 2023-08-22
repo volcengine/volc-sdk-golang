@@ -826,6 +826,14 @@ var (
 				"Version": []string{ServiceVersion20230101},
 			},
 		},
+		"DescribeLiveMetricTrafficData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveMetricTrafficData"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
