@@ -167,6 +167,13 @@ type Result struct {
 	Uri        string     `json:"Uri"`
 	UriStatus  int        `json:"UriStatus"` // 图片上传结果（2000:成功，2001:失败）需要传 SuccessOids 才会返回
 	Encryption Encryption `json:"Encryption"`
+	PutError   *PutError  `json:"-"` // 上传阶段错误
+}
+
+type PutError struct {
+	ErrorCode int
+	Error     string
+	Message   string
 }
 
 type Encryption struct {
