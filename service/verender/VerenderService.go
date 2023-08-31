@@ -25,53 +25,6 @@ func packError(resp *ResponseMetadata) error {
     return fmt.Errorf(string(errDetail))
 }
 
-func toSlash(filename string) (string, error) {
-    newName := strings.ReplaceAll(filename, ":\\", "/")
-    newName = strings.ReplaceAll(newName, "\\", "/")
-
-    return newName, nil
-}
-
-func getStatInfo(fileName string) (os.FileInfo, error) {
-    stat, err := os.Stat(fileName)
-    if err != nil {
-        return nil, err
-    }
-    return stat, nil
-}
-
-func listLocalDir(dir string, depth int) ([]string, error) {
-    if depth <= 0 {
-        return nil, fmt.Errorf("dir is too deep")
-    }
-
-    var files []string
-
-    fs, err := os.ReadDir(dir)
-    if err != nil {
-        return nil, err
-    }
-
-    if len(fs) <= 0 {
-        return []string{dir}, nil
-    }
-
-    for _, f := range fs {
-        if f.IsDir() {
-            subDir, err := listLocalDir(filepath.Join(dir, f.Name()), depth-1)
-            if err != nil {
-                return nil, err
-            }
-
-            files = append(files, subDir...)
-        } else {
-            files = append(files, filepath.Join(dir, f.Name()))
-        }
-    }
-
-    return files, nil
-}
-
 func NewVerenderInstance() *Verender {
     v := Verender{}
     v.Client = base.NewClient(ServiceInfo, APIInfoList)
@@ -79,6 +32,24 @@ func NewVerenderInstance() *Verender {
     v.Client.ServiceInfo.Credentials.Region = DefaultRegion
 
     return &v
+}
+
+// SetFtransClientAddr ftransClientAddr must be set when transport by ftrans client
+func (v *Verender) SetFtransClientAddr(ftransClientAddr string) {
+    v.ftransClientAddr = ftransClientAddr
+}
+
+// SetFtransProxyAddr ftransProxyAddr must be set when transport by ftrans proxy
+func (v *Verender) SetFtransProxyAddr(ftransProxyAddr string) {
+    v.ftransProxyAddr = ftransProxyAddr
+}
+
+func (v *Verender) SetFtransServerIsp(isp string) {
+    v.ftransServerIsp = isp
+}
+
+func (v *Verender) SetFtransClientAclToken(aclToken string) {
+    v.ftransClientAclToken = aclToken
 }
 
 func (v *Verender) queryHandler(api string, query url.Values) ([]byte, int, error) {
@@ -90,11 +61,43 @@ func (v *Verender) jsonHandler(api string, query url.Values, body string) ([]byt
 }
 
 func (w *Workspace) queryHandler(api string, query url.Values) ([]byte, int, error) {
-    return w.Client.Query(api, query)
+    return w.client.Query(api, query)
 }
 
 func (w *Workspace) jsonHandler(api string, query url.Values, body string) ([]byte, int, error) {
-    return w.Client.Json(api, query, body)
+    return w.client.Json(api, query, body)
+}
+
+func listLocalDir(dir string, depth int) ([]string, error) {
+    if depth <= 0 {
+        return nil, fmt.Errorf("listLocalDir: dir is too deep")
+    }
+
+    var files []string
+
+    fs, err := os.ReadDir(dir)
+    if err != nil {
+        return nil, fmt.Errorf("listLocalDir: read dir failed [%s]", err.Error())
+    }
+
+    if len(fs) <= 0 {
+        return []string{dir}, nil
+    }
+
+    for _, f := range fs {
+        if f.IsDir() {
+            subDir, err := listLocalDir(filepath.Join(dir, f.Name()), depth-1)
+            if err != nil {
+                return nil, fmt.Errorf("ftrans:listLocalDir: list sub dir failed [%s]", err.Error())
+            }
+
+            files = append(files, subDir...)
+        } else {
+            files = append(files, filepath.Join(dir, f.Name()))
+        }
+    }
+
+    return files, nil
 }
 
 func (v *Verender) ListWorkspace(r *ListWorkspaceRequest) (*WorkspaceList, error) {
@@ -204,17 +207,34 @@ func (v *Verender) GetWorkspace(workspaceID int64) (*Workspace, error) {
     }
 
     w := resp.Workspaces[0]
-    w.Client = v.Client
+    w.client = v.Client
 
-    w.StorageAccess, err = w.getStorageAccess()
+    if w.storageAccess == nil || w.storageAccess.ExpiredNSec <= time.Now().Unix() {
+        w.storageAccess, err = w.getStorageAccess(v.ftransClientAddr, v.ftransProxyAddr, v.ftransClientAclToken,
+            v.ftransServerIsp)
+        if err != nil {
+            return nil, err
+        }
+        w.storageAccess.ExpiredNSec = time.Now().Unix() + StorageAccessExpiredNSec
+    }
+
+    cellSpecList, err := w.ListCellSpec()
     if err != nil {
         return nil, err
+    }
+
+    for _, cs := range cellSpecList {
+        if cs.SystemInfo == VerenderOsTypeWindows {
+            w.ignoreUploadCase = true
+            break
+        }
     }
 
     return w, nil
 }
 
-func (w *Workspace) getStorageAccess() (*StorageAccess, error) {
+func (w *Workspace) getStorageAccess(ftransClientAddr, ftransProxyAddr, ftransClientAclToken, isp string) (
+    *StorageAccess, error) {
     q := url.Values{}
     q.Set("WorkspaceId", fmt.Sprintf("%d", w.Id))
 
@@ -236,8 +256,10 @@ func (w *Workspace) getStorageAccess() (*StorageAccess, error) {
         return nil, packError(&resp.ResponseMetadata)
     }
 
-    cli, err := NewFtransClient(resp.Result.BucketName, DefaultIsp, resp.Result.FtransS10Server,
-        resp.Result.FtransCertName, resp.Result.FtransSecurityToken, resp.Result.FtransCert, resp.Result.FtransKey)
+    cli, err := NewFtransClient(
+        resp.Result.BucketName, resp.Result.FtransCertName, resp.Result.FtransSecurityToken,
+        resp.Result.FtransS10Server, resp.Result.FtransCert, resp.Result.FtransKey,
+        ftransClientAddr, resp.Result.FtransQuicServer, ftransProxyAddr, isp, ftransClientAclToken)
     if err != nil {
         return nil, err
     }
@@ -246,33 +268,16 @@ func (w *Workspace) getStorageAccess() (*StorageAccess, error) {
 }
 
 func (w *Workspace) UploadFile(src, des string) (*FileInfo, error) {
-    stat, err := getStatInfo(src)
-    if err != nil {
-        return nil, err
+    r := FtransFileRequest{
+        LocalFilePath:  src,
+        RemoteFilePath: des,
     }
 
-    if stat.Size() > MaxObjectSize {
-        return nil, fmt.Errorf("file %s is bigger than %d", src, MaxObjectSize)
+    if w.ignoreUploadCase {
+        r.RemoteFilePath = strings.ToLower(r.RemoteFilePath)
     }
 
-    target, err := toSlash(des)
-    if err != nil {
-        return nil, err
-    }
-
-    if target[0] == '/' {
-        target = target[1:]
-    }
-
-    r := FtransUploadFileRequest{
-        LocalFilePath:    src,
-        RemoteFilePath:   target,
-        PartSize:         FtransDefaultPartSize,
-        ConsistencyCheck: true,
-        Md5Check:         false,
-    }
-
-    info, err := w.StorageAccess.FtransClient.UploadFile(&r)
+    info, err := w.storageAccess.FtransClient.UploadFile(&r)
     if err != nil {
         return nil, err
     }
@@ -286,39 +291,33 @@ func (w *Workspace) UploadFile(src, des string) (*FileInfo, error) {
     return &fi, nil
 }
 
-func (w *Workspace) UploadFolder(srcFolder, desFolder string) ([]*FileInfo, error) {
-    if _, err := os.Stat(srcFolder); err != nil {
-        return nil, err
-    }
-
-    files, err := listLocalDir(srcFolder, DefaultListDirMaxDepth)
+func (w *Workspace) UploadFolder(srcFolder, desFolder string) error {
+    files, err := listLocalDir(srcFolder, 50)
     if err != nil {
-        return nil, err
+        return fmt.Errorf("list local folder [%s] failed [%s]", srcFolder, err.Error())
     }
 
-    var fileObjects []*FileInfo
     for _, f := range files {
-        remoteFileName := filepath.Join(desFolder, f[len(srcFolder):])
-        fi, err := w.UploadFile(f, remoteFileName)
-        if err != nil {
-            return fileObjects, fmt.Errorf("upload file %s failed %s", f, err.Error())
+        des := filepath.Join(desFolder, f[len(srcFolder):])
+        if w.ignoreUploadCase {
+            des = strings.ToLower(des)
         }
-        fileObjects = append(fileObjects, fi)
+
+        if _, err := w.UploadFile(f, des); err != nil {
+            return fmt.Errorf("upload folder [%s] failed [%s]", srcFolder, err.Error())
+        }
     }
 
-    return fileObjects, nil
+    return nil
 }
 
 func (w *Workspace) DownloadFile(src, dst string) error {
-    r := FtransDownloadFileRequest{
-        LocalFilePath:    dst,
-        RemoteFilePath:   src,
-        PartSize:         FtransDefaultPartSize,
-        ConsistencyCheck: true,
-        Md5Check:         false,
+    r := FtransFileRequest{
+        LocalFilePath:  dst,
+        RemoteFilePath: src,
     }
 
-    _, err := w.StorageAccess.FtransClient.DownloadFile(&r)
+    _, err := w.storageAccess.FtransClient.DownloadFile(&r)
     if err != nil {
         return err
     }
@@ -327,17 +326,17 @@ func (w *Workspace) DownloadFile(src, dst string) error {
 }
 
 func (w *Workspace) RemoveFile(filename string) error {
-    return w.StorageAccess.FtransClient.RemoveFile(filename)
+    return w.storageAccess.FtransClient.RemoveFile(filename)
 }
 
 // ListFile 返回指定目录下的所有子目录以及文件列表 不递归子文件夹
 func (w *Workspace) ListFile(prefix, filter, orderType, orderFiled string, pageNum, pageSize int64) (
-    []*FileInfo, []*FileInfo, error) {
+    int64, []*FileInfo, []*FileInfo, error) {
 
     var files []*FileInfo
     var subDirs []*FileInfo
 
-    cli := w.StorageAccess.FtransClient
+    cli := w.storageAccess.FtransClient
     r := FtransListFileRequest{
         Prefix:     prefix,
         FilterIn:   filter,
@@ -348,15 +347,14 @@ func (w *Workspace) ListFile(prefix, filter, orderType, orderFiled string, pageN
     }
     resp, err := cli.ListFile(&r)
     if err != nil {
-        return nil, nil, err
+        return 0, nil, nil, err
     }
 
     for _, elem := range resp.Records {
-        lm, _ := time.Parse(elem.LastModified, time.RFC3339)
         fileInfo := FileInfo{
             Key:           elem.Name,
             ContentLength: elem.Size,
-            LastModified:  lm,
+            LastModified:  time.UnixMicro(elem.MTime),
         }
         if elem.Type == "dir" {
             subDirs = append(subDirs, &fileInfo)
@@ -365,16 +363,11 @@ func (w *Workspace) ListFile(prefix, filter, orderType, orderFiled string, pageN
         }
     }
 
-    return subDirs, files, nil
+    return resp.Total, subDirs, files, nil
 }
 
 func (w *Workspace) StatFile(filename string) (*FileInfo, error) {
-    r := FtransStatFileRequest{
-        FileName: filename,
-        WithMd5:  false,
-    }
-
-    fi, err := w.StorageAccess.FtransClient.StatFile(&r)
+    fi, err := w.storageAccess.FtransClient.StatFile(filename)
 
     if err != nil {
         return nil, err
@@ -383,7 +376,7 @@ func (w *Workspace) StatFile(filename string) (*FileInfo, error) {
     fo := FileInfo{
         Key:           fi.Name,
         ContentLength: fi.Size,
-        LastModified:  time.UnixMicro(fi.MTime),
+        LastModified:  time.UnixMicro(fi.MTime).UTC(),
     }
 
     return &fo, nil

@@ -9,31 +9,26 @@ import (
 )
 
 const (
-    DefaultIsp                = "ct"
-    DefaultRegion             = "cn-north-1"
-    ServiceVersion            = "2021-12-31"
-    ServiceName               = "verender"
-    DefaultTimeoutInSecond    = 5
-    DefaultSchema             = "https"
-    DefaultHost               = "open.volcengineapi.com"
-    CodeOK                    = 0
-    HTTPStatusOK              = 200
-    MinPartSize               = uint64(5 << 20) // 5MB
-    MaxPartSize               = uint64(5 << 30) // 5GB
-    MaxParts                  = 10000
-    MaxObjectSize             = int64(MaxParts * MaxPartSize)
-    DefaultLinuxDownloadDir   = "Download"
-    DefaultWindowsDownloadDir = "C:\\Download"
-    DefaultListDirMaxDepth    = 50
+    DefaultRegion          = "cn-north-1"
+    ServiceVersion         = "2021-12-31"
+    ServiceName            = "verender"
+    DefaultTimeoutInSecond = 5
+    DefaultSchema          = "https"
+    DefaultHost            = "open.volcengineapi.com"
+    CodeOK                 = 0
+    HTTPStatusOK           = 200
+    DefaultListDirMaxDepth = 50
 
     DefaultOrderFieldWorkspace = "CreatedAt"
-    DefaultOrderFieldStatistic = "StartTime"
     DefaultOrderFieldRenderJob = "created_at"
     DefaultOrderTypeWorkspace  = "ascend"
-    DefaultOrderTypeStatistic  = "1"
     DefaultOrderTypeRenderJob  = "1"
     DefaultPageNum             = "1"
     DefaultPageSize            = "10"
+
+    StorageAccessExpiredNSec = 15 * 60 // 15minutes
+
+    VerenderOsTypeWindows = "windows"
 )
 
 var ValidOrderTypeWorkspace = map[string]string{

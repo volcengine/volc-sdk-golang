@@ -7,7 +7,11 @@ import (
 )
 
 type Verender struct {
-    Client *base.Client
+    ftransClientAddr     string `json:"ftrans_client_addr"`
+    ftransClientAclToken string `json:"ftrans_client_acl_token"`
+    ftransProxyAddr      string `json:"ftrans_proxy_addr"`
+    ftransServerIsp      string `json:"ftrans_server_isp"`
+    Client               *base.Client
 }
 
 type Error struct {
@@ -120,6 +124,7 @@ type StorageAccess struct {
     FtransCert          string        `json:"cert_pem"`
     FtransKey           string        `json:"private_key_pem"`
     FtransClient        *FtransClient `json:"-"`
+    ExpiredNSec         int64         `json:"-"`
 }
 
 type HardwareSpecification struct {
@@ -142,8 +147,9 @@ type Workspace struct {
     Status                string                `json:"Status"`
     Specification         Specification         `json:"Specification,omitempty"`
     HardwareSpecification HardwareSpecification `json:"HardwareSpecification"`
-    Client                *base.Client          `json:"-"`
-    StorageAccess         *StorageAccess        `json:"-"`
+    client                *base.Client          `json:"-"`
+    storageAccess         *StorageAccess        `json:"-"`
+    ignoreUploadCase      bool                  `json:"-"` /*上传文件时是否忽略大小写*/
 }
 
 type WorkspaceLimit struct {
