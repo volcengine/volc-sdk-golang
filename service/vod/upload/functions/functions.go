@@ -30,6 +30,7 @@ func AddOptionInfoFunc(info business.VodUploadFunctionInput) business.VodUploadF
 			RecordType:       info.RecordType,
 			Format:           info.Format,
 			ClassificationId: info.ClassificationId,
+			IsHlsIndexOnly:   info.IsHlsIndexOnly,
 		},
 	}
 }
