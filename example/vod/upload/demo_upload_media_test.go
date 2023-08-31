@@ -36,6 +36,7 @@ func TestVod_UploadMediaWithCallback(t *testing.T) {
 		Description:      "Go 语言高级编程", // 视频的描述信息
 		Format:           "MP4",       // 音视频格式
 		ClassificationId: 0,           // 分类 Id，上传时可以指定分类，非必须字段
+		IsHlsIndexOnly:   false,             //该字段传true表示视频仅关联hls文件，删除时不会删除ts文件
 	})
 	vodFunctions := []business.VodUploadFunction{snapShotFunc, getMetaFunc, startWorkFlowFunc, optionFunc}
 	fbts, _ := json.Marshal(vodFunctions)
