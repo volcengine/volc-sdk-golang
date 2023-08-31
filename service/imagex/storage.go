@@ -17,73 +17,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
-type uploadTaskSet struct {
-	ctx     context.Context
-	host    string
-	info    []StoreInfo
-	content []io.Reader
-	size    []int64
-
-	lock        sync.Mutex
-	taskChan    chan *uploadTaskElement
-	successOids []string
-}
-
-func (r *uploadTaskSet) GetResult() []Result {
-	failedOids := make(map[string]struct{})
-	for _, item := range r.info {
-		failedOids[item.StoreUri] = struct{}{}
-	}
-	ret := make([]Result, 0)
-	for _, item := range r.successOids {
-		delete(failedOids, item)
-		ret = append(ret, Result{
-			Uri:        item,
-			UriStatus:  2000,
-			Encryption: Encryption{},
-		})
-	}
-	for item, _ := range failedOids {
-		ret = append(ret, Result{
-			Uri:        item,
-			UriStatus:  2001,
-			Encryption: Encryption{},
-		})
-	}
-
-	return ret
-}
-
-type uploadTaskElement struct {
-	ctx     context.Context
-	host    string
-	info    StoreInfo
-	content io.Reader
-	size    int64
-}
-
-func (r *uploadTaskSet) init() {
-	r.lock = sync.Mutex{}
-	r.successOids = make([]string, 0)
-	r.taskChan = make(chan *uploadTaskElement, len(r.size))
-	for idx := range r.size {
-		r.taskChan <- &uploadTaskElement{
-			ctx:     r.ctx,
-			host:    r.host,
-			info:    r.info[idx],
-			content: r.content[idx],
-			size:    r.size[idx],
-		}
-	}
-	close(r.taskChan)
-}
-
-func (r *uploadTaskSet) addSuccess(oid string) {
-	r.lock.Lock()
-	r.successOids = append(r.successOids, oid)
-	r.lock.Unlock()
-}
-
 func (c *ImageX) ImageXGet(action string, query url.Values, result interface{}) error {
 	respBody, _, err := c.Client.Query(action, query)
 	if err != nil {
@@ -220,14 +153,14 @@ func (c *ImageX) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploa
 	return result, nil
 }
 
-func (c *ImageX) segmentedUpload(item *uploadTaskElement) error {
+func (c *ImageX) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) error {
 	if item.size <= MinChunkSize {
 		//goland:noinspection GoDeprecation
 		bts, err := ioutil.ReadAll(item.content)
 		if err != nil {
 			return err
 		}
-		err = c.directUpload(item.ctx, item.host, item.info, bts)
+		err = c.directUpload(item.ctx, item.host, item.idx, set, item.info, bts)
 		if err != nil {
 			return err
 		}
@@ -238,12 +171,15 @@ func (c *ImageX) segmentedUpload(item *uploadTaskElement) error {
 			content:     item.content,
 			size:        item.size,
 			isLargeFile: item.size > LargeFileSize,
+			idx:         item.idx,
+			set:         set,
 		}
 		err := arg.chunkUpload()
 		if err != nil {
 			return err
 		}
 	}
+	set.result[item.idx].success = true
 	return nil
 }
 
@@ -299,24 +235,27 @@ func (c *ImageX) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 			}()
 
 			for item := range uploadTaskSet.taskChan {
-				err := c.segmentedUpload(item)
+				uploadTaskSet.result[item.idx] = uploadTaskResult{
+					uri: item.info.StoreUri,
+				}
+				err := c.segmentedUpload(uploadTaskSet, item)
 				if err == nil {
+					uploadTaskSet.result[item.idx].success = true
 					uploadTaskSet.addSuccess(item.info.StoreUri)
+				} else {
+					uploadTaskSet.result[item.idx].errMsg = err.Error()
 				}
 			}
 		}()
 	}
 	wg.Wait()
-	if len(uploadTaskSet.successOids) == 0 {
-		return nil, fmt.Errorf("upload failed, no file uploaded")
-	}
-
-	// 3. commit
-	if params.SkipCommit {
+	if len(uploadTaskSet.successOids) == 0 || params.SkipCommit {
 		return &CommitUploadImageResult{
 			Results: uploadTaskSet.GetResult(),
 		}, nil
 	}
+
+	// 3. commit
 	commitParams := &CommitUploadImageParam{
 		ServiceId:   params.ServiceId,
 		SessionKey:  uploadAddr.SessionKey,
@@ -330,6 +269,7 @@ func (c *ImageX) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 	if err != nil {
 		return nil, err
 	}
+	uploadTaskSet.fill(commitResp)
 	return commitResp, nil
 }
 
@@ -363,27 +303,31 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	for i, image := range images {
 		imageCopy := image
 		info := uploadAddr.StoreInfos[i]
+		idx := i
+		uploadTaskSet.result[idx] = uploadTaskResult{
+			uri: info.StoreUri,
+		}
 		err = retry.Do(func() error {
 			ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
 			defer cancel()
-			return c.directUpload(ctx, host, info, imageCopy)
-		}, retry.Attempts(3))
+			return c.directUpload(ctx, host, idx, uploadTaskSet, info, imageCopy)
+		}, retry.Attempts(2))
 		if err != nil {
-			fmt.Printf("UploadImages: fail to do upload, %v", err)
+			uploadTaskSet.result[idx].errMsg = err.Error()
 		} else {
+			uploadTaskSet.result[idx].success = true
+			uploadTaskSet.result[idx].errMsg = ""
+			uploadTaskSet.result[idx].putErr = nil
 			uploadTaskSet.addSuccess(info.StoreUri)
 		}
 	}
-	if len(uploadTaskSet.successOids) == 0 {
-		return nil, fmt.Errorf("upload failed, no file uploaded")
-	}
-
-	// 3. commit
-	if params.SkipCommit {
+	if len(uploadTaskSet.successOids) == 0 || params.SkipCommit {
 		return &CommitUploadImageResult{
 			Results: uploadTaskSet.GetResult(),
 		}, nil
 	}
+
+	// 3. commit
 	commitParams := &CommitUploadImageParam{
 		ServiceId:   params.ServiceId,
 		SessionKey:  uploadAddr.SessionKey,
@@ -397,6 +341,7 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	if err != nil {
 		return nil, err
 	}
+	uploadTaskSet.fill(commitResp)
 	return commitResp, nil
 }
 

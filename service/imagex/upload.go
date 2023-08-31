@@ -10,14 +10,116 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"sync"
 
 	"github.com/avast/retry-go"
 )
 
+type uploadTaskSet struct {
+	ctx     context.Context
+	host    string
+	info    []StoreInfo
+	content []io.Reader
+	size    []int64
+
+	lock        sync.Mutex
+	taskChan    chan *uploadTaskElement
+	successOids []string
+	result      []uploadTaskResult
+}
+
+type uploadTaskResult struct {
+	uri     string
+	success bool
+	errMsg  string
+	putErr  *PutError
+}
+
+func (r *uploadTaskSet) GetResult() []Result {
+	ret := make([]Result, 0)
+	for _, item := range r.result {
+		rst := Result{
+			Uri:        item.uri,
+			UriStatus:  2000,
+			Encryption: Encryption{},
+		}
+		if item.success {
+			ret = append(ret, rst)
+			continue
+		}
+		rst.UriStatus = 2001
+		rst.PutError = item.putErr
+		if rst.PutError == nil {
+			rst.PutError = &PutError{
+				ErrorCode: -2001,
+				Error:     item.errMsg,
+				Message:   item.errMsg,
+			}
+		}
+		ret = append(ret, rst)
+	}
+	return ret
+}
+
+func (r *uploadTaskSet) fill(result *CommitUploadImageResult) {
+	m := make(map[string]int)
+	for idx, item := range r.result {
+		if !item.success {
+			m[item.uri] = idx
+		}
+	}
+	for idx := range result.Results {
+		idx, ok := m[result.Results[idx].Uri]
+		if ok {
+			result.Results[idx].PutError = r.result[idx].putErr
+			if result.Results[idx].PutError == nil {
+				result.Results[idx].PutError = &PutError{
+					ErrorCode: -2001,
+					Error:     r.result[idx].errMsg,
+					Message:   r.result[idx].errMsg,
+				}
+			}
+		}
+	}
+}
+
+type uploadTaskElement struct {
+	ctx     context.Context
+	host    string
+	idx     int
+	info    StoreInfo
+	content io.Reader
+	size    int64
+}
+
+func (r *uploadTaskSet) init() {
+	r.lock = sync.Mutex{}
+	r.successOids = make([]string, 0)
+	r.result = make([]uploadTaskResult, len(r.info))
+	r.taskChan = make(chan *uploadTaskElement, len(r.size))
+	for idx := range r.size {
+		r.taskChan <- &uploadTaskElement{
+			ctx:     r.ctx,
+			host:    r.host,
+			idx:     idx,
+			info:    r.info[idx],
+			content: r.content[idx],
+			size:    r.size[idx],
+		}
+	}
+	close(r.taskChan)
+}
+
+func (r *uploadTaskSet) addSuccess(oid string) {
+	r.lock.Lock()
+	r.successOids = append(r.successOids, oid)
+	r.lock.Unlock()
+}
+
 type uploadPartCommonResponse struct {
-	Version string          `json:"Version"`
-	Success int             `json:"success,omitempty"`
-	Error   uploadPartError `json:"error"`
+	Version string      `json:"Version"`
+	Success int         `json:"success,omitempty"`
+	Error   uploadError `json:"error"`
 }
 
 type uploadPartResponse struct {
@@ -35,10 +137,11 @@ type mergePartPayLoad struct {
 	Key  string `json:"key"`
 }
 
-type uploadPartError struct {
-	Code    int    `json:"code"`
-	Error   string `json:"error"`
-	Message string `json:"message"`
+type uploadError struct {
+	HttpCode  int    `json:"code"`
+	Error     string `json:"error"`
+	ErrorCode int    `json:"error_code"`
+	Message   string `json:"message"`
 }
 
 type initPartPayLoad struct {
@@ -46,15 +149,16 @@ type initPartPayLoad struct {
 }
 
 type directUploadResponse struct {
-	Success int                 `json:"success"`
-	Payload directUploadPayload `json:"payload,omitempty"`
+	Success int           `json:"success"`
+	Error   *uploadError  `json:"error"`
+	Payload UploadPayload `json:"payload,omitempty"`
 }
 
-type directUploadPayload struct {
+type UploadPayload struct {
 	Hash string `json:"hash"`
 }
 
-func (c *ImageX) directUpload(ctx context.Context, host string, storeInfo StoreInfo, imageBytes []byte) error {
+func (c *ImageX) directUpload(ctx context.Context, host string, idx int, set *uploadTaskSet, storeInfo StoreInfo, imageBytes []byte) error {
 	if len(imageBytes) == 0 {
 		return fmt.Errorf("file size is zero")
 	}
@@ -73,17 +177,13 @@ func (c *ImageX) directUpload(ctx context.Context, host string, storeInfo StoreI
 	if err != nil {
 		return fmt.Errorf("fail to do request to %s, %v", url, err)
 	}
+	defer rsp.Body.Close()
 
 	//goland:noinspection GoDeprecation
 	body, err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
 		return fmt.Errorf("fail to read response body %s, %v", url, err)
 	}
-
-	if rsp.StatusCode != http.StatusOK {
-		return fmt.Errorf("http status=%v, body=%s, url=%s", rsp.StatusCode, string(body), url)
-	}
-	defer rsp.Body.Close()
 
 	var putResp = directUploadResponse{
 		Success: -1,
@@ -92,6 +192,12 @@ func (c *ImageX) directUpload(ctx context.Context, host string, storeInfo StoreI
 		return fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(body), err)
 	}
 	if putResp.Success != 0 {
+		set.result[idx].errMsg = fmt.Sprintf("upload fail, %s", putResp.Error.Message)
+		set.result[idx].putErr = &PutError{
+			ErrorCode: putResp.Error.ErrorCode,
+			Error:     putResp.Error.Error,
+			Message:   putResp.Error.Message,
+		}
 		return fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(body), putResp)
 	}
 	if checkSum != putResp.Payload.Hash {
@@ -106,6 +212,8 @@ type segmentedUploadParam struct {
 	content     io.Reader
 	size        int64
 	isLargeFile bool
+	idx         int
+	set         *uploadTaskSet
 }
 
 func (c *segmentedUploadParam) chunkUpload() error {
@@ -195,6 +303,11 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 		return "", fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
 	}
 	if res.Success != 0 {
+		c.set.result[c.idx].putErr = &PutError{
+			ErrorCode: res.Error.ErrorCode,
+			Error:     res.Error.Error,
+			Message:   res.Error.Message,
+		}
 		return "", fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(b), res)
 	}
 	return res.PayLoad.UploadID, nil
@@ -232,6 +345,11 @@ func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data 
 		return "", fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
 	}
 	if res.Success != 0 {
+		c.set.result[c.idx].putErr = &PutError{
+			ErrorCode: res.Error.ErrorCode,
+			Error:     res.Error.Error,
+			Message:   res.Error.Message,
+		}
 		return "", fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(b), res)
 	}
 	return checkSum, nil
@@ -270,6 +388,11 @@ func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []strin
 		return fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
 	}
 	if res.Success != 0 {
+		c.set.result[c.idx].putErr = &PutError{
+			ErrorCode: res.Error.ErrorCode,
+			Error:     res.Error.Error,
+			Message:   res.Error.Message,
+		}
 		return fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(b), res)
 	}
 	return nil
