@@ -904,3 +904,16 @@ func (p *Visual) VideoOverResolutionQueryTask(query url.Values) (*model.VideoEdi
 	}
 	return resp, statusCode, nil
 }
+
+func (p *Visual) FaceCompare(bodyMap interface{}) (*model.FaceCompareResult, int, error) {
+	jsonStr, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceCompareResult)
+	statusCode, err := p.commonJsonHandler("FaceCompare", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}

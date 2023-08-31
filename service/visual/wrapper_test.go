@@ -12,6 +12,22 @@ const (
 	testSk = "sk"
 )
 
+func TestVisual_FaceCompare(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	reqBody := map[string]interface{}{
+		"req_key": "face_compare", // 固定值
+		//"binary_data_base64": []string{"/9xxx"},
+		"image_urls": []string{"https://1xxx", "https://2xxx"},
+	}
+
+	resp, status, err := DefaultInstance.FaceCompare(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
 func TestVisual_ConvertPhotoV2(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
