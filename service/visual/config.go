@@ -786,6 +786,17 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"FaceCompare": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"FaceCompare"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 )
 
