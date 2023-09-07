@@ -119,6 +119,7 @@ type AudioDetailV2 struct {
 	AudioText    string           `json:"AudioText"`
 	SliceId      string           `json:"SliceId"`
 	UserId       string           `json:"UserId"`
+	Decision     string           `json:"Decision"`
 	FrameResults []*FrameResultV2 `json:"FrameResults"`
 }
 
@@ -135,11 +136,12 @@ type VideoResult struct {
 }
 
 type Frame struct {
-	Url     string   `json:"Url"`
-	Offset  float64  `json:"Offset"`
-	SliceId string   `json:"SliceId"`
-	UserId  string   `json:"UserId"`
-	Results []Result `json:"Results"`
+	Url      string   `json:"Url"`
+	Offset   float64  `json:"Offset"`
+	SliceId  string   `json:"SliceId"`
+	UserId   string   `json:"UserId"`
+	Decision string   `json:"Decision"`
+	Results  []Result `json:"Results"`
 }
 
 type Result struct {
