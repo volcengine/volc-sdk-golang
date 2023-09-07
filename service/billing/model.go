@@ -286,6 +286,7 @@ type CostBillDetail struct {
 	BillID                      string
 	InstanceNo                  string
 	InstanceName                string
+	ConfigName                  string
 	Element                     string
 	Region                      string
 	Zone                        string
@@ -300,6 +301,10 @@ type CostBillDetail struct {
 	Unit                        string
 	UseDuration                 string
 	UseDurationUnit             string
+	OriginalBillAmount          string
+	PreferentialBillAmount      string
+	RoundAmount                 string
+	DiscountBillAmount          string
 	CouponAmount                string
 	PayableAmount               string
 	DailyAmortizedCouponAmount  string
@@ -361,17 +366,23 @@ type CostBillMonthly struct {
 	BillID                       string
 	InstanceNo                   string
 	InstanceName                 string
+	ConfigName                   string
 	Element                      string
 	Region                       string
 	Zone                         string
 	Factor                       string
 	ExpandField                  string
+	ExpenseTime                  string
 	Price                        string
 	PriceUnit                    string
 	Count                        string
 	Unit                         string
 	UseDuration                  string
 	UseDurationUnit              string
+	OriginalBillAmount           string
+	PreferentialBillAmount       string
+	RoundAmount                  string
+	DiscountBillAmount           string
 	CouponAmount                 string
 	PayableAmount                string
 	DailyAmortizedCouponAmount   string
