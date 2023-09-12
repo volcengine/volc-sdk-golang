@@ -6,11 +6,12 @@ require (
 	github.com/Shopify/sarama v1.30.1
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/cenkalti/backoff/v4 v4.1.2
+	github.com/demdxx/gocast v1.2.0
 	github.com/go-kit/kit v0.12.0
 	github.com/gogo/protobuf v1.3.2
 	github.com/google/go-querystring v1.1.0
 	github.com/google/uuid v1.3.0
-	github.com/minio/minio-go/v7 v7.0.34
+	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/pierrec/lz4 v2.6.1+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0

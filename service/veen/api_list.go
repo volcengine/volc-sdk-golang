@@ -169,5 +169,61 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"CreateEbsInstances": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateEbsInstances"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"ListEbsInstances": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListEbsInstances"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"GetEbsInstance": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetEbsInstance"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"ScaleEbsInstanceCapacity": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ScaleEbsInstanceCapacity"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"AttachEbs": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AttachEbs"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DetachEbs": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetachEbs"},
+				"Version": []string{ServiceVersion},
+			},
+		},
+		"DeleteEbsInstance": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteEbsInstance"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
