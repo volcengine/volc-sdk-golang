@@ -23,6 +23,7 @@ var (
 			Service: ServiceName,
 			Region:  base.RegionCnNorth1,
 		},
+		Scheme: "https",
 	}
 )
 
