@@ -262,3 +262,96 @@ func (c *ImageX) CreateImageHmExtract(param *CreateImageHmExtractParam) (*Create
 	}
 	return result, nil
 }
+
+func (c *ImageX) GetImageAuditResult(req *GetImageAuditResultReq) (*GetImageAuditResultResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
+	}
+	resp := &GetImageAuditResultResp{}
+	err = c.ImageXGet("GetImageAuditResult", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func (c *ImageX) GetImageAuditTasks(req *GetImageAuditTasksReq) (*GetImageAuditTasksResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
+	}
+	resp := &GetImageAuditTasksResp{}
+	err = c.ImageXGet("GetImageAuditTasks", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func (c *ImageX) GetAuditEntrysCount(req *GetAuditEntrysCountReq) (*GetAuditEntrysCountResp, error) {
+	query, err := MarshalToQuery(req, SkipEmptyValue())
+	if err != nil {
+		return nil, err
+	}
+	resp := &GetAuditEntrysCountResp{}
+	err = c.ImageXGet("GetAuditEntrysCount", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, err
+}
+
+func (c *ImageX) UpdateImageAuditTaskStatus(req *UpdateImageAuditTaskStatusReq) (*UpdateImageAuditTaskStatusResp, error) {
+	result := new(UpdateImageAuditTaskStatusResp)
+	err := c.ImageXPost("UpdateImageAuditTaskStatus", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *ImageX) CreateImageRetryAuditTask(req *CreateImageRetryAuditTaskReq) (*CreateImageRetryAuditTaskResp, error) {
+	result := new(CreateImageRetryAuditTaskResp)
+	err := c.ImageXPost("CreateImageRetryAuditTask", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *ImageX) DeleteImageAuditResult(req *DeleteImageAuditResultReq) (*DeleteImageAuditResultResp, error) {
+	result := new(DeleteImageAuditResultResp)
+	err := c.ImageXPost("DeleteImageAuditResult", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *ImageX) UpdateAuditImageStatus(req *UpdateAuditImageStatusReq) (*UpdateAuditImageStatusResp, error) {
+	result := new(UpdateAuditImageStatusResp)
+	err := c.ImageXPost("UpdateAuditImageStatus", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *ImageX) CreateImageAuditTask(req *CreateImageAuditTaskReq) (*CreateImageAuditTaskResp, error) {
+	result := new(CreateImageAuditTaskResp)
+	err := c.ImageXPost("CreateImageAuditTask", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (c *ImageX) UpdateImageAuditTask(req *UpdateImageAuditTaskReq) (*UpdateImageAuditTaskResp, error) {
+	result := new(UpdateImageAuditTaskResp)
+	err := c.ImageXPost("UpdateImageAuditTask", nil, req, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
