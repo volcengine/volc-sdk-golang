@@ -551,6 +551,78 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"GetImageAuditResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAuditResult"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageAuditTasks": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAuditTasks"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"UpdateImageAuditTaskStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAuditTaskStatus"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageRetryAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageRetryAuditTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetAuditEntrysCount": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAuditEntrysCount"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"DeleteImageAuditResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageAuditResult"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"UpdateAuditImageStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAuditImageStatus"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"CreateImageAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageAuditTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"UpdateImageAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAuditTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 	}
 )
 

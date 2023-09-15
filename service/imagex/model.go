@@ -729,3 +729,183 @@ type DescribeImageVolcCdnAccessLogRespLog struct {
 	LogPath   string `json:"LogPath"`
 	LogSize   int64  `json:"LogSize"`
 }
+
+// DeleteImageAuditResult
+type DeleteImageAuditResultReq struct {
+	TaskId  string `json:"TaskId"`
+	EntryId string `json:"EntryId"`
+}
+
+type DeleteImageAuditResultResp struct {
+}
+
+// CreateImageAuditTask
+type CreateImageAuditTaskReq struct {
+	Type               string   `json:"Type"`
+	ServiceID          string   `json:"ServiceId"`
+	Region             string   `json:"Region"`
+	TaskType           string   `json:"TaskType"`
+	AuditAbility       int      `json:"AuditAbility"`
+	AuditDimensions    []string `json:"AuditDimensions"`
+	FreezeStrategy     int      `json:"FreezeStrategy"`
+	ResURI             []string `json:"ResUri"`
+	CallbackDimensions []string `json:"CallbackDimensions"`
+	FreezeType         []string `json:"FreezeType"`
+	CallbackImageTypes []string `json:"CallbackImageTypes"`
+	CallbackURL        string   `json:"CallbackUrl"`
+	EnableFreeze       bool     `json:"EnableFreeze"`
+	EnableCallback     bool     `json:"EnableCallback"`
+	AuditPrefix        []string `json:"AuditPrefix"`
+	FreezeDimensions   []string `json:"FreezeDimensions"`
+	EnableAuditRange   int      `json:"EnableAuditRange"`
+	NoAuditPrefix      []string `json:"NoAuditPrefix"`
+}
+
+type CreateImageAuditTaskResp struct {
+	TaskID string `json:"TaskId"`
+}
+
+// UpdateAuditImageStatus
+type UpdateAuditImageStatusReq struct {
+	TaskID  string `json:"TaskId"`
+	EntryID string `json:"EntryId"`
+	Status  string `json:"Status"`
+}
+
+type UpdateAuditImageStatusResp struct {
+}
+
+type UpdateImageAuditTaskStatusReq struct {
+	TaskID string `json:"TaskId"`
+	Status string `json:"Status"`
+}
+
+type UpdateImageAuditTaskStatusResp struct {
+}
+
+// GetAuditEntrysCount
+type GetAuditEntrysCountReq struct {
+	TaskId string `query:"TaskId"`
+}
+
+type GetAuditEntrysCountResp struct {
+	Total               int `json:"Total"`
+	NopassCount         int `json:"NopassCount"`
+	RecheckCount        int `json:"RecheckCount"`
+	SuccessCount        int `json:"SuccessCount"`
+	FailedCount         int `json:"FailedCount"`
+	ExceptionCount      int `json:"ExceptionCount"`
+	AuditFailCount      int `json:"AuditFailCount"`
+	AuditSuccessCount   int `json:"AuditSuccessCount"`
+	AuditTotal          int `json:"AuditTotal"`
+	AuditExceptionCount int `json:"AuditExceptionCount"`
+	AuditNopassCount    int `json:"AuditNopassCount"`
+	AuditRecheckCount   int `json:"AuditRecheckCount"`
+}
+
+// GetImageAuditResult
+type GetImageAuditResultReq struct {
+	TaskId          string `query:"TaskId"`
+	AuditSuggestion string `query:"AuditSuggestion"`
+	Problem         string `query:"Problem"`
+	ImageType       string `query:"ImageType"`
+	Marker          string `query:"Marker"`
+	Limit           int    `query:"Limit"`
+	Offset          int    `query:"Offset"`
+	Type            string `query:"Type"`
+}
+
+type GetImageAuditResultResp struct {
+	Results  []GetImageAuditResultResults `json:"Results"`
+	HaveMore bool                         `json:"HaveMore"`
+}
+
+type GetImageAuditResultResults struct {
+	Marker          string   `json:"Marker"`
+	EndAt           string   `json:"EndAt"`
+	Type            string   `json:"Type"`
+	ErrMsg          string   `json:"ErrMsg"`
+	TaskID          string   `json:"TaskId"`
+	Problems        []string `json:"Problems"`
+	ImageType       string   `json:"ImageType"`
+	EntryID         string   `json:"EntryId"`
+	AuditSuggestion string   `json:"AuditSuggestion"`
+	ImageURI        string   `json:"ImageUri"`
+}
+
+// CreateImageRetryAuditTask
+type CreateImageRetryAuditTaskReq struct {
+	TaskID string `json:"TaskId"`
+	Entry  string `json:"Entry"`
+}
+
+type CreateImageRetryAuditTaskResp struct {
+	TaskId string `json:"TaskId"`
+}
+
+// UpdateImageAuditTask
+type UpdateImageAuditTaskReq struct {
+	ServiceID          string   `json:"ServiceId"`
+	AuditDimensions    []string `json:"AuditDimensions"`
+	TaskID             string   `json:"TaskId"`
+	EnableFreeze       bool     `json:"EnableFreeze"`
+	CallbackURL        string   `json:"CallbackUrl"`
+	AuditPrefix        []string `json:"AuditPrefix"`
+	NoAuditPrefix      []string `json:"NoAuditPrefix"`
+	ResURI             []string `json:"ResUri"`
+	FreezeStrategy     int      `json:"FreezeStrategy"`
+	EnableAuditRange   string   `json:"EnableAuditRange"`
+	CallbackDimensions []string `json:"CallbackDimensions"`
+	FreezeDimensions   []string `json:"FreezeDimensions"`
+	Region             string   `json:"Region"`
+	CallbackImageTypes []string `json:"CallbackImageTypes"`
+	EnableCallback     bool     `json:"EnableCallback"`
+	FreezeType         []string `json:"FreezeType"`
+}
+
+type UpdateImageAuditTaskResp struct {
+}
+
+// GetImageAuditTasks
+type GetImageAuditTasksReq struct {
+	Region       string `query:"Region"`
+	TaskType     string `query:"TaskType"`
+	AuditAbility string `query:"AuditAbility"`
+	Status       string `query:"Status"`
+	Offset       int    `query:"Offset"`
+	Limit        int    `query:"Limit"`
+	Type         string `query:"Type"`
+}
+
+type GetImageAuditTasksResp struct {
+	Tasks []GetImageAuditTasksTask `json:"Tasks"`
+	Total int                      `json:"Total"`
+}
+type GetImageAuditTasksAuditTask struct {
+	AuditAbility       int      `json:"AuditAbility"`
+	FreezeType         []string `json:"FreezeType"`
+	FreezeDimensions   []string `json:"FreezeDimensions"`
+	EnableFreeze       bool     `json:"EnableFreeze"`
+	AuditDimensions    []string `json:"AuditDimensions"`
+	CallbackDimensions []string `json:"CallbackDimensions"`
+	EnableCallback     bool     `json:"EnableCallback"`
+	FreezeStrategy     int      `json:"FreezeStrategy"`
+	CallbackURL        string   `json:"CallbackUrl"`
+	CallbackImageTypes []string `json:"CallbackImageTypes"`
+	EnableAuditRange   int      `json:"EnableAuditRange"`
+	NoAuditPrefix      []string `json:"NoAuditPrefix"`
+	AuditPrefix        []string `json:"AuditPrefix"`
+	ProcessedNumber    int      `json:"ProcessedNumber"`
+	FailedCount        int      `json:"FailedCount"`
+	SuccessCount       int      `json:"SuccessCount"`
+}
+type GetImageAuditTasksTask struct {
+	Status    string                      `json:"Status"`
+	ID        string                      `json:"Id"`
+	TaskType  string                      `json:"TaskType"`
+	AuditTask GetImageAuditTasksAuditTask `json:"AuditTask"`
+	Type      string                      `json:"Type"`
+	ResURI    []string                    `json:"ResUri"`
+	CreateAt  string                      `json:"CreateAt"`
+	ServiceID string                      `json:"ServiceId"`
+}
