@@ -1180,3 +1180,23 @@ func (c *IPaaS) ListProduct(ctx context.Context, arg *ListProductQuery) (*ListPr
 
 	return result, nil
 }
+
+func (c *IPaaS) ListPackage(ctx context.Context, arg *ListPackageBody) (*ListPackageRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListPackage", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListPackageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
