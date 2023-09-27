@@ -24,9 +24,10 @@ type AddCdnCertInfo struct {
 }
 
 type AddCdnCertificateRequest struct {
-	CertInfo    *AddCdnCertInfo `json:",omitempty"`
-	Certificate Certificate
-	Source      *string `json:",omitempty"`
+	CertInfo      *AddCdnCertInfo `json:",omitempty"`
+	Certificate   Certificate
+	CloseSigCheck *bool   `json:",omitempty"`
+	Source        *string `json:",omitempty"`
 }
 
 type AddCdnCertificateResponse struct {
@@ -35,51 +36,53 @@ type AddCdnCertificateResponse struct {
 }
 
 type AddCdnDomainRequest struct {
-	AreaAccessRule     *AreaAccessRule `json:",omitempty"`
-	AutoRotate         *AutoRotate     `json:",omitempty"`
-	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
-	BrowserCache       []BrowserCacheControlRule
-	Cache              []CacheControlRule
-	CacheHost          *CacheHost `json:",omitempty"`
-	CacheKey           []CacheKeyGenerationRule
-	Compression        *Compression     `json:",omitempty"`
-	CustomErrorPage    *CustomErrorPage `json:",omitempty"`
-	Domain             string
-	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
-	FollowRedirect     *bool               `json:",omitempty"`
-	HTTPS              *HTTPS              `json:",omitempty"`
-	HeaderLogging      *HeaderLog          `json:",omitempty"`
-	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
-	IPv6               *IPv6               `json:",omitempty"`
-	IpAccessRule       *IpAccessRule       `json:",omitempty"`
-	IpFreqLimit        *IpFreqLimit        `json:",omitempty"`
-	MassCompression    *MassCompression    `json:",omitempty"`
-	MethodDeniedRule   *MethodDeniedRule   `json:",omitempty"`
-	NegativeCache      []NegativeCache
-	Origin             []OriginRule
-	OriginAccessRule   *OriginAccessRule `json:",omitempty"`
-	OriginArg          []OriginArgRule
-	OriginHost         *string `json:",omitempty"`
-	OriginProtocol     string
-	OriginRange        *bool               `json:",omitempty"`
-	OriginRewrite      *OriginRewrite      `json:",omitempty"`
-	OriginSni          *OriginSni          `json:",omitempty"`
-	Project            *string             `json:",omitempty"`
-	Quic               *Quic               `json:",omitempty"`
-	RedirectionRewrite *RedirectionRewrite `json:",omitempty"`
-	RefererAccessRule  *RefererAccessRule  `json:",omitempty"`
-	RemoteAuth         *RemoteAuth         `json:",omitempty"`
-	RequestHeader      []RequestHeaderRule
-	ResourceTags       []ResourceTag
-	ResponseHeader     []ResponseHeaderRule
-	ServiceRegion      *string              `json:",omitempty"`
-	ServiceType        *string              `json:",omitempty"`
-	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
-	Sparrow            *Sparrow             `json:",omitempty"`
-	Timeout            *TimeoutArg          `json:",omitempty"`
-	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
-	VideoDrag          *VideoDrag           `json:",omitempty"`
-	WebpAdaptive       *WebpAdaptive        `json:",omitempty"`
+	AreaAccessRule      *AreaAccessRule `json:",omitempty"`
+	AutoRotate          *AutoRotate     `json:",omitempty"`
+	BandwidthLimit      *BandwidthLimit `json:",omitempty"`
+	BrowserCache        []BrowserCacheControlRule
+	Cache               []CacheControlRule
+	CacheHost           *CacheHost `json:",omitempty"`
+	CacheKey            []CacheKeyRule
+	Compression         *Compression         `json:",omitempty"`
+	CustomErrorPage     *CustomErrorPage     `json:",omitempty"`
+	CustomizeAccessRule *CustomizeAccessRule `json:",omitempty"`
+	Domain              string
+	DownloadSpeedLimit  *DownloadSpeedLimit `json:",omitempty"`
+	FollowRedirect      *bool               `json:",omitempty"`
+	HTTPS               *HTTPS              `json:",omitempty"`
+	HeaderLogging       *HeaderLog          `json:",omitempty"`
+	HttpForcedRedirect  *HttpForcedRedirect `json:",omitempty"`
+	IPv6                *IPv6               `json:",omitempty"`
+	IpAccessRule        *IpAccessRule       `json:",omitempty"`
+	IpFreqLimit         *IpFreqLimit        `json:",omitempty"`
+	MassCompression     *MassCompression    `json:",omitempty"`
+	MethodDeniedRule    *MethodDeniedRule   `json:",omitempty"`
+	NegativeCache       []NegativeCache
+	Origin              []OriginRule
+	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
+	OriginArg           []OriginArgRule
+	OriginHost          *string `json:",omitempty"`
+	OriginProtocol      string
+	OriginRange         *bool               `json:",omitempty"`
+	OriginRewrite       *OriginRewrite      `json:",omitempty"`
+	OriginSni           *OriginSni          `json:",omitempty"`
+	PageOptimization    *PageOptimization   `json:",omitempty"`
+	Project             *string             `json:",omitempty"`
+	Quic                *Quic               `json:",omitempty"`
+	RedirectionRewrite  *RedirectionRewrite `json:",omitempty"`
+	RefererAccessRule   *RefererAccessRule  `json:",omitempty"`
+	RemoteAuth          *RemoteAuth         `json:",omitempty"`
+	RequestHeader       []RequestHeaderRule
+	ResourceTags        []ResourceTag
+	ResponseHeader      []ResponseHeaderRule
+	ServiceRegion       *string `json:",omitempty"`
+	ServiceType         string
+	SignedUrlAuth       *SignedUrlAuth       `json:",omitempty"`
+	Sparrow             *Sparrow             `json:",omitempty"`
+	Timeout             *Timeout             `json:",omitempty"`
+	UaAccessRule        *UserAgentAccessRule `json:",omitempty"`
+	VideoDrag           *VideoDrag           `json:",omitempty"`
+	WebpAdaptive        *WebpAdaptive        `json:",omitempty"`
 }
 
 type AddCdnDomainResponse struct {
@@ -123,10 +126,15 @@ type AuthRequestHeaderRule struct {
 }
 
 type AuthResponseConfig struct {
-	CacheAction      *AuthCacheAction  `json:",omitempty"`
-	ResponseAction   *ResponseAction   `json:",omitempty"`
-	StatusCodeAction *StatusCodeAction `json:",omitempty"`
-	TimeOutAction    *TimeOutAction    `json:",omitempty"`
+	CacheAction      *AuthCacheAction   `json:",omitempty"`
+	ResponseAction   *ResponseAction    `json:",omitempty"`
+	StatusCodeAction *StatusCodeAction  `json:",omitempty"`
+	TimeOutAction    *AuthTimeoutAction `json:",omitempty"`
+}
+
+type AuthTimeoutAction struct {
+	Action *string `json:",omitempty"`
+	Time   *int64  `json:",omitempty"`
 }
 
 type AutoRotate struct {
@@ -161,7 +169,16 @@ type BatchDeployCertResponse struct {
 }
 
 type BatchDeployCertResult struct {
-	DeployResult []DomainCertDeployStatus
+	DeployResult []CertDeployStatus
+}
+
+type BlockTaskInfo struct {
+	BlockReason string
+	CreateTime  int64
+	Status      string
+	TaskID      string
+	TaskType    string
+	Url         string
 }
 
 type BrowserCacheControlRule struct {
@@ -206,9 +223,15 @@ type CacheKeyComponent struct {
 	Subobject  *string `json:",omitempty"`
 }
 
-type CacheKeyGenerationRule struct {
+type CacheKeyRule struct {
 	CacheKeyAction *CacheKeyAction `json:",omitempty"`
 	Condition      *Condition      `json:",omitempty"`
+}
+
+type CertDeployStatus struct {
+	Domain   string
+	ErrorMsg string
+	Status   string
 }
 
 type CertInfo struct {
@@ -240,6 +263,7 @@ type CompressionAction struct {
 	CompressionFormat *string `json:",omitempty"`
 	CompressionTarget *string `json:",omitempty"`
 	CompressionType   []string
+	MinFileSizeKB     *int64 `json:",omitempty"`
 }
 
 type CompressionRule struct {
@@ -259,13 +283,23 @@ type ConditionRule struct {
 	Value    *string `json:",omitempty"`
 }
 
+type ConfiguredDomain struct {
+	Domain string
+	Type   string
+}
+
 type ContentTask struct {
+	Area          string
 	CreateTime    int64
 	Delete        bool
+	Isp           string
+	Layer         string
 	Process       string
 	RefreshPrefix bool
+	Region        string
 	Remark        string
 	Status        string
+	SubArea       string
 	TaskID        string
 	TaskType      string
 	Url           string
@@ -284,6 +318,27 @@ type CustomVariableInstance struct {
 
 type CustomVariableRules struct {
 	CustomVariableInstances []CustomVariableInstance
+}
+
+type CustomizeAccessAction struct {
+	AllowEmpty    *bool `json:",omitempty"`
+	ListRules     []string
+	RequestHeader *string `json:",omitempty"`
+	RuleType      *string `json:",omitempty"`
+}
+
+type CustomizeAccessRule struct {
+	CustomizeInstances []CustomizeInstance
+	Switch             *bool `json:",omitempty"`
+}
+
+type CustomizeInstance struct {
+	CustomizeRule *CustomizeRule `json:",omitempty"`
+}
+
+type CustomizeRule struct {
+	AccessAction *CustomizeAccessAction `json:",omitempty"`
+	Condition    *Condition             `json:",omitempty"`
 }
 
 type DataPoint struct {
@@ -322,6 +377,7 @@ type DescribeAccountingDataRequest struct {
 	Domain           *string `json:",omitempty"`
 	EndTime          int64
 	Interval         *int64 `json:",omitempty"`
+	InverseDomain    *bool  `json:",omitempty"`
 	IsWildcardDomain *bool  `json:",omitempty"`
 	Metric           string
 	Project          *string `json:",omitempty"`
@@ -344,8 +400,11 @@ type DescribeAccountingSummaryRequest struct {
 	BillingRegion *string `json:",omitempty"`
 	Domain        string
 	EndTime       int64
+	FreeTime      *string `json:",omitempty"`
+	InverseDomain *bool   `json:",omitempty"`
 	Project       *string `json:",omitempty"`
 	StartTime     int64
+	TimeZone      *string `json:",omitempty"`
 }
 
 type DescribeAccountingSummaryResponse struct {
@@ -389,7 +448,7 @@ type DescribeCdnConfigResponse struct {
 }
 
 type DescribeCdnConfigResult struct {
-	DomainConfig DomainVolcanoDetail
+	DomainConfig DomainConfig
 }
 
 type DescribeCdnDataDetailRequest struct {
@@ -400,6 +459,7 @@ type DescribeCdnDataDetailRequest struct {
 	Metric    string
 	Protocol  *string `json:",omitempty"`
 	StartTime int64
+	TimeZone  *string `json:",omitempty"`
 }
 
 type DescribeCdnDataDetailResponse struct {
@@ -420,6 +480,7 @@ type DescribeCdnDataRequest struct {
 	Domain              *string `json:",omitempty"`
 	EndTime             int64
 	Interval            *string `json:",omitempty"`
+	InverseDomain       *bool   `json:",omitempty"`
 	IpVersion           *string `json:",omitempty"`
 	IsWildcardDomain    *bool   `json:",omitempty"`
 	Isp                 *string `json:",omitempty"`
@@ -428,6 +489,7 @@ type DescribeCdnDataRequest struct {
 	Protocol            *string `json:",omitempty"`
 	Region              *string `json:",omitempty"`
 	StartTime           int64
+	TimeZone            *string `json:",omitempty"`
 }
 
 type DescribeCdnDataResponse struct {
@@ -446,10 +508,12 @@ type DescribeCdnOriginDataRequest struct {
 	Domain              *string `json:",omitempty"`
 	EndTime             int64
 	Interval            *string `json:",omitempty"`
+	InverseDomain       *bool   `json:",omitempty"`
 	IsWildcardDomain    *bool   `json:",omitempty"`
 	Metric              string
 	Project             *string `json:",omitempty"`
 	StartTime           int64
+	TimeZone            *string `json:",omitempty"`
 }
 
 type DescribeCdnOriginDataResponse struct {
@@ -501,7 +565,7 @@ type DescribeCdnUpperIpResult struct {
 }
 
 type DescribeCertConfigRequest struct {
-	CertId *string `json:",omitempty"`
+	CertId string
 	Status *string `json:",omitempty"`
 }
 
@@ -511,9 +575,9 @@ type DescribeCertConfigResponse struct {
 }
 
 type DescribeCertConfigResult struct {
-	CertNotConfig       []DomainNoCertResult
-	OtherCertConfig     []DomainCertResult
-	SpecifiedCertConfig []DomainCertResult
+	CertNotConfig       []DomainStatus
+	OtherCertConfig     []DomainCertStatus
+	SpecifiedCertConfig []DomainCertStatus
 }
 
 type DescribeContentBlockTasksRequest struct {
@@ -534,19 +598,10 @@ type DescribeContentBlockTasksResponse struct {
 }
 
 type DescribeContentBlockTasksResult struct {
-	Data     []DescribeContentBlockTasksTaskInfo
+	Data     []BlockTaskInfo
 	PageNum  int64
 	PageSize int64
 	Total    int64
-}
-
-type DescribeContentBlockTasksTaskInfo struct {
-	BlockReason string
-	CreateTime  int64
-	Status      string
-	TaskID      string
-	TaskType    string
-	Url         string
 }
 
 type DescribeContentQuotaResponse struct {
@@ -555,6 +610,9 @@ type DescribeContentQuotaResponse struct {
 }
 
 type DescribeContentQuotaResult struct {
+	BlockLimit         int64
+	BlockQuota         int64
+	BlockRemain        int64
 	PreloadLimit       int64
 	PreloadQuota       int64
 	PreloadRemain      int64
@@ -567,6 +625,9 @@ type DescribeContentQuotaResult struct {
 	RefreshRegexQuota  int64
 	RefreshRegexRemain int64
 	RefreshRemain      int64
+	UnblockLimit       int64
+	UnblockQuota       int64
+	UnblockRemain      int64
 }
 
 type DescribeContentTasksRequest struct {
@@ -603,6 +664,7 @@ type DescribeDistrictIspDataRequest struct {
 	Metric    string
 	Protocol  *string `json:",omitempty"`
 	StartTime int64
+	TimeZone  *string `json:",omitempty"`
 }
 
 type DescribeDistrictIspDataResponse struct {
@@ -622,6 +684,7 @@ type DescribeEdgeNrtDataSummaryRequest struct {
 	Domain              *string `json:",omitempty"`
 	EndTime             int64
 	Interval            *string `json:",omitempty"`
+	InverseDomain       *bool   `json:",omitempty"`
 	IpVersion           *string `json:",omitempty"`
 	Isp                 *string `json:",omitempty"`
 	Metric              string
@@ -666,6 +729,7 @@ type DescribeEdgeTopNrtDataRequest struct {
 	Domain        *string `json:",omitempty"`
 	EndTime       int64
 	Interval      *string `json:",omitempty"`
+	InverseDomain *bool   `json:",omitempty"`
 	Item          string
 	Metric        string
 	Project       *string `json:",omitempty"`
@@ -711,6 +775,7 @@ type DescribeEdgeTopStatusCodeRequest struct {
 	BillingRegion *string `json:",omitempty"`
 	Domain        *string `json:",omitempty"`
 	EndTime       int64
+	InverseDomain *bool `json:",omitempty"`
 	Item          string
 	Metric        string
 	Project       *string `json:",omitempty"`
@@ -762,6 +827,7 @@ type DescribeOriginNrtDataSummaryRequest struct {
 	Domain              *string `json:",omitempty"`
 	EndTime             int64
 	Interval            *string `json:",omitempty"`
+	InverseDomain       *bool   `json:",omitempty"`
 	IpVersion           *string `json:",omitempty"`
 	Isp                 *string `json:",omitempty"`
 	Metric              string
@@ -786,6 +852,7 @@ type DescribeOriginTopNrtDataRequest struct {
 	Domain        *string `json:",omitempty"`
 	EndTime       int64
 	Interval      *string `json:",omitempty"`
+	InverseDomain *bool   `json:",omitempty"`
 	Item          string
 	Metric        string
 	Project       *string `json:",omitempty"`
@@ -809,6 +876,7 @@ type DescribeOriginTopStatusCodeRequest struct {
 	BillingRegion *string `json:",omitempty"`
 	Domain        *string `json:",omitempty"`
 	EndTime       int64
+	InverseDomain *bool `json:",omitempty"`
 	Item          string
 	Metric        string
 	Project       *string `json:",omitempty"`
@@ -827,16 +895,65 @@ type DescribeOriginTopStatusCodeResult struct {
 	TopDataDetails []TopStatusCodeDetail
 }
 
-type DomainCertDeployStatus struct {
-	Domain   string
-	ErrorMsg string
-	Status   string
-}
-
-type DomainCertResult struct {
+type DomainCertStatus struct {
 	CerStatus string
 	Domain    string
 	Status    string
+	Type      string
+}
+
+type DomainConfig struct {
+	AreaAccessRule      *AreaAccessRule `json:",omitempty"`
+	AutoRotate          *AutoRotate     `json:",omitempty"`
+	BandwidthLimit      *BandwidthLimit `json:",omitempty"`
+	BrowserCache        []BrowserCacheControlRule
+	Cache               []CacheControlRule
+	CacheHost           *CacheHost `json:",omitempty"`
+	CacheKey            []CacheKeyRule
+	Cname               *string              `json:",omitempty"`
+	Compression         *Compression         `json:",omitempty"`
+	CreateTime          *int64               `json:",omitempty"`
+	CustomErrorPage     *CustomErrorPage     `json:",omitempty"`
+	CustomizeAccessRule *CustomizeAccessRule `json:",omitempty"`
+	Domain              *string              `json:",omitempty"`
+	DownloadSpeedLimit  *DownloadSpeedLimit  `json:",omitempty"`
+	FollowRedirect      *bool                `json:",omitempty"`
+	HTTPS               *HTTPS               `json:",omitempty"`
+	HeaderLogging       *HeaderLog           `json:",omitempty"`
+	HttpForcedRedirect  *HttpForcedRedirect  `json:",omitempty"`
+	IPv6                *IPv6                `json:",omitempty"`
+	IpAccessRule        *IpAccessRule        `json:",omitempty"`
+	IpFreqLimit         *IpFreqLimit         `json:",omitempty"`
+	LockStatus          *string              `json:",omitempty"`
+	MassCompression     *MassCompression     `json:",omitempty"`
+	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
+	NegativeCache       []NegativeCache
+	Origin              []OriginRule
+	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
+	OriginArg           []OriginArgRule
+	OriginHost          *string `json:",omitempty"`
+	OriginProtocol      string
+	OriginRange         *bool               `json:",omitempty"`
+	OriginRewrite       *OriginRewrite      `json:",omitempty"`
+	OriginSni           *OriginSni          `json:",omitempty"`
+	PageOptimization    *PageOptimization   `json:",omitempty"`
+	Project             *string             `json:",omitempty"`
+	Quic                *Quic               `json:",omitempty"`
+	RedirectionRewrite  *RedirectionRewrite `json:",omitempty"`
+	RefererAccessRule   *RefererAccessRule  `json:",omitempty"`
+	RemoteAuth          *RemoteAuth         `json:",omitempty"`
+	RequestHeader       []RequestHeaderRule
+	ResponseHeader      []ResponseHeaderRule
+	ServiceRegion       *string `json:",omitempty"`
+	ServiceType         string
+	SignedUrlAuth       *SignedUrlAuth       `json:",omitempty"`
+	Sparrow             *Sparrow             `json:",omitempty"`
+	Status              *string              `json:",omitempty"`
+	Timeout             *Timeout             `json:",omitempty"`
+	UaAccessRule        *UserAgentAccessRule `json:",omitempty"`
+	UpdateTime          *int64               `json:",omitempty"`
+	VideoDrag           *VideoDrag           `json:",omitempty"`
+	WebpAdaptive        *WebpAdaptive        `json:",omitempty"`
 }
 
 type DomainLock struct {
@@ -852,66 +969,39 @@ type DomainLogDetail struct {
 	StartTime int64
 }
 
-type DomainNoCertResult struct {
-	Domain string
-	Status string
-}
-
 type DomainNrtDetailData struct {
 	DataDetails []NrtDataDetails
 	Name        string
 }
 
-type DomainVolcanoDetail struct {
-	AreaAccessRule     *AreaAccessRule `json:",omitempty"`
-	AutoRotate         *AutoRotate     `json:",omitempty"`
-	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
-	BrowserCache       []BrowserCacheControlRule
-	Cache              []CacheControlRule
-	CacheHost          *CacheHost `json:",omitempty"`
-	CacheKey           []CacheKeyGenerationRule
-	Cname              *string             `json:",omitempty"`
-	Compression        *Compression        `json:",omitempty"`
-	CreateTime         *int64              `json:",omitempty"`
-	CustomErrorPage    *CustomErrorPage    `json:",omitempty"`
-	Domain             *string             `json:",omitempty"`
-	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
-	FollowRedirect     *bool               `json:",omitempty"`
-	HTTPS              *HTTPS              `json:",omitempty"`
-	HeaderLogging      *HeaderLog          `json:",omitempty"`
-	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
-	IPv6               *IPv6               `json:",omitempty"`
-	IpAccessRule       *IpAccessRule       `json:",omitempty"`
-	IpFreqLimit        *IpFreqLimit        `json:",omitempty"`
-	LockStatus         *string             `json:",omitempty"`
-	MassCompression    *MassCompression    `json:",omitempty"`
-	MethodDeniedRule   *MethodDeniedRule   `json:",omitempty"`
-	NegativeCache      []NegativeCache
-	Origin             []OriginRule
-	OriginAccessRule   *OriginAccessRule `json:",omitempty"`
-	OriginArg          []OriginArgRule
-	OriginHost         *string `json:",omitempty"`
-	OriginProtocol     string
-	OriginRange        *bool               `json:",omitempty"`
-	OriginRewrite      *OriginRewrite      `json:",omitempty"`
-	OriginSni          *OriginSni          `json:",omitempty"`
-	Project            *string             `json:",omitempty"`
-	Quic               *Quic               `json:",omitempty"`
-	RedirectionRewrite *RedirectionRewrite `json:",omitempty"`
-	RefererAccessRule  *RefererAccessRule  `json:",omitempty"`
-	RemoteAuth         *RemoteAuth         `json:",omitempty"`
-	RequestHeader      []RequestHeaderRule
-	ResponseHeader     []ResponseHeaderRule
-	ServiceRegion      *string              `json:",omitempty"`
-	ServiceType        *string              `json:",omitempty"`
-	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
-	Sparrow            *Sparrow             `json:",omitempty"`
-	Status             *string              `json:",omitempty"`
-	Timeout            *TimeoutArg          `json:",omitempty"`
-	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
-	UpdateTime         *int64               `json:",omitempty"`
-	VideoDrag          *VideoDrag           `json:",omitempty"`
-	WebpAdaptive       *WebpAdaptive        `json:",omitempty"`
+type DomainStatus struct {
+	Domain string
+	Status string
+	Type   string
+}
+
+type DomainSummary struct {
+	BackupOrigin          []string
+	CacheShared           string
+	CacheSharedTargetHost string
+	Cname                 string
+	ConfigStatus          string
+	CreateTime            int64
+	Domain                string
+	DomainLock            DomainLock
+	HTTPS                 bool
+	IPv6                  bool
+	IsConflictDomain      bool
+	OriginProtocol        string
+	PrimaryOrigin         []string
+	Project               string
+	ResourceTags          []ResourceTag
+	ServiceRegion         string
+	ServiceType           string
+	SparrowList           []string
+	Status                string
+	UpdateTime            int64
+	Waf                   bool
 }
 
 type DownloadSpeedLimit struct {
@@ -964,7 +1054,8 @@ type ForcedRedirect struct {
 }
 
 type HTTPS struct {
-	CertInfo       *CertInfo       `json:",omitempty"`
+	CertInfo       *CertInfo `json:",omitempty"`
+	CertInfoList   []CertInfo
 	DisableHttp    *bool           `json:",omitempty"`
 	ForcedRedirect *ForcedRedirect `json:",omitempty"`
 	HTTP2          *bool           `json:",omitempty"`
@@ -1025,6 +1116,7 @@ type IpFreqLimitRule struct {
 
 type ListCdnCertInfoRequest struct {
 	CertId           *string `json:",omitempty"`
+	Configured       *bool   `json:",omitempty"`
 	ConfiguredDomain *string `json:",omitempty"`
 	DnsName          *string `json:",omitempty"`
 	PageNum          *int64  `json:",omitempty"`
@@ -1044,29 +1136,6 @@ type ListCdnCertInfoResult struct {
 	PageNum       int64
 	PageSize      int64
 	Total         int64
-}
-
-type ListCdnDomainDomain struct {
-	BackupOrigin          []string
-	CacheShared           string
-	CacheSharedTargetHost string
-	Cname                 string
-	ConfigStatus          string
-	CreateTime            int64
-	Domain                string
-	DomainLock            DomainLock
-	HTTPS                 bool
-	IPv6                  bool
-	IsConflictDomain      bool
-	OriginProtocol        string
-	PrimaryOrigin         []string
-	Project               string
-	ResourceTags          []ResourceTag
-	ServiceRegion         string
-	ServiceType           string
-	SparrowList           []string
-	Status                string
-	UpdateTime            int64
 }
 
 type ListCdnDomainsRequest struct {
@@ -1093,22 +1162,23 @@ type ListCdnDomainsResponse struct {
 }
 
 type ListCdnDomainsResult struct {
-	Data     []ListCdnDomainDomain
+	Data     []DomainSummary
 	PageNum  int64
 	PageSize int64
 	Total    int64
 }
 
 type ListCertInfo struct {
-	CertId           string
-	CertName         string
-	ConfiguredDomain string
-	Desc             string
-	DnsName          string
-	EffectiveTime    int64
-	ExpireTime       int64
-	Source           string
-	Status           string
+	CertId                 string
+	CertName               string
+	ConfiguredDomain       string
+	ConfiguredDomainDetail []ConfiguredDomain
+	Desc                   string
+	DnsName                string
+	EffectiveTime          int64
+	ExpireTime             int64
+	Source                 string
+	Status                 string
 }
 
 type ListCertInfoRequest struct {
@@ -1119,7 +1189,7 @@ type ListCertInfoRequest struct {
 	PageNum          *int64  `json:",omitempty"`
 	PageSize         *int64  `json:",omitempty"`
 	SetPagination    *bool   `json:",omitempty"`
-	Source           *string `json:",omitempty"`
+	Source           string
 	Status           *string `json:",omitempty"`
 }
 
@@ -1155,12 +1225,8 @@ type MassCompressionAction struct {
 	CompressionType  *string `json:",omitempty"`
 }
 
-type MassCompressionCondition struct {
-}
-
 type MassCompressionRule struct {
-	CompressionAction *MassCompressionAction    `json:",omitempty"`
-	Condition         *MassCompressionCondition `json:",omitempty"`
+	CompressionAction *MassCompressionAction `json:",omitempty"`
 }
 
 type MethodDeniedRule struct {
@@ -1251,6 +1317,7 @@ type OriginLine struct {
 	OriginType          *string            `json:",omitempty"`
 	PrivateBucketAccess *bool              `json:",omitempty"`
 	PrivateBucketAuth   *PrivateBucketAuth `json:",omitempty"`
+	Region              *string            `json:",omitempty"`
 	Weight              *string            `json:",omitempty"`
 }
 
@@ -1279,9 +1346,9 @@ type OriginSni struct {
 	Switch    *bool   `json:",omitempty"`
 }
 
-type OriginTimeoutAction struct {
-	HttpTimeout *int64 `json:",omitempty"`
-	TcpTimeout  *int64 `json:",omitempty"`
+type PageOptimization struct {
+	OptimizationType []string
+	Switch           *bool `json:",omitempty"`
 }
 
 type PrivateBucketAuth struct {
@@ -1429,6 +1496,7 @@ type SignedUrlAuthAction struct {
 	BackupSecretKey     *string              `json:",omitempty"`
 	CustomVariableRules *CustomVariableRules `json:",omitempty"`
 	Duration            *int64               `json:",omitempty"`
+	KeepOriginArg       *bool                `json:",omitempty"`
 	MasterSecretKey     *string              `json:",omitempty"`
 	RewriteM3u8         *bool                `json:",omitempty"`
 	SignName            *string              `json:",omitempty"`
@@ -1488,6 +1556,7 @@ type StopCdnDomainResponse struct {
 }
 
 type SubmitBlockTaskRequest struct {
+	Type *string `json:",omitempty"`
 	Urls string
 }
 
@@ -1517,7 +1586,8 @@ type SubmitPreloadTaskResponse struct {
 }
 
 type SubmitPreloadTaskResult struct {
-	TaskID string
+	CommitNum *int64 `json:",omitempty"`
+	TaskID    string
 }
 
 type SubmitRefreshTaskRequest struct {
@@ -1537,6 +1607,7 @@ type SubmitRefreshTaskResult struct {
 }
 
 type SubmitUnblockTaskRequest struct {
+	Type *string `json:",omitempty"`
 	Urls string
 }
 
@@ -1554,19 +1625,19 @@ type TargetQueryComponents struct {
 	Value  *string `json:",omitempty"`
 }
 
-type TimeOutAction struct {
-	Action *string `json:",omitempty"`
-	Time   *int64  `json:",omitempty"`
-}
-
-type TimeoutArg struct {
+type Timeout struct {
 	Switch       *bool `json:",omitempty"`
 	TimeoutRules []TimeoutRule
 }
 
+type TimeoutAction struct {
+	HttpTimeout *int64 `json:",omitempty"`
+	TcpTimeout  *int64 `json:",omitempty"`
+}
+
 type TimeoutRule struct {
-	Condition     *Condition           `json:",omitempty"`
-	TimeoutAction *OriginTimeoutAction `json:",omitempty"`
+	Condition     *Condition     `json:",omitempty"`
+	TimeoutAction *TimeoutAction `json:",omitempty"`
 }
 
 type TimestampValue struct {
@@ -1592,6 +1663,10 @@ type TopInstanceDetail struct {
 type TopNrtDataDetail struct {
 	Bandwidth                float64
 	BandwidthPeakTime        int64
+	BsBandwidth              float64
+	BsBandwidthPeakTime      int64
+	BsFlux                   float64
+	BsFluxRatio              float64
 	DynamicRequest           int64
 	DynamicRequestRatio      float64
 	Flux                     float64
@@ -1631,49 +1706,51 @@ type TosAuthInformation struct {
 }
 
 type UpdateCdnConfigRequest struct {
-	AreaAccessRule     *AreaAccessRule `json:",omitempty"`
-	AutoRotate         *AutoRotate     `json:",omitempty"`
-	BandwidthLimit     *BandwidthLimit `json:",omitempty"`
-	BrowserCache       []BrowserCacheControlRule
-	Cache              []CacheControlRule
-	CacheHost          *CacheHost `json:",omitempty"`
-	CacheKey           []CacheKeyGenerationRule
-	Compression        *Compression        `json:",omitempty"`
-	CustomErrorPage    *CustomErrorPage    `json:",omitempty"`
-	Domain             *string             `json:",omitempty"`
-	DownloadSpeedLimit *DownloadSpeedLimit `json:",omitempty"`
-	FollowRedirect     *bool               `json:",omitempty"`
-	HTTPS              *HTTPS              `json:",omitempty"`
-	HeaderLogging      *HeaderLog          `json:",omitempty"`
-	HttpForcedRedirect *HttpForcedRedirect `json:",omitempty"`
-	IPv6               *IPv6               `json:",omitempty"`
-	IpAccessRule       *IpAccessRule       `json:",omitempty"`
-	IpFreqLimit        *IpFreqLimit        `json:",omitempty"`
-	MassCompression    *MassCompression    `json:",omitempty"`
-	MethodDeniedRule   *MethodDeniedRule   `json:",omitempty"`
-	NegativeCache      []NegativeCache
-	Origin             []OriginRule
-	OriginAccessRule   *OriginAccessRule `json:",omitempty"`
-	OriginArg          []OriginArgRule
-	OriginHost         *string             `json:",omitempty"`
-	OriginProtocol     *string             `json:",omitempty"`
-	OriginRange        *bool               `json:",omitempty"`
-	OriginRewrite      *OriginRewrite      `json:",omitempty"`
-	OriginSni          *OriginSni          `json:",omitempty"`
-	Quic               *Quic               `json:",omitempty"`
-	RedirectionRewrite *RedirectionRewrite `json:",omitempty"`
-	RefererAccessRule  *RefererAccessRule  `json:",omitempty"`
-	RemoteAuth         *RemoteAuth         `json:",omitempty"`
-	RequestHeader      []RequestHeaderRule
-	ResponseHeader     []ResponseHeaderRule
-	ServiceRegion      *string              `json:",omitempty"`
-	ServiceType        *string              `json:",omitempty"`
-	SignedUrlAuth      *SignedUrlAuth       `json:",omitempty"`
-	Sparrow            *Sparrow             `json:",omitempty"`
-	Timeout            *TimeoutArg          `json:",omitempty"`
-	UaAccessRule       *UserAgentAccessRule `json:",omitempty"`
-	VideoDrag          *VideoDrag           `json:",omitempty"`
-	WebpAdaptive       *WebpAdaptive        `json:",omitempty"`
+	AreaAccessRule      *AreaAccessRule `json:",omitempty"`
+	AutoRotate          *AutoRotate     `json:",omitempty"`
+	BandwidthLimit      *BandwidthLimit `json:",omitempty"`
+	BrowserCache        []BrowserCacheControlRule
+	Cache               []CacheControlRule
+	CacheHost           *CacheHost `json:",omitempty"`
+	CacheKey            []CacheKeyRule
+	Compression         *Compression         `json:",omitempty"`
+	CustomErrorPage     *CustomErrorPage     `json:",omitempty"`
+	CustomizeAccessRule *CustomizeAccessRule `json:",omitempty"`
+	Domain              *string              `json:",omitempty"`
+	DownloadSpeedLimit  *DownloadSpeedLimit  `json:",omitempty"`
+	FollowRedirect      *bool                `json:",omitempty"`
+	HTTPS               *HTTPS               `json:",omitempty"`
+	HeaderLogging       *HeaderLog           `json:",omitempty"`
+	HttpForcedRedirect  *HttpForcedRedirect  `json:",omitempty"`
+	IPv6                *IPv6                `json:",omitempty"`
+	IpAccessRule        *IpAccessRule        `json:",omitempty"`
+	IpFreqLimit         *IpFreqLimit         `json:",omitempty"`
+	MassCompression     *MassCompression     `json:",omitempty"`
+	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
+	NegativeCache       []NegativeCache
+	Origin              []OriginRule
+	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
+	OriginArg           []OriginArgRule
+	OriginHost          *string             `json:",omitempty"`
+	OriginProtocol      *string             `json:",omitempty"`
+	OriginRange         *bool               `json:",omitempty"`
+	OriginRewrite       *OriginRewrite      `json:",omitempty"`
+	OriginSni           *OriginSni          `json:",omitempty"`
+	PageOptimization    *PageOptimization   `json:",omitempty"`
+	Quic                *Quic               `json:",omitempty"`
+	RedirectionRewrite  *RedirectionRewrite `json:",omitempty"`
+	RefererAccessRule   *RefererAccessRule  `json:",omitempty"`
+	RemoteAuth          *RemoteAuth         `json:",omitempty"`
+	RequestHeader       []RequestHeaderRule
+	ResponseHeader      []ResponseHeaderRule
+	ServiceRegion       *string              `json:",omitempty"`
+	ServiceType         *string              `json:",omitempty"`
+	SignedUrlAuth       *SignedUrlAuth       `json:",omitempty"`
+	Sparrow             *Sparrow             `json:",omitempty"`
+	Timeout             *Timeout             `json:",omitempty"`
+	UaAccessRule        *UserAgentAccessRule `json:",omitempty"`
+	VideoDrag           *VideoDrag           `json:",omitempty"`
+	WebpAdaptive        *WebpAdaptive        `json:",omitempty"`
 }
 
 type UpdateCdnConfigResponse struct {
