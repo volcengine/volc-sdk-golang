@@ -9,13 +9,14 @@ import (
 )
 
 const (
-	Ak = "" // write your access key
-	Sk = "" // write your secret key
+	Ak = "AK" // write your access key
+	Sk = "SK" // write your secret key
 )
 
 func init() {
 	DefaultInstance.Client.SetAccessKey(Ak)
 	DefaultInstance.Client.SetSecretKey(Sk)
+	DefaultInstance.SetTimeout(time.Second * 2)
 }
 
 func RiskDetection(appId int64, service string, parameters string) {

@@ -141,6 +141,7 @@ type Frame struct {
 	SliceId  string   `json:"SliceId"`
 	UserId   string   `json:"UserId"`
 	Decision string   `json:"Decision"`
+	Text     string   `json:"Text"`
 	Results  []Result `json:"Results"`
 }
 
