@@ -323,7 +323,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DistributeFileToInstances"},
-				"Version": []string{"2023-08-01"},
+				"Version": []string{"2020-10-25"},
 			},
 		},
 		"GetFileDistributionJobDetail": {
@@ -331,7 +331,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetFileDistributionJobDetail"},
-				"Version": []string{"2023-08-01"},
+				"Version": []string{"2020-10-25"},
 			},
 		},
 		"GetFileDistributionResult": {
@@ -444,6 +444,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"ListProduct"},
 				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListPackage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListPackage"},
+				"Version": []string{"2023-08-01"},
 			},
 		},
 	}
