@@ -82,3 +82,34 @@ func (s *CDN) SetMethod(api, method string) bool {
 	}
 	return false
 }
+
+func (s *CDN) SetAPIRetrySetting(apis []string, retryTime int, interval time.Duration) bool {
+	if len(apis) <= 0 {
+		return false
+	}
+	_retryTime, _interval := uint64(retryTime), interval
+	for _, api := range apis {
+		if _, ok := s.Client.ApiInfoList[api]; ok {
+			s.Client.ApiInfoList[api].Retry = base.RetrySettings{
+				AutoRetry:     true,
+				RetryTimes:    &_retryTime,
+				RetryInterval: &_interval,
+			}
+		} else {
+			return false
+		}
+	}
+	s.Client.SetRetrySettings(&base.RetrySettings{AutoRetry: true})
+	return true
+}
+
+func (s *CDN) SetNewAPI(info base.ApiInfo) {
+	if len(info.Query.Get("Action")) <= 0 {
+		return
+	}
+	action := info.Query.Get("Action")
+	if _, ok := s.Client.ApiInfoList[action]; ok {
+		return
+	}
+	s.Client.ApiInfoList[action] = &info
+}
