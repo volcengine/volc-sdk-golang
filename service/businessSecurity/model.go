@@ -146,10 +146,10 @@ type Frame struct {
 }
 
 type Result struct {
-	Decision string   `json:"Decision"`
-	Label    string   `json:"Label"`
-	SubLabel string   `json:"SubLabel"`
-	Detail   []string `json:"Detail"`
+	Decision string      `json:"Decision"`
+	Label    string      `json:"Label"`
+	SubLabel string      `json:"SubLabel"`
+	Detail   interface{} `json:"Detail"`
 }
 
 type ImageResultResponse struct {
