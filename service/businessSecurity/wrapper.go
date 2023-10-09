@@ -160,6 +160,7 @@ func (p *BusinessSecurity) AsyncVideoRisk(req *AsyncRiskDetectionRequest) (*Asyn
 
 // Deprecated: use ElementVerifyV2 instead
 // 已废弃，请使用ElementVerifyV2
+// Deprecated
 func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVerifyResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -332,7 +333,8 @@ func (p *BusinessSecurity) GetImageResultV2(req *VideoResultRequest) (*ImageResu
 }
 
 // image risk deteciton
-// 内容安全图片实时接口
+// 已废弃-使用ImageContentRiskV2
+// Deprecated
 func (p *BusinessSecurity) ImageContentRisk(req *RiskDetectionRequest) (*ImageResultResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -472,7 +474,8 @@ func (p *BusinessSecurity) ElementVerifyEncrypted(encryptedType string, secretKe
 }
 
 // text risk detection
-// 内容安全文本实时接口
+// 已废弃-使用TextSliceRisk
+// Deprecated
 func (p *BusinessSecurity) TextRisk(req *RiskDetectionRequest) (*TextResultResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
@@ -537,6 +540,7 @@ func (p *BusinessSecurity) TextSliceRisk(req *RiskDetectionRequest) (*TextSliceR
 
 // Deprecated: use MobileStatusV2 instead
 // 已废弃，请使用MobileStatusV2
+// Deprecated
 func (p *BusinessSecurity) MobileStatus(req *MobileStatusRequest) (*MobileStatusResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
