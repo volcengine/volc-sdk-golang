@@ -210,6 +210,11 @@ func (c *Client) ListPrivateZones(ctx context.Context, data *ListPrivateZonesReq
 	if v := data.VpcID; v != nil {
 		q.Add("VpcID", *v)
 	}
+	if v := data.ZIDs; len(v) > 0 {
+		for _, vv := range v {
+			q.Add("ZIDs", vv)
+		}
+	}
 	req.URL.RawQuery = q.Encode()
 
 	resp, err := c.do(ctx, req)
@@ -457,6 +462,32 @@ func (c *Client) ListRecordSets(ctx context.Context, data *ListRecordSetsRequest
 	return &payload, nil
 }
 
+func (c *Client) QueryRecord(ctx context.Context, data *QueryRecordRequest) (*QueryRecordResponse, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=QueryRecord", nil)
+	if err != nil {
+		return nil, err
+	}
+
+	q := req.URL.Query()
+	if v := data.RecordID; v != nil {
+		q.Add("RecordID", *v)
+	}
+	req.URL.RawQuery = q.Encode()
+
+	resp, err := c.do(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var payload QueryRecordResponse
+	d := json.NewDecoder(resp.Body)
+	if err := d.Decode(&payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
+}
+
 func (c *Client) ListRecords(ctx context.Context, data *ListRecordsRequest) (*ListRecordsResponse, error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, "/?Action=ListRecords", nil)
 	if err != nil {
@@ -496,6 +527,14 @@ func (c *Client) ListRecords(ctx context.Context, data *ListRecordsRequest) (*Li
 	}
 	if v := data.SearchOrder; v != nil {
 		q.Add("SearchOrder", *v)
+	}
+	if v := data.Tag; v != nil {
+		q.Add("Tag", *v)
+	}
+	if v := data.RecordIDs; len(v) > 0 {
+		for _, vv := range v {
+			q.Add("RecordIDs", vv)
+		}
 	}
 	req.URL.RawQuery = q.Encode()
 

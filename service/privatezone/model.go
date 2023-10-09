@@ -58,19 +58,22 @@ type ListBindVPCResponse struct {
 }
 
 type ListPrivateZonesRequest struct {
-	KeyWord       *string `form:"-" json:"-"`
-	LineMode      *string `form:"-" json:"-"`
-	PageNumber    *string `form:"-" json:"-"`
-	PageSize      *string `form:"-" json:"-"`
-	RecursionMode *string `form:"-" json:"-"`
-	Region        *string `form:"-" json:"-"`
-	SearchMode    *string `form:"-" json:"-"`
-	VpcID         *string `form:"-" json:"-"`
+	KeyWord       *string  `form:"-" json:"-"`
+	LineMode      *string  `form:"-" json:"-"`
+	PageNumber    *string  `form:"-" json:"-"`
+	PageSize      *string  `form:"-" json:"-"`
+	RecursionMode *string  `form:"-" json:"-"`
+	Region        *string  `form:"-" json:"-"`
+	SearchMode    *string  `form:"-" json:"-"`
+	VpcID         *string  `form:"-" json:"-"`
+	ZIDs          []string `form:"-" json:"-"`
 }
 
 type ListPrivateZonesResponse struct {
-	Total *int64                   `form:"Total" json:"Total,omitempty"`
-	Zones []TopPrivateZoneResponse `form:"Zones" json:"Zones,omitempty"`
+	PageNumber *int64                   `form:"PageNumber" json:"PageNumber"`
+	PageSize   *int64                   `form:"PageSize" json:"PageSize"`
+	Total      *int64                   `form:"Total" json:"Total,omitempty"`
+	Zones      []TopPrivateZoneResponse `form:"Zones" json:"Zones,omitempty"`
 }
 
 type QueryPrivateZoneRequest struct {
@@ -174,25 +177,47 @@ type ListRecordSetsResponse struct {
 	TotalCount *int64             `form:"TotalCount" json:"TotalCount,omitempty"`
 }
 
+type QueryRecordRequest struct {
+	RecordID *string `form:"-" json:"-"`
+}
+
+type QueryRecordResponse struct {
+	CreatedAt    *string `form:"CreatedAt" json:"CreatedAt,omitempty"`
+	Enable       *bool   `form:"Enable" json:"Enable"`
+	Host         *string `form:"Host" json:"Host,omitempty"`
+	LastOperator *string `form:"LastOperator" json:"LastOperator,omitempty"`
+	Line         *string `form:"Line" json:"Line,omitempty"`
+	RecordID     *string `form:"RecordID" json:"RecordID,omitempty"`
+	Remark       *string `form:"Remark" json:"Remark,omitempty"`
+	TTL          *int64  `form:"TTL" json:"TTL,omitempty"`
+	Type         *string `form:"Type" json:"Type,omitempty"`
+	UpdatedAt    *string `form:"UpdatedAt" json:"UpdatedAt,omitempty"`
+	Value        *string `form:"Value" json:"Value,omitempty"`
+	Weight       *int64  `form:"Weight" json:"Weight,omitempty"`
+	ZID          *int64  `form:"ZID" json:"ZID,omitempty"`
+}
+
 type ListRecordsRequest struct {
-	Host         *string `form:"-" json:"-"`
-	LastOperator *string `form:"-" json:"-"`
-	Line         *string `form:"-" json:"-"`
-	Name         *string `form:"-" json:"-"`
-	PageNumber   *string `form:"-" json:"-"`
-	PageSize     *string `form:"-" json:"-"`
-	SearchMode   *string `form:"-" json:"-"`
-	SearchOrder  *string `form:"-" json:"-"`
-	Type         *string `form:"-" json:"-"`
-	Value        *string `form:"-" json:"-"`
-	ZID          *string `form:"-" json:"-"`
+	Host         *string  `form:"-" json:"-"`
+	LastOperator *string  `form:"-" json:"-"`
+	Line         *string  `form:"-" json:"-"`
+	Name         *string  `form:"-" json:"-"`
+	PageNumber   *string  `form:"-" json:"-"`
+	PageSize     *string  `form:"-" json:"-"`
+	SearchMode   *string  `form:"-" json:"-"`
+	SearchOrder  *string  `form:"-" json:"-"`
+	Tag          *string  `form:"-" json:"-"`
+	Type         *string  `form:"-" json:"-"`
+	Value        *string  `form:"-" json:"-"`
+	ZID          *string  `form:"-" json:"-"`
+	RecordIDs    []string `form:"-" json:"-"`
 }
 
 type ListRecordsResponse struct {
 	Records    []Record `form:"Records" json:"Records,omitempty"`
-	PageNumber *int64   `form:"page_number" json:"page_number,omitempty"`
-	PageSize   *int64   `form:"page_size" json:"page_size,omitempty"`
-	Total      *int64   `form:"total" json:"total,omitempty"`
+	PageNumber *int64   `form:"PageNumber" json:"page_number,omitempty"`
+	PageSize   *int64   `form:"PageSize" json:"page_size,omitempty"`
+	Total      *int64   `form:"Total" json:"total,omitempty"`
 }
 
 type UpdateRecordRequest struct {
@@ -334,6 +359,7 @@ type TopRecordSetResp struct {
 
 type Record struct {
 	CreatedAt    *string `form:"CreatedAt" json:"CreatedAt,omitempty"`
+	Enable       *bool   `form:"Enable" json:"Enable,omitempty"`
 	Host         *string `form:"Host" json:"Host,omitempty"`
 	LastOperator *string `form:"LastOperator" json:"LastOperator,omitempty"`
 	Line         *string `form:"Line" json:"Line,omitempty"`
