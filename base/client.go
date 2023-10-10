@@ -63,9 +63,10 @@ func init() {
 
 // Client
 type Client struct {
-	Client      *http.Client
-	ServiceInfo *ServiceInfo
-	ApiInfoList map[string]*ApiInfo
+	Client        *http.Client
+	ServiceInfo   *ServiceInfo
+	ApiInfoList   map[string]*ApiInfo
+	CustomTimeout time.Duration
 }
 
 // NewClient
@@ -186,6 +187,12 @@ func (client *Client) SetCredential(c Credentials) {
 func (client *Client) SetTimeout(timeout time.Duration) {
 	if timeout > 0 {
 		client.ServiceInfo.Timeout = timeout
+	}
+}
+
+func (client *Client) SetCustomTimeout(timeout time.Duration) {
+	if timeout > 0 {
+		client.CustomTimeout = timeout
 	}
 }
 
@@ -337,7 +344,7 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 	if apiInfo == nil {
 		return []byte(""), 500, errors.New("The related api does not exist")
 	}
-	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout)
+	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout, client.CustomTimeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
 	query = mergeQuery(query, apiInfo.Query)
 	retrySettings := getRetrySetting(&client.ServiceInfo.Retry, &apiInfo.Retry)
