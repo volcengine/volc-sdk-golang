@@ -25,3 +25,21 @@ func TestDescribeLiveMetricTrafficData(t *testing.T) {
 	res, _ := json.Marshal(resp)
 	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
 }
+
+func TestDescribeLiveMetricBandwidthData(t *testing.T) {
+	live.DefaultInstance.Client.SetAccessKey("your ak")
+	live.DefaultInstance.Client.SetSecretKey("your sk")
+	bodyMap := live.DescribeLiveMetricBandwidthDataReq{
+		DomainList:  []string{"example.com"},
+		StartTime:   time.Now().Add(-time.Hour).Format(time.RFC3339),
+		EndTime:     time.Now().Format(time.RFC3339),
+		Aggregation: 300,
+	}
+	body, _ := json.Marshal(bodyMap)
+	resp, statusCode, err := live.DefaultInstance.DescribeLiveMetricBandwidthData(nil, string(body))
+	if err != nil {
+		t.Logf("error occur %v", err)
+	}
+	res, _ := json.Marshal(resp)
+	t.Logf("statusCode = %+v  msgInfo = %+v \n", statusCode, string(res))
+}

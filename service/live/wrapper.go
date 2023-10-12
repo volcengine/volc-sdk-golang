@@ -622,3 +622,12 @@ func (p *LIVE) DescribeLiveMetricTrafficData(query url.Values, body string) (*De
 	}
 	return resp, statusCode, nil
 }
+
+func (p *LIVE) DescribeLiveMetricBandwidthData(query url.Values, body string) (*DescribeLiveMetricBandwidthDataResp, int, error) {
+	resp := new(DescribeLiveMetricBandwidthDataResp)
+	statusCode, err := p.commonHandlerJson("DescribeLiveMetricBandwidthData", query, resp, body)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
