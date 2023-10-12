@@ -32,6 +32,7 @@ const (
 	ChatRoleOfUser      = "user"
 	ChatRoleOfAssistant = "assistant"
 	ChatRoleOfSystem    = "system"
+	ChatRoleOfFunction  = "function"
 )
 
 // MaaS ... use base client
