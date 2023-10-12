@@ -649,3 +649,60 @@ type TrafficDetailData struct {
 	TotalDownTraffic float64       `json:"TotalDownTraffic"`
 	TrafficDataList  []TrafficData `json:"TrafficDataList,omitempty"`
 }
+
+type DescribeLiveMetricBandwidthDataReq struct {
+	DomainList     []string `json:"DomainList,omitempty"`
+	Domain         string   `json:"Domain,omitempty"`
+	App            string   `json:"App,omitempty"`
+	Stream         string   `json:"Stream,omitempty"`
+	ProtocolList   []string `json:"ProtocolList,omitempty"`
+	ISPList        []string `json:"ISPList,omitempty"`
+	RegionList     []Region `json:"RegionList,omitempty"`
+	UserRegionList []Region `json:"UserRegionList,omitempty"`
+	IPList         []string `json:"IPList,omitempty"`
+	StartTime      string   `json:"StartTime"`
+	EndTime        string   `json:"EndTime"`
+	Aggregation    int      `json:"Aggregation"`
+	ShowDetail     bool     `json:"ShowDetail,omitempty"`
+}
+
+type DescribeLiveMetricBandwidthDataResp struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           DescribeLiveMetricBandwidthDataResult
+}
+
+type DescribeLiveMetricBandwidthDataResult struct {
+	DomainList              []string                    `json:"DomainList,omitempty"`
+	Domain                  string                      `json:"Domain,omitempty"`
+	App                     string                      `json:"App,omitempty"`
+	Stream                  string                      `json:"Stream,omitempty"`
+	ProtocolList            []string                    `json:"ProtocolList,omitempty"`
+	ISPList                 []string                    `json:"ISPList,omitempty"`
+	RegionList              []Region                    `json:"RegionList,omitempty"`
+	UserRegionList          []Region                    `json:"UserRegionList,omitempty"`
+	IPList                  []string                    `json:"IPList,omitempty"`
+	StartTime               string                      `json:"StartTime,omitempty"`
+	EndTime                 string                      `json:"EndTime,omitempty"`
+	Aggregation             int                         `json:"Aggregation"`
+	ShowDetail              bool                        `json:"ShowDetail,omitempty"`
+	PeakUpBandwidth         float64                     `json:"PeakUpBandwidth"`
+	PeakDownBandwidth       float64                     `json:"PeakDownBandwidth"`
+	BandwidthDataList       []MetricBandwidthData       `json:"BandwidthDataList,omitempty"`
+	BandwidthDetailDataList []MetricBandwidthDetailData `json:"BandwidthDetailDataList,omitempty"`
+}
+
+type MetricBandwidthData struct {
+	TimeStamp     string  `json:"TimeStamp"`
+	UpBandwidth   float64 `json:"UpBandwidth"`
+	DownBandwidth float64 `json:"DownBandwidth"`
+}
+
+type MetricBandwidthDetailData struct {
+	Domain            string                `json:"Domain,omitempty"`
+	Protocol          string                `json:"Protocol,omitempty"`
+	ISP               string                `json:"ISP,omitempty"`
+	IP                string                `json:"IP,omitempty"`
+	PeakUpBandwidth   float64               `json:"PeakUpBandwidth"`
+	PeakDownBandwidth float64               `json:"PeakDownBandwidth"`
+	BandwidthDataList []MetricBandwidthData `json:"BandwidthDataList,omitempty"`
+}

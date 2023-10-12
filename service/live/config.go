@@ -834,6 +834,14 @@ var (
 				"Version": []string{ServiceVersion20200801},
 			},
 		},
+		"DescribeLiveMetricBandwidthData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveMetricBandwidthData"},
+				"Version": []string{ServiceVersion20200801},
+			},
+		},
 	}
 )
 
