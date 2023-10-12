@@ -191,3 +191,70 @@ func Test_DescribeVodPlayFileLogByDomain(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_DescribeVodSpaceStorageData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeVodSpaceStorageDataRequest{
+		SpaceList:   "your SpaceList",
+		StartTime:   "your StartTime",
+		EndTime:     "your EndTime",
+		Aggregation: 0,
+		Type:        "your Type",
+	}
+
+	resp, status, err := instance.DescribeVodSpaceStorageData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodDomainTrafficData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeVodDomainTrafficDataRequest{
+		DomainList:        "your DomainList",
+		DomainInSpaceList: "your DomainInSpaceList",
+		StartTime:         "your StartTime",
+		EndTime:           "your EndTime",
+		Aggregation:       0,
+		TrafficType:       "your TrafficType",
+		Area:              "your Area",
+	}
+
+	resp, status, err := instance.DescribeVodDomainTrafficData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodDomainBandwidthData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeVodDomainBandwidthDataRequest{
+		DomainList:        "your DomainList",
+		DomainInSpaceList: "your DomainInSpaceList",
+		StartTime:         "your StartTime",
+		EndTime:           "your EndTime",
+		Aggregation:       0,
+		BandwidthType:     "your BandwidthType",
+		Area:              "your Area",
+	}
+
+	resp, status, err := instance.DescribeVodDomainBandwidthData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

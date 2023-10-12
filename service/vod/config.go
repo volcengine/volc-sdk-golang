@@ -575,7 +575,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceStorageData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 
@@ -587,7 +587,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListDomain"},
-				"Version": []string{"2021-01-01"},
+				"Version": []string{"2023-01-01"},
 			},
 		},
 		"CreateCdnRefreshTask": {
@@ -643,7 +643,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodDomainBandwidthData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"ListCdnUsageData": {
@@ -683,7 +683,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodDomainTrafficData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"SubmitBlockTasks": {
@@ -734,6 +734,14 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
+		"AddOrUpdateCertificate20230701": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddOrUpdateCertificate"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************
@@ -761,7 +769,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceTranscodeData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSpaceAIStatisData": {
@@ -769,7 +777,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceAIStatisData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSpaceSubtitleStatisData": {
@@ -777,7 +785,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceSubtitleStatisData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSpaceDetectStatisData": {
@@ -785,7 +793,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceDetectStatisData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSnapshotData": {
@@ -793,7 +801,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSnapshotData"},
-				"Version": []string{"2020-08-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSpaceWorkflowDetailData": {
@@ -801,7 +809,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceWorkflowDetailData"},
-				"Version": []string{"2022-12-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodSpaceEditDetailData": {
@@ -809,7 +817,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodSpaceEditDetailData"},
-				"Version": []string{"2022-12-01"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"DescribeVodPlayFileLogByDomain": {

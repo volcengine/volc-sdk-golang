@@ -25,6 +25,7 @@ func Test_ListDomain(t *testing.T) {
 		DomainType:        "your DomainType",
 		SourceStationType: 0,
 		Offset:            0,
+		Limit:             0,
 	}
 
 	resp, status, err := instance.ListDomain(query)
@@ -156,28 +157,6 @@ func Test_ListCdnTopAccess(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
-func Test_DescribeVodDomainBandwidthData(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodDescribeVodDomainBandwidthDataRequest{
-		DomainList:    "your DomainList",
-		StartTime:     "your StartTime",
-		EndTime:       "your EndTime",
-		Aggregation:   0,
-		BandwidthType: "your BandwidthType",
-		Area:          "your Area",
-	}
-
-	resp, status, err := instance.DescribeVodDomainBandwidthData(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
-
 func Test_ListCdnUsageData(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
@@ -264,27 +243,6 @@ func Test_DescribeIpInfo(t *testing.T) {
 	}
 
 	resp, status, err := instance.DescribeIpInfo(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
-
-func Test_DescribeVodDomainTrafficData(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodDescribeVodDomainTrafficDataRequest{
-		DomainList:  "your DomainList",
-		StartTime:   "your StartTime",
-		EndTime:     "your EndTime",
-		Aggregation: 0,
-		TrafficType: "your TrafficType",
-	}
-
-	resp, status, err := instance.DescribeVodDomainTrafficData(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
@@ -416,6 +374,27 @@ func Test_UpdateDomainAuthConfig(t *testing.T) {
 	}
 
 	resp, status, err := instance.UpdateDomainAuthConfig(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_AddOrUpdateCertificate20230701(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.AddOrUpdateCertificateV2Request{
+		SpaceName:     "your SpaceName",
+		Domain:        "your Domain",
+		DomainType:    "your DomainType",
+		CertificateId: "your CertificateId",
+		HttpsStatus:   "your HttpsStatus",
+	}
+
+	resp, status, err := instance.AddOrUpdateCertificate20230701(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())

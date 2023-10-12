@@ -50,6 +50,22 @@ func Test_GetDirectEditResult(t *testing.T) {
 	resp, status, err := instance.GetDirectEditResult(query)
 	fmt.Println(status)
 	fmt.Println(err)
+	//获取EditParam中的Track
+	for _, result := range resp.GetResult() {
+		editParam := result.GetEditParam()
+		tracks := editParam.GetTrack()
+		for _, track := range tracks {
+			listValue := track.GetListValue()
+			for _, value := range listValue.Values {
+				structValue := value.GetStructValue()
+				fields := structValue.GetFields()
+				fmt.Println("ID:", fields["ID"].GetStringValue())
+				for _, value := range fields["TargetTime"].GetListValue().Values {
+					fmt.Println(value.GetNumberValue())
+				}
+			}
+		}
+	}
 	fmt.Println(resp.String())
 }
 
