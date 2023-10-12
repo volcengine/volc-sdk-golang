@@ -89,13 +89,16 @@ func createInnerToken(credentials Credentials, sts *SecurityToken2, inlinePolicy
 	return innerToken, nil
 }
 
-func getTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
+func getTimeout(serviceTimeout, apiTimeout, customTimeout time.Duration) time.Duration {
 	timeout := time.Second
 	if serviceTimeout != time.Duration(0) {
 		timeout = serviceTimeout
 	}
 	if apiTimeout != time.Duration(0) {
 		timeout = apiTimeout
+	}
+	if customTimeout != time.Duration(0) {
+		timeout = customTimeout
 	}
 	return timeout
 }
