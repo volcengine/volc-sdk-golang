@@ -529,3 +529,39 @@ type ContentProductStatisticsResultDetail struct {
 	RequestFrameCnt *int64   `json:"RequestFrameCnt,omitempty"`
 	RequestDuration *float64 `json:"RequestAudioDuration,omitempty"`
 }
+
+type DelSystemNameListItemReq struct {
+	Product string `json:"Product" form:"Product" query:"Product"`
+	AppId   int64  `json:"AppId" form:"AppId" query:"AppId"`
+	Service string `json:"Service" form:"Service" query:"Service"`
+	Object  string `json:"Object" form:"Object" query:"Object"`
+}
+
+type QuerySystemNameListItemReq struct {
+	Product string `json:"Product" form:"Product" query:"Product"`
+	AppId   int64  `json:"AppId" form:"AppId" query:"AppId"`
+	Service string `json:"Service" form:"Service" query:"Service"`
+	Object  string `json:"Object" form:"Object" query:"Object"`
+}
+
+func (r *QuerySystemNameListItemReq) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
+
+type DelSystemNameListItemResp struct {
+	OpenResult
+	Data *DelSystemNameListItemResult `json:"Data"`
+}
+
+type QuerySystemNameListItemResp struct {
+	OpenResult
+	Data *QuerySystemNameListItemResult `json:"Data"`
+}
+
+type DelSystemNameListItemResult struct {
+	Status int `json:"Status"`
+}
+
+type QuerySystemNameListItemResult struct {
+	IsHit bool `json:"IsHit"`
+}
