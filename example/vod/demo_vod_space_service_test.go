@@ -107,24 +107,3 @@ func Test_UpdateSpaceUploadConfig(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
-
-func Test_DescribeVodSpaceStorageData(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodDescribeVodSpaceStorageDataRequest{
-		SpaceList:   "your SpaceList",
-		StartTime:   "your StartTime",
-		EndTime:     "your EndTime",
-		Aggregation: 0,
-		Type:        "your Type",
-	}
-
-	resp, status, err := instance.DescribeVodSpaceStorageData(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
