@@ -336,5 +336,23 @@ var (
 				"Version": []string{"2022-12-23"},
 			},
 		},
+		"DelSystemNameListItem": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DelSystemNameListItem"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"QuerySystemNameListItem": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"QuerySystemNameListItem"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
 	}
 )

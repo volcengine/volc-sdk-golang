@@ -1076,3 +1076,62 @@ func (p *BusinessSecurity) ContentRiskStat(req *CommonProductStatisticsReq) (*Co
 	}
 	return handleContentRiskStatResp(respBody)
 }
+
+// query system name list item
+// 查询系统名单内容
+func (p *BusinessSecurity) QuerySystemNameListItem(req *QuerySystemNameListItemReq) (*QuerySystemNameListItemResp, error) {
+	respBody, _, err := p.Client.Query("QuerySystemNameListItem", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("QuerySystemNameListItem", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("QuerySystemNameListItem: fail to do request, %v", err)
+			}
+			result := new(QuerySystemNameListItemResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("QuerySystemNameListItem: fail to do request, %v", err)
+	}
+	result := new(QuerySystemNameListItemResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// delete system name list item
+// 删除系统名单内容，进行解封
+func (p *BusinessSecurity) DelSystemNameListItem(req *DelSystemNameListItemReq) (*DelSystemNameListItemResp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("DelSystemNameListItem: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("DelSystemNameListItem", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("DelSystemNameListItem", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("DelSystemNameListItem: fail to do request, %v", err)
+			}
+			result := new(DelSystemNameListItemResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("DelSystemNameListItem: fail to do request, %v", err)
+	}
+	result := new(DelSystemNameListItemResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
