@@ -178,7 +178,7 @@ var (
 			},
 		},
 		"ListEbsInstances": {
-			Method: http.MethodGet,
+			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListEbsInstances"},
@@ -186,7 +186,7 @@ var (
 			},
 		},
 		"GetEbsInstance": {
-			Method: http.MethodGet,
+			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetEbsInstance"},

@@ -9,6 +9,7 @@ import (
 
 func DeleteEbsInstance(t *testing.T) {
 	resp, err := veen.NewInstance(ak, sk).DeleteEbsInstance(&veen.DeleteEbsInstanceReq{
+		EbsID:  "disk-t9p44586fn6cbs9",
 		EbsIds: []string{"disk-t9p44586fn6cbs9", "disk-fz26fhklggjnbhj"},
 	})
 	assert.NoError(t, err)

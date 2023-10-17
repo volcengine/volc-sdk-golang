@@ -843,14 +843,21 @@ type EbsInstance struct {
 }
 
 type CreateEbsInstancesReq struct {
-	ClusterName string      `json:"cluster_name"`
-	ChargeType  ChargeType  `json:"charge_type"`
-	EbsType     EbsType     `json:"ebs_type"`
-	StorageType StorageType `json:"storage_type"`
-	Capacity    string      `json:"capacity"`
-	Number      int64       `json:"number"`
-	Name        string      `json:"name"`
-	Desc        string      `json:"desc,omitempty"`
+	ClusterName   string      `thrift:"cluster_name,3,required" frugal:"3,required,string" json:"cluster_name"`
+	ChargeType    ChargeType  `thrift:"charge_type,4,required" frugal:"4,required,string" json:"charge_type"`
+	EbsType       EbsType     `thrift:"ebs_type,5,required" frugal:"5,required,string" json:"ebs_type"`
+	StorageType   StorageType `thrift:"storage_type,6,required" frugal:"6,required,string" json:"storage_type"`
+	Capacity      string      `thrift:"capacity,7,required" frugal:"7,required,string" json:"capacity"`
+	Number        int64       `thrift:"number,8,required" frugal:"8,required,i64" json:"number"`
+	Name          string      `thrift:"name,9,required" frugal:"9,required,string" json:"name"`
+	Desc          *string     `thrift:"desc,10,optional" frugal:"10,optional,string" json:"desc,omitempty"`
+	Project       *string     `thrift:"project,11,optional" frugal:"11,optional,string" json:"project,omitempty"`
+	DeleteWithRes *bool       `thrift:"delete_with_res,12,optional" frugal:"12,optional,bool" json:"delete_with_res,omitempty"`
+	ResID         *string     `thrift:"res_id,13,optional" frugal:"13,optional,string" json:"res_id,omitempty"`
+	EbsIds        []string    `thrift:"ebs_ids,14,optional" frugal:"14,optional,list<string>" json:"ebs_ids,omitempty"`
+	CreateByRes   *bool       `thrift:"create_by_res,15,optional" frugal:"15,optional,bool" json:"create_by_res,omitempty"`
+	PvcNs         *string     `thrift:"pvc_ns,16,optional" frugal:"16,optional,string" json:"pvc_ns,omitempty"`
+	PvcName       *string     `thrift:"pvc_name,17,optional" frugal:"17,optional,string" json:"pvc_name,omitempty"`
 }
 
 type CreateEbsInstancesResp struct {
@@ -863,18 +870,21 @@ type CreateEbsInstancesResult struct {
 }
 
 type ListEbsInstancesReq struct {
-	WithAttachmentInfo  bool           `json:"with_attachment_info,omitempty" query:"with_attachment_info"`
-	ResIds              string         `json:"res_ids,omitempty" query:"res_ids"`
-	EbsIds              string         `json:"ebs_ids,omitempty" query:"ebs_ids"`
-	EbsNames            string         `json:"ebs_names,omitempty" query:"ebs_names"`
-	Regions             string         `json:"regions,omitempty" query:"regions"`
-	ClusterNames        string         `json:"cluster_names,omitempty" query:"clusters_names"`
-	Status              EbsStatus      `json:"status,omitempty" query:"status"`
-	EbsType             EbsType        `json:"ebs_type,omitempty" query:"ebs_type"`
-	ChargeType          ChargeType     `json:"charge_type,omitempty" query:"charge_type"`
-	FuzzyVeenExternalIP string         `json:"fuzzy_veen_external_ip,omitempty" query:"fuzzy_veen_external_ip"`
-	PageOption          EbsPagination  `json:"page_option,omitempty" query:"page_option"`
-	OrderOption         EbsOrderOption `json:"order_option,omitempty" query:"order_option"`
+	WithAttachmentInfo  *bool           `thrift:"with_attachment_info,3,optional" frugal:"3,optional,bool" json:"with_attachment_info,omitempty"`
+	ResIds              []string        `thrift:"res_ids,4,optional" frugal:"4,optional,list<string>" json:"res_ids,omitempty"`
+	EbsIds              []string        `thrift:"ebs_ids,5,optional" frugal:"5,optional,list<string>" json:"ebs_ids,omitempty"`
+	EbsNames            []string        `thrift:"ebs_names,6,optional" frugal:"6,optional,list<string>" json:"ebs_names,omitempty"`
+	Regions             []string        `thrift:"regions,7,optional" frugal:"7,optional,list<string>" json:"regions,omitempty"`
+	ClusterNames        []string        `thrift:"cluster_names,8,optional" frugal:"8,optional,list<string>" json:"cluster_names,omitempty"`
+	Status              []EbsStatus     `thrift:"status,9,optional" frugal:"9,optional,list<string>" json:"status,omitempty"`
+	EbsType             []EbsType       `thrift:"ebs_type,10,optional" frugal:"10,optional,list<string>" json:"ebs_type,omitempty"`
+	ChargeType          []ChargeType    `thrift:"charge_type,11,optional" frugal:"11,optional,list<string>" json:"charge_type,omitempty"`
+	FuzzyVeenExternalIP *string         `thrift:"fuzzy_veen_external_ip,12,optional" frugal:"12,optional,string" json:"fuzzy_veen_external_ip,omitempty"`
+	DeleteWithRes       *bool           `thrift:"delete_with_res,13,optional" frugal:"13,optional,bool" json:"delete_with_res,omitempty"`
+	FuzzyEbsIDOrName    *string         `thrift:"fuzzy_ebs_id_or_name,14,optional" frugal:"14,optional,string" json:"fuzzy_ebs_id_or_name,omitempty"`
+	Projects            []string        `thrift:"projects,15,optional" frugal:"15,optional,list<string>" json:"projects,omitempty"`
+	PageOption          *EbsPagination  `thrift:"page_option,128,optional" frugal:"128,optional,Pagination" json:"page_option,omitempty"`
+	OrderOption         *EbsOrderOption `thrift:"order_option,129,optional" frugal:"129,optional,OrderOption" json:"order_option,omitempty"`
 }
 
 type ListEbsInstancesResp struct {
@@ -889,7 +899,7 @@ type ListEbsInstancesResult struct {
 
 type GetEbsInstanceReq struct {
 	EbsID              string `json:"ebs_id" query:"ebs_id"`
-	WithAttachmentInfo bool   `json:"with_attachment_info,omitempty" query:"with_attachment_info"`
+	WithAttachmentInfo *bool  `json:"with_attachment_info,omitempty" query:"with_attachment_info"`
 }
 
 type GetEbsInstanceResp struct {
@@ -902,8 +912,9 @@ type GetEbsInstanceResult struct {
 }
 
 type ScaleEbsInstanceCapacityReq struct {
-	EbsID    string `json:"ebs_id"`
-	Capacity string `json:"capacity"`
+	EbsID      string `thrift:"ebs_id,3,required" frugal:"3,required,string" json:"ebs_id"`
+	Capacity   string `thrift:"capacity,4,required" frugal:"4,required,string" json:"capacity"`
+	WithReboot *bool  `thrift:"with_reboot,5,optional" frugal:"5,optional,bool" json:"with_reboot,omitempty"`
 }
 
 type ScaleEbsInstanceCapacityResp struct {
@@ -915,9 +926,11 @@ type ScaleEbsInstanceCapacityResult struct {
 }
 
 type AttachEbsReq struct {
-	EbsIds  []string       `json:"ebs_ids"`
-	ResType AttachmentType `json:"res_type"`
-	ResID   string         `json:"res_id"`
+	EbsID         string         `thrift:"ebs_id,3,required" frugal:"3,required,string" json:"ebs_id"`
+	EbsIds        []string       `thrift:"ebs_ids,4,optional" frugal:"4,optional,list<string>" json:"ebs_ids,omitempty"`
+	ResType       AttachmentType `thrift:"res_type,5,required" frugal:"5,required,string" json:"res_type"`
+	ResID         string         `thrift:"res_id,6,required" frugal:"6,required,string" json:"res_id"`
+	DeleteWithRes *bool          `thrift:"delete_with_res,7,optional" frugal:"7,optional,bool" json:"delete_with_res,omitempty"`
 }
 
 type AttachEbsResp struct {
@@ -929,7 +942,8 @@ type AttachEbsResult struct {
 }
 
 type DetachEbsReq struct {
-	EbsIds []string `json:"ebs_ids"`
+	EbsID  string   `thrift:"ebs_id,3,required" frugal:"3,required,string" json:"ebs_id"`
+	EbsIds []string `thrift:"ebs_ids,4,optional" frugal:"4,optional,list<string>" json:"ebs_ids,omitempty"`
 }
 
 type DetachEbsResp struct {
@@ -941,7 +955,8 @@ type DetachEbsResult struct {
 }
 
 type DeleteEbsInstanceReq struct {
-	EbsIds []string `json:"ebs_ids"`
+	EbsID  string   `thrift:"ebs_id,3,required" frugal:"3,required,string" json:"ebs_id"`
+	EbsIds []string `thrift:"ebs_ids,4,optional" frugal:"4,optional,list<string>" json:"ebs_ids,omitempty"`
 }
 
 type DeleteEbsInstanceResp struct {

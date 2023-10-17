@@ -8,10 +8,13 @@ import (
 )
 
 func AttachEbs(t *testing.T) {
+	deleteWithRes := true
 	resp, err := veen.NewInstance(ak, sk).AttachEbs(&veen.AttachEbsReq{
-		EbsIds:  []string{"disk-t9p44586fn6cbs9", "disk-fz26fhklggjnbhj"},
-		ResType: "veen",
-		ResID:   "testing2-veen92023710333272539522",
+		EbsID:         "disk-t9p44586fn6cbs9",
+		EbsIds:        []string{"disk-t9p44586fn6cbs9", "disk-fz26fhklggjnbhj"},
+		ResType:       "veen",
+		ResID:         "testing2-veen92023710333272539522",
+		DeleteWithRes: &deleteWithRes,
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)

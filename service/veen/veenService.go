@@ -1,7 +1,6 @@
 package veen
 
 import (
-	"github.com/demdxx/gocast"
 	"net/url"
 	"strconv"
 )
@@ -314,44 +313,7 @@ func (v *Veen) CreateEbsInstances(req *CreateEbsInstancesReq) (*CreateEbsInstanc
 
 func (v *Veen) ListEbsInstances(req *ListEbsInstancesReq) (*ListEbsInstancesResp, error) {
 	resp := &ListEbsInstancesResp{}
-	query := url.Values{}
-	query.Set("page_no", strconv.Itoa(int(req.PageOption.PageNo)))
-	query.Set("page_size", strconv.Itoa(int(req.PageOption.PageSize)))
-	query.Set("order_by", req.OrderOption.OrderBy)
-	query.Set("asc", gocast.ToString(req.OrderOption.Asc))
-
-	if req.WithAttachmentInfo {
-		query.Set("with_attachment_info", gocast.ToString(req.WithAttachmentInfo))
-	}
-	if len(req.ResIds) != 0 {
-		query.Set("res_ids", req.ResIds)
-	}
-	if len(req.EbsIds) != 0 {
-		query.Set("ebs_ids", req.EbsIds)
-	}
-	if len(req.EbsNames) != 0 {
-		query.Set("ebs_names", req.EbsNames)
-	}
-	if len(req.Regions) != 0 {
-		query.Set("regions", req.Regions)
-	}
-	if len(req.ClusterNames) != 0 {
-		query.Set("cluster_names", req.ClusterNames)
-	}
-	if len(req.Status) != 0 {
-		query.Set("status", req.Status)
-	}
-	if len(req.EbsType) != 0 {
-		query.Set("ebs_type", req.EbsType)
-	}
-	if len(req.ChargeType) != 0 {
-		query.Set("charge_type", req.ChargeType)
-	}
-	if len(req.FuzzyVeenExternalIP) != 0 {
-		query.Set("fuzzy_veen_external_ip", req.FuzzyVeenExternalIP)
-	}
-
-	if err := v.get("ListEbsInstances", query, resp); err != nil {
+	if err := v.post("ListEbsInstances", req, resp); err != nil {
 		return nil, err
 	}
 	if resp.ResponseMetadata.Error != nil {
@@ -362,14 +324,7 @@ func (v *Veen) ListEbsInstances(req *ListEbsInstancesReq) (*ListEbsInstancesResp
 
 func (v *Veen) GetEbsInstance(req *GetEbsInstanceReq) (*GetEbsInstanceResp, error) {
 	resp := &GetEbsInstanceResp{}
-	query := url.Values{}
-	if req.EbsID != "" {
-		query.Set("ebs_id", req.EbsID)
-	}
-	if req.WithAttachmentInfo {
-		query.Set("with_attachment_info", gocast.ToString(req.WithAttachmentInfo))
-	}
-	if err := v.get("GetEbsInstance", query, resp); err != nil {
+	if err := v.post("GetEbsInstance", req, resp); err != nil {
 		return nil, err
 	}
 	if resp.ResponseMetadata.Error != nil {
