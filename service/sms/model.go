@@ -97,4 +97,9 @@ const (
 	SmsOrder_PASSED    SmsOrderStatus = 3
 	SmsOrder_CLOSE     SmsOrderStatus = 4
 	SmsOrder_EXEMPTED  SmsOrderStatus = 5
+
+	VmsOrder_VENDOR_REVIEWING SmsOrderStatus = 6 // 视频短信供应商审核中
+	VmsOrder_VENDOR_REJECTED  SmsOrderStatus = 7 // 视频短信供应商审核失败
+	VmsOrder_VENDOR_PASSED    SmsOrderStatus = 8 // 视频短信供应商审核通过
+	VmsOrder_VENDOR_EXPIRED   SmsOrderStatus = 9 // 视频短信模版过期
 )

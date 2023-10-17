@@ -44,7 +44,10 @@ type GetVmsTemplateStatusRequest struct {
 type GetVmsTemplateStatusResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           struct {
-		ApplyResult []CarrierReviewInfo `json:"ApplyResult"`
+		ApplyResult   []CarrierReviewInfo `json:"ApplyResult"`
+		ApproveTime   int64               `json:"approveTime"`   // 视频模版；模版通过的第一个运营商审批时间
+		ExpireTime    int64               `json:"expireTime"`    // 视频模版；模版的到期时间
+		RestValidDays int64               `json:"restValidDays"` // 视频模版；模版剩余有效天数
 	}
 }
 
