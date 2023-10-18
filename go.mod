@@ -6,6 +6,7 @@ require (
 	github.com/Shopify/sarama v1.30.1
 	github.com/avast/retry-go v3.0.0+incompatible
 	github.com/cenkalti/backoff/v4 v4.1.2
+	github.com/cloudwego/hertz/cmd/hz v0.7.0
 	github.com/demdxx/gocast v1.2.0
 	github.com/go-kit/kit v0.12.0
 	github.com/gogo/protobuf v1.3.2
