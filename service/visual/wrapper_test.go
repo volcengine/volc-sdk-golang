@@ -3,13 +3,14 @@ package visual
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/service/visual/model"
 	"testing"
+
+	"github.com/volcengine/volc-sdk-golang/service/visual/model"
 )
 
 const (
-	testAk = "ak"
-	testSk = "sk"
+	testAk = ""
+	testSk = ""
 )
 
 func TestVisual_FaceCompare(t *testing.T) {
@@ -91,4 +92,40 @@ func TestVisual_FaceFusionMovie(t *testing.T) {
 	fmt.Println(status, err)
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
+}
+
+func TestVisual_FaceFusionMovieAsync(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 提交任务
+	reqBody := &model.FaceFusionMovieSubmitTaskRequest{
+		ReqKey:           "facefusionmovie_standard", // 固定值
+		ImageUrl:         "https://xxx, https://xxx",
+		VideoUrl:         "https://xxx",
+		RefImgUrl:        "https://xxx, https://xxx",
+		SourceSimilarity: "1",
+		LogoInfo: &model.FaceFusionMovieLogoInfo{
+			AddLogo:  false,
+			Position: 0,
+			Language: 0,
+			Opacity:  0.3,
+		},
+	}
+
+	resp, status, err := DefaultInstance.FaceFusionMovieSubmitTask(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+
+	// 查询结果
+	// reqBody := &model.FaceFusionMovieGetResultRequest{
+	// 	ReqKey: "facefusionmovie_standard", // 固定值
+	// 	TaskId: "xxxx",
+	// }
+
+	// resp, status, err := DefaultInstance.FaceFusionMovieGetResult(reqBody)
+	// fmt.Println(status, err)
+	// b, _ := json.Marshal(resp)
+	// fmt.Println(string(b))
 }

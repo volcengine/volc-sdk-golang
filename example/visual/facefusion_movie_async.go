@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"time"
+
 	"github.com/volcengine/volc-sdk-golang/service/visual"
 	"github.com/volcengine/volc-sdk-golang/service/visual/model"
-	"time"
 )
 
 func main() {
@@ -18,11 +19,20 @@ func main() {
 	//visual.DefaultInstance.SetHost("host")
 
 	//提交任务-请求入参
+	logoInfo := &model.FaceFusionMovieLogoInfo{
+		AddLogo:  false,
+		Position: 0,
+		Language: 0,
+		Opacity:  0.3,
+	}
+
 	submitReqBody := &model.FaceFusionMovieSubmitTaskRequest{
-		ReqKey:   "facefusionmovie_standard", // 固定值
-		ImageUrl: "",
-		VideoUrl: "",
-		//EnableFaceBeautify: false,
+		ReqKey:           "facefusionmovie_standard", // 固定值
+		ImageUrl:         "https://xxx, https://xxx",
+		VideoUrl:         "https://xxx",
+		RefImgUrl:        "https://xxx, https://xxx",
+		SourceSimilarity: "1",
+		LogoInfo:         logoInfo,
 	}
 
 	submitResp, status, err := visual.DefaultInstance.FaceFusionMovieSubmitTask(submitReqBody)
