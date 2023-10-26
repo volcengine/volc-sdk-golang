@@ -131,8 +131,9 @@ type FrameResultV2 struct {
 }
 
 type VideoResult struct {
-	Decision string  `json:"Decision"`
-	Frames   []Frame `json:"Frames"`
+	Decision        string  `json:"Decision"`
+	ImageSliceCount int64   `json:"ImageSliceCount"`
+	Frames          []Frame `json:"Frames"`
 }
 
 type Frame struct {
