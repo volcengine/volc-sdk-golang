@@ -4,12 +4,21 @@ import "github.com/volcengine/volc-sdk-golang/base"
 
 // 请求参数
 
+type FaceFusionMovieLogoInfo struct {
+	AddLogo  bool    `json:"add_logo"`
+	Position int     `json:"position"`
+	Language int     `json:"language"`
+	Opacity  float64 `json:"opacity"`
+}
+
 type FaceFusionMovieSubmitTaskRequest struct {
-	ReqKey             string `json:"req_key"`
-	ImageUrl           string `json:"image_url"`
-	VideoUrl           string `json:"video_url"`
-	EnableFaceBeautify bool   `json:"enable_face_beautify"`
-	RefImgUrl          string `json:"ref_img_url"`
+	ReqKey             string                   `json:"req_key"`
+	ImageUrl           string                   `json:"image_url"`
+	VideoUrl           string                   `json:"video_url"`
+	EnableFaceBeautify bool                     `json:"enable_face_beautify"`
+	RefImgUrl          string                   `json:"ref_img_url"`
+	SourceSimilarity   string                   `json:"source_similarity"`
+	LogoInfo           *FaceFusionMovieLogoInfo `json:"logo_info"`
 }
 
 type FaceFusionMovieGetResultRequest struct {
