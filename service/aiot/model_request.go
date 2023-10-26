@@ -105,6 +105,14 @@ type LocalMediaDownloadRequest struct {
 	SchedQuotaKey       string `json:"SchedQuotaKey"`       //调度到哪个集群
 }
 
+type LocalMediaDownloadRequestV3 struct {
+	StreamID      string `json:"StreamID"`
+	StartTime     int64  `json:"StartTime"`
+	EndTime       int64  `json:"EndTime"`
+	MediaProcess  *Mps   `json:"MediaProcess"`
+	DownloadSpeed *int   `json:"DownloadSpeedSingle"` //在本地录像下载的时候时候，不填就以设备维度所设置的速度进行下载
+}
+
 type GetLocalMediaDownloadRequest struct {
 	ID      string
 	SpaceID string
@@ -181,13 +189,34 @@ type CloudRecordPlayRequest struct {
 	TokenValid *int   `json:"TokenValid"`
 }
 
+type CloudRecordPlayRequestV3 struct {
+	StreamID       string `json:"StreamID"`
+	StreamingIndex int    `json:"StreamingIndex,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
+	Resolution     string `json:"Resolution,omitempty"`     // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
+	StartTime      int64  `json:"StartTime"`
+	EndTime        int64  `json:"EndTime"`
+	TokenValid     *int   `json:"TokenValid"`
+}
+
 type ListHistoryRequest struct {
-	SpaceID    string
-	StreamID   string
-	PageNumber int
-	PageSize   int
+	SpaceID    string `json:"-"`
+	StreamID   string `json:"-"`
+	PageNumber int    `json:"-"`
+	PageSize   int    `json:"-"`
 	StartTs    string `json:"StartTs"`
 	EndTs      string `json:"EndTs"`
+	ReqType    string `json:"-"`
+}
+
+type ListHistoryRequestV3 struct {
+	StreamID       string
+	StreamingIndex int
+	Resolution     string
+	PageNumber     int   `json:"-"`
+	PageSize       int   `json:"-"`
+	StartTime      int64 `json:"StartTs"`
+	EndTime        int64 `json:"EndTs"`
+	ReqType        string
 }
 
 type AiotPlayBackControlRequest struct {
@@ -240,6 +269,13 @@ type CloudControlRequest struct {
 	Action    string `json:"action"`
 }
 
+type CloudControlRequestV3 struct {
+	StreamID string `json:"StreamID"`
+	Cmd      string `json:"Cmd"`
+	Para     uint8  `json:"Para"`
+	Action   string `json:"action"`
+}
+
 type QueryPresetInfoRequest struct {
 	SipID     string
 	DeviceID  string `json:"DeviceID"`
@@ -247,9 +283,23 @@ type QueryPresetInfoRequest struct {
 	TimeOut   int    `json:"TimeOut"`
 }
 
+type QueryPresetInfoRequestV3 struct {
+	StreamID string `json:"StreamID"`
+	TimeOut  int    `json:"TimeOut"`
+}
+
 type GetRecordListRequest struct {
 	DeviceID     string `json:"DeviceID"`
 	ChannelID    string `json:"ChannelID"`
+	StartTime    int64  `json:"StartTime"`
+	EndTime      int64  `json:"EndTime"`
+	RecordType   string `json:"RecordType"`
+	TimeoutInSec int    `json:"TimeoutInSec"`
+	Order        bool   `json:"Order"`
+}
+
+type GetRecordListRequestV3 struct {
+	StreamID     string `json:"StreamID"`
 	StartTime    int64  `json:"StartTime"`
 	EndTime      int64  `json:"EndTime"`
 	RecordType   string `json:"RecordType"`
@@ -268,6 +318,16 @@ type PlayBackStartRequest struct {
 	SchedQuotaKey       string `json:"SchedQuotaKey"`       //调度到哪个集群
 }
 
+type PlayBackStartRequestV3 struct {
+	StreamID            string `json:"StreamID"`
+	StartTime           int64  `json:"StartTime"`
+	EndTime             int64  `json:"EndTime"`
+	Version             string `json:"Version"`
+	MediaProcess        *Mps   `json:"MediaProcess"`
+	DownloadSpeedSingle *int   `json:"DownloadSpeedSingle"` //在本地录像下载的时候时候，不填就以设备维度所设置的速度进行下载
+	SchedQuotaKey       string `json:"SchedQuotaKey"`       //调度到哪个集群
+}
+
 type PlayBackControlRequest struct {
 	StreamID string  `json:"StreamID"`
 	Cmd      int     `json:"Cmd"`
@@ -278,6 +338,15 @@ type PlayBackControlRequest struct {
 type CruiseControlRequest struct {
 	DeviceNSID  string `json:"DeviceNSID"`
 	ChannelID   string `json:"ChannelID"`
+	Action      string `json:"Action"`
+	TrackID     uint8  `json:"TrackID"`     // 巡航轨迹组ID
+	PresetID    uint8  `json:"PresetID"`    // 预置位ID
+	Speed       uint32 `json:"Speed"`       // 巡航速度
+	StaySeconds uint32 `json:"StaySeconds"` // 巡航停留时间
+}
+
+type CruiseControlRequestV3 struct {
+	StreamID    string `json:"StreamID"`
 	Action      string `json:"Action"`
 	TrackID     uint8  `json:"TrackID"`     // 巡航轨迹组ID
 	PresetID    uint8  `json:"PresetID"`    // 预置位ID

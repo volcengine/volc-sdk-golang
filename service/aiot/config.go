@@ -1,6 +1,7 @@
 package aiot
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -11,6 +12,7 @@ import (
 const (
 	DefaultRegion          = "cn-north-1"
 	ServiceVersion20210101 = "2021-01-01"
+	ServiceVersion20231001 = "2023-10-01"
 	ServiceName            = "aiotvideo"
 )
 
@@ -22,6 +24,91 @@ var (
 			"Accept": []string{"application/json"},
 		},
 	}
+	ApiInfoListV3 = map[string]*base.ApiInfo{
+		"DeleteSpaceV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteSpace"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"GetRecordListV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetRecordList"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"LocalMediaDownloadV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"LocalMediaDownload"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"CloudControlV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CloudControl"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"QueryPresetInfoV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"QueryPresetInfo"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"CruiseControlV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CruiseControl"}, "Version": []string{ServiceVersion20231001}},
+		},
+		// Cruise Track API
+		"SetCruiseTrackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"SetCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"GetCruiseTrackV3": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ListCruiseTracksV3": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListCruiseTracks"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"DeleteCruiseTrackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"StartCruiseTrackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"StartCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"StopCruiseTrackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"StopCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"PlayBackStartV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"PlayBackStart"}, "Version": []string{ServiceVersion20231001}},
+		},
+		// get cloud record metadata, cloud playback and cloud screenshot
+		"CloudRecordPlayV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CloudRecordPlay"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ListStreamScreenshotsV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListStreamScreenshots"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ListStreamRecordsV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListStreamRecords"}, "Version": []string{ServiceVersion20231001}},
+		},
+	}
+
 	ApiInfoList = map[string]*base.ApiInfo{
 		"AddGroupTreeNode": {
 			Method: http.MethodPost,
@@ -1148,10 +1235,10 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"GetCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
 		},
-		"ListCruiseTrack": {
+		"ListCruiseTracks": {
 			Method: http.MethodGet,
 			Path:   "/",
-			Query:  url.Values{"Action": []string{"ListCruiseTrack"}, "Version": []string{ServiceVersion20210101}},
+			Query:  url.Values{"Action": []string{"ListCruiseTracks"}, "Version": []string{ServiceVersion20210101}},
 		},
 		"DeleteCruiseTrack": {
 			Method: http.MethodPost,
@@ -1190,10 +1277,29 @@ type AIoT struct {
 	queryInterceptors []QueryInterceptorFunc
 }
 
+func MergeApiConfig(args ...map[string]*base.ApiInfo) (map[string]*base.ApiInfo, error) {
+	if len(args) == 0 {
+		return nil, fmt.Errorf("you have to provide at least one arguments")
+	} else if len(args) == 1 {
+		return args[0], nil
+	} else {
+		src := args[0]
+		idx := 1
+		for idx < len(args) {
+			for k, v := range args[idx] {
+				src[k] = v
+			}
+			idx = idx + 1
+		}
+		return src, nil
+	}
+}
+
 // NewInstance 创建一个实例
 func NewInstance() *AIoT {
 	instance := &AIoT{}
-	instance.Client = base.NewClient(ServiceInfo, ApiInfoList)
+	mergeApiInfo, _ := MergeApiConfig(ApiInfoList, ApiInfoListV3)
+	instance.Client = base.NewClient(ServiceInfo, mergeApiInfo)
 	instance.Client.ServiceInfo.Credentials.Service = ServiceName
 	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
 	return instance

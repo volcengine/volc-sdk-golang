@@ -109,6 +109,10 @@ type SpaceResponse struct {
 	Result           IDResponse `json:"Result,omitempty"`
 }
 
+type SpaceResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+}
+
 type GetSpaceResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           SpaceView `json:"Result,omitempty"`
@@ -272,6 +276,15 @@ type LocalMediaDownloadResponse struct {
 type LocalMediaDownloadResp struct {
 	Result bool   `json:"Result"`
 	ID     string `json:"ID"`
+}
+
+type LocalMediaDownloadResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           LocalMediaDownloadRespV3 `json:"Result,omitempty"`
+}
+
+type LocalMediaDownloadRespV3 struct {
+	DownloadID string `json:"DownloadID"`
 }
 
 type ListGBMediaResponse struct {
@@ -632,10 +645,54 @@ type HistoryResult struct {
 	Path         string        `json:"Path"`
 	ScreenResult *ScreenResult `json:"Screenshot,omitempty"`
 	RecordResult *RecordResult `json:"Record,omitempty"`
+	RecordMeta   *RecordMeta   `json:"RecordMeta,omitempty"`
+}
+
+type RecordMeta struct {
+	StartTs     string  `json:"StartTs"`
+	EndTs       string  `json:"EndTs"`
+	Duration    float64 `json:"Duration"`
+	Format      string  `json:"Format"`
+	Bucket      string  `json:"Bucket"`
+	StorageType string  `json:"StorageType"`
 }
 
 type ScreenResult struct {
 	BornTs string `json:"BornTs"`
+}
+
+type ListHistoryResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           []*HistoryResultV3 `json:"Result,omitempty"`
+}
+
+type HistoryResultV3 struct {
+	Type         string          `json:"Type"`
+	Path         string          `json:"Path"`
+	ScreenResult *ScreenResultV3 `json:"Screenshot,omitempty"`
+	RecordResult *RecordResultV3 `json:"Record,omitempty"`
+	RecordMeta   *RecordMetaV3   `json:"RecordMeta,omitempty"`
+}
+
+type RecordResultV3 struct {
+	StartTime int64   `json:"StartTime"`
+	EndTime   int64   `json:"EndTime"`
+	Duration  float64 `json:"Duration"`
+	Cover     string  `json:"Cover"`
+	Format    string  `json:"Format"`
+}
+
+type RecordMetaV3 struct {
+	StartTime   int64   `json:"StartTime"`
+	EndTime     int64   `json:"EndTime"`
+	Duration    float64 `json:"Duration"`
+	Format      string  `json:"Format"`
+	Bucket      string  `json:"Bucket"`
+	StorageType string  `json:"StorageType"`
+}
+
+type ScreenResultV3 struct {
+	BornTs int64 `json:"BornTs"`
 }
 
 type RecordResult struct {
@@ -1445,10 +1502,23 @@ type SetCruiseTrackArgs struct {
 	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
 }
 
+type SetCruiseTrackArgsV3 struct {
+	StreamID    string        `json:"StreamID"`
+	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
+	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
+	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
+	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
+}
+
 type DeleteCruiseTrackArgs struct {
 	DeviceNSID string `json:"DeviceNSID"`
 	ChannelID  string `json:"ChannelID"`
 	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type DeleteCruiseTrackArgsV3 struct {
+	StreamID string `json:"StreamID"`
+	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
 }
 
 type StartCruiseTrackArgs struct {
@@ -1457,9 +1527,18 @@ type StartCruiseTrackArgs struct {
 	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
 }
 
+type StartCruiseTrackArgsV3 struct {
+	StreamID string `json:"StreamID"`
+	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
 type StopCruiseTrackArgs struct {
 	DeviceNSID string `json:"DeviceNSID"`
 	ChannelID  string `json:"ChannelID"`
+}
+
+type StopCruiseTrackArgsV3 struct {
+	StreamID string `json:"StreamID"`
 }
 
 type GetCruiseTrackResponse struct {
@@ -1467,7 +1546,7 @@ type GetCruiseTrackResponse struct {
 	Result           CruiseTrack `json:"Result,omitempty"`
 }
 
-type ListCruiseTrackResponse struct {
+type ListCruiseTracksResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           []CruiseTrack `json:"Result,omitempty"`
 }
