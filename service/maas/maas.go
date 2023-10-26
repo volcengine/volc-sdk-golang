@@ -17,10 +17,12 @@ import (
 )
 
 const (
-	ServiceName   = "ml_maas"
-	APICert       = "cert"
-	APIChat       = "chat"
-	APIStreamChat = "stream_chat"
+	ServiceName       = "ml_maas"
+	APICert           = "cert"
+	APIChat           = "chat"
+	APIStreamChat     = "stream_chat"
+	APITokenization   = "tokenization"
+	APIClassification = "classification"
 
 	ServiceTimeout = time.Minute
 
@@ -66,6 +68,14 @@ func NewInstance(host, region string) *MaaS {
 		APICert: {
 			Method: http.MethodPost,
 			Path:   "/api/v1/cert",
+		},
+		APIClassification: {
+			Method: http.MethodPost,
+			Path:   "/api/v1/classification",
+		},
+		APITokenization: {
+			Method: http.MethodPost,
+			Path:   "/api/v1/tokenization",
 		},
 	})
 
@@ -345,4 +355,66 @@ func (cli *MaaS) decryptChatResponse(key, nonce []byte, resp *api.ChatResp) (*ap
 		resp.GetChoice().GetMessage().Content = plain
 	}
 	return resp, nil
+}
+
+// POST method
+// Tokenization
+func (cli *MaaS) Tokenization(req *api.TokenizeReq) (*api.TokenizeResp, int, error) {
+	return cli.TokenizationWithCtx(context.Background(), req)
+}
+
+func (cli *MaaS) TokenizationWithCtx(ctx context.Context, req *api.TokenizeReq) (*api.TokenizeResp, int, error) {
+	bts, err := json.Marshal(req)
+	if err != nil {
+		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
+	}
+	return cli.tokenizationImpl(ctx, bts)
+}
+
+func (cli *MaaS) tokenizationImpl(ctx context.Context, body []byte) (*api.TokenizeResp, int, error) {
+	respBody, status, err := cli.Client.CtxJson(ctx, APITokenization, nil, string(body))
+	if err != nil {
+		errVal := &api.TokenizeResp{}
+		if er := json.Unmarshal(respBody, errVal); er != nil {
+			errVal.Error = api.NewClientSDKRequestError(err.Error())
+		}
+		return nil, status, errVal.Error
+	}
+
+	output := new(api.TokenizeResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()))
+	}
+	return output, status, nil
+}
+
+// POST method
+// Classification
+func (cli *MaaS) Classification(req *api.ClassificationReq) (*api.ClassificationResp, int, error) {
+	return cli.ClassificationWithCtx(context.Background(), req)
+}
+
+func (cli *MaaS) ClassificationWithCtx(ctx context.Context, req *api.ClassificationReq) (*api.ClassificationResp, int, error) {
+	bts, err := json.Marshal(req)
+	if err != nil {
+		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
+	}
+	return cli.classificationImpl(ctx, bts)
+}
+
+func (cli *MaaS) classificationImpl(ctx context.Context, body []byte) (*api.ClassificationResp, int, error) {
+	respBody, status, err := cli.Client.CtxJson(ctx, APIClassification, nil, string(body))
+	if err != nil {
+		errVal := &api.ClassificationResp{}
+		if er := json.Unmarshal(respBody, errVal); er != nil {
+			errVal.Error = api.NewClientSDKRequestError(err.Error())
+		}
+		return nil, status, errVal.Error
+	}
+
+	output := new(api.ClassificationResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()))
+	}
+	return output, status, nil
 }
