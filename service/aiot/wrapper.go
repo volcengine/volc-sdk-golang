@@ -555,6 +555,7 @@ func (p *AIoT) ListDeviceRecords(request *ListHistoryRequest) (*ListHistoryRespo
 	query := url.Values{
 		"SpaceID":  []string{request.SpaceID},
 		"StreamID": []string{request.StreamID},
+		"ReqType":  []string{request.ReqType},
 	}
 	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
 	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
@@ -2188,14 +2189,14 @@ func (p *AIoT) GetCruiseTrack(deviceNSID, channelID string, trackID uint8) (*Get
 	return resp, statusCode, nil
 }
 
-// ListCruiseTrack 查询通道巡航轨迹列表
-func (p *AIoT) ListCruiseTrack(deviceNSID, channelID string) (*ListCruiseTrackResponse, int, error) {
-	resp := new(ListCruiseTrackResponse)
+// ListCruiseTracks 查询通道巡航轨迹列表
+func (p *AIoT) ListCruiseTracks(deviceNSID, channelID string) (*ListCruiseTracksResponse, int, error) {
+	resp := new(ListCruiseTracksResponse)
 	query := url.Values{
 		"DeviceNSID": []string{deviceNSID},
 		"ChannelID":  []string{channelID},
 	}
-	statusCode, err := p.commonHandlerJson("ListCruiseTrack", query, resp, nil)
+	statusCode, err := p.commonHandlerJson("ListCruiseTracks", query, resp, nil)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -2240,6 +2241,183 @@ func (p *AIoT) GetNssInfoList() (*NssInfoListResp, int, error) {
 	query := url.Values{}
 	query.Add("type", "relay")
 	statusCode, err := p.commonHandler("GetNssInfoList", query, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// ------- section for V3 version API -----------------------------------------------------
+// ------- add v3 api at below place  -----------------------------------------------------
+
+func (p *AIoT) DeleteSpaceV3(request *SpaceRequest) (*SpaceResponseV3, int, error) {
+	resp := new(SpaceResponseV3)
+	query := url.Values{
+		"SpaceID": []string{request.SpaceID},
+	}
+	statusCode, err := p.commonHandlerJson("DeleteSpaceV3", query, resp, "")
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) LocalMediaDownloadV3(request *LocalMediaDownloadRequestV3) (*LocalMediaDownloadResponseV3, int, error) {
+	resp := new(LocalMediaDownloadResponseV3)
+	statusCode, err := p.commonHandlerJson("LocalMediaDownloadV3", url.Values{}, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CloudControlV3(request *CloudControlRequestV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CloudControlV3", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) QueryPresetInfoV3(request *QueryPresetInfoRequestV3) (*QueryPresetInfoResponse, int, error) {
+	resp := new(QueryPresetInfoResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("QueryPresetInfoV3", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) GetRecordListV3(request *GetRecordListRequestV3) (*GetRecordListResponse, int, error) {
+	resp := new(GetRecordListResponse)
+	statusCode, err := p.commonHandlerJson("GetRecordListV3", url.Values{}, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CruiseControlV3(request *CruiseControlRequestV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CruiseControlV3", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// SetCruiseTrack 设置巡航轨迹
+func (p *AIoT) SetCruiseTrackV3(args *SetCruiseTrackArgsV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("SetCruiseTrackV3", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// GetCruiseTrack 查询通道巡航轨迹
+func (p *AIoT) GetCruiseTrackV3(streamID string, trackID uint8) (*GetCruiseTrackResponse, int, error) {
+	resp := new(GetCruiseTrackResponse)
+	query := url.Values{
+		"StreamID": []string{streamID},
+		"TrackID":  []string{fmt.Sprintf("%d", trackID)},
+	}
+	statusCode, err := p.commonHandlerJson("GetCruiseTrackV3", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// ListCruiseTracks 查询通道巡航轨迹列表
+func (p *AIoT) ListCruiseTracksV3(streamID string) (*ListCruiseTracksResponse, int, error) {
+	resp := new(ListCruiseTracksResponse)
+	query := url.Values{
+		"StreamID": []string{streamID},
+	}
+	statusCode, err := p.commonHandlerJson("ListCruiseTracksV3", query, resp, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// DeleteCruiseTrack 删除巡航轨迹
+func (p *AIoT) DeleteCruiseTrackV3(args *DeleteCruiseTrackArgsV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("DeleteCruiseTrackV3", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// StartCruiseTrack 开始巡航
+func (p *AIoT) StartCruiseTrackV3(args *StartCruiseTrackArgsV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("StartCruiseTrackV3", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// StopCruiseTrack 停止巡航
+func (p *AIoT) StopCruiseTrackV3(args *StopCruiseTrackArgsV3) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("StopCruiseTrackV3", query, resp, args)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) PlayBackStartV3(request *PlayBackStartRequestV3) (*PlayBackStartResponse, int, error) {
+	resp := new(PlayBackStartResponse)
+	statusCode, err := p.commonHandlerJson("PlayBackStartV3", url.Values{}, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CloudRecordPlayV3(request *CloudRecordPlayRequestV3) (*CloudRecordPlayResponse, int, error) {
+	resp := new(CloudRecordPlayResponse)
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CloudRecordPlayV3", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) ListStreamScreenshotsV3(request *ListHistoryRequestV3) (*ListHistoryResponseV3, int, error) {
+	resp := new(ListHistoryResponseV3)
+	query := url.Values{}
+	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
+	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
+	statusCode, err := p.commonHandlerJson("ListStreamScreenshotsV3", query, resp, request)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) ListStreamRecordsV3(request *ListHistoryRequestV3) (*ListHistoryResponseV3, int, error) {
+	resp := new(ListHistoryResponseV3)
+	query := url.Values{}
+	query.Add("PageSize", fmt.Sprintf("%d", request.PageSize))
+	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
+	statusCode, err := p.commonHandlerJson("ListStreamRecordsV3", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
