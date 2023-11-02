@@ -29,7 +29,7 @@ var (
 	busineseId = "Your_BusinessId"
 	taskId     = appId + "_" + roomId + "_xxx"
 
-	s *rtc.RTC
+	s *rtc.Rtc
 )
 
 func TestMain(t *testing.M) {

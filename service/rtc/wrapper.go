@@ -7,7 +7,8 @@ import (
 
 // GET method
 // GetRecordTask ...
-func GetRecordTask(r *RTC, query url.Values) (*GetRecordTaskResponse, int, error) {
+
+func GetRecordTask(r *Rtc, query url.Values) (*GetRecordTaskResponse, int, error) {
 	respBody, status, err := r.Client.Query(ActionGetRecordTask, query)
 	if err != nil {
 		return nil, status, err
@@ -20,7 +21,7 @@ func GetRecordTask(r *RTC, query url.Values) (*GetRecordTaskResponse, int, error
 
 // POST method
 // StartRecord ...
-func StartRecord(r *RTC, req *StartRecordRequest) (*StartRecordResponse, int, error) {
+func StartRecord(r *Rtc, req *StartRecordRequest) (*StartRecordResponse, int, error) {
 	bts, err := json.Marshal(req)
 	if err != nil {
 		return nil, 0, err
@@ -36,7 +37,7 @@ func StartRecord(r *RTC, req *StartRecordRequest) (*StartRecordResponse, int, er
 	return output, status, err
 }
 
-func StartWebRecord(r *RTC, req *StartWebRecordRequest) (*StartWebRecordResponse, int, error) {
+func StartWebRecord(r *Rtc, req *StartWebRecordRequest) (*StartWebRecordResponse, int, error) {
 	bts, err := json.Marshal(req)
 	if err != nil {
 		return nil, 0, err
@@ -52,7 +53,7 @@ func StartWebRecord(r *RTC, req *StartWebRecordRequest) (*StartWebRecordResponse
 	return output, status, err
 }
 
-func StopWebRecord(r *RTC, req *StopWebRecordRequest) (*StopWebRecordResponse, int, error) {
+func StopWebRecord(r *Rtc, req *StopWebRecordRequest) (*StopWebRecordResponse, int, error) {
 	bts, err := json.Marshal(req)
 	if err != nil {
 		return nil, 0, err
@@ -68,7 +69,7 @@ func StopWebRecord(r *RTC, req *StopWebRecordRequest) (*StopWebRecordResponse, i
 	return output, status, err
 }
 
-func GetWebRecordTask(r *RTC, query url.Values) (*GetWebRecordTaskResponse, int, error) {
+func GetWebRecordTask(r *Rtc, query url.Values) (*GetWebRecordTaskResponse, int, error) {
 	respBody, status, err := r.Client.Query(ActionGetWebRecordTask, query)
 	if err != nil {
 		return nil, status, err
@@ -79,7 +80,7 @@ func GetWebRecordTask(r *RTC, query url.Values) (*GetWebRecordTaskResponse, int,
 	return output, status, err
 }
 
-func GetWebRecordList(r *RTC, query url.Values) (*GetWebRecordListResponse, int, error) {
+func GetWebRecordList(r *Rtc, query url.Values) (*GetWebRecordListResponse, int, error) {
 	respBody, status, err := r.Client.Query(ActionGetWebRecordList, query)
 	if err != nil {
 		return nil, status, err

@@ -5,25 +5,14 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/volcengine/volc-sdk-golang/base"
+	common "github.com/volcengine/volc-sdk-golang/base"
 )
 
-// RTC ... use base client
-type RTC struct {
-	Client *base.Client
-}
-
-// NewInstance ...
-func NewInstance() *RTC {
-	instance := &RTC{}
-	instance.Client = base.NewClient(ServiceInfo, DefaultApiInfoList)
-	instance.Client.ServiceInfo.Credentials.Service = ServiceName
-	instance.Client.ServiceInfo.Credentials.Region = DefaultRegion
-	return instance
-}
+// RTC ... use base clie
 
 const (
 	DefaultRegion          = "cn-north-1"
+	DefaultTimeout         = 10 * time.Second
 	ServiceVersion20201201 = "2020-12-01"
 	ServiceVersion20220601 = "2022-06-01"
 	ServiceName            = "rtc"
@@ -39,61 +28,108 @@ const (
 )
 
 var (
-	ServiceInfo = &base.ServiceInfo{
-		Timeout: 5 * time.Second,
-		Host:    ServiceHost,
-		Header: http.Header{
-			"Accept": []string{"application/json"},
+	ServiceInfoMap = map[string]common.ServiceInfo{
+		"cn-north-1": {
+			Timeout: DefaultTimeout,
+			Scheme:  "https",
+			Host:    "rtc.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: common.Credentials{
+				Region:  "cn-north-1",
+				Service: ServiceName,
+			},
 		},
 	}
+	ApiListInfo = map[string]*common.ApiInfo{
 
-	DefaultApiInfoList = map[string]*base.ApiInfo{
-		ActionStartRecord: {
+		"StartWBRecord": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionStartRecord},
-				"Version": []string{ServiceVersion20220601},
+				"Action":  []string{"StartWBRecord"},
+				"Version": []string{"2020-12-01"},
 			},
 		},
-		ActionGetRecordTask: {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{ActionGetRecordTask},
-				"Version": []string{ServiceVersion20220601},
-			},
-		},
-		ActionStartWebRecord: {
+		"WbTranscodeCreate": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionStartWebRecord},
-				"Version": []string{ServiceVersion20201201},
+				"Action":  []string{"WbTranscodeCreate"},
+				"Version": []string{"2020-12-01"},
 			},
 		},
-		ActionStopWebRecord: {
+		"WbTranscodeQuery": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"WbTranscodeQuery"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"StopWBRecord": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionStopWebRecord},
-				"Version": []string{ServiceVersion20201201},
+				"Action":  []string{"StopWBRecord"},
+				"Version": []string{"2020-12-01"},
 			},
 		},
-		ActionGetWebRecordTask: {
+		"WbTranscodeGet": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionGetWebRecordTask},
-				"Version": []string{ServiceVersion20201201},
+				"Action":  []string{"WbTranscodeGet"},
+				"Version": []string{"2020-12-01"},
 			},
 		},
-		ActionGetWebRecordList: {
+		"StartRecord": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartRecord"},
+				"Version": []string{"2022-06-01"},
+			},
+		},
+		"GetRecordTask": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{ActionGetWebRecordList},
-				"Version": []string{ServiceVersion20201201},
+				"Action":  []string{"GetRecordTask"},
+				"Version": []string{"2022-06-01"},
+			},
+		},
+		"StartWebRecord": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetRecordTask"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"StopWebRecord": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopWebRecord"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"GetWebRecordTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetWebRecordTask"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"GetWebRecordList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetWebRecordList"},
+				"Version": []string{"2020-12-01"},
 			},
 		},
 		//ActionExample, add new action
