@@ -15,6 +15,10 @@ func (c *LsClient) WebTracks(request *WebTracksRequest) (r *WebTracksResponse, e
 		"ProjectId": request.ProjectID,
 	}
 
+	if request.CompressType == "" {
+		request.CompressType = CompressLz4
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type":       "application/json",
 		"x-tls-compresstype": request.CompressType,
