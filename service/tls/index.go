@@ -165,7 +165,8 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, 
 
 func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse, e error) {
 	reqHeaders := map[string]string{
-		"Content-Type": "application/json",
+		"Content-Type":   "application/json",
+		HeaderAPIVersion: APIVersion2,
 	}
 
 	return c.search(request, reqHeaders)
