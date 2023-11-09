@@ -15,7 +15,7 @@ jobs:
           - git checkout mainrelease
           - git merge master --squash
           - git add . 
-          - git rm  --cached  .codebase/pipelines/hw.yaml
+          - git rm  --cached  .codebase/pipelines/update.yaml
       - name: commit & push
         commands:
           # Commit.
