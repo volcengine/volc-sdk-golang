@@ -86,6 +86,22 @@ func TestListListBillOverviewByProd(t *testing.T) {
 	fmt.Println(string(b))
 }
 
+func TestListBillOverviewByCategory(t *testing.T) {
+	billing.DefaultInstance.Client.SetAccessKey(testAk)
+	billing.DefaultInstance.Client.SetSecretKey(testSk)
+	//
+	query := url.Values{}
+	query.Add("BillPeriod", "2023-03")
+	query.Add("BillingMode", "")
+	query.Add("BillCategoryParent", "")
+	resp, status, err := billing.DefaultInstance.ListBillOverviewByCategory(query)
+	assert.NoError(t, err)
+	assert.Equal(t, status, http.StatusOK)
+	assert.NotNil(t, resp)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
 func TestListSplitBillDetail(t *testing.T) {
 	billing.DefaultInstance.Client.SetAccessKey(testAk)
 	billing.DefaultInstance.Client.SetSecretKey(testSk)
