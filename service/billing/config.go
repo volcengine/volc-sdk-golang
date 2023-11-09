@@ -50,6 +50,14 @@ var (
 				"Version": []string{ServiceVersion20220101},
 			},
 		},
+		"ListBillOverviewByCategory": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListBillOverviewByCategory"},
+				"Version": []string{ServiceVersion20220101},
+			},
+		},
 		"ListSplitBillDetail": {
 			Method: http.MethodPost,
 			Path:   "/",
