@@ -186,7 +186,7 @@ func appendParam(originalUrl string, params map[string]string) string {
 
 func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers map[string]string, body []byte) (*http.Response, error) {
 	headers[AgentHeader] = defaultLogUserAgent
-	// 如果header没有配置api version，增加默认的api version 0.2.0
+	// 如果header没有配置api version，增加默认的api version 0.3.0
 	if _, ok := headers[HeaderAPIVersion]; !ok {
 		headers[HeaderAPIVersion] = c.APIVersion
 	}

@@ -41,6 +41,10 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		"TopicId": request.TopicID,
 	}
 
+	if request.CompressType == "" {
+		request.CompressType = CompressLz4
+	}
+
 	bodyBytes, originalLength, err := GetPutLogsBody(request.CompressType, request.LogBody)
 	if err != nil {
 		return nil, err

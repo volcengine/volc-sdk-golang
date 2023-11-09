@@ -6,7 +6,7 @@ import (
 )
 
 func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
-	apiVersion := APIVersion2
+	apiVersion := APIVersion3
 	return &LsClient{
 		Endpoint:        endpoint,
 		accessLock:      &sync.RWMutex{},
