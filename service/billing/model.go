@@ -143,6 +143,8 @@ type BillOverviewByProd struct {
 	PaidAmount             string
 	UnpaidAmount           string
 	SettlementType         string
+	CreditCarriedAmount    string
+	SubjectName            string
 }
 
 type BillOverviewByProdList struct {
@@ -155,6 +157,40 @@ type BillOverviewByProdList struct {
 type BillOverviewByProdListResp struct {
 	ResponseMetadata *base.ResponseMetadata
 	Result           *BillOverviewByProdList `json:",omitempty"`
+}
+
+type BillOverviewByCategory struct {
+	PayerID             string
+	PayerUserName       string
+	PayerCustomerName   string
+	BusinessMode        string
+	BillPeriod          string
+	BillCategoryParent  string
+	SubjectNo           string
+	SellerID            string
+	SellerUserName      string
+	SellerCustomerName  string
+	OwnerID             string
+	OwnerUserName       string
+	OwnerCustomerName   string
+	SettlementType      string
+	SubjectName         string
+	OriginalBillAmount  string
+	DiscountBillAmount  string
+	CouponAmount        string
+	PayableAmount       string
+	PaidAmount          string
+	UnpaidAmount        string
+	CreditCarriedAmount string
+}
+
+type BillOverviewByCategoryMap struct {
+	Map map[int64][]*BillOverviewByCategory
+}
+
+type BillOverviewByCategoryMapResp struct {
+	ResponseMetadata *base.ResponseMetadata
+	Result           *BillOverviewByCategoryMap `json:"Result,omitempty"`
 }
 
 type SplitBillDetail struct {
