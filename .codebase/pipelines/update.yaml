@@ -1,0 +1,26 @@
+name: SDK # 自动更新 SDK
+trigger:
+  change: # 仅在 MR 合入 master 分支后触发
+    branches: [ master ]
+    types: [ submit ]
+jobs:
+  update:
+    name: update sdk
+    image: hub.byted.org/codebase/ci_debian_bullseye
+    allow-push: true # 开启 git push 权限，https://bytedance.feishu.cn/wiki/wikcn0XxotllYX3nzz7AEv1h07d#Qmod8l
+    steps:
+      - name: generate code
+        commands:
+          - git checkout master
+          - git checkout mainrelease
+          - git merge master --squash
+          - git add .
+      - name: commit & push
+        commands:
+          # Commit.
+          - git config user.name "liyan.90210"
+          - git config user.email "liyan.90210@bytedance.com"
+          - git commit -m 'feat auto update sdk'
+          - git log -1
+          # Push.
+          - git push origin mainrelease
