@@ -144,6 +144,7 @@ type SubtitleItem struct {
 	Start   int64  `json:"Start"` //millsecond
 	End     int64  `json:"End"`   //millsecond
 	Content string `json:"Content"`
+	Font    *Font  `json:"Font"`
 }
 
 type GenSipIDRequest struct {
@@ -217,6 +218,12 @@ type ListHistoryRequestV3 struct {
 	StartTime      int64 `json:"StartTs"`
 	EndTime        int64 `json:"EndTs"`
 	ReqType        string
+}
+
+type DeleteStreamRecordRequest struct {
+	StreamID string
+	ObjKey   []string
+	Bucket   string
 }
 
 type AiotPlayBackControlRequest struct {
@@ -307,6 +314,10 @@ type GetRecordListRequestV3 struct {
 	Order        bool   `json:"Order"`
 }
 
+type PlaybackRequest struct {
+	PlaybackID string `json:"PlaybackID"`
+}
+
 type PlayBackStartRequest struct {
 	DeviceID            string `json:"DeviceID"`
 	ChannelID           string `json:"ChannelID"`
@@ -318,7 +329,7 @@ type PlayBackStartRequest struct {
 	SchedQuotaKey       string `json:"SchedQuotaKey"`       //调度到哪个集群
 }
 
-type PlayBackStartRequestV3 struct {
+type StartPlaybackRequestV3 struct {
 	StreamID            string `json:"StreamID"`
 	StartTime           int64  `json:"StartTime"`
 	EndTime             int64  `json:"EndTime"`
@@ -333,6 +344,13 @@ type PlayBackControlRequest struct {
 	Cmd      int     `json:"Cmd"`
 	Ntp      string  `json:"Ntp"`
 	Scale    float32 `json:"Scale"`
+}
+
+type ControlPlaybackRequestV3 struct {
+	PlaybackID string  `json:"PlaybackID"`
+	Cmd        int     `json:"Cmd"`
+	Ntp        string  `json:"Ntp"`
+	Scale      float32 `json:"Scale"`
 }
 
 type CruiseControlRequest struct {
@@ -352,6 +370,54 @@ type CruiseControlRequestV3 struct {
 	PresetID    uint8  `json:"PresetID"`    // 预置位ID
 	Speed       uint32 `json:"Speed"`       // 巡航速度
 	StaySeconds uint32 `json:"StaySeconds"` // 巡航停留时间
+}
+
+type SetCruiseTrackRequest struct {
+	DeviceNSID  string        `json:"DeviceNSID"`
+	ChannelID   string        `json:"ChannelID"`
+	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
+	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
+	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
+	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
+}
+
+type SetCruiseTrackRequestV3 struct {
+	StreamID    string        `json:"StreamID"`
+	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
+	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
+	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
+	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
+}
+
+type DeleteCruiseTrackRequest struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type DeleteCruiseTrackRequestV3 struct {
+	StreamID string `json:"StreamID"`
+	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type StartCruiseTrackRequest struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type StartCruiseTrackRequestV3 struct {
+	StreamID string `json:"StreamID"`
+	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
+}
+
+type StopCruiseTrackRequest struct {
+	DeviceNSID string `json:"DeviceNSID"`
+	ChannelID  string `json:"ChannelID"`
+}
+
+type StopCruiseTrackRequestV3 struct {
+	StreamID string `json:"StreamID"`
 }
 
 type CreateStreamRequest struct {
@@ -374,9 +440,10 @@ type UpdateStreamRequest struct {
 		TemplateName string `json:"TemplateName"`
 		TemplateID   string `json:"TemplateID"`
 	} `json:"Record"`
-	PushUrl    string `json:"push_url"`
-	Status     string `json:"Status"`
-	PushUrlDDL *int64 `json:"PushUrlDDL"`
+	PushUrl     string `json:"push_url"`
+	Status      string `json:"Status"`
+	PushUrlDDL  *int64 `json:"PushUrlDDL"`
+	IgnoreAudio bool   `json:"IgnoreAudio"`
 }
 
 type StreamRequest struct {
@@ -852,25 +919,61 @@ type SetAlarmGuardRequest struct {
 	Enable     string
 }
 
+type SetDeviceAlarmRequestV3 struct {
+	DeviceID string `json:"DeviceID"`
+	StreamID string `json:"StreamID"`
+	Enable   string `json:"Enable"`
+}
+
 type ResetAlarmRequest struct {
 	SipID      string
 	DeviceNSID string
 	ChannelID  string
 }
 
+type ResetDeviceAlarmRequestV3 struct {
+	DeviceID string `json:"DeviceID"`
+	StreamID string `json:"StreamID"`
+}
+
 type ListAlarmNotifyRequest struct {
-	PageNumber    int
-	PageSize      int
-	DeviceNSID    string   `bson:"DeviceNSID"`
-	ChannelID     string   `bson:"ChannelID"`
-	StartTime     int64    `bson:"StartTime"`
-	EndTime       int64    `bson:"EndTime"`
-	AlarmMethod   []uint32 `bson:"AlarmMethod"`
+	PageNumber    int      `json:"PageNumber"`
+	PageSize      int      `json:"PageSize"`
+	DeviceNSID    string   `json:"DeviceNSID"`
+	ChannelID     string   `json:"ChannelID"`
+	StartTime     int64    `json:"StartTime"`
+	EndTime       int64    `json:"EndTime"`
+	AlarmMethod   []uint32 `json:"AlarmMethod"`
+	AlarmPriority []uint32 `json:"AlarmPriority"`
+	AlarmType2    []uint32 `json:"AlarmType2"`
+	AlarmType5    []uint32 `json:"AlarmType5"`
+	AlarmType6    []uint32 `json:"AlarmType6"`
+	Order         uint32   `json:"Order"`
+}
+
+type ListDeviceAlarmsRequestV3 struct {
+	PageNumber int
+	PageSize   int
+	DeviceID   string `json:"DeviceID"`
+	StreamID   string `json:"StreamID"`
+	StartTime  int64  `bson:"StartTime"`
+	EndTime    int64  `bson:"EndTime"`
+	// 告警方式筛选条件，可选枚举值为（如传入空数组，即返回所有告警方式的报警记录）
+	//1（电话报警）
+	//2（设备报警）
+	//3（短信报警
+	//4（GPS报警）
+	//5（视频报警）
+	//6（设备故障报警）
+	//7（其他报警）
+	AlarmMethod []uint32 `bson:"AlarmMethod"`
+	// 报警级别筛选条件，可选枚举值为（如传入空数组，即返回所有告警级别的报警记录）：
+	//1（一级警情）
+	//2（二级警情）
+	//3（三级警情）
+	//4（四级警情）
 	AlarmPriority []uint32 `bson:"AlarmPriority"`
-	AlarmType2    []uint32 `bson:"AlarmType2"`
-	AlarmType5    []uint32 `bson:"AlarmType5"`
-	AlarmType6    []uint32 `bson:"AlarmType6"`
-	Order         uint32   `bson:"Order"`
+	Order         uint32   `bson:"Order"` // 排序方式：0（正序）,其他（倒序）
 }
 
 type UploadCertRequest struct {
