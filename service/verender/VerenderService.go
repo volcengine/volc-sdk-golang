@@ -218,18 +218,6 @@ func (v *Verender) GetWorkspace(workspaceID int64) (*Workspace, error) {
         w.storageAccess.ExpiredNSec = time.Now().Unix() + StorageAccessExpiredNSec
     }
 
-    cellSpecList, err := w.ListCellSpec()
-    if err != nil {
-        return nil, err
-    }
-
-    for _, cs := range cellSpecList {
-        if cs.SystemInfo == VerenderOsTypeWindows {
-            w.ignoreUploadCase = true
-            break
-        }
-    }
-
     return w, nil
 }
 
@@ -273,7 +261,7 @@ func (w *Workspace) UploadFile(src, des string) (*FileInfo, error) {
         RemoteFilePath: des,
     }
 
-    if w.ignoreUploadCase {
+    if w.ConvertToLowerCase {
         r.RemoteFilePath = strings.ToLower(r.RemoteFilePath)
     }
 
@@ -299,7 +287,7 @@ func (w *Workspace) UploadFolder(srcFolder, desFolder string) error {
 
     for _, f := range files {
         des := filepath.Join(desFolder, f[len(srcFolder):])
-        if w.ignoreUploadCase {
+        if w.ConvertToLowerCase {
             des = strings.ToLower(des)
         }
 
