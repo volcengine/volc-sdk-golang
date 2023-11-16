@@ -86,10 +86,25 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"StopCruiseTrack"}, "Version": []string{ServiceVersion20231001}},
 		},
-		"PlayBackStartV3": {
+		"StartPlaybackV3": {
 			Method: http.MethodPost,
 			Path:   "/",
-			Query:  url.Values{"Action": []string{"PlayBackStart"}, "Version": []string{ServiceVersion20231001}},
+			Query:  url.Values{"Action": []string{"StartPlayback"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"StopPlaybackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"StopPlayback"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ControlPlaybackV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ControlPlayback"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"GetPlaybackStatusV3": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"GetPlaybackStatus"}, "Version": []string{ServiceVersion20231001}},
 		},
 		// get cloud record metadata, cloud playback and cloud screenshot
 		"CloudRecordPlayV3": {
@@ -106,6 +121,36 @@ var (
 			Method: http.MethodPost,
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"ListStreamRecords"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"SetDeviceAlarmV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"SetDeviceAlarm"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ResetDeviceAlarmV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ResetDeviceAlarm"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ListDeviceAlarmsV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ListDeviceAlarms"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"DeleteDeviceAlarmV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteDeviceAlarm"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"ClearDeviceAlarmV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"ClearDeviceAlarm"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"DeleteStreamRecord": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"DeleteStreamRecord"}, "Version": []string{ServiceVersion20231001}},
 		},
 	}
 
