@@ -7,7 +7,7 @@ import (
 const (
 	SourceTypeText     = "text/string"
 	SourceTypeImageJPG = "image/jpg"
-	SourceTypeImagePNG = "image/png "
+	SourceTypeImagePNG = "image/png"
 	SourceTypeImageGIF = "image/gif"
 	SourceTypeVideo    = "video/mp4"
 	SourceTypeAudio    = "audio/mp3"
