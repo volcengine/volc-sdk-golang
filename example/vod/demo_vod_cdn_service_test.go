@@ -379,7 +379,7 @@ func Test_UpdateDomainAuthConfig(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
-func Test_AddOrUpdateCertificate20230701(t *testing.T) {
+func Test_AddOrUpdateCertificate(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
 		AccessKeyID:     "your ak",
@@ -394,7 +394,7 @@ func Test_AddOrUpdateCertificate20230701(t *testing.T) {
 		HttpsStatus:   "your HttpsStatus",
 	}
 
-	resp, status, err := instance.AddOrUpdateCertificate20230701(query)
+	resp, status, err := instance.AddOrUpdateCertificate(query)
 	fmt.Println(status)
 	fmt.Println(err)
 	fmt.Println(resp.String())
