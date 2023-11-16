@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	testAk = ""
-	testSk = ""
+	testAk = "ak"
+	testSk = "sk"
 )
 
 func TestVisual_FaceCompare(t *testing.T) {
@@ -102,7 +102,7 @@ func TestVisual_FaceFusionMovieAsync(t *testing.T) {
 	reqBody := &model.FaceFusionMovieSubmitTaskRequest{
 		ReqKey:           "facefusionmovie_standard", // 固定值
 		ImageUrl:         "https://xxx, https://xxx",
-		VideoUrl:         "https://xxx",
+		VideoUrl:         "https://xxxx",
 		RefImgUrl:        "https://xxx, https://xxx",
 		SourceSimilarity: "1",
 		LogoInfo: &model.FaceFusionMovieLogoInfo{
@@ -121,7 +121,7 @@ func TestVisual_FaceFusionMovieAsync(t *testing.T) {
 	// 查询结果
 	// reqBody := &model.FaceFusionMovieGetResultRequest{
 	// 	ReqKey: "facefusionmovie_standard", // 固定值
-	// 	TaskId: "xxxx",
+	// 	TaskId: "xxxxx",
 	// }
 
 	// resp, status, err := DefaultInstance.FaceFusionMovieGetResult(reqBody)

@@ -478,6 +478,10 @@ func (p *Visual) VideoOverResolutionQueryTaskV2(req *model.VideoOverResolutionQu
 }
 
 func (p *Visual) FaceFusionMovieSubmitTask(req *model.FaceFusionMovieSubmitTaskRequest) (*model.FaceFusionMovieSubmitTaskResult, int, error) {
+	if req.SourceSimilarity == "" {
+		req.SourceSimilarity = "1"
+	}
+	
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
