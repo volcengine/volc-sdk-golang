@@ -424,6 +424,26 @@ type PlayBackStartResponse struct {
 	Result           PlayBackStartResp `json:"Result,omitempty"`
 }
 
+type StartPlaybackRespV3 struct {
+	PlaybackID string   `json:"PlaybackID"`
+	PullUrls   []string `json:"PullUrls"`
+	PushUrl    string   `json:"PushUrl"`
+}
+
+type StartPlaybackResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           StartPlaybackRespV3 `json:"Result,omitempty"`
+}
+
+type GetPlaybackStatusRespV3 struct {
+	Status string `json:"Status"`
+}
+
+type GetPlaybackStatusResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           GetPlaybackStatusRespV3 `json:"Result,omitempty"`
+}
+
 type StreamResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           IDResponse `json:"Result,omitempty"`
@@ -672,6 +692,21 @@ type HistoryResultV3 struct {
 	ScreenResult *ScreenResultV3 `json:"Screenshot,omitempty"`
 	RecordResult *RecordResultV3 `json:"Record,omitempty"`
 	RecordMeta   *RecordMetaV3   `json:"RecordMeta,omitempty"`
+}
+
+type DeleteStreamRecordResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *DeleteStreamRecord
+}
+
+type DeleteStreamRecord struct {
+	Deleted    []string
+	DeleteErrs []*DeleteErrWrapper
+}
+
+type DeleteErrWrapper struct {
+	Key     string
+	Message string
 }
 
 type RecordResultV3 struct {
@@ -1267,13 +1302,37 @@ type AlarmNotify struct {
 		AlarmType      uint32 `json:"AlarmType"`
 		AlarmTypeParam struct {
 			EventType uint32 `json:"EventType"`
-		} `bson:"AlarmTypeParam"`
-	} `bson:"Info"`
+		} `json:"AlarmTypeParam"`
+	} `json:"Info"`
 }
 
 type ListAlarmNotifyResult struct {
 	PageResult
 	AlarmNotifies []*AlarmNotify
+}
+
+type ListDeviceAlarmsResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           ListAlarmNotifyResultV3 `json:"Result,omitempty"`
+}
+
+type AlarmNotifyV3 struct {
+	AlarmNotifyID    string `json:"AlarmNotifyID"`
+	DeviceNSID       string `json:"DeviceNSID"`
+	ChannelID        string `json:"ChannelID"`
+	AlarmPriority    uint32 `json:"AlarmPriority"`    // 报警级别(1-一级警情,2-二级警情,3-三级警情,4-四级警情)
+	AlarmMethod      uint32 `json:"AlarmMethod"`      // 报警方式(1-电话报警,2-设备报警,3-短信报警,4-GPS报警,5-视频报警,6-设备故障报警,7-其他报警)
+	AlarmType        uint32 `json:"AlarmType"`        // 报警类型
+	EventType        uint32 `json:"EventType"`        // 事件类型(1-进入区域；2-离开区域)
+	AlarmTime        int64  `json:"AlarmTime"`        // 告警时间，UNIX时间戳
+	AlarmDescription string `json:"AlarmDescription"` // 告警描述
+	Longitude        string `json:"Longitude"`        // 经度
+	Latitude         string `json:"Latitude"`         // 纬度
+}
+
+type ListAlarmNotifyResultV3 struct {
+	PageResult
+	AlarmNotifies []*AlarmNotifyV3
 }
 
 type UploadCertResponse struct {
@@ -1491,54 +1550,6 @@ type CruiseTrack struct {
 	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
 	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
 	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
-}
-
-type SetCruiseTrackArgs struct {
-	DeviceNSID  string        `json:"DeviceNSID"`
-	ChannelID   string        `json:"ChannelID"`
-	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
-	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
-	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
-	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
-}
-
-type SetCruiseTrackArgsV3 struct {
-	StreamID    string        `json:"StreamID"`
-	TrackID     uint8         `json:"TrackID"`     // 巡航轨迹组编号(1~255)
-	TrackList   []CruisePoint `json:"TrackList"`   // 巡航轨迹列表, 最多可添加255个预置点
-	StaySeconds uint32        `json:"StaySeconds"` // 预置点停留时间, 单位:秒, 取值范围:1~4095
-	Speed       uint32        `json:"Speed"`       // 巡航速度, 取值范围: 1~4095
-}
-
-type DeleteCruiseTrackArgs struct {
-	DeviceNSID string `json:"DeviceNSID"`
-	ChannelID  string `json:"ChannelID"`
-	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
-}
-
-type DeleteCruiseTrackArgsV3 struct {
-	StreamID string `json:"StreamID"`
-	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
-}
-
-type StartCruiseTrackArgs struct {
-	DeviceNSID string `json:"DeviceNSID"`
-	ChannelID  string `json:"ChannelID"`
-	TrackID    uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
-}
-
-type StartCruiseTrackArgsV3 struct {
-	StreamID string `json:"StreamID"`
-	TrackID  uint8  `json:"TrackID"` // 巡航轨迹组编号(1~255)
-}
-
-type StopCruiseTrackArgs struct {
-	DeviceNSID string `json:"DeviceNSID"`
-	ChannelID  string `json:"ChannelID"`
-}
-
-type StopCruiseTrackArgsV3 struct {
-	StreamID string `json:"StreamID"`
 }
 
 type GetCruiseTrackResponse struct {
