@@ -326,6 +326,14 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"ListFileMetaInfosByFileNames": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListFileMetaInfosByFileNames"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"SubmitUnblockMediaTask": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -734,7 +742,7 @@ var (
 				"Version": []string{"2022-01-01"},
 			},
 		},
-		"AddOrUpdateCertificate20230701": {
+		"AddOrUpdateCertificate": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{

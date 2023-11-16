@@ -89,31 +89,6 @@ type ListAccountDccPluginsResp struct {
     Result           ListAccountDccPluginsResult `json:"Result"`
 }
 
-type ResourceSpec struct {
-    SpecId         int64  `json:"SpecId"`
-    CpuCount       int    `json:"CpuCount"`
-    CpuType        string `json:"CpuType"`
-    GpuCount       int    `json:"GpuCount"`
-    GpuType        string `json:"GpuType"`
-    Memory         int    `json:"Memory"`
-    SystemInfo     string `json:"SystemInfo"`
-    SpecType       string `json:"SpecType"`
-    SpecTemplateId int64  `json:"SpecTemplateId"`
-}
-
-type ResourceSpecification struct {
-    RegionId   int64          `json:"RegionId"`
-    RegionName string         `json:"RegionName"`
-    SupportCpu string         `json:"SupportCpu"`
-    SupportGpu string         `json:"SupportGpu"`
-    Specs      []ResourceSpec `json:"Specs"`
-}
-
-type ListResourceSpecificationsResp struct {
-    ResponseMetadata ResponseMetadata        `json:"ResponseMetadata"`
-    Result           []ResourceSpecification `json:"Result"`
-}
-
 type StorageAccess struct {
     BucketName          string        `json:"bucket_name"`
     FtransAclToken      string        `json:"ftrans_acl_token"`
@@ -149,7 +124,7 @@ type Workspace struct {
     HardwareSpecification HardwareSpecification `json:"HardwareSpecification"`
     client                *base.Client          `json:"-"`
     storageAccess         *StorageAccess        `json:"-"`
-    ignoreUploadCase      bool                  `json:"-"` /*上传文件时是否忽略大小写*/
+    ConvertToLowerCase    bool                  `json:"ConvertToLowerCase"`
 }
 
 type WorkspaceLimit struct {

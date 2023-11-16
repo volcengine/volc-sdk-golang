@@ -13,6 +13,25 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
+func Test_ListFileMetaInfosByFileNames(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListFileMetaInfosByFileNamesRequest{
+		SpaceName:        "your SpaceName",
+		FileNameEncodeds: "your FileNameEncodeds",
+		BucketName:       "your BucketName",
+	}
+
+	resp, status, err := instance.ListFileMetaInfosByFileNames(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_UpdateMediaInfo(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

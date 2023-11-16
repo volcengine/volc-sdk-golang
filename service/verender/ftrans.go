@@ -17,12 +17,16 @@ import (
     "time"
 
     "github.com/google/uuid"
+    "golang.org/x/exp/rand"
 )
 
 const (
-    IspCt = "ct"
-    IspUn = "un"
-    IspCm = "cm"
+    IspCt      = "ct"
+    IspUn      = "un"
+    IspCm      = "cm"
+    IspDefault = "default"
+
+    FtransDefaultVersion = "default"
 
     FtransClientAclToken = "4d0c1b2513cb82263814e10bf2f136ed"
 
@@ -59,7 +63,6 @@ const (
     FtransTransStatusFailed      = "failed"
     FtransTransStatusCancelled   = "cancelled"
     FtransStatusUploadFileNone   = 0x401003
-    FtransStatusUploadDirNone    = 0x401202
     FtransStatusDownloadFileNone = 0x402003
     FtransStatusSucc             = 0
 )
@@ -171,41 +174,107 @@ type ftransPartTask struct {
     f          *os.File
 }
 
-func parseAddressMap(addr string) (map[string]map[string]string, error) {
-    addrMap := map[string]map[string]string{}
+func setAddrMap(addrMap map[string]map[string][]string, version, isp, host string) map[string]map[string][]string {
+    if _, ok := addrMap[version]; ok {
+        if _, ok := addrMap[version][isp]; ok {
+            found := false
+            for _, h := range addrMap[version][isp] {
+                if h == host {
+                    found = true
+                    break
+                }
+            }
 
-    for _, elem := range strings.Split(addr, ";") {
-        segs := strings.Split(elem, ":")
-
-        // version:ip:port or version:isp:ip:port
-        if len(segs) < 3 {
-            continue
-        }
-
-        version := segs[0]
-        if segs[1] != IspCt && segs[1] != IspUn && segs[1] != IspCm {
-            host := strings.Join(segs[1:], ":")
-
-            addrMap[version] = map[string]string{
-                IspCt: host,
-                IspUn: host,
-                IspCm: host,
+            if !found {
+                addrMap[version][isp] = append(addrMap[version][isp], host)
             }
         } else {
-            isp := segs[1]
-            host := strings.Join(segs[2:], ":")
+            addrMap[version][isp] = []string{host}
+        }
+    } else {
+        addrMap[version] = map[string][]string{
+            isp: {host},
+        }
+    }
+    return addrMap
+}
 
-            if _, ok := addrMap[version]; ok {
-                addrMap[version][isp] = host
+func buildAddrMap(addr string) (map[string]map[string][]string, error) {
+    addrMap := map[string]map[string][]string{}
+
+    for _, elem := range strings.Split(addr, ";") {
+        if strings.Contains(elem, "[") { /* ipv6 */
+            idx := strings.Index(elem, "[")
+            host := elem[idx:]
+
+            if idx == 0 {
+                /* [ip6]:port */
+                addrMap = setAddrMap(addrMap, FtransDefaultVersion, IspDefault, host)
             } else {
-                addrMap[version] = map[string]string{
-                    isp: host,
+                segs := strings.Split(elem[:idx-1], ":")
+                if len(segs) == 1 {
+                    if segs[0] != IspCt && segs[0] != IspUn && segs[0] != IspCm {
+                        /* version:[ip6]:port */
+                        addrMap = setAddrMap(addrMap, segs[0], IspDefault, host)
+                    } else {
+                        /* isp:[ip6]:port */
+                        addrMap = setAddrMap(addrMap, FtransDefaultVersion, segs[0], host)
+                    }
+                } else {
+                    /* version:isp:[ip6]:port */
+                    addrMap = setAddrMap(addrMap, segs[0], segs[1], host)
                 }
+            }
+        } else { /* ipv4 */
+            segs := strings.Split(elem, ":")
+            if len(segs) < 2 || len(segs) > 4 {
+                continue
+            }
+
+            if len(segs) == 2 {
+                /* ip4:port */
+                addrMap = setAddrMap(addrMap, FtransDefaultVersion, IspDefault, addr)
+            } else if len(segs) == 3 {
+                host := strings.Join(segs[1:], ":")
+                if segs[0] != IspCt && segs[0] != IspUn && segs[0] != IspCm {
+                    /* version:ip4:port */
+                    addrMap = setAddrMap(addrMap, segs[0], IspDefault, host)
+                } else {
+                    /* isp:ip4:port */
+                    addrMap = setAddrMap(addrMap, FtransDefaultVersion, segs[1], host)
+                }
+            } else {
+                /* version:isp:ip4:port */
+                host := strings.Join(segs[2:], ":")
+                addrMap = setAddrMap(addrMap, segs[0], segs[1], host)
             }
         }
     }
 
     return addrMap, nil
+}
+
+func getAddrMap(addrMap map[string]map[string][]string, version, isp string) (string, error) {
+    if _, ok := addrMap[version]; !ok {
+        if _, ok := addrMap[FtransDefaultVersion]; !ok {
+            return "", fmt.Errorf("addr of version[%s] not found", version)
+        }
+        version = FtransDefaultVersion
+    }
+
+    if _, ok := addrMap[version][isp]; !ok {
+        if _, ok := addrMap[version][IspDefault]; !ok {
+            return "", fmt.Errorf("addr of isp[%s] not found", isp)
+        }
+        isp = IspDefault
+    }
+
+    ipList := addrMap[version][isp]
+    if len(ipList) == 0 {
+        return "", fmt.Errorf("addr of version[%s] isp[%s] not found", version, isp)
+    }
+
+    return ipList[rand.Int()%len(ipList)], nil
 }
 
 func getFtransClientSig(op string, t int64, token string) string {
@@ -238,24 +307,18 @@ func NewFtransClient(bucketName, serverName, aclToken, s10Server, cert, key, cli
     }
 
     if s10Server != "" {
-        s10ServerAddrMap, err := parseAddressMap(s10Server)
+        s10ServerAddrMap, err := buildAddrMap(s10Server)
 
         if err != nil {
             return nil, err
         }
 
-        found := false
-        for _, ispMap := range s10ServerAddrMap {
-            if _, ok := ispMap[isp]; ok {
-                fc.FtransS10Addr = ispMap[isp]
-                found = true
-                break
-            }
-        }
+        host, err := getAddrMap(s10ServerAddrMap, FtransDefaultVersion, isp)
 
-        if !found {
+        if err != nil {
             return nil, fmt.Errorf("ftrans: isp[%s] not found in s10Server[%s]", isp, s10Server)
         }
+        fc.FtransS10Addr = host
 
         if cert == "" || key == "" {
             return nil, fmt.Errorf("ftrans: cert and key must be set when s10Server specified")
@@ -287,30 +350,32 @@ func NewFtransClient(bucketName, serverName, aclToken, s10Server, cert, key, cli
         fc.FtransClientConfig = conf
         version := fc.FtransClientConfig["Version"].(string)
         protocol := FtransProtocolUDP
-        if int(conf["RunTimeTransTudpSwitch"].(float64)) == FtransSwitchOff &&
-            int(conf["RunTimeTransTtcpSwitch"].(float64)) == FtransSwitchOn {
-            protocol = FtransProtocolTCP
+        if tudpSwitch, ok := conf["RuntimeTransTudpSwitch"]; ok {
+            if int(tudpSwitch.(float64)) == FtransSwitchOff {
+                if ttcpSwitch, ok := conf["RuntimeTransTtcpSwitch"]; ok {
+                    if int(ttcpSwitch.(float64)) == FtransSwitchOn {
+                        protocol = FtransProtocolTCP
+                    }
+                }
+            }
         }
 
         if s2Server == "" {
             return nil, fmt.Errorf("ftrans: s2Server must be set when s2Server specified")
         }
 
-        s2ServerMap, err := parseAddressMap(s2Server)
+        s2ServerMap, err := buildAddrMap(s2Server)
         if err != nil {
             return nil, err
         }
 
-        if _, ok := s2ServerMap[version]; !ok {
-            return nil, fmt.Errorf("ftrans: client version[%s] is too old, please upgrade it first", version)
-        }
-
-        if _, ok := s2ServerMap[version][isp]; !ok {
+        host, err := getAddrMap(s2ServerMap, version, isp)
+        if err != nil {
             return nil, fmt.Errorf("ftrans: isp [%s] not found in s2Server [%s] of version [%s]",
                 isp, s2Server, version)
         }
 
-        fc.FtransS2Addr = s2ServerMap[version][isp]
+        fc.FtransS2Addr = host
 
         if proxyAddr != "" {
             proxyList, err := fc.getProxyList(proxyAddr)
