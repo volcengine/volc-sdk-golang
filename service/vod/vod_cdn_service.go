@@ -1599,12 +1599,12 @@ func (p *Vod) UpdateDomainAuthConfig(req *request.VodUpdateDomainAuthConfigV2Req
 	return output, status, nil
 }
 
-// AddOrUpdateCertificate20230701
+// AddOrUpdateCertificate
 /*
  * @param *request.AddOrUpdateCertificateV2Request
  * @return *response.AddOrUpdateCertificateV2Response, int, error
  */
-func (p *Vod) AddOrUpdateCertificate20230701(req *request.AddOrUpdateCertificateV2Request) (*response.AddOrUpdateCertificateV2Response, int, error) {
+func (p *Vod) AddOrUpdateCertificate(req *request.AddOrUpdateCertificateV2Request) (*response.AddOrUpdateCertificateV2Response, int, error) {
 	query := url.Values{}
 	form := url.Values{}
 	marshaler := protojson.MarshalOptions{
@@ -1664,7 +1664,7 @@ func (p *Vod) AddOrUpdateCertificate20230701(req *request.AddOrUpdateCertificate
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Post("AddOrUpdateCertificate20230701", url.Values{}, form)
+	respBody, status, err := p.Post("AddOrUpdateCertificate", url.Values{}, form)
 
 	output := &response.AddOrUpdateCertificateV2Response{}
 	unmarshaler := protojson.UnmarshalOptions{
