@@ -21,6 +21,10 @@ func Uint16Ptr(in uint16) *uint16 {
 	return &in
 }
 
+func BoolPtr(in bool) *bool {
+	return &in
+}
+
 func CreateProject(projectName, description, region string, cli Client) (string, error) {
 	createProjectReq := &CreateProjectRequest{
 		ProjectName: projectName,
@@ -39,11 +43,12 @@ func CreateProject(projectName, description, region string, cli Client) (string,
 
 func CreateTopic(projectId, topicName, description string, shardCount int, ttl uint16, cli Client) (string, error) {
 	createTopicReq := &CreateTopicRequest{
-		ProjectID:   projectId,
-		TopicName:   topicName,
-		Ttl:         ttl,
-		Description: description,
-		ShardCount:  shardCount,
+		ProjectID:      projectId,
+		TopicName:      topicName,
+		Ttl:            ttl,
+		Description:    description,
+		ShardCount:     shardCount,
+		EnableTracking: BoolPtr(true),
 	}
 
 	createTopicResp, err := cli.CreateTopic(createTopicReq)

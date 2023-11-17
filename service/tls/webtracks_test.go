@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"os"
 	"testing"
 
@@ -19,12 +20,12 @@ type SDKWebtracksTestSuite struct {
 func (suite *SDKWebtracksTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
@@ -60,44 +61,76 @@ func (suite *SDKWebtracksTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKWebtracksTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKWebtracksTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKWebtracksTestSuite))
 }
 
-// TestWebtracks
-func (suite *SDKWebtracksTestSuite) TestWebtracks() {
-	{
-		testcases := map[*WebTracksRequest]*WebTracksResponse{
-			{
-				TopicID:      suite.topic,
-				ProjectID:    suite.project,
-				CompressType: "lz4",
-				Source:       "sdk-test",
-				Logs: []map[string]string{
-					{
-						"tap1": "person-A",
-					},
+func (suite *SDKWebtracksTestSuite) TestWebTracksNormally() {
+	testcases := map[*WebTracksRequest]*Error{
+		{
+			ProjectID:    suite.project,
+			TopicID:      suite.topic,
+			CompressType: "lz4",
+			Source:       "192.168.1.1",
+			Logs: []map[string]string{
+				{
+					"key1": "value11",
+					"key2": "value21",
 				},
-			}: {},
-		}
-
-		for req, _ := range testcases {
-			_, err := suite.cli.WebTracks(req)
-			suite.NoError(err)
-		}
+				{
+					"key1": "value12",
+					"key2": "value22",
+				},
+			},
+		}: nil,
 	}
 
-	// Test invalid
-	{
-		testcases := map[*WebTracksRequest]*WebTracksResponse{
-			{
-				TopicID: "Test",
-			}: {},
-		}
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.WebTracks(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.WebTracks(req)
-			suite.Error(err)
-		}
+func (suite *SDKWebtracksTestSuite) TestWebTracksAbnormally() {
+	testcases := map[*WebTracksRequest]*Error{
+		{
+			ProjectID:    suite.project,
+			TopicID:      suite.topic,
+			CompressType: "rar",
+			Source:       "192.168.1.1",
+			Logs: []map[string]string{
+				{
+					"key1": "value11",
+					"key2": "value21",
+				},
+				{
+					"key1": "value12",
+					"key2": "value22",
+				},
+			},
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key x-tls-compresstype, value rar, please check argument.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.WebTracks(req)
+		suite.validateError(err, expectedErr)
 	}
 }

@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"os"
 	"strconv"
 	"testing"
@@ -22,12 +23,12 @@ type SDKLogTestSuite struct {
 func (suite *SDKLogTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
@@ -63,17 +64,25 @@ func (suite *SDKLogTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
-func TestSDKLogTestSuite(t *testing.T) {
-	suite.Run(t, new(SDKLogTestSuite))
+func (suite *SDKLogTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
 }
 
-// TestPutLogs: test put logs
-func (suite *SDKLogTestSuite) TestPutLogs() {
-	var logs []*pb.LogGroupList
+func getLogGroupList() {
+	var logGroupList []*pb.LogGroupList
 	for i := 0; i < 10; i++ {
 		idx := strconv.Itoa(i)
-
-		logs = append(logs, &pb.LogGroupList{
+		logGroupList = append(logGroupList, &pb.LogGroupList{
 			LogGroups: []*pb.LogGroup{
 				{
 					Source:   "localhost",
@@ -97,88 +106,213 @@ func (suite *SDKLogTestSuite) TestPutLogs() {
 			},
 		})
 	}
+}
 
-	// update 10 logGroupLists without compression
-	for _, logGroupList := range logs {
-		_, err := suite.cli.PutLogs(&PutLogsRequest{
-			TopicID:      suite.topic,
-			CompressType: "none",
-			LogBody:      logGroupList,
-		})
-		suite.NoError(err)
+func getLogs(num int) []Log {
+	logs := make([]Log, 0)
+
+	for i := 0; i < num; i++ {
+		log := Log{
+			Contents: []LogContent{
+				{
+					Key:   "key-1",
+					Value: uuid.New().String(),
+				},
+				{
+					Key:   "key-2",
+					Value: uuid.New().String(),
+				},
+			},
+			Time: time.Now().Unix(),
+		}
+		logs = append(logs, log)
 	}
 
-	// update 10 logGroupLists with lz4 compression
-	for _, logGroupList := range logs {
-		_, err := suite.cli.PutLogs(&PutLogsRequest{
+	return logs
+}
+
+func putLogs(cli Client, topicID string, source string, filename string, num int) error {
+	_, err := cli.PutLogsV2(&PutLogsV2Request{
+		TopicID:      topicID,
+		HashKey:      "",
+		CompressType: "lz4",
+		Source:       source,
+		FileName:     filename,
+		Logs:         getLogs(num),
+	})
+	if err != nil {
+		return err
+	}
+	time.Sleep(60 * time.Second)
+	return err
+}
+
+func TestSDKLogTestSuite(t *testing.T) {
+	suite.Run(t, new(SDKLogTestSuite))
+}
+
+func (suite *SDKLogTestSuite) TestPutLogsV2Normally() {
+	_, err := suite.cli.PutLogsV2(&PutLogsV2Request{
+		TopicID:      suite.topic,
+		HashKey:      "",
+		CompressType: "lz4",
+		Source:       "192.168.1.1",
+		FileName:     "sys.log",
+		Logs:         getLogs(100),
+	})
+	suite.NoError(err)
+}
+
+func (suite *SDKLogTestSuite) TestPutLogsV2Abnormally() {
+	testcases := map[*PutLogsV2Request]*Error{
+		{
 			TopicID:      suite.topic,
-			CompressType: "lz4",
-			LogBody:      logGroupList,
-		})
-		suite.NoError(err)
+			HashKey:      "",
+			CompressType: "rar",
+			Source:       "192.168.1.1",
+			FileName:     "sys.log",
+			Logs:         getLogs(100),
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key x-tls-compresstype, value rar, please check argument.",
+		},
 	}
 
-	// wait for consumption
-	time.Sleep(30 * time.Second)
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.PutLogsV2(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-	// test pull logs
-	beginCursorResp, err := suite.cli.DescribeCursor(&DescribeCursorRequest{
+func (suite *SDKLogTestSuite) TestDescribeCursorNormally() {
+	testcases := map[*DescribeCursorRequest]*Error{
+		{
+			TopicID: suite.topic,
+			ShardID: 0,
+			From:    "begin",
+		}: nil,
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeCursor(req)
+		suite.validateError(err, expectedErr)
+	}
+}
+
+func (suite *SDKLogTestSuite) TestDescribeCursorAbnormally() {
+	testcases := map[*DescribeCursorRequest]*Error{
+		{
+			TopicID: suite.topic,
+			ShardID: 100,
+			From:    "begin",
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key ShardId, value %!s(int32=100), please check argument.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeCursor(req)
+		suite.validateError(err, expectedErr)
+	}
+}
+
+func (suite *SDKLogTestSuite) TestConsumeLogsNormally() {
+	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
+	suite.NoError(err)
+
+	describeCursorResp, err := suite.cli.DescribeCursor(&DescribeCursorRequest{
 		TopicID: suite.topic,
 		ShardID: 0,
 		From:    "begin",
 	})
 	suite.NoError(err)
+	cursor := describeCursorResp.Cursor
 
-	beginCursor := beginCursorResp.Cursor
-
-	pullLogsResp, err := suite.cli.ConsumeLogs(&ConsumeLogsRequest{
-		TopicID:       suite.topic,
-		ShardID:       0,
-		Cursor:        beginCursor,
-		EndCursor:     nil,
-		LogGroupCount: IntPtr(100),
-		Compression:   nil,
+	resp, err := suite.cli.ConsumeLogs(&ConsumeLogsRequest{
+		TopicID:     suite.topic,
+		ShardID:     0,
+		Cursor:      cursor,
+		Compression: StrPtr("lz4"),
 	})
 	suite.NoError(err)
+	suite.Equal(1, resp.Count)
+	suite.Equal(100, len(resp.Logs.LogGroups[0].Logs))
+	suite.Equal("192.168.1.1", resp.Logs.LogGroups[0].Source)
+	suite.Equal("sys.log", resp.Logs.LogGroups[0].FileName)
+}
 
-	suite.Equal(pullLogsResp.Count, 10)
+func (suite *SDKLogTestSuite) TestConsumeLogsAbnormally() {
+	invalidCursor := uuid.New().String()
+	testcases := map[*ConsumeLogsRequest]*Error{
+		{
+			TopicID:     suite.topic,
+			ShardID:     0,
+			Cursor:      invalidCursor,
+			Compression: StrPtr("lz4"),
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key Cursor, value " + invalidCursor + ", please check argument.",
+		},
+	}
 
-	// wait for consumption
-	time.Sleep(30 * time.Second)
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.ConsumeLogs(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-	// test search logs
-	searchRes, err := suite.cli.SearchLogs(&SearchLogsRequest{
+func (suite *SDKLogTestSuite) TestSearchLogsV2Normally() {
+	startTime := time.Now().Unix()
+
+	time.Sleep(15 * time.Second)
+	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
+	suite.NoError(err)
+
+	testcases := map[*SearchLogsRequest]*SearchLogsResponse{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   time.Now().Unix(),
+		}: {
+			Status:   "complete",
+			HitCount: 100,
+			ListOver: true,
+			Analysis: false,
+			Count:    0,
+		},
+	}
+
+	for req, expectedResp := range testcases {
+		resp, err := suite.cli.SearchLogsV2(req)
+		suite.NoError(err)
+		suite.Equal(expectedResp.Status, resp.Status)
+		suite.Equal(expectedResp.HitCount, resp.HitCount)
+		suite.Equal(expectedResp.ListOver, resp.ListOver)
+		suite.Equal(expectedResp.Analysis, resp.Analysis)
+		suite.Equal(expectedResp.Count, resp.Count)
+	}
+}
+
+func (suite *SDKLogTestSuite) TestSearchLogsV2Abnormally() {
+	startTime := time.Now().Unix()
+
+	_, err := suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	_, err = suite.cli.SearchLogsV2(&SearchLogsRequest{
 		TopicID:   suite.topic,
 		Query:     "*",
-		StartTime: 1600000000000,
-		EndTime:   2600000000000,
-		Limit:     100,
+		StartTime: startTime,
+		EndTime:   time.Now().Unix(),
 	})
-	suite.NoError(err)
-
-	suite.Equal(20, searchRes.HitCount)
-
-	logMap := make(map[string]struct{})
-	for _, searchLog := range searchRes.Logs {
-		for _, v := range searchLog {
-			switch v.(type) {
-			case string:
-				logMap[v.(string)] = struct{}{}
-			}
-		}
+	expectedErr := &Error{
+		HTTPCode: http.StatusNotFound,
+		Code:     "IndexNotExists",
+		Message:  "Index does not exist.",
 	}
-
-	suite.Contains(logMap, "localhost")
-
-	for _, logGroupList := range logs {
-		for _, logGroup := range logGroupList.LogGroups {
-			suite.Contains(logMap, logGroup.FileName)
-
-			for _, log := range logGroup.Logs {
-				for _, content := range log.Contents {
-					suite.Contains(logMap, content.Value)
-				}
-			}
-		}
-	}
+	suite.validateError(err, expectedErr)
 }
