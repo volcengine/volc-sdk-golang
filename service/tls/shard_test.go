@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"os"
 	"testing"
 
@@ -37,13 +38,25 @@ func (suite *SDKShardTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKShardTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKShardTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKShardTestSuite))
 }
 
-// TestCreateIndex: test create index
-func (suite *SDKShardTestSuite) TestDescribeShards() {
-
+func (suite *SDKShardTestSuite) TestDescribeShardsNormally() {
 	testcases := map[*DescribeShardsRequest]int{
 		{
 			TopicID: suite.topic,
@@ -62,6 +75,23 @@ func (suite *SDKShardTestSuite) TestDescribeShards() {
 	for req, expect := range testcases {
 		listResp, err := suite.cli.DescribeShards(req)
 		suite.NoError(err)
-		suite.Equal(len(listResp.Shards), expect)
+		suite.Equal(expect, len(listResp.Shards))
+	}
+}
+
+func (suite *SDKShardTestSuite) TestDescribeShardsAbnormally() {
+	testcases := map[*DescribeShardsRequest]*Error{
+		{
+			TopicID: uuid.New().String(),
+		}: {
+			HTTPCode: http.StatusNotFound,
+			Code:     "TopicNotExist",
+			Message:  "Topic does not exist.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeShards(req)
+		suite.validateError(err, expectedErr)
 	}
 }

@@ -17,11 +17,18 @@ type CommonRequest struct {
 	Headers map[string]string `json:"-"`
 }
 
+type TagInfo struct {
+	Key   string `json:","`
+	Value string `json:","`
+}
+
 type CreateProjectRequest struct {
 	CommonRequest
-	ProjectName string
-	Description string
-	Region      string
+	ProjectName    string    `json:","`
+	Description    string    `json:","`
+	Region         string    `json:","`
+	IamProjectName *string   `json:",omitempty"`
+	Tags           []TagInfo `json:",omitempty"`
 }
 
 func (v *CreateProjectRequest) CheckValidation() error {
@@ -46,7 +53,7 @@ type DeleteProjectRequest struct {
 
 func (v *DeleteProjectRequest) CheckValidation() error {
 	if len(v.ProjectID) <= 0 {
-		return errors.New("Invalid argument, empty Region")
+		return errors.New("Invalid argument, empty ProjectID")
 	}
 	return nil
 }
@@ -70,11 +77,13 @@ type DescribeProjectResponse struct {
 
 type DescribeProjectsRequest struct {
 	CommonRequest
-	ProjectName string
-	ProjectID   string
-	PageNumber  int
-	PageSize    int
-	IsFullName  bool
+	ProjectName    string
+	ProjectID      string
+	PageNumber     int
+	PageSize       int
+	IsFullName     bool
+	IamProjectName *string
+	Tags           []TagInfo
 }
 
 func (v *DescribeProjectsRequest) CheckValidation() error {
@@ -82,19 +91,20 @@ func (v *DescribeProjectsRequest) CheckValidation() error {
 }
 
 type ProjectInfo struct {
-	ProjectID       string `json:"ProjectId"`
-	ProjectName     string `json:"ProjectName"`
-	Description     string `json:"Description"`
-	CreateTimestamp string `json:"CreateTime"`
-	TopicCount      int64  `json:"TopicCount"`
-	InnerNetDomain  string `json:"InnerNetDomain"`
+	ProjectID       string    `json:"ProjectId"`
+	ProjectName     string    `json:"ProjectName"`
+	Description     string    `json:"Description"`
+	CreateTimestamp string    `json:"CreateTime"`
+	TopicCount      int64     `json:"TopicCount"`
+	InnerNetDomain  string    `json:"InnerNetDomain"`
+	IamProjectName  string    `json:"IamProjectName"`
+	Tags            []TagInfo `json:"Tags"`
 }
 
 type DescribeProjectsResponse struct {
 	CommonResponse
 	Projects []ProjectInfo `json:"Projects"`
-
-	Total int64 `json:"Total"`
+	Total    int64         `json:"Total"`
 }
 
 type ModifyProjectRequest struct {
@@ -113,14 +123,18 @@ func (v *ModifyProjectRequest) CheckValidation() error {
 
 type CreateTopicRequest struct {
 	CommonRequest
-	ProjectID      string `json:"ProjectId"`
-	TopicName      string `json:","`
-	Ttl            uint16 `json:","`
-	Description    string `json:","`
-	ShardCount     int    `json:","`
-	MaxSplitShard  *int32 `json:",omitempty"`
-	AutoSplit      bool   `json:","`
-	EnableTracking *bool  `json:",omitempty"`
+	ProjectID      string    `json:"ProjectId"`
+	TopicName      string    `json:","`
+	Ttl            uint16    `json:","`
+	Description    string    `json:","`
+	ShardCount     int       `json:","`
+	MaxSplitShard  *int32    `json:",omitempty"`
+	AutoSplit      bool      `json:","`
+	EnableTracking *bool     `json:",omitempty"`
+	TimeKey        *string   `json:",omitempty"`
+	TimeFormat     *string   `json:",omitempty"`
+	Tags           []TagInfo `json:",omitempty"`
+	LogPublicIP    *bool     `json:",omitempty"`
 }
 
 func (v *CreateTopicRequest) CheckValidation() error {
@@ -165,6 +179,9 @@ type ModifyTopicRequest struct {
 	MaxSplitShard  *int32  `json:",omitempty"`
 	AutoSplit      *bool   `json:",omitempty"`
 	EnableTracking *bool   `json:",omitempty"`
+	TimeKey        *string `json:",omitempty"`
+	TimeFormat     *string `json:",omitempty"`
+	LogPublicIP    *bool   `json:",omitempty"`
 }
 
 func (v *ModifyTopicRequest) CheckValidation() error {
@@ -188,17 +205,21 @@ func (v *DescribeTopicRequest) CheckValidation() error {
 
 type DescribeTopicResponse struct {
 	CommonResponse
-	TopicName       string `json:"TopicName"`
-	ProjectID       string `json:"ProjectId"`
-	TopicID         string `json:"TopicId"`
-	Ttl             uint16 `json:"Ttl"`
-	CreateTimestamp string `json:"CreateTime"`
-	ModifyTimestamp string `json:"ModifyTime"`
-	ShardCount      int32  `json:"ShardCount"`
-	Description     string `json:"Description"`
-	MaxSplitShard   int32  `json:"MaxSplitShard"`
-	AutoSplit       bool   `json:"AutoSplit"`
-	EnableTracking  bool   `json:"EnableTracking"`
+	TopicName       string    `json:"TopicName"`
+	ProjectID       string    `json:"ProjectId"`
+	TopicID         string    `json:"TopicId"`
+	Ttl             uint16    `json:"Ttl"`
+	CreateTimestamp string    `json:"CreateTime"`
+	ModifyTimestamp string    `json:"ModifyTime"`
+	ShardCount      int32     `json:"ShardCount"`
+	Description     string    `json:"Description"`
+	MaxSplitShard   int32     `json:"MaxSplitShard"`
+	AutoSplit       bool      `json:"AutoSplit"`
+	EnableTracking  bool      `json:"EnableTracking"`
+	TimeKey         string    `json:"TimeKey"`
+	TimeFormat      string    `json:"TimeFormat"`
+	Tags            []TagInfo `json:"Tags"`
+	LogPublicIP     bool      `json:"LogPublicIP"`
 }
 
 type DescribeTopicsRequest struct {
@@ -209,6 +230,7 @@ type DescribeTopicsRequest struct {
 	TopicName  string
 	TopicID    string
 	IsFullName bool
+	Tags       []TagInfo
 }
 
 func (v *DescribeTopicsRequest) CheckValidation() error {
@@ -219,17 +241,21 @@ func (v *DescribeTopicsRequest) CheckValidation() error {
 }
 
 type Topic struct {
-	TopicName       string `json:"TopicName"`
-	ProjectID       string `json:"ProjectId"`
-	TopicID         string `json:"TopicId"`
-	Ttl             uint16 `json:"Ttl"`
-	CreateTimestamp string `json:"CreateTime"`
-	ModifyTimestamp string `json:"ModifyTime"`
-	ShardCount      int32  `json:"ShardCount"`
-	Description     string `json:"Description"`
-	MaxSplitShard   int32  `json:"MaxSplitShard"`
-	AutoSplit       bool   `json:"AutoSplit"`
-	EnableTracking  bool   `json:"EnableTracking"`
+	TopicName       string    `json:"TopicName"`
+	ProjectID       string    `json:"ProjectId"`
+	TopicID         string    `json:"TopicId"`
+	Ttl             uint16    `json:"Ttl"`
+	CreateTimestamp string    `json:"CreateTime"`
+	ModifyTimestamp string    `json:"ModifyTime"`
+	ShardCount      int32     `json:"ShardCount"`
+	Description     string    `json:"Description"`
+	MaxSplitShard   int32     `json:"MaxSplitShard"`
+	AutoSplit       bool      `json:"AutoSplit"`
+	EnableTracking  bool      `json:"EnableTracking"`
+	TimeKey         string    `json:"TimeKey"`
+	TimeFormat      string    `json:"TimeFormat"`
+	Tags            []TagInfo `json:"Tags"`
+	LogPublicIP     bool      `json:"LogPublicIP"`
 }
 
 type DescribeTopicsResponse struct {
@@ -544,6 +570,7 @@ type ExtractRule struct {
 	UnMatchUpLoadSwitch bool             `json:"UnMatchUpLoadSwitch"`
 	UnMatchLogKey       string           `json:"UnMatchLogKey,omitempty"`
 	LogTemplate         LogTemplate      `json:"LogTemplate,omitempty"`
+	Quote               string           `json:"Quote,omitempty"`
 }
 
 type FilterKeyRegex struct {
@@ -566,6 +593,9 @@ type UserDefineRule struct {
 	ShardHashKey  *ShardHashKey     `json:"ShardHashKey,omitempty"`
 	EnableRawLog  bool              `json:"EnableRawLog,omitempty"`
 	Fields        map[string]string `json:"Fields,omitempty"`
+	Plugin        *Plugin           `json:"Plugin,omitempty"`
+	Advanced      *Advanced         `json:"Advanced,omitempty"`
+	TailFiles     bool              `json:"TailFiles,omitempty"`
 }
 
 type ShardHashKey struct {
@@ -576,6 +606,18 @@ type ParsePathRule struct {
 	PathSample string   `json:"PathSample,omitempty"`
 	Regex      string   `json:"Regex,omitempty"`
 	Keys       []string `json:"Keys,omitempty"`
+}
+
+type Plugin struct {
+	Processors []map[string]interface{} `json:"processors,omitempty"`
+}
+
+type Advanced struct {
+	CloseInactive int  `json:","`
+	CloseRemoved  bool `json:","`
+	CloseRenamed  bool `json:","`
+	CloseEOF      bool `json:","`
+	CloseTimeout  int  `json:","`
 }
 
 type ContainerRule struct {
@@ -597,6 +639,7 @@ type KubernetesRule struct {
 	IncludePodLabelRegex map[string]string `json:"IncludePodLabelRegex,omitempty"`
 	ExcludePodLabelRegex map[string]string `json:"ExcludePodLabelRegex,omitempty"`
 	LabelTag             map[string]string `json:"LabelTag,omitempty"`
+	AnnotationTag        map[string]string `json:"AnnotationTag,omitempty"`
 }
 
 type CreateRuleResponse struct {
@@ -931,18 +974,27 @@ type ModifyHostGroupsAutoUpdateResponse struct {
 	CommonResponse
 }
 
+type AlarmPeriodSetting struct {
+	Sms            int `json:"SMS"`
+	Phone          int `json:"Phone"`
+	Email          int `json:"Email"`
+	GeneralWebhook int `json:"GeneralWebhook"`
+}
+
 type CreateAlarmRequest struct {
 	CommonRequest
-	AlarmName        string        `json:"AlarmName"`
-	ProjectID        string        `json:"ProjectId"`
-	Status           *bool         `json:"Status,omitempty"`
-	QueryRequest     QueryRequests `json:"QueryRequest"`
-	RequestCycle     RequestCycle  `json:"RequestCycle"`
-	Condition        string        `json:"Condition"`
-	TriggerPeriod    int           `json:"TriggerPeriod"`
-	AlarmPeriod      int           `json:"AlarmPeriod"`
-	AlarmNotifyGroup []string      `json:"AlarmNotifyGroup"`
-	UserDefineMsg    *string       `json:"UserDefineMsg,omitempty"`
+	AlarmName         string              `json:"AlarmName"`
+	ProjectID         string              `json:"ProjectId"`
+	Status            *bool               `json:"Status,omitempty"`
+	QueryRequest      QueryRequests       `json:"QueryRequest"`
+	RequestCycle      RequestCycle        `json:"RequestCycle"`
+	Condition         string              `json:"Condition"`
+	TriggerPeriod     int                 `json:"TriggerPeriod"`
+	AlarmPeriod       int                 `json:"AlarmPeriod"`
+	AlarmNotifyGroup  []string            `json:"AlarmNotifyGroup"`
+	UserDefineMsg     *string             `json:"UserDefineMsg,omitempty"`
+	Severity          *string             `json:"Severity,omitempty"`
+	AlarmPeriodDetail *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
 }
 
 func (v *CreateAlarmRequest) CheckValidation() error {
@@ -1009,16 +1061,18 @@ func (v *DeleteAlarmRequest) CheckValidation() error {
 
 type ModifyAlarmRequest struct {
 	CommonRequest
-	AlarmID          string         `json:"AlarmId"`
-	AlarmName        *string        `json:"AlarmName"`
-	Status           *bool          `json:"Status"`
-	QueryRequest     *QueryRequests `json:"QueryRequest"`
-	RequestCycle     *RequestCycle  `json:"RequestCycle"`
-	Condition        *string        `json:"Condition"`
-	TriggerPeriod    *int           `json:"TriggerPeriod"`
-	AlarmPeriod      *int           `json:"AlarmPeriod"`
-	AlarmNotifyGroup *[]string      `json:"AlarmNotifyGroup"`
-	UserDefineMsg    *string        `json:"UserDefineMsg"`
+	AlarmID           string              `json:"AlarmId"`
+	AlarmName         *string             `json:"AlarmName"`
+	Status            *bool               `json:"Status"`
+	QueryRequest      *QueryRequests      `json:"QueryRequest"`
+	RequestCycle      *RequestCycle       `json:"RequestCycle"`
+	Condition         *string             `json:"Condition"`
+	TriggerPeriod     *int                `json:"TriggerPeriod"`
+	AlarmPeriod       *int                `json:"AlarmPeriod"`
+	AlarmNotifyGroup  *[]string           `json:"AlarmNotifyGroup"`
+	UserDefineMsg     *string             `json:"UserDefineMsg"`
+	Severity          *string             `json:"Severity,omitempty"`
+	AlarmPeriodDetail *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
 }
 
 func (v *ModifyAlarmRequest) CheckValidation() error {
@@ -1054,19 +1108,21 @@ type DescribeAlarmsResponse struct {
 }
 
 type QueryResp struct {
-	AlarmID          string             `json:"AlarmId"`
-	AlarmName        string             `json:"AlarmName"`
-	ProjectID        string             `json:"ProjectId"`
-	Status           bool               `json:"Status"`
-	QueryRequest     []QueryRequest     `json:"QueryRequest"`
-	RequestCycle     RequestCycle       `json:"RequestCycle"`
-	Condition        string             `json:"Condition"`
-	TriggerPeriod    int                `json:"TriggerPeriod"`
-	AlarmPeriod      int                `json:"AlarmPeriod"`
-	AlarmNotifyGroup []NotifyGroupsInfo `json:"AlarmNotifyGroup"`
-	UserDefineMsg    string             `json:"UserDefineMsg"`
-	CreateTimestamp  string             `json:"CreateTime"`
-	ModifyTimestamp  string             `json:"ModifyTime"`
+	AlarmID           string             `json:"AlarmId"`
+	AlarmName         string             `json:"AlarmName"`
+	ProjectID         string             `json:"ProjectId"`
+	Status            bool               `json:"Status"`
+	QueryRequest      []QueryRequest     `json:"QueryRequest"`
+	RequestCycle      RequestCycle       `json:"RequestCycle"`
+	Condition         string             `json:"Condition"`
+	TriggerPeriod     int                `json:"TriggerPeriod"`
+	AlarmPeriod       int                `json:"AlarmPeriod"`
+	AlarmNotifyGroup  []NotifyGroupsInfo `json:"AlarmNotifyGroup"`
+	UserDefineMsg     string             `json:"UserDefineMsg"`
+	CreateTimestamp   string             `json:"CreateTime"`
+	ModifyTimestamp   string             `json:"ModifyTime"`
+	Severity          string             `json:"Severity"`
+	AlarmPeriodDetail AlarmPeriodSetting `json:"AlarmPeriodDetail"`
 }
 
 type NotifyGroupsInfo struct {
@@ -1076,6 +1132,7 @@ type NotifyGroupsInfo struct {
 	Receivers       Receivers   `json:"Receivers"`
 	CreateTimestamp string      `json:"CreateTime"`
 	ModifyTimestamp string      `json:"ModifyTime"`
+	IamProjectName  string      `json:"IamProjectName"`
 }
 
 type NoticeTypes []NoticeType
@@ -1099,9 +1156,10 @@ type ReceiverChannel string
 
 type CreateAlarmNotifyGroupRequest struct {
 	CommonRequest
-	GroupName  string      `json:"AlarmNotifyGroupName"`
-	NoticeType NoticeTypes `json:"NotifyType"`
-	Receivers  Receivers   `json:"Receivers"`
+	GroupName      string      `json:"AlarmNotifyGroupName"`
+	NoticeType     NoticeTypes `json:"NotifyType"`
+	Receivers      Receivers   `json:"Receivers"`
+	IamProjectName *string     `json:"IamProjectName,omitempty"`
 }
 
 func (v *CreateAlarmNotifyGroupRequest) CheckValidation() error {
@@ -1154,11 +1212,12 @@ func (v *ModifyAlarmNotifyGroupRequest) CheckValidation() error {
 
 type DescribeAlarmNotifyGroupsRequest struct {
 	CommonRequest
-	GroupName     *string
-	NotifyGroupID *string
-	UserName      *string
-	PageNumber    int
-	PageSize      int
+	GroupName      *string
+	NotifyGroupID  *string
+	UserName       *string
+	PageNumber     int
+	PageSize       int
+	IamProjectName *string
 }
 
 func (v *DescribeAlarmNotifyGroupsRequest) CheckValidation() error {

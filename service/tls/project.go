@@ -17,13 +17,7 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjec
 		"Content-Type": "application/json",
 	}
 
-	reqBody := map[string]string{
-		"ProjectName": request.ProjectName,
-		"Description": request.Description,
-		"Region":      request.Region,
-	}
-
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
@@ -150,6 +144,18 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *Descri
 	}
 
 	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+
+	if request.IamProjectName != nil {
+		params["IamProjectName"] = *request.IamProjectName
+	}
+
+	if request.Tags != nil && len(request.Tags) > 0 {
+		tagsBytes, err := json.Marshal(request.Tags)
+		if err != nil {
+			return nil, err
+		}
+		params["Tags"] = string(tagsBytes)
+	}
 
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)

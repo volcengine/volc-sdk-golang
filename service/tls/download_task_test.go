@@ -1,8 +1,8 @@
 package tls
 
 import (
+	"net/http"
 	"os"
-	"strings"
 	"testing"
 	"time"
 
@@ -21,12 +21,12 @@ type SDKDownloadTaskTestSuite struct {
 func (suite *SDKDownloadTaskTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
@@ -62,157 +62,167 @@ func (suite *SDKDownloadTaskTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKDownloadTaskTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKDownloadTaskTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKDownloadTaskTestSuite))
 }
 
-func (suite *SDKDownloadTaskTestSuite) TestDownloadTask() {
-	var TaskId string
+func (suite *SDKDownloadTaskTestSuite) TestCreateDownloadTaskNormally() {
+	startTime := time.Now().Unix()
 
-	var startTime = time.Now().UnixNano()/1e6 - 1000
-	var endTime = time.Now().UnixNano() / 1e6
-
-	// CreateDownloadTask
-	{
-		testcases := map[*CreateDownloadTaskRequest]*CreateDownloadTaskResponse{
-			{
-				TopicID:     suite.topic,
-				TaskName:    "unit-test-task",
-				Query:       "*",
-				StartTime:   startTime,
-				EndTime:     endTime,
-				Compression: "gzip",
-				DataFormat:  "json",
-				Limit:       100,
-				Sort:        "asc",
-			}: {},
-		}
-
-		for req, _ := range testcases {
-			actualResp, err := suite.cli.CreateDownloadTask(req)
-			suite.NoError(err)
-			suite.NotEqual(actualResp.TaskId, "")
-			TaskId = actualResp.TaskId
-		}
+	testcases := map[*CreateDownloadTaskRequest]*Error{
+		{
+			TopicID:     suite.topic,
+			TaskName:    "go-sdk-download-task",
+			Query:       "*",
+			StartTime:   startTime - 60,
+			EndTime:     time.Now().Unix(),
+			DataFormat:  "csv",
+			Sort:        "asc",
+			Limit:       100,
+			Compression: "gzip",
+		}: nil,
 	}
 
-	// DescribeDownloadTask
-	{
-		testcases := map[*DescribeDownloadTasksRequest]*DescribeDownloadTasksResponse{
-			{
-				TopicID: suite.topic,
-			}: {
-				Total: 1,
-				Tasks: []*DownloadTaskResp{
-					{
-						TaskId:     TaskId,
-						TaskName:   "unit-test-task",
-						TopicId:    suite.topic,
-						Query:      "*",
-						StartTime:  time.Unix(startTime/1e3, 0).Format("2006-01-02 15:04:05"),
-						EndTime:    time.Unix(endTime/1e3, 0).Format("2006-01-02 15:04:05"),
-						TaskStatus: "creating",
-					},
-				},
-			},
-		}
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CreateDownloadTask(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-		for req, resp := range testcases {
-			actualResp, err := suite.cli.DescribeDownloadTasks(req)
-			suite.NoError(err)
-			suite.Equal(resp.Total, actualResp.Total)
-			suite.Equal(len(resp.Tasks), len(actualResp.Tasks))
-			for i, _ := range resp.Tasks {
-				suite.Equal(resp.Tasks[i].TaskId, actualResp.Tasks[i].TaskId)
-				suite.Equal(resp.Tasks[i].TaskName, actualResp.Tasks[i].TaskName)
-				suite.Equal(resp.Tasks[i].TopicId, actualResp.Tasks[i].TopicId)
-				suite.Equal(resp.Tasks[i].Query, actualResp.Tasks[i].Query)
-				suite.Equal(resp.Tasks[i].StartTime, actualResp.Tasks[i].StartTime)
-				suite.Equal(resp.Tasks[i].EndTime, actualResp.Tasks[i].EndTime)
-				suite.Equal(resp.Tasks[i].TaskStatus, actualResp.Tasks[i].TaskStatus)
-			}
-		}
+func (suite *SDKDownloadTaskTestSuite) TestCreateDownloadTaskAbnormally() {
+	startTime := time.Now().Unix()
+
+	testcases := map[*CreateDownloadTaskRequest]*Error{
+		{
+			TopicID:     uuid.New().String(),
+			TaskName:    "go-sdk-download-task",
+			Query:       "*",
+			StartTime:   startTime - 60,
+			EndTime:     time.Now().Unix(),
+			DataFormat:  "csv",
+			Sort:        "asc",
+			Limit:       100,
+			Compression: "gzip",
+		}: {
+			HTTPCode: http.StatusNotFound,
+			Code:     "TopicNotExist",
+			Message:  "Topic does not exist.",
+		},
 	}
 
-	// DescribeDownloadUrl
-	{
-		testcases := map[*DescribeDownloadUrlRequest]*DescribeDownloadUrlResponse{
-			{
-				TaskId: TaskId,
-			}: {},
-		}
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CreateDownloadTask(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.DescribeDownloadUrl(req)
-			var ok bool
-			{
-				if strings.Contains(err.Error(), "DownloadTaskNotFinished") || err != nil {
-					ok = true
-				}
-			}
-			suite.Equal(ok, true)
-		}
+func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadTasksNormally() {
+	startTime := time.Now().Unix()
+
+	testcases := map[*CreateDownloadTaskRequest]*DescribeDownloadTasksRequest{
+		{
+			TopicID:     suite.topic,
+			TaskName:    "go-sdk-download-task",
+			Query:       "*",
+			StartTime:   startTime - 60,
+			EndTime:     time.Now().Unix(),
+			DataFormat:  "csv",
+			Sort:        "asc",
+			Limit:       100,
+			Compression: "gzip",
+		}: {
+			TopicID: suite.topic,
+		},
 	}
 
-	// CreateDownloadTaskInvalid
-	{
-		testcases := map[*CreateDownloadTaskRequest]*CreateDownloadTaskResponse{
-			{
-				TopicID:     suite.topic,
-				TaskName:    "unit-test-task",
-				Query:       "*",
-				StartTime:   startTime,
-				EndTime:     endTime,
-				Compression: "lz4",
-				DataFormat:  "json",
-				Limit:       100,
-				Sort:        "asc",
-			}: {},
-		}
+	for createDownloadTaskReq, describeDownloadTasksReq := range testcases {
+		_, err := suite.cli.CreateDownloadTask(createDownloadTaskReq)
+		suite.NoError(err)
 
-		for req, _ := range testcases {
-			_, err := suite.cli.CreateDownloadTask(req)
-			suite.Error(err)
-		}
+		describeDownloadTasksResp, err := suite.cli.DescribeDownloadTasks(describeDownloadTasksReq)
+		suite.NoError(err)
+		suite.Equal(1, int(describeDownloadTasksResp.Total))
+		suite.Equal(createDownloadTaskReq.TaskName, describeDownloadTasksResp.Tasks[0].TaskName)
+		suite.Equal(createDownloadTaskReq.Query, describeDownloadTasksResp.Tasks[0].Query)
+		suite.Equal(createDownloadTaskReq.DataFormat, describeDownloadTasksResp.Tasks[0].DataFormat)
+		suite.Equal(createDownloadTaskReq.Compression, describeDownloadTasksResp.Tasks[0].Compression)
+	}
+}
+
+func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadTasksAbnormally() {
+	testcases := map[*DescribeDownloadTasksRequest]*Error{
+		{
+			TopicID: suite.topic,
+		}: {
+			HTTPCode: http.StatusNotFound,
+			Code:     "TopicNotExist",
+			Message:  "Topic does not exist.",
+		},
 	}
 
-	// DescribeDownloadTaskInvalid
-	{
-		testcases := map[*DescribeDownloadTasksRequest]*DescribeDownloadTasksResponse{
-			{
-				TopicID: "Test",
-			}: {
-				Total: 1,
-				Tasks: []*DownloadTaskResp{
-					{
-						TaskId:    TaskId,
-						TaskName:  "unit-test-task",
-						TopicId:   suite.topic,
-						Query:     "*",
-						StartTime: time.Unix(startTime/1e3, 0).Format("2006-01-02 15:04:05"),
-						EndTime:   time.Unix(endTime/1e3, 0).Format("2006-01-02 15:04:05"),
-					},
-				},
-			},
-		}
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeDownloadTasks(req)
+		suite.validateError(err, expectedErr)
+	}
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.DescribeDownloadTasks(req)
-			suite.Error(err)
-		}
+func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadUrlNormally() {
+	startTime := time.Now().Unix()
+
+	testcases := map[*CreateDownloadTaskRequest]*Error{
+		{
+			TopicID:     suite.topic,
+			TaskName:    "go-sdk-download-task",
+			Query:       "*",
+			StartTime:   startTime - 60,
+			EndTime:     time.Now().Unix(),
+			DataFormat:  "csv",
+			Sort:        "asc",
+			Limit:       100,
+			Compression: "gzip",
+		}: nil,
 	}
 
-	// DescribeDownloadUrlInvalid
-	{
-		testcases := map[*DescribeDownloadUrlRequest]*DescribeDownloadUrlResponse{
-			{
-				TaskId: "Test",
-			}: {},
-		}
+	for req, expectedErr := range testcases {
+		createDownloadTaskResp, err := suite.cli.CreateDownloadTask(req)
+		suite.NoError(err)
+		time.Sleep(15 * time.Second)
 
-		for req, _ := range testcases {
-			_, err := suite.cli.DescribeDownloadUrl(req)
-			suite.Error(err)
-		}
+		resp, err := suite.cli.DescribeDownloadUrl(&DescribeDownloadUrlRequest{TaskId: createDownloadTaskResp.TaskId})
+		suite.validateError(err, expectedErr)
+		suite.GreaterOrEqual(len(resp.DownloadUrl), 0)
+	}
+}
+
+func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadUrlAbnormally() {
+	nonexistentTaskID := uuid.New().String()
+
+	testcases := map[*DescribeDownloadUrlRequest]*Error{
+		{
+			TaskId: nonexistentTaskID,
+		}: {
+			HTTPCode: http.StatusNotFound,
+			Code:     "TaskNotExist",
+			Message:  "Task " + nonexistentTaskID + " does not exist",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeDownloadUrl(req)
+		suite.validateError(err, expectedErr)
 	}
 }

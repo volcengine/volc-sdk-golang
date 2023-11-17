@@ -1,7 +1,9 @@
 package tls
 
 import (
+	"net/http"
 	"os"
+	"strconv"
 	"testing"
 	"time"
 
@@ -20,12 +22,12 @@ type SDKHistogramTestSuite struct {
 func (suite *SDKHistogramTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
@@ -61,46 +63,69 @@ func (suite *SDKHistogramTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKHistogramTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKHistogramTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKHistogramTestSuite))
 }
 
-func (suite *SDKHistogramTestSuite) TestHistogram() {
-	{
-		testcases := map[*DescribeHistogramRequest]*DescribeHistogramResponse{
-			{
-				TopicID:   suite.topic,
-				Query:     "*",
-				StartTime: time.Now().UnixNano()/1e9 - 10,
-				EndTime:   time.Now().UnixNano() / 1e9,
-			}: {
-				TotalCount: 0,
-			},
-		}
+func (suite *SDKHistogramTestSuite) TestDescribeHistogramNormally() {
+	startTime := time.Now().Unix()
 
-		for req, resp := range testcases {
-			actualResp, err := suite.cli.DescribeHistogram(req)
-			suite.NoError(err)
-			suite.Equal(resp.TotalCount, actualResp.TotalCount)
-		}
+	time.Sleep(15 * time.Second)
+	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
+	suite.NoError(err)
+
+	testcases := map[*DescribeHistogramRequest]*DescribeHistogramResponse{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   time.Now().Unix(),
+		}: {
+			ResultStatus: "complete",
+			TotalCount:   100,
+		},
 	}
 
-	// Test Invalid
-	{
-		testcases := map[*DescribeHistogramRequest]*DescribeHistogramResponse{
-			{
-				TopicID:   "Test",
-				Query:     "*",
-				StartTime: time.Now().UnixNano()/1e9 - 10,
-				EndTime:   time.Now().UnixNano() / 1e9,
-			}: {
-				TotalCount: 0,
-			},
-		}
+	for req, expectedResp := range testcases {
+		resp, err := suite.cli.DescribeHistogram(req)
+		suite.NoError(err)
+		suite.Equal(expectedResp.ResultStatus, resp.ResultStatus)
+		suite.Equal(expectedResp.TotalCount, resp.TotalCount)
+	}
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.DescribeHistogram(req)
-			suite.Error(err)
-		}
+func (suite *SDKHistogramTestSuite) TestDescribeHistogramAbnormally() {
+	startTime := time.Now().Unix() - 60
+
+	testcases := map[*DescribeHistogramRequest]*Error{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   startTime,
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key StartTime, value " + strconv.FormatInt(startTime, 10) + ", please check argument.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeHistogram(req)
+		suite.validateError(err, expectedErr)
 	}
 }

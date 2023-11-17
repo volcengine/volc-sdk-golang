@@ -22,6 +22,11 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 		*request.MaxSplitShard = int32(10)
 	}
 
+	if request.LogPublicIP == nil {
+		request.LogPublicIP = new(bool)
+		*request.LogPublicIP = true
+	}
+
 	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
@@ -192,6 +197,14 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 	}
 
 	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+
+	if request.Tags != nil && len(request.Tags) > 0 {
+		tagsBytes, err := json.Marshal(request.Tags)
+		if err != nil {
+			return nil, err
+		}
+		params["Tags"] = string(tagsBytes)
+	}
 
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
