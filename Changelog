@@ -1,5 +1,8 @@
 ### Change log
 
+2023-11-17 Bumped to version v1.0.127
+- Updated apis for tls
+
 2023-11-16 Bumped to version v1.0.126
 - Updated apis for sms/aiot/visual/verender/vod
 
