@@ -281,6 +281,10 @@ func (c *LsClient) DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsR
 		params["ReceiverName"] = *request.UserName
 	}
 
+	if request.IamProjectName != nil {
+		params["IamProjectName"] = *request.IamProjectName
+	}
+
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
