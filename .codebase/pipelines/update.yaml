@@ -2,6 +2,7 @@ name: SDK # 自动更新 SDK
 trigger:
   change: # 仅在 MR 合入 master 分支后触发
     branches: [ master ]
+    source-branches: [ "version**" ] # 限制源分支为version开头
     types: [ submit ]
 jobs:
   update:
@@ -13,9 +14,13 @@ jobs:
         commands:
           - git checkout master
           - git checkout mainrelease
-          - git merge master --squash
+          - cd ../
+          - git clone git@code.byted.org:volcengine/volc-sdk-golang.git
+          - mv volc-sdk-golang eps-master
+          - cd -
+          - cp -rf ../eps-master/* ./
           - git add . 
-          - git rm  --cached  .codebase/pipelines/update.yaml
+          # - git rm  --cached  .codebase/pipelines/update.yaml
       - name: commit & push
         commands:
           # Commit.
