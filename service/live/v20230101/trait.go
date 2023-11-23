@@ -331,6 +331,46 @@ func (c *Live) CreateWatermarkPreset(ctx context.Context, arg *CreateWatermarkPr
 	return result, nil
 }
 
+func (c *Live) StopPullRecordTask(ctx context.Context, arg *StopPullRecordTaskBody) (*StopPullRecordTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "StopPullRecordTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(StopPullRecordTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreatePullRecordTask(ctx context.Context, arg *CreatePullRecordTaskBody) (*CreatePullRecordTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreatePullRecordTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreatePullRecordTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DeleteRecordPreset(ctx context.Context, arg *DeleteRecordPresetBody) (*DeleteRecordPresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -403,6 +443,26 @@ func (c *Live) ListVhostRecordPresetV2(ctx context.Context, arg *ListVhostRecord
 	}
 
 	result := new(ListVhostRecordPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListPullRecordTask(ctx context.Context, arg *ListPullRecordTaskBody) (*ListPullRecordTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListPullRecordTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListPullRecordTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -691,26 +751,6 @@ func (c *Live) DescribeAuth(ctx context.Context, arg *DescribeAuthBody) (*Descri
 	return result, nil
 }
 
-func (c *Live) UpdateAuthKey(ctx context.Context, arg *UpdateAuthKeyBody) (*UpdateAuthKeyRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "UpdateAuthKey", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(UpdateAuthKeyRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DeleteCert(ctx context.Context, arg *DeleteCertBody) (*DeleteCertRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -831,18 +871,18 @@ func (c *Live) UnbindCert(ctx context.Context, arg *UnbindCertBody) (*UnbindCert
 	return result, nil
 }
 
-func (c *Live) DeleteReferer(ctx context.Context, arg *DeleteRefererBody) (*DeleteRefererRes, error) {
+func (c *Live) CreateVerifyContent(ctx context.Context, arg *CreateVerifyContentBody) (*CreateVerifyContentRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DeleteReferer", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "CreateVerifyContent", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DeleteRefererRes)
+	result := new(CreateVerifyContentRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -851,38 +891,18 @@ func (c *Live) DeleteReferer(ctx context.Context, arg *DeleteRefererBody) (*Dele
 	return result, nil
 }
 
-func (c *Live) DescribeReferer(ctx context.Context, arg *DescribeRefererBody) (*DescribeRefererRes, error) {
+func (c *Live) VerifyDomainOwner(ctx context.Context, arg *VerifyDomainOwnerBody) (*VerifyDomainOwnerRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DescribeReferer", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "VerifyDomainOwner", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DescribeRefererRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) UpdateReferer(ctx context.Context, arg *UpdateRefererBody) (*UpdateRefererRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "UpdateReferer", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(UpdateRefererRes)
+	result := new(VerifyDomainOwnerRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1003,46 +1023,6 @@ func (c *Live) ListDomainDetail(ctx context.Context, arg *ListDomainDetailBody) 
 	}
 
 	result := new(ListDomainDetailRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) CreateVerifyContent(ctx context.Context, arg *CreateVerifyContentBody) (*CreateVerifyContentRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreateVerifyContent", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(CreateVerifyContentRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) VerifyDomainOwner(ctx context.Context, arg *VerifyDomainOwnerBody) (*VerifyDomainOwnerRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "VerifyDomainOwner", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(VerifyDomainOwnerRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1203,46 +1183,6 @@ func (c *Live) ListPullToPushTask(ctx context.Context, arg *ListPullToPushTaskQu
 	}
 
 	result := new(ListPullToPushTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) DescribeDenyConfig(ctx context.Context, arg *DescribeDenyConfigBody) (*DescribeDenyConfigRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeDenyConfig", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeDenyConfigRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) UpdateDenyConfig(ctx context.Context, arg *UpdateDenyConfigBody) (*UpdateDenyConfigRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "UpdateDenyConfig", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(UpdateDenyConfigRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1631,31 +1571,6 @@ func (c *Live) UpdateStreamQuotaConfig(ctx context.Context, arg *UpdateStreamQuo
 	return result, nil
 }
 
-func (c *Live) ListVqosDimensionValues(ctx context.Context, arg *ListVqosDimensionValuesReq) (*ListVqosDimensionValuesRes, error) {
-	query, err := marshalToQuery(arg.ListVqosDimensionValuesQuery)
-	if err != nil {
-		return nil, err
-	}
-
-	body, err := marshalToJson(arg.ListVqosDimensionValuesBody)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "ListVqosDimensionValues", query, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(ListVqosDimensionValuesRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) ListVqosMetricsDimensions(ctx context.Context, arg *ListVqosMetricsDimensionsQuery) (*ListVqosMetricsDimensionsRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1676,23 +1591,18 @@ func (c *Live) ListVqosMetricsDimensions(ctx context.Context, arg *ListVqosMetri
 	return result, nil
 }
 
-func (c *Live) GetVqosRawData(ctx context.Context, arg *GetVqosRawDataReq) (*GetVqosRawDataRes, error) {
-	query, err := marshalToQuery(arg.GetVqosRawDataQuery)
+func (c *Live) StopPullCDNSnapshotTask(ctx context.Context, arg *StopPullCDNSnapshotTaskBody) (*StopPullCDNSnapshotTaskRes, error) {
+	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := marshalToJson(arg.GetVqosRawDataBody)
+	data, _, err := c.Client.CtxJson(ctx, "StopPullCDNSnapshotTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "GetVqosRawData", query, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(GetVqosRawDataRes)
+	result := new(StopPullCDNSnapshotTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1701,18 +1611,18 @@ func (c *Live) GetVqosRawData(ctx context.Context, arg *GetVqosRawDataReq) (*Get
 	return result, nil
 }
 
-func (c *Live) StopPullRecordTask(ctx context.Context, arg *StopPullRecordTaskBody) (*StopPullRecordTaskRes, error) {
+func (c *Live) CreatePullCDNSnapshotTask(ctx context.Context, arg *CreatePullCDNSnapshotTaskBody) (*CreatePullCDNSnapshotTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "StopPullRecordTask", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "CreatePullCDNSnapshotTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(StopPullRecordTaskRes)
+	result := new(CreatePullCDNSnapshotTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1721,18 +1631,18 @@ func (c *Live) StopPullRecordTask(ctx context.Context, arg *StopPullRecordTaskBo
 	return result, nil
 }
 
-func (c *Live) CreatePullRecordTask(ctx context.Context, arg *CreatePullRecordTaskBody) (*CreatePullRecordTaskRes, error) {
+func (c *Live) GetPullCDNSnapshotTask(ctx context.Context, arg *GetPullCDNSnapshotTaskBody) (*GetPullCDNSnapshotTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "CreatePullRecordTask", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "GetPullCDNSnapshotTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(CreatePullRecordTaskRes)
+	result := new(GetPullCDNSnapshotTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1741,18 +1651,38 @@ func (c *Live) CreatePullRecordTask(ctx context.Context, arg *CreatePullRecordTa
 	return result, nil
 }
 
-func (c *Live) ListPullRecordTask(ctx context.Context, arg *ListPullRecordTaskBody) (*ListPullRecordTaskRes, error) {
+func (c *Live) ListPullCDNSnapshotTask(ctx context.Context, arg *ListPullCDNSnapshotTaskBody) (*ListPullCDNSnapshotTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "ListPullRecordTask", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "ListPullCDNSnapshotTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(ListPullRecordTaskRes)
+	result := new(ListPullCDNSnapshotTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetPullRecordTask(ctx context.Context, arg *GetPullRecordTaskBody) (*GetPullRecordTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetPullRecordTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetPullRecordTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1793,6 +1723,26 @@ func (c *Live) UpdateSnapshotAuditPreset(ctx context.Context, arg *UpdateSnapsho
 	}
 
 	result := new(UpdateSnapshotAuditPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeSnapshotAuditPresetDetail(ctx context.Context, arg *DescribeSnapshotAuditPresetDetailBody) (*DescribeSnapshotAuditPresetDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeSnapshotAuditPresetDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeSnapshotAuditPresetDetailRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2365,6 +2315,186 @@ func (c *Live) DescribeLiveTimeShiftData(ctx context.Context, arg *DescribeLiveT
 	}
 
 	result := new(DescribeLiveTimeShiftDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveCustomizedLogData(ctx context.Context, arg *DescribeLiveCustomizedLogDataBody) (*DescribeLiveCustomizedLogDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveCustomizedLogData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveCustomizedLogDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveLogData(ctx context.Context, arg *DescribeLiveLogDataBody) (*DescribeLiveLogDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveLogData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveLogDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteReferer(ctx context.Context, arg *DeleteRefererBody) (*DeleteRefererRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteReferer", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteRefererRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeReferer(ctx context.Context, arg *DescribeRefererBody) (*DescribeRefererRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeReferer", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeRefererRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeDenyConfig(ctx context.Context, arg *DescribeDenyConfigBody) (*DescribeDenyConfigRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeDenyConfig", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeDenyConfigRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateReferer(ctx context.Context, arg *UpdateRefererBody) (*UpdateRefererRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateReferer", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateRefererRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateAuthKey(ctx context.Context, arg *UpdateAuthKeyBody) (*UpdateAuthKeyRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateAuthKey", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateAuthKeyRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateDenyConfig(ctx context.Context, arg *UpdateDenyConfigBody) (*UpdateDenyConfigRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateDenyConfig", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateDenyConfigRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveStreamUsageData(ctx context.Context, arg *DescribeLiveStreamUsageDataBody) (*DescribeLiveStreamUsageDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveStreamUsageData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveStreamUsageDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
