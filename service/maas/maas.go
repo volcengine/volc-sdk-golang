@@ -23,6 +23,7 @@ const (
 	APIStreamChat     = "stream_chat"
 	APITokenization   = "tokenization"
 	APIClassification = "classification"
+	APIEmbeddings     = "embeddings"
 
 	ServiceTimeout = time.Minute
 
@@ -76,6 +77,10 @@ func NewInstance(host, region string) *MaaS {
 		APITokenization: {
 			Method: http.MethodPost,
 			Path:   "/api/v1/tokenization",
+		},
+		APIEmbeddings: {
+			Method: http.MethodPost,
+			Path:   "/api/v1/embeddings",
 		},
 	})
 
@@ -413,6 +418,37 @@ func (cli *MaaS) classificationImpl(ctx context.Context, body []byte) (*api.Clas
 	}
 
 	output := new(api.ClassificationResp)
+	if err = json.Unmarshal(respBody, output); err != nil {
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()))
+	}
+	return output, status, nil
+}
+
+// POST method
+// Embeddings
+func (cli *MaaS) Embeddings(req *api.EmbeddingsReq) (*api.EmbeddingsResp, int, error) {
+	return cli.EmbeddingsWithCtx(context.Background(), req)
+}
+
+func (cli *MaaS) EmbeddingsWithCtx(ctx context.Context, req *api.EmbeddingsReq) (*api.EmbeddingsResp, int, error) {
+	bts, err := json.Marshal(req)
+	if err != nil {
+		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
+	}
+	return cli.embeddingsImpl(ctx, bts)
+}
+
+func (cli *MaaS) embeddingsImpl(ctx context.Context, body []byte) (*api.EmbeddingsResp, int, error) {
+	respBody, status, err := cli.Client.CtxJson(ctx, APIEmbeddings, nil, string(body))
+	if err != nil {
+		errVal := &api.EmbeddingsResp{}
+		if er := json.Unmarshal(respBody, errVal); er != nil {
+			errVal.Error = api.NewClientSDKRequestError(err.Error())
+		}
+		return nil, status, errVal.Error
+	}
+
+	output := new(api.EmbeddingsResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
 		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()))
 	}
