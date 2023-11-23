@@ -111,6 +111,7 @@ type LocalMediaDownloadRequestV3 struct {
 	EndTime       int64  `json:"EndTime"`
 	MediaProcess  *Mps   `json:"MediaProcess"`
 	DownloadSpeed *int   `json:"DownloadSpeedSingle"` //在本地录像下载的时候时候，不填就以设备维度所设置的速度进行下载
+	Expire        int    `json:"Expire"`              //自定义文件过期时间
 }
 
 type GetLocalMediaDownloadRequest struct {
@@ -215,8 +216,8 @@ type ListHistoryRequestV3 struct {
 	Resolution     string
 	PageNumber     int   `json:"-"`
 	PageSize       int   `json:"-"`
-	StartTime      int64 `json:"StartTs"`
-	EndTime        int64 `json:"EndTs"`
+	StartTime      int64 `json:"StartTime"`
+	EndTime        int64 `json:"EndTime"`
 	ReqType        string
 }
 
@@ -447,15 +448,9 @@ type UpdateStreamRequest struct {
 }
 
 type StreamRequest struct {
-	StreamID string `json:"StreamID"`
-}
-
-type StartStreamRequest struct {
-	StreamID   string `json:"StreamID,omitempty"`
-	DeviceNSID string `json:"DeviceNSID,omitempty"` // 设备国标ID
-	ChannelID  string `json:"ChannelID,omitempty"`  // 通道国标ID
-	StreamType int    `json:"StreamType,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
-	Resolution string `json:"Resolution,omitempty"` // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
+	StreamID       string `json:"StreamID"`
+	StreamingIndex int    `json:"StreamingIndex,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
+	Resolution     string `json:"Resolution,omitempty"`     // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
 }
 
 type ListStreamsRequest struct {

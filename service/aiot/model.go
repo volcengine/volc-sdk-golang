@@ -213,10 +213,14 @@ type AlertNotification struct {
 }
 
 type DeviceStreams struct {
-	StreamID string   `bson:"stream_id"`
-	PullUrls []string `bson:"pull_urls"`
-	PushUrl  string   `bson:"push_url"`
-	Status   string   `bson:"status"`
+	StreamID      string   `json:"StreamID"`
+	Name          string   `json:"Name"`
+	ChannelStatus string   `json:"ChannelStatus"`
+	Manufacturer  string   `json:"Manufacturer"`
+	Model         string   `json:"Model"`
+	PullUrls      []string `json:"PullUrls"`
+	PushUrl       string   `json:"PushUrl"`
+	Status        string   `json:"Status"`
 }
 
 type Coordinates struct {
@@ -447,6 +451,17 @@ type GetPlaybackStatusResponseV3 struct {
 type StreamResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           IDResponse `json:"Result,omitempty"`
+}
+
+type StartStreamResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *StartStreamResp `json:"Result"`
+}
+
+type StartStreamResp struct {
+	ID            string
+	PullUrls      []string
+	TransPullUrls map[string][]string
 }
 
 type GetStreamResponse struct {
