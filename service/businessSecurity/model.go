@@ -161,10 +161,11 @@ type ImageResultResponse struct {
 }
 
 type ImageContentRiskResp struct {
-	DataId   string                 `json:"DataId"`
-	Decision string                 `json:"Decision"`
-	Results  []*ImageContentRiskTag `json:"Results"`
-	Scores   map[string]float64     `json:"Scores"`
+	DataId         string                 `json:"DataId"`
+	Decision       string                 `json:"Decision"`
+	DecisionDetail string                 `json:"DecisionDetail"`
+	Results        []*ImageContentRiskTag `json:"Results"`
+	Scores         map[string]float64     `json:"Scores"`
 }
 
 type ImageContentRiskTag struct {
