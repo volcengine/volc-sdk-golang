@@ -397,6 +397,7 @@ func (p *AIoT) FreshDevice(request *FreshDeviceRequest) (*DeviceResponse, int, e
 	return resp, statusCode, nil
 }
 
+// Deprecated: Use LocalMediaDownloadV3 instead.
 func (p *AIoT) LocalMediaDownload(request *LocalMediaDownloadRequest) (*LocalMediaDownloadResponse, int, error) {
 	resp := new(LocalMediaDownloadResponse)
 	query := url.Values{
@@ -762,24 +763,12 @@ func (p *AIoT) UpdateStream(request *UpdateStreamRequest) (*StreamResponse, int,
 	return resp, statusCode, nil
 }
 
-func (p *AIoT) StartStream(request *StreamRequest) (*StreamResponse, int, error) {
-	resp := new(StreamResponse)
+func (p *AIoT) StartStream(request *StreamRequest) (*StartStreamResponse, int, error) {
+	resp := new(StartStreamResponse)
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
 	statusCode, err := p.commonHandlerJson("StartStream", query, resp, nil)
-	if err != nil {
-		return nil, statusCode, err
-	}
-	return resp, statusCode, nil
-}
-
-func (p *AIoT) StartStreamWithParameters(request *StartStreamRequest) (*StreamResponse, int, error) {
-	resp := new(StreamResponse)
-	query := url.Values{
-		"StreamID": []string{request.StreamID},
-	}
-	statusCode, err := p.commonHandlerJson("StartStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
