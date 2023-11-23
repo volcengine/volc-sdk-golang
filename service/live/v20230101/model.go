@@ -145,6 +145,8 @@ type ComponentsFuamuzSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	SliceDuration *int32 `json:"SliceDuration,omitempty"`
 
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
+
+	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
 // ComponentsKovkk9SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparamPropertiesVodparam
@@ -427,6 +429,63 @@ type CreateDomainV2ResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type CreatePullCDNSnapshotTaskBody struct {
+
+	// REQUIRED; app名字
+	App string `json:"App"`
+
+	// REQUIRED; 域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; stream名称
+	Stream string `json:"Stream"`
+
+	// 结束时间
+	EndTime *string `json:"EndTime,omitempty"`
+
+	// 开始时间
+	StartTime *string `json:"StartTime,omitempty"`
+
+	// 拉流地址
+	StreamURL *string `json:"StreamURL,omitempty"`
+
+	// 域名空间
+	Vhost *string `json:"Vhost,omitempty"`
+}
+
+type CreatePullCDNSnapshotTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata CreatePullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result CreatePullCDNSnapshotTaskResResult `json:"Result"`
+}
+
+type CreatePullCDNSnapshotTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type CreatePullCDNSnapshotTaskResResult struct {
+
+	// REQUIRED; 任务id
+	TaskID string `json:"TaskId"`
+}
+
 type CreatePullRecordTaskBody struct {
 
 	// REQUIRED; app名字
@@ -487,7 +546,7 @@ type CreatePullRecordTaskResResult struct {
 
 type CreatePullToPushTaskBody struct {
 
-	// REQUIRED; 结束时间，Unix 时间戳（秒）
+	// REQUIRED; 结束时间，Unix 时间戳，单位为 s
 	EndTime int32 `json:"EndTime"`
 
 	// REQUIRED; 开始时间，Unix 时间戳，单位为 s
@@ -547,11 +606,11 @@ type CreatePullToPushTaskBody struct {
 	// 标题，支持中英文字符、数字，最大长度为 10 个字符
 	Title *string `json:"Title,omitempty"`
 
-	// 水印信息
+	// 水印信息。
 	Watermark *CreatePullToPushTaskBodyWatermark `json:"Watermark,omitempty"`
 }
 
-// CreatePullToPushTaskBodyWatermark - 水印信息
+// CreatePullToPushTaskBodyWatermark - 水印信息。
 type CreatePullToPushTaskBodyWatermark struct {
 
 	// REQUIRED; 水印图片字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:[<mediatype>];[base64],<data>。
@@ -629,7 +688,7 @@ type CreateRecordPresetV2Body struct {
 // CreateRecordPresetV2BodyRecordPresetConfig - 录制模板详细配置
 type CreateRecordPresetV2BodyRecordPresetConfig struct {
 
-	// FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+	// FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	FlvParam *CreateRecordPresetV2BodyRecordPresetConfigFlvParam `json:"FlvParam,omitempty"`
 
 	// HLS 录制参数，开启 HLS 录制时设置 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
@@ -641,7 +700,7 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 源流录制，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord和OriginRecord的取值至少一个为 1。 :::
+	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
 	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
 	// 录制 HLS 格式时，单个 TS 切片时长，单位为 s，默认值为 5，取值范围为 [5,30]
@@ -650,11 +709,15 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 转码流录制，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord和OriginRecord的取值至少一个为 1。 :::
+	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命中的转码后缀。
+	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
+
+	// 录制转码流后缀列表，转码流录制配置为全部录制时（TranscodeRecord 配置等于 2）生效。
+	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigFlvParam - FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigFlvParam - FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
 	// 断流等待时长，取值范围[0,3600]
@@ -1120,15 +1183,18 @@ type CreateSnapshotPresetBody struct {
 	// 回调详情。
 	CallbackDetailList []*CreateSnapshotPresetBodyCallbackDetailListItem `json:"CallbackDetailList,omitempty"`
 
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、"-"、"!"、"_"、"."、"*"及占位符。
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
 	// veImageX 的服务 ID。 :::tipBucket 与 ServiceID 传且仅传一个。 :::
 	ServiceID *string `json:"ServiceID,omitempty"`
 
 	// 截图格式。默认值为 jpeg，支持如下取值。
 	// * jpeg
-	// * png
+	// * jpg
 	SnapshotFormat *string `json:"SnapshotFormat,omitempty"`
 
-	// 存储规则。存储在 ToS 时传，格式为{PushDomain}/{App}/{Stream}/{UnixTimestamp}。
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、"-"、"!"、"_"、"."、"*"及占位符。
 	SnapshotObject *string `json:"SnapshotObject,omitempty"`
 
 	// 截图模版状态状态。默认开启。
@@ -1284,7 +1350,7 @@ type CreateTranscodePresetBody struct {
 	// 2 个参考帧之间的最大 B 帧数。不同编码格式的取值存在差异。
 	// * H.264：取值范围为 [0,7]，默认值为 3；
 	// * H.265：取值范围为 [0,1,2,3,7,15]，默认值为 3；
-	// BFrames 取 0 时，表示去 B 帧。
+	// BFrames 取 0 时，表示��� B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 视频帧率，单位为 fps，取值范围为 [0,60]，默认为 25fps。帧率越大，画面越流畅。
@@ -2198,7 +2264,7 @@ type DescribeAuthResResultAuthListItem struct {
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 鉴权场景类型。
-	// * push：推流鉴权；
+	// * push：推���鉴权；
 	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
@@ -2233,10 +2299,10 @@ type DescribeCDNSnapshotHistoryBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 查询时间范围的开始时间。
+	// REQUIRED; 查询时间范围的开始时间，RFC3339 格式的 UTC 时间，精度为 s。当您查询指定截图任务详情时，DateFrom 应设置为开始时间之前的任意时间。
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 查询时间范围的结束时间。
+	// REQUIRED; 查询时间范围的结束时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的 UTC 时间，精度为 s。
 	DateTo string `json:"DateTo"`
 
 	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
@@ -2503,7 +2569,7 @@ type DescribeCertDetailSecretV2ResResult struct {
 	// REQUIRED; 证书名称。
 	CertName string `json:"CertName"`
 
-	// REQUIRED; 证书链ID。
+	// REQUIRED; 证书链 ID。
 	ChainID string `json:"ChainID"`
 
 	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为 s。
@@ -2916,13 +2982,12 @@ type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 type DescribeLiveAuditDataBody struct {
 
 	// REQUIRED; 查询的结束时间。RFC3339 格式的 UTC 时间，精度为 s。
-	// 支持查询 366 天以内的数据。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询的起始时间。RFC3339 格式的 UTC 时间，精度为 s。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，支持天粒度，默认为 86400。
+	// 时间粒度，单位为 s，当前仅支持天粒度，默认值为 86400。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 用于指定数据拆分的维度。缺省情况下，表示只显示截图总张数，不做数据拆维展示。支持的取值为 Domain，表示按域名拆分数据。
@@ -3073,7 +3138,7 @@ type DescribeLiveBandwidthDataBody struct {
 
 type DescribeLiveBandwidthDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查���区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
 	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
@@ -3522,7 +3587,7 @@ type DescribeLiveBatchStreamTrafficDataResResponseMetadata struct {
 	// REQUIRED; RequestID为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
-	// REQUIRED; 请求的服务，属于请求的公共参数。
+	// REQUIRED; 请求的服务，��于请求的公共参数。
 	Service string `json:"Service"`
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
@@ -3701,6 +3766,106 @@ type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
 	VCodec string `json:"VCodec"`
 }
 
+type DescribeLiveCustomizedLogDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。当前仅支持查询最近 31 天的日志数据。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为 s。当前仅支持查询最近 31 天的日志数据。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 日志类型，请联系技术支持同学获取参数值。
+	Type string `json:"Type"`
+
+	// 查询日志的域名列表；日志类型为拉流转推日志（Type=relay）时，该参数无效。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 页码，默认为 1。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页数量，默认为 20。
+	PageSize *int32 `json:"PageSize,omitempty"`
+}
+
+type DescribeLiveCustomizedLogDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveCustomizedLogDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveCustomizedLogDataResResult `json:"Result"`
+}
+
+type DescribeLiveCustomizedLogDataResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeLiveCustomizedLogDataResResult struct {
+
+	// REQUIRED; 查询日志的域名列表。
+	DomainList []string `json:"DomainList"`
+
+	// REQUIRED; 结束时间。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 日志文件的信息列表。
+	LogInfoList []DescribeLiveCustomizedLogDataResResultLogInfoListItem `json:"LogInfoList"`
+
+	// REQUIRED; 分页信息。
+	Pagination DescribeLiveCustomizedLogDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 开始时间。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 查询的日志类型。
+	Type string `json:"Type"`
+}
+
+type DescribeLiveCustomizedLogDataResResultLogInfoListItem struct {
+
+	// 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为 s。
+	DateTime *string `json:"DateTime,omitempty"`
+
+	// 域名；查询拉流转推日志（Type=relay）时，该字段为空。
+	Domain *string `json:"Domain,omitempty"`
+
+	// 日志文件下载链接链接。
+	DownloadURL *string `json:"DownloadUrl,omitempty"`
+
+	// 日志文件名称。
+	LogName *string `json:"LogName,omitempty"`
+
+	// 日志文件大小，单位为 byte。
+	LogSize *int32 `json:"LogSize,omitempty"`
+}
+
+// DescribeLiveCustomizedLogDataResResultPagination - 分页信息。
+type DescribeLiveCustomizedLogDataResResultPagination struct {
+
+	// REQUIRED; 当前所在的分页。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页显示的信息条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果总条数。
+	TotalCnt int32 `json:"TotalCnt"`
+}
+
 type DescribeLiveISPDataRes struct {
 
 	// REQUIRED
@@ -3753,6 +3918,110 @@ type DescribeLiveISPDataResResultISPListItem struct {
 
 	// REQUIRED; 运营商名称。
 	Name string `json:"Name"`
+}
+
+type DescribeLiveLogDataBody struct {
+
+	// REQUIRED; 仅支持查询最近31天的数据
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 仅支持查询最近31天的数据
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 日志类型，支持如下枚举值：
+	// * pull：拉流日志
+	// * push：推流日志
+	// * source：回源日志
+	// * relay：拉流转推日志
+	Type string `json:"Type"`
+
+	// 查询日志的域名列表；日志类型为拉流转推日志（Type=relay）时，该参数无效。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 页码，默认为 1。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页数量，默认为 20。
+	PageSize *int32 `json:"PageSize,omitempty"`
+}
+
+type DescribeLiveLogDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveLogDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveLogDataResResult `json:"Result"`
+}
+
+type DescribeLiveLogDataResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeLiveLogDataResResult struct {
+
+	// REQUIRED; 结束时间。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 日志文件信息列表。
+	LogInfoList []DescribeLiveLogDataResResultLogInfoListItem `json:"LogInfoList"`
+
+	// REQUIRED; 分页信息。
+	Pagination DescribeLiveLogDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 开始时间。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 查询的日志类型。
+	Type string `json:"Type"`
+
+	// 查询日志的域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+}
+
+type DescribeLiveLogDataResResultLogInfoListItem struct {
+
+	// REQUIRED; 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为 s。
+	DateTime string `json:"DateTime"`
+
+	// REQUIRED; 日志文件下载链接链接。
+	DownloadURL string `json:"DownloadUrl"`
+
+	// REQUIRED; 日志文件名。
+	LogName string `json:"LogName"`
+
+	// REQUIRED; 日志文件大小，单位为 byte。
+	LogSize int32 `json:"LogSize"`
+
+	// 域名；查询拉流转推日志（Type=relay）时，该字段为空。
+	Domain *string `json:"Domain,omitempty"`
+}
+
+// DescribeLiveLogDataResResultPagination - 分页信息。
+type DescribeLiveLogDataResResultPagination struct {
+
+	// REQUIRED; 当前所在分页。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页显示信息条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 结果总条数。
+	TotalCnt int32 `json:"TotalCnt"`
 }
 
 type DescribeLiveMetricBandwidthDataBody struct {
@@ -3872,7 +4141,7 @@ type DescribeLiveMetricBandwidthDataResResult struct {
 	// REQUIRED; 时间粒度。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒��数据。
 	BandwidthDataList []DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
 	// REQUIRED; 结束时间。
@@ -4103,7 +4372,7 @@ type DescribeLiveMetricTrafficDataResResponseMetadata struct {
 
 type DescribeLiveMetricTrafficDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 时��粒度。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 结束时间。
@@ -4220,13 +4489,13 @@ type DescribeLiveMetricTrafficDataResResultUserRegionListItem struct {
 
 type DescribeLiveP95PeakBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s，支持的历史查询时间范围为 93 天。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。支持的历史查询时间范围为 93 天。
+	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300，支持的取值为 300。
+	// 时间粒度，单位为 s，默认值为 300，支持的取值为 300。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 域名列表，缺省情况下表示查询所有域名。
@@ -4587,10 +4856,10 @@ type DescribeLivePlayStatusCodeDataResResultUserRegionListItem struct {
 
 type DescribeLivePullToPushBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，结束时间需晚于起始时间 StartTime，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，起始时间应早于当前时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
 	StartTime string `json:"StartTime"`
 
 	// 时间粒度，单位为 s，默认值为 300。
@@ -4820,7 +5089,7 @@ type DescribeLivePullToPushDataResResultPullToPushDetailDataListItem struct {
 	// REQUIRED; 各时间片详细数据。
 	PullToPushDataList []DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsItem `json:"PullToPushDataList"`
 
-	// REQUIRED; 查询范围内拉流转推总时长，单位分钟，保留小数点后 2 位。
+	// REQUIRED; 查询范围内拉流���推总时长，单位分钟，保留小数点后 2 位。
 	TotalDuration float32 `json:"TotalDuration"`
 
 	// 域名。
@@ -5079,7 +5348,7 @@ type DescribeLivePushStreamMetricsResResultMetricListItem struct {
 	// REQUIRED; 音频帧率，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; ���频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
 	AudioPts int32 `json:"AudioPts"`
 
 	// REQUIRED; 视频码率，单位为 kbps。
@@ -5816,7 +6085,7 @@ type DescribeLiveSourceTrafficDataResResponseMetadataError struct {
 
 type DescribeLiveSourceTrafficDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 时���粒度。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 应用名称。
@@ -6048,7 +6317,7 @@ type DescribeLiveStreamInfoByPageQuery struct {
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
 	// 流类型，缺省情况下表示全选。支持如下取值。
-	// * Origin：原始流；
+	// * origin：原始流；
 	// * trans：转码流。
 	StreamType *string `json:"StreamType,omitempty" query:"StreamType"`
 
@@ -6406,6 +6675,70 @@ type DescribeLiveStreamStateResResult struct {
 	Type string `json:"type"`
 }
 
+type DescribeLiveStreamUsageDataBody struct {
+
+	// 域名。
+	Domain *string `json:"Domain,omitempty"`
+
+	// 查询时间，格式为 yyyy-mm-dd HH:MM。 例如：查询时间 2023-01-01 10:00 时表示查询时间范围为 10:00 到 10:01。 :::tip
+	// * 未填写查询时间时，默认查询时间为当前时间减 5 分钟。
+	// * 最长支持查询的历史时间范围为 31 天。 :::
+	QueryTime *string `json:"QueryTime,omitempty"`
+
+	// 流名称。
+	StreamName *string `json:"StreamName,omitempty"`
+}
+
+type DescribeLiveStreamUsageDataRes struct {
+
+	// REQUIRED; 响应数据。
+	Response DescribeLiveStreamUsageDataResResponse `json:"Response"`
+
+	// REQUIRED; 请求失败原因：
+	// * 请求成功时 Result 为空
+	// * 请求失败时 Result 展示失败的原因
+	Result string `json:"Result"`
+
+	// REQUIRED; 请求状态：
+	// * 1：请求成功
+	// * 0：请求失败
+	Status int32 `json:"Status"`
+}
+
+// DescribeLiveStreamUsageDataResResponse - 响应数据。
+type DescribeLiveStreamUsageDataResResponse struct {
+
+	// REQUIRED; 详细数据信息。
+	DataInfoList []DescribeLiveStreamUsageDataResResponseDataInfoListItem `json:"DataInfoList"`
+
+	// REQUIRED; 查询时间。
+	QueryTime string `json:"QueryTime"`
+
+	// REQUIRED; 请求 ID。
+	RequestID string `json:"RequestId"`
+}
+
+type DescribeLiveStreamUsageDataResResponseDataInfoListItem struct {
+
+	// REQUIRED; 带宽，单位 kbps。
+	Bandwidth int32 `json:"Bandwidth"`
+
+	// REQUIRED; 域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 在线人数。
+	OnlineUser int32 `json:"OnlineUser"`
+
+	// REQUIRED; 协议。
+	Protocol string `json:"Protocol"`
+
+	// REQUIRED; 请求数。
+	Request int32 `json:"Request"`
+
+	// REQUIRED; 流名称。
+	StreamName string `json:"StreamName"`
+}
+
 type DescribeLiveTimeShiftDataBody struct {
 
 	// REQUIRED; 结束时间，RFC3339 格式的 UTC 时间，精度为 s。
@@ -6414,7 +6747,7 @@ type DescribeLiveTimeShiftDataBody struct {
 	// REQUIRED; 开始时间，RFC3339 格式的 UTC 时间，精度为 s。
 	StartTime string `json:"StartTime"`
 
-	// 聚合时间粒度，单位秒，支持配置为 86400，支持查询最近 366 天内的数据，单次查询时间范围 93 天。
+	// 时间粒度，单位为 s，支持配置为 86400，单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 域名空间列表，缺省情况表示查询该用户的所有域名空间。
@@ -6486,7 +6819,7 @@ type DescribeLiveTrafficDataBody struct {
 	// 时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
 	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
 	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
-	// * 86400：支持单次查询时间跨度为 366 天，历史查询时间范围为 366 天。
+	// * 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 数据拆分的维度，可取值为 "Domain"，"ISP"，"Protocol"，设置为空时不进行数据拆分。
@@ -6697,7 +7030,7 @@ type DescribeLiveTranscodeDataBody struct {
 	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，当前仅支持天粒度，默认值为 86400。单次查询时间跨度为 93d，历史查询时间范围为 93d。
+	// 时间粒度，单位为 s，当前仅支持天粒度，默认值为 86400。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 应用名称。
@@ -6800,10 +7133,10 @@ type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 
 type DescribeRecordTaskFileHistoryBody struct {
 
-	// REQUIRED; 开始推流时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 开始录制时间，RFC3339 格式的 UTC 时间，精度为 s。当您查询指定录制任务详情时，DateFrom 应设置为开始时间之前的任意时间。
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 结束推流时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 结束录制时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的 UTC 时间，精度为 s。
 	DateTo string `json:"DateTo"`
 
 	// REQUIRED; 分页查询页码。
@@ -6882,7 +7215,7 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 录制时长。
 	Duration string `json:"Duration"`
 
-	// REQUIRED; 结束推流时间。
+	// REQUIRED; 结束录制时间。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 录制文件的文件名。
@@ -6894,7 +7227,7 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; ToS 中的保存路径。
 	Path string `json:"Path"`
 
-	// REQUIRED; 开始推流时间。
+	// REQUIRED; 开始录制时间。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
@@ -7094,6 +7427,118 @@ type DescribeRelaySourceV3ResResultRelaySourceConfigListPropertiesItemsServersIt
 
 	// REQUIRED; 回源协议。
 	RelaySourceProtocol string `json:"RelaySourceProtocol"`
+}
+
+type DescribeSnapshotAuditPresetDetailBody struct {
+	PresetList []*string `json:"PresetList,omitempty"`
+}
+
+type DescribeSnapshotAuditPresetDetailRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeSnapshotAuditPresetDetailResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *DescribeSnapshotAuditPresetDetailResResult `json:"Result,omitempty"`
+}
+
+type DescribeSnapshotAuditPresetDetailResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// DescribeSnapshotAuditPresetDetailResResult - 视请求的接口而定
+type DescribeSnapshotAuditPresetDetailResResult struct {
+
+	// REQUIRED
+	PresetDetailList []DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem `json:"PresetDetailList"`
+}
+
+// DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem - 审核模版详细信息。
+type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem struct {
+
+	// REQUIRED
+	AshePresetName string `json:"AshePresetName"`
+
+	// REQUIRED; ToS 存储空间 bucket。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
+	Bucket string `json:"Bucket"`
+
+	// REQUIRED; 审核结果回调配置。
+	CallbackDetailList []DescribeSnapshotAuditPresetDetailResResultPresetDetailListPropertiesItemsItem `json:"CallbackDetailList"`
+
+	// REQUIRED
+	CreatedAt int32 `json:"CreatedAt"`
+
+	// REQUIRED; 审核模板描述。
+	Description string `json:"Description"`
+
+	// REQUIRED; 审核标签名称，若为空，则默认请求所有基础模型。支持以下取值。
+	// * 301：涉黄；
+	// * 302：涉敏1；
+	// * 303：涉敏2；
+	// * 304：广告；
+	// * 305：引人不适；
+	// * 306：违禁；
+	// * 307：二维码；
+	// * 308：诈骗；
+	// * 309：不良画面；
+	// * 310：未成年相关；
+	// * 320：文字违规。
+	Label []string `json:"Label"`
+
+	// REQUIRED; 审核模板名称。
+	PresetName string `json:"PresetName"`
+
+	// REQUIRED; veimageX 的服务 ID。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
+	ServiceID string `json:"ServiceID"`
+
+	// REQUIRED
+	SnapshotConfig DescribeSnapshotAuditPresetDetailResResultPresetDetailListItemSnapshotConfig `json:"SnapshotConfig"`
+
+	// REQUIRED; 存储策略。支持以下取值。
+	// * 0：触发存储，只存储有风险图片；
+	// * 1：全部存储，存储全部图片。
+	StorageStrategy int32 `json:"StorageStrategy"`
+
+	// REQUIRED
+	UpdatedAt int32 `json:"UpdatedAt"`
+}
+
+type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItemSnapshotConfig struct {
+
+	// REQUIRED
+	Format string `json:"Format"`
+
+	// REQUIRED
+	Interval float32 `json:"Interval"`
+
+	// REQUIRED
+	SnapshotObject string `json:"SnapshotObject"`
+
+	// REQUIRED
+	StorageDir string `json:"StorageDir"`
+}
+
+type DescribeSnapshotAuditPresetDetailResResultPresetDetailListPropertiesItemsItem struct {
+
+	// REQUIRED; 回调的类型 HTTP。
+	CallbackType string `json:"CallbackType"`
+
+	// REQUIRED; 回调地址。
+	URL string `json:"URL"`
 }
 
 type DescribeStreamQuotaConfigBody struct {
@@ -7509,101 +7954,134 @@ type GeneratePushURLResResultPushURLListDetailItem struct {
 	URL string `json:"URL"`
 }
 
-type GetVqosRawDataBody struct {
+type GetPullCDNSnapshotTaskBody struct {
 
-	// REQUIRED; 维度可为该service下任意一个维度
-	Dimensions []string `json:"Dimensions"`
-
-	// REQUIRED; 同上
-	End int32 `json:"End"`
-
-	// REQUIRED; 过滤条件
-	Filter GetVqosRawDataBodyFilter `json:"Filter"`
-
-	// REQUIRED; Limit取值上限为20000
-	Limit int32 `json:"Limit"`
-
-	// REQUIRED; line时表示图例数，point时表示数据点数
-	LimitType string `json:"LimitType"`
-
-	// REQUIRED; 指标可为该service下任意一个指标
-	Metrics []string `json:"Metrics"`
-
-	// REQUIRED; 默认0
-	Offset int32 `json:"Offset"`
-
-	// REQUIRED; UNIX时间戳，单位：s
-	Start int32 `json:"Start"`
-
-	// REQUIRED; 支持5m、1h、1d
-	Window string `json:"Window"`
+	// REQUIRED; 直播截图任务 ID，任务的唯一标识。
+	TaskID string `json:"TaskID"`
 }
 
-// GetVqosRawDataBodyFilter - 过滤条件
-type GetVqosRawDataBodyFilter struct {
+type GetPullCDNSnapshotTaskRes struct {
 
-	// REQUIRED; Logic有值时，Filters必须有值
-	Filters []GetVqosRawDataBodyFilterFiltersItem `json:"Filters"`
+	// REQUIRED
+	ResponseMetadata GetPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
 
-	// REQUIRED; 取值为空、"and"或者"or"
-	Logic string `json:"Logic"`
+	// REQUIRED; 视请求的接口而定
+	Result GetPullCDNSnapshotTaskResResult `json:"Result"`
 }
 
-type GetVqosRawDataBodyFilterFiltersItem struct {
+type GetPullCDNSnapshotTaskResResponseMetadata struct {
 
-	// 筛选项名称
-	Field *string `json:"Field,omitempty"`
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
 
-	// 操作符号
-	Op *string `json:"Op,omitempty"`
+	// REQUIRED; 请求的Region，例如���cn-north-1
+	Region string `json:"Region"`
 
-	// Logic为空时生效，多值时使用英文逗号拼接
-	Value *string `json:"Value,omitempty"`
-}
-
-type GetVqosRawDataQuery struct {
-
-	// REQUIRED
-	AppQueryType string `json:"AppQueryType" query:"AppQueryType"`
-
-	// REQUIRED
-	VqosService string `json:"VqosService" query:"VqosService"`
-}
-
-type GetVqosRawDataRes struct {
-
-	// REQUIRED
-	ResponseMetadata GetVqosRawDataResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result GetVqosRawDataResResult `json:"Result"`
-}
-
-type GetVqosRawDataResResponseMetadata struct {
-
-	// REQUIRED
+	// REQUIRED; RequestID为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
-type GetVqosRawDataResResult struct {
+// GetPullCDNSnapshotTaskResResult - 视请求的接口而定
+type GetPullCDNSnapshotTaskResResult struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 推流/拉流域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 截图任务的结束时间。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 截图任务的开始时间。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 任务状态：
+	// * 停用
+	// * 未开始
+	// * 生效中
+	// * 已结束
+	Status string `json:"Status"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 直播截图任务 ID。
+	TaskID string `json:"TaskId"`
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+}
+
+type GetPullRecordTaskBody struct {
+
+	// REQUIRED; 直播录制任务的 ID，任务的唯一标识。
+	TaskID string `json:"TaskID"`
+}
+
+type GetPullRecordTaskRes struct {
 
 	// REQUIRED
-	Columns []interface{} `json:"Columns"`
+	ResponseMetadata GetPullRecordTaskResResponseMetadata `json:"ResponseMetadata"`
 
-	// REQUIRED
-	Data []interface{} `json:"Data"`
+	// REQUIRED; 视请求的接口而定
+	Result GetPullRecordTaskResResult `json:"Result"`
+}
 
-	// REQUIRED
-	Limit int32 `json:"Limit"`
+type GetPullRecordTaskResResponseMetadata struct {
 
-	// REQUIRED
-	Offset int32 `json:"Offset"`
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
 
-	// REQUIRED
-	Total int32 `json:"Total"`
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
 
-	// REQUIRED
-	TotalPoint int32 `json:"TotalPoint"`
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetPullRecordTaskResResult - 视请求的接口而定
+type GetPullRecordTaskResResult struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 推流/拉流域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 任务结束时间
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 任务开始时间。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 任务状态，有以下几种状态：
+	// * 停用
+	// * 未开始
+	// * 生效中
+	// * 已结束
+	Status string `json:"Status"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 直播录制任务的 ID。
+	TaskID string `json:"TaskId"`
+
+	// REQUIRED; 域名空间
+	Vhost string `json:"Vhost"`
 }
 
 type KillStreamBody struct {
@@ -7914,7 +8392,6 @@ type ListDomainDetailBody struct {
 
 	// 域名区域列表。缺省情况下表示全部，区域类型支持以下取值。
 	// * cn：中国大陆；
-	// * oversea：海外；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
 	DomainRegionList []*string `json:"DomainRegionList,omitempty"`
@@ -8012,6 +8489,9 @@ type ListDomainDetailResResultDomainListItem struct {
 	// REQUIRED; IPC 备案校验是否通过，是否过期信息。
 	ICPCheck int32 `json:"ICPCheck"`
 
+	// REQUIRED; 项目名称
+	ProjectName string `json:"ProjectName"`
+
 	// REQUIRED; 绑定的推流域名。
 	PushDomain string `json:"PushDomain"`
 
@@ -8030,6 +8510,9 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 5：欠费关停。
 	Status int32 `json:"Status"`
 
+	// REQUIRED; 标签
+	Tags []ListDomainDetailResResultDomainListPropertiesItemsItem `json:"Tags"`
+
 	// REQUIRED; 域名类型，包含两种类型。
 	// * push：推流域名；
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
@@ -8037,6 +8520,107 @@ type ListDomainDetailResResultDomainListItem struct {
 
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
+}
+
+type ListDomainDetailResResultDomainListPropertiesItemsItem struct {
+
+	// REQUIRED; 分类。
+	Category string `json:"Category"`
+
+	// REQUIRED; 标签 Key。
+	Key string `json:"Key"`
+
+	// REQUIRED; 标签 value。
+	Value string `json:"Value"`
+}
+
+type ListPullCDNSnapshotTaskBody struct {
+
+	// REQUIRED; 分页数
+	PageNum string `json:"PageNum"`
+
+	// REQUIRED; 分页的大小
+	PageSize string `json:"PageSize"`
+}
+
+type ListPullCDNSnapshotTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *ListPullCDNSnapshotTaskResResult `json:"Result,omitempty"`
+}
+
+type ListPullCDNSnapshotTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// ListPullCDNSnapshotTaskResResult - 视请求的接口而定
+type ListPullCDNSnapshotTaskResResult struct {
+
+	// REQUIRED; 直播截图列表记录。
+	List []ListPullCDNSnapshotTaskResResultListItem `json:"List"`
+
+	// REQUIRED; 分页信息。
+	Pagination ListPullCDNSnapshotTaskResResultPagination `json:"Pagination"`
+}
+
+type ListPullCDNSnapshotTaskResResultListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 推流/拉流域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 截图任务的结束时间。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 截图任务的开始时间。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 4种状态:停用，未开始，生效中，已结束
+	Status string `json:"Status"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 任务ID，任务的唯一标识。
+	TaskID string `json:"TaskId"`
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+}
+
+// ListPullCDNSnapshotTaskResResultPagination - 分页信息。
+type ListPullCDNSnapshotTaskResResultPagination struct {
+
+	// REQUIRED; 当前页。
+	PageCur int32 `json:"PageCur"`
+
+	// REQUIRED; 当前页的数据量。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 总页数。
+	PageTotal int32 `json:"PageTotal"`
+
+	// REQUIRED; 总数据量。
+	TotalCount int32 `json:"TotalCount"`
 }
 
 type ListPullRecordTaskBody struct {
@@ -8819,7 +9403,7 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 2 个参考帧之���的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
+	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 帧率，单位为 fps。帧率越大，画面越流畅
@@ -9103,58 +9687,6 @@ type ListVhostWatermarkPresetResResultWatermarkPresetListItem struct {
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
-type ListVqosDimensionValuesBody struct {
-
-	// REQUIRED
-	Dimension string `json:"Dimension"`
-
-	// REQUIRED
-	End int32 `json:"End"`
-
-	// REQUIRED
-	Start int32 `json:"Start"`
-
-	// REQUIRED
-	Window string   `json:"Window"`
-	Limit  *float32 `json:"Limit,omitempty"`
-}
-
-type ListVqosDimensionValuesQuery struct {
-
-	// REQUIRED
-	AppQueryType float32 `json:"AppQueryType" query:"AppQueryType"`
-
-	// REQUIRED
-	VqosService string `json:"VqosService" query:"VqosService"`
-}
-
-type ListVqosDimensionValuesRes struct {
-
-	// REQUIRED
-	ResponseMetadata ListVqosDimensionValuesResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result []ListVqosDimensionValuesResResultItem `json:"Result"`
-}
-
-type ListVqosDimensionValuesResResponseMetadata struct {
-
-	// REQUIRED
-	RequestID string `json:"RequestId"`
-}
-
-type ListVqosDimensionValuesResResultItem struct {
-
-	// REQUIRED
-	Alias string `json:"Alias"`
-
-	// REQUIRED
-	Count int32 `json:"Count"`
-
-	// REQUIRED
-	Name string `json:"Name"`
-}
-
 type ListVqosMetricsDimensionsQuery struct {
 
 	// REQUIRED
@@ -9374,6 +9906,39 @@ type ResumeStreamResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type StopPullCDNSnapshotTaskBody struct {
+
+	// REQUIRED; 任务id
+	TaskID string `json:"TaskId"`
+}
+
+type StopPullCDNSnapshotTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata StopPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type StopPullCDNSnapshotTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type StopPullRecordTaskBody struct {
@@ -9659,11 +10224,11 @@ type UpdateDenyConfigBody struct {
 	// REQUIRED; 黑白名单配置列表。
 	DenyConfigList []UpdateDenyConfigBodyDenyConfigListItem `json:"DenyConfigList"`
 
+	// REQUIRED; 推/拉流域名。
+	Domain string `json:"Domain"`
+
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
-
-	// 推/拉流域名。
-	Domain *string `json:"Domain,omitempty"`
 }
 
 type UpdateDenyConfigBodyDenyConfigListItem struct {
@@ -9910,7 +10475,7 @@ type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 	// 源流录制，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord和OriginRecord的取值至少一个为 1。 :::
+	// :::tipTranscodeRecord和OriginRecord的取值至少一个不为 0。 :::
 	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
 	// 录制 HLS 格式时，单个 TS 切片时长，单位为 s，默认值为 5，取值范围为 [5,30]。
@@ -9919,8 +10484,12 @@ type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 	// 转码流录制，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord和OriginRecord的取值至少一个为 1。 :::
+	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命���的转码后缀。
+	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
+
+	// 录制转码流后缀列表，转码流录制配置为全部录制时（TranscodeRecord 配置等于 2）生效。
+	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
 // UpdateRecordPresetV2BodyRecordPresetConfigFlvParam - FLV 录制参数，开启 FLV 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
@@ -10286,7 +10855,7 @@ type UpdateRefererResResponseMetadataError struct {
 
 type UpdateRelaySourceV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，由 1 到 30 位��字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
 	// REQUIRED; 回源组配置详情。
@@ -10529,15 +11098,16 @@ type UpdateSnapshotPresetBody struct {
 	// 截图间隔时间，单位为 s，默认值为 10，取值范围为正整数
 	Interval *int32 `json:"Interval,omitempty"`
 
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、"-"、"!"、"_"、"."、"*"及占位符。
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
 	// veImageX 的服务 ID。 :::tipBucket 与 ServiceID 传且仅传一个。 :::
 	ServiceID *string `json:"ServiceID,omitempty"`
 
-	// 截图格式。支持如下取值。
-	// * jpeg
-	// * png
+	// 截图格式。支持如下取值。- jpeg - jpg
 	SnapshotFormat *string `json:"SnapshotFormat,omitempty"`
 
-	// 存储规则。存储在 ToS 时传，格式为{PushDomain}/{App}/{Stream}/{UnixTimestamp}。
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、"-"、"!"、"_"、"."、"*"及占位符。
 	SnapshotObject *string `json:"SnapshotObject,omitempty"`
 
 	// 截图模版状态。
@@ -10545,7 +11115,7 @@ type UpdateSnapshotPresetBody struct {
 	// * 0：关闭
 	Status *int32 `json:"Status,omitempty"`
 
-	// ToS 的存储目录，不传为空。
+	// ToS 的存储目录，不��为空。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
@@ -10806,7 +11376,7 @@ type UpdateTranscodePresetBody struct {
 	// * 当 As 的取值为 1 时，如果同时配置 LongSide 和 ShortSide 的值，则按照 ShortSide 进行等比缩放。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd���uhd。 例如，配置的转码流后缀名为hd，则拉转码流时转码的流名为 stream-123456789_hd。
+	// 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、uhd。 例如，配置的转码流后缀名为hd，则拉转码流时转码的流名为 stream-123456789_hd。
 	SuffixName *string `json:"SuffixName,omitempty"`
 
 	// 视频编码格式。
@@ -10969,673 +11539,589 @@ type VerifyDomainOwnerResResult struct {
 	// REQUIRED; 检查结果
 	CheckResult bool `json:"CheckResult"`
 }
-type ListWatermarkPreset struct {
-}
-type VerifyDomainOwner struct {
-}
-type UpdateTimeShiftPresetV3 struct {
-}
-type UpdateRelaySourceV4 struct {
-}
-type DescribeLivePushStreamCountDataQuery struct {
-}
-type DescribeStreamQuotaConfig struct {
-}
-type DescribeLivePullToPushData struct {
-}
-type RestartPullToPushTask struct {
-}
-type DeleteRelaySourceV4Query struct {
-}
-type ListPullRecordTaskQuery struct {
-}
-type DescribeLiveSourceTrafficDataQuery struct {
-}
-type UpdateAuthKey struct {
-}
-type DeleteRelaySourceV3 struct {
-}
-type DescribeLiveBatchPushStreamMetricsQuery struct {
-}
-type CreateWatermarkPresetQuery struct {
-}
-type UpdatePullToPushTaskQuery struct {
-}
-type UpdateSnapshotPreset struct {
-}
-type DescribeLiveSourceStreamMetricsQuery struct {
-}
-type DescribeLiveTrafficDataQuery struct {
-}
-type UpdateDomainVhost struct {
-}
-type UnbindCert struct {
-}
-type KillStreamQuery struct {
-}
-type ListTimeShiftPresetV2 struct {
-}
-type DescribeRefererQuery struct {
-}
-type EnableDomain struct {
-}
-type DescribeLiveAuditData struct {
-}
-type UpdateTranscodePresetQuery struct {
-}
-type DescribeStreamQuotaConfigQuery struct {
-}
-type ListWatermarkPresetQuery struct {
-}
-type ListDomainDetail struct {
-}
-type ListPullRecordTask struct {
-}
-type DescribeLiveTranscodeDataQuery struct {
-}
-type DescribeIPInfoBody struct {
-}
-type CreatePullRecordTask struct {
-}
-type ListPullToPushTaskBody struct {
-}
-type CreateSnapshotAuditPreset struct {
-}
-type ListCommonTransPresetDetailQuery struct {
-}
-type DescribeAuth struct {
-}
-type DescribeLiveSourceBandwidthData struct {
-}
-type DescribeLiveStreamSessionData struct {
-}
-type DeleteWatermarkPreset struct {
-}
-type DeleteCallback struct {
-}
-type UpdateRefererQuery struct {
-}
-type UpdateAuthKeyQuery struct {
-}
-type DescribeLiveBatchStreamTranscodeData struct {
+type DescribeLiveBatchStreamTranscodeDataQuery struct {
 }
 type UpdateRelaySourceV3 struct {
 }
-type DescribeLivePushStreamMetrics struct {
+type CreateRecordPresetV2Query struct {
 }
-type DeleteTranscodePreset struct {
-}
-type ListDomainDetailQuery struct {
-}
-type UpdateTranscodePreset struct {
-}
-type StopPullRecordTask struct {
-}
-type DescribeRecordTaskFileHistoryQuery struct {
-}
-type UpdateDenyConfig struct {
-}
-type CreatePullToPushTaskQuery struct {
-}
-type CreateSnapshotPresetQuery struct {
-}
-type DescribeLiveStreamInfoByPageBody struct {
-}
-type CreateDomainV2 struct {
-}
-type CreatePullRecordTaskQuery struct {
-}
-type DescribeLiveBatchSourceStreamMetricsQuery struct {
-}
-type DescribeLiveP95PeakBandwidthData struct {
-}
-type ListVhostSnapshotPreset struct {
+type StopPullToPushTask struct {
 }
 type GeneratePlayURL struct {
 }
-type DescribeDenyConfig struct {
+type DescribeLiveLogDataQuery struct {
 }
-type DescribeLiveRecordDataQuery struct {
+type DeleteCallback struct {
+}
+type ResumeStreamQuery struct {
+}
+type CreatePullRecordTaskQuery struct {
+}
+type DescribeLiveP95PeakBandwidthDataQuery struct {
+}
+type BindCert struct {
+}
+type DescribeLiveStreamStateBody struct {
+}
+type ListVhostWatermarkPresetQuery struct {
+}
+type CreateSnapshotPreset struct {
+}
+type UpdateReferer struct {
+}
+type GeneratePlayURLQuery struct {
+}
+type ListPullToPushTaskBody struct {
+}
+type ListPullCDNSnapshotTaskQuery struct {
+}
+type DescribeLivePlayStatusCodeDataQuery struct {
+}
+type DescribeLiveBatchStreamTrafficData struct {
+}
+type DescribeLiveStreamSessionDataQuery struct {
+}
+type UpdatePullToPushTaskQuery struct {
+}
+type DescribeCDNSnapshotHistoryQuery struct {
+}
+type DescribeLiveStreamSessionData struct {
+}
+type BindCertQuery struct {
+}
+type GetPullRecordTaskQuery struct {
+}
+type DescribeLiveTrafficData struct {
+}
+type DescribeRefererQuery struct {
+}
+type ResumeStream struct {
+}
+type UpdateCallback struct {
+}
+type CreateCert struct {
+}
+type DeleteTimeShiftPresetV3Query struct {
+}
+type UpdateDomainVhost struct {
+}
+type CreateRelaySourceV4 struct {
+}
+type DescribeIPInfoBody struct {
+}
+type DescribeLivePushStreamMetricsQuery struct {
+}
+type DescribeAuthQuery struct {
+}
+type ListCertV2 struct {
+}
+type DescribeCertDetailSecretV2 struct {
+}
+type UpdateTimeShiftPresetV3Query struct {
+}
+type DescribeLiveStreamState struct {
+}
+type UnbindCertQuery struct {
+}
+type DescribeLiveStreamInfoByPage struct {
+}
+type ListRelaySourceV4Query struct {
+}
+type GetPullCDNSnapshotTaskQuery struct {
 }
 type DescribeCDNSnapshotHistory struct {
 }
-type ListCommonTransPresetDetail struct {
+type DeleteCert struct {
 }
-type UpdateRecordPresetV2 struct {
+type DescribeLiveBandwidthDataQuery struct {
 }
-type CreateDomainQuery struct {
+type ListVhostSnapshotAuditPresetQuery struct {
 }
-type ListVhostRecordPresetV2 struct {
+type DeleteCertQuery struct {
 }
-type ListVhostRecordPresetV2Query struct {
+type VerifyDomainOwner struct {
 }
-type DescribeRecordTaskFileHistory struct {
+type DescribeIPInfoRes struct {
 }
-type VerifyDomainOwnerQuery struct {
+type DeleteRelaySourceV4 struct {
+}
+type DescribeIPInfoQuery struct {
+}
+type DescribeLiveISPDataBody struct {
+}
+type DescribeLiveSnapshotDataQuery struct {
+}
+type DescribeLiveSourceStreamMetrics struct {
+}
+type ListVhostTransCodePresetQuery struct {
+}
+type DescribeLiveTranscodeData struct {
+}
+type DeleteRefererQuery struct {
+}
+type DescribeDomainQuery struct {
+}
+type DescribeLivePushStreamCountDataQuery struct {
+}
+type DescribeLiveSourceBandwidthDataQuery struct {
+}
+type ListTimeShiftPresetV2Query struct {
+}
+type UpdateTimeShiftPresetV3 struct {
+}
+type ListVqosMetricsDimensionsBody struct {
+}
+type DescribeLivePlayStatusCodeData struct {
+}
+type UnbindCert struct {
+}
+type DescribeSnapshotAuditPresetDetailQuery struct {
+}
+type DescribeLiveRegionDataBody struct {
+}
+type UpdateAuthKeyQuery struct {
+}
+type DeleteDomainQuery struct {
+}
+type DescribeLiveISPData struct {
+}
+type UpdateRelaySourceV4Query struct {
+}
+type DescribeLiveAuditDataQuery struct {
 }
 type DisableDomain struct {
 }
-type CreateSnapshotAuditPresetQuery struct {
+type UpdateRelaySourceV3Query struct {
 }
-type DescribeLiveMetricTrafficData struct {
+type DescribeClosedStreamInfoByPage struct {
+}
+type DescribeStreamQuotaConfigQuery struct {
+}
+type DescribeLiveLogData struct {
+}
+type UpdateTranscodePresetQuery struct {
+}
+type DescribeLiveRegionDataQuery struct {
+}
+type DescribeForbiddenStreamInfoByPage struct {
+}
+type UpdateCallbackQuery struct {
+}
+type DeleteWatermarkPreset struct {
+}
+type GetPullRecordTask struct {
+}
+type DescribeLivePullToPushBandwidthData struct {
+}
+type DescribeRelaySourceV3Query struct {
+}
+type UpdateRelaySourceV4 struct {
+}
+type UpdateSnapshotAuditPresetQuery struct {
+}
+type DeleteRecordPreset struct {
+}
+type DescribeLiveTranscodeDataQuery struct {
+}
+type DeleteWatermarkPresetQuery struct {
+}
+type ListVqosMetricsDimensions struct {
+}
+type CreateTimeShiftPresetV3 struct {
+}
+type DescribeClosedStreamInfoByPageBody struct {
+}
+type DescribeRecordTaskFileHistory struct {
+}
+type DescribeLiveMetricBandwidthData struct {
+}
+type DeletePullToPushTaskQuery struct {
+}
+type ListVhostWatermarkPreset struct {
+}
+type ListRelaySourceV4 struct {
+}
+type DescribeLivePushStreamCountData struct {
+}
+type StopPullCDNSnapshotTask struct {
+}
+type CreateVerifyContentQuery struct {
+}
+type DescribeIPInfo struct {
+}
+type DescribeLiveBatchSourceStreamMetrics struct {
+}
+type DescribeLiveMetricTrafficDataQuery struct {
+}
+type DescribeLivePullToPushData struct {
+}
+type CreateDomainV2Query struct {
+}
+type CreateDomainQuery struct {
+}
+type DeleteStreamQuotaConfig struct {
+}
+type DescribeLiveTimeShiftData struct {
+}
+type DeleteSnapshotPresetQuery struct {
+}
+type DescribeLiveSourceTrafficDataQuery struct {
+}
+type CreatePullCDNSnapshotTaskQuery struct {
+}
+type DescribeDomain struct {
+}
+type UpdateDomainVhostQuery struct {
+}
+type DescribeCallback struct {
+}
+type DescribeLiveBatchPushStreamMetrics struct {
+}
+type GetPullCDNSnapshotTask struct {
+}
+type DescribeDenyConfigQuery struct {
 }
 type DescribeLiveMetricBandwidthDataQuery struct {
+}
+type DescribeLiveTimeShiftDataQuery struct {
 }
 type CreateRelaySourceV4Query struct {
 }
 type ForbidStream struct {
 }
-type UpdateRecordPresetV2Query struct {
+type DescribeDenyConfig struct {
 }
-type DeletePullToPushTask struct {
+type ListWatermarkPresetQuery struct {
 }
-type ForbidStreamQuery struct {
+type ListVhostRecordPresetV2Query struct {
 }
-type ResumeStreamQuery struct {
+type ListCommonTransPresetDetailQuery struct {
 }
-type DescribeLiveRegionDataBody struct {
-}
-type ListVhostSnapshotPresetQuery struct {
-}
-type UpdateStreamQuotaConfigQuery struct {
-}
-type DescribeForbiddenStreamInfoByPageBody struct {
-}
-type DescribeCallback struct {
-}
-type DescribeCertDetailSecretV2Query struct {
-}
-type DeleteReferer struct {
-}
-type ListVqosMetricsDimensions struct {
-}
-type DescribeLiveBatchStreamTranscodeDataQuery struct {
-}
-type ListVqosDimensionValues struct {
-}
-type DescribeLiveMetricBandwidthData struct {
-}
-type DeleteTimeShiftPresetV3Query struct {
-}
-type CreateVerifyContent struct {
-}
-type DescribeLiveSnapshotData struct {
-}
-type DescribeLiveRegionDataQuery struct {
-}
-type DescribeLiveSourceTrafficData struct {
-}
-type DescribeLiveRegionData struct {
-}
-type CreateTimeShiftPresetV3 struct {
-}
-type GeneratePushURLQuery struct {
-}
-type BindCert struct {
-}
-type ResumeStream struct {
-}
-type DescribeLiveBatchPushStreamMetrics struct {
-}
-type CreateTranscodePreset struct {
-}
-type DescribeLiveStreamStateBody struct {
-}
-type DeleteSnapshotAuditPresetQuery struct {
-}
-type DescribeLiveStreamCountDataQuery struct {
-}
-type CreateCertQuery struct {
-}
-type KillStream struct {
-}
-type DescribeLiveStreamSessionDataQuery struct {
-}
-type DescribeLiveTranscodeData struct {
-}
-type ListVhostWatermarkPresetQuery struct {
-}
-type UpdateRelaySourceV4Query struct {
-}
-type DeleteRelaySourceV4 struct {
-}
-type CreateTimeShiftPresetV3Query struct {
-}
-type GeneratePushURL struct {
-}
-type DescribeLiveBatchStreamTrafficDataQuery struct {
-}
-type UpdateRelaySourceV3Query struct {
-}
-type UpdateCallback struct {
-}
-type GeneratePlayURLQuery struct {
-}
-type DescribeLiveSourceBandwidthDataQuery struct {
-}
-type DeleteSnapshotPresetQuery struct {
-}
-type DescribeCDNSnapshotHistoryQuery struct {
-}
-type ListPullToPushTask struct {
-}
-type DeleteRecordPresetQuery struct {
-}
-type DescribeLivePlayStatusCodeDataQuery struct {
-}
-type DeleteRelaySourceV3Query struct {
-}
-type DescribeLivePushStreamMetricsQuery struct {
-}
-type DeleteCert struct {
-}
-type DescribeLiveBatchSourceStreamMetrics struct {
-}
-type DeleteDomain struct {
-}
-type DescribeClosedStreamInfoByPageBody struct {
-}
-type CreateCert struct {
-}
-type EnableDomainQuery struct {
-}
-type DescribeRelaySourceV3Query struct {
-}
-type UpdateSnapshotAuditPresetQuery struct {
-}
-type StopPullToPushTask struct {
-}
-type UpdateSnapshotPresetQuery struct {
-}
-type DeleteWatermarkPresetQuery struct {
-}
-type CreateRecordPresetV2Query struct {
-}
-type UpdateStreamQuotaConfig struct {
-}
-type DeleteSnapshotPreset struct {
-}
-type DescribeLiveStreamCountData struct {
-}
-type DescribeLiveISPDataBody struct {
-}
-type ListCertV2 struct {
-}
-type DescribeLiveTrafficData struct {
-}
-type ListVhostSnapshotAuditPresetQuery struct {
-}
-type DescribeLiveMetricTrafficDataQuery struct {
-}
-type DescribeAuthQuery struct {
-}
-type DescribeLiveISPData struct {
-}
-type CreateSnapshotPreset struct {
-}
-type DescribeClosedStreamInfoByPage struct {
+type ListVhostSnapshotPreset struct {
 }
 type DeleteTimeShiftPresetV3 struct {
 }
-type ListVhostTransCodePresetQuery struct {
+type ListVhostSnapshotPresetQuery struct {
 }
-type ListVhostSnapshotAuditPreset struct {
-}
-type DisableDomainQuery struct {
-}
-type ListVqosMetricsDimensionsBody struct {
-}
-type UpdateReferer struct {
-}
-type DescribeLiveRecordData struct {
-}
-type DeleteRecordPreset struct {
-}
-type RestartPullToPushTaskQuery struct {
-}
-type DeletePullToPushTaskQuery struct {
-}
-type DeleteStreamQuotaConfigQuery struct {
-}
-type DescribeIPInfo struct {
-}
-type DeleteRefererQuery struct {
-}
-type DescribeForbiddenStreamInfoByPage struct {
-}
-type CreateDomain struct {
-}
-type DescribeLiveSnapshotDataQuery struct {
-}
-type CreateRelaySourceV4 struct {
-}
-type DescribeLiveStreamInfoByPage struct {
-}
-type DescribeIPInfoRes struct {
-}
-type StopPullRecordTaskQuery struct {
-}
-type DescribeLiveTimeShiftData struct {
-}
-type ListRelaySourceV4Query struct {
-}
-type UpdateDenyConfigQuery struct {
-}
-type UpdateWatermarkPreset struct {
-}
-type DescribeDenyConfigQuery struct {
-}
-type UpdateSnapshotAuditPreset struct {
-}
-type DeleteStreamQuotaConfig struct {
-}
-type DeleteTranscodePresetQuery struct {
-}
-type DescribeIPInfoQuery struct {
-}
-type ListVhostWatermarkPreset struct {
-}
-type CreateWatermarkPreset struct {
-}
-type UpdatePullToPushTask struct {
-}
-type CreatePullToPushTask struct {
-}
-type DescribeLivePullToPushBandwidthDataQuery struct {
-}
-type DescribeDomainQuery struct {
-}
-type StopPullToPushTaskQuery struct {
-}
-type ListRelaySourceV4 struct {
-}
-type ListVhostTransCodePreset struct {
-}
-type CreateRecordPresetV2 struct {
-}
-type DescribeLivePullToPushBandwidthData struct {
-}
-type DescribeLiveBandwidthData struct {
-}
-type DescribeLivePushStreamCountData struct {
-}
-type DescribeLivePullToPushDataQuery struct {
-}
-type DescribeLiveBatchStreamTrafficData struct {
-}
-type GetVqosRawData struct {
-}
-type DescribeLiveP95PeakBandwidthDataQuery struct {
-}
-type UpdateWatermarkPresetQuery struct {
-}
-type ListTimeShiftPresetV2Query struct {
-}
-type DeleteDomainQuery struct {
-}
-type DescribeLiveBandwidthDataQuery struct {
-}
-type DescribeLiveAuditDataQuery struct {
-}
-type DescribeCallbackQuery struct {
-}
-type DescribeLiveSourceStreamMetrics struct {
-}
-type UnbindCertQuery struct {
-}
-type DescribeReferer struct {
-}
-type UpdateTimeShiftPresetV3Query struct {
-}
-type BindCertQuery struct {
-}
-type CreateDomainV2Query struct {
-}
-type DescribeLiveStreamState struct {
-}
-type CreateVerifyContentQuery struct {
-}
-type DescribeCertDetailSecretV2 struct {
-}
-type DescribeLiveISPDataQuery struct {
-}
-type ListCertV2Query struct {
-}
-type DescribeDomain struct {
-}
-type DescribeLivePlayStatusCodeData struct {
-}
-type DescribeRelaySourceV3 struct {
-}
-type CreateTranscodePresetQuery struct {
-}
-type DescribeLiveTimeShiftDataQuery struct {
-}
-type DeleteCallbackQuery struct {
+type KillStream struct {
 }
 type DeleteSnapshotAuditPreset struct {
 }
-type DeleteCertQuery struct {
+type DescribeLiveSourceBandwidthData struct {
 }
-type UpdateCallbackQuery struct {
+type ListVhostSnapshotAuditPreset struct {
 }
-type UpdateDomainVhostQuery struct {
+type UpdateAuthKey struct {
+}
+type DescribeRelaySourceV3 struct {
+}
+type DescribeLiveBatchStreamTrafficDataQuery struct {
+}
+type DescribeLivePullToPushDataQuery struct {
+}
+type DescribeLiveStreamUsageData struct {
+}
+type CreateTranscodePresetQuery struct {
+}
+type ListPullCDNSnapshotTask struct {
+}
+type DeleteRecordPresetQuery struct {
+}
+type DescribeLiveTrafficDataQuery struct {
+}
+type ListVhostRecordPresetV2 struct {
+}
+type ListTimeShiftPresetV2 struct {
+}
+type CreatePullToPushTaskQuery struct {
+}
+type UpdatePullToPushTask struct {
+}
+type ForbidStreamQuery struct {
+}
+type CreatePullCDNSnapshotTask struct {
+}
+type CreateSnapshotPresetQuery struct {
+}
+type DeleteSnapshotPreset struct {
+}
+type UpdateWatermarkPreset struct {
+}
+type DeletePullToPushTask struct {
+}
+type DescribeLiveISPDataQuery struct {
+}
+type ListCommonTransPresetDetail struct {
+}
+type DeleteSnapshotAuditPresetQuery struct {
+}
+type RestartPullToPushTask struct {
+}
+type UpdateRefererQuery struct {
+}
+type RestartPullToPushTaskQuery struct {
+}
+type ListPullRecordTask struct {
+}
+type ListPullRecordTaskQuery struct {
+}
+type DeleteRelaySourceV3Query struct {
+}
+type UpdateSnapshotPresetQuery struct {
+}
+type EnableDomain struct {
+}
+type CreatePullToPushTask struct {
+}
+type UpdateSnapshotPreset struct {
+}
+type DescribeLiveCustomizedLogData struct {
+}
+type UpdateStreamQuotaConfigQuery struct {
+}
+type CreateSnapshotAuditPresetQuery struct {
+}
+type DescribeLiveStreamUsageDataQuery struct {
+}
+type DescribeLiveBatchStreamTranscodeData struct {
+}
+type UpdateRecordPresetV2 struct {
+}
+type DescribeLiveStreamCountData struct {
+}
+type UpdateSnapshotAuditPreset struct {
+}
+type DescribeCallbackQuery struct {
+}
+type DeleteRelaySourceV4Query struct {
+}
+type ListPullToPushTask struct {
+}
+type DeleteStreamQuotaConfigQuery struct {
+}
+type DescribeLiveRecordData struct {
+}
+type StopPullCDNSnapshotTaskQuery struct {
+}
+type CreateWatermarkPresetQuery struct {
+}
+type CreateDomain struct {
+}
+type UpdateDenyConfigQuery struct {
+}
+type DescribeReferer struct {
+}
+type DescribeAuth struct {
+}
+type DeleteRelaySourceV3 struct {
+}
+type DescribeLiveBatchSourceStreamMetricsQuery struct {
+}
+type UpdateWatermarkPresetQuery struct {
+}
+type ListDomainDetail struct {
+}
+type GeneratePushURLQuery struct {
+}
+type StopPullToPushTaskQuery struct {
+}
+type DescribeLiveAuditData struct {
+}
+type DescribeLivePullToPushBandwidthDataQuery struct {
+}
+type DisableDomainQuery struct {
+}
+type VerifyDomainOwnerQuery struct {
+}
+type DescribeLiveMetricTrafficData struct {
+}
+type DeleteTranscodePreset struct {
+}
+type UpdateStreamQuotaConfig struct {
+}
+type DescribeLiveSourceStreamMetricsQuery struct {
+}
+type StopPullRecordTask struct {
+}
+type DescribeLiveStreamCountDataQuery struct {
+}
+type DescribeLiveCustomizedLogDataQuery struct {
+}
+type CreateTranscodePreset struct {
+}
+type EnableDomainQuery struct {
+}
+type DescribeStreamQuotaConfig struct {
+}
+type DescribeLiveBatchPushStreamMetricsQuery struct {
+}
+type DescribeForbiddenStreamInfoByPageBody struct {
+}
+type ListWatermarkPreset struct {
+}
+type KillStreamQuery struct {
+}
+type DescribeLiveRegionData struct {
+}
+type DescribeLiveRecordDataQuery struct {
+}
+type DeleteReferer struct {
+}
+type GeneratePushURL struct {
+}
+type DeleteTranscodePresetQuery struct {
+}
+type CreateWatermarkPreset struct {
+}
+type CreateVerifyContent struct {
+}
+type DescribeSnapshotAuditPresetDetail struct {
+}
+type DescribeLiveSnapshotData struct {
+}
+type DescribeLiveSourceTrafficData struct {
+}
+type DescribeLiveBandwidthData struct {
+}
+type CreatePullRecordTask struct {
+}
+type DeleteCallbackQuery struct {
+}
+type CreateDomainV2 struct {
+}
+type DescribeLivePushStreamMetrics struct {
+}
+type DescribeCertDetailSecretV2Query struct {
+}
+type ListVhostTransCodePreset struct {
+}
+type CreateCertQuery struct {
+}
+type CreateRecordPresetV2 struct {
+}
+type UpdateTranscodePreset struct {
+}
+type StopPullRecordTaskQuery struct {
+}
+type UpdateRecordPresetV2Query struct {
+}
+type ListCertV2Query struct {
+}
+type DescribeRecordTaskFileHistoryQuery struct {
+}
+type DescribeLiveStreamInfoByPageBody struct {
+}
+type DeleteDomain struct {
+}
+type ListDomainDetailQuery struct {
+}
+type CreateTimeShiftPresetV3Query struct {
+}
+type DescribeLiveP95PeakBandwidthData struct {
+}
+type CreateSnapshotAuditPreset struct {
+}
+type UpdateDenyConfig struct {
 }
 type ListVhostWatermarkPresetReq struct {
 	*ListVhostWatermarkPresetQuery
 	*ListVhostWatermarkPresetBody
 }
-type ListVhostRecordPresetV2Req struct {
-	*ListVhostRecordPresetV2Query
-	*ListVhostRecordPresetV2Body
+type DescribeRecordTaskFileHistoryReq struct {
+	*DescribeRecordTaskFileHistoryQuery
+	*DescribeRecordTaskFileHistoryBody
 }
-type DescribeCallbackReq struct {
-	*DescribeCallbackQuery
-	*DescribeCallbackBody
-}
-type DescribeLivePlayStatusCodeDataReq struct {
-	*DescribeLivePlayStatusCodeDataQuery
-	*DescribeLivePlayStatusCodeDataBody
-}
-type DeleteCallbackReq struct {
-	*DeleteCallbackQuery
-	*DeleteCallbackBody
-}
-type UpdateRefererReq struct {
-	*UpdateRefererQuery
-	*UpdateRefererBody
-}
-type StopPullToPushTaskReq struct {
-	*StopPullToPushTaskQuery
-	*StopPullToPushTaskBody
-}
-type UpdateRelaySourceV3Req struct {
-	*UpdateRelaySourceV3Query
-	*UpdateRelaySourceV3Body
-}
-type DescribeStreamQuotaConfigReq struct {
-	*DescribeStreamQuotaConfigQuery
-	*DescribeStreamQuotaConfigBody
-}
-type ListVqosDimensionValuesReq struct {
-	*ListVqosDimensionValuesQuery
-	*ListVqosDimensionValuesBody
-}
-type ListVhostSnapshotAuditPresetReq struct {
-	*ListVhostSnapshotAuditPresetQuery
-	*ListVhostSnapshotAuditPresetBody
-}
-type DescribeLiveBatchPushStreamMetricsReq struct {
-	*DescribeLiveBatchPushStreamMetricsQuery
-	*DescribeLiveBatchPushStreamMetricsBody
-}
-type UpdateCallbackReq struct {
-	*UpdateCallbackQuery
-	*UpdateCallbackBody
-}
-type ForbidStreamReq struct {
-	*ForbidStreamQuery
-	*ForbidStreamBody
-}
-type DescribeLiveAuditDataReq struct {
-	*DescribeLiveAuditDataQuery
-	*DescribeLiveAuditDataBody
-}
-type DeleteWatermarkPresetReq struct {
-	*DeleteWatermarkPresetQuery
-	*DeleteWatermarkPresetBody
-}
-type UpdateSnapshotAuditPresetReq struct {
-	*UpdateSnapshotAuditPresetQuery
-	*UpdateSnapshotAuditPresetBody
-}
-type UpdateTranscodePresetReq struct {
-	*UpdateTranscodePresetQuery
-	*UpdateTranscodePresetBody
-}
-type UpdateSnapshotPresetReq struct {
-	*UpdateSnapshotPresetQuery
-	*UpdateSnapshotPresetBody
-}
-type VerifyDomainOwnerReq struct {
-	*VerifyDomainOwnerQuery
-	*VerifyDomainOwnerBody
-}
-type DeletePullToPushTaskReq struct {
-	*DeletePullToPushTaskQuery
-	*DeletePullToPushTaskBody
-}
-type GetVqosRawDataReq struct {
-	*GetVqosRawDataQuery
-	*GetVqosRawDataBody
-}
-type DescribeLivePushStreamCountDataReq struct {
-	*DescribeLivePushStreamCountDataQuery
-	*DescribeLivePushStreamCountDataBody
-}
-type CreateTranscodePresetReq struct {
-	*CreateTranscodePresetQuery
-	*CreateTranscodePresetBody
-}
-type DeleteSnapshotPresetReq struct {
-	*DeleteSnapshotPresetQuery
-	*DeleteSnapshotPresetBody
-}
-type DescribeCDNSnapshotHistoryReq struct {
-	*DescribeCDNSnapshotHistoryQuery
-	*DescribeCDNSnapshotHistoryBody
-}
-type DescribeLivePushStreamMetricsReq struct {
-	*DescribeLivePushStreamMetricsQuery
-	*DescribeLivePushStreamMetricsBody
+type UpdateDomainVhostReq struct {
+	*UpdateDomainVhostQuery
+	*UpdateDomainVhostBody
 }
 type DescribeLivePullToPushBandwidthDataReq struct {
 	*DescribeLivePullToPushBandwidthDataQuery
 	*DescribeLivePullToPushBandwidthDataBody
 }
-type DeleteRecordPresetReq struct {
-	*DeleteRecordPresetQuery
-	*DeleteRecordPresetBody
-}
-type UpdateTimeShiftPresetV3Req struct {
-	*UpdateTimeShiftPresetV3Query
-	*UpdateTimeShiftPresetV3Body
-}
-type ListTimeShiftPresetV2Req struct {
-	*ListTimeShiftPresetV2Query
-	*ListTimeShiftPresetV2Body
-}
-type CreateDomainV2Req struct {
-	*CreateDomainV2Query
-	*CreateDomainV2Body
-}
-type DescribeLiveMetricTrafficDataReq struct {
-	*DescribeLiveMetricTrafficDataQuery
-	*DescribeLiveMetricTrafficDataBody
-}
-type CreatePullToPushTaskReq struct {
-	*CreatePullToPushTaskQuery
-	*CreatePullToPushTaskBody
-}
-type DescribeLiveRegionDataReq struct {
-	*DescribeLiveRegionDataQuery
-	*DescribeLiveRegionDataBody
-}
-type DescribeLiveBatchSourceStreamMetricsReq struct {
-	*DescribeLiveBatchSourceStreamMetricsQuery
-	*DescribeLiveBatchSourceStreamMetricsBody
-}
-type DescribeLiveStreamCountDataReq struct {
-	*DescribeLiveStreamCountDataQuery
-	*DescribeLiveStreamCountDataBody
-}
-type DescribeLivePullToPushDataReq struct {
-	*DescribeLivePullToPushDataQuery
-	*DescribeLivePullToPushDataBody
-}
-type RestartPullToPushTaskReq struct {
-	*RestartPullToPushTaskQuery
-	*RestartPullToPushTaskBody
-}
-type DescribeLiveMetricBandwidthDataReq struct {
-	*DescribeLiveMetricBandwidthDataQuery
-	*DescribeLiveMetricBandwidthDataBody
-}
-type DescribeLiveP95PeakBandwidthDataReq struct {
-	*DescribeLiveP95PeakBandwidthDataQuery
-	*DescribeLiveP95PeakBandwidthDataBody
-}
-type CreateWatermarkPresetReq struct {
-	*CreateWatermarkPresetQuery
-	*CreateWatermarkPresetBody
-}
-type EnableDomainReq struct {
-	*EnableDomainQuery
-	*EnableDomainBody
-}
-type DisableDomainReq struct {
-	*DisableDomainQuery
-	*DisableDomainBody
-}
-type DescribeLiveBatchStreamTranscodeDataReq struct {
-	*DescribeLiveBatchStreamTranscodeDataQuery
-	*DescribeLiveBatchStreamTranscodeDataBody
-}
-type UpdateWatermarkPresetReq struct {
-	*UpdateWatermarkPresetQuery
-	*UpdateWatermarkPresetBody
-}
-type ListDomainDetailReq struct {
-	*ListDomainDetailQuery
-	*ListDomainDetailBody
-}
-type CreateDomainReq struct {
-	*CreateDomainQuery
-	*CreateDomainBody
-}
-type DescribeDenyConfigReq struct {
-	*DescribeDenyConfigQuery
-	*DescribeDenyConfigBody
-}
-type ListVqosMetricsDimensionsReq struct {
-	*ListVqosMetricsDimensionsQuery
-	*ListVqosMetricsDimensionsBody
+type DescribeAuthReq struct {
+	*DescribeAuthQuery
+	*DescribeAuthBody
 }
 type UpdatePullToPushTaskReq struct {
 	*UpdatePullToPushTaskQuery
 	*UpdatePullToPushTaskBody
 }
-type DescribeRecordTaskFileHistoryReq struct {
-	*DescribeRecordTaskFileHistoryQuery
-	*DescribeRecordTaskFileHistoryBody
+type DeleteStreamQuotaConfigReq struct {
+	*DeleteStreamQuotaConfigQuery
+	*DeleteStreamQuotaConfigBody
 }
-type UpdateDenyConfigReq struct {
-	*UpdateDenyConfigQuery
-	*UpdateDenyConfigBody
+type DescribeSnapshotAuditPresetDetailReq struct {
+	*DescribeSnapshotAuditPresetDetailQuery
+	*DescribeSnapshotAuditPresetDetailBody
 }
-type DescribeLiveTimeShiftDataReq struct {
-	*DescribeLiveTimeShiftDataQuery
-	*DescribeLiveTimeShiftDataBody
+type DescribeLiveLogDataReq struct {
+	*DescribeLiveLogDataQuery
+	*DescribeLiveLogDataBody
+}
+type VerifyDomainOwnerReq struct {
+	*VerifyDomainOwnerQuery
+	*VerifyDomainOwnerBody
+}
+type DescribeDomainReq struct {
+	*DescribeDomainQuery
+	*DescribeDomainBody
+}
+type ListPullCDNSnapshotTaskReq struct {
+	*ListPullCDNSnapshotTaskQuery
+	*ListPullCDNSnapshotTaskBody
+}
+type DescribeLiveSourceBandwidthDataReq struct {
+	*DescribeLiveSourceBandwidthDataQuery
+	*DescribeLiveSourceBandwidthDataBody
+}
+type DescribeDenyConfigReq struct {
+	*DescribeDenyConfigQuery
+	*DescribeDenyConfigBody
+}
+type ListVhostTransCodePresetReq struct {
+	*ListVhostTransCodePresetQuery
+	*ListVhostTransCodePresetBody
+}
+type CreateSnapshotPresetReq struct {
+	*CreateSnapshotPresetQuery
+	*CreateSnapshotPresetBody
+}
+type DescribeStreamQuotaConfigReq struct {
+	*DescribeStreamQuotaConfigQuery
+	*DescribeStreamQuotaConfigBody
+}
+type DescribeLiveStreamInfoByPageReq struct {
+	*DescribeLiveStreamInfoByPageQuery
+	*DescribeLiveStreamInfoByPageBody
+}
+type StopPullCDNSnapshotTaskReq struct {
+	*StopPullCDNSnapshotTaskQuery
+	*StopPullCDNSnapshotTaskBody
+}
+type GetPullRecordTaskReq struct {
+	*GetPullRecordTaskQuery
+	*GetPullRecordTaskBody
+}
+type DescribeLiveStreamSessionDataReq struct {
+	*DescribeLiveStreamSessionDataQuery
+	*DescribeLiveStreamSessionDataBody
+}
+type DescribeLiveISPDataReq struct {
+	*DescribeLiveISPDataQuery
+	*DescribeLiveISPDataBody
+}
+type ListTimeShiftPresetV2Req struct {
+	*ListTimeShiftPresetV2Query
+	*ListTimeShiftPresetV2Body
+}
+type ListCertV2Req struct {
+	*ListCertV2Query
+	*ListCertV2Body
+}
+type DescribeClosedStreamInfoByPageReq struct {
+	*DescribeClosedStreamInfoByPageQuery
+	*DescribeClosedStreamInfoByPageBody
 }
 type DescribeRefererReq struct {
 	*DescribeRefererQuery
@@ -11645,227 +12131,371 @@ type DeleteSnapshotAuditPresetReq struct {
 	*DeleteSnapshotAuditPresetQuery
 	*DeleteSnapshotAuditPresetBody
 }
-type DescribeLiveBandwidthDataReq struct {
-	*DescribeLiveBandwidthDataQuery
-	*DescribeLiveBandwidthDataBody
-}
-type CreateRecordPresetV2Req struct {
-	*CreateRecordPresetV2Query
-	*CreateRecordPresetV2Body
-}
-type ListPullToPushTaskReq struct {
-	*ListPullToPushTaskQuery
-	*ListPullToPushTaskBody
-}
-type DescribeClosedStreamInfoByPageReq struct {
-	*DescribeClosedStreamInfoByPageQuery
-	*DescribeClosedStreamInfoByPageBody
-}
-type GeneratePlayURLReq struct {
-	*GeneratePlayURLQuery
-	*GeneratePlayURLBody
-}
-type UpdateStreamQuotaConfigReq struct {
-	*UpdateStreamQuotaConfigQuery
-	*UpdateStreamQuotaConfigBody
-}
-type DescribeLiveTrafficDataReq struct {
-	*DescribeLiveTrafficDataQuery
-	*DescribeLiveTrafficDataBody
-}
-type DeleteTimeShiftPresetV3Req struct {
-	*DeleteTimeShiftPresetV3Query
-	*DeleteTimeShiftPresetV3Body
-}
-type DescribeLiveStreamSessionDataReq struct {
-	*DescribeLiveStreamSessionDataQuery
-	*DescribeLiveStreamSessionDataBody
-}
-type DescribeLiveTranscodeDataReq struct {
-	*DescribeLiveTranscodeDataQuery
-	*DescribeLiveTranscodeDataBody
-}
-type DescribeIPInfoReq struct {
-	*DescribeIPInfoQuery
-	*DescribeIPInfoBody
-}
-type DescribeLiveRecordDataReq struct {
-	*DescribeLiveRecordDataQuery
-	*DescribeLiveRecordDataBody
-}
-type DescribeLiveSnapshotDataReq struct {
-	*DescribeLiveSnapshotDataQuery
-	*DescribeLiveSnapshotDataBody
-}
-type DescribeDomainReq struct {
-	*DescribeDomainQuery
-	*DescribeDomainBody
-}
-type UpdateRelaySourceV4Req struct {
-	*UpdateRelaySourceV4Query
-	*UpdateRelaySourceV4Body
-}
-type CreatePullRecordTaskReq struct {
-	*CreatePullRecordTaskQuery
-	*CreatePullRecordTaskBody
-}
-type DeleteRefererReq struct {
-	*DeleteRefererQuery
-	*DeleteRefererBody
-}
-type ResumeStreamReq struct {
-	*ResumeStreamQuery
-	*ResumeStreamBody
-}
-type CreateSnapshotAuditPresetReq struct {
-	*CreateSnapshotAuditPresetQuery
-	*CreateSnapshotAuditPresetBody
-}
-type ListCommonTransPresetDetailReq struct {
-	*ListCommonTransPresetDetailQuery
-	*ListCommonTransPresetDetailBody
-}
-type DescribeAuthReq struct {
-	*DescribeAuthQuery
-	*DescribeAuthBody
-}
-type DescribeRelaySourceV3Req struct {
-	*DescribeRelaySourceV3Query
-	*DescribeRelaySourceV3Body
-}
-type CreateRelaySourceV4Req struct {
-	*CreateRelaySourceV4Query
-	*CreateRelaySourceV4Body
-}
-type DescribeLiveSourceBandwidthDataReq struct {
-	*DescribeLiveSourceBandwidthDataQuery
-	*DescribeLiveSourceBandwidthDataBody
-}
-type DescribeLiveBatchStreamTrafficDataReq struct {
-	*DescribeLiveBatchStreamTrafficDataQuery
-	*DescribeLiveBatchStreamTrafficDataBody
-}
-type ListVhostSnapshotPresetReq struct {
-	*ListVhostSnapshotPresetQuery
-	*ListVhostSnapshotPresetBody
-}
-type ListPullRecordTaskReq struct {
-	*ListPullRecordTaskQuery
-	*ListPullRecordTaskBody
-}
-type DeleteCertReq struct {
-	*DeleteCertQuery
-	*DeleteCertBody
-}
-type DescribeCertDetailSecretV2Req struct {
-	*DescribeCertDetailSecretV2Query
-	*DescribeCertDetailSecretV2Body
-}
-type DescribeForbiddenStreamInfoByPageReq struct {
-	*DescribeForbiddenStreamInfoByPageQuery
-	*DescribeForbiddenStreamInfoByPageBody
-}
-type DescribeLiveSourceStreamMetricsReq struct {
-	*DescribeLiveSourceStreamMetricsQuery
-	*DescribeLiveSourceStreamMetricsBody
-}
-type DeleteTranscodePresetReq struct {
-	*DeleteTranscodePresetQuery
-	*DeleteTranscodePresetBody
-}
-type ListWatermarkPresetReq struct {
-	*ListWatermarkPresetQuery
-	*ListWatermarkPresetBody
-}
-type UpdateRecordPresetV2Req struct {
-	*UpdateRecordPresetV2Query
-	*UpdateRecordPresetV2Body
-}
-type ListCertV2Req struct {
-	*ListCertV2Query
-	*ListCertV2Body
-}
-type UnbindCertReq struct {
-	*UnbindCertQuery
-	*UnbindCertBody
-}
-type ListRelaySourceV4Req struct {
-	*ListRelaySourceV4Query
-	*ListRelaySourceV4Body
-}
-type CreateTimeShiftPresetV3Req struct {
-	*CreateTimeShiftPresetV3Query
-	*CreateTimeShiftPresetV3Body
-}
-type CreateCertReq struct {
-	*CreateCertQuery
-	*CreateCertBody
-}
-type ListVhostTransCodePresetReq struct {
-	*ListVhostTransCodePresetQuery
-	*ListVhostTransCodePresetBody
+type UpdateAuthKeyReq struct {
+	*UpdateAuthKeyQuery
+	*UpdateAuthKeyBody
 }
 type DescribeLiveStreamStateReq struct {
 	*DescribeLiveStreamStateQuery
 	*DescribeLiveStreamStateBody
 }
-type DescribeLiveISPDataReq struct {
-	*DescribeLiveISPDataQuery
-	*DescribeLiveISPDataBody
+type UpdateRefererReq struct {
+	*UpdateRefererQuery
+	*UpdateRefererBody
 }
-type BindCertReq struct {
-	*BindCertQuery
-	*BindCertBody
+type UpdateWatermarkPresetReq struct {
+	*UpdateWatermarkPresetQuery
+	*UpdateWatermarkPresetBody
 }
-type KillStreamReq struct {
-	*KillStreamQuery
-	*KillStreamBody
+type DescribeLivePushStreamMetricsReq struct {
+	*DescribeLivePushStreamMetricsQuery
+	*DescribeLivePushStreamMetricsBody
 }
-type DescribeLiveStreamInfoByPageReq struct {
-	*DescribeLiveStreamInfoByPageQuery
-	*DescribeLiveStreamInfoByPageBody
+type DescribeLiveP95PeakBandwidthDataReq struct {
+	*DescribeLiveP95PeakBandwidthDataQuery
+	*DescribeLiveP95PeakBandwidthDataBody
 }
-type GeneratePushURLReq struct {
-	*GeneratePushURLQuery
-	*GeneratePushURLBody
+type DeleteSnapshotPresetReq struct {
+	*DeleteSnapshotPresetQuery
+	*DeleteSnapshotPresetBody
 }
-type StopPullRecordTaskReq struct {
-	*StopPullRecordTaskQuery
-	*StopPullRecordTaskBody
+type ListVhostSnapshotPresetReq struct {
+	*ListVhostSnapshotPresetQuery
+	*ListVhostSnapshotPresetBody
 }
-type DescribeLiveSourceTrafficDataReq struct {
-	*DescribeLiveSourceTrafficDataQuery
-	*DescribeLiveSourceTrafficDataBody
+type CreateTimeShiftPresetV3Req struct {
+	*CreateTimeShiftPresetV3Query
+	*CreateTimeShiftPresetV3Body
 }
-type UpdateDomainVhostReq struct {
-	*UpdateDomainVhostQuery
-	*UpdateDomainVhostBody
+type GeneratePlayURLReq struct {
+	*GeneratePlayURLQuery
+	*GeneratePlayURLBody
 }
-type CreateVerifyContentReq struct {
-	*CreateVerifyContentQuery
-	*CreateVerifyContentBody
+type DescribeIPInfoReq struct {
+	*DescribeIPInfoQuery
+	*DescribeIPInfoBody
 }
-type DeleteRelaySourceV4Req struct {
-	*DeleteRelaySourceV4Query
-	*DeleteRelaySourceV4Body
-}
-type DeleteStreamQuotaConfigReq struct {
-	*DeleteStreamQuotaConfigQuery
-	*DeleteStreamQuotaConfigBody
-}
-type CreateSnapshotPresetReq struct {
-	*CreateSnapshotPresetQuery
-	*CreateSnapshotPresetBody
-}
-type UpdateAuthKeyReq struct {
-	*UpdateAuthKeyQuery
-	*UpdateAuthKeyBody
+type DeleteCallbackReq struct {
+	*DeleteCallbackQuery
+	*DeleteCallbackBody
 }
 type DeleteDomainReq struct {
 	*DeleteDomainQuery
 	*DeleteDomainBody
 }
+type CreateDomainReq struct {
+	*CreateDomainQuery
+	*CreateDomainBody
+}
 type DeleteRelaySourceV3Req struct {
 	*DeleteRelaySourceV3Query
 	*DeleteRelaySourceV3Body
+}
+type DescribeRelaySourceV3Req struct {
+	*DescribeRelaySourceV3Query
+	*DescribeRelaySourceV3Body
+}
+type DescribeLiveBatchPushStreamMetricsReq struct {
+	*DescribeLiveBatchPushStreamMetricsQuery
+	*DescribeLiveBatchPushStreamMetricsBody
+}
+type CreatePullRecordTaskReq struct {
+	*CreatePullRecordTaskQuery
+	*CreatePullRecordTaskBody
+}
+type EnableDomainReq struct {
+	*EnableDomainQuery
+	*EnableDomainBody
+}
+type CreatePullToPushTaskReq struct {
+	*CreatePullToPushTaskQuery
+	*CreatePullToPushTaskBody
+}
+type UpdateRelaySourceV4Req struct {
+	*UpdateRelaySourceV4Query
+	*UpdateRelaySourceV4Body
+}
+type CreateTranscodePresetReq struct {
+	*CreateTranscodePresetQuery
+	*CreateTranscodePresetBody
+}
+type UpdateTimeShiftPresetV3Req struct {
+	*UpdateTimeShiftPresetV3Query
+	*UpdateTimeShiftPresetV3Body
+}
+type CreateCertReq struct {
+	*CreateCertQuery
+	*CreateCertBody
+}
+type UpdateSnapshotPresetReq struct {
+	*UpdateSnapshotPresetQuery
+	*UpdateSnapshotPresetBody
+}
+type UnbindCertReq struct {
+	*UnbindCertQuery
+	*UnbindCertBody
+}
+type DescribeLiveRegionDataReq struct {
+	*DescribeLiveRegionDataQuery
+	*DescribeLiveRegionDataBody
+}
+type GetPullCDNSnapshotTaskReq struct {
+	*GetPullCDNSnapshotTaskQuery
+	*GetPullCDNSnapshotTaskBody
+}
+type DescribeLiveBatchSourceStreamMetricsReq struct {
+	*DescribeLiveBatchSourceStreamMetricsQuery
+	*DescribeLiveBatchSourceStreamMetricsBody
+}
+type ListPullToPushTaskReq struct {
+	*ListPullToPushTaskQuery
+	*ListPullToPushTaskBody
+}
+type DescribeForbiddenStreamInfoByPageReq struct {
+	*DescribeForbiddenStreamInfoByPageQuery
+	*DescribeForbiddenStreamInfoByPageBody
+}
+type UpdateRelaySourceV3Req struct {
+	*UpdateRelaySourceV3Query
+	*UpdateRelaySourceV3Body
+}
+type ListVhostSnapshotAuditPresetReq struct {
+	*ListVhostSnapshotAuditPresetQuery
+	*ListVhostSnapshotAuditPresetBody
+}
+type DeleteWatermarkPresetReq struct {
+	*DeleteWatermarkPresetQuery
+	*DeleteWatermarkPresetBody
+}
+type DeleteTimeShiftPresetV3Req struct {
+	*DeleteTimeShiftPresetV3Query
+	*DeleteTimeShiftPresetV3Body
+}
+type UpdateCallbackReq struct {
+	*UpdateCallbackQuery
+	*UpdateCallbackBody
+}
+type GeneratePushURLReq struct {
+	*GeneratePushURLQuery
+	*GeneratePushURLBody
+}
+type CreateSnapshotAuditPresetReq struct {
+	*CreateSnapshotAuditPresetQuery
+	*CreateSnapshotAuditPresetBody
+}
+type DescribeLiveTrafficDataReq struct {
+	*DescribeLiveTrafficDataQuery
+	*DescribeLiveTrafficDataBody
+}
+type DeleteCertReq struct {
+	*DeleteCertQuery
+	*DeleteCertBody
+}
+type DeletePullToPushTaskReq struct {
+	*DeletePullToPushTaskQuery
+	*DeletePullToPushTaskBody
+}
+type ListRelaySourceV4Req struct {
+	*ListRelaySourceV4Query
+	*ListRelaySourceV4Body
+}
+type DescribeLivePlayStatusCodeDataReq struct {
+	*DescribeLivePlayStatusCodeDataQuery
+	*DescribeLivePlayStatusCodeDataBody
+}
+type ListWatermarkPresetReq struct {
+	*ListWatermarkPresetQuery
+	*ListWatermarkPresetBody
+}
+type UpdateStreamQuotaConfigReq struct {
+	*UpdateStreamQuotaConfigQuery
+	*UpdateStreamQuotaConfigBody
+}
+type UpdateSnapshotAuditPresetReq struct {
+	*UpdateSnapshotAuditPresetQuery
+	*UpdateSnapshotAuditPresetBody
+}
+type DescribeCertDetailSecretV2Req struct {
+	*DescribeCertDetailSecretV2Query
+	*DescribeCertDetailSecretV2Body
+}
+type StopPullToPushTaskReq struct {
+	*StopPullToPushTaskQuery
+	*StopPullToPushTaskBody
+}
+type CreateRelaySourceV4Req struct {
+	*CreateRelaySourceV4Query
+	*CreateRelaySourceV4Body
+}
+type DescribeLiveBatchStreamTranscodeDataReq struct {
+	*DescribeLiveBatchStreamTranscodeDataQuery
+	*DescribeLiveBatchStreamTranscodeDataBody
+}
+type DescribeLiveAuditDataReq struct {
+	*DescribeLiveAuditDataQuery
+	*DescribeLiveAuditDataBody
+}
+type ListCommonTransPresetDetailReq struct {
+	*ListCommonTransPresetDetailQuery
+	*ListCommonTransPresetDetailBody
+}
+type ListPullRecordTaskReq struct {
+	*ListPullRecordTaskQuery
+	*ListPullRecordTaskBody
+}
+type DescribeCDNSnapshotHistoryReq struct {
+	*DescribeCDNSnapshotHistoryQuery
+	*DescribeCDNSnapshotHistoryBody
+}
+type DescribeLiveBandwidthDataReq struct {
+	*DescribeLiveBandwidthDataQuery
+	*DescribeLiveBandwidthDataBody
+}
+type DeleteRefererReq struct {
+	*DeleteRefererQuery
+	*DeleteRefererBody
+}
+type ListDomainDetailReq struct {
+	*ListDomainDetailQuery
+	*ListDomainDetailBody
+}
+type DescribeLiveMetricTrafficDataReq struct {
+	*DescribeLiveMetricTrafficDataQuery
+	*DescribeLiveMetricTrafficDataBody
+}
+type DescribeLiveBatchStreamTrafficDataReq struct {
+	*DescribeLiveBatchStreamTrafficDataQuery
+	*DescribeLiveBatchStreamTrafficDataBody
+}
+type RestartPullToPushTaskReq struct {
+	*RestartPullToPushTaskQuery
+	*RestartPullToPushTaskBody
+}
+type ForbidStreamReq struct {
+	*ForbidStreamQuery
+	*ForbidStreamBody
+}
+type ResumeStreamReq struct {
+	*ResumeStreamQuery
+	*ResumeStreamBody
+}
+type CreatePullCDNSnapshotTaskReq struct {
+	*CreatePullCDNSnapshotTaskQuery
+	*CreatePullCDNSnapshotTaskBody
+}
+type DeleteTranscodePresetReq struct {
+	*DeleteTranscodePresetQuery
+	*DeleteTranscodePresetBody
+}
+type BindCertReq struct {
+	*BindCertQuery
+	*BindCertBody
+}
+type CreateDomainV2Req struct {
+	*CreateDomainV2Query
+	*CreateDomainV2Body
+}
+type UpdateDenyConfigReq struct {
+	*UpdateDenyConfigQuery
+	*UpdateDenyConfigBody
+}
+type DeleteRecordPresetReq struct {
+	*DeleteRecordPresetQuery
+	*DeleteRecordPresetBody
+}
+type DisableDomainReq struct {
+	*DisableDomainQuery
+	*DisableDomainBody
+}
+type DeleteRelaySourceV4Req struct {
+	*DeleteRelaySourceV4Query
+	*DeleteRelaySourceV4Body
+}
+type DescribeLivePushStreamCountDataReq struct {
+	*DescribeLivePushStreamCountDataQuery
+	*DescribeLivePushStreamCountDataBody
+}
+type DescribeLiveSourceTrafficDataReq struct {
+	*DescribeLiveSourceTrafficDataQuery
+	*DescribeLiveSourceTrafficDataBody
+}
+type CreateWatermarkPresetReq struct {
+	*CreateWatermarkPresetQuery
+	*CreateWatermarkPresetBody
+}
+type StopPullRecordTaskReq struct {
+	*StopPullRecordTaskQuery
+	*StopPullRecordTaskBody
+}
+type CreateRecordPresetV2Req struct {
+	*CreateRecordPresetV2Query
+	*CreateRecordPresetV2Body
+}
+type UpdateRecordPresetV2Req struct {
+	*UpdateRecordPresetV2Query
+	*UpdateRecordPresetV2Body
+}
+type DescribeLiveTranscodeDataReq struct {
+	*DescribeLiveTranscodeDataQuery
+	*DescribeLiveTranscodeDataBody
+}
+type DescribeLiveTimeShiftDataReq struct {
+	*DescribeLiveTimeShiftDataQuery
+	*DescribeLiveTimeShiftDataBody
+}
+type DescribeLiveStreamUsageDataReq struct {
+	*DescribeLiveStreamUsageDataQuery
+	*DescribeLiveStreamUsageDataBody
+}
+type KillStreamReq struct {
+	*KillStreamQuery
+	*KillStreamBody
+}
+type DescribeLiveStreamCountDataReq struct {
+	*DescribeLiveStreamCountDataQuery
+	*DescribeLiveStreamCountDataBody
+}
+type DescribeLiveMetricBandwidthDataReq struct {
+	*DescribeLiveMetricBandwidthDataQuery
+	*DescribeLiveMetricBandwidthDataBody
+}
+type DescribeLiveSourceStreamMetricsReq struct {
+	*DescribeLiveSourceStreamMetricsQuery
+	*DescribeLiveSourceStreamMetricsBody
+}
+type DescribeLiveCustomizedLogDataReq struct {
+	*DescribeLiveCustomizedLogDataQuery
+	*DescribeLiveCustomizedLogDataBody
+}
+type ListVhostRecordPresetV2Req struct {
+	*ListVhostRecordPresetV2Query
+	*ListVhostRecordPresetV2Body
+}
+type DescribeCallbackReq struct {
+	*DescribeCallbackQuery
+	*DescribeCallbackBody
+}
+type CreateVerifyContentReq struct {
+	*CreateVerifyContentQuery
+	*CreateVerifyContentBody
+}
+type DescribeLiveSnapshotDataReq struct {
+	*DescribeLiveSnapshotDataQuery
+	*DescribeLiveSnapshotDataBody
+}
+type UpdateTranscodePresetReq struct {
+	*UpdateTranscodePresetQuery
+	*UpdateTranscodePresetBody
+}
+type ListVqosMetricsDimensionsReq struct {
+	*ListVqosMetricsDimensionsQuery
+	*ListVqosMetricsDimensionsBody
+}
+type DescribeLiveRecordDataReq struct {
+	*DescribeLiveRecordDataQuery
+	*DescribeLiveRecordDataBody
+}
+type DescribeLivePullToPushDataReq struct {
+	*DescribeLivePullToPushDataQuery
+	*DescribeLivePullToPushDataBody
 }
