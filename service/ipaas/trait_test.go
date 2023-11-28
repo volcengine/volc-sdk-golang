@@ -64,10 +64,10 @@ func TestSample(t *testing.T) {
 				ISP: 7,
 			},
 			DeviceCharge: CreateDevicesBodyDeviceCharge{
-				DeviceChargeMode: CreateDevicesBodyDeviceCharge0DeviceChargeMode{
+				DeviceChargeMode: CreateDevicesBodyDeviceChargeMode{
 					DeviceChargeType: 3,
 				},
-				NetworkChargeMode: CreateDevicesBodyDeviceCharge0NetworkChargeMode{
+				NetworkChargeMode: CreateDevicesBodyDeviceChargeNetworkChargeMode{
 					BandWidthChargeType: "traffic",
 				},
 			},
@@ -291,11 +291,11 @@ func TestForCloudGame(t *testing.T) {
 				Bandwidth: &bandwidth,
 			},
 			DeviceCharge: CreateDevicesBodyDeviceCharge{
-				DeviceChargeMode: CreateDevicesBodyDeviceCharge0DeviceChargeMode{
+				DeviceChargeMode: CreateDevicesBodyDeviceChargeMode{
 					DeviceChargeType: 2,
 				},
 				// 'traffic','daily_peak','bandwidth','95th_percentile'
-				NetworkChargeMode: CreateDevicesBodyDeviceCharge0NetworkChargeMode{
+				NetworkChargeMode: CreateDevicesBodyDeviceChargeNetworkChargeMode{
 					BandWidthChargeType: "daily_peak",
 				},
 			},

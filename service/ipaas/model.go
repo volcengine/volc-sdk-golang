@@ -4,15 +4,15 @@ type ArrayItemschema int32
 
 type ControlApplicationBodyOperation string
 
-type CreateDevicesBodyNetConfig0ISP int32
+type CreateDevicesBodyNetConfigISP int32
 
 type DetailInstanceResResultIsp int32
 
-type DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemExpose int32
+type DetailInstanceResResultSecurityGroupSecurityRuleListItemExpose int32
 
-type DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemNatType int32
+type DetailInstanceResResultSecurityGroupSecurityRuleListItemNatType int32
 
-type DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemProtocol int32
+type DetailInstanceResResultSecurityGroupSecurityRuleListItemProtocol int32
 
 type DetailInstanceResResultSgBoundSt int32
 
@@ -24,207 +24,73 @@ type DetailSecurityGroupResResultSecurityRuleListItemNatType int32
 
 type DetailSecurityGroupResResultSecurityRuleListItemProtocol int32
 
-type DistributeFileBodyAfterDistributionAction0Action int32
+type DistributeFileBodyAfterDistributionActionAction int32
 
 type DistributeFileBodyFileFormat string
 
-type DistributeFileToInstancesBodyAfterDistributionAction0Action int32
+type DistributeFileToInstancesBodyAfterDistributionActionAction int32
 
 type DistributeFileToInstancesBodyFileFormat string
 
 type Enum0 int32
 
-type Enum10 int32
-
-type Enum101 string
-
-type Enum103 int32
-
-type Enum105 int32
-
-type Enum107 string
-
-type Enum109 int32
-
-type Enum111 int32
-
-type Enum113 int32
-
-type Enum115 int32
-
-type Enum117 int32
-
-type Enum119 int32
-
-type Enum121 int32
-
-type Enum123 string
-
-type Enum125 string
-
-type Enum127 string
-
-type Enum129 string
+type Enum1 int32
 
 type Enum13 string
 
-type Enum131 int32
+type Enum14 int32
 
-type Enum133 string
+type Enum15 int32
 
-type Enum135 int32
+type Enum16 int32
 
-type Enum137 string
+type Enum17 int32
 
-type Enum139 int32
+type Enum21 int32
 
-type Enum141 int32
+type Enum22 int32
 
-type Enum143 int32
+type Enum23 int32
 
-type Enum145 int32
-
-type Enum148 string
-
-type Enum151 string
-
-type Enum153 int32
-
-type Enum155 int32
-
-type Enum157 int32
-
-type Enum159 int32
-
-type Enum16 string
-
-type Enum161 int32
-
-type Enum163 int32
-
-type Enum165 int32
-
-type Enum167 int32
-
-type Enum17 string
-
-type Enum18 int32
-
-type Enum19 int32
-
-type Enum2 int32
-
-type Enum20 int32
-
-type Enum22 string
-
-type Enum24 int32
-
-type Enum26 int32
-
-type Enum27 int32
-
-type Enum28 int32
-
-type Enum29 int32
-
-type Enum30 int32
-
-type Enum31 int32
-
-type Enum32 int32
-
-type Enum34 int32
+type Enum35 string
 
 type Enum36 int32
 
+type Enum37 int32
+
 type Enum38 string
 
-type Enum4 int32
+type Enum39 int32
 
-type Enum41 string
+type Enum40 int32
+
+type Enum41 int32
+
+type Enum42 string
 
 type Enum43 string
 
+type Enum44 string
+
 type Enum45 string
-
-type Enum47 int32
-
-type Enum49 string
-
-type Enum51 int32
-
-type Enum53 string
-
-type Enum54 string
-
-type Enum55 int32
-
-type Enum56 int32
-
-type Enum57 int32
-
-type Enum58 int32
-
-type Enum59 int32
-
-type Enum6 int32
-
-type Enum60 int32
-
-type Enum61 int32
-
-type Enum62 int32
-
-type Enum63 string
-
-type Enum64 string
-
-type Enum65 string
-
-type Enum66 string
-
-type Enum67 string
-
-type Enum68 string
-
-type Enum69 int32
-
-type Enum71 int32
-
-type Enum73 int32
-
-type Enum75 int32
-
-type Enum77 int32
-
-type Enum79 int32
 
 type Enum8 int32
 
-type Enum81 int32
+type Enum9 int32
 
-type Enum83 int32
+type ExportInstanceQueryIsp int32
 
-type Enum85 int32
-
-type Enum87 int32
-
-type Enum89 int32
-
-type Enum91 int32
-
-type Enum93 int32
-
-type Enum95 int32
-
-type Enum98 string
+type ExportInstanceQuerySgBoundSt int32
 
 type GetFileDistributionJobDetailResResultJobStatus int32
 
 type ImportContainerImageBodyImageFileType string
 
 type ListContainerImagesResResultRowItemStatusCode int32
+
+type ListDcCapacityBodyIsp int32
+
+type ListDcCapacityResResultItemIsp int32
 
 type ListHostMetricDataBodyMetricNameItem string
 
@@ -233,6 +99,10 @@ type ListHostMetricDataBodyMetricType string
 type ListHostMetricDataResResultMetricNameItem string
 
 type ListHostMetricDataResResultMetricType string
+
+type ListHostQueryIsp int32
+
+type ListHostQueryOrderBy string
 
 type ListHostResResultRowItemIsp int32
 
@@ -246,17 +116,27 @@ type ListInstanceMetricDataResResultMetricNameItem string
 
 type ListInstanceMetricDataResResultMetricType string
 
+type ListInstanceQueryIsp int32
+
+type ListInstanceQuerySgBoundSt int32
+
 type ListInstanceResResultRowItemIsp int32
 
-type ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemExpose int32
+type ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemExpose int32
 
-type ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemNatType int32
+type ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemNatType int32
 
-type ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemProtocol int32
+type ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemProtocol int32
 
 type ListInstanceResResultRowItemSgBoundSt int32
 
 type ListInstanceResResultRowItemStatus int32
+
+type ListPortMappingQueryIsp int32
+
+type ListPortMappingQueryProtocolEnum int32
+
+type ListPortMappingQueryState int32
 
 type ListPortMappingResResultRowItemIsp int32
 
@@ -554,8 +434,11 @@ type ColdRebootInstanceResResult struct {
 	// Deprecated
 	FailIDList []*string `json:"fail_id_list,omitempty"`
 
-	// 失败列表
+	// 失败的记录
 	FailedList []*ColdRebootInstanceResResultFailedListItem `json:"failed_list,omitempty"`
+
+	// 异步JobId
+	JobID *string `json:"job_id,omitempty"`
 
 	// Deprecated
 	SuccessIDList []*string `json:"success_id_list,omitempty"`
@@ -576,15 +459,16 @@ type ControlApplicationBody struct {
 	// REQUIRED; 对象的类别，可选枚举值包括： instance（对指定实例为对象进行操作） host（对云机下的所有实例进行操作)
 	ObjectType string `json:"object_type"`
 
-	// REQUIRED; 应用控制具体操作
+	// REQUIRED
 	Operation ControlApplicationBodyOperation `json:"operation"`
 
 	// REQUIRED; 应用包名，例如：com.abc.xyz uninstall, 卸载, 执行pm uninstall [packagename], e.g. com.abc.xyz enable, 启用, 执行pm enable [packagename],
 	// e.g. com.abc.xyz disable, 停用, 执行pm disable-user [packagename], e.g. com.abc.xyz
 	// stop, 停止, 执行am force-stop [packagename], e.g. com.abc.xyz start, 启动, 执行am start [-n] [package_name], 支持传入或者不传入具体的 activity
-	// case 1: 不传入 activity, 例如 com.adc.xyz case 2: 传入 activity时, 例如
-	// com.abc.xyz/.MainActivity. 举例来说, 对于有前台 UI 的应用, 可以在计算侧, 启动应用后, 命令行输入 dumpsys activity |grep -i mResumedActivity | awk -F
-	// " " '{print $4}' 来确认具体的字段内容
+	// case 1: 不传入 activity, 例如 com.abc.xyz, 启动 [android.intent.action.MAIN]
+	// activity, 如果 apk 不存在该 activity, 则报错. case 2: 传入 activity 时, 例如 com.abc.xyz/.MainActivity. 举例来说, 对于有前台 UI 的应用, 可以在云手机内部,
+	// 启动应用后, 命令行输入 dumpsys activity |grep -i mResumedActivity | awk -F " " '{print
+	// $4}' 来确认具体的字段内容
 	PackageName string `json:"package_name"`
 
 	// REQUIRED; 产品ID`
@@ -641,7 +525,7 @@ type ControlApplicationResResultFailedIDListItem struct {
 }
 
 type CreateDevicesBody struct {
-	// REQUIRED; 计费相关
+	// REQUIRED
 	DeviceCharge CreateDevicesBodyDeviceCharge `json:"DeviceCharge"`
 
 	// REQUIRED; 需要订购的设备数量
@@ -653,10 +537,10 @@ type CreateDevicesBody struct {
 	// REQUIRED; container容器订购，vm虚拟机订购， bm 裸node订购
 	DeviceType string `json:"DeviceType"`
 
-	// REQUIRED; 镜像配置
+	// REQUIRED
 	ImageConfig CreateDevicesBodyImageConfig `json:"ImageConfig"`
 
-	// REQUIRED; 网络配置
+	// REQUIRED
 	NetConfig CreateDevicesBodyNetConfig `json:"NetConfig"`
 
 	// REQUIRED; 业务ID
@@ -672,17 +556,15 @@ type CreateDevicesBody struct {
 	Region *string `json:"Region,omitempty"`
 }
 
-// CreateDevicesBodyDeviceCharge - 计费相关
 type CreateDevicesBodyDeviceCharge struct {
-	// REQUIRED; 设备计费
-	DeviceChargeMode CreateDevicesBodyDeviceCharge0DeviceChargeMode `json:"DeviceChargeMode"`
+	// REQUIRED
+	DeviceChargeMode CreateDevicesBodyDeviceChargeMode `json:"DeviceChargeMode"`
 
-	// REQUIRED; 网络计费
-	NetworkChargeMode CreateDevicesBodyDeviceCharge0NetworkChargeMode `json:"NetworkChargeMode"`
+	// REQUIRED
+	NetworkChargeMode CreateDevicesBodyDeviceChargeNetworkChargeMode `json:"NetworkChargeMode"`
 }
 
-// CreateDevicesBodyDeviceCharge0DeviceChargeMode - 设备计费
-type CreateDevicesBodyDeviceCharge0DeviceChargeMode struct {
+type CreateDevicesBodyDeviceChargeMode struct {
 	// REQUIRED; 云机计费模式，选项： 1：包年包月 2：按量计费（按天） 3: 按量计费（按月）
 	DeviceChargeType int32 `json:"DeviceChargeType"`
 
@@ -693,13 +575,11 @@ type CreateDevicesBodyDeviceCharge0DeviceChargeMode struct {
 	RenewType *int32 `json:"RenewType,omitempty"`
 }
 
-// CreateDevicesBodyDeviceCharge0NetworkChargeMode - 网络计费
-type CreateDevicesBodyDeviceCharge0NetworkChargeMode struct {
+type CreateDevicesBodyDeviceChargeNetworkChargeMode struct {
 	// REQUIRED; 云机对应的带宽计费方式，选项： dailypeak：按日带宽峰值计费 traffic：按实际流量计费 95thpercentile：按带宽95峰计费 bandwidth: 按带宽上线计费
 	BandWidthChargeType string `json:"BandWidthChargeType"`
 }
 
-// CreateDevicesBodyImageConfig - 镜像配置
 type CreateDevicesBodyImageConfig struct {
 	// 镜像Id, container订购时表示aosp镜像(必填) bm订购时表示debian镜像
 	ImageID *string `json:"ImageId,omitempty"`
@@ -708,10 +588,9 @@ type CreateDevicesBodyImageConfig struct {
 	IsPublicImage *bool `json:"IsPublicImage,omitempty"`
 }
 
-// CreateDevicesBodyNetConfig - 网络配置
 type CreateDevicesBodyNetConfig struct {
-	// REQUIRED; 运营商： 1 => 移动 2 => 联通 4 => 电信 7 => 三线 8 => BGP
-	ISP CreateDevicesBodyNetConfig0ISP `json:"ISP"`
+	// REQUIRED
+	ISP CreateDevicesBodyNetConfigISP `json:"ISP"`
 
 	// 带宽，2-100, 不填默认5Mbps
 	Bandwidth *int32 `json:"Bandwidth,omitempty"`
@@ -892,13 +771,10 @@ type DetailInstanceResResponseMetadataError struct {
 }
 
 type DetailInstanceResResult struct {
-	// 实例绑定的密钥对信息
 	AdbKey *DetailInstanceResResultAdbKey `json:"adb_key,omitempty"`
 
 	// 带宽
-	Bandwidth *int32 `json:"bandwidth,omitempty"`
-
-	// 实例套餐信息
+	Bandwidth     *int32                                `json:"bandwidth,omitempty"`
 	Configuration *DetailInstanceResResultConfiguration `json:"configuration,omitempty"`
 
 	// 创建时间, unix 时间戳, 秒级
@@ -919,17 +795,15 @@ type DetailInstanceResResult struct {
 	// 镜像ID
 	ImageID *string `json:"image_id,omitempty"`
 
-	// 镜��版本
+	// 镜像版本
 	ImageVersion *string `json:"image_version,omitempty"`
 
 	// 实例ID
 	InstanceID *string `json:"instance_id,omitempty"`
 
 	// 实例名称
-	InstanceName *string `json:"instance_name,omitempty"`
-
-	// 运营商
-	Isp *DetailInstanceResResultIsp `json:"isp,omitempty"`
+	InstanceName *string                     `json:"instance_name,omitempty"`
+	Isp          *DetailInstanceResResultIsp `json:"isp,omitempty"`
 
 	// 产品ID
 	ProductID *string `json:"product_id,omitempty"`
@@ -938,40 +812,26 @@ type DetailInstanceResResult struct {
 	Region *string `json:"region,omitempty"`
 
 	// 分辨率
-	Resolution *string `json:"resolution,omitempty"`
-
-	// 实例绑定的安全组
+	Resolution    *string                               `json:"resolution,omitempty"`
 	SecurityGroup *DetailInstanceResResultSecurityGroup `json:"security_group,omitempty"`
-
-	// 安全组绑定状态
-	SgBoundSt *DetailInstanceResResultSgBoundSt `json:"sg_bound_st,omitempty"`
+	SgBoundSt     *DetailInstanceResResultSgBoundSt     `json:"sg_bound_st,omitempty"`
 
 	// 安全组绑定状态字符串
 	SgBoundStStr *string `json:"sg_bound_st_str,omitempty"`
 
 	// 序列号, maybe useless
-	Sn *string `json:"sn,omitempty"`
-
-	// 状态码（status） 状态说明(status_str) 含义 256 Running 运行中 259 Shutdown 已关机 261 Initializing 初始化中 513 ShuttingDown 关机中 515 Booting
-	// 开机中 514 Rebooting 重启中 519 ColdRebooting 强制重启中 516 Upgrading 升级中 517 Resetting
-	// 重置中 518 ResetToFactoryHandling 恢复出厂设置中 528 ModifyCritConfigRebootHandling 配置变更, 设备重启中 1024 Fault 异常状态 1025 InitFailed 初始化失败
+	Sn     *string                        `json:"sn,omitempty"`
 	Status *DetailInstanceResResultStatus `json:"status,omitempty"`
 
 	// 实例状态字符串
-	StatusStr *string `json:"status_str,omitempty"`
-
-	// 标签
-	Tag *DetailInstanceResResultTag `json:"tag,omitempty"`
+	StatusStr *string                     `json:"status_str,omitempty"`
+	Tag       *DetailInstanceResResultTag `json:"tag,omitempty"`
 }
 
-// DetailInstanceResResultAdbKey - 实例绑定的密钥对信息
 type DetailInstanceResResultAdbKey struct {
 	// 用户权限类型：
 	// 1（root） 2（user）
 	AuthType *int32 `json:"auth_type,omitempty"`
-
-	// 密钥对绑定的云机数量
-	BindHostNum *int32 `json:"bind_host_num,omitempty"`
 
 	// 密钥对绑定的实例数量
 	BindInstanceNum *int32 `json:"bind_instance_num,omitempty"`
@@ -986,7 +846,6 @@ type DetailInstanceResResultAdbKey struct {
 	PublicKey   *string `json:"public_key,omitempty"`
 }
 
-// DetailInstanceResResultConfiguration - 实例套餐信息
 type DetailInstanceResResultConfiguration struct {
 	// CPU 核心数
 	CPUCore *int32 `json:"cpu_core,omitempty"`
@@ -1007,7 +866,6 @@ type DetailInstanceResResultConfiguration struct {
 	Memory *float32 `json:"memory,omitempty"`
 }
 
-// DetailInstanceResResultSecurityGroup - 实例绑定的安全组
 type DetailInstanceResResultSecurityGroup struct {
 	// BindHostNum *int64 json:"bind_host_num,omitempty" // Deprecated: 请使用BindInstanceNum
 	BindInstanceNum *int32 `json:"bind_instance_num,omitempty"`
@@ -1028,21 +886,16 @@ type DetailInstanceResResultSecurityGroup struct {
 	SecurityGroupName *string `json:"security_group_name,omitempty"`
 
 	// 安全组规则列表
-	SecurityRuleList []*DetailInstanceResResultSecurityGroup0SecurityRuleListItem `json:"security_rule_list,omitempty"`
+	SecurityRuleList []*DetailInstanceResResultSecurityGroupSecurityRuleListItem `json:"security_rule_list,omitempty"`
 
 	// 更新时间，秒级时间戳
 	UpdateAt *int32 `json:"update_at,omitempty"`
 }
 
-type DetailInstanceResResultSecurityGroup0SecurityRuleListItem struct {
-	// 转发方式 1: 仅开放内网，不开放公网 3: 开放公网，默认
-	Expose *DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemExpose `json:"expose,omitempty"`
-
-	// NAT类型, 默认 1 ( DNAT )
-	NatType *DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemNatType `json:"nat_type,omitempty"`
-
-	// 协议 1 => UDP 2 => TCP 3 => ALL（源端口号同时支持 TCP 和 UDP 协议）
-	Protocol *DetailInstanceResResultSecurityGroupAllOf0SecurityRuleListItemProtocol `json:"protocol,omitempty"`
+type DetailInstanceResResultSecurityGroupSecurityRuleListItem struct {
+	Expose   *DetailInstanceResResultSecurityGroupSecurityRuleListItemExpose   `json:"expose,omitempty"`
+	NatType  *DetailInstanceResResultSecurityGroupSecurityRuleListItemNatType  `json:"nat_type,omitempty"`
+	Protocol *DetailInstanceResResultSecurityGroupSecurityRuleListItemProtocol `json:"protocol,omitempty"`
 
 	// 安全组规则ID
 	RuleID *int32 `json:"rule_id,omitempty"`
@@ -1051,7 +904,6 @@ type DetailInstanceResResultSecurityGroup0SecurityRuleListItem struct {
 	SourcePort *int32 `json:"source_port,omitempty"`
 }
 
-// DetailInstanceResResultTag - 标签
 type DetailInstanceResResultTag struct {
 	ProductID          *string `json:"product_id,omitempty"`
 	RelatedInstanceNum *int32  `json:"related_instance_num,omitempty"`
@@ -1128,13 +980,8 @@ type DetailSecurityGroupResResult struct {
 }
 
 type DetailSecurityGroupResResultSecurityRuleListItem struct {
-	// 转发方式 1: 仅开放内网，不开放公网 3: 开放公网，默认
-	Expose *DetailSecurityGroupResResultSecurityRuleListItemExpose `json:"expose,omitempty"`
-
-	// NAT类型, 默认 1 ( DNAT )
-	NatType *DetailSecurityGroupResResultSecurityRuleListItemNatType `json:"nat_type,omitempty"`
-
-	// 协议 1 => UDP 2 => TCP 3 => ALL（源端口号同时支持 TCP 和 UDP 协议）
+	Expose   *DetailSecurityGroupResResultSecurityRuleListItemExpose   `json:"expose,omitempty"`
+	NatType  *DetailSecurityGroupResResultSecurityRuleListItemNatType  `json:"nat_type,omitempty"`
 	Protocol *DetailSecurityGroupResResultSecurityRuleListItemProtocol `json:"protocol,omitempty"`
 
 	// 安全组规则ID
@@ -1152,44 +999,33 @@ type DistributeFileBody struct {
 	InstanceID string `json:"instance_id"`
 
 	// REQUIRED; 产品ID
-	ProductID string `json:"product_id"`
-
-	// 文件分发完成后执行的操作
+	ProductID               string                                     `json:"product_id"`
 	AfterDistributionAction *DistributeFileBodyAfterDistributionAction `json:"after_distribution_action,omitempty"`
 
 	// 在云机中存储文件的路径（默认：/data/file_ds）
-	FileDir *string `json:"file_dir,omitempty"`
-
-	// 获取文件的方式： volc_tos（火山引擎对象存储，默认） url（URL 下载，目���仅支持火山引擎域名）
-	FileFormat *DistributeFileBodyFileFormat `json:"file_format,omitempty"`
-
-	// 获取文件的 URL 注：如需使用暂不支持的域名，请联系火山引擎云手机技术支持
-	URLFile *DistributeFileBodyURLFile `json:"url_file,omitempty"`
-
-	// 保存文件的火山引擎对象存储信息
+	FileDir     *string                        `json:"file_dir,omitempty"`
+	FileFormat  *DistributeFileBodyFileFormat  `json:"file_format,omitempty"`
+	URLFile     *DistributeFileBodyURLFile     `json:"url_file,omitempty"`
 	VolcTosFile *DistributeFileBodyVolcTosFile `json:"volc_tos_file,omitempty"`
 }
 
-// DistributeFileBodyAfterDistributionAction - 文件分发完成后执行的操作
 type DistributeFileBodyAfterDistributionAction struct {
-	// REQUIRED; 操作类型，枚举值包括： 1（apk 安装）
-	Action          DistributeFileBodyAfterDistributionAction0Action           `json:"action"`
-	InstallApkParam *DistributeFileBodyAfterDistributionAction0InstallApkParam `json:"install_apk_param,omitempty"`
+	// REQUIRED
+	Action          DistributeFileBodyAfterDistributionActionAction           `json:"action"`
+	InstallApkParam *DistributeFileBodyAfterDistributionActionInstallApkParam `json:"install_apk_param,omitempty"`
 }
 
-type DistributeFileBodyAfterDistributionAction0InstallApkParam struct {
+type DistributeFileBodyAfterDistributionActionInstallApkParam struct {
 	// 应用安装可选参数列表： 1（ApkInstallAllowTest，允许测试） 2（ApkInstallReplaceExisting，替换现存） 3（ApkInstallGrantAllPerm，获取全部许可） 4（ApkInstallABI，覆盖默认
 	// ABI） 5（ApkInstallInternalFlash，内部闪存） 6（ApkInstallAllowDowngrade，允许降级）
 	OptionList []*ArrayItemschema `json:"option_list,omitempty"`
 }
 
-// DistributeFileBodyURLFile - 获取文件的 URL 注：如需使用暂不支持的域名，请联系火山引擎云手机技术支持
 type DistributeFileBodyURLFile struct {
 	// REQUIRED; 保存文件的 URL
 	URL string `json:"url"`
 }
 
-// DistributeFileBodyVolcTosFile - 保存文件的火山引擎对象存储信息
 type DistributeFileBodyVolcTosFile struct {
 	// REQUIRED; 火山引擎对象存储中的存储桶名称
 	TosBucket string `json:"tos_bucket"`
@@ -1243,48 +1079,37 @@ type DistributeFileToInstancesBody struct {
 	// REQUIRED; 文件的 MD5 值
 	FileMD5 string `json:"file_md5"`
 
-	// REQUIRED; 实例ID列表，多个 ID 使用英文逗号分隔
+	// REQUIRED; 实例ID列表
 	InstanceIDs []string `json:"instance_ids"`
 
 	// REQUIRED; 产品ID
-	ProductID string `json:"product_id"`
-
-	// 文件分发完成后执行的操作
+	ProductID               string                                                `json:"product_id"`
 	AfterDistributionAction *DistributeFileToInstancesBodyAfterDistributionAction `json:"after_distribution_action,omitempty"`
 
 	// 在云机中存储文件的路径（默认：/data/file_ds）
-	FileDir *string `json:"file_dir,omitempty"`
-
-	// 获取文件的方式： volc_tos（火山引擎对象存储，默认） url（URL 下载，目前仅支持火山引擎域名）
-	FileFormat *DistributeFileToInstancesBodyFileFormat `json:"file_format,omitempty"`
-
-	// 获取文件的 URL 注：如需使用暂不支持的域名，请联系火山引擎云手机技术支持
-	URLFile *DistributeFileToInstancesBodyURLFile `json:"url_file,omitempty"`
-
-	// 保存文件的火山引擎对象存储信息
+	FileDir     *string                                   `json:"file_dir,omitempty"`
+	FileFormat  *DistributeFileToInstancesBodyFileFormat  `json:"file_format,omitempty"`
+	URLFile     *DistributeFileToInstancesBodyURLFile     `json:"url_file,omitempty"`
 	VolcTosFile *DistributeFileToInstancesBodyVolcTosFile `json:"volc_tos_file,omitempty"`
 }
 
-// DistributeFileToInstancesBodyAfterDistributionAction - 文件分发完成后执行的操作
 type DistributeFileToInstancesBodyAfterDistributionAction struct {
-	// REQUIRED; 操作类型，枚举值包括： 1（apk 安装）
-	Action          DistributeFileToInstancesBodyAfterDistributionAction0Action           `json:"action"`
-	InstallApkParam *DistributeFileToInstancesBodyAfterDistributionAction0InstallApkParam `json:"install_apk_param,omitempty"`
+	// REQUIRED
+	Action          DistributeFileToInstancesBodyAfterDistributionActionAction           `json:"action"`
+	InstallApkParam *DistributeFileToInstancesBodyAfterDistributionActionInstallApkParam `json:"install_apk_param,omitempty"`
 }
 
-type DistributeFileToInstancesBodyAfterDistributionAction0InstallApkParam struct {
+type DistributeFileToInstancesBodyAfterDistributionActionInstallApkParam struct {
 	// 应用安装可选参数列表： 1（ApkInstallAllowTest，允许测试） 2（ApkInstallReplaceExisting，替换现存） 3（ApkInstallGrantAllPerm，获取全部许可） 4（ApkInstallABI，覆盖默认
 	// ABI） 5（ApkInstallInternalFlash，内部闪存） 6（ApkInstallAllowDowngrade，允许降级）
 	OptionList []*ArrayItemschema `json:"option_list,omitempty"`
 }
 
-// DistributeFileToInstancesBodyURLFile - 获取文件的 URL 注：如需使用暂不支持的域名，请联系火山引擎云手机技术支持
 type DistributeFileToInstancesBodyURLFile struct {
 	// REQUIRED; 保存文件的 URL
 	URL string `json:"url"`
 }
 
-// DistributeFileToInstancesBodyVolcTosFile - 保存文件的火山引擎对象存储信息
 type DistributeFileToInstancesBodyVolcTosFile struct {
 	// REQUIRED; 火山引擎对象存储中的存储桶名称
 	TosBucket string `json:"tos_bucket"`
@@ -1422,17 +1247,11 @@ type ExportInstanceQuery struct {
 	// 机房
 	Idc *string `json:"idc,omitempty" query:"idc"`
 
-	// 批量筛选, 实例ID, 逗号分隔 string. 内部注释-勿展示: 为了兼容性，优先级比 InstanceIdList 低, 参见 Rectify()
-	InInstanceList *string `json:"in_instance_list,omitempty" query:"in_instance_list"`
-
-	// 批量筛选, 状态, 逗号分隔 int
-	InStatusList *string `json:"in_status_list,omitempty" query:"in_status_list"`
-
-	// 批量筛选, 标签ID, 逗号分隔 string
-	InTagIDList *string `json:"in_tag_id_list,omitempty" query:"in_tag_id_list"`
-
 	// 实例 ID
 	InstanceID *string `json:"instance_id,omitempty" query:"instance_id"`
+
+	// 批量筛选, 实例ID, 逗号分隔 string. 内部注释-勿展示: 为了兼容性，优先级比 InstanceIdList 低, 参见 Rectify()
+	InstanceIDIn *string `json:"instance_id_in,omitempty" query:"instance_id_in"`
 
 	// 模糊查询, 实例ID
 	InstanceIDLike *string `json:"instance_id_like,omitempty" query:"instance_id_like"`
@@ -1444,7 +1263,7 @@ type ExportInstanceQuery struct {
 	IsOrderAsc *bool `json:"is_order_asc,omitempty" query:"is_order_asc"`
 
 	// 运营商
-	Isp *int32 `json:"isp,omitempty" query:"isp"`
+	Isp *ExportInstanceQueryIsp `json:"isp,omitempty" query:"isp"`
 
 	// 偏移量, 默认 0
 	Offset *int32 `json:"offset,omitempty" query:"offset"`
@@ -1455,17 +1274,17 @@ type ExportInstanceQuery struct {
 	// 套餐 ID
 	PackageID *string `json:"package_id,omitempty" query:"package_id"`
 
-	// 安全组 ID
-	SecurityGroupID *int32 `json:"security_group_id,omitempty" query:"security_group_id"`
-
 	// 安全组绑定状态
-	SgBoundSt *int32 `json:"sg_bound_st,omitempty" query:"sg_bound_st"`
+	SgBoundSt *ExportInstanceQuerySgBoundSt `json:"sg_bound_st,omitempty" query:"sg_bound_st"`
 
 	// 实例状态
 	Status *int32 `json:"status,omitempty" query:"status"`
 
-	// 标签 ID
-	TagID *string `json:"tag_id,omitempty" query:"tag_id"`
+	// 批量筛选, 状态, 逗号分隔 int
+	StatusIn *string `json:"status_in,omitempty" query:"status_in"`
+
+	// 批量筛选, 标签ID, 逗号分隔 string
+	TagIDIn *string `json:"tag_id_in,omitempty" query:"tag_id_in"`
 }
 
 type FixInstancesSGBoundBody struct {
@@ -1533,15 +1352,15 @@ type FixInstancesSGBoundResResultDataPropertiesItemsItem struct {
 	Msg *string `json:"msg,omitempty"`
 }
 
-type GetFileDistributionJobDetailQuery struct {
+type GetFileDistributionJobDetailBody struct {
 	// REQUIRED; 产品ID
-	ProductID string `json:"product_id" query:"product_id"`
+	ProductID string `json:"product_id"`
 
 	// 文件分发执行ID, 与 JobId 二选一
-	DistributionTaskID *string `json:"distribution_task_id,omitempty" query:"distribution_task_id"`
+	DistributionTaskID *string `json:"distribution_task_id,omitempty"`
 
 	// 任务ID
-	JobID *string `json:"job_id,omitempty" query:"job_id"`
+	JobID *string `json:"job_id,omitempty"`
 }
 
 type GetFileDistributionJobDetailRes struct {
@@ -1576,9 +1395,7 @@ type GetFileDistributionJobDetailResResponseMetadataError struct {
 
 type GetFileDistributionJobDetailResResult struct {
 	// 批量分发 job id
-	JobID *string `json:"job_id,omitempty"`
-
-	// 批任务状态
+	JobID     *string                                         `json:"job_id,omitempty"`
 	JobStatus *GetFileDistributionJobDetailResResultJobStatus `json:"job_status,omitempty"`
 
 	// 批任务状态(string)
@@ -1888,12 +1705,10 @@ type GetJobDetailsResResponseMetadataError struct {
 }
 
 type GetJobDetailsResResult struct {
-	CreateTime *int32  `json:"create_time,omitempty"`
-	JobID      *string `json:"job_id,omitempty"`
-
-	// CustomInfo string json:"custom_info,omitempty"JobType string json:"request_type,omitempty"RequestBrief string json:"request_brief,omitempty"
-	Process   *GetJobDetailsResResultProcess `json:"process,omitempty"`
-	ProductID *string                        `json:"product_id,omitempty"`
+	CreateTime *int32                         `json:"create_time,omitempty"`
+	JobID      *string                        `json:"job_id,omitempty"`
+	Process    *GetJobDetailsResResultProcess `json:"process,omitempty"`
+	ProductID  *string                        `json:"product_id,omitempty"`
 
 	// 任务状态：
 	// 100：执行中 200：成功 500：全部失败 501：部分失败 502：取消
@@ -1903,8 +1718,6 @@ type GetJobDetailsResResult struct {
 	UpdateTime   *int32                                    `json:"update_time,omitempty"`
 }
 
-// GetJobDetailsResResultProcess - CustomInfo string json:"custom_info,omitempty"JobType string json:"request_type,omitempty"RequestBrief
-// string json:"request_brief,omitempty"
 type GetJobDetailsResResultProcess struct {
 	FailTaskNum    *int32 `json:"fail_task_num,omitempty"`
 	PendingTaskNum *int32 `json:"pending_task_num,omitempty"`
@@ -1937,22 +1750,15 @@ type GetJobDetailsResResultTaskInfoListItem struct {
 
 type ImportContainerImageBody struct {
 	// 镜像描述信息，由用户按需添加镜像备注说明，便于业务识别
-	ImageAnnotation *string `json:"image_annotation,omitempty"`
-
-	// 镜像文件类型及来源，可选项： volc_tos（从火山引擎对象存储拉取文件，默认） url（从第三方对象存储服务拉取文件，需联系火山引擎技术支持做加白处理）
-	ImageFileType *ImportContainerImageBodyImageFileType `json:"image_file_type,omitempty"`
+	ImageAnnotation *string                                `json:"image_annotation,omitempty"`
+	ImageFileType   *ImportContainerImageBodyImageFileType `json:"image_file_type,omitempty"`
 
 	// 镜像名称，由用户自定义，用于业务标识，128个英文或中文字符及以内，需以英文或中文开头，可以包含数字、下划线
-	ImageName *string `json:"image_name,omitempty"`
-
-	// 镜像文件tos信息
+	ImageName    *string                               `json:"image_name,omitempty"`
 	ImageTosInfo *ImportContainerImageBodyImageTosInfo `json:"image_tos_info,omitempty"`
-
-	// 镜像文件url信息
 	ImageURLInfo *ImportContainerImageBodyImageURLInfo `json:"image_url_info,omitempty"`
 }
 
-// ImportContainerImageBodyImageTosInfo - 镜像文件tos信息
 type ImportContainerImageBodyImageTosInfo struct {
 	// REQUIRED; 镜像文件所在 TOS 的 bucket，例如：cloudphone
 	Bucket string `json:"bucket"`
@@ -1963,15 +1769,14 @@ type ImportContainerImageBodyImageTosInfo struct {
 	// REQUIRED; 对象存储所在区域： cn-north => 华北 cn-south => 华南 cn-east => 华东 cn-middle => 华中
 	Region string `json:"region"`
 
-	// REQUIRED; AOSP 镜像 system 分区原始镜像信息
-	SystemImg ImportContainerImageBodyImageTosInfo0SystemImg `json:"system_img"`
+	// REQUIRED
+	SystemImg ImportContainerImageBodyImageTosInfoSystemImg `json:"system_img"`
 
-	// REQUIRED; AOSP 镜像 vendor 分区原始镜像信息
-	VendorImg ImportContainerImageBodyImageTosInfo0VendorImg `json:"vendor_img"`
+	// REQUIRED
+	VendorImg ImportContainerImageBodyImageTosInfoVendorImg `json:"vendor_img"`
 }
 
-// ImportContainerImageBodyImageTosInfo0SystemImg - AOSP 镜像 system 分区原始镜像信息
-type ImportContainerImageBodyImageTosInfo0SystemImg struct {
+type ImportContainerImageBodyImageTosInfoSystemImg struct {
 	// REQUIRED; 镜像文件在 TOS 中的存储路径（不能以 / 开头），例如： android-image-build/system.img
 	FilePath string `json:"file_path"`
 
@@ -1979,8 +1784,7 @@ type ImportContainerImageBodyImageTosInfo0SystemImg struct {
 	MD5 *string `json:"md5,omitempty"`
 }
 
-// ImportContainerImageBodyImageTosInfo0VendorImg - AOSP 镜像 vendor 分区原始镜像信息
-type ImportContainerImageBodyImageTosInfo0VendorImg struct {
+type ImportContainerImageBodyImageTosInfoVendorImg struct {
 	// REQUIRED; 镜像文件在 TOS 中的存储路径（不能以 / 开头），例如： android-image-build/system.img
 	FilePath string `json:"file_path"`
 
@@ -1988,17 +1792,13 @@ type ImportContainerImageBodyImageTosInfo0VendorImg struct {
 	MD5 *string `json:"md5,omitempty"`
 }
 
-// ImportContainerImageBodyImageURLInfo - 镜像文件url信息
 type ImportContainerImageBodyImageURLInfo struct {
-	// REQUIRED; AOSP 镜像 system 分区原始镜像信息
-	SystemImg ImportContainerImageBodyImageURLInfo0SystemImg `json:"system_img"`
-
-	// AOSP 镜像 vendor 分区原始镜像信息
-	VendorImg *ImportContainerImageBodyImageURLInfo0VendorImg `json:"vendor_img,omitempty"`
+	// REQUIRED
+	SystemImg ImportContainerImageBodyImageURLInfoSystemImg  `json:"system_img"`
+	VendorImg *ImportContainerImageBodyImageURLInfoVendorImg `json:"vendor_img,omitempty"`
 }
 
-// ImportContainerImageBodyImageURLInfo0SystemImg - AOSP 镜像 system 分区原始镜像信息
-type ImportContainerImageBodyImageURLInfo0SystemImg struct {
+type ImportContainerImageBodyImageURLInfoSystemImg struct {
 	// REQUIRED; 文件的下载地址
 	URL string `json:"url"`
 
@@ -2006,8 +1806,7 @@ type ImportContainerImageBodyImageURLInfo0SystemImg struct {
 	MD5 *string `json:"md5,omitempty"`
 }
 
-// ImportContainerImageBodyImageURLInfo0VendorImg - AOSP 镜像 vendor 分区原始镜像信息
-type ImportContainerImageBodyImageURLInfo0VendorImg struct {
+type ImportContainerImageBodyImageURLInfoVendorImg struct {
 	// REQUIRED; 文件的下载地址
 	URL string `json:"url"`
 
@@ -2050,6 +1849,57 @@ type ImportContainerImageResResult struct {
 	ImageID *string `json:"image_id,omitempty"`
 }
 
+type InitializeHostBody struct {
+	// REQUIRED; 云机ID列表
+	HostIDList []string `json:"HostIdList"`
+
+	// REQUIRED; 业务ID
+	ProductID string `json:"ProductId"`
+}
+
+type InitializeHostRes struct {
+	// REQUIRED
+	ResponseMetadata InitializeHostResResponseMetadata `json:"ResponseMetadata"`
+	Result           *InitializeHostResResult          `json:"Result,omitempty"`
+}
+
+type InitializeHostResResponseMetadata struct {
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                  `json:"Version"`
+	Error   *InitializeHostResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type InitializeHostResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type InitializeHostResResult struct {
+	// 失败列表
+	FailedList []*InitializeHostResResultFailedListItem `json:"FailedList,omitempty"`
+}
+
+type InitializeHostResResultFailedListItem struct {
+	// 操作的ID，云机Id 或 实例Id
+	ID *string `json:"Id,omitempty"`
+
+	// 信息
+	Msg *string `json:"Msg,omitempty"`
+}
+
 type InstallApplicationBody struct {
 	// REQUIRED; 目标 Id 列表
 	ObjectIDList []string `json:"object_id_list"`
@@ -2060,7 +1910,7 @@ type InstallApplicationBody struct {
 	// REQUIRED; 产品ID`
 	ProductID string `json:"product_id"`
 
-	// REQUIRED; 保存源文件的火山引擎对象存储信息
+	// REQUIRED
 	TosInfo InstallApplicationBodyTosInfo `json:"tos_info"`
 
 	// 应用安装可选参数列表 1（ApkInstallAllowTest，允许测试） 2（ApkInstallReplaceExisting，替换现存） 3（ApkInstallGrantAllPerm，获取全部许可） 4（ApkInstallABI，覆盖默认
@@ -2068,7 +1918,6 @@ type InstallApplicationBody struct {
 	OptionList []*ArrayItemschema `json:"option_list,omitempty"`
 }
 
-// InstallApplicationBodyTosInfo - 保存源文件的火山引擎对象存储信息
 type InstallApplicationBodyTosInfo struct {
 	// REQUIRED; 火山引擎对象存储中的存储桶名称
 	TosBucket string `json:"tos_bucket"`
@@ -2237,12 +2086,7 @@ type ListAdbKeyResResult struct {
 }
 
 type ListAdbKeyResResultRowItem struct {
-	// 用户权限类型：
-	// 1（root） 2（user）
 	AuthType *int32 `json:"auth_type,omitempty"`
-
-	// 密钥对绑定的云机数量
-	BindHostNum *int32 `json:"bind_host_num,omitempty"`
 
 	// 密钥对绑定的实例数量
 	BindInstanceNum *int32 `json:"bind_instance_num,omitempty"`
@@ -2254,7 +2098,6 @@ type ListAdbKeyResResultRowItem struct {
 	KeyID       *int32  `json:"key_id,omitempty"`
 	KeyName     *string `json:"key_name,omitempty"`
 	ProductID   *string `json:"product_id,omitempty"`
-	PublicKey   *string `json:"public_key,omitempty"`
 }
 
 type ListContainerImagesQuery struct {
@@ -2342,9 +2185,7 @@ type ListContainerImagesResResultRowItem struct {
 	Size *int32 `json:"size,omitempty"`
 
 	// 镜像状态 string UNKNOWN（未知） IN_QUEUE（队列中） BUILDING（构建中） BUILT（构建完成） FAILED（构建失败）
-	Status *string `json:"status,omitempty"`
-
-	// 镜像状态码： 0（UNKNOWN） 1（IN_QUEUE） 2（BUILDING） 11（BUILT） -1（FAILED）
+	Status     *string                                        `json:"status,omitempty"`
 	StatusCode *ListContainerImagesResResultRowItemStatusCode `json:"status_code,omitempty"`
 
 	// 构建任务更新时间
@@ -2352,6 +2193,83 @@ type ListContainerImagesResResultRowItem struct {
 
 	// 镜像版本
 	Version *string `json:"version,omitempty"`
+}
+
+type ListDcCapacityBody struct {
+	// REQUIRED; 业务ID
+	ProductID string `json:"ProductId"`
+
+	// 机房ID
+	DcID string `json:"DcId"`
+
+	// 多开的数量，默认为1，单开
+	InstanceAmount *int32                 `json:"InstanceAmount,omitempty"`
+	Isp            *ListDcCapacityBodyIsp `json:"Isp,omitempty"`
+
+	// 套餐code，比如CloudHostARMNode8c12g_daily
+	PackageCode *string `json:"PackageCode,omitempty"`
+
+	// pre/ post 预付费还是后付费
+	PayMode *string `json:"PayMode,omitempty"`
+
+	// monthly / daily 按月还是按天计费 // monthly / daily 按月还是按天计费
+	PayPeriod *string `json:"PayPeriod,omitempty"`
+}
+
+type ListDcCapacityRes struct {
+	// REQUIRED
+	ResponseMetadata ListDcCapacityResResponseMetadata `json:"ResponseMetadata"`
+	Result           []*ListDcCapacityResResultItem    `json:"result,omitempty"`
+}
+
+type ListDcCapacityResResponseMetadata struct {
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                  `json:"Version"`
+	Error   *ListDcCapacityResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ListDcCapacityResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type ListDcCapacityResResultItem struct {
+	// 当前模式下可订购的数量
+	AvailableCount *int32  `json:"AvailableCount,omitempty"`
+	DcID           *string `json:"DcId,omitempty"`
+
+	// V2:用于预付或者后付中的估价; 唯一性
+	HostVolChargeItemID *string `json:"HostVolChargeItemId,omitempty"`
+
+	// 实例数量，对应单开、双开、四开等
+	InstanceAmount *int32                          `json:"InstanceAmount,omitempty"`
+	Isp            *ListDcCapacityResResultItemIsp `json:"Isp,omitempty"`
+
+	// "移动", "联通", "电信", "三线", "BGP(多线)"
+	IspName *string `json:"IspName,omitempty"`
+
+	// 业务侧套餐ID
+	PackageID *string `json:"PackageId,omitempty"`
+
+	// pre 预付费; post 后付费
+	PayMode *string `json:"PayMode,omitempty"`
+
+	// 计费周期 [ daily-按天 | monthly-按月]
+	PayPeriod *string `json:"PayPeriod,omitempty"`
+	ProductID *string `json:"ProductId,omitempty"`
 }
 
 type ListHostMetricDataBody struct {
@@ -2364,7 +2282,7 @@ type ListHostMetricDataBody struct {
 	// REQUIRED; 监控指标名称 UpBandwidth -> 上行带宽 DownBandwidth -> 下行带宽 MaxBandwidth -> 最大带宽
 	MetricName []ListHostMetricDataBodyMetricNameItem `json:"MetricName"`
 
-	// REQUIRED; 监控指标类型 Bandwidth -> 带宽 Traffic -> 流量
+	// REQUIRED
 	MetricType ListHostMetricDataBodyMetricType `json:"MetricType"`
 
 	// REQUIRED; 业务ID
@@ -2419,9 +2337,7 @@ type ListHostMetricDataResResult struct {
 
 	// 监控指标名称 UpBandwidth -> 上行带宽 DownBandwidth -> 下行带宽 MaxBandwidth -> 最大带宽
 	MetricName []*ListHostMetricDataResResultMetricNameItem `json:"MetricName,omitempty"`
-
-	// 监控指标类型 Bandwidth -> 带宽 Traffic -> 流量
-	MetricType *ListHostMetricDataResResultMetricType `json:"MetricType,omitempty"`
+	MetricType *ListHostMetricDataResResultMetricType       `json:"MetricType,omitempty"`
 
 	// 聚合粒度，目前时5min,10min,30min,60min
 	SimpleRate *int32 `json:"SimpleRate,omitempty"`
@@ -2492,14 +2408,14 @@ type ListHostQuery struct {
 	IsDesc *bool `json:"is_desc,omitempty" query:"is_desc"`
 
 	// 运营商
-	Isp *int32 `json:"isp,omitempty" query:"isp"`
+	Isp *ListHostQueryIsp `json:"isp,omitempty" query:"isp"`
 
 	// 分页偏移量
 	Offset *int32 `json:"offset,omitempty" query:"offset"`
 
 	// 排序字段
-	OrderBy   *string `json:"order_by,omitempty" query:"order_by"`
-	PackageID *string `json:"package_id,omitempty" query:"package_id"`
+	OrderBy   *ListHostQueryOrderBy `json:"order_by,omitempty" query:"order_by"`
+	PackageID *string               `json:"package_id,omitempty" query:"package_id"`
 
 	// 云机所在区域
 	Region *string `json:"region,omitempty" query:"region"`
@@ -2509,12 +2425,14 @@ type ListHostQuery struct {
 }
 
 type ListHostRes struct {
+
 	// REQUIRED
 	ResponseMetadata ListHostResResponseMetadata `json:"ResponseMetadata"`
 	Result           *ListHostResResult          `json:"Result,omitempty"`
 }
 
 type ListHostResResponseMetadata struct {
+
 	// REQUIRED
 	Action string `json:"Action"`
 
@@ -2544,10 +2462,9 @@ type ListHostResResult struct {
 }
 
 type ListHostResResultRowItem struct {
-	// 平均到每个实例的带宽，例：2 (Mbps)
-	Bandwidth *int32 `json:"bandwidth,omitempty"`
 
-	// 套餐规格
+	// 平均到每个实例的带宽，例：2 (Mbps)
+	Bandwidth     *int32                                 `json:"bandwidth,omitempty"`
 	Configuration *ListHostResResultRowItemConfiguration `json:"configuration,omitempty"`
 
 	// 云机创建时间
@@ -2581,10 +2498,8 @@ type ListHostResResultRowItem struct {
 	Idc *string `json:"idc,omitempty"`
 
 	// 单个云机对应的实例数量
-	InstanceNum *int32 `json:"instance_num,omitempty"`
-
-	// 运营商： 1 => 移动 2 => 联通 4 => 电信 7 => 三线 8 => BGP
-	Isp *ListHostResResultRowItemIsp `json:"isp,omitempty"`
+	InstanceNum *int32                       `json:"instance_num,omitempty"`
+	Isp         *ListHostResResultRowItemIsp `json:"isp,omitempty"`
 
 	// ISP计费项ID
 	IspChargeID *string `json:"isp_charge_id,omitempty"`
@@ -2605,17 +2520,15 @@ type ListHostResResultRowItem struct {
 	PublicIP *string `json:"public_ip,omitempty"`
 
 	// 云机所在区域名称： cn-north => 华北 cn-south => 华南 cn-east => 华东 cn-middle => 华中 cn-southwest => 西南
-	Region *string `json:"region,omitempty"`
-
-	// 云机状态： 100 => 初始化中 200 => 初始化完成 202 => 重启中 203 => 重启失败 500 => 初始化失败 1, 废弃 2, 废弃
+	Region *string                         `json:"region,omitempty"`
 	Status *ListHostResResultRowItemStatus `json:"status,omitempty"`
 
 	// 云机更新时间
 	UpdatedAt *string `json:"updated_at,omitempty"`
 }
 
-// ListHostResResultRowItemConfiguration - 套餐规格
 type ListHostResResultRowItemConfiguration struct {
+
 	// CPU 核心数
 	CPUCore *int32 `json:"cpu_core,omitempty"`
 
@@ -2636,6 +2549,7 @@ type ListHostResResultRowItemConfiguration struct {
 }
 
 type ListInstanceMetricDataBody struct {
+
 	// REQUIRED; 查询结束的时间戳，闭区间
 	EndTime int32 `json:"EndTime"`
 
@@ -2645,7 +2559,7 @@ type ListInstanceMetricDataBody struct {
 	// REQUIRED; 监控指标名称 UpBandwidth -> 上行带宽 DownBandwidth -> 下行带宽 MaxBandwidth -> 最大带宽
 	MetricName []ListInstanceMetricDataBodyMetricNameItem `json:"MetricName"`
 
-	// REQUIRED; 监控指标类型 Bandwidth -> 带宽 Traffic -> 流量
+	// REQUIRED
 	MetricType ListInstanceMetricDataBodyMetricType `json:"MetricType"`
 
 	// REQUIRED; 业务ID
@@ -2659,12 +2573,14 @@ type ListInstanceMetricDataBody struct {
 }
 
 type ListInstanceMetricDataRes struct {
+
 	// REQUIRED
 	ResponseMetadata ListInstanceMetricDataResResponseMetadata `json:"ResponseMetadata"`
 	Result           *ListInstanceMetricDataResResult          `json:"Result,omitempty"`
 }
 
 type ListInstanceMetricDataResResponseMetadata struct {
+
 	// REQUIRED
 	Action string `json:"Action"`
 
@@ -2689,6 +2605,7 @@ type ListInstanceMetricDataResResponseMetadataError struct {
 }
 
 type ListInstanceMetricDataResResult struct {
+
 	// 下行带宽的查询结果
 	DownBandwidthResult []*ListInstanceMetricDataResResultDownBandwidthResultItem `json:"DownBandwidthResult,omitempty"`
 
@@ -2700,9 +2617,7 @@ type ListInstanceMetricDataResResult struct {
 
 	// 监控指标名称 UpBandwidth -> 上行带宽 DownBandwidth -> 下行带宽 MaxBandwidth -> 最大带宽
 	MetricName []*ListInstanceMetricDataResResultMetricNameItem `json:"MetricName,omitempty"`
-
-	// 监控指标类型 Bandwidth -> 带宽 Traffic -> 流量
-	MetricType *ListInstanceMetricDataResResultMetricType `json:"MetricType,omitempty"`
+	MetricType *ListInstanceMetricDataResResultMetricType       `json:"MetricType,omitempty"`
 
 	// 聚合粒度，目前时5min,10min,30min,60min
 	SimpleRate *int32 `json:"SimpleRate,omitempty"`
@@ -2715,6 +2630,7 @@ type ListInstanceMetricDataResResult struct {
 }
 
 type ListInstanceMetricDataResResultDownBandwidthResultItem struct {
+
 	// 时间 example:"2023-07-25T17:40:00+08:00"
 	TimeStamp *string `json:"TimeStamp,omitempty"`
 
@@ -2723,6 +2639,7 @@ type ListInstanceMetricDataResResultDownBandwidthResultItem struct {
 }
 
 type ListInstanceMetricDataResResultMaxBandwidthResultItem struct {
+
 	// 时间 example:"2023-07-25T17:40:00+08:00"
 	TimeStamp *string `json:"TimeStamp,omitempty"`
 
@@ -2731,6 +2648,7 @@ type ListInstanceMetricDataResResultMaxBandwidthResultItem struct {
 }
 
 type ListInstanceMetricDataResResultUpBandwidthResultItem struct {
+
 	// 时间 example:"2023-07-25T17:40:00+08:00"
 	TimeStamp *string `json:"TimeStamp,omitempty"`
 
@@ -2739,6 +2657,7 @@ type ListInstanceMetricDataResResultUpBandwidthResultItem struct {
 }
 
 type ListInstanceQuery struct {
+
 	// REQUIRED; 产品 ID
 	ProductID string `json:"product_id" query:"product_id"`
 
@@ -2763,17 +2682,11 @@ type ListInstanceQuery struct {
 	// 机房
 	Idc *string `json:"idc,omitempty" query:"idc"`
 
-	// 批量筛选, 实例ID, 逗号分隔 string. 内部注释-勿展示: 为了兼容性，优先级比 InstanceIdList 低, 参见 Rectify()
-	InInstanceList *string `json:"in_instance_list,omitempty" query:"in_instance_list"`
-
-	// 批量筛选, 状态, 逗号分隔 int
-	InStatusList *string `json:"in_status_list,omitempty" query:"in_status_list"`
-
-	// 批量筛选, 标签ID, 逗号分隔 string
-	InTagIDList *string `json:"in_tag_id_list,omitempty" query:"in_tag_id_list"`
-
 	// 实例 ID
 	InstanceID *string `json:"instance_id,omitempty" query:"instance_id"`
+
+	// 批量筛选, 实例ID, 逗号分隔 string. 内部注释-勿展示: 为了兼容性，优先级比 InstanceIdList 低, 参见 Rectify()
+	InstanceIDIn *string `json:"instance_id_in,omitempty" query:"instance_id_in"`
 
 	// 模糊查询, 实例ID
 	InstanceIDLike *string `json:"instance_id_like,omitempty" query:"instance_id_like"`
@@ -2785,7 +2698,7 @@ type ListInstanceQuery struct {
 	IsOrderAsc *bool `json:"is_order_asc,omitempty" query:"is_order_asc"`
 
 	// 运营商
-	Isp *int32 `json:"isp,omitempty" query:"isp"`
+	Isp *ListInstanceQueryIsp `json:"isp,omitempty" query:"isp"`
 
 	// 偏移量, 默认 0
 	Offset *int32 `json:"offset,omitempty" query:"offset"`
@@ -2796,20 +2709,21 @@ type ListInstanceQuery struct {
 	// 套餐 ID
 	PackageID *string `json:"package_id,omitempty" query:"package_id"`
 
-	// 安全组 ID
-	SecurityGroupID *int32 `json:"security_group_id,omitempty" query:"security_group_id"`
-
 	// 安全组绑定状态
-	SgBoundSt *int32 `json:"sg_bound_st,omitempty" query:"sg_bound_st"`
+	SgBoundSt *ListInstanceQuerySgBoundSt `json:"sg_bound_st,omitempty" query:"sg_bound_st"`
 
 	// 实例状态
 	Status *int32 `json:"status,omitempty" query:"status"`
 
-	// 标签 ID
-	TagID *string `json:"tag_id,omitempty" query:"tag_id"`
+	// 批量筛选, 状态, 逗号分隔 int
+	StatusIn *string `json:"status_in,omitempty" query:"status_in"`
+
+	// 批量筛选, 标签ID, 逗号分隔 string
+	TagIDIn *string `json:"tag_id_in,omitempty" query:"tag_id_in"`
 }
 
 type ListInstanceRes struct {
+
 	// REQUIRED
 	ResponseMetadata ListInstanceResResponseMetadata `json:"ResponseMetadata"`
 	Result           *ListInstanceResResult          `json:"Result,omitempty"`
@@ -2846,14 +2760,10 @@ type ListInstanceResResult struct {
 }
 
 type ListInstanceResResultRowItem struct {
-
-	// 实例绑定的密钥对信息
 	AdbKey *ListInstanceResResultRowItemAdbKey `json:"adb_key,omitempty"`
 
 	// 带宽
-	Bandwidth *int32 `json:"bandwidth,omitempty"`
-
-	// 实例套餐信息
+	Bandwidth     *int32                                     `json:"bandwidth,omitempty"`
 	Configuration *ListInstanceResResultRowItemConfiguration `json:"configuration,omitempty"`
 
 	// 创建时间, unix 时间戳, 秒级
@@ -2881,10 +2791,8 @@ type ListInstanceResResultRowItem struct {
 	InstanceID *string `json:"instance_id,omitempty"`
 
 	// 实例名称
-	InstanceName *string `json:"instance_name,omitempty"`
-
-	// 运营商
-	Isp *ListInstanceResResultRowItemIsp `json:"isp,omitempty"`
+	InstanceName *string                          `json:"instance_name,omitempty"`
+	Isp          *ListInstanceResResultRowItemIsp `json:"isp,omitempty"`
 
 	// 产品ID
 	ProductID *string `json:"product_id,omitempty"`
@@ -2893,41 +2801,27 @@ type ListInstanceResResultRowItem struct {
 	Region *string `json:"region,omitempty"`
 
 	// 分辨率
-	Resolution *string `json:"resolution,omitempty"`
-
-	// 实例绑定的安全组
+	Resolution    *string                                    `json:"resolution,omitempty"`
 	SecurityGroup *ListInstanceResResultRowItemSecurityGroup `json:"security_group,omitempty"`
-
-	// 安全组绑定状态
-	SgBoundSt *ListInstanceResResultRowItemSgBoundSt `json:"sg_bound_st,omitempty"`
+	SgBoundSt     *ListInstanceResResultRowItemSgBoundSt     `json:"sg_bound_st,omitempty"`
 
 	// 安全组绑定状态字符串
 	SgBoundStStr *string `json:"sg_bound_st_str,omitempty"`
 
 	// 序列号, maybe useless
-	Sn *string `json:"sn,omitempty"`
-
-	// 状态码（status） 状态说明(status_str) 含义 256 Running 运行中 259 Shutdown 已关机 261 Initializing 初始化中 513 ShuttingDown 关机中 515 Booting
-	// 开机中 514 Rebooting 重启中 519 ColdRebooting 强制重启中 516 Upgrading 升级中 517 Resetting
-	// 重置中 518 ResetToFactoryHandling 恢复出厂设置中 528 ModifyCritConfigRebootHandling 配置变更, 设备重启中 1024 Fault 异常状态 1025 InitFailed 初始化失败
+	Sn     *string                             `json:"sn,omitempty"`
 	Status *ListInstanceResResultRowItemStatus `json:"status,omitempty"`
 
 	// 实例状态字符串
-	StatusStr *string `json:"status_str,omitempty"`
-
-	// 标签
-	Tag *ListInstanceResResultRowItemTag `json:"tag,omitempty"`
+	StatusStr *string                          `json:"status_str,omitempty"`
+	Tag       *ListInstanceResResultRowItemTag `json:"tag,omitempty"`
 }
 
-// ListInstanceResResultRowItemAdbKey - 实例绑定的密钥对信息
 type ListInstanceResResultRowItemAdbKey struct {
 
 	// 用户权限类型：
 	// 1（root） 2（user）
 	AuthType *int32 `json:"auth_type,omitempty"`
-
-	// 密钥对绑定的云机数量
-	BindHostNum *int32 `json:"bind_host_num,omitempty"`
 
 	// 密钥对绑定的实例数量
 	BindInstanceNum *int32 `json:"bind_instance_num,omitempty"`
@@ -2942,7 +2836,6 @@ type ListInstanceResResultRowItemAdbKey struct {
 	PublicKey   *string `json:"public_key,omitempty"`
 }
 
-// ListInstanceResResultRowItemConfiguration - 实例套餐信息
 type ListInstanceResResultRowItemConfiguration struct {
 
 	// CPU 核心数
@@ -2964,7 +2857,6 @@ type ListInstanceResResultRowItemConfiguration struct {
 	Memory *float32 `json:"memory,omitempty"`
 }
 
-// ListInstanceResResultRowItemSecurityGroup - 实例绑定的安全组
 type ListInstanceResResultRowItemSecurityGroup struct {
 
 	// BindHostNum *int64 json:"bind_host_num,omitempty" // Deprecated: 请使用BindInstanceNum
@@ -2986,13 +2878,12 @@ type ListInstanceResResultRowItemSecurityGroup struct {
 	SecurityGroupName *string `json:"security_group_name,omitempty"`
 
 	// 安全组规则列表
-	SecurityRuleList []*ListInstanceResResultRowPropertiesAllOfPropertiesItemsItem `json:"security_rule_list,omitempty"`
+	SecurityRuleList []*ListInstanceResResultRowPropertiesItemsItem `json:"security_rule_list,omitempty"`
 
 	// 更新时间，秒级时间戳
 	UpdateAt *int32 `json:"update_at,omitempty"`
 }
 
-// ListInstanceResResultRowItemTag - 标签
 type ListInstanceResResultRowItemTag struct {
 	ProductID          *string `json:"product_id,omitempty"`
 	RelatedInstanceNum *int32  `json:"related_instance_num,omitempty"`
@@ -3001,16 +2892,10 @@ type ListInstanceResResultRowItemTag struct {
 	TagName            *string `json:"tag_name,omitempty"`
 }
 
-type ListInstanceResResultRowPropertiesAllOfPropertiesItemsItem struct {
-
-	// 转发方式 1: 仅开放内网，不开放公网 3: 开放公网，默认
-	Expose *ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemExpose `json:"expose,omitempty"`
-
-	// NAT类型, 默认 1 ( DNAT )
-	NatType *ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemNatType `json:"nat_type,omitempty"`
-
-	// 协议 1 => UDP 2 => TCP 3 => ALL（源端口号同时支持 TCP 和 UDP 协议）
-	Protocol *ListInstanceResResultRowItemSecurityGroupAllOf0SecurityRuleListItemProtocol `json:"protocol,omitempty"`
+type ListInstanceResResultRowPropertiesItemsItem struct {
+	Expose   *ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemExpose   `json:"expose,omitempty"`
+	NatType  *ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemNatType  `json:"nat_type,omitempty"`
+	Protocol *ListInstanceResResultRowItemSecurityGroupSecurityRuleListItemProtocol `json:"protocol,omitempty"`
 
 	// 安全组规则ID
 	RuleID *int32 `json:"rule_id,omitempty"`
@@ -3130,7 +3015,7 @@ type ListPortMappingQuery struct {
 	InstanceIDIn *string `json:"instance_id_in,omitempty" query:"instance_id_in"`
 
 	// 端口映射的运营商
-	Isp *int32 `json:"isp,omitempty" query:"isp"`
+	Isp *ListPortMappingQueryIsp `json:"isp,omitempty" query:"isp"`
 
 	// 偏移量
 	Offset *int32 `json:"offset,omitempty" query:"offset"`
@@ -3139,7 +3024,7 @@ type ListPortMappingQuery struct {
 	PortMappingID *string `json:"port_mapping_id,omitempty" query:"port_mapping_id"`
 
 	// 端口映射的协议
-	ProtocolEnum *int32 `json:"protocol_enum,omitempty" query:"protocol_enum"`
+	ProtocolEnum *ListPortMappingQueryProtocolEnum `json:"protocol_enum,omitempty" query:"protocol_enum"`
 
 	// 安全组ID
 	SecurityGroupID *int32 `json:"security_group_id,omitempty" query:"security_group_id"`
@@ -3148,7 +3033,7 @@ type ListPortMappingQuery struct {
 	SecurityRuleID *int32 `json:"security_rule_id,omitempty" query:"security_rule_id"`
 
 	// 端口映射状态
-	State *int32 `json:"state,omitempty" query:"state"`
+	State *ListPortMappingQueryState `json:"state,omitempty" query:"state"`
 
 	// 端口映射状态列表
 	StateIn *string `json:"state_in,omitempty" query:"state_in"`
@@ -3207,21 +3092,15 @@ type ListPortMappingResResultRowItem struct {
 	InstanceID *string `json:"instance_id,omitempty"`
 
 	// 实例源端口号
-	InstancePort *int32 `json:"instance_port,omitempty"`
-
-	// 运营商
-	Isp *ListPortMappingResResultRowItemIsp `json:"isp,omitempty"`
+	InstancePort *int32                              `json:"instance_port,omitempty"`
+	Isp          *ListPortMappingResResultRowItemIsp `json:"isp,omitempty"`
 
 	// 端口映射ID
 	PortMappingID *string `json:"port_mapping_id,omitempty"`
 
 	// 产品ID
-	ProductID *string `json:"product_id,omitempty"`
-
-	// 协议类型 string
-	Protocol *ListPortMappingResResultRowItemProtocol `json:"protocol,omitempty"`
-
-	// 协议类型
+	ProductID    *string                                      `json:"product_id,omitempty"`
+	Protocol     *ListPortMappingResResultRowItemProtocol     `json:"protocol,omitempty"`
 	ProtocolEnum *ListPortMappingResResultRowItemProtocolEnum `json:"protocol_enum,omitempty"`
 
 	// 内网代理 IP
@@ -3240,10 +3119,8 @@ type ListPortMappingResResultRowItem struct {
 	SecurityGroupID *int32 `json:"security_group_id,omitempty"`
 
 	// 安全组规则ID
-	SecurityRuleID *int32 `json:"security_rule_id,omitempty"`
-
-	// 端口映射状态
-	State *ListPortMappingResResultRowItemState `json:"state,omitempty"`
+	SecurityRuleID *int32                                `json:"security_rule_id,omitempty"`
+	State          *ListPortMappingResResultRowItemState `json:"state,omitempty"`
 }
 
 type ListProductQuery struct {
@@ -3314,9 +3191,7 @@ type ListProductResResultRowItem struct {
 	ProductID *string `json:"product_id,omitempty"`
 
 	// 业务名称
-	ProductName *string `json:"product_name,omitempty"`
-
-	// 业务类型
+	ProductName *string                                 `json:"product_name,omitempty"`
 	ProductType *ListProductResResultRowItemProductType `json:"product_type,omitempty"`
 
 	// 用户列表
@@ -3426,14 +3301,8 @@ type ListSecurityGroupResResultRowItem struct {
 }
 
 type ListSecurityGroupResResultRowPropertiesItemsItem struct {
-
-	// 转发方式 1: 仅开放内网，不开放公网 3: 开放公网，默认
-	Expose *ListSecurityGroupResResultRowItemSecurityRuleListItemExpose `json:"expose,omitempty"`
-
-	// NAT类型, 默认 1 ( DNAT )
-	NatType *ListSecurityGroupResResultRowItemSecurityRuleListItemNatType `json:"nat_type,omitempty"`
-
-	// 协议 1 => UDP 2 => TCP 3 => ALL（源端口号同时支持 TCP 和 UDP 协议）
+	Expose   *ListSecurityGroupResResultRowItemSecurityRuleListItemExpose   `json:"expose,omitempty"`
+	NatType  *ListSecurityGroupResResultRowItemSecurityRuleListItemNatType  `json:"nat_type,omitempty"`
 	Protocol *ListSecurityGroupResResultRowItemSecurityRuleListItemProtocol `json:"protocol,omitempty"`
 
 	// 安全组规则ID
@@ -3443,22 +3312,63 @@ type ListSecurityGroupResResultRowPropertiesItemsItem struct {
 	SourcePort *int32 `json:"source_port,omitempty"`
 }
 
-type ModifyInstanceWindowDisplaySpecBody struct {
+type ModifyInstanceFpsBody struct {
+
+	// REQUIRED; 帧率，目前仅支持30、60
+	Fps int32 `json:"Fps"`
 
 	// REQUIRED; 实例ID
 	InstanceID string `json:"InstanceId"`
 
 	// REQUIRED; 产品ID
 	ProductID string `json:"ProductId"`
-
-	// 自定义分辨率
-	ResolutionCustom *ModifyInstanceWindowDisplaySpecBodyResolutionCustom `json:"ResolutionCustom,omitempty"`
-
-	// 屏幕显示规格
-	ResolutionLevel *ModifyInstanceWindowDisplaySpecBodyResolutionLevel `json:"ResolutionLevel,omitempty"`
 }
 
-// ModifyInstanceWindowDisplaySpecBodyResolutionCustom - 自定义分辨率
+type ModifyInstanceFpsRes struct {
+
+	// REQUIRED
+	ResponseMetadata ModifyInstanceFpsResResponseMetadata `json:"ResponseMetadata"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type ModifyInstanceFpsResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                     `json:"Version"`
+	Error   *ModifyInstanceFpsResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ModifyInstanceFpsResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type ModifyInstanceWindowDisplaySpecBody struct {
+
+	// REQUIRED; 实例ID
+	InstanceID string `json:"InstanceId"`
+
+	// REQUIRED; 产品ID
+	ProductID        string                                               `json:"ProductId"`
+	ResolutionCustom *ModifyInstanceWindowDisplaySpecBodyResolutionCustom `json:"ResolutionCustom,omitempty"`
+	ResolutionLevel  *ModifyInstanceWindowDisplaySpecBodyResolutionLevel  `json:"ResolutionLevel,omitempty"`
+}
+
 type ModifyInstanceWindowDisplaySpecBodyResolutionCustom struct {
 
 	// REQUIRED; 屏幕显示分辨率X
@@ -3548,8 +3458,11 @@ type PowerDownInstanceResResult struct {
 	// Deprecated: 弃用
 	FailIDList []*string `json:"fail_id_list,omitempty"`
 
-	// 失败列表
+	// 失败的记录
 	FailedList []*PowerDownInstanceResResultFailedListItem `json:"failed_list,omitempty"`
+
+	// 异步JobId
+	JobID *string `json:"job_id,omitempty"`
 
 	// Deprecated: 弃用
 	SuccessIDList []*string `json:"success_id_list,omitempty"`
@@ -3610,8 +3523,11 @@ type PowerUpInstanceResResult struct {
 	// Deprecated: 弃用
 	FailIDList []*string `json:"fail_id_list,omitempty"`
 
-	// 失败列表
+	// 失败的记录
 	FailedList []*PowerUpInstanceResResultFailedListItem `json:"failed_list,omitempty"`
+
+	// 异步JobId
+	JobID *string `json:"job_id,omitempty"`
 
 	// Deprecated: 弃用
 	SuccessIDList []*string `json:"success_id_list,omitempty"`
@@ -3637,11 +3553,10 @@ type PullFileBody struct {
 	// REQUIRED; 产品ID
 	ProductID string `json:"product_id"`
 
-	// REQUIRED; 保存源文件的火山引擎对象存储信息
+	// REQUIRED
 	TosInfo PullFileBodyTosInfo `json:"tos_info"`
 }
 
-// PullFileBodyTosInfo - 保存源文件的火山引擎对象存储信息
 type PullFileBodyTosInfo struct {
 
 	// REQUIRED; 火山引擎对象存储中的存储桶名称
@@ -3707,13 +3622,10 @@ type PushFileBody struct {
 	ObjectType string `json:"object_type"`
 
 	// REQUIRED; 产品ID
-	ProductID string `json:"product_id"`
-
-	// 保存源文件的火山引擎对象存储信息
-	TosInfo *PushFileBodyTosInfo `json:"tos_info,omitempty"`
+	ProductID string               `json:"product_id"`
+	TosInfo   *PushFileBodyTosInfo `json:"tos_info,omitempty"`
 }
 
-// PushFileBodyTosInfo - 保存源文件的火山引擎对象存储信息
 type PushFileBodyTosInfo struct {
 
 	// REQUIRED; 火山引擎对象存储中的存储桶名称
@@ -3843,7 +3755,7 @@ type RecordScreenBody struct {
 	// REQUIRED; 实例ID
 	InstanceID string `json:"instance_id"`
 
-	// REQUIRED; 录屏操作，可选枚举值为： start：开始录屏 stop：停止录屏 注意：当处于 start 状态下，再次 start 会报错；当处于 stop 状态下，再次 stop 会报错
+	// REQUIRED
 	Option RecordScreenBodyOption `json:"option"`
 
 	// REQUIRED; 产品ID
@@ -3940,7 +3852,7 @@ type ResetInstanceToFactoryResResponseMetadataError struct {
 
 type ResetInstanceToFactoryResResult struct {
 
-	// 失败的ID列表
+	// 失���的ID列表
 	FailedIDList []*ResetInstanceToFactoryResResultFailedIDListItem `json:"failed_id_list,omitempty"`
 
 	// 异步JobId
@@ -4022,6 +3934,66 @@ type ResetInstancesResResultFailedListItem struct {
 
 	// 信息
 	Msg *string `json:"msg,omitempty"`
+}
+
+type SetInstanceBandwidthBody struct {
+
+	// REQUIRED; 需要设置的带宽大小，2～300Mbps
+	BandwidthMbps int32 `json:"BandwidthMbps"`
+
+	// REQUIRED; 实例列表，单次最大不能超过50个实例
+	InstanceIDList []string `json:"InstanceIdList"`
+
+	// REQUIRED; 业务ID
+	ProductID string `json:"ProductId"`
+}
+
+type SetInstanceBandwidthRes struct {
+
+	// REQUIRED
+	ResponseMetadata SetInstanceBandwidthResResponseMetadata `json:"ResponseMetadata"`
+	Result           *SetInstanceBandwidthResResult          `json:"Result,omitempty"`
+}
+
+type SetInstanceBandwidthResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                        `json:"Version"`
+	Error   *SetInstanceBandwidthResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type SetInstanceBandwidthResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type SetInstanceBandwidthResResult struct {
+
+	// 失败列表
+	FailedList    []*SetInstanceBandwidthResResultFailedListItem `json:"FailedList,omitempty"`
+	SuccessIDList []*string                                      `json:"SuccessIdList,omitempty"`
+}
+
+type SetInstanceBandwidthResResultFailedListItem struct {
+
+	// 操作的ID，云机Id 或 实例Id
+	ID *string `json:"Id,omitempty"`
+
+	// 信息
+	Msg *string `json:"Msg,omitempty"`
 }
 
 type SetInstancePropertiesBody struct {
@@ -4255,7 +4227,7 @@ type UpdateContainerImageResResponseMetadataError struct {
 
 type UpdateInstancePropertyBody struct {
 
-	// REQUIRED; 实例属性信息, 数组长度上限200
+	// REQUIRED
 	InstanceProperty UpdateInstancePropertyBodyInstanceProperty `json:"instance_property"`
 
 	// REQUIRED; 目标 Id 列表
@@ -4268,7 +4240,6 @@ type UpdateInstancePropertyBody struct {
 	ProductID string `json:"product_id"`
 }
 
-// UpdateInstancePropertyBodyInstanceProperty - 实例属性信息, 数组长度上限200
 type UpdateInstancePropertyBodyInstanceProperty struct {
 
 	// REQUIRED; 属性名 属性名称长度上限64 不支持输入特殊字符，包括但不限于 +- ;&|(){}[]
@@ -4442,8 +4413,11 @@ type WarmRebootInstanceResResult struct {
 	// Deprecated
 	FailIDList []*string `json:"fail_id_list,omitempty"`
 
-	// 失败列表
+	// 失败的记录
 	FailedList []*WarmRebootInstanceResResultFailedListItem `json:"failed_list,omitempty"`
+
+	// 异步JobId
+	JobID *string `json:"job_id,omitempty"`
 
 	// Deprecated
 	SuccessIDList []*string `json:"success_id_list,omitempty"`
@@ -4457,320 +4431,344 @@ type WarmRebootInstanceResResultFailedListItem struct {
 	// 信息
 	Msg *string `json:"msg,omitempty"`
 }
-type ResetInstanceToFactory struct{}
-type ImportContainerImage struct{}
-type PowerDownInstance struct{}
-type UnbindInstanceAdbKey struct{}
-type ColdRebootInstance struct{}
-type BindInstancesAdbKey struct{}
-type GetFileDistributionResult struct{}
-type ListInstanceMetricData struct{}
-type PullFile struct{}
-type DistributeFileToInstances struct{}
-type BindInstancesSecurityGroupQuery struct{}
-type ListInstanceBody struct{}
-type BindInstanceAdbKey struct{}
-type AcquireIdempotentTokenQuery struct{}
-type UnbindInstancesSecurityGroup struct{}
-type PowerUpInstance struct{}
-type GetFileDistributionJobDetail struct{}
-type FixInstancesSGBound struct{}
-type DeleteContainerImages struct{}
-type InstallApplicationQuery struct{}
-type BindInstancesAdbKeyQuery struct{}
-type UpdateInstancePropertyQuery struct{}
-type AdbCommandQuery struct{}
-type ListContainerImagesBody struct{}
-type ListSecurityGroupBody struct{}
-type RebootHostQuery struct{}
-type GetInfoAfterOrder struct{}
-type DetailInstance struct{}
-type ListHostMetricData struct{}
-type GetInstancePropertyQuery struct{}
-type GetInstancePropertiesQuery struct{}
-type InstallApplication struct{}
-type PowerUpInstanceQuery struct{}
-type ListPackageQuery struct{}
-type BindInstancesSecurityGroup struct{}
-type UpdateContainerImage struct{}
-type LatestMetricInstance struct{}
-type ControlApplicationQuery struct{}
-type ResetInstances struct{}
 type ExportInstance struct{}
 type ExecCmdSync struct{}
-type UpdateContainerImageQuery struct{}
-type DetailInstanceBody struct{}
-type ResetInstancesQuery struct{}
-type ListContainerImages struct{}
-type ExecCmdSyncQuery struct{}
-type LatestMetricInstanceBody struct{}
-type ControlApplication struct{}
-type GetJobDetails struct{}
-type SetInstanceProperties struct{}
-type DistributeFile struct{}
-type ListProduct struct{}
-type BindInstanceAdbKeyQuery struct{}
-type RebootHost struct{}
-type AdbCommand struct{}
-type DeleteDevices struct{}
-type PushFileQuery struct{}
-type RecordScreenQuery struct{}
-type RecordScreen struct{}
-type UnbindInstanceAdbKeyQuery struct{}
-type ColdRebootInstanceQuery struct{}
-type UpgradeInstancesQuery struct{}
-type ListHost struct{}
-type ListPortMapping struct{}
-type GetFileDistributionResultBody struct{}
-type GetFileDistributionJobDetailBody struct{}
-type PullFileQuery struct{}
-type ListProductBody struct{}
-type UnbindInstancesSecurityGroupQuery struct{}
-type ListHostMetricDataQuery struct{}
-type CreateDevices struct{}
-type GetInstanceProperty struct{}
 type DetailSecurityGroup struct{}
-type ListInstance struct{}
-type WarmRebootInstanceQuery struct{}
 type ListAdbKeyBody struct{}
 type UnbindInstancesAdbKey struct{}
-type ModifyInstanceWindowDisplaySpec struct{}
-type SetInstancePropertiesQuery struct{}
-type ListInstanceMetricDataQuery struct{}
-type UnbindInstancesAdbKeyQuery struct{}
-type AcquireIdempotentToken struct{}
+type GetFileDistributionJobDetail struct{}
 type ExportInstanceRes struct{}
-type DistributeFileToInstancesQuery struct{}
-type ListPackage struct{}
 type GetJobDetailsBody struct{}
-type UpgradeInstances struct{}
-type PowerDownInstanceQuery struct{}
-type ResetInstanceToFactoryQuery struct{}
-type GetInstanceProperties struct{}
-type ListAdbKey struct{}
-type ListSecurityGroup struct{}
-type DetailSecurityGroupBody struct{}
-type ListPortMappingBody struct{}
-type ExportInstanceBody struct{}
-type PushFile struct{}
-type WarmRebootInstance struct{}
-type ListHostBody struct{}
-type DistributeFileQuery struct{}
-type FixInstancesSGBoundQuery struct{}
-type UpdateInstanceProperty struct{}
-type ImportContainerImageQuery struct{}
-type DeleteContainerImagesQuery struct{}
-type ModifyInstanceWindowDisplaySpecQuery struct{}
+type RebootHost struct{}
 type GetInfoAfterOrderQuery struct{}
-type ListContainerImagesReq struct {
-	*ListContainerImagesQuery
-	*ListContainerImagesBody
-}
-type UnbindInstancesAdbKeyReq struct {
-	*UnbindInstancesAdbKeyQuery
-	*UnbindInstancesAdbKeyBody
-}
-type ListSecurityGroupReq struct {
-	*ListSecurityGroupQuery
-	*ListSecurityGroupBody
-}
-type ExecCmdSyncReq struct {
-	*ExecCmdSyncQuery
-	*ExecCmdSyncBody
-}
-type ControlApplicationReq struct {
-	*ControlApplicationQuery
-	*ControlApplicationBody
-}
-type GetInstancePropertyReq struct {
-	*GetInstancePropertyQuery
-	*GetInstancePropertyBody
-}
-type BindInstancesAdbKeyReq struct {
-	*BindInstancesAdbKeyQuery
-	*BindInstancesAdbKeyBody
-}
+type ListInstanceBody struct{}
+type InstallApplication struct{}
+type UnbindInstanceAdbKey struct{}
+type GetFileDistributionResultBody struct{}
+type ModifyInstanceWindowDisplaySpec struct{}
+type BindInstancesAdbKey struct{}
+type ListDcCapacity struct{}
+type WarmRebootInstance struct{}
+type InitializeHost struct{}
+type GetInfoAfterOrder struct{}
+type DeleteDevices struct{}
+type SetInstanceBandwidthQuery struct{}
+type ListProduct struct{}
+type PowerDownInstanceQuery struct{}
+type DetailInstanceBody struct{}
+type ColdRebootInstanceQuery struct{}
+type ControlApplication struct{}
+type ListAdbKey struct{}
+type DistributeFileQuery struct{}
+type ListPortMappingBody struct{}
+type SetInstanceProperties struct{}
+type UpdateContainerImage struct{}
+type InstallApplicationQuery struct{}
+type RecordScreen struct{}
+type ExportInstanceBody struct{}
+type UnbindInstanceAdbKeyQuery struct{}
+type ModifyInstanceWindowDisplaySpecQuery struct{}
+type ListHostMetricDataQuery struct{}
+type PowerDownInstance struct{}
+type ColdRebootInstance struct{}
+type PowerUpInstance struct{}
+type UpdateInstancePropertyQuery struct{}
+type ListPackageQuery struct{}
+type GetFileDistributionJobDetailQuery struct{}
+type DistributeFileToInstances struct{}
+type AcquireIdempotentToken struct{}
+type DetailInstance struct{}
+type GetFileDistributionResult struct{}
+type ListHostBody struct{}
+type BindInstancesSecurityGroup struct{}
+type PushFileQuery struct{}
+type ImportContainerImage struct{}
+type ListProductBody struct{}
+type CreateDevices struct{}
+type ListPackage struct{}
+type ListInstanceMetricData struct{}
+type BindInstancesSecurityGroupQuery struct{}
+type PullFile struct{}
+type ModifyInstanceFpsQuery struct{}
+type DeleteContainerImagesQuery struct{}
+type FixInstancesSGBound struct{}
+type FixInstancesSGBoundQuery struct{}
+type ListSecurityGroupBody struct{}
+type DeleteContainerImages struct{}
+type UpdateInstanceProperty struct{}
+type GetJobDetails struct{}
+type ListContainerImages struct{}
+type RecordScreenQuery struct{}
+type DistributeFile struct{}
+type AdbCommand struct{}
+type DistributeFileToInstancesQuery struct{}
+type AdbCommandQuery struct{}
+type WarmRebootInstanceQuery struct{}
+type ResetInstances struct{}
+type GetInstanceProperty struct{}
+type AcquireIdempotentTokenQuery struct{}
+type UnbindInstancesSecurityGroupQuery struct{}
+type InitializeHostQuery struct{}
+type ExecCmdSyncQuery struct{}
+type BindInstanceAdbKey struct{}
+type ImportContainerImageQuery struct{}
+type ResetInstanceToFactory struct{}
+type ListHostMetricData struct{}
+type LatestMetricInstance struct{}
+type ListHost struct{}
+type ResetInstanceToFactoryQuery struct{}
+type ListDcCapacityQuery struct{}
+type ListSecurityGroup struct{}
+type ModifyInstanceFps struct{}
+type ListContainerImagesBody struct{}
+type LatestMetricInstanceBody struct{}
+type PushFile struct{}
+type UpgradeInstancesQuery struct{}
+type SetInstanceBandwidth struct{}
+type GetInstancePropertyQuery struct{}
+type PullFileQuery struct{}
+type UnbindInstancesAdbKeyQuery struct{}
+type DetailSecurityGroupBody struct{}
+type ListInstanceMetricDataQuery struct{}
+type PowerUpInstanceQuery struct{}
+type GetInstancePropertiesQuery struct{}
+type SetInstancePropertiesQuery struct{}
+type ResetInstancesQuery struct{}
+type UpdateContainerImageQuery struct{}
+type UnbindInstancesSecurityGroup struct{}
+type UpgradeInstances struct{}
+type BindInstancesAdbKeyQuery struct{}
+type BindInstanceAdbKeyQuery struct{}
+type GetInstanceProperties struct{}
+type ControlApplicationQuery struct{}
+type ListInstance struct{}
+type ListPortMapping struct{}
+type RebootHostQuery struct{}
 type BindInstanceAdbKeyReq struct {
 	*BindInstanceAdbKeyQuery
 	*BindInstanceAdbKeyBody
-}
-type GetInfoAfterOrderReq struct {
-	*GetInfoAfterOrderQuery
-	*GetInfoAfterOrderBody
-}
-type BindInstancesSecurityGroupReq struct {
-	*BindInstancesSecurityGroupQuery
-	*BindInstancesSecurityGroupBody
-}
-type LatestMetricInstanceReq struct {
-	*LatestMetricInstanceQuery
-	*LatestMetricInstanceBody
-}
-type ListAdbKeyReq struct {
-	*ListAdbKeyQuery
-	*ListAdbKeyBody
-}
-type ExportInstanceReq struct {
-	*ExportInstanceQuery
-	*ExportInstanceBody
-}
-type UnbindInstancesSecurityGroupReq struct {
-	*UnbindInstancesSecurityGroupQuery
-	*UnbindInstancesSecurityGroupBody
-}
-type AcquireIdempotentTokenReq struct {
-	*AcquireIdempotentTokenQuery
-	*AcquireIdempotentTokenBody
-}
-type FixInstancesSGBoundReq struct {
-	*FixInstancesSGBoundQuery
-	*FixInstancesSGBoundBody
-}
-type PowerDownInstanceReq struct {
-	*PowerDownInstanceQuery
-	*PowerDownInstanceBody
-}
-type DeleteContainerImagesReq struct {
-	*DeleteContainerImagesQuery
-	*DeleteContainerImagesBody
-}
-type DetailInstanceReq struct {
-	*DetailInstanceQuery
-	*DetailInstanceBody
-}
-type AdbCommandReq struct {
-	*AdbCommandQuery
-	*AdbCommandBody
-}
-type InstallApplicationReq struct {
-	*InstallApplicationQuery
-	*InstallApplicationBody
-}
-type PullFileReq struct {
-	*PullFileQuery
-	*PullFileBody
-}
-type ResetInstancesReq struct {
-	*ResetInstancesQuery
-	*ResetInstancesBody
 }
 type ListInstanceMetricDataReq struct {
 	*ListInstanceMetricDataQuery
 	*ListInstanceMetricDataBody
 }
-type DistributeFileToInstancesReq struct {
-	*DistributeFileToInstancesQuery
-	*DistributeFileToInstancesBody
-}
-type ModifyInstanceWindowDisplaySpecReq struct {
-	*ModifyInstanceWindowDisplaySpecQuery
-	*ModifyInstanceWindowDisplaySpecBody
-}
-type CreateDevicesReq struct {
-	*CreateDevicesQuery
-	*CreateDevicesBody
-}
-type SetInstancePropertiesReq struct {
-	*SetInstancePropertiesQuery
-	*SetInstancePropertiesBody
-}
-type ListProductReq struct {
-	*ListProductQuery
-	*ListProductBody
-}
-type DistributeFileReq struct {
-	*DistributeFileQuery
-	*DistributeFileBody
-}
-type ColdRebootInstanceReq struct {
-	*ColdRebootInstanceQuery
-	*ColdRebootInstanceBody
-}
-type UnbindInstanceAdbKeyReq struct {
-	*UnbindInstanceAdbKeyQuery
-	*UnbindInstanceAdbKeyBody
-}
-type ListInstanceReq struct {
-	*ListInstanceQuery
-	*ListInstanceBody
-}
-type ListPortMappingReq struct {
-	*ListPortMappingQuery
-	*ListPortMappingBody
-}
-type PushFileReq struct {
-	*PushFileQuery
-	*PushFileBody
-}
-type UpdateInstancePropertyReq struct {
-	*UpdateInstancePropertyQuery
-	*UpdateInstancePropertyBody
-}
-type ImportContainerImageReq struct {
-	*ImportContainerImageQuery
-	*ImportContainerImageBody
-}
-type ListHostReq struct {
-	*ListHostQuery
-	*ListHostBody
-}
-type DeleteDevicesReq struct {
-	*DeleteDevicesQuery
-	*DeleteDevicesBody
-}
-type RecordScreenReq struct {
-	*RecordScreenQuery
-	*RecordScreenBody
-}
-type ListHostMetricDataReq struct {
-	*ListHostMetricDataQuery
-	*ListHostMetricDataBody
-}
-type DetailSecurityGroupReq struct {
-	*DetailSecurityGroupQuery
-	*DetailSecurityGroupBody
-}
-type GetInstancePropertiesReq struct {
-	*GetInstancePropertiesQuery
-	*GetInstancePropertiesBody
-}
-type UpdateContainerImageReq struct {
-	*UpdateContainerImageQuery
-	*UpdateContainerImageBody
-}
-type GetFileDistributionJobDetailReq struct {
-	*GetFileDistributionJobDetailQuery
-	*GetFileDistributionJobDetailBody
-}
-type GetFileDistributionResultReq struct {
-	*GetFileDistributionResultQuery
-	*GetFileDistributionResultBody
-}
-type PowerUpInstanceReq struct {
-	*PowerUpInstanceQuery
-	*PowerUpInstanceBody
-}
-type WarmRebootInstanceReq struct {
-	*WarmRebootInstanceQuery
-	*WarmRebootInstanceBody
+type PowerDownInstanceReq struct {
+	*PowerDownInstanceQuery
+	*PowerDownInstanceBody
 }
 type GetJobDetailsReq struct {
 	*GetJobDetailsQuery
 	*GetJobDetailsBody
 }
+type GetFileDistributionJobDetailReq struct {
+	*GetFileDistributionJobDetailQuery
+	*GetFileDistributionJobDetailBody
+}
+type GetInfoAfterOrderReq struct {
+	*GetInfoAfterOrderQuery
+	*GetInfoAfterOrderBody
+}
+type ListProductReq struct {
+	*ListProductQuery
+	*ListProductBody
+}
+type AdbCommandReq struct {
+	*AdbCommandQuery
+	*AdbCommandBody
+}
+type SetInstanceBandwidthReq struct {
+	*SetInstanceBandwidthQuery
+	*SetInstanceBandwidthBody
+}
+type GetInstancePropertyReq struct {
+	*GetInstancePropertyQuery
+	*GetInstancePropertyBody
+}
+type ImportContainerImageReq struct {
+	*ImportContainerImageQuery
+	*ImportContainerImageBody
+}
+type PushFileReq struct {
+	*PushFileQuery
+	*PushFileBody
+}
+type GetFileDistributionResultReq struct {
+	*GetFileDistributionResultQuery
+	*GetFileDistributionResultBody
+}
+type ModifyInstanceWindowDisplaySpecReq struct {
+	*ModifyInstanceWindowDisplaySpecQuery
+	*ModifyInstanceWindowDisplaySpecBody
+}
+type PullFileReq struct {
+	*PullFileQuery
+	*PullFileBody
+}
+type GetInstancePropertiesReq struct {
+	*GetInstancePropertiesQuery
+	*GetInstancePropertiesBody
+}
+type DetailSecurityGroupReq struct {
+	*DetailSecurityGroupQuery
+	*DetailSecurityGroupBody
+}
+type RecordScreenReq struct {
+	*RecordScreenQuery
+	*RecordScreenBody
+}
+type ExecCmdSyncReq struct {
+	*ExecCmdSyncQuery
+	*ExecCmdSyncBody
+}
+type ListHostMetricDataReq struct {
+	*ListHostMetricDataQuery
+	*ListHostMetricDataBody
+}
+type UnbindInstancesSecurityGroupReq struct {
+	*UnbindInstancesSecurityGroupQuery
+	*UnbindInstancesSecurityGroupBody
+}
 type ResetInstanceToFactoryReq struct {
 	*ResetInstanceToFactoryQuery
 	*ResetInstanceToFactoryBody
 }
-type RebootHostReq struct {
-	*RebootHostQuery
-	*RebootHostBody
+type ListAdbKeyReq struct {
+	*ListAdbKeyQuery
+	*ListAdbKeyBody
+}
+type ListContainerImagesReq struct {
+	*ListContainerImagesQuery
+	*ListContainerImagesBody
+}
+type DeleteContainerImagesReq struct {
+	*DeleteContainerImagesQuery
+	*DeleteContainerImagesBody
+}
+type UnbindInstanceAdbKeyReq struct {
+	*UnbindInstanceAdbKeyQuery
+	*UnbindInstanceAdbKeyBody
+}
+type DistributeFileReq struct {
+	*DistributeFileQuery
+	*DistributeFileBody
+}
+type DeleteDevicesReq struct {
+	*DeleteDevicesQuery
+	*DeleteDevicesBody
+}
+type ColdRebootInstanceReq struct {
+	*ColdRebootInstanceQuery
+	*ColdRebootInstanceBody
+}
+type WarmRebootInstanceReq struct {
+	*WarmRebootInstanceQuery
+	*WarmRebootInstanceBody
+}
+type ListHostReq struct {
+	*ListHostQuery
+	*ListHostBody
+}
+type ListSecurityGroupReq struct {
+	*ListSecurityGroupQuery
+	*ListSecurityGroupBody
+}
+type ListInstanceReq struct {
+	*ListInstanceQuery
+	*ListInstanceBody
+}
+type UpgradeInstancesReq struct {
+	*UpgradeInstancesQuery
+	*UpgradeInstancesBody
+}
+type DetailInstanceReq struct {
+	*DetailInstanceQuery
+	*DetailInstanceBody
+}
+type ModifyInstanceFpsReq struct {
+	*ModifyInstanceFpsQuery
+	*ModifyInstanceFpsBody
+}
+type InitializeHostReq struct {
+	*InitializeHostQuery
+	*InitializeHostBody
+}
+type FixInstancesSGBoundReq struct {
+	*FixInstancesSGBoundQuery
+	*FixInstancesSGBoundBody
+}
+type BindInstancesSecurityGroupReq struct {
+	*BindInstancesSecurityGroupQuery
+	*BindInstancesSecurityGroupBody
+}
+type SetInstancePropertiesReq struct {
+	*SetInstancePropertiesQuery
+	*SetInstancePropertiesBody
+}
+type UnbindInstancesAdbKeyReq struct {
+	*UnbindInstancesAdbKeyQuery
+	*UnbindInstancesAdbKeyBody
+}
+type PowerUpInstanceReq struct {
+	*PowerUpInstanceQuery
+	*PowerUpInstanceBody
+}
+type AcquireIdempotentTokenReq struct {
+	*AcquireIdempotentTokenQuery
+	*AcquireIdempotentTokenBody
+}
+type UpdateInstancePropertyReq struct {
+	*UpdateInstancePropertyQuery
+	*UpdateInstancePropertyBody
 }
 type ListPackageReq struct {
 	*ListPackageQuery
 	*ListPackageBody
 }
-type UpgradeInstancesReq struct {
-	*UpgradeInstancesQuery
-	*UpgradeInstancesBody
+type ResetInstancesReq struct {
+	*ResetInstancesQuery
+	*ResetInstancesBody
+}
+type UpdateContainerImageReq struct {
+	*UpdateContainerImageQuery
+	*UpdateContainerImageBody
+}
+type CreateDevicesReq struct {
+	*CreateDevicesQuery
+	*CreateDevicesBody
+}
+type ListDcCapacityReq struct {
+	*ListDcCapacityQuery
+	*ListDcCapacityBody
+}
+type LatestMetricInstanceReq struct {
+	*LatestMetricInstanceQuery
+	*LatestMetricInstanceBody
+}
+type InstallApplicationReq struct {
+	*InstallApplicationQuery
+	*InstallApplicationBody
+}
+type RebootHostReq struct {
+	*RebootHostQuery
+	*RebootHostBody
+}
+type ControlApplicationReq struct {
+	*ControlApplicationQuery
+	*ControlApplicationBody
+}
+type DistributeFileToInstancesReq struct {
+	*DistributeFileToInstancesQuery
+	*DistributeFileToInstancesBody
+}
+type BindInstancesAdbKeyReq struct {
+	*BindInstancesAdbKeyQuery
+	*BindInstancesAdbKeyBody
+}
+type ExportInstanceReq struct {
+	*ExportInstanceQuery
+	*ExportInstanceBody
+}
+type ListPortMappingReq struct {
+	*ListPortMappingQuery
+	*ListPortMappingBody
 }
