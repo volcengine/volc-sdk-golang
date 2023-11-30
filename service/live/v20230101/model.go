@@ -3863,7 +3863,7 @@ type DescribeLiveCustomizedLogDataResResultPagination struct {
 	PageSize int32 `json:"PageSize"`
 
 	// REQUIRED; 查询结果总条数。
-	TotalCnt int32 `json:"TotalCnt"`
+	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeLiveISPDataRes struct {
@@ -4021,7 +4021,7 @@ type DescribeLiveLogDataResResultPagination struct {
 	PageSize int32 `json:"PageSize"`
 
 	// REQUIRED; 结果总条数。
-	TotalCnt int32 `json:"TotalCnt"`
+	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeLiveMetricBandwidthDataBody struct {
