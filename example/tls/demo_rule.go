@@ -2,6 +2,8 @@ package tls
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/google/uuid"
 	"github.com/volcengine/volc-sdk-golang/service/tls"
 )
@@ -17,60 +19,48 @@ const (
 )
 
 func main() {
-	//初始化客户端，配置AccessKeyID,AccessKeySecret,region,securityToken;securityToken可以为空
-	client := tls.NewClient(testEndPoint, testAk, testSk, testSessionToken, testRegion)
+	// 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免AccessKey硬编码引发数据安全风险。详细说明请参考 https://www.volcengine.com/docs/6470/1166455
+	// 使用STS时，ak和sk均使用临时密钥，且设置VOLCENGINE_TOKEN；不使用STS时，VOLCENGINE_TOKEN部分传空
+	client := tls.NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCESS_KEY_ID"),
+		os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 
-	//新建project
-	createResp, _ := client.CreateProject(&tls.CreateProjectRequest{
-		ProjectName: testPrefix + uuid.NewString(),
-		Description: "",
-		Region:      testRegion,
-	})
+	// 请填写您的ProjectId、TopicId和HostGroupId
+	projectID := "your-project-id"
+	topicID := "your-topic-id"
+	hostGroupID := "your-host-group-id"
 
-	testProjectID := createResp.ProjectID
-
-	// 新建topic
-	// TopicName Description字段规范参考api文档
-	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectID,
-		TopicName:   testPrefix + uuid.NewString(),
-		Ttl:         30,
-		ShardCount:  2,
-		Description: "topic desc",
-	}
-	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicID := topic.TopicID
-
-	// 新建rule
+	// 创建采集配置
+	// 请根据您的需要，填写TopicId、RuleName和其它采集配置参数
+	// CreateRule API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112199
 	logType := "minimalist_log"
 	logSample := "logSample"
 	inputType := 1
-	createRule := tls.CreateRuleRequest{
-		TopicID:  testTopicID,
-		RuleName: testPrefix + uuid.NewString(),
-		//Paths:       &[]string{fmt.Sprintf("/tmp/%s.log", uuid.NewString())},
+	createRuleReq := tls.CreateRuleRequest{
+		TopicID:     topicID,
+		RuleName:    uuid.NewString(),
+		Paths:       &[]string{fmt.Sprintf("/tmp/%s.log", uuid.NewString())},
 		LogType:     &logType,
 		ExtractRule: GenExtractRuleWithLogType(MinimalistLog),
-		//ExcludePaths: &[]sdk.ExcludePath{
-		//	{
-		//		Type:  "File",
-		//		Value: "/tmp/excludeFile.log",
-		//	},
-		//	{
-		//		Type:  "Path",
-		//		Value: "/tmp/excludePath/",
-		//	},
-		//},
-		//UserDefineRule: &sdk.UserDefineRule{
-		//	ParsePathRule: &sdk.ParsePathRule{
-		//		PathSample: "/var/logs/2100101862_",
-		//		Regex:      "\\/var\\/logs\\/([0-9]*)_guangzhou_([a-z0-9-]*)\\/access\\.log",
-		//		Keys: []string{
-		//			"accountId",
-		//			"podName",
-		//		},
-		//	},
-		//},
+		ExcludePaths: &[]tls.ExcludePath{
+			{
+				Type:  "File",
+				Value: "/tmp/excludeFile.log",
+			},
+			{
+				Type:  "Path",
+				Value: "/tmp/excludePath/",
+			},
+		},
+		UserDefineRule: &tls.UserDefineRule{
+			ParsePathRule: &tls.ParsePathRule{
+				PathSample: "/var/logs/2100101862_",
+				Regex:      "\\/var\\/logs\\/([0-9]*)_guangzhou_([a-z0-9-]*)\\/access\\.log",
+				Keys: []string{
+					"accountId",
+					"podName",
+				},
+			},
+		},
 		LogSample: &logSample,
 		InputType: &inputType,
 		ContainerRule: &tls.ContainerRule{
@@ -111,58 +101,59 @@ func main() {
 			},
 		},
 	}
-	rule, _ := client.CreateRule(&createRule)
-	testRuleID := rule.RuleID
+	createRuleResp, _ := client.CreateRule(&createRuleReq)
+	ruleID := createRuleResp.RuleID
 
-	// modify rule
-	modifyRuleName := testPrefix + uuid.NewString()
+	// 修改采集配置
+	// 请根据您的需要，填写待修改的RuleId、RuleName或其它参数
+	// ModifyRule API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112201
+	modifyRuleName := uuid.NewString()
 	modifyPath := fmt.Sprintf("/tmp/%s.log", uuid.NewString())
 	_, _ = client.ModifyRule(&tls.ModifyRuleRequest{
-		RuleID:   testRuleID,
+		RuleID:   ruleID,
 		RuleName: &modifyRuleName,
 		Paths:    &[]string{modifyPath},
 	})
 
-	// add hostGroup
-	hostIdentifier := "label"
-	hostIPList := []string{"192.168.0.1"}
-	createHostGroupReq := tls.CreateHostGroupRequest{
-		HostGroupName:  "mgn1",
-		HostGroupType:  "IP",
-		HostIdentifier: &hostIdentifier,
-		HostIPList:     &hostIPList,
-	}
-
-	hostGroup, _ := client.CreateHostGroup(&createHostGroupReq)
-
-	hostGroupID := hostGroup.HostGroupID
-
-	// apply rule to host group
+	// 应用采集配置到机器组
+	// 请根据您的需要，填写RuleId和HostGroupIds列表
+	// ApplyRuleToHostGroups API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112204
 	_, _ = client.ApplyRuleToHostGroups(&tls.ApplyRuleToHostGroupsRequest{
-		RuleID:       testRuleID,
+		RuleID:       ruleID,
 		HostGroupIDs: []string{hostGroupID},
 	})
 
-	// delete rule from host group
+	// 删除机器组的采集配置
+	// 请根据您的需要，填写RuleId和HostGroupIds列表
+	// DeleteRuleFromHostGroups API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112205
 	_, _ = client.DeleteRuleFromHostGroups(&tls.DeleteRuleFromHostGroupsRequest{
-		RuleID:       testRuleID,
+		RuleID:       ruleID,
 		HostGroupIDs: []string{hostGroupID},
 	})
 
-	// describe rule
-	_, _ = client.DescribeRule(&tls.DescribeRuleRequest{
-		RuleID: testRuleID,
+	// 查询指定采集配置
+	// 请根据您的需要，填写待查询的RuleId
+	// DescribeRule API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112202
+	describeRuleResp, _ := client.DescribeRule(&tls.DescribeRuleRequest{
+		RuleID: ruleID,
 	})
+	fmt.Println(describeRuleResp.RuleInfo.RuleName)
 
-	// describe rules
-	_, _ = client.DescribeRules(&tls.DescribeRulesRequest{
-		ProjectID:  testProjectID,
+	// 查询日志项目所有采集配置
+	// 请根据您的需要，填写待查询的ProjectId
+	// DescribeRules API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112203
+	describeRulesResp, _ := client.DescribeRules(&tls.DescribeRulesRequest{
+		ProjectID:  projectID,
 		PageNumber: 1,
 		PageSize:   10,
 	})
-	// delete rule
+	fmt.Println(describeRulesResp.Total)
+
+	// 删除采集配置
+	// 请根据您的需要，填写待删除的RuleId
+	// DeleteRule API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112200
 	_, _ = client.DeleteRule(&tls.DeleteRuleRequest{
-		RuleID: testRuleID,
+		RuleID: ruleID,
 	})
 }
 
@@ -184,7 +175,6 @@ func GenExtractRuleWithLogType(logType LogType) *tls.ExtractRule {
 }
 
 func GenExtractRule(logType LogType, setDelimiter, setBeginRegex, setLogRegex, setKeys, setTimeKey, setTimeFormat, setFilterKeyRegex, setUnMatchUpLoadSwitch, setUnMatchLogKey bool) *tls.ExtractRule {
-
 	var extractRule = tls.ExtractRule{}
 
 	if setDelimiter {
@@ -208,30 +198,30 @@ func GenExtractRule(logType LogType, setDelimiter, setBeginRegex, setLogRegex, s
 	if setFilterKeyRegex {
 		if logType == MinimalistLog || logType == MultilineLog {
 			extractRule.FilterKeyRegex = []tls.FilterKeyRegex{
-				tls.FilterKeyRegex{
+				{
 					Key:   "__content__",
 					Regex: "regex",
 				},
 			}
 		} else {
 			extractRule.FilterKeyRegex = []tls.FilterKeyRegex{
-				tls.FilterKeyRegex{
+				{
 					Key:   "key1",
 					Regex: "regex1",
 				},
-				tls.FilterKeyRegex{
+				{
 					Key:   "key2",
 					Regex: "regex2",
 				},
-				tls.FilterKeyRegex{
+				{
 					Key:   "key3",
 					Regex: "regex3",
 				},
-				tls.FilterKeyRegex{
+				{
 					Key:   "key4",
 					Regex: "regex4",
 				},
-				tls.FilterKeyRegex{
+				{
 					Key:   "key5",
 					Regex: "regex5",
 				},

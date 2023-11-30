@@ -1,94 +1,91 @@
 package tls
 
 import (
-	"github.com/google/uuid"
-	"github.com/volcengine/volc-sdk-golang/service/tls"
-	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
-	"github.com/volcengine/volc-sdk-golang/service/tls/producer"
+	"fmt"
 	"os"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
+	"github.com/volcengine/volc-sdk-golang/service/tls/producer"
 )
 
 func main() {
-	//初始化客户端，配置AccessKeyID,AccessKeySecret,region,securityToken;securityToken可以为空
-	client := tls.NewClient(testEndPoint, testAk, testSk, testSessionToken, testRegion)
+	// 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免AccessKey硬编码引发数据安全风险。详细说明请参考 https://www.volcengine.com/docs/6470/1166455
+	// 使用STS时，ak和sk均使用临时密钥，且设置VOLCENGINE_TOKEN；不使用STS时，VOLCENGINE_TOKEN部分传空
+	tlsProducerCfg := producer.GetDefaultProducerConfig()
+	tlsProducerCfg.Endpoint = os.Getenv("VOLCENGINE_ENDPOINT")
+	tlsProducerCfg.Region = os.Getenv("VOLCENGINE_REGION")
+	tlsProducerCfg.AccessKeyID = os.Getenv("VOLCENGINE_ACCESS_KEY_ID")
+	tlsProducerCfg.AccessKeySecret = os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET")
 
-	//新建project
-	createResp, _ := client.CreateProject(&tls.CreateProjectRequest{
-		ProjectName: testPrefix + uuid.NewString(),
-		Description: "",
-		Region:      testRegion,
-	})
+	// 初始化并启动Producer
+	tlsProducer := producer.NewProducer(tlsProducerCfg)
+	tlsProducer.Start()
 
-	testProjectID := createResp.ProjectID
+	// 请根据您的需要，填写topicId、source、filename
+	topicID := "your-topic-id"
+	source := "your-log-source"
+	filename := "your-log-filename"
 
-	// 新建topic
-	// TopicName Description字段规范参考api文档
-	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectID,
-		TopicName:   testPrefix + uuid.NewString(),
-		Ttl:         30,
-		ShardCount:  2,
-		Description: "topic desc",
-	}
-	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicID := topic.TopicID
-
-	//新建index
-	createIndexReq := &tls.CreateIndexRequest{
-		TopicID: testTopicID,
-		FullText: &tls.FullTextInfo{
-			CaseSensitive:  false,
-			IncludeChinese: false,
-			Delimiter:      ", ?",
-		},
-		KeyValue: &[]tls.KeyValueInfo{
+	// 调用Producer SendLog接口，一次提交一条日志
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLog接口
+	err := tlsProducer.SendLog("", topicID, source, filename, &pb.Log{
+		Contents: []*pb.LogContent{
 			{
-				Key: "test1",
-				Value: tls.Value{
-					ValueType:      "text",
-					Delimiter:      ", ?",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        false,
-				},
+				Key:   "key1",
+				Value: "value1",
+			},
+			{
+				Key:   "key2",
+				Value: "value2",
 			},
 		},
+		Time: time.Now().Unix(),
+	}, nil)
+	if err != nil {
+		// 处理错误
+		fmt.Println(err.Error())
 	}
-	_, _ = client.CreateIndex(createIndexReq)
 
-	//初始化producer
-	producerCfg := producer.GetDefaultProducerConfig()
-	producerCfg.Endpoint = os.Getenv("LOG_SERVICE_ENDPOINT")
-	producerCfg.Region = os.Getenv("LOG_SERVICE_REGION")
-	producerCfg.AccessKeyID = os.Getenv("LOG_SERVICE_AK")
-	producerCfg.AccessKeySecret = os.Getenv("LOG_SERVICE_SK")
-
-	producer := producer.NewProducer(producerCfg)
-	producer.Start()
-
-	_ = producer.SendLogs("", testTopicID, "fileSource", "fileName", &pb.LogGroup{
-		Source:   "localhost",
-		FileName: "logFileName",
+	// 调用Producer SendLogs接口，一次提交多条日志
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLogs接口
+	err = tlsProducer.SendLogs("", topicID, source, filename, &pb.LogGroup{
+		Source:   source,
+		FileName: filename,
 		Logs: []*pb.Log{
 			{
 				Contents: []*pb.LogContent{
 					{
-						Key:   "key-1",
-						Value: "test-message",
+						Key:   "key1",
+						Value: "value1-1",
 					},
 					{
-						Key:   "key-2",
-						Value: "test_message",
+						Key:   "key2",
+						Value: "value2-1",
+					},
+				},
+				Time: time.Now().Unix(),
+			},
+			{
+				Contents: []*pb.LogContent{
+					{
+						Key:   "key1",
+						Value: "value1-2",
+					},
+					{
+						Key:   "key2",
+						Value: "value2-2",
 					},
 				},
 				Time: time.Now().Unix(),
 			},
 		},
 	}, nil)
+	if err != nil {
+		// 处理错误
+		fmt.Println(err.Error())
+	}
 
-	//关闭producer
-	producer.Close()
-	//强制关闭producer
-	producer.ForceClose()
+	// 关闭Producer
+	tlsProducer.Close()
 }
