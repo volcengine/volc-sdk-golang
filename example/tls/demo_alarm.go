@@ -1,37 +1,28 @@
 package tls
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/google/uuid"
 	"github.com/volcengine/volc-sdk-golang/service/tls"
 )
 
 func main() {
-	//初始化客户端，配置AccessKeyID,AccessKeySecret,region,securityToken;securityToken可以为空
-	client := tls.NewClient(testEndPoint, testAk, testSk, testSessionToken, testRegion)
+	// 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免AccessKey硬编码引发数据安全风险。详细说明请参考 https://www.volcengine.com/docs/6470/1166455
+	// 使用STS时，ak和sk均使用临时密钥，且设置VOLCENGINE_TOKEN；不使用STS时，VOLCENGINE_TOKEN部分传空
+	client := tls.NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCESS_KEY_ID"),
+		os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 
-	//新建project
-	createProjectResp, _ := client.CreateProject(&tls.CreateProjectRequest{
-		ProjectName: testPrefix + uuid.NewString(),
-		Description: "",
-		Region:      testRegion,
-	})
+	// 请填写您的ProjectId和TopicId
+	projectID := "your-project-id"
+	topicID := "your-topic-id"
 
-	testProjectID := createProjectResp.ProjectID
-
-	//新建topic
-	topicName := testPrefix + uuid.NewString()
-	topic, _ := client.CreateTopic(&tls.CreateTopicRequest{
-		ProjectID:   testProjectID,
-		TopicName:   topicName,
-		Ttl:         30,
-		ShardCount:  2,
-		Description: "topic desc",
-	})
-	testTopicID := topic.TopicID
-
-	//create alarm vms group
-	createAlarmGroupReq := &tls.CreateAlarmNotifyGroupRequest{
-		GroupName:  testPrefix + uuid.NewString(),
+	// 创建告警组
+	// 请根据您的需要，填写AlarmNotifyGroupName、NotifyType和Receivers等参数
+	// CreateAlarmNotifyGroup API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112220
+	createAlarmNotifyGroupResp, _ := client.CreateAlarmNotifyGroup(&tls.CreateAlarmNotifyGroupRequest{
+		GroupName:  uuid.NewString(),
 		NoticeType: tls.NoticeTypes{"Recovery", "Trigger"},
 		Receivers: []tls.Receiver{
 			{
@@ -42,25 +33,24 @@ func main() {
 				EndTime:          "23:59:59",
 			},
 		},
-	}
+	})
+	alarmNotifyGroupID := createAlarmNotifyGroupResp.NotifyGroupID
 
-	createAlarmNotifyGroupRes, _ := client.CreateAlarmNotifyGroup(createAlarmGroupReq)
-
-	notifyGroupId := createAlarmNotifyGroupRes.NotifyGroupID
-
-	// create alarm
+	// 创建告警策略
+	// 请根据您的需要，填写ProjectId、AlarmName、QueryRequest、RequestCycle、Condition、AlarmPeriod、AlarmNotifyGroup等参数
+	// CreateAlarm API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112216
 	createAlarmStatus := true
-	createAlarmReq := &tls.CreateAlarmRequest{
-		AlarmName: testPrefix + uuid.NewString(),
-		ProjectID: testProjectID,
+	createAlarmResp, _ := client.CreateAlarm(&tls.CreateAlarmRequest{
+		AlarmName: uuid.NewString(),
+		ProjectID: projectID,
 		Status:    &createAlarmStatus,
 		QueryRequest: tls.QueryRequests{
 			{
 				Query:           "*|select count(*) as count",
 				Number:          1,
 				StartTimeOffset: -3,
-				TopicID:         testTopicID,
-				TopicName:       topicName,
+				TopicID:         topicID,
+				TopicName:       "your-topic-name",
 				EndTimeOffset:   0,
 			},
 		},
@@ -71,20 +61,20 @@ func main() {
 		Condition:        "$1.count > 0",
 		TriggerPeriod:    1,
 		AlarmPeriod:      10,
-		AlarmNotifyGroup: []string{notifyGroupId},
-	}
+		AlarmNotifyGroup: []string{alarmNotifyGroupID},
+	})
+	alarmID := createAlarmResp.AlarmID
 
-	resp, _ := client.CreateAlarm(createAlarmReq)
-	alarmID := resp.AlarmID
-
-	// modify alarm
+	// 修改告警策略
+	// 请根据您的需要，填写待修改的AlarmId和其它参数
+	// ModifyAlarm API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112218
 	modifyUserDefineMsg := "modifyUserDefineMsg"
 	modifyStatus := true
-	modifyAlarmName := testPrefix + uuid.NewString()
+	modifyAlarmName := uuid.NewString()
 	modifyCondition := "$1.count > 0"
 	modifyTriggerPeriod := 1
 	modifyAlarmPeriod := 10
-	modifyNotifyGroup := []string{notifyGroupId}
+	modifyNotifyGroup := []string{alarmNotifyGroupID}
 	_, _ = client.ModifyAlarm(&tls.ModifyAlarmRequest{
 		AlarmID:   alarmID,
 		AlarmName: &modifyAlarmName,
@@ -94,8 +84,8 @@ func main() {
 				Query:           "*|select count(*) as count",
 				Number:          1,
 				StartTimeOffset: -3,
-				TopicID:         testTopicID,
-				TopicName:       topicName,
+				TopicID:         topicID,
+				TopicName:       "your-topic-name",
 				EndTimeOffset:   0,
 			},
 		},
@@ -110,15 +100,26 @@ func main() {
 		UserDefineMsg:    &modifyUserDefineMsg,
 	})
 
-	// describe alarms
-	_, _ = client.DescribeAlarms(&tls.DescribeAlarmsRequest{
-		ProjectID: testProjectID,
-		TopicID:   &testTopicID,
+	// 查询告警策略
+	// 请根据您的需要，填写待查询的ProjectId
+	// DescribeAlarms API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112219
+	describeAlarmsResp, _ := client.DescribeAlarms(&tls.DescribeAlarmsRequest{
+		ProjectID: projectID,
+		TopicID:   &topicID,
+	})
+	fmt.Println(describeAlarmsResp.Total)
+
+	// 删除告警策略
+	// 请根据您的需要，填写待删除的AlarmId
+	// DeleteAlarm API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112217
+	_, _ = client.DeleteAlarm(&tls.DeleteAlarmRequest{
+		AlarmID: alarmID,
 	})
 
-	// delete alarm
-	_, _ = client.DescribeAlarms(&tls.DescribeAlarmsRequest{
-		ProjectID:     testProjectID,
-		AlarmPolicyID: &alarmID,
+	// 删除告警组
+	// 请根据您的需要，填写待删除的AlarmNotifyGroupId
+	// DeleteAlarmNotifyGroup API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112221
+	_, _ = client.DeleteAlarmNotifyGroup(&tls.DeleteAlarmNotifyGroupRequest{
+		AlarmNotifyGroupID: alarmNotifyGroupID,
 	})
 }

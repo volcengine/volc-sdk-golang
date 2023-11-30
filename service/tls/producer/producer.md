@@ -1,35 +1,118 @@
-# LOG Go Producer
+# TLS Go Producer
 
-Producer 专用的异步发送log的类库，具有异步发送、高性能、失败重试、优雅关闭等特性
+Go Producer用于海量数据场景下快速发送日志数据。
+Producer具有异步发送、高性能、失败重试、优雅关闭等特性。
+日志服务推荐您使用Producer来上报日志。
 
-## 使用步骤
+## 场景说明
 
-### producer的启动和关闭
+Go SDK支持通过以下方式写入日志：
+
+|   写入方式   | 说明                                                                                                                           |
+|:--------:|:-----------------------------------------------------------------------------------------------------------------------------|
+| PutLogs  | 不推荐。<br/>日志服务支持通过 PutLogs 接口同步请求的方式上传日志。如果选择使用 PutLogs 上传日志，建议您一次性聚合多条日志后调用一次 PutLogs 接口。相对于逐条上传日志的方式，日志聚合后上传可以提升吞吐率并避免触发限流。 |
+| Producer | 推荐。<br/>在实际生产环境中，为了提高数据写入效率，建议通过 Go Producer 方式写入日志数据。Producer 用于在海量数据、高并发场景下快速发送日志数据，具有异步发送、高性能、失败重试、优雅关闭等特性。               |
+
+## 示例代码
 
 ```go
-        // 获取producer默认配置 具体配置见Config
-producerCfg := GetDefaultProducerConfig()
-producerCfg.Endpoint = os.Getenv("LOG_SERVICE_ENDPOINT")
-producerCfg.Region = os.Getenv("LOG_SERVICE_REGION")
-producerCfg.AccessKeyID = os.Getenv("LOG_SERVICE_AK")
-producerCfg.AccessKeySecret = os.Getenv("LOG_SERVICE_SK")
+package tls
 
-producer := NewProducer(producerCfg)
-//启动
-producer.Start()
-//安全关闭，等待producer中缓存的所有的数据全部发送完成以后在关闭producer
-producer.Close()
-//强制关闭
-producer.ForceClose()
+import (
+	"fmt"
+	"os"
+	"time"
+
+	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
+	"github.com/volcengine/volc-sdk-golang/service/tls/producer"
+)
+
+func main() {
+	// 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免AccessKey硬编码引发数据安全风险。详细说明请参考 https://www.volcengine.com/docs/6470/1166455
+	// 使用STS时，ak和sk均使用临时密钥，且设置VOLCENGINE_TOKEN；不使用STS时，VOLCENGINE_TOKEN部分传空
+	tlsProducerCfg := producer.GetDefaultProducerConfig()
+	tlsProducerCfg.Endpoint = os.Getenv("VOLCENGINE_ENDPOINT")
+	tlsProducerCfg.Region = os.Getenv("VOLCENGINE_REGION")
+	tlsProducerCfg.AccessKeyID = os.Getenv("VOLCENGINE_ACCESS_KEY_ID")
+	tlsProducerCfg.AccessKeySecret = os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET")
+
+	// 初始化并启动Producer
+	tlsProducer := producer.NewProducer(tlsProducerCfg)
+	tlsProducer.Start()
+
+	// 请根据您的需要，填写topicId、source、filename
+	topicID := "your-topic-id"
+	source := "your-log-source"
+	filename := "your-log-filename"
+
+	// 调用Producer SendLog接口，一次提交一条日志
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLog接口
+	err := tlsProducer.SendLog("", topicID, source, filename, &pb.Log{
+		Contents: []*pb.LogContent{
+			{
+				Key:   "key1",
+				Value: "value1",
+			},
+			{
+				Key:   "key2",
+				Value: "value2",
+			},
+		},
+		Time: time.Now().Unix(),
+	}, nil)
+	if err != nil {
+		// 处理错误
+		fmt.Println(err.Error())
+	}
+
+	// 调用Producer SendLogs接口，一次提交多条日志
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLogs接口
+	err = tlsProducer.SendLogs("", topicID, source, filename, &pb.LogGroup{
+		Source:   source,
+		FileName: filename,
+		Logs: []*pb.Log{
+			{
+				Contents: []*pb.LogContent{
+					{
+						Key:   "key1",
+						Value: "value1-1",
+					},
+					{
+						Key:   "key2",
+						Value: "value2-1",
+					},
+				},
+				Time: time.Now().Unix(),
+			},
+			{
+				Contents: []*pb.LogContent{
+					{
+						Key:   "key1",
+						Value: "value1-2",
+					},
+					{
+						Key:   "key2",
+						Value: "value2-2",
+					},
+				},
+				Time: time.Now().Unix(),
+			},
+		},
+	}, nil)
+	if err != nil {
+		// 处理错误
+		fmt.Println(err.Error())
+	}
+
+	// 关闭Producer
+	tlsProducer.Close()
+}
 ```
 
-### 发送日志
+## Producer配置
 
-参考example/tls/demo_producer
+### Producer Config可配置参数
 
-## producer配置
-
-### config
 | 参数                    | 类型            | 示例值                                  | 描述                                                                                                                                                                                                                  |
 |:----------------------|:--------------|:-------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | TotalSizeLnBytes      | Int64         | 100 * 1024 * 1024                    | 单个 producer 实例能缓存的日志大小上限，单位为b，默认为 100MB。                                                                                                                                                                            |
@@ -46,12 +129,12 @@ producer.ForceClose()
 | NoRetryStatusCodeList | []int         | [400,400]                            | 用户配置的不需要重试的错误码列表，当发送日志失败时返回的错误码在列表中，则不会重试。默认包含400，404两个值。                                                                                                                                                           |
 | LoggerConfig          | LoggerConfig  |                                      | 日志相关配置                                                                                                                                                                                                              |
 
-### LoggerConfig
+### LoggerConfig可配置参数
 
-| 参数          | 类型     | 示例值   | 描述                                                               |
-|-------------|--------|-------|------------------------------------------------------------------|
-| LogLevel    | String | info  | 设置日志输出级别，默认值是Info,consumer中一共有4种日志输出级别，分别为debug,info,warn和error。 |
-| LogFileName | String | 50    | 日志文件输出路径，不设置的话默认输出到stdout。                                       |
-| IsJsonType  | Bool   | false | 是否格式化文件输出格式，默认为false。                                            |
-| LogMaxSize  | Int    | 10    | 单个日志存储数量，默认为10M。                                                 |
-| LogCompress | Bool   | false | 日志是否开启压缩。                                                        |
+| 参数          | 类型     | 示例值   | 描述                                           |
+|-------------|--------|-------|----------------------------------------------|
+| LogLevel    | string | info  | 设置日志输出级别，支持设置为debug、info、warn和error，默认为info。 |
+| LogFileName | string | 50    | 日志文件输出路径，默认输出到stdout。                        |
+| IsJsonType  | bool   | false | 是否格式化文件输出格式，默认为false。                        |
+| LogMaxSize  | int    | 10    | 单个日志存储数量，默认为10M。                             |
+| LogCompress | bool   | false | 日志是否开启压缩。                                    |
