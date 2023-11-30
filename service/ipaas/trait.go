@@ -271,6 +271,26 @@ func (c *IPaaS) ModifyInstanceWindowDisplaySpec(ctx context.Context, arg *Modify
 	return result, nil
 }
 
+func (c *IPaaS) ModifyInstanceFps(ctx context.Context, arg *ModifyInstanceFpsBody) (*ModifyInstanceFpsRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ModifyInstanceFps", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ModifyInstanceFpsRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *IPaaS) PowerDownInstance(ctx context.Context, arg *PowerDownInstanceBody) (*PowerDownInstanceRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -363,6 +383,26 @@ func (c *IPaaS) AdbCommand(ctx context.Context, arg *AdbCommandBody) (*AdbComman
 	}
 
 	result := new(AdbCommandRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *IPaaS) SetInstanceBandwidth(ctx context.Context, arg *SetInstanceBandwidthBody) (*SetInstanceBandwidthRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "SetInstanceBandwidth", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(SetInstanceBandwidthRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -871,13 +911,13 @@ func (c *IPaaS) DistributeFileToInstances(ctx context.Context, arg *DistributeFi
 	return result, nil
 }
 
-func (c *IPaaS) GetFileDistributionJobDetail(ctx context.Context, arg *GetFileDistributionJobDetailQuery) (*GetFileDistributionJobDetailRes, error) {
-	query, err := marshalToQuery(arg)
+func (c *IPaaS) GetFileDistributionJobDetail(ctx context.Context, arg *GetFileDistributionJobDetailBody) (*GetFileDistributionJobDetailRes, error) {
+	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "GetFileDistributionJobDetail", query, "")
+	data, _, err := c.Client.CtxJson(ctx, "GetFileDistributionJobDetail", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
@@ -923,6 +963,26 @@ func (c *IPaaS) ListHost(ctx context.Context, arg *ListHostQuery) (*ListHostRes,
 	}
 
 	result := new(ListHostRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *IPaaS) InitializeHost(ctx context.Context, arg *InitializeHostBody) (*InitializeHostRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "InitializeHost", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(InitializeHostRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1193,6 +1253,26 @@ func (c *IPaaS) ListPackage(ctx context.Context, arg *ListPackageBody) (*ListPac
 	}
 
 	result := new(ListPackageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *IPaaS) ListDcCapacity(ctx context.Context, arg *ListDcCapacityBody) (*ListDcCapacityRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListDcCapacity", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListDcCapacityRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

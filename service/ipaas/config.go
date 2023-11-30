@@ -86,6 +86,14 @@ var (
 				"Version": []string{"2023-08-01"},
 			},
 		},
+		"ModifyInstanceFps": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ModifyInstanceFps"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
 		"PowerDownInstance": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -124,6 +132,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"AdbCommand"},
 				"Version": []string{"2020-10-25"},
+			},
+		},
+		"SetInstanceBandwidth": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetInstanceBandwidth"},
+				"Version": []string{"2023-08-01"},
 			},
 		},
 		"InstallApplication": {
@@ -350,6 +366,14 @@ var (
 				"Version": []string{"2020-10-25"},
 			},
 		},
+		"InitializeHost": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"InitializeHost"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
 		"GetInfoAfterOrder": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -451,6 +475,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListPackage"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListDcCapacity": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListDcCapacity"},
 				"Version": []string{"2023-08-01"},
 			},
 		},
