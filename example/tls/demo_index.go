@@ -1,38 +1,42 @@
 package tls
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/google/uuid"
 	"github.com/volcengine/volc-sdk-golang/service/tls"
 )
 
 func main() {
-	//初始化客户端，配置AccessKeyID,AccessKeySecret,region,securityToken;securityToken可以为空
-	client := tls.NewClient(testEndPoint, testAk, testSk, testSessionToken, testRegion)
+	// 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免AccessKey硬编码引发数据安全风险。详细说明请参考 https://www.volcengine.com/docs/6470/1166455
+	// 使用STS时，ak和sk均使用临时密钥，且设置VOLCENGINE_TOKEN；不使用STS时，VOLCENGINE_TOKEN部分传空
+	client := tls.NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCESS_KEY_ID"),
+		os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 
-	//新建project
+	// 创建日志项目
 	createResp, _ := client.CreateProject(&tls.CreateProjectRequest{
-		ProjectName: testPrefix + uuid.NewString(),
+		ProjectName: uuid.NewString(),
 		Description: "",
-		Region:      testRegion,
+		Region:      os.Getenv("VOLCENGINE_REGION"),
 	})
+	projectID := createResp.ProjectID
 
-	testProjectID := createResp.ProjectID
-
-	// 新建topic
-	// TopicName Description字段规范参考api文档
-	createTopicRequest := &tls.CreateTopicRequest{
-		ProjectID:   testProjectID,
-		TopicName:   testPrefix + uuid.NewString(),
+	// 创建日志主题
+	topic, _ := client.CreateTopic(&tls.CreateTopicRequest{
+		ProjectID:   projectID,
+		TopicName:   uuid.NewString(),
 		Ttl:         30,
 		ShardCount:  2,
-		Description: "topic desc",
-	}
-	topic, _ := client.CreateTopic(createTopicRequest)
-	testTopicID := topic.TopicID
+		Description: "topic description",
+	})
+	topicID := topic.TopicID
 
-	//新建index，开启全文索引和kv索引
-	createIndexReq := &tls.CreateIndexRequest{
-		TopicID: testTopicID,
+	// 创建索引配置
+	// 请根据您的需要，配置FullText全文索引或KeyValue键值索引
+	// CreateIndex API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112187
+	_, _ = client.CreateIndex(&tls.CreateIndexRequest{
+		TopicID: topicID,
 		FullText: &tls.FullTextInfo{
 			CaseSensitive:  false,
 			IncludeChinese: false,
@@ -50,99 +54,43 @@ func main() {
 				},
 			},
 		},
-	}
-	_, _ = client.CreateIndex(createIndexReq)
-
-	//新建index，仅开启全文索引
-	createIndexReq2 := &tls.CreateIndexRequest{
-		TopicID: testTopicID,
-		FullText: &tls.FullTextInfo{
-			CaseSensitive:  false,
-			IncludeChinese: false,
-			Delimiter:      ", ?",
-		},
-		KeyValue: nil,
-	}
-	_, _ = client.CreateIndex(createIndexReq2)
-
-	//新建index，仅开启kv索引
-	createIndexReq3 := &tls.CreateIndexRequest{
-		TopicID:  testTopicID,
-		FullText: nil,
-		KeyValue: &[]tls.KeyValueInfo{
-			{
-				Key: "test1",
-				Value: tls.Value{
-					ValueType:      "text",
-					Delimiter:      ", ?",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        false,
-				},
-			},
-		},
-	}
-	_, _ = client.CreateIndex(createIndexReq3)
-
-	//修改索引
-
-	//开启全文和kv
-	updateIndexReq := &tls.ModifyIndexRequest{
-		TopicID: testTopicID,
-		FullText: &tls.FullTextInfo{
-			CaseSensitive:  false,
-			IncludeChinese: false,
-			Delimiter:      ", ?",
-		},
-		KeyValue: &[]tls.KeyValueInfo{
-			{
-				Key: "test1",
-				Value: tls.Value{
-					ValueType:      "text",
-					Delimiter:      ", ?",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        false,
-				},
-			},
-		},
-	}
-
-	_, _ = client.ModifyIndex(updateIndexReq)
-	//开启全文，关闭kv
-	updateIndexReq2 := &tls.ModifyIndexRequest{
-		TopicID: testTopicID,
-		FullText: &tls.FullTextInfo{
-			CaseSensitive:  false,
-			IncludeChinese: false,
-			Delimiter:      ", ?",
-		},
-		KeyValue: nil,
-	}
-	_, _ = client.ModifyIndex(updateIndexReq2)
-
-	//关闭全文，开启kv
-	updateIndexReq3 := &tls.ModifyIndexRequest{
-		TopicID:  testTopicID,
-		FullText: nil,
-		KeyValue: &[]tls.KeyValueInfo{
-			{
-				Key: "test1",
-				Value: tls.Value{
-					ValueType:      "text",
-					Delimiter:      ", ?",
-					CasSensitive:   false,
-					IncludeChinese: false,
-					SQLFlag:        false,
-				},
-			},
-		},
-	}
-	_, _ = client.ModifyIndex(updateIndexReq3)
-
-	//查询索引详情
-	_, _ = client.DescribeIndex(&tls.DescribeIndexRequest{
-		TopicID: testTopicID,
 	})
 
+	// 修改索引配置
+	// 请根据您的需要，填写TopicId和待修改的FullText或KeyValue配置
+	// ModifyIndex API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112189
+	_, _ = client.ModifyIndex(&tls.ModifyIndexRequest{
+		TopicID: topicID,
+		FullText: &tls.FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+		KeyValue: nil,
+	})
+
+	// 查询索引配置
+	// 请根据您的需要，填写待查询的TopicId
+	// DescribeIndex API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112190
+	describeIndexResp, _ := client.DescribeIndex(&tls.DescribeIndexRequest{
+		TopicID: topicID,
+	})
+	fmt.Println(describeIndexResp.TopicID)
+
+	// 删除索引配置
+	// 请根据您的需要，填写待删除索引的TopicId
+	// DeleteIndex API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112188
+	_, _ = client.DeleteIndex(&tls.DeleteIndexRequest{
+		TopicID: topicID,
+	})
+
+	// 删除日志主题
+	_, _ = client.DeleteTopic(&tls.DeleteTopicRequest{
+		TopicID: topicID,
+	})
+
+	// 删除日志项目
+	_, _ = client.DeleteProject(&tls.DeleteProjectRequest{
+		ProjectID: projectID,
+	})
 }
