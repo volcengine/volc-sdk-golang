@@ -18,6 +18,7 @@ jobs:
           - git clone git@code.byted.org:volcengine/volc-sdk-golang.git
           - mv volc-sdk-golang eps-master
           - cd -
+          - rm -rf ./*
           - cp -rf ../eps-master/* ./
           - git add . 
           # - git rm  --cached  .codebase/pipelines/update.yaml
