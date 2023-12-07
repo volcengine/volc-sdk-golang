@@ -765,10 +765,15 @@ func (p *AIoT) UpdateStream(request *UpdateStreamRequest) (*StreamResponse, int,
 
 func (p *AIoT) StartStream(request *StreamRequest) (*StartStreamResponse, int, error) {
 	resp := new(StartStreamResponse)
+	transOption := "0"
+	if request.EnableAudioTrans {
+		transOption = "1"
+	}
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
+		"EnableAudioTranscode":[]string{transOption},
 	}
-	statusCode, err := p.commonHandlerJson("StartStream", query, resp, nil)
+	statusCode, err := p.commonHandlerJson("StartStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -780,7 +785,7 @@ func (p *AIoT) StopStream(request *StreamRequest) (*StreamResponse, int, error) 
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
-	statusCode, err := p.commonHandlerJson("StopStream", query, resp, nil)
+	statusCode, err := p.commonHandlerJson("StopStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -792,7 +797,7 @@ func (p *AIoT) ForbidStream(request *StreamRequest) (*StreamResponse, int, error
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
-	statusCode, err := p.commonHandlerJson("ForbidStream", query, resp, "")
+	statusCode, err := p.commonHandlerJson("ForbidStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -804,7 +809,7 @@ func (p *AIoT) UnforbidStream(request *StreamRequest) (*StreamResponse, int, err
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
-	statusCode, err := p.commonHandlerJson("UnforbidStream", query, resp, "")
+	statusCode, err := p.commonHandlerJson("UnforbidStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -816,7 +821,7 @@ func (p *AIoT) DeleteStream(request *StreamRequest) (*StreamResponse, int, error
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
 	}
-	statusCode, err := p.commonHandlerJson("DeleteStream", query, resp, "")
+	statusCode, err := p.commonHandlerJson("DeleteStream", query, resp, request)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -826,7 +831,9 @@ func (p *AIoT) DeleteStream(request *StreamRequest) (*StreamResponse, int, error
 func (p *AIoT) GetStream(request *StreamRequest) (*GetStreamResponse, int, error) {
 	resp := new(GetStreamResponse)
 	query := url.Values{
-		"StreamID": []string{request.StreamID},
+		"StreamID":       []string{request.StreamID},
+		"Resolution":     []string{request.Resolution},
+		"StreamingIndex": []string{fmt.Sprintf("%d", request.StreamingIndex)},
 	}
 	statusCode, err := p.commonHandler("GetStream", query, resp)
 	if err != nil {
@@ -2280,8 +2287,8 @@ func (p *AIoT) QueryPresetInfoV3(request *QueryPresetInfoRequestV3) (*QueryPrese
 	return resp, statusCode, nil
 }
 
-func (p *AIoT) GetRecordListV3(request *GetRecordListRequestV3) (*GetRecordListResponse, int, error) {
-	resp := new(GetRecordListResponse)
+func (p *AIoT) GetRecordListV3(request *GetRecordListRequestV3) (*GetRecordListResponseV3, int, error) {
+	resp := new(GetRecordListResponseV3)
 	statusCode, err := p.commonHandlerJson("GetRecordListV3", url.Values{}, resp, request)
 	if err != nil {
 		return nil, statusCode, err
