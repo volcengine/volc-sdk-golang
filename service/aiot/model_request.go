@@ -448,9 +448,10 @@ type UpdateStreamRequest struct {
 }
 
 type StreamRequest struct {
-	StreamID       string `json:"StreamID"`
-	StreamingIndex int    `json:"StreamingIndex,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
-	Resolution     string `json:"Resolution,omitempty"`     // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
+	StreamID           string `json:"StreamID,omitempty"`
+	StreamingIndex     int    `json:"StreamingIndex,omitempty"` // 码流类型(可选参数), 0-主码流;1-子码流1;2-子码流2, 以此类推
+	Resolution         string `json:"Resolution,omitempty"`     // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
+	EnableAudioTrans   bool   `json:"-"`
 }
 
 type ListStreamsRequest struct {
@@ -462,9 +463,11 @@ type ListStreamsRequest struct {
 }
 
 type GetStreamDataRequest struct {
-	StreamID  string
-	StartTime string
-	EndTime   string
+	StreamID       string
+	StartTime      string
+	EndTime        string
+	Resolution     string
+	StreamingIndex int64
 }
 
 type StreamLogsRequest struct {

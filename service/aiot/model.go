@@ -400,6 +400,11 @@ type RecordList struct {
 	Items []RecordItem `json:"Items"`
 }
 
+type RecordListV3 struct {
+	Num   int            `json:"Num"`
+	Items []RecordItemV3 `json:"Items"`
+}
+
 type RecordItem struct {
 	DeviceID       string `json:"DeviceID"`
 	Name           string `json:"Name"`
@@ -412,9 +417,24 @@ type RecordItem struct {
 	FileSize       string `json:"FileSize"`
 }
 
+type RecordItemV3 struct {
+	DeviceID  string `json:"DeviceID"`
+	Name      string `json:"Name"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	Secrecy   string `json:"Secrecy"`
+	Type      string `json:"Type"`
+	FileSize  int    `json:"FileSize"`
+}
+
 type GetRecordListResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           RecordList `json:"Result,omitempty"`
+}
+
+type GetRecordListResponseV3 struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           RecordListV3 `json:"Result,omitempty"`
 }
 
 type PlayBackStartResp struct {
