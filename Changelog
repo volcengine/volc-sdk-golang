@@ -1,8 +1,10 @@
 ### Change log
 
+2023-12-07 Bumped to version v1.0.130
+- Updated apis for aiot
+
 2023-11-30 Bumped to version v1.0.129
-- Updated apis for live/video_aiot/maas/businessSecurity 
-- Added service live/ipaas/tls
+- Updated apis for live/ipaas/tls
 
 2023-11-23 Bumped to version v1.0.128
 - Updated apis for live/video_aiot/maas/businessSecurity 
