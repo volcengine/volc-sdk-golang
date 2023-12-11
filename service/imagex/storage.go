@@ -552,3 +552,25 @@ func (c *ImageX) GetImageCompressTaskInfo(req *GetImageCompressTaskInfoReq) (*Ge
 	}
 	return resp, nil
 }
+
+func (c *ImageX) GetAiGenerateImage(req *GetAiGenerateImageReq) (*GetAiGenerateImageResp, error) {
+	query := make(url.Values)
+	query.Add("ServiceId", req.ServiceId)
+	resp := new(GetAiGenerateImageResp)
+	err := c.ImageXPost("GetAiGenerateImage", query, req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *ImageX) GetImageAiGenerateTask(req *GetImageAiGenerateTaskReq) (*GetImageAiGenerateTaskResp, error) {
+	query := make(url.Values)
+	query.Add("TaskId", req.TaskId)
+	resp := new(GetImageAiGenerateTaskResp)
+	err := c.ImageXGet("GetImageAiGenerateTask", query, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
