@@ -421,3 +421,14 @@ func (v *Veen) DeleteEbsInstance(req *DeleteEbsInstanceReq) (*DeleteEbsInstanceR
 	}
 	return resp, nil
 }
+
+func (v *Veen) BatchResetSystem(req *BatchResetSystemReq) (*BatchResetSystemResp, error) {
+	resp := &BatchResetSystemResp{}
+	if err := v.post("BatchResetSystem", req, resp); err != nil {
+		return nil, err
+	}
+	if resp.ResponseMetadata.Error != nil {
+		return resp, packErrorInfo(resp.ResponseMetadata)
+	}
+	return resp, nil
+}

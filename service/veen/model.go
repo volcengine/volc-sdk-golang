@@ -951,3 +951,18 @@ type DeleteEbsInstanceResp struct {
 
 type DeleteEbsInstanceResult struct {
 }
+
+type BatchResetSystemReq struct {
+	InstanceIdentities []string `json:"instance_identities"`
+	ImageIdentity      *string  `json:"image_identity,omitempty"`
+	ClearDataDisk      *bool    `json:"clear_data_disk,omitempty"`
+}
+
+type BatchResetSystemResp struct {
+	ResponseMetadata VolcResponseMetadata   `json:"ResponseMetadata"`
+	Result           BatchResetSystemResult `json:"Result"`
+}
+
+type BatchResetSystemResult struct {
+	FailedInstanceIdentities []string `json:"failed_instance_identities,omitempty"`
+}
