@@ -31,6 +31,13 @@ func MarshalBinary(pub *ecdsa.PublicKey) []byte {
 	return elliptic.Marshal(pub.Curve, pub.X, pub.Y)
 }
 
+func ECDHMarshalBinary(pub *ecdsa.PublicKey) []byte {
+	byteLen := (pub.Curve.Params().BitSize + 7) / 8
+	ecdh := make([]byte, byteLen)
+	pub.X.FillBytes(ecdh[:])
+	return ecdh
+}
+
 func UnmarshalBinary(curve elliptic.Curve, data []byte) (*big.Int, *big.Int) {
 	return elliptic.Unmarshal(curve, data)
 }
@@ -235,7 +242,7 @@ func ReadCertFromString(pemString string) (*x509.Certificate, error) {
 }
 
 func deriveKeyBasic(hash func() hash.Hash, dh *ecdsa.PublicKey, len int) ([]byte, error) {
-	dhb := MarshalBinary(dh)
+	dhb := ECDHMarshalBinary(dh)
 	hkdf := hkdf.New(hash, dhb, nil, nil)
 	key := make([]byte, len)
 	_, err := hkdf.Read(key)
