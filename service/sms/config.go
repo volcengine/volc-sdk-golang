@@ -19,7 +19,7 @@ const (
 var (
 	ServiceInfo = map[string]*base.ServiceInfo{
 		DefaultRegion: {
-			Timeout: 5 * time.Second,
+			Timeout: 10 * time.Second,
 			Host:    "sms.volcengineapi.com",
 			Scheme:  "https",
 			Header: http.Header{
