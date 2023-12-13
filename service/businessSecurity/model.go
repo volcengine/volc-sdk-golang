@@ -567,3 +567,22 @@ type DelSystemNameListItemResult struct {
 type QuerySystemNameListItemResult struct {
 	IsHit bool `json:"IsHit"`
 }
+
+type SecuritySourceResponse struct {
+	RequestId string             `json:"RequestId"`
+	Code      int                `json:"Code"`
+	Message   string             `json:"Message"`
+	Data      SecuritySourceData `json:"Data"`
+}
+
+type SecuritySourceData struct {
+	Content    string                      `json:"Content"`
+	References []*SecuritySourceReferences `json:"References"`
+}
+
+type SecuritySourceReferences struct {
+	Url      string `json:"Url"`
+	Idx      int64  `json:"Idx"`
+	LogoUrl  string `json:"LogoUrl"`
+	SiteName string `json:"SiteName"`
+}
