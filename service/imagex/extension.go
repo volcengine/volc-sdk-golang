@@ -249,11 +249,24 @@ func (c *ImageX) CreateImageHmEmbed(param *CreateImageHmEmbedParam) (*CreateImag
 	return result, nil
 }
 
+func (c *ImageX) CreateHiddenWatermarkImage(param *CreateHiddenWatermarkImageParam) (*CreateHiddenWatermarkImageResult, error) {
+	query := make(url.Values)
+	query.Add("ServiceId", param.ServiceId)
+
+	result := new(CreateHiddenWatermarkImageResult)
+	err := c.ImageXPost("CreateHiddenWatermarkImage", query, param, result)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (c *ImageX) CreateImageHmExtract(param *CreateImageHmExtractParam) (*CreateImageHmExtractResult, error) {
 	query := make(url.Values)
 	query.Add("ServiceId", param.ServiceId)
 	query.Add("StoreUri", param.StoreUri)
 	query.Add("Algorithm", param.Algorithm)
+	query.Add("ImageUrl", param.ImageUrl)
 
 	result := new(CreateImageHmExtractResult)
 	err := c.ImageXGet("CreateImageHmExtract", query, result)

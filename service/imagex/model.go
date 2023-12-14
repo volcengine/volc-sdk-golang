@@ -658,6 +658,17 @@ type GetPrivateImageTypeResult struct {
 	Cloth int `json:"Cloth"`
 }
 
+type CreateHiddenWatermarkImageParam struct {
+	ServiceId string
+	Algorithm string `json:"Algorithm"`
+	Strength  string `json:"Strength"`
+	Info      string `json:"Info"`
+}
+
+type CreateHiddenWatermarkImageResult struct {
+	StoreUri string `json:"StoreUri"`
+}
+
 // CreateImageHmEmbed
 type CreateImageHmEmbedParam struct {
 	ServiceId     string `json:"ServiceId"`
@@ -667,6 +678,8 @@ type CreateImageHmEmbedParam struct {
 	OutFormat     string `json:"OutFormat"`
 	OutQuality    int    `json:"OutQuality"`
 	StrengthLevel string `json:"StrengthLevel"`
+	ImageUrl      string `json:"ImageUrl"`
+	Strength      int    `json:"Strength"`
 }
 
 type CreateImageHmEmbedResult struct {
@@ -678,6 +691,7 @@ type CreateImageHmExtractParam struct {
 	ServiceId string `json:"ServiceId"`
 	StoreUri  string `json:"StoreUri"`
 	Algorithm string `json:"Algorithm"`
+	ImageUrl  string
 }
 
 type CreateImageHmExtractResult struct {
