@@ -495,6 +495,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"CreateHiddenWatermarkImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateHiddenWatermarkImage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"CreateImageHmExtract": {
 			Method: http.MethodPost,
 			Path:   "/",
