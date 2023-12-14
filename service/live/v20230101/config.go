@@ -286,19 +286,19 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"ListCertV2": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListCertV2"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DescribeCertDetailSecretV2": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeCertDetailSecretV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListCertV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCertV2"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -454,19 +454,19 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DeleteRelaySourceV3": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DeleteRelaySourceV3"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DeleteRelaySourceV4": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteRelaySourceV4"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteRelaySourceV3": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteRelaySourceV3"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -934,6 +934,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeDenyConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDenyConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeReferer": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -942,11 +950,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeDenyConfig": {
+		"UpdateDenyConfig": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DescribeDenyConfig"},
+				"Action":  []string{"UpdateDenyConfig"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -966,11 +974,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"UpdateDenyConfig": {
+		"DescribeLiveActivityBandwidthData": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UpdateDenyConfig"},
+				"Action":  []string{"DescribeLiveActivityBandwidthData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},

@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_GetVqosRawData(t *testing.T) {
+func Test_DescribeLiveActivityBandwidthData(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,12 +18,9 @@ func Test_GetVqosRawData(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.GetVqosRawDataReq{
-		GetVqosRawDataQuery: &live_v20230101.GetVqosRawDataQuery{},
-		GetVqosRawDataBody:  &live_v20230101.GetVqosRawDataBody{},
-	}
+	param := &live_v20230101.DescribeLiveActivityBandwidthDataBody{}
 
-	resp, err := instance.GetVqosRawData(context.Background(), param)
+	resp, err := instance.DescribeLiveActivityBandwidthData(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)
