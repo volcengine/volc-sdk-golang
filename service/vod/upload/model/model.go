@@ -60,28 +60,32 @@ type UploadPartCommon struct {
 }
 
 type VodUploadFuncRequest struct {
-	FilePath      string
-	Rd            io.Reader
-	Size          int64
-	ParallelNum   int
-	SpaceName     string
-	FileType      string
-	FileName      string
-	FileExtension string
-	StorageClass  int32
+	FilePath          string
+	Rd                io.Reader
+	Size              int64
+	ParallelNum       int
+	SpaceName         string
+	FileType          string
+	FileName          string
+	FileExtension     string
+	StorageClass      int32
+	ClientNetWorkMode string
+	ClientIDCMode     string
 }
 
 type VodUploadMediaInnerFuncRequest struct {
-	FilePath        string
-	Rd              io.Reader
-	Size            int64
-	ParallelNum     int
-	SpaceName       string
-	FileType        string
-	CallbackArgs    string
-	Funcs           string
-	FileName        string
-	FileExtension   string
-	StorageClass    int32
-	VodUploadSource string
+	FilePath          string
+	Rd                io.Reader
+	Size              int64
+	ParallelNum       int
+	SpaceName         string
+	FileType          string
+	CallbackArgs      string
+	Funcs             string
+	FileName          string
+	FileExtension     string
+	StorageClass      int32
+	VodUploadSource   string
+	ClientNetWorkMode string
+	ClientIDCMode     string
 }
