@@ -771,26 +771,6 @@ func (c *Live) DeleteCert(ctx context.Context, arg *DeleteCertBody) (*DeleteCert
 	return result, nil
 }
 
-func (c *Live) ListCertV2(ctx context.Context, arg *ListCertV2Body) (*ListCertV2Res, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "ListCertV2", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(ListCertV2Res)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DescribeCertDetailSecretV2(ctx context.Context, arg *DescribeCertDetailSecretV2Body) (*DescribeCertDetailSecretV2Res, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -803,6 +783,26 @@ func (c *Live) DescribeCertDetailSecretV2(ctx context.Context, arg *DescribeCert
 	}
 
 	result := new(DescribeCertDetailSecretV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListCertV2(ctx context.Context, arg *ListCertV2Body) (*ListCertV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListCertV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListCertV2Res)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1191,26 +1191,6 @@ func (c *Live) ListPullToPushTask(ctx context.Context, arg *ListPullToPushTaskQu
 	return result, nil
 }
 
-func (c *Live) DeleteRelaySourceV3(ctx context.Context, arg *DeleteRelaySourceV3Body) (*DeleteRelaySourceV3Res, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DeleteRelaySourceV3", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DeleteRelaySourceV3Res)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DeleteRelaySourceV4(ctx context.Context, arg *DeleteRelaySourceV4Body) (*DeleteRelaySourceV4Res, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1223,6 +1203,26 @@ func (c *Live) DeleteRelaySourceV4(ctx context.Context, arg *DeleteRelaySourceV4
 	}
 
 	result := new(DeleteRelaySourceV4Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteRelaySourceV3(ctx context.Context, arg *DeleteRelaySourceV3Body) (*DeleteRelaySourceV3Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteRelaySourceV3", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteRelaySourceV3Res)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2383,6 +2383,26 @@ func (c *Live) DeleteReferer(ctx context.Context, arg *DeleteRefererBody) (*Dele
 	return result, nil
 }
 
+func (c *Live) DescribeDenyConfig(ctx context.Context, arg *DescribeDenyConfigBody) (*DescribeDenyConfigRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeDenyConfig", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeDenyConfigRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeReferer(ctx context.Context, arg *DescribeRefererBody) (*DescribeRefererRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2403,18 +2423,18 @@ func (c *Live) DescribeReferer(ctx context.Context, arg *DescribeRefererBody) (*
 	return result, nil
 }
 
-func (c *Live) DescribeDenyConfig(ctx context.Context, arg *DescribeDenyConfigBody) (*DescribeDenyConfigRes, error) {
+func (c *Live) UpdateDenyConfig(ctx context.Context, arg *UpdateDenyConfigBody) (*UpdateDenyConfigRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DescribeDenyConfig", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "UpdateDenyConfig", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DescribeDenyConfigRes)
+	result := new(UpdateDenyConfigRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2463,18 +2483,18 @@ func (c *Live) UpdateAuthKey(ctx context.Context, arg *UpdateAuthKeyBody) (*Upda
 	return result, nil
 }
 
-func (c *Live) UpdateDenyConfig(ctx context.Context, arg *UpdateDenyConfigBody) (*UpdateDenyConfigRes, error) {
+func (c *Live) DescribeLiveActivityBandwidthData(ctx context.Context, arg *DescribeLiveActivityBandwidthDataBody) (*DescribeLiveActivityBandwidthDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "UpdateDenyConfig", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveActivityBandwidthData", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(UpdateDenyConfigRes)
+	result := new(DescribeLiveActivityBandwidthDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

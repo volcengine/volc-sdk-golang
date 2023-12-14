@@ -425,6 +425,8 @@ type GetImageEnhanceParam struct {
 	DisableSharp bool     `json:"DisableSharp"`
 	Resolution   string   `json:"Resolution"`
 	Actions      []string `json:"Actions"`
+	OutFormat    string   `json:"OutFormat"`
+	Quality      int      `json:"Quality"`
 }
 
 type GetImageEnhanceResult struct {
@@ -656,6 +658,17 @@ type GetPrivateImageTypeResult struct {
 	Cloth int `json:"Cloth"`
 }
 
+type CreateHiddenWatermarkImageParam struct {
+	ServiceId string
+	Algorithm string `json:"Algorithm"`
+	Strength  string `json:"Strength"`
+	Info      string `json:"Info"`
+}
+
+type CreateHiddenWatermarkImageResult struct {
+	StoreUri string `json:"StoreUri"`
+}
+
 // CreateImageHmEmbed
 type CreateImageHmEmbedParam struct {
 	ServiceId     string `json:"ServiceId"`
@@ -665,6 +678,8 @@ type CreateImageHmEmbedParam struct {
 	OutFormat     string `json:"OutFormat"`
 	OutQuality    int    `json:"OutQuality"`
 	StrengthLevel string `json:"StrengthLevel"`
+	ImageUrl      string `json:"ImageUrl"`
+	Strength      int    `json:"Strength"`
 }
 
 type CreateImageHmEmbedResult struct {
@@ -676,6 +691,7 @@ type CreateImageHmExtractParam struct {
 	ServiceId string `json:"ServiceId"`
 	StoreUri  string `json:"StoreUri"`
 	Algorithm string `json:"Algorithm"`
+	ImageUrl  string
 }
 
 type CreateImageHmExtractResult struct {
@@ -922,4 +938,38 @@ type GetImageAuditTask struct {
 	CreateAt  string                 `json:"CreateAt"`
 	UpdateAt  string                 `json:"UpdateAt"`
 	ServiceID string                 `json:"ServiceId"`
+}
+
+type GetImageAiGenerateTaskReq struct {
+	TaskId string
+}
+
+type GetImageAiGenerateTaskResp struct {
+	Uris            string    `json:"Uris"`
+	Status          string    `json:"Status"`
+	AestheticScores []float64 `json:"AestheticScores"`
+	SDScores        []float64 `json:"SDScores"`
+}
+
+type GetAiGenerateImageReq struct {
+	ServiceId      string  `json:"-"`
+	URL            string  `json:"Url"`
+	NeedSeg        bool    `json:"NeedSeg"`
+	PositivePrompt string  `json:"PositivePrompt"`
+	NegativePrompt string  `json:"NegativePrompt"`
+	ProductRatio   float64 `json:"ProductRatio"`
+	OutputSize     int     `json:"OutputSize"`
+	Callback       string  `json:"Callback"`
+	Scene          string  `json:"Scene"`
+	UseCaption     bool    `json:"UseCaption"`
+	ReturnTop1     bool    `json:"ReturnTop1"`
+	CX             int     `json:"CX"`
+	CY             int     `json:"CY"`
+	SafeH          int     `json:"SafeH"`
+	SafeW          int     `json:"SafeW"`
+	Extra          string  `json:"Extra"`
+}
+
+type GetAiGenerateImageResp struct {
+	TaskId string `json:"TaskId"`
 }

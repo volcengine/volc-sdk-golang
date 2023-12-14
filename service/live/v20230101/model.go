@@ -8,6 +8,9 @@ type BindCertBody struct {
 	// REQUIRED; 需要绑定证书的域名。
 	Domain string `json:"Domain"`
 
+	// 证书域名。
+	CertDomain *string `json:"CertDomain,omitempty"`
+
 	// 是否开启 HTTPS，默认值为 false。
 	// * false：关闭；
 	// * true：开启。
@@ -1350,7 +1353,7 @@ type CreateTranscodePresetBody struct {
 	// 2 个参考帧之间的最大 B 帧数。不同编码格式的取值存在差异。
 	// * H.264：取值范围为 [0,7]，默认值为 3；
 	// * H.265：取值范围为 [0,1,2,3,7,15]，默认值为 3；
-	// BFrames 取 0 时，表示��� B 帧。
+	// BFrames 取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 视频帧率，单位为 fps，取值范围为 [0,60]，默认为 25fps。帧率越大，画面越流畅。
@@ -2264,7 +2267,7 @@ type DescribeAuthResResultAuthListItem struct {
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 鉴权场景类型。
-	// * push：推���鉴权；
+	// * push：推流鉴权；
 	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
@@ -2979,6 +2982,175 @@ type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 	Vhost string `json:"Vhost"`
 }
 
+type DescribeLiveActivityBandwidthDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	StartTime string `json:"StartTime"`
+
+	// 时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
+	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
+	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
+	// * 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	Aggregation *int32 `json:"Aggregation,omitempty"`
+
+	// 域名列表，缺省情况表示该用户的所有域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 运营商，缺省情况下表示所有运营商。支持的运营商如下所示。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
+	// * HTTP-FLV
+	// * HTTP-HLS
+	// * RTMP
+	// * RTM
+	// * SRT
+	// * QUIC
+	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	RegionList []*DescribeLiveActivityBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
+
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	UserRegionList []*DescribeLiveActivityBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
+}
+
+type DescribeLiveActivityBandwidthDataBodyRegionListItem struct {
+
+	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	Area *string `json:"Area,omitempty"`
+
+	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	Country *string `json:"Country,omitempty"`
+
+	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveActivityBandwidthDataBodyUserRegionListItem struct {
+
+	// 大区，映射关系请参见区域映射
+	Area *string `json:"Area,omitempty"`
+
+	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	Country *string `json:"Country,omitempty"`
+
+	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveActivityBandwidthDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveActivityBandwidthDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveActivityBandwidthDataResResult `json:"Result"`
+}
+
+type DescribeLiveActivityBandwidthDataResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeLiveActivityBandwidthDataResResult struct {
+
+	// REQUIRED; 时间粒度。
+	Aggregation int32 `json:"Aggregation"`
+
+	// REQUIRED; 所有时间粒度数据。
+	BandwidthDataList []DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
+
+	// REQUIRED; 结束时间。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 峰值带宽，单位为 Mbps。
+	PeakBandwidth int32 `json:"PeakBandwidth"`
+
+	// REQUIRED; 峰值时间
+	PeakTimestamp string `json:"PeakTimestamp"`
+
+	// REQUIRED; 开始时间。
+	StartTime string `json:"StartTime"`
+
+	// 域名列表，代表所查询的域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 运营商。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 推拉流协议。
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域。
+	RegionList []*DescribeLiveActivityBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
+
+	// 客户端 IP 所属区域。
+	UserRegionList []*DescribeLiveActivityBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
+}
+
+type DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem struct {
+
+	// REQUIRED; 带宽，单位为 Mbps。
+	Bandwidth int32 `json:"Bandwidth"`
+
+	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	TimeStamp string `json:"TimeStamp"`
+}
+
+type DescribeLiveActivityBandwidthDataResResultRegionListItem struct {
+
+	// 大区标识符。
+	Area *string `json:"Area,omitempty"`
+
+	// 国家标识符。
+	Country *string `json:"Country,omitempty"`
+
+	// 省份标识符。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveActivityBandwidthDataResResultUserRegionListItem struct {
+
+	// 大区标识符。
+	Area *string `json:"Area,omitempty"`
+
+	// 国家标识符。
+	Country *string `json:"Country,omitempty"`
+
+	// 省份标识符。
+	Province *string `json:"Province,omitempty"`
+}
+
 type DescribeLiveAuditDataBody struct {
 
 	// REQUIRED; 查询的结束时间。RFC3339 格式的 UTC 时间，精度为 s。
@@ -3587,7 +3759,7 @@ type DescribeLiveBatchStreamTrafficDataResResponseMetadata struct {
 	// REQUIRED; RequestID为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
-	// REQUIRED; 请求的服务，��于请求的公共参数。
+	// REQUIRED; 请求的服务，属于请求的公共参数。
 	Service string `json:"Service"`
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
@@ -4141,7 +4313,7 @@ type DescribeLiveMetricBandwidthDataResResult struct {
 	// REQUIRED; 时间粒度。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒��数据。
+	// REQUIRED; 所有时间粒度数据。
 	BandwidthDataList []DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
 	// REQUIRED; 结束时间。
@@ -4372,7 +4544,7 @@ type DescribeLiveMetricTrafficDataResResponseMetadata struct {
 
 type DescribeLiveMetricTrafficDataResResult struct {
 
-	// REQUIRED; 时��粒度。
+	// REQUIRED; 时间粒度。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 结束时间。
@@ -5089,7 +5261,7 @@ type DescribeLivePullToPushDataResResultPullToPushDetailDataListItem struct {
 	// REQUIRED; 各时间片详细数据。
 	PullToPushDataList []DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsItem `json:"PullToPushDataList"`
 
-	// REQUIRED; 查询范围内拉流���推总时长，单位分钟，保留小数点后 2 位。
+	// REQUIRED; 查询范围内拉流转推总时长，单位分钟，保留小数点后 2 位。
 	TotalDuration float32 `json:"TotalDuration"`
 
 	// 域名。
@@ -5348,7 +5520,7 @@ type DescribeLivePushStreamMetricsResResultMetricListItem struct {
 	// REQUIRED; 音频帧率，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; ���频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
 	AudioPts int32 `json:"AudioPts"`
 
 	// REQUIRED; 视频码率，单位为 kbps。
@@ -6085,7 +6257,7 @@ type DescribeLiveSourceTrafficDataResResponseMetadataError struct {
 
 type DescribeLiveSourceTrafficDataResResult struct {
 
-	// REQUIRED; 时���粒度。
+	// REQUIRED; 时间粒度。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 应用名称。
@@ -7974,7 +8146,7 @@ type GetPullCDNSnapshotTaskResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED; 请求的Region，例如���cn-north-1
+	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
 	// REQUIRED; RequestID为每次API请求的唯一标识。
@@ -10484,7 +10656,7 @@ type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 	// 转码流录制，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命���的转码后缀。
+	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命中的转码后缀。
 	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
@@ -10855,7 +11027,7 @@ type UpdateRefererResResponseMetadataError struct {
 
 type UpdateRelaySourceV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位��字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
 	// REQUIRED; 回源组配置详情。
@@ -11115,7 +11287,7 @@ type UpdateSnapshotPresetBody struct {
 	// * 0：关闭
 	Status *int32 `json:"Status,omitempty"`
 
-	// ToS 的存储目录，不��为空。
+	// ToS 的存储目录，不传为空。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
@@ -11539,741 +11711,873 @@ type VerifyDomainOwnerResResult struct {
 	// REQUIRED; 检查结果
 	CheckResult bool `json:"CheckResult"`
 }
-type DescribeLiveBatchStreamTranscodeDataQuery struct {
-}
-type UpdateRelaySourceV3 struct {
-}
-type CreateRecordPresetV2Query struct {
-}
-type StopPullToPushTask struct {
-}
-type GeneratePlayURL struct {
-}
-type DescribeLiveLogDataQuery struct {
-}
-type DeleteCallback struct {
-}
-type ResumeStreamQuery struct {
-}
-type CreatePullRecordTaskQuery struct {
-}
-type DescribeLiveP95PeakBandwidthDataQuery struct {
-}
-type BindCert struct {
-}
-type DescribeLiveStreamStateBody struct {
-}
-type ListVhostWatermarkPresetQuery struct {
-}
-type CreateSnapshotPreset struct {
-}
-type UpdateReferer struct {
-}
-type GeneratePlayURLQuery struct {
-}
-type ListPullToPushTaskBody struct {
-}
-type ListPullCDNSnapshotTaskQuery struct {
-}
-type DescribeLivePlayStatusCodeDataQuery struct {
-}
-type DescribeLiveBatchStreamTrafficData struct {
-}
 type DescribeLiveStreamSessionDataQuery struct {
-}
-type UpdatePullToPushTaskQuery struct {
-}
-type DescribeCDNSnapshotHistoryQuery struct {
-}
-type DescribeLiveStreamSessionData struct {
-}
-type BindCertQuery struct {
-}
-type GetPullRecordTaskQuery struct {
-}
-type DescribeLiveTrafficData struct {
-}
-type DescribeRefererQuery struct {
-}
-type ResumeStream struct {
-}
-type UpdateCallback struct {
-}
-type CreateCert struct {
 }
 type DeleteTimeShiftPresetV3Query struct {
 }
-type UpdateDomainVhost struct {
+type CreatePullToPushTask struct {
 }
-type CreateRelaySourceV4 struct {
-}
-type DescribeIPInfoBody struct {
-}
-type DescribeLivePushStreamMetricsQuery struct {
-}
-type DescribeAuthQuery struct {
-}
-type ListCertV2 struct {
-}
-type DescribeCertDetailSecretV2 struct {
-}
-type UpdateTimeShiftPresetV3Query struct {
-}
-type DescribeLiveStreamState struct {
-}
-type UnbindCertQuery struct {
-}
-type DescribeLiveStreamInfoByPage struct {
-}
-type ListRelaySourceV4Query struct {
-}
-type GetPullCDNSnapshotTaskQuery struct {
-}
-type DescribeCDNSnapshotHistory struct {
-}
-type DeleteCert struct {
-}
-type DescribeLiveBandwidthDataQuery struct {
+type UpdateSnapshotPresetQuery struct {
 }
 type ListVhostSnapshotAuditPresetQuery struct {
 }
-type DeleteCertQuery struct {
-}
-type VerifyDomainOwner struct {
-}
-type DescribeIPInfoRes struct {
-}
-type DeleteRelaySourceV4 struct {
-}
-type DescribeIPInfoQuery struct {
-}
-type DescribeLiveISPDataBody struct {
-}
-type DescribeLiveSnapshotDataQuery struct {
-}
-type DescribeLiveSourceStreamMetrics struct {
-}
-type ListVhostTransCodePresetQuery struct {
-}
-type DescribeLiveTranscodeData struct {
-}
 type DeleteRefererQuery struct {
 }
-type DescribeDomainQuery struct {
+type DescribeLiveP95PeakBandwidthDataQuery struct {
 }
-type DescribeLivePushStreamCountDataQuery struct {
+type CreateCert struct {
 }
-type DescribeLiveSourceBandwidthDataQuery struct {
-}
-type ListTimeShiftPresetV2Query struct {
+type DescribeAuthQuery struct {
 }
 type UpdateTimeShiftPresetV3 struct {
 }
-type ListVqosMetricsDimensionsBody struct {
+type UpdateRelaySourceV3 struct {
+}
+type CreateSnapshotPresetQuery struct {
+}
+type CreateVerifyContent struct {
+}
+type ListVhostTransCodePreset struct {
+}
+type DescribeLiveStreamSessionData struct {
 }
 type DescribeLivePlayStatusCodeData struct {
 }
-type UnbindCert struct {
-}
-type DescribeSnapshotAuditPresetDetailQuery struct {
-}
-type DescribeLiveRegionDataBody struct {
-}
-type UpdateAuthKeyQuery struct {
-}
-type DeleteDomainQuery struct {
-}
-type DescribeLiveISPData struct {
-}
-type UpdateRelaySourceV4Query struct {
-}
-type DescribeLiveAuditDataQuery struct {
-}
-type DisableDomain struct {
-}
-type UpdateRelaySourceV3Query struct {
-}
-type DescribeClosedStreamInfoByPage struct {
-}
-type DescribeStreamQuotaConfigQuery struct {
-}
-type DescribeLiveLogData struct {
-}
-type UpdateTranscodePresetQuery struct {
-}
-type DescribeLiveRegionDataQuery struct {
-}
-type DescribeForbiddenStreamInfoByPage struct {
-}
-type UpdateCallbackQuery struct {
-}
-type DeleteWatermarkPreset struct {
-}
-type GetPullRecordTask struct {
-}
-type DescribeLivePullToPushBandwidthData struct {
-}
-type DescribeRelaySourceV3Query struct {
-}
-type UpdateRelaySourceV4 struct {
-}
-type UpdateSnapshotAuditPresetQuery struct {
-}
-type DeleteRecordPreset struct {
-}
-type DescribeLiveTranscodeDataQuery struct {
-}
-type DeleteWatermarkPresetQuery struct {
-}
-type ListVqosMetricsDimensions struct {
-}
-type CreateTimeShiftPresetV3 struct {
-}
-type DescribeClosedStreamInfoByPageBody struct {
-}
-type DescribeRecordTaskFileHistory struct {
-}
-type DescribeLiveMetricBandwidthData struct {
-}
-type DeletePullToPushTaskQuery struct {
-}
-type ListVhostWatermarkPreset struct {
-}
-type ListRelaySourceV4 struct {
-}
-type DescribeLivePushStreamCountData struct {
-}
-type StopPullCDNSnapshotTask struct {
-}
-type CreateVerifyContentQuery struct {
-}
-type DescribeIPInfo struct {
-}
-type DescribeLiveBatchSourceStreamMetrics struct {
-}
-type DescribeLiveMetricTrafficDataQuery struct {
-}
-type DescribeLivePullToPushData struct {
-}
-type CreateDomainV2Query struct {
-}
-type CreateDomainQuery struct {
-}
-type DeleteStreamQuotaConfig struct {
-}
-type DescribeLiveTimeShiftData struct {
-}
-type DeleteSnapshotPresetQuery struct {
-}
-type DescribeLiveSourceTrafficDataQuery struct {
-}
-type CreatePullCDNSnapshotTaskQuery struct {
+type DeleteSnapshotAuditPresetQuery struct {
 }
 type DescribeDomain struct {
 }
-type UpdateDomainVhostQuery struct {
+type ResumeStreamQuery struct {
 }
-type DescribeCallback struct {
+type CreateDomain struct {
 }
-type DescribeLiveBatchPushStreamMetrics struct {
+type CreateDomainV2Query struct {
 }
-type GetPullCDNSnapshotTask struct {
+type ListVqosMetricsDimensions struct {
 }
-type DescribeDenyConfigQuery struct {
+type UpdateWatermarkPresetQuery struct {
 }
-type DescribeLiveMetricBandwidthDataQuery struct {
+type DescribeForbiddenStreamInfoByPage struct {
 }
-type DescribeLiveTimeShiftDataQuery struct {
+type GetPullCDNSnapshotTaskQuery struct {
 }
-type CreateRelaySourceV4Query struct {
-}
-type ForbidStream struct {
-}
-type DescribeDenyConfig struct {
-}
-type ListWatermarkPresetQuery struct {
-}
-type ListVhostRecordPresetV2Query struct {
-}
-type ListCommonTransPresetDetailQuery struct {
-}
-type ListVhostSnapshotPreset struct {
-}
-type DeleteTimeShiftPresetV3 struct {
-}
-type ListVhostSnapshotPresetQuery struct {
-}
-type KillStream struct {
-}
-type DeleteSnapshotAuditPreset struct {
-}
-type DescribeLiveSourceBandwidthData struct {
-}
-type ListVhostSnapshotAuditPreset struct {
-}
-type UpdateAuthKey struct {
-}
-type DescribeRelaySourceV3 struct {
+type ListVhostWatermarkPresetQuery struct {
 }
 type DescribeLiveBatchStreamTrafficDataQuery struct {
 }
-type DescribeLivePullToPushDataQuery struct {
+type ListPullRecordTaskQuery struct {
+}
+type ListVqosMetricsDimensionsBody struct {
+}
+type ListVhostSnapshotPresetQuery struct {
+}
+type DescribeLivePushStreamCountData struct {
+}
+type UpdateRelaySourceV4 struct {
+}
+type DescribeRelaySourceV3Query struct {
+}
+type UnbindCert struct {
+}
+type CreatePullToPushTaskQuery struct {
+}
+type DeleteSnapshotPresetQuery struct {
+}
+type ListVhostSnapshotPreset struct {
+}
+type DescribeLiveAuditData struct {
+}
+type DescribeCertDetailSecretV2Query struct {
+}
+type DescribeLiveLogDataQuery struct {
+}
+type DeleteSnapshotAuditPreset struct {
+}
+type DescribeLiveSourceBandwidthDataQuery struct {
+}
+type DeleteSnapshotPreset struct {
+}
+type UpdateAuthKeyQuery struct {
+}
+type DescribeLiveISPData struct {
+}
+type UpdateAuthKey struct {
+}
+type ListWatermarkPreset struct {
+}
+type UpdateDomainVhostQuery struct {
+}
+type DescribeLivePushStreamMetrics struct {
+}
+type DescribeRecordTaskFileHistoryQuery struct {
+}
+type DescribeLiveISPDataQuery struct {
+}
+type BindCertQuery struct {
+}
+type CreatePullCDNSnapshotTaskQuery struct {
+}
+type RestartPullToPushTask struct {
+}
+type GeneratePlayURL struct {
+}
+type UpdateStreamQuotaConfigQuery struct {
+}
+type VerifyDomainOwnerQuery struct {
+}
+type DescribeLiveTranscodeData struct {
+}
+type ListCommonTransPresetDetail struct {
+}
+type DescribeLiveLogData struct {
+}
+type DescribeLiveMetricTrafficDataQuery struct {
+}
+type UpdateTranscodePreset struct {
+}
+type DescribeIPInfo struct {
+}
+type ListWatermarkPresetQuery struct {
+}
+type DeleteWatermarkPreset struct {
+}
+type DeleteTranscodePreset struct {
+}
+type DescribeLiveTimeShiftData struct {
+}
+type CreateRecordPresetV2Query struct {
+}
+type DescribeLiveBandwidthDataQuery struct {
+}
+type DescribeLiveBatchSourceStreamMetrics struct {
+}
+type DescribeLiveSourceBandwidthData struct {
+}
+type ListCertV2 struct {
+}
+type DescribeDenyConfig struct {
+}
+type DescribeLiveBatchStreamTranscodeData struct {
+}
+type CreateSnapshotPreset struct {
+}
+type DescribeDenyConfigQuery struct {
+}
+type StopPullToPushTaskQuery struct {
+}
+type StopPullCDNSnapshotTask struct {
+}
+type DeleteRelaySourceV3Query struct {
+}
+type ListCertV2Query struct {
+}
+type GeneratePushURLQuery struct {
+}
+type DescribeLiveISPDataBody struct {
+}
+type DeleteRecordPreset struct {
+}
+type UpdateReferer struct {
+}
+type DescribeDomainQuery struct {
+}
+type DescribeClosedStreamInfoByPage struct {
+}
+type UpdateRecordPresetV2 struct {
+}
+type DescribeCallbackQuery struct {
+}
+type DescribeLiveRecordData struct {
+}
+type DescribeLiveStreamInfoByPage struct {
+}
+type UpdateWatermarkPreset struct {
+}
+type UpdateTranscodePresetQuery struct {
+}
+type DeleteDomain struct {
+}
+type UpdateSnapshotAuditPresetQuery struct {
+}
+type DescribeIPInfoQuery struct {
+}
+type CreateTimeShiftPresetV3 struct {
+}
+type DescribeReferer struct {
+}
+type CreateTranscodePreset struct {
+}
+type UpdateDenyConfig struct {
+}
+type DeleteCallback struct {
+}
+type DescribeLiveTrafficData struct {
+}
+type DescribeCertDetailSecretV2 struct {
+}
+type DescribeLiveRegionDataBody struct {
+}
+type ResumeStream struct {
+}
+type DescribeAuth struct {
+}
+type ListPullToPushTaskBody struct {
+}
+type DescribeLivePushStreamCountDataQuery struct {
+}
+type DescribeIPInfoBody struct {
+}
+type DisableDomain struct {
+}
+type DeleteStreamQuotaConfigQuery struct {
+}
+type CreatePullCDNSnapshotTask struct {
+}
+type UpdatePullToPushTaskQuery struct {
+}
+type DescribeLiveTranscodeDataQuery struct {
+}
+type StopPullRecordTask struct {
+}
+type CreateRelaySourceV4Query struct {
+}
+type ListDomainDetail struct {
+}
+type DescribeLiveSourceTrafficDataQuery struct {
+}
+type DescribeLiveRegionData struct {
+}
+type UpdateRelaySourceV4Query struct {
+}
+type UpdateRelaySourceV3Query struct {
+}
+type DescribeLiveStreamState struct {
+}
+type DescribeLiveSourceStreamMetricsQuery struct {
+}
+type UpdateCallback struct {
+}
+type CreateDomainV2 struct {
+}
+type DescribeLiveSourceTrafficData struct {
+}
+type CreateSnapshotAuditPresetQuery struct {
+}
+type StopPullRecordTaskQuery struct {
+}
+type ForbidStream struct {
+}
+type DescribeLiveMetricBandwidthData struct {
+}
+type DescribeLiveStreamCountDataQuery struct {
+}
+type CreateDomainQuery struct {
 }
 type DescribeLiveStreamUsageData struct {
+}
+type ListPullRecordTask struct {
+}
+type UpdateSnapshotPreset struct {
+}
+type CreateWatermarkPreset struct {
+}
+type UpdateSnapshotAuditPreset struct {
+}
+type DescribeLivePullToPushDataQuery struct {
+}
+type DeleteReferer struct {
+}
+type DescribeRefererQuery struct {
+}
+type DescribeCDNSnapshotHistoryQuery struct {
 }
 type CreateTranscodePresetQuery struct {
 }
 type ListPullCDNSnapshotTask struct {
 }
-type DeleteRecordPresetQuery struct {
-}
-type DescribeLiveTrafficDataQuery struct {
-}
-type ListVhostRecordPresetV2 struct {
-}
-type ListTimeShiftPresetV2 struct {
-}
-type CreatePullToPushTaskQuery struct {
-}
-type UpdatePullToPushTask struct {
-}
-type ForbidStreamQuery struct {
-}
-type CreatePullCDNSnapshotTask struct {
-}
-type CreateSnapshotPresetQuery struct {
-}
-type DeleteSnapshotPreset struct {
-}
-type UpdateWatermarkPreset struct {
-}
-type DeletePullToPushTask struct {
-}
-type DescribeLiveISPDataQuery struct {
-}
-type ListCommonTransPresetDetail struct {
-}
-type DeleteSnapshotAuditPresetQuery struct {
-}
-type RestartPullToPushTask struct {
-}
-type UpdateRefererQuery struct {
-}
-type RestartPullToPushTaskQuery struct {
-}
-type ListPullRecordTask struct {
-}
-type ListPullRecordTaskQuery struct {
-}
-type DeleteRelaySourceV3Query struct {
-}
-type UpdateSnapshotPresetQuery struct {
+type DescribeLiveSnapshotDataQuery struct {
 }
 type EnableDomain struct {
 }
-type CreatePullToPushTask struct {
+type DescribeLivePushStreamMetricsQuery struct {
 }
-type UpdateSnapshotPreset struct {
-}
-type DescribeLiveCustomizedLogData struct {
-}
-type UpdateStreamQuotaConfigQuery struct {
-}
-type CreateSnapshotAuditPresetQuery struct {
-}
-type DescribeLiveStreamUsageDataQuery struct {
-}
-type DescribeLiveBatchStreamTranscodeData struct {
-}
-type UpdateRecordPresetV2 struct {
-}
-type DescribeLiveStreamCountData struct {
-}
-type UpdateSnapshotAuditPreset struct {
-}
-type DescribeCallbackQuery struct {
-}
-type DeleteRelaySourceV4Query struct {
-}
-type ListPullToPushTask struct {
-}
-type DeleteStreamQuotaConfigQuery struct {
-}
-type DescribeLiveRecordData struct {
-}
-type StopPullCDNSnapshotTaskQuery struct {
-}
-type CreateWatermarkPresetQuery struct {
-}
-type CreateDomain struct {
+type DescribeLiveActivityBandwidthData struct {
 }
 type UpdateDenyConfigQuery struct {
 }
-type DescribeReferer struct {
-}
-type DescribeAuth struct {
-}
-type DeleteRelaySourceV3 struct {
-}
-type DescribeLiveBatchSourceStreamMetricsQuery struct {
-}
-type UpdateWatermarkPresetQuery struct {
-}
-type ListDomainDetail struct {
-}
-type GeneratePushURLQuery struct {
-}
-type StopPullToPushTaskQuery struct {
-}
-type DescribeLiveAuditData struct {
-}
-type DescribeLivePullToPushBandwidthDataQuery struct {
-}
-type DisableDomainQuery struct {
-}
-type VerifyDomainOwnerQuery struct {
-}
-type DescribeLiveMetricTrafficData struct {
-}
-type DeleteTranscodePreset struct {
-}
-type UpdateStreamQuotaConfig struct {
-}
-type DescribeLiveSourceStreamMetricsQuery struct {
-}
-type StopPullRecordTask struct {
-}
-type DescribeLiveStreamCountDataQuery struct {
-}
-type DescribeLiveCustomizedLogDataQuery struct {
-}
-type CreateTranscodePreset struct {
-}
-type EnableDomainQuery struct {
-}
-type DescribeStreamQuotaConfig struct {
-}
-type DescribeLiveBatchPushStreamMetricsQuery struct {
-}
-type DescribeForbiddenStreamInfoByPageBody struct {
-}
-type ListWatermarkPreset struct {
-}
-type KillStreamQuery struct {
-}
-type DescribeLiveRegionData struct {
-}
-type DescribeLiveRecordDataQuery struct {
-}
-type DeleteReferer struct {
-}
-type GeneratePushURL struct {
-}
-type DeleteTranscodePresetQuery struct {
-}
-type CreateWatermarkPreset struct {
-}
-type CreateVerifyContent struct {
-}
-type DescribeSnapshotAuditPresetDetail struct {
-}
-type DescribeLiveSnapshotData struct {
-}
-type DescribeLiveSourceTrafficData struct {
-}
-type DescribeLiveBandwidthData struct {
-}
-type CreatePullRecordTask struct {
-}
-type DeleteCallbackQuery struct {
-}
-type CreateDomainV2 struct {
-}
-type DescribeLivePushStreamMetrics struct {
-}
-type DescribeCertDetailSecretV2Query struct {
-}
-type ListVhostTransCodePreset struct {
-}
 type CreateCertQuery struct {
 }
-type CreateRecordPresetV2 struct {
-}
-type UpdateTranscodePreset struct {
-}
-type StopPullRecordTaskQuery struct {
+type DescribeLivePullToPushBandwidthData struct {
 }
 type UpdateRecordPresetV2Query struct {
 }
-type ListCertV2Query struct {
+type DeleteRelaySourceV4Query struct {
 }
-type DescribeRecordTaskFileHistoryQuery struct {
+type DescribeLiveStreamStateBody struct {
 }
-type DescribeLiveStreamInfoByPageBody struct {
+type DescribeRelaySourceV3 struct {
 }
-type DeleteDomain struct {
+type GetPullCDNSnapshotTask struct {
 }
-type ListDomainDetailQuery struct {
+type DeleteRecordPresetQuery struct {
 }
-type CreateTimeShiftPresetV3Query struct {
+type VerifyDomainOwner struct {
 }
-type DescribeLiveP95PeakBandwidthData struct {
+type DisableDomainQuery struct {
 }
 type CreateSnapshotAuditPreset struct {
 }
-type UpdateDenyConfig struct {
+type CreateWatermarkPresetQuery struct {
 }
-type ListVhostWatermarkPresetReq struct {
-	*ListVhostWatermarkPresetQuery
-	*ListVhostWatermarkPresetBody
+type DeleteTranscodePresetQuery struct {
 }
-type DescribeRecordTaskFileHistoryReq struct {
-	*DescribeRecordTaskFileHistoryQuery
-	*DescribeRecordTaskFileHistoryBody
+type DeletePullToPushTaskQuery struct {
 }
-type UpdateDomainVhostReq struct {
-	*UpdateDomainVhostQuery
-	*UpdateDomainVhostBody
+type DeleteCert struct {
 }
-type DescribeLivePullToPushBandwidthDataReq struct {
-	*DescribeLivePullToPushBandwidthDataQuery
-	*DescribeLivePullToPushBandwidthDataBody
+type DeleteStreamQuotaConfig struct {
+}
+type DescribeLiveRegionDataQuery struct {
+}
+type DescribeLiveBatchStreamTrafficData struct {
+}
+type DescribeLiveStreamUsageDataQuery struct {
+}
+type DescribeLiveBandwidthData struct {
+}
+type DescribeLiveStreamCountData struct {
+}
+type DescribeLivePullToPushData struct {
+}
+type StopPullToPushTask struct {
+}
+type DescribeLivePullToPushBandwidthDataQuery struct {
+}
+type ListVhostTransCodePresetQuery struct {
+}
+type DescribeStreamQuotaConfig struct {
+}
+type DescribeLiveTrafficDataQuery struct {
+}
+type DescribeCallback struct {
+}
+type UpdateRefererQuery struct {
+}
+type ListVhostRecordPresetV2 struct {
+}
+type DescribeForbiddenStreamInfoByPageBody struct {
+}
+type ListTimeShiftPresetV2 struct {
+}
+type CreateTimeShiftPresetV3Query struct {
+}
+type ListVhostSnapshotAuditPreset struct {
+}
+type BindCert struct {
+}
+type RestartPullToPushTaskQuery struct {
+}
+type GeneratePushURL struct {
+}
+type ListPullCDNSnapshotTaskQuery struct {
+}
+type DescribeLiveSnapshotData struct {
+}
+type DeleteWatermarkPresetQuery struct {
+}
+type DescribeLiveCustomizedLogData struct {
+}
+type ListDomainDetailQuery struct {
+}
+type UpdateCallbackQuery struct {
+}
+type DescribeLiveAuditDataQuery struct {
+}
+type DescribeLivePlayStatusCodeDataQuery struct {
+}
+type CreatePullRecordTaskQuery struct {
+}
+type DescribeLiveMetricTrafficData struct {
+}
+type DescribeStreamQuotaConfigQuery struct {
+}
+type ListVhostRecordPresetV2Query struct {
+}
+type ListRelaySourceV4Query struct {
+}
+type CreateRelaySourceV4 struct {
+}
+type StopPullCDNSnapshotTaskQuery struct {
+}
+type DeletePullToPushTask struct {
+}
+type DescribeClosedStreamInfoByPageBody struct {
+}
+type DescribeSnapshotAuditPresetDetailQuery struct {
+}
+type DescribeLiveMetricBandwidthDataQuery struct {
+}
+type DescribeIPInfoRes struct {
+}
+type DescribeLiveCustomizedLogDataQuery struct {
+}
+type DescribeLiveActivityBandwidthDataQuery struct {
+}
+type DescribeCDNSnapshotHistory struct {
+}
+type DescribeLiveBatchSourceStreamMetricsQuery struct {
+}
+type DescribeLiveBatchStreamTranscodeDataQuery struct {
+}
+type DescribeSnapshotAuditPresetDetail struct {
+}
+type DescribeLiveBatchPushStreamMetrics struct {
+}
+type GetPullRecordTask struct {
+}
+type GetPullRecordTaskQuery struct {
+}
+type DescribeLiveSourceStreamMetrics struct {
+}
+type DescribeLiveBatchPushStreamMetricsQuery struct {
+}
+type ListTimeShiftPresetV2Query struct {
+}
+type DeleteDomainQuery struct {
+}
+type UpdateDomainVhost struct {
+}
+type DeleteRelaySourceV4 struct {
+}
+type CreateRecordPresetV2 struct {
+}
+type DescribeLiveStreamInfoByPageBody struct {
+}
+type DeleteCallbackQuery struct {
+}
+type ForbidStreamQuery struct {
+}
+type EnableDomainQuery struct {
+}
+type DescribeLiveP95PeakBandwidthData struct {
+}
+type UnbindCertQuery struct {
+}
+type CreateVerifyContentQuery struct {
+}
+type KillStream struct {
+}
+type UpdateStreamQuotaConfig struct {
+}
+type DescribeLiveTimeShiftDataQuery struct {
+}
+type DescribeRecordTaskFileHistory struct {
+}
+type UpdatePullToPushTask struct {
+}
+type DeleteCertQuery struct {
+}
+type ListPullToPushTask struct {
+}
+type DescribeLiveRecordDataQuery struct {
+}
+type ListRelaySourceV4 struct {
+}
+type ListVhostWatermarkPreset struct {
+}
+type CreatePullRecordTask struct {
+}
+type DeleteRelaySourceV3 struct {
+}
+type DeleteTimeShiftPresetV3 struct {
+}
+type GeneratePlayURLQuery struct {
+}
+type UpdateTimeShiftPresetV3Query struct {
+}
+type KillStreamQuery struct {
+}
+type ListCommonTransPresetDetailQuery struct {
 }
 type DescribeAuthReq struct {
 	*DescribeAuthQuery
 	*DescribeAuthBody
 }
-type UpdatePullToPushTaskReq struct {
-	*UpdatePullToPushTaskQuery
-	*UpdatePullToPushTaskBody
+type DeleteDomainReq struct {
+	*DeleteDomainQuery
+	*DeleteDomainBody
 }
-type DeleteStreamQuotaConfigReq struct {
-	*DeleteStreamQuotaConfigQuery
-	*DeleteStreamQuotaConfigBody
-}
-type DescribeSnapshotAuditPresetDetailReq struct {
-	*DescribeSnapshotAuditPresetDetailQuery
-	*DescribeSnapshotAuditPresetDetailBody
-}
-type DescribeLiveLogDataReq struct {
-	*DescribeLiveLogDataQuery
-	*DescribeLiveLogDataBody
-}
-type VerifyDomainOwnerReq struct {
-	*VerifyDomainOwnerQuery
-	*VerifyDomainOwnerBody
-}
-type DescribeDomainReq struct {
-	*DescribeDomainQuery
-	*DescribeDomainBody
-}
-type ListPullCDNSnapshotTaskReq struct {
-	*ListPullCDNSnapshotTaskQuery
-	*ListPullCDNSnapshotTaskBody
+type DescribeLivePushStreamCountDataReq struct {
+	*DescribeLivePushStreamCountDataQuery
+	*DescribeLivePushStreamCountDataBody
 }
 type DescribeLiveSourceBandwidthDataReq struct {
 	*DescribeLiveSourceBandwidthDataQuery
 	*DescribeLiveSourceBandwidthDataBody
 }
-type DescribeDenyConfigReq struct {
-	*DescribeDenyConfigQuery
-	*DescribeDenyConfigBody
-}
-type ListVhostTransCodePresetReq struct {
-	*ListVhostTransCodePresetQuery
-	*ListVhostTransCodePresetBody
-}
-type CreateSnapshotPresetReq struct {
-	*CreateSnapshotPresetQuery
-	*CreateSnapshotPresetBody
-}
-type DescribeStreamQuotaConfigReq struct {
-	*DescribeStreamQuotaConfigQuery
-	*DescribeStreamQuotaConfigBody
-}
-type DescribeLiveStreamInfoByPageReq struct {
-	*DescribeLiveStreamInfoByPageQuery
-	*DescribeLiveStreamInfoByPageBody
-}
-type StopPullCDNSnapshotTaskReq struct {
-	*StopPullCDNSnapshotTaskQuery
-	*StopPullCDNSnapshotTaskBody
-}
-type GetPullRecordTaskReq struct {
-	*GetPullRecordTaskQuery
-	*GetPullRecordTaskBody
-}
-type DescribeLiveStreamSessionDataReq struct {
-	*DescribeLiveStreamSessionDataQuery
-	*DescribeLiveStreamSessionDataBody
-}
-type DescribeLiveISPDataReq struct {
-	*DescribeLiveISPDataQuery
-	*DescribeLiveISPDataBody
-}
-type ListTimeShiftPresetV2Req struct {
-	*ListTimeShiftPresetV2Query
-	*ListTimeShiftPresetV2Body
-}
-type ListCertV2Req struct {
-	*ListCertV2Query
-	*ListCertV2Body
-}
-type DescribeClosedStreamInfoByPageReq struct {
-	*DescribeClosedStreamInfoByPageQuery
-	*DescribeClosedStreamInfoByPageBody
-}
-type DescribeRefererReq struct {
-	*DescribeRefererQuery
-	*DescribeRefererBody
-}
-type DeleteSnapshotAuditPresetReq struct {
-	*DeleteSnapshotAuditPresetQuery
-	*DeleteSnapshotAuditPresetBody
-}
 type UpdateAuthKeyReq struct {
 	*UpdateAuthKeyQuery
 	*UpdateAuthKeyBody
 }
-type DescribeLiveStreamStateReq struct {
-	*DescribeLiveStreamStateQuery
-	*DescribeLiveStreamStateBody
+type DeleteTranscodePresetReq struct {
+	*DeleteTranscodePresetQuery
+	*DeleteTranscodePresetBody
 }
-type UpdateRefererReq struct {
-	*UpdateRefererQuery
-	*UpdateRefererBody
+type DeleteCertReq struct {
+	*DeleteCertQuery
+	*DeleteCertBody
 }
-type UpdateWatermarkPresetReq struct {
-	*UpdateWatermarkPresetQuery
-	*UpdateWatermarkPresetBody
+type BindCertReq struct {
+	*BindCertQuery
+	*BindCertBody
+}
+type ListVqosMetricsDimensionsReq struct {
+	*ListVqosMetricsDimensionsQuery
+	*ListVqosMetricsDimensionsBody
 }
 type DescribeLivePushStreamMetricsReq struct {
 	*DescribeLivePushStreamMetricsQuery
 	*DescribeLivePushStreamMetricsBody
 }
-type DescribeLiveP95PeakBandwidthDataReq struct {
-	*DescribeLiveP95PeakBandwidthDataQuery
-	*DescribeLiveP95PeakBandwidthDataBody
+type DisableDomainReq struct {
+	*DisableDomainQuery
+	*DisableDomainBody
 }
-type DeleteSnapshotPresetReq struct {
-	*DeleteSnapshotPresetQuery
-	*DeleteSnapshotPresetBody
+type DeleteRecordPresetReq struct {
+	*DeleteRecordPresetQuery
+	*DeleteRecordPresetBody
 }
-type ListVhostSnapshotPresetReq struct {
-	*ListVhostSnapshotPresetQuery
-	*ListVhostSnapshotPresetBody
-}
-type CreateTimeShiftPresetV3Req struct {
-	*CreateTimeShiftPresetV3Query
-	*CreateTimeShiftPresetV3Body
-}
-type GeneratePlayURLReq struct {
-	*GeneratePlayURLQuery
-	*GeneratePlayURLBody
-}
-type DescribeIPInfoReq struct {
-	*DescribeIPInfoQuery
-	*DescribeIPInfoBody
-}
-type DeleteCallbackReq struct {
-	*DeleteCallbackQuery
-	*DeleteCallbackBody
-}
-type DeleteDomainReq struct {
-	*DeleteDomainQuery
-	*DeleteDomainBody
-}
-type CreateDomainReq struct {
-	*CreateDomainQuery
-	*CreateDomainBody
+type ListDomainDetailReq struct {
+	*ListDomainDetailQuery
+	*ListDomainDetailBody
 }
 type DeleteRelaySourceV3Req struct {
 	*DeleteRelaySourceV3Query
 	*DeleteRelaySourceV3Body
 }
-type DescribeRelaySourceV3Req struct {
-	*DescribeRelaySourceV3Query
-	*DescribeRelaySourceV3Body
+type DescribeClosedStreamInfoByPageReq struct {
+	*DescribeClosedStreamInfoByPageQuery
+	*DescribeClosedStreamInfoByPageBody
+}
+type DescribeLiveTranscodeDataReq struct {
+	*DescribeLiveTranscodeDataQuery
+	*DescribeLiveTranscodeDataBody
+}
+type DescribeLiveLogDataReq struct {
+	*DescribeLiveLogDataQuery
+	*DescribeLiveLogDataBody
+}
+type DescribeRefererReq struct {
+	*DescribeRefererQuery
+	*DescribeRefererBody
+}
+type DeleteCallbackReq struct {
+	*DeleteCallbackQuery
+	*DeleteCallbackBody
+}
+type CreateDomainReq struct {
+	*CreateDomainQuery
+	*CreateDomainBody
+}
+type RestartPullToPushTaskReq struct {
+	*RestartPullToPushTaskQuery
+	*RestartPullToPushTaskBody
 }
 type DescribeLiveBatchPushStreamMetricsReq struct {
 	*DescribeLiveBatchPushStreamMetricsQuery
 	*DescribeLiveBatchPushStreamMetricsBody
 }
-type CreatePullRecordTaskReq struct {
-	*CreatePullRecordTaskQuery
-	*CreatePullRecordTaskBody
+type DescribeLiveActivityBandwidthDataReq struct {
+	*DescribeLiveActivityBandwidthDataQuery
+	*DescribeLiveActivityBandwidthDataBody
 }
-type EnableDomainReq struct {
-	*EnableDomainQuery
-	*EnableDomainBody
+type CreateSnapshotPresetReq struct {
+	*CreateSnapshotPresetQuery
+	*CreateSnapshotPresetBody
+}
+type ListCertV2Req struct {
+	*ListCertV2Query
+	*ListCertV2Body
 }
 type CreatePullToPushTaskReq struct {
 	*CreatePullToPushTaskQuery
 	*CreatePullToPushTaskBody
 }
-type UpdateRelaySourceV4Req struct {
-	*UpdateRelaySourceV4Query
-	*UpdateRelaySourceV4Body
+type DescribeLiveMetricBandwidthDataReq struct {
+	*DescribeLiveMetricBandwidthDataQuery
+	*DescribeLiveMetricBandwidthDataBody
 }
-type CreateTranscodePresetReq struct {
-	*CreateTranscodePresetQuery
-	*CreateTranscodePresetBody
+type UpdateWatermarkPresetReq struct {
+	*UpdateWatermarkPresetQuery
+	*UpdateWatermarkPresetBody
 }
-type UpdateTimeShiftPresetV3Req struct {
-	*UpdateTimeShiftPresetV3Query
-	*UpdateTimeShiftPresetV3Body
+type DescribeCallbackReq struct {
+	*DescribeCallbackQuery
+	*DescribeCallbackBody
 }
-type CreateCertReq struct {
-	*CreateCertQuery
-	*CreateCertBody
+type CreateDomainV2Req struct {
+	*CreateDomainV2Query
+	*CreateDomainV2Body
 }
-type UpdateSnapshotPresetReq struct {
-	*UpdateSnapshotPresetQuery
-	*UpdateSnapshotPresetBody
+type StopPullRecordTaskReq struct {
+	*StopPullRecordTaskQuery
+	*StopPullRecordTaskBody
 }
-type UnbindCertReq struct {
-	*UnbindCertQuery
-	*UnbindCertBody
+type CreatePullRecordTaskReq struct {
+	*CreatePullRecordTaskQuery
+	*CreatePullRecordTaskBody
 }
-type DescribeLiveRegionDataReq struct {
-	*DescribeLiveRegionDataQuery
-	*DescribeLiveRegionDataBody
+type DescribeCertDetailSecretV2Req struct {
+	*DescribeCertDetailSecretV2Query
+	*DescribeCertDetailSecretV2Body
 }
-type GetPullCDNSnapshotTaskReq struct {
-	*GetPullCDNSnapshotTaskQuery
-	*GetPullCDNSnapshotTaskBody
+type DescribeLiveSourceStreamMetricsReq struct {
+	*DescribeLiveSourceStreamMetricsQuery
+	*DescribeLiveSourceStreamMetricsBody
 }
-type DescribeLiveBatchSourceStreamMetricsReq struct {
-	*DescribeLiveBatchSourceStreamMetricsQuery
-	*DescribeLiveBatchSourceStreamMetricsBody
+type DescribeLiveBatchStreamTranscodeDataReq struct {
+	*DescribeLiveBatchStreamTranscodeDataQuery
+	*DescribeLiveBatchStreamTranscodeDataBody
+}
+type DescribeLiveP95PeakBandwidthDataReq struct {
+	*DescribeLiveP95PeakBandwidthDataQuery
+	*DescribeLiveP95PeakBandwidthDataBody
+}
+type UpdateCallbackReq struct {
+	*UpdateCallbackQuery
+	*UpdateCallbackBody
+}
+type CreateVerifyContentReq struct {
+	*CreateVerifyContentQuery
+	*CreateVerifyContentBody
 }
 type ListPullToPushTaskReq struct {
 	*ListPullToPushTaskQuery
 	*ListPullToPushTaskBody
 }
-type DescribeForbiddenStreamInfoByPageReq struct {
-	*DescribeForbiddenStreamInfoByPageQuery
-	*DescribeForbiddenStreamInfoByPageBody
+type GetPullCDNSnapshotTaskReq struct {
+	*GetPullCDNSnapshotTaskQuery
+	*GetPullCDNSnapshotTaskBody
 }
-type UpdateRelaySourceV3Req struct {
-	*UpdateRelaySourceV3Query
-	*UpdateRelaySourceV3Body
+type CreatePullCDNSnapshotTaskReq struct {
+	*CreatePullCDNSnapshotTaskQuery
+	*CreatePullCDNSnapshotTaskBody
 }
-type ListVhostSnapshotAuditPresetReq struct {
-	*ListVhostSnapshotAuditPresetQuery
-	*ListVhostSnapshotAuditPresetBody
+type DescribeLiveBatchStreamTrafficDataReq struct {
+	*DescribeLiveBatchStreamTrafficDataQuery
+	*DescribeLiveBatchStreamTrafficDataBody
+}
+type DeleteRefererReq struct {
+	*DeleteRefererQuery
+	*DeleteRefererBody
 }
 type DeleteWatermarkPresetReq struct {
 	*DeleteWatermarkPresetQuery
 	*DeleteWatermarkPresetBody
 }
+type ListVhostWatermarkPresetReq struct {
+	*ListVhostWatermarkPresetQuery
+	*ListVhostWatermarkPresetBody
+}
+type DeleteSnapshotPresetReq struct {
+	*DeleteSnapshotPresetQuery
+	*DeleteSnapshotPresetBody
+}
+type EnableDomainReq struct {
+	*EnableDomainQuery
+	*EnableDomainBody
+}
+type DescribeLiveAuditDataReq struct {
+	*DescribeLiveAuditDataQuery
+	*DescribeLiveAuditDataBody
+}
+type DescribeLivePullToPushBandwidthDataReq struct {
+	*DescribeLivePullToPushBandwidthDataQuery
+	*DescribeLivePullToPushBandwidthDataBody
+}
+type KillStreamReq struct {
+	*KillStreamQuery
+	*KillStreamBody
+}
+type DescribeIPInfoReq struct {
+	*DescribeIPInfoQuery
+	*DescribeIPInfoBody
+}
+type DescribeLivePlayStatusCodeDataReq struct {
+	*DescribeLivePlayStatusCodeDataQuery
+	*DescribeLivePlayStatusCodeDataBody
+}
+type UpdateSnapshotPresetReq struct {
+	*UpdateSnapshotPresetQuery
+	*UpdateSnapshotPresetBody
+}
+type CreateCertReq struct {
+	*CreateCertQuery
+	*CreateCertBody
+}
+type DescribeDomainReq struct {
+	*DescribeDomainQuery
+	*DescribeDomainBody
+}
+type UpdatePullToPushTaskReq struct {
+	*UpdatePullToPushTaskQuery
+	*UpdatePullToPushTaskBody
+}
+type ListVhostRecordPresetV2Req struct {
+	*ListVhostRecordPresetV2Query
+	*ListVhostRecordPresetV2Body
+}
+type CreateTimeShiftPresetV3Req struct {
+	*CreateTimeShiftPresetV3Query
+	*CreateTimeShiftPresetV3Body
+}
+type DeletePullToPushTaskReq struct {
+	*DeletePullToPushTaskQuery
+	*DeletePullToPushTaskBody
+}
+type DescribeSnapshotAuditPresetDetailReq struct {
+	*DescribeSnapshotAuditPresetDetailQuery
+	*DescribeSnapshotAuditPresetDetailBody
+}
+type DescribeLiveCustomizedLogDataReq struct {
+	*DescribeLiveCustomizedLogDataQuery
+	*DescribeLiveCustomizedLogDataBody
+}
+type DeleteRelaySourceV4Req struct {
+	*DeleteRelaySourceV4Query
+	*DeleteRelaySourceV4Body
+}
+type UpdateSnapshotAuditPresetReq struct {
+	*UpdateSnapshotAuditPresetQuery
+	*UpdateSnapshotAuditPresetBody
+}
+type ListVhostSnapshotAuditPresetReq struct {
+	*ListVhostSnapshotAuditPresetQuery
+	*ListVhostSnapshotAuditPresetBody
+}
+type DescribeLiveBatchSourceStreamMetricsReq struct {
+	*DescribeLiveBatchSourceStreamMetricsQuery
+	*DescribeLiveBatchSourceStreamMetricsBody
+}
+type ListCommonTransPresetDetailReq struct {
+	*ListCommonTransPresetDetailQuery
+	*ListCommonTransPresetDetailBody
+}
+type CreateRecordPresetV2Req struct {
+	*CreateRecordPresetV2Query
+	*CreateRecordPresetV2Body
+}
+type UpdateDomainVhostReq struct {
+	*UpdateDomainVhostQuery
+	*UpdateDomainVhostBody
+}
+type DescribeLiveSourceTrafficDataReq struct {
+	*DescribeLiveSourceTrafficDataQuery
+	*DescribeLiveSourceTrafficDataBody
+}
+type UpdateRecordPresetV2Req struct {
+	*UpdateRecordPresetV2Query
+	*UpdateRecordPresetV2Body
+}
+type ListPullRecordTaskReq struct {
+	*ListPullRecordTaskQuery
+	*ListPullRecordTaskBody
+}
+type ListVhostSnapshotPresetReq struct {
+	*ListVhostSnapshotPresetQuery
+	*ListVhostSnapshotPresetBody
+}
+type CreateRelaySourceV4Req struct {
+	*CreateRelaySourceV4Query
+	*CreateRelaySourceV4Body
+}
+type UpdateRefererReq struct {
+	*UpdateRefererQuery
+	*UpdateRefererBody
+}
+type ListVhostTransCodePresetReq struct {
+	*ListVhostTransCodePresetQuery
+	*ListVhostTransCodePresetBody
+}
 type DeleteTimeShiftPresetV3Req struct {
 	*DeleteTimeShiftPresetV3Query
 	*DeleteTimeShiftPresetV3Body
 }
-type UpdateCallbackReq struct {
-	*UpdateCallbackQuery
-	*UpdateCallbackBody
+type StopPullToPushTaskReq struct {
+	*StopPullToPushTaskQuery
+	*StopPullToPushTaskBody
+}
+type DescribeLiveStreamSessionDataReq struct {
+	*DescribeLiveStreamSessionDataQuery
+	*DescribeLiveStreamSessionDataBody
+}
+type UpdateTranscodePresetReq struct {
+	*UpdateTranscodePresetQuery
+	*UpdateTranscodePresetBody
+}
+type DescribeRecordTaskFileHistoryReq struct {
+	*DescribeRecordTaskFileHistoryQuery
+	*DescribeRecordTaskFileHistoryBody
+}
+type DescribeLiveStreamStateReq struct {
+	*DescribeLiveStreamStateQuery
+	*DescribeLiveStreamStateBody
+}
+type DeleteStreamQuotaConfigReq struct {
+	*DeleteStreamQuotaConfigQuery
+	*DeleteStreamQuotaConfigBody
+}
+type CreateWatermarkPresetReq struct {
+	*CreateWatermarkPresetQuery
+	*CreateWatermarkPresetBody
+}
+type UpdateTimeShiftPresetV3Req struct {
+	*UpdateTimeShiftPresetV3Query
+	*UpdateTimeShiftPresetV3Body
+}
+type DeleteSnapshotAuditPresetReq struct {
+	*DeleteSnapshotAuditPresetQuery
+	*DeleteSnapshotAuditPresetBody
+}
+type DescribeLiveTrafficDataReq struct {
+	*DescribeLiveTrafficDataQuery
+	*DescribeLiveTrafficDataBody
+}
+type ForbidStreamReq struct {
+	*ForbidStreamQuery
+	*ForbidStreamBody
+}
+type DescribeLivePullToPushDataReq struct {
+	*DescribeLivePullToPushDataQuery
+	*DescribeLivePullToPushDataBody
+}
+type DescribeLiveISPDataReq struct {
+	*DescribeLiveISPDataQuery
+	*DescribeLiveISPDataBody
+}
+type UpdateRelaySourceV3Req struct {
+	*UpdateRelaySourceV3Query
+	*UpdateRelaySourceV3Body
+}
+type ListPullCDNSnapshotTaskReq struct {
+	*ListPullCDNSnapshotTaskQuery
+	*ListPullCDNSnapshotTaskBody
+}
+type DescribeLiveStreamCountDataReq struct {
+	*DescribeLiveStreamCountDataQuery
+	*DescribeLiveStreamCountDataBody
+}
+type DescribeLiveTimeShiftDataReq struct {
+	*DescribeLiveTimeShiftDataQuery
+	*DescribeLiveTimeShiftDataBody
+}
+type VerifyDomainOwnerReq struct {
+	*VerifyDomainOwnerQuery
+	*VerifyDomainOwnerBody
+}
+type DescribeLiveStreamInfoByPageReq struct {
+	*DescribeLiveStreamInfoByPageQuery
+	*DescribeLiveStreamInfoByPageBody
 }
 type GeneratePushURLReq struct {
 	*GeneratePushURLQuery
@@ -12283,25 +12587,25 @@ type CreateSnapshotAuditPresetReq struct {
 	*CreateSnapshotAuditPresetQuery
 	*CreateSnapshotAuditPresetBody
 }
-type DescribeLiveTrafficDataReq struct {
-	*DescribeLiveTrafficDataQuery
-	*DescribeLiveTrafficDataBody
+type UpdateDenyConfigReq struct {
+	*UpdateDenyConfigQuery
+	*UpdateDenyConfigBody
 }
-type DeleteCertReq struct {
-	*DeleteCertQuery
-	*DeleteCertBody
+type ListTimeShiftPresetV2Req struct {
+	*ListTimeShiftPresetV2Query
+	*ListTimeShiftPresetV2Body
 }
-type DeletePullToPushTaskReq struct {
-	*DeletePullToPushTaskQuery
-	*DeletePullToPushTaskBody
+type GeneratePlayURLReq struct {
+	*GeneratePlayURLQuery
+	*GeneratePlayURLBody
 }
-type ListRelaySourceV4Req struct {
-	*ListRelaySourceV4Query
-	*ListRelaySourceV4Body
+type DescribeLiveRegionDataReq struct {
+	*DescribeLiveRegionDataQuery
+	*DescribeLiveRegionDataBody
 }
-type DescribeLivePlayStatusCodeDataReq struct {
-	*DescribeLivePlayStatusCodeDataQuery
-	*DescribeLivePlayStatusCodeDataBody
+type DescribeLiveSnapshotDataReq struct {
+	*DescribeLiveSnapshotDataQuery
+	*DescribeLiveSnapshotDataBody
 }
 type ListWatermarkPresetReq struct {
 	*ListWatermarkPresetQuery
@@ -12311,191 +12615,67 @@ type UpdateStreamQuotaConfigReq struct {
 	*UpdateStreamQuotaConfigQuery
 	*UpdateStreamQuotaConfigBody
 }
-type UpdateSnapshotAuditPresetReq struct {
-	*UpdateSnapshotAuditPresetQuery
-	*UpdateSnapshotAuditPresetBody
+type ListRelaySourceV4Req struct {
+	*ListRelaySourceV4Query
+	*ListRelaySourceV4Body
 }
-type DescribeCertDetailSecretV2Req struct {
-	*DescribeCertDetailSecretV2Query
-	*DescribeCertDetailSecretV2Body
+type DescribeForbiddenStreamInfoByPageReq struct {
+	*DescribeForbiddenStreamInfoByPageQuery
+	*DescribeForbiddenStreamInfoByPageBody
 }
-type StopPullToPushTaskReq struct {
-	*StopPullToPushTaskQuery
-	*StopPullToPushTaskBody
+type GetPullRecordTaskReq struct {
+	*GetPullRecordTaskQuery
+	*GetPullRecordTaskBody
 }
-type CreateRelaySourceV4Req struct {
-	*CreateRelaySourceV4Query
-	*CreateRelaySourceV4Body
-}
-type DescribeLiveBatchStreamTranscodeDataReq struct {
-	*DescribeLiveBatchStreamTranscodeDataQuery
-	*DescribeLiveBatchStreamTranscodeDataBody
-}
-type DescribeLiveAuditDataReq struct {
-	*DescribeLiveAuditDataQuery
-	*DescribeLiveAuditDataBody
-}
-type ListCommonTransPresetDetailReq struct {
-	*ListCommonTransPresetDetailQuery
-	*ListCommonTransPresetDetailBody
-}
-type ListPullRecordTaskReq struct {
-	*ListPullRecordTaskQuery
-	*ListPullRecordTaskBody
-}
-type DescribeCDNSnapshotHistoryReq struct {
-	*DescribeCDNSnapshotHistoryQuery
-	*DescribeCDNSnapshotHistoryBody
+type DescribeStreamQuotaConfigReq struct {
+	*DescribeStreamQuotaConfigQuery
+	*DescribeStreamQuotaConfigBody
 }
 type DescribeLiveBandwidthDataReq struct {
 	*DescribeLiveBandwidthDataQuery
 	*DescribeLiveBandwidthDataBody
 }
-type DeleteRefererReq struct {
-	*DeleteRefererQuery
-	*DeleteRefererBody
+type DescribeLiveStreamUsageDataReq struct {
+	*DescribeLiveStreamUsageDataQuery
+	*DescribeLiveStreamUsageDataBody
 }
-type ListDomainDetailReq struct {
-	*ListDomainDetailQuery
-	*ListDomainDetailBody
+type CreateTranscodePresetReq struct {
+	*CreateTranscodePresetQuery
+	*CreateTranscodePresetBody
 }
-type DescribeLiveMetricTrafficDataReq struct {
-	*DescribeLiveMetricTrafficDataQuery
-	*DescribeLiveMetricTrafficDataBody
-}
-type DescribeLiveBatchStreamTrafficDataReq struct {
-	*DescribeLiveBatchStreamTrafficDataQuery
-	*DescribeLiveBatchStreamTrafficDataBody
-}
-type RestartPullToPushTaskReq struct {
-	*RestartPullToPushTaskQuery
-	*RestartPullToPushTaskBody
-}
-type ForbidStreamReq struct {
-	*ForbidStreamQuery
-	*ForbidStreamBody
+type DescribeRelaySourceV3Req struct {
+	*DescribeRelaySourceV3Query
+	*DescribeRelaySourceV3Body
 }
 type ResumeStreamReq struct {
 	*ResumeStreamQuery
 	*ResumeStreamBody
 }
-type CreatePullCDNSnapshotTaskReq struct {
-	*CreatePullCDNSnapshotTaskQuery
-	*CreatePullCDNSnapshotTaskBody
+type DescribeDenyConfigReq struct {
+	*DescribeDenyConfigQuery
+	*DescribeDenyConfigBody
 }
-type DeleteTranscodePresetReq struct {
-	*DeleteTranscodePresetQuery
-	*DeleteTranscodePresetBody
-}
-type BindCertReq struct {
-	*BindCertQuery
-	*BindCertBody
-}
-type CreateDomainV2Req struct {
-	*CreateDomainV2Query
-	*CreateDomainV2Body
-}
-type UpdateDenyConfigReq struct {
-	*UpdateDenyConfigQuery
-	*UpdateDenyConfigBody
-}
-type DeleteRecordPresetReq struct {
-	*DeleteRecordPresetQuery
-	*DeleteRecordPresetBody
-}
-type DisableDomainReq struct {
-	*DisableDomainQuery
-	*DisableDomainBody
-}
-type DeleteRelaySourceV4Req struct {
-	*DeleteRelaySourceV4Query
-	*DeleteRelaySourceV4Body
-}
-type DescribeLivePushStreamCountDataReq struct {
-	*DescribeLivePushStreamCountDataQuery
-	*DescribeLivePushStreamCountDataBody
-}
-type DescribeLiveSourceTrafficDataReq struct {
-	*DescribeLiveSourceTrafficDataQuery
-	*DescribeLiveSourceTrafficDataBody
-}
-type CreateWatermarkPresetReq struct {
-	*CreateWatermarkPresetQuery
-	*CreateWatermarkPresetBody
-}
-type StopPullRecordTaskReq struct {
-	*StopPullRecordTaskQuery
-	*StopPullRecordTaskBody
-}
-type CreateRecordPresetV2Req struct {
-	*CreateRecordPresetV2Query
-	*CreateRecordPresetV2Body
-}
-type UpdateRecordPresetV2Req struct {
-	*UpdateRecordPresetV2Query
-	*UpdateRecordPresetV2Body
-}
-type DescribeLiveTranscodeDataReq struct {
-	*DescribeLiveTranscodeDataQuery
-	*DescribeLiveTranscodeDataBody
-}
-type DescribeLiveTimeShiftDataReq struct {
-	*DescribeLiveTimeShiftDataQuery
-	*DescribeLiveTimeShiftDataBody
-}
-type DescribeLiveStreamUsageDataReq struct {
-	*DescribeLiveStreamUsageDataQuery
-	*DescribeLiveStreamUsageDataBody
-}
-type KillStreamReq struct {
-	*KillStreamQuery
-	*KillStreamBody
-}
-type DescribeLiveStreamCountDataReq struct {
-	*DescribeLiveStreamCountDataQuery
-	*DescribeLiveStreamCountDataBody
-}
-type DescribeLiveMetricBandwidthDataReq struct {
-	*DescribeLiveMetricBandwidthDataQuery
-	*DescribeLiveMetricBandwidthDataBody
-}
-type DescribeLiveSourceStreamMetricsReq struct {
-	*DescribeLiveSourceStreamMetricsQuery
-	*DescribeLiveSourceStreamMetricsBody
-}
-type DescribeLiveCustomizedLogDataReq struct {
-	*DescribeLiveCustomizedLogDataQuery
-	*DescribeLiveCustomizedLogDataBody
-}
-type ListVhostRecordPresetV2Req struct {
-	*ListVhostRecordPresetV2Query
-	*ListVhostRecordPresetV2Body
-}
-type DescribeCallbackReq struct {
-	*DescribeCallbackQuery
-	*DescribeCallbackBody
-}
-type CreateVerifyContentReq struct {
-	*CreateVerifyContentQuery
-	*CreateVerifyContentBody
-}
-type DescribeLiveSnapshotDataReq struct {
-	*DescribeLiveSnapshotDataQuery
-	*DescribeLiveSnapshotDataBody
-}
-type UpdateTranscodePresetReq struct {
-	*UpdateTranscodePresetQuery
-	*UpdateTranscodePresetBody
-}
-type ListVqosMetricsDimensionsReq struct {
-	*ListVqosMetricsDimensionsQuery
-	*ListVqosMetricsDimensionsBody
+type DescribeLiveMetricTrafficDataReq struct {
+	*DescribeLiveMetricTrafficDataQuery
+	*DescribeLiveMetricTrafficDataBody
 }
 type DescribeLiveRecordDataReq struct {
 	*DescribeLiveRecordDataQuery
 	*DescribeLiveRecordDataBody
 }
-type DescribeLivePullToPushDataReq struct {
-	*DescribeLivePullToPushDataQuery
-	*DescribeLivePullToPushDataBody
+type DescribeCDNSnapshotHistoryReq struct {
+	*DescribeCDNSnapshotHistoryQuery
+	*DescribeCDNSnapshotHistoryBody
+}
+type UnbindCertReq struct {
+	*UnbindCertQuery
+	*UnbindCertBody
+}
+type UpdateRelaySourceV4Req struct {
+	*UpdateRelaySourceV4Query
+	*UpdateRelaySourceV4Body
+}
+type StopPullCDNSnapshotTaskReq struct {
+	*StopPullCDNSnapshotTaskQuery
+	*StopPullCDNSnapshotTaskBody
 }
