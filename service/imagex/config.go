@@ -623,6 +623,22 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"GetAiGenerateImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAiGenerateImage"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageAiGenerateTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAiGenerateTask"},
+				"Version": []string{"2018-08-01"},
+			},
+		},
 	}
 )
 
