@@ -216,6 +216,33 @@ func (p *Vod) UploadObjectWithCallback(filePath string, spaceName string, callba
 	return p.UploadMediaInner(req)
 }
 
+func (p *Vod) UploadObjectWithCallbackV2(uploadReq *request.VodUploadObjectRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	file, err := os.Open(filepath.Clean(uploadReq.FilePath))
+	if err != nil {
+		return nil, -1, err
+	}
+	defer file.Close()
+	stat, err := file.Stat()
+	if err != nil {
+		return nil, -1, err
+	}
+
+	req := &model.VodUploadMediaInnerFuncRequest{
+		FilePath:          uploadReq.FilePath,
+		Rd:                file,
+		Size:              stat.Size(),
+		SpaceName:         uploadReq.SpaceName,
+		FileType:          "object",
+		CallbackArgs:      uploadReq.CallbackArgs,
+		Funcs:             uploadReq.Functions,
+		FileName:          uploadReq.FileName,
+		FileExtension:     uploadReq.FileExtension,
+		ClientIDCMode:     uploadReq.ClientIDCMode,
+		ClientNetWorkMode: uploadReq.ClientNetWorkMode,
+	}
+	return p.UploadMediaInner(req)
+}
+
 func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaRequest) (*response.VodCommitUploadInfoResponse, int, error) {
 	file, err := os.Open(filepath.Clean(mediaRequset.GetFilePath()))
 	if err != nil {
@@ -228,17 +255,19 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 	}
 
 	req := &model.VodUploadMediaInnerFuncRequest{
-		FilePath:        mediaRequset.GetFilePath(),
-		Rd:              file,
-		Size:            stat.Size(),
-		ParallelNum:     int(mediaRequset.GetParallelNum()),
-		SpaceName:       mediaRequset.GetSpaceName(),
-		CallbackArgs:    mediaRequset.GetCallbackArgs(),
-		Funcs:           mediaRequset.GetFunctions(),
-		FileName:        mediaRequset.GetFileName(),
-		FileExtension:   mediaRequset.GetFileExtension(),
-		VodUploadSource: mediaRequset.GetVodUploadSource(),
-		StorageClass:    mediaRequset.StorageClass,
+		FilePath:          mediaRequset.GetFilePath(),
+		Rd:                file,
+		Size:              stat.Size(),
+		ParallelNum:       int(mediaRequset.GetParallelNum()),
+		SpaceName:         mediaRequset.GetSpaceName(),
+		CallbackArgs:      mediaRequset.GetCallbackArgs(),
+		Funcs:             mediaRequset.GetFunctions(),
+		FileName:          mediaRequset.GetFileName(),
+		FileExtension:     mediaRequset.GetFileExtension(),
+		VodUploadSource:   mediaRequset.GetVodUploadSource(),
+		StorageClass:      mediaRequset.StorageClass,
+		ClientNetWorkMode: mediaRequset.ClientNetWorkMode,
+		ClientIDCMode:     mediaRequset.ClientIDCMode,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -271,15 +300,17 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 
 func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInnerFuncRequest) (*response.VodCommitUploadInfoResponse, int, error) {
 	req := &model.VodUploadFuncRequest{
-		FilePath:      uploadMediaInnerRequest.FilePath,
-		Rd:            uploadMediaInnerRequest.Rd,
-		Size:          uploadMediaInnerRequest.Size,
-		ParallelNum:   uploadMediaInnerRequest.ParallelNum,
-		SpaceName:     uploadMediaInnerRequest.SpaceName,
-		FileType:      uploadMediaInnerRequest.FileType,
-		FileName:      uploadMediaInnerRequest.FileName,
-		FileExtension: uploadMediaInnerRequest.FileExtension,
-		StorageClass:  uploadMediaInnerRequest.StorageClass,
+		FilePath:          uploadMediaInnerRequest.FilePath,
+		Rd:                uploadMediaInnerRequest.Rd,
+		Size:              uploadMediaInnerRequest.Size,
+		ParallelNum:       uploadMediaInnerRequest.ParallelNum,
+		SpaceName:         uploadMediaInnerRequest.SpaceName,
+		FileType:          uploadMediaInnerRequest.FileType,
+		FileName:          uploadMediaInnerRequest.FileName,
+		FileExtension:     uploadMediaInnerRequest.FileExtension,
+		StorageClass:      uploadMediaInnerRequest.StorageClass,
+		ClientNetWorkMode: uploadMediaInnerRequest.ClientNetWorkMode,
+		ClientIDCMode:     uploadMediaInnerRequest.ClientIDCMode,
 	}
 	logId, sessionKey, err, code := p.Upload(req)
 	if err != nil {
@@ -331,11 +362,13 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 	}
 
 	applyRequest := &request.VodApplyUploadInfoRequest{
-		SpaceName:     vodUploadFuncRequest.SpaceName,
-		FileType:      vodUploadFuncRequest.FileType,
-		FileName:      vodUploadFuncRequest.FileName,
-		FileExtension: vodUploadFuncRequest.FileExtension,
-		StorageClass:  vodUploadFuncRequest.StorageClass,
+		SpaceName:         vodUploadFuncRequest.SpaceName,
+		FileType:          vodUploadFuncRequest.FileType,
+		FileName:          vodUploadFuncRequest.FileName,
+		FileExtension:     vodUploadFuncRequest.FileExtension,
+		StorageClass:      vodUploadFuncRequest.StorageClass,
+		ClientNetWorkMode: vodUploadFuncRequest.ClientNetWorkMode,
+		ClientIDCMode:     vodUploadFuncRequest.ClientIDCMode,
 	}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
@@ -347,6 +380,9 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 	if resp.ResponseMetadata.Error != nil && resp.ResponseMetadata.Error.Code != "0" {
 		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
 	}
+
+	data, _ := json.Marshal(resp)
+	fmt.Println("ApplyUploadInfo: ", string(data))
 
 	uploadAddress := resp.GetResult().GetData().GetUploadAddress()
 	if uploadAddress != nil {
