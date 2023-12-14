@@ -6,36 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"net/http"
-	"time"
-
 	"github.com/gogo/protobuf/proto"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
-)
-
-const (
-	ServiceName       = "ml_maas"
-	APICert           = "cert"
-	APIChat           = "chat"
-	APIStreamChat     = "stream_chat"
-	APITokenization   = "tokenization"
-	APIClassification = "classification"
-	APIEmbeddings     = "embeddings"
-
-	ServiceTimeout = time.Minute
-
-	maxBufferSize  = 4096
-	respBufferSize = 32
-
-	terminator = "[DONE]"
-
-	ChatRoleOfUser      = "user"
-	ChatRoleOfAssistant = "assistant"
-	ChatRoleOfSystem    = "system"
-	ChatRoleOfFunction  = "function"
+	"io"
+	"net/http"
 )
 
 // MaaS ... use base client
@@ -103,7 +79,7 @@ func (cli *MaaS) ChatWithCtx(ctx context.Context, req *api.ChatReq) (*api.ChatRe
 		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
 	}
 
-	return cli.chatImpl(ctx, bts)
+	return cli.ChatImpl(ctx, bts)
 }
 
 // POST method
@@ -155,7 +131,7 @@ func (cli *MaaS) SecretStreamChatWithCtx(ctx context.Context, req *api.ChatReq) 
 		return nil, err
 	}
 
-	outputs := make(chan *api.ChatResp, respBufferSize)
+	outputs := make(chan *api.ChatResp, RespBufferSize)
 	go func() {
 		defer func() {
 			_ = recover()
@@ -195,10 +171,10 @@ func (cli *MaaS) StreamChatWithCtx(ctx context.Context, req *api.ChatReq) (ch <-
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()))
 	}
 
-	return cli.streamChatImpl(ctx, bts)
+	return cli.StreamChatImpl(ctx, bts)
 }
 
-func (cli *MaaS) chatImpl(ctx context.Context, body []byte) (*api.ChatResp, int, error) {
+func (cli *MaaS) ChatImpl(ctx context.Context, body []byte) (*api.ChatResp, int, error) {
 	respBody, status, err := cli.Client.CtxJson(ctx, APIChat, nil, string(body))
 	if err != nil {
 		errVal := &api.ChatResp{}
@@ -215,19 +191,19 @@ func (cli *MaaS) chatImpl(ctx context.Context, body []byte) (*api.ChatResp, int,
 	return output, status, nil
 }
 
-func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.ChatResp, error) {
+func (cli *MaaS) StreamChatImpl(ctx context.Context, body []byte) (<-chan *api.ChatResp, error) {
 	apiInfo := cli.ApiInfoList[APIStreamChat]
 	if apiInfo == nil {
 		return nil, api.NewClientSDKRequestError("the related api does not exist")
 	}
 
 	// build request
-	req, err := makeRequest(apiInfo, cli.ServiceInfo, nil, "application/json")
+	req, err := MakeRequest(apiInfo, "", cli.ServiceInfo, nil, "application/json")
 	if err != nil {
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err))
 	}
 	req.Body = io.NopCloser(bytes.NewReader(body))
-	timeout := getTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
+	timeout := GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 
 	req = cli.ServiceInfo.Credentials.Sign(req)
 
@@ -252,7 +228,7 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 	}
 
 	// parse response
-	ch := make(chan *api.ChatResp, respBufferSize)
+	ch := make(chan *api.ChatResp, RespBufferSize)
 	go func() {
 		defer func() {
 			_ = recover()
@@ -261,7 +237,7 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 			close(ch)
 		}()
 
-		stream := sse.NewEventStreamFromReader(resp.Body, maxBufferSize)
+		stream := sse.NewEventStreamFromReader(resp.Body, MaxBufferSize)
 		for {
 			event, err := stream.Next()
 			if err != nil {
@@ -280,7 +256,7 @@ func (cli *MaaS) streamChatImpl(ctx context.Context, body []byte) (<-chan *api.C
 				return
 			}
 			if event != nil {
-				if bytes.Equal(event.Data, []byte(terminator)) {
+				if bytes.Equal(event.Data, []byte(Terminator)) {
 					return
 				}
 

@@ -10,7 +10,34 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
-func getTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
+const (
+	ServiceName       = "ml_maas"
+	APICert           = "cert"
+	APIChat           = "chat"
+	APIStreamChat     = "stream_chat"
+	APITokenization   = "tokenization"
+	APIClassification = "classification"
+	APIEmbeddings     = "embeddings"
+
+	ServiceTimeout = time.Minute
+
+	MaxBufferSize  = 4096
+	RespBufferSize = 32
+
+	Terminator = "[DONE]"
+
+	ChatRoleOfUser      = "user"
+	ChatRoleOfAssistant = "assistant"
+	ChatRoleOfSystem    = "system"
+	ChatRoleOfFunction  = "function"
+)
+
+var (
+	defaultRetryTimes    uint64 = 2
+	defaultRetryInterval        = 1 * time.Second
+)
+
+func GetTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
 	timeout := time.Second
 	if serviceTimeout != time.Duration(0) {
 		timeout = serviceTimeout
@@ -21,7 +48,7 @@ func getTimeout(serviceTimeout, apiTimeout time.Duration) time.Duration {
 	return timeout
 }
 
-func mergeQuery(query1, query2 url.Values) (query url.Values) {
+func MergeQuery(query1, query2 url.Values) (query url.Values) {
 	query = url.Values{}
 
 	for k, vv := range query1 {
@@ -38,7 +65,7 @@ func mergeQuery(query1, query2 url.Values) (query url.Values) {
 	return
 }
 
-func mergeHeader(header1, header2 http.Header) (header http.Header) {
+func MergeHeader(header1, header2 http.Header) (header http.Header) {
 	header = http.Header{}
 
 	for k, v := range header1 {
@@ -52,14 +79,18 @@ func mergeHeader(header1, header2 http.Header) (header http.Header) {
 	return
 }
 
-func makeRequest(apiInfo *base.ApiInfo, serviceInfo *base.ServiceInfo, query url.Values, ct string) (*http.Request, error) {
-	header := mergeHeader(serviceInfo.Header, apiInfo.Header)
-	query = mergeQuery(query, apiInfo.Query)
+func MakeRequest(apiInfo *base.ApiInfo, endpointId string, serviceInfo *base.ServiceInfo, query url.Values, ct string) (*http.Request, error) {
+	header := MergeHeader(serviceInfo.Header, apiInfo.Header)
+	query = MergeQuery(query, apiInfo.Query)
+	path := apiInfo.Path
+	if endpointId != "" {
+		path = fmt.Sprintf(apiInfo.Path, endpointId)
+	}
 
 	u := url.URL{
 		Scheme:   serviceInfo.Scheme,
 		Host:     serviceInfo.Host,
-		Path:     apiInfo.Path,
+		Path:     path,
 		RawQuery: query.Encode(),
 	}
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
@@ -75,4 +106,31 @@ func makeRequest(apiInfo *base.ApiInfo, serviceInfo *base.ServiceInfo, query url
 	req.Header.Set("User-Agent", strings.Join([]string{base.SDKName, base.SDKVersion}, "/"))
 
 	return req, nil
+}
+
+func GetRetrySetting(serviceRetrySettings, apiRetrySettings *base.RetrySettings) *base.RetrySettings {
+	retrySettings := &base.RetrySettings{
+		AutoRetry:     false,
+		RetryTimes:    new(uint64),
+		RetryInterval: new(time.Duration),
+	}
+	if !apiRetrySettings.AutoRetry || !serviceRetrySettings.AutoRetry {
+		return retrySettings
+	}
+	retrySettings.AutoRetry = true
+	if serviceRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = serviceRetrySettings.RetryTimes
+	} else if apiRetrySettings.RetryTimes != nil {
+		retrySettings.RetryTimes = apiRetrySettings.RetryTimes
+	} else {
+		retrySettings.RetryTimes = &defaultRetryTimes
+	}
+	if serviceRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = serviceRetrySettings.RetryInterval
+	} else if apiRetrySettings.RetryInterval != nil {
+		retrySettings.RetryInterval = apiRetrySettings.RetryInterval
+	} else {
+		retrySettings.RetryInterval = &defaultRetryInterval
+	}
+	return retrySettings
 }
