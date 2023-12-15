@@ -1,8 +1,14 @@
 package businessSecurity
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	hi_sse "github.com/volcengine/volc-sdk-golang/service/businessSecurity/sse"
+	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
+	"io"
 )
 
 // Synchronous risk detection
@@ -1138,4 +1144,110 @@ func (p *BusinessSecurity) DelSystemNameListItem(req *DelSystemNameListItemReq) 
 		return nil, err
 	}
 	return result, nil
+}
+
+func (p *SecuritySecurityClient) SecuritySource(req *RiskDetectionRequest) (*SecuritySourceResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("SecuritySource: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("SecuritySource", nil, string(reqData))
+	if err != nil {
+		return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
+	}
+	result := new(SecuritySourceResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest) (<-chan *SecuritySourceResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("SecuritySource: fail to marshal request, %v", err)
+	}
+
+	apiInfo := p.ApiInfoList["SecuritySourceStream"]
+	if apiInfo == nil {
+		return nil, api.NewClientSDKRequestError("the related api does not exist")
+	}
+
+	r, err := makeRequest(apiInfo, p.ServiceInfo, nil, "application/json")
+	if err != nil {
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err))
+	}
+
+	r.Body = io.NopCloser(bytes.NewReader(reqData))
+	timeout := getTimeout(p.ServiceInfo.Timeout, apiInfo.Timeout)
+
+	r = p.ServiceInfo.Credentials.Sign(r)
+
+	ctx, cancel := context.WithTimeout(context.TODO(), timeout)
+	r = r.WithContext(ctx)
+
+	// do request
+	resp, err := p.Client.Client.Do(r)
+	if err != nil {
+		cancel()
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("request error: %v", err))
+	}
+
+	if resp.StatusCode != 200 {
+		err = fmt.Errorf("error:%+v", resp.Body)
+		cancel()
+		_ = resp.Body.Close()
+		return nil, err
+	}
+
+	requestId := resp.Header.Get("X-Tt-Logid")
+	ch := make(chan *SecuritySourceResponse, respBufferSize)
+
+	go func() {
+		defer func() {
+			_ = recover()
+			_ = resp.Body.Close()
+			cancel()
+			close(ch)
+		}()
+		stream := hi_sse.NewEventStreamFromReader(resp.Body, maxBufferSize)
+
+		for {
+			event, err := stream.Next()
+			if err != nil {
+				if errors.Is(err, io.EOF) {
+					return
+				}
+				//if errors.Is(err, context.DeadlineExceeded) {
+				//}
+				ch <- &SecuritySourceResponse{
+					RequestId: requestId,
+					Code:      2000,
+					Message:   "internal error",
+				}
+				return
+			}
+			if event != nil {
+				if bytes.Equal(event.Data, []byte(terminator)) {
+					return
+				}
+			}
+
+			item := &SecuritySourceResponse{}
+			if err = UnmarshalResultInto(event.Data, item); err != nil {
+				//if err = json.Unmarshal(event.Data, item); err != nil {
+				ch <- &SecuritySourceResponse{
+					RequestId: requestId,
+					Code:      2000,
+					Message:   "internal error",
+				}
+				return
+			}
+			ch <- item
+
+		}
+	}()
+
+	return ch, nil
 }

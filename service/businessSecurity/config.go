@@ -23,6 +23,18 @@ func NewInstance() *BusinessSecurity {
 	return instance
 }
 
+func GetServiceInfo(region string, host string, timeout time.Duration) *base.ServiceInfo {
+	return &base.ServiceInfo{
+		Timeout: timeout,
+		Host:    host,
+		Header: http.Header{
+			"Accept": []string{"application/json"},
+		},
+		Scheme:      "https",
+		Credentials: base.Credentials{Region: region, Service: "BusinessSecurity"},
+	}
+}
+
 func (p *BusinessSecurity) Retry() bool {
 	return p.retry
 }

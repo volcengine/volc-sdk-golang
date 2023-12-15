@@ -31,3 +31,7 @@ const (
 	RiskTypeImage = "image"
 	RiskTypeAudio = "audio"
 )
+
+const respBufferSize = 32
+const maxBufferSize = 4096
+const terminator = "[DONE]"
