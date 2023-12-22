@@ -22,11 +22,6 @@ type DescribeDnsScheduleResponseWrapper struct {
 	ResponseMetadata base.ResponseMetadata
 }
 
-type DescribeCdnDataResponseWrapper struct {
-	Result           DescribeCdnDataResponse
-	ResponseMetadata base.ResponseMetadata
-}
-
 type DescribeCdnDataOfflineResponseWrapper struct {
 	Result           DescribeCdnDataOfflineResponse
 	ResponseMetadata base.ResponseMetadata
