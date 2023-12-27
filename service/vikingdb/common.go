@@ -106,6 +106,7 @@ type IndexOptions struct {
 	description string
 	partitionBy string
 	scalarIndex []string
+	shardCount  *int64
 }
 
 func NewIndexOptions() *IndexOptions {
@@ -115,6 +116,7 @@ func NewIndexOptions() *IndexOptions {
 		description: "",
 		partitionBy: "",
 		scalarIndex: nil,
+		shardCount:  nil,
 	}
 	return indexOptions
 }
@@ -138,6 +140,10 @@ func (indexOptions *IndexOptions) SetScalarIndex(scalarIndex []string) *IndexOpt
 	indexOptions.scalarIndex = scalarIndex
 	return indexOptions
 }
+func (indexOptions *IndexOptions) SetShardCount(shardCount int64) *IndexOptions {
+	indexOptions.shardCount = &shardCount
+	return indexOptions
+}
 
 type UpdateCollectionOptions struct {
 	fields      []Field
@@ -158,4 +164,31 @@ func (updateCollectionOptions *UpdateCollectionOptions) SetFields(fields []Field
 func (updateCollectionOptions *UpdateCollectionOptions) SetDescription(description string) *UpdateCollectionOptions {
 	updateCollectionOptions.description = &description
 	return updateCollectionOptions
+}
+
+type UpdateIndexOptions struct {
+	description *string
+	cpuQuota    *int64
+	scalarIndex []string
+}
+
+func NewUpdateIndexOptions() *UpdateIndexOptions {
+	updateIndexOptions := &UpdateIndexOptions{
+		description: nil,
+		cpuQuota:    nil,
+		scalarIndex: nil,
+	}
+	return updateIndexOptions
+}
+func (updateIndexOptions *UpdateIndexOptions) SetDescription(description string) *UpdateIndexOptions {
+	updateIndexOptions.description = &description
+	return updateIndexOptions
+}
+func (updateIndexOptions *UpdateIndexOptions) SetCpuQuota(cpuQuota int64) *UpdateIndexOptions {
+	updateIndexOptions.cpuQuota = &cpuQuota
+	return updateIndexOptions
+}
+func (updateIndexOptions *UpdateIndexOptions) SetScalarIndex(scalarIndex []string) *UpdateIndexOptions {
+	updateIndexOptions.scalarIndex = scalarIndex
+	return updateIndexOptions
 }
