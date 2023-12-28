@@ -44,28 +44,6 @@ func (s *MCDN) DescribeDnsSchedule(req DescribeDnsScheduleRequest, opts ...withR
 	return
 }
 
-func (s *MCDN) DescribeCdnData(req DescribeCdnDataRequest, opts ...withRequestOption) (resp *DescribeCdnDataResponseWrapper, err error) {
-	resp = new(DescribeCdnDataResponseWrapper)
-	if err = s.doRequest("DescribeCdnData", req, &resp, opts); err != nil {
-		return
-	}
-	if err = validateResponse(resp.ResponseMetadata); err != nil {
-		return
-	}
-	return
-}
-
-func (s *MCDN) DescribeCdnOriginData(req DescribeCdnDataRequest, opts ...withRequestOption) (resp *DescribeCdnDataResponseWrapper, err error) {
-	resp = new(DescribeCdnDataResponseWrapper)
-	if err = s.doRequest("DescribeCdnOriginData", req, &resp, opts); err != nil {
-		return
-	}
-	if err = validateResponse(resp.ResponseMetadata); err != nil {
-		return
-	}
-	return
-}
-
 func (s *MCDN) DescribeCdnDataOffline(req DescribeCdnDataOfflineRequest, opts ...withRequestOption) (resp *DescribeCdnDataOfflineResponseWrapper, err error) {
 	resp = new(DescribeCdnDataOfflineResponseWrapper)
 	if err = s.doRequest("DescribeCdnDataOffline", req, &resp, opts); err != nil {
