@@ -60,22 +60,6 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
-		"DescribeCdnData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeCdnData"},
-				"Version": []string{ServiceVersion},
-			},
-		},
-		"DescribeCdnOriginData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeCdnOriginData"},
-				"Version": []string{ServiceVersion},
-			},
-		},
 		"SubmitRefreshTask": {
 			Method: http.MethodPost,
 			Path:   "/",
