@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"github.com/volcengine/volc-sdk-golang/service/vikingdb"
 	"math/rand"
 	"time"
 )
 
 func main() {
-	service := vikingdb.NewVikingDBService("host", "region", "ak", "sk", "scheme")
+	service := vikingdb.NewVikingDBService("host", "region", "ak", "sk", "http")
 	//fields := []vikingdb.Field{
 	//	{
 	//		FieldName:    "doc_id",
@@ -41,7 +40,7 @@ func main() {
 	//		DefaultVal: true,
 	//	},
 	//}
-	//collection, err := service.CreateCollection("goTest", fields, "this is a go example")
+	//collection, err := service.CreateCollection("go", fields, "this is a go example")
 	//if err != nil {
 	//	print(err.Error())
 	//}
@@ -71,7 +70,7 @@ func main() {
 	//	Distance:  vikingdb.COSINE,
 	//	IndexType: vikingdb.HNSW,
 	//}
-	//indexOptions := vikingdb.NewIndexOptions().SetVectorIndex(vectorIndex).SetCpuQuota(2).SetDescription("this is an index").SetPartitionBy("").SetScalarIndex([]string{"price", "like"})
+	//indexOptions := vikingdb.NewIndexOptions().SetVectorIndex(vectorIndex).SetCpuQuota(2).SetDescription("this is an index").SetPartitionBy("").SetScalarIndex([]string{"price", "like"}).SetShardCount(12)
 	//index, err := service.CreateIndex("go", "goIndex", indexOptions)
 	//if err != nil {
 	//	fmt.Println(err)
@@ -89,13 +88,13 @@ func main() {
 	//	fmt.Println(err)
 	//}
 
-	indexes, err := service.ListIndexes("go")
-	if err != nil {
-		fmt.Println(err)
-	}
-	for _, index := range indexes {
-		fmt.Println(index)
-	}
+	//indexes, err := service.ListIndexes("go")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for _, index := range indexes {
+	//	fmt.Println(index)
+	//}
 
 	//collection, _ := service.GetCollection("go")
 	//field1 := map[string]interface{}{
@@ -313,15 +312,25 @@ func main() {
 	//}
 	//fmt.Println(index)
 
-	index, _ := service.GetIndex("go_text_new", "goIndex")
-	searchOption := vikingdb.NewSearchOptions().SetLimit(5).SetOutputFields([]string{"doc_id"})
-	res, err := index.SearchByText(vikingdb.TextObject{Text: "example"}, searchOption)
-	if err != nil {
-		fmt.Println(err)
-	}
-	for _, item := range res {
-		fmt.Println(item)
-	}
+	//index, _ := service.GetIndex("go_text_new", "goIndex")
+	//searchOption := vikingdb.NewSearchOptions().SetLimit(5).SetOutputFields([]string{"doc_id"})
+	//res, err := index.SearchByText(vikingdb.TextObject{Text: "example"}, searchOption)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for _, item := range res {
+	//	fmt.Println(item)
+	//}
+
+	//index, _ := service.GetIndex("example", "example_index")
+	//fmt.Println(index)
+	//params := vikingdb.NewUpdateIndexOptions().SetDescription("go").SetCpuQuota(5).SetScalarIndex([]string{"like", "aim"})
+	//err := service.UpdateIndex("example", "example_index", params)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//index1, _ := service.GetIndex("example", "example_index")
+	//fmt.Println(index1)
 
 }
 func genRandomVector(dim int) []float64 {

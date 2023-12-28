@@ -144,6 +144,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"UpdateIndex": {
+			Method: http.MethodPost,
+			Path:   "/api/index/update",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 	return apiInfos
 }
@@ -670,6 +678,9 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 	if indexOptions.scalarIndex != nil {
 		params["scalar_index"] = indexOptions.scalarIndex
 	}
+	if indexOptions.shardCount != nil {
+		params["shard_count"] = *indexOptions.shardCount
+	}
 	//fmt.Println(vikingDBService.convertMapToJson(params))
 	res, err := vikingDBService.DoRequest(context.Background(), "CreateIndex", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
@@ -1032,4 +1043,21 @@ func (vikingDBService *VikingDBService) Embedding(embModel EmbModel, rawData int
 		ret = append(ret, floatList)
 	}
 	return ret, err
+}
+func (vikingDBService *VikingDBService) UpdateIndex(collectionName string, indexName string, updateIndexOptions *UpdateIndexOptions) error {
+	params := map[string]interface{}{
+		"collection_name": collectionName,
+		"index_name":      indexName,
+	}
+	if updateIndexOptions.description != nil {
+		params["description"] = *updateIndexOptions.description
+	}
+	if updateIndexOptions.cpuQuota != nil {
+		params["cpu_quota"] = *updateIndexOptions.cpuQuota
+	}
+	if updateIndexOptions.scalarIndex != nil {
+		params["scalar_index"] = updateIndexOptions.scalarIndex
+	}
+	_, err := vikingDBService.DoRequest(context.Background(), "UpdateIndex", nil, vikingDBService.convertMapToJson(params))
+	return err
 }
