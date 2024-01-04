@@ -1,5 +1,8 @@
 ### Change log
 
+2024-01-04 Bumped to version v1.0.135
+- Added service maas/tls
+
 2023-12-28 Bumped to version v1.0.134
 - Added service vikingdb/sms/mcdn
 
