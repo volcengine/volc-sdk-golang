@@ -3,12 +3,9 @@ package tls
 import (
 	"bytes"
 	"context"
-	"errors"
-
-	"github.com/volcengine/volc-sdk-golang/base"
-
 	"crypto/md5"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -18,6 +15,7 @@ import (
 	"time"
 
 	"github.com/go-kit/kit/log/level"
+	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
@@ -31,7 +29,7 @@ var (
 
 func init() {
 	defaultHttpClient = &http.Client{
-		Timeout: time.Second * 30,
+		Timeout: time.Second * 60,
 		Transport: &http.Transport{
 			MaxIdleConns:        1000,
 			MaxIdleConnsPerHost: 50,
@@ -46,7 +44,7 @@ func init() {
 	defaultRetryCounter = 0
 	defaultRetryCounterMaximum = 50
 	defaultRetryInterval = 100 * time.Millisecond
-	defaultRequestTimeout = time.Second * 30
+	defaultRequestTimeout = time.Second * 90
 }
 
 type LsClient struct {
