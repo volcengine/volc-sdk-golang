@@ -21,7 +21,7 @@ const (
 
 	ServiceTimeout = time.Minute
 
-	MaxBufferSize  = 4096
+	MaxBufferSize  = 4194304
 	RespBufferSize = 32
 
 	Terminator = "[DONE]"

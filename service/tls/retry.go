@@ -2,12 +2,13 @@ package tls
 
 import (
 	"context"
-	"github.com/pkg/errors"
 	"math"
 	"math/rand"
 	"net"
 	"sync/atomic"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 type ConditionOperation func() error
