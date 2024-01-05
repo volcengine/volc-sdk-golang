@@ -13,6 +13,23 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
+func Test_DeleteSpace(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDeleteSpaceRequest{
+		SpaceName: "your SpaceName",
+	}
+
+	resp, status, err := instance.DeleteSpace(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_CreateSpace(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

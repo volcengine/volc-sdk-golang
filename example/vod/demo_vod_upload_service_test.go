@@ -38,13 +38,15 @@ func Test_ApplyUploadInfo(t *testing.T) {
 	})
 
 	query := &request.VodApplyUploadInfoRequest{
-		SpaceName:     "your SpaceName",
-		SessionKey:    "your SessionKey",
-		FileSize:      0,
-		FileType:      "your FileType",
-		FileName:      "your FileName",
-		StorageClass:  0,
-		FileExtension: "your FileExtension",
+		SpaceName:         "your SpaceName",
+		SessionKey:        "your SessionKey",
+		FileSize:          0,
+		FileType:          "your FileType",
+		FileName:          "your FileName",
+		StorageClass:      0,
+		FileExtension:     "your FileExtension",
+		ClientNetWorkMode: "your ClientNetWorkMode",
+		ClientIDCMode:     "your ClientIDCMode",
 	}
 
 	resp, status, err := instance.ApplyUploadInfo(query)
