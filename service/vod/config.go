@@ -77,6 +77,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"DescribeDrmDataKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDrmDataKey"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"GetPlayInfoWithLiveTimeShiftScene": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -164,6 +172,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetMediaInfos"},
 				"Version": []string{"2022-12-01"},
+			},
+		},
+		"GetMediaInfos20230701": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMediaInfos"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"GetRecommendedPoster": {
@@ -538,6 +554,14 @@ var (
 		// **********************************************************************
 		// 空间管理
 		// **********************************************************************
+		"DeleteSpace": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteSpace"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"CreateSpace": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -590,6 +614,54 @@ var (
 		// **********************************************************************
 		// 分发加速管理
 		// **********************************************************************
+		"DeleteDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteDomain"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"StopDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StopDomain"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"StartDomain": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"StartDomain"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateDomainPlayRule": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDomainPlayRule"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"RemoveDomainFromScheduler": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RemoveDomainFromScheduler"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"AddDomainToScheduler": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddDomainToScheduler"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"ListDomain": {
 			Method: http.MethodGet,
 			Path:   "/",

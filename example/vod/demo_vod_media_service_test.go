@@ -109,6 +109,23 @@ func Test_GetMediaInfos(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_GetMediaInfos20230701(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetMediaInfosRequest{
+		Vids: "your Vids",
+	}
+
+	resp, status, err := instance.GetMediaInfos20230701(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_GetRecommendedPoster(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

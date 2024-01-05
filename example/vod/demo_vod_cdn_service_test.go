@@ -13,6 +13,124 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
+func Test_AddDomainToScheduler(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodAddDomainToSchedulerRequest{
+		SpaceName:         "your SpaceName",
+		DomainType:        "your DomainType",
+		Domain:            "your Domain",
+		SourceStationType: 0,
+	}
+
+	resp, status, err := instance.AddDomainToScheduler(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_RemoveDomainFromScheduler(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodRemoveDomainFromSchedulerRequest{
+		SpaceName:         "your SpaceName",
+		DomainType:        "your DomainType",
+		Domain:            "your Domain",
+		SourceStationType: 0,
+	}
+
+	resp, status, err := instance.RemoveDomainFromScheduler(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateDomainPlayRule(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateDomainPlayRuleRequest{
+		SpaceName:     "your SpaceName",
+		DefaultDomain: "your DefaultDomain",
+		PlayRule:      "your PlayRule",
+	}
+
+	resp, status, err := instance.UpdateDomainPlayRule(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_StartDomain(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodStartDomainRequest{
+		SpaceName:         "your SpaceName",
+		DomainType:        "your DomainType",
+		Domain:            "your Domain",
+		SourceStationType: 0,
+	}
+
+	resp, status, err := instance.StartDomain(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_StopDomain(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodStopDomainRequest{
+		SpaceName:         "your SpaceName",
+		DomainType:        "your DomainType",
+		Domain:            "your Domain",
+		SourceStationType: 0,
+	}
+
+	resp, status, err := instance.StopDomain(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DeleteDomain(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDeleteDomainRequest{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+	}
+
+	resp, status, err := instance.DeleteDomain(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_ListDomain(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
