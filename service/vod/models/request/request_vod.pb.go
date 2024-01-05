@@ -661,6 +661,54 @@ func (x *VodGetPlayInfoWithLiveTimeShiftSceneRequest) GetNeedComposeBucketName()
 	return ""
 }
 
+type VodDescribeDrmDataKeyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// KeyId
+	Ak string `protobuf:"bytes,1,opt,name=Ak,proto3" json:"Ak,omitempty"`
+}
+
+func (x *VodDescribeDrmDataKeyRequest) Reset() {
+	*x = VodDescribeDrmDataKeyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodDescribeDrmDataKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodDescribeDrmDataKeyRequest) ProtoMessage() {}
+
+func (x *VodDescribeDrmDataKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodDescribeDrmDataKeyRequest.ProtoReflect.Descriptor instead.
+func (*VodDescribeDrmDataKeyRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *VodDescribeDrmDataKeyRequest) GetAk() string {
+	if x != nil {
+		return x.Ak
+	}
+	return ""
+}
+
 type VodUrlUploadRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -675,7 +723,7 @@ type VodUrlUploadRequest struct {
 func (x *VodUrlUploadRequest) Reset() {
 	*x = VodUrlUploadRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[5]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -688,7 +736,7 @@ func (x *VodUrlUploadRequest) String() string {
 func (*VodUrlUploadRequest) ProtoMessage() {}
 
 func (x *VodUrlUploadRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[5]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -701,7 +749,7 @@ func (x *VodUrlUploadRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUrlUploadRequest.ProtoReflect.Descriptor instead.
 func (*VodUrlUploadRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{5}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *VodUrlUploadRequest) GetSpaceName() string {
@@ -730,7 +778,7 @@ type VodQueryUploadTaskInfoRequest struct {
 func (x *VodQueryUploadTaskInfoRequest) Reset() {
 	*x = VodQueryUploadTaskInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[6]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -743,7 +791,7 @@ func (x *VodQueryUploadTaskInfoRequest) String() string {
 func (*VodQueryUploadTaskInfoRequest) ProtoMessage() {}
 
 func (x *VodQueryUploadTaskInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[6]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,7 +804,7 @@ func (x *VodQueryUploadTaskInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodQueryUploadTaskInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodQueryUploadTaskInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{6}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *VodQueryUploadTaskInfoRequest) GetJobIds() string {
@@ -794,7 +842,7 @@ type VodApplyUploadInfoRequest struct {
 func (x *VodApplyUploadInfoRequest) Reset() {
 	*x = VodApplyUploadInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[7]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -807,7 +855,7 @@ func (x *VodApplyUploadInfoRequest) String() string {
 func (*VodApplyUploadInfoRequest) ProtoMessage() {}
 
 func (x *VodApplyUploadInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[7]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -820,7 +868,7 @@ func (x *VodApplyUploadInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodApplyUploadInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodApplyUploadInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{7}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *VodApplyUploadInfoRequest) GetSpaceName() string {
@@ -920,7 +968,7 @@ type VodUploadMediaRequest struct {
 func (x *VodUploadMediaRequest) Reset() {
 	*x = VodUploadMediaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[8]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -933,7 +981,7 @@ func (x *VodUploadMediaRequest) String() string {
 func (*VodUploadMediaRequest) ProtoMessage() {}
 
 func (x *VodUploadMediaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[8]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -946,7 +994,7 @@ func (x *VodUploadMediaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUploadMediaRequest.ProtoReflect.Descriptor instead.
 func (*VodUploadMediaRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{8}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *VodUploadMediaRequest) GetSpaceName() string {
@@ -1065,7 +1113,7 @@ type VodUploadMaterialRequest struct {
 func (x *VodUploadMaterialRequest) Reset() {
 	*x = VodUploadMaterialRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[9]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1078,7 +1126,7 @@ func (x *VodUploadMaterialRequest) String() string {
 func (*VodUploadMaterialRequest) ProtoMessage() {}
 
 func (x *VodUploadMaterialRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[9]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1091,7 +1139,7 @@ func (x *VodUploadMaterialRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUploadMaterialRequest.ProtoReflect.Descriptor instead.
 func (*VodUploadMaterialRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{9}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *VodUploadMaterialRequest) GetSpaceName() string {
@@ -1201,7 +1249,7 @@ type VodUploadObjectRequest struct {
 func (x *VodUploadObjectRequest) Reset() {
 	*x = VodUploadObjectRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[10]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1214,7 +1262,7 @@ func (x *VodUploadObjectRequest) String() string {
 func (*VodUploadObjectRequest) ProtoMessage() {}
 
 func (x *VodUploadObjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[10]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1227,7 +1275,7 @@ func (x *VodUploadObjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUploadObjectRequest.ProtoReflect.Descriptor instead.
 func (*VodUploadObjectRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{10}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *VodUploadObjectRequest) GetSpaceName() string {
@@ -1320,7 +1368,7 @@ type VodCommitUploadInfoRequest struct {
 func (x *VodCommitUploadInfoRequest) Reset() {
 	*x = VodCommitUploadInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[11]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1333,7 +1381,7 @@ func (x *VodCommitUploadInfoRequest) String() string {
 func (*VodCommitUploadInfoRequest) ProtoMessage() {}
 
 func (x *VodCommitUploadInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[11]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1346,7 +1394,7 @@ func (x *VodCommitUploadInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCommitUploadInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodCommitUploadInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{11}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *VodCommitUploadInfoRequest) GetSpaceName() string {
@@ -1398,7 +1446,7 @@ type VodUrlUploadJsonRequest struct {
 func (x *VodUrlUploadJsonRequest) Reset() {
 	*x = VodUrlUploadJsonRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[12]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1411,7 +1459,7 @@ func (x *VodUrlUploadJsonRequest) String() string {
 func (*VodUrlUploadJsonRequest) ProtoMessage() {}
 
 func (x *VodUrlUploadJsonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[12]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1424,7 +1472,7 @@ func (x *VodUrlUploadJsonRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUrlUploadJsonRequest.ProtoReflect.Descriptor instead.
 func (*VodUrlUploadJsonRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{12}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *VodUrlUploadJsonRequest) GetSpaceName() string {
@@ -1458,7 +1506,7 @@ type VodListFileMetaInfosByFileNamesRequest struct {
 func (x *VodListFileMetaInfosByFileNamesRequest) Reset() {
 	*x = VodListFileMetaInfosByFileNamesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[13]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1471,7 +1519,7 @@ func (x *VodListFileMetaInfosByFileNamesRequest) String() string {
 func (*VodListFileMetaInfosByFileNamesRequest) ProtoMessage() {}
 
 func (x *VodListFileMetaInfosByFileNamesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[13]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1484,7 +1532,7 @@ func (x *VodListFileMetaInfosByFileNamesRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use VodListFileMetaInfosByFileNamesRequest.ProtoReflect.Descriptor instead.
 func (*VodListFileMetaInfosByFileNamesRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{13}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *VodListFileMetaInfosByFileNamesRequest) GetSpaceName() string {
@@ -1519,7 +1567,7 @@ type VodGetRecommendedPosterRequest struct {
 func (x *VodGetRecommendedPosterRequest) Reset() {
 	*x = VodGetRecommendedPosterRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[14]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1532,7 +1580,7 @@ func (x *VodGetRecommendedPosterRequest) String() string {
 func (*VodGetRecommendedPosterRequest) ProtoMessage() {}
 
 func (x *VodGetRecommendedPosterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[14]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1545,7 +1593,7 @@ func (x *VodGetRecommendedPosterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetRecommendedPosterRequest.ProtoReflect.Descriptor instead.
 func (*VodGetRecommendedPosterRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{14}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *VodGetRecommendedPosterRequest) GetVids() string {
@@ -1567,7 +1615,7 @@ type VodUpdateMediaPublishStatusRequest struct {
 func (x *VodUpdateMediaPublishStatusRequest) Reset() {
 	*x = VodUpdateMediaPublishStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[15]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1580,7 +1628,7 @@ func (x *VodUpdateMediaPublishStatusRequest) String() string {
 func (*VodUpdateMediaPublishStatusRequest) ProtoMessage() {}
 
 func (x *VodUpdateMediaPublishStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[15]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1593,7 +1641,7 @@ func (x *VodUpdateMediaPublishStatusRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use VodUpdateMediaPublishStatusRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateMediaPublishStatusRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{15}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *VodUpdateMediaPublishStatusRequest) GetVid() string {
@@ -1624,7 +1672,7 @@ type VodUpdateMediaStorageClassRequest struct {
 func (x *VodUpdateMediaStorageClassRequest) Reset() {
 	*x = VodUpdateMediaStorageClassRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[16]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1637,7 +1685,7 @@ func (x *VodUpdateMediaStorageClassRequest) String() string {
 func (*VodUpdateMediaStorageClassRequest) ProtoMessage() {}
 
 func (x *VodUpdateMediaStorageClassRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[16]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1650,7 +1698,7 @@ func (x *VodUpdateMediaStorageClassRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodUpdateMediaStorageClassRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateMediaStorageClassRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{16}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *VodUpdateMediaStorageClassRequest) GetVids() string {
@@ -1697,7 +1745,7 @@ type VodUpdateMediaInfoRequest struct {
 func (x *VodUpdateMediaInfoRequest) Reset() {
 	*x = VodUpdateMediaInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[17]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1710,7 +1758,7 @@ func (x *VodUpdateMediaInfoRequest) String() string {
 func (*VodUpdateMediaInfoRequest) ProtoMessage() {}
 
 func (x *VodUpdateMediaInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[17]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1723,7 +1771,7 @@ func (x *VodUpdateMediaInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateMediaInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateMediaInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{17}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *VodUpdateMediaInfoRequest) GetVid() string {
@@ -1779,7 +1827,7 @@ type VodGetMediaInfosRequest struct {
 func (x *VodGetMediaInfosRequest) Reset() {
 	*x = VodGetMediaInfosRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[18]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1792,7 +1840,7 @@ func (x *VodGetMediaInfosRequest) String() string {
 func (*VodGetMediaInfosRequest) ProtoMessage() {}
 
 func (x *VodGetMediaInfosRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[18]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1805,7 +1853,7 @@ func (x *VodGetMediaInfosRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetMediaInfosRequest.ProtoReflect.Descriptor instead.
 func (*VodGetMediaInfosRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{18}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *VodGetMediaInfosRequest) GetVids() string {
@@ -1827,7 +1875,7 @@ type VodDeleteMediaRequest struct {
 func (x *VodDeleteMediaRequest) Reset() {
 	*x = VodDeleteMediaRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[19]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1840,7 +1888,7 @@ func (x *VodDeleteMediaRequest) String() string {
 func (*VodDeleteMediaRequest) ProtoMessage() {}
 
 func (x *VodDeleteMediaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[19]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1853,7 +1901,7 @@ func (x *VodDeleteMediaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteMediaRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteMediaRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{19}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *VodDeleteMediaRequest) GetVids() string {
@@ -1883,7 +1931,7 @@ type VodDeleteTranscodesRequest struct {
 func (x *VodDeleteTranscodesRequest) Reset() {
 	*x = VodDeleteTranscodesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[20]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1896,7 +1944,7 @@ func (x *VodDeleteTranscodesRequest) String() string {
 func (*VodDeleteTranscodesRequest) ProtoMessage() {}
 
 func (x *VodDeleteTranscodesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[20]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1909,7 +1957,7 @@ func (x *VodDeleteTranscodesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteTranscodesRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteTranscodesRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{20}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *VodDeleteTranscodesRequest) GetVid() string {
@@ -1945,7 +1993,7 @@ type VodDeleteMediaTosFileRequest struct {
 func (x *VodDeleteMediaTosFileRequest) Reset() {
 	*x = VodDeleteMediaTosFileRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[21]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1958,7 +2006,7 @@ func (x *VodDeleteMediaTosFileRequest) String() string {
 func (*VodDeleteMediaTosFileRequest) ProtoMessage() {}
 
 func (x *VodDeleteMediaTosFileRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[21]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1971,7 +2019,7 @@ func (x *VodDeleteMediaTosFileRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteMediaTosFileRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteMediaTosFileRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{21}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *VodDeleteMediaTosFileRequest) GetFileNames() []string {
@@ -2010,7 +2058,7 @@ type VodGetMediaListRequest struct {
 func (x *VodGetMediaListRequest) Reset() {
 	*x = VodGetMediaListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[22]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2023,7 +2071,7 @@ func (x *VodGetMediaListRequest) String() string {
 func (*VodGetMediaListRequest) ProtoMessage() {}
 
 func (x *VodGetMediaListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[22]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2036,7 +2084,7 @@ func (x *VodGetMediaListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetMediaListRequest.ProtoReflect.Descriptor instead.
 func (*VodGetMediaListRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{22}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *VodGetMediaListRequest) GetSpaceName() string {
@@ -2145,7 +2193,7 @@ type VodGetSubtitleInfoListRequest struct {
 func (x *VodGetSubtitleInfoListRequest) Reset() {
 	*x = VodGetSubtitleInfoListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[23]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2158,7 +2206,7 @@ func (x *VodGetSubtitleInfoListRequest) String() string {
 func (*VodGetSubtitleInfoListRequest) ProtoMessage() {}
 
 func (x *VodGetSubtitleInfoListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[23]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2171,7 +2219,7 @@ func (x *VodGetSubtitleInfoListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetSubtitleInfoListRequest.ProtoReflect.Descriptor instead.
 func (*VodGetSubtitleInfoListRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{23}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *VodGetSubtitleInfoListRequest) GetVid() string {
@@ -2273,7 +2321,7 @@ type VodUpdateSubtitleStatusRequest struct {
 func (x *VodUpdateSubtitleStatusRequest) Reset() {
 	*x = VodUpdateSubtitleStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[24]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2286,7 +2334,7 @@ func (x *VodUpdateSubtitleStatusRequest) String() string {
 func (*VodUpdateSubtitleStatusRequest) ProtoMessage() {}
 
 func (x *VodUpdateSubtitleStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[24]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2299,7 +2347,7 @@ func (x *VodUpdateSubtitleStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateSubtitleStatusRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSubtitleStatusRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{24}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *VodUpdateSubtitleStatusRequest) GetVid() string {
@@ -2353,7 +2401,7 @@ type VodUpdateSubtitleInfoRequest struct {
 func (x *VodUpdateSubtitleInfoRequest) Reset() {
 	*x = VodUpdateSubtitleInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[25]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2366,7 +2414,7 @@ func (x *VodUpdateSubtitleInfoRequest) String() string {
 func (*VodUpdateSubtitleInfoRequest) ProtoMessage() {}
 
 func (x *VodUpdateSubtitleInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[25]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2379,7 +2427,7 @@ func (x *VodUpdateSubtitleInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateSubtitleInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSubtitleInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{25}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *VodUpdateSubtitleInfoRequest) GetVid() string {
@@ -2438,7 +2486,7 @@ type VodGetAuditFramesForAuditRequest struct {
 func (x *VodGetAuditFramesForAuditRequest) Reset() {
 	*x = VodGetAuditFramesForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[26]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2451,7 +2499,7 @@ func (x *VodGetAuditFramesForAuditRequest) String() string {
 func (*VodGetAuditFramesForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetAuditFramesForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[26]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2464,7 +2512,7 @@ func (x *VodGetAuditFramesForAuditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetAuditFramesForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetAuditFramesForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{26}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *VodGetAuditFramesForAuditRequest) GetVid() string {
@@ -2517,7 +2565,7 @@ type VodGetMLFramesForAuditRequest struct {
 func (x *VodGetMLFramesForAuditRequest) Reset() {
 	*x = VodGetMLFramesForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[27]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2530,7 +2578,7 @@ func (x *VodGetMLFramesForAuditRequest) String() string {
 func (*VodGetMLFramesForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetMLFramesForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[27]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2543,7 +2591,7 @@ func (x *VodGetMLFramesForAuditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetMLFramesForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetMLFramesForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{27}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *VodGetMLFramesForAuditRequest) GetVid() string {
@@ -2643,7 +2691,7 @@ type VodGetBetterFramesForAuditRequest struct {
 func (x *VodGetBetterFramesForAuditRequest) Reset() {
 	*x = VodGetBetterFramesForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[28]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2656,7 +2704,7 @@ func (x *VodGetBetterFramesForAuditRequest) String() string {
 func (*VodGetBetterFramesForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetBetterFramesForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[28]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2669,7 +2717,7 @@ func (x *VodGetBetterFramesForAuditRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodGetBetterFramesForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetBetterFramesForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{28}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *VodGetBetterFramesForAuditRequest) GetVid() string {
@@ -2705,7 +2753,7 @@ type VodGetAudioInfoForAuditRequest struct {
 func (x *VodGetAudioInfoForAuditRequest) Reset() {
 	*x = VodGetAudioInfoForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[29]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2718,7 +2766,7 @@ func (x *VodGetAudioInfoForAuditRequest) String() string {
 func (*VodGetAudioInfoForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetAudioInfoForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[29]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2731,7 +2779,7 @@ func (x *VodGetAudioInfoForAuditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetAudioInfoForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetAudioInfoForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{29}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *VodGetAudioInfoForAuditRequest) GetVid() string {
@@ -2760,7 +2808,7 @@ type VodGetAutomaticSpeechRecognitionForAuditRequest struct {
 func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) Reset() {
 	*x = VodGetAutomaticSpeechRecognitionForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[30]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2773,7 +2821,7 @@ func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) String() string {
 func (*VodGetAutomaticSpeechRecognitionForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[30]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2786,7 +2834,7 @@ func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) ProtoReflect() protore
 
 // Deprecated: Use VodGetAutomaticSpeechRecognitionForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetAutomaticSpeechRecognitionForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{30}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *VodGetAutomaticSpeechRecognitionForAuditRequest) GetVid() string {
@@ -2815,7 +2863,7 @@ type VodGetAudioEventDetectionForAuditRequest struct {
 func (x *VodGetAudioEventDetectionForAuditRequest) Reset() {
 	*x = VodGetAudioEventDetectionForAuditRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[31]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2828,7 +2876,7 @@ func (x *VodGetAudioEventDetectionForAuditRequest) String() string {
 func (*VodGetAudioEventDetectionForAuditRequest) ProtoMessage() {}
 
 func (x *VodGetAudioEventDetectionForAuditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[31]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2841,7 +2889,7 @@ func (x *VodGetAudioEventDetectionForAuditRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use VodGetAudioEventDetectionForAuditRequest.ProtoReflect.Descriptor instead.
 func (*VodGetAudioEventDetectionForAuditRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{31}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *VodGetAudioEventDetectionForAuditRequest) GetVid() string {
@@ -2872,7 +2920,7 @@ type VodCreateVideoClassificationRequest struct {
 func (x *VodCreateVideoClassificationRequest) Reset() {
 	*x = VodCreateVideoClassificationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[32]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2885,7 +2933,7 @@ func (x *VodCreateVideoClassificationRequest) String() string {
 func (*VodCreateVideoClassificationRequest) ProtoMessage() {}
 
 func (x *VodCreateVideoClassificationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[32]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2898,7 +2946,7 @@ func (x *VodCreateVideoClassificationRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use VodCreateVideoClassificationRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateVideoClassificationRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{32}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *VodCreateVideoClassificationRequest) GetSpaceName() string {
@@ -2942,7 +2990,7 @@ type VodUpdateVideoClassificationRequest struct {
 func (x *VodUpdateVideoClassificationRequest) Reset() {
 	*x = VodUpdateVideoClassificationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[33]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2955,7 +3003,7 @@ func (x *VodUpdateVideoClassificationRequest) String() string {
 func (*VodUpdateVideoClassificationRequest) ProtoMessage() {}
 
 func (x *VodUpdateVideoClassificationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[33]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2968,7 +3016,7 @@ func (x *VodUpdateVideoClassificationRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use VodUpdateVideoClassificationRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateVideoClassificationRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{33}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *VodUpdateVideoClassificationRequest) GetSpaceName() string {
@@ -3004,7 +3052,7 @@ type VodDeleteVideoClassificationRequest struct {
 func (x *VodDeleteVideoClassificationRequest) Reset() {
 	*x = VodDeleteVideoClassificationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[34]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3017,7 +3065,7 @@ func (x *VodDeleteVideoClassificationRequest) String() string {
 func (*VodDeleteVideoClassificationRequest) ProtoMessage() {}
 
 func (x *VodDeleteVideoClassificationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[34]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3030,7 +3078,7 @@ func (x *VodDeleteVideoClassificationRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use VodDeleteVideoClassificationRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteVideoClassificationRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{34}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *VodDeleteVideoClassificationRequest) GetSpaceName() string {
@@ -3059,7 +3107,7 @@ type VodListVideoClassificationsRequest struct {
 func (x *VodListVideoClassificationsRequest) Reset() {
 	*x = VodListVideoClassificationsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[35]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3072,7 +3120,7 @@ func (x *VodListVideoClassificationsRequest) String() string {
 func (*VodListVideoClassificationsRequest) ProtoMessage() {}
 
 func (x *VodListVideoClassificationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[35]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3085,7 +3133,7 @@ func (x *VodListVideoClassificationsRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use VodListVideoClassificationsRequest.ProtoReflect.Descriptor instead.
 func (*VodListVideoClassificationsRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{35}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *VodListVideoClassificationsRequest) GetSpaceName() string {
@@ -3113,7 +3161,7 @@ type VodListSnapshotsRequest struct {
 func (x *VodListSnapshotsRequest) Reset() {
 	*x = VodListSnapshotsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[36]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3126,7 +3174,7 @@ func (x *VodListSnapshotsRequest) String() string {
 func (*VodListSnapshotsRequest) ProtoMessage() {}
 
 func (x *VodListSnapshotsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[36]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3139,7 +3187,7 @@ func (x *VodListSnapshotsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListSnapshotsRequest.ProtoReflect.Descriptor instead.
 func (*VodListSnapshotsRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{36}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *VodListSnapshotsRequest) GetVid() string {
@@ -3163,7 +3211,7 @@ type VodGetFileListRequest struct {
 func (x *VodGetFileListRequest) Reset() {
 	*x = VodGetFileListRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[37]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3176,7 +3224,7 @@ func (x *VodGetFileListRequest) String() string {
 func (*VodGetFileListRequest) ProtoMessage() {}
 
 func (x *VodGetFileListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[37]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3189,7 +3237,7 @@ func (x *VodGetFileListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetFileListRequest.ProtoReflect.Descriptor instead.
 func (*VodGetFileListRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{37}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *VodGetFileListRequest) GetSpaceName() string {
@@ -3231,7 +3279,7 @@ type VodExtractMediaMetaTaskRequest struct {
 func (x *VodExtractMediaMetaTaskRequest) Reset() {
 	*x = VodExtractMediaMetaTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[38]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3244,7 +3292,7 @@ func (x *VodExtractMediaMetaTaskRequest) String() string {
 func (*VodExtractMediaMetaTaskRequest) ProtoMessage() {}
 
 func (x *VodExtractMediaMetaTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[38]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3257,7 +3305,7 @@ func (x *VodExtractMediaMetaTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodExtractMediaMetaTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodExtractMediaMetaTaskRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{38}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *VodExtractMediaMetaTaskRequest) GetVid() string {
@@ -3288,7 +3336,7 @@ type VodStartWorkflowRequest struct {
 func (x *VodStartWorkflowRequest) Reset() {
 	*x = VodStartWorkflowRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[39]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3301,7 +3349,7 @@ func (x *VodStartWorkflowRequest) String() string {
 func (*VodStartWorkflowRequest) ProtoMessage() {}
 
 func (x *VodStartWorkflowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[39]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3314,7 +3362,7 @@ func (x *VodStartWorkflowRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodStartWorkflowRequest.ProtoReflect.Descriptor instead.
 func (*VodStartWorkflowRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{39}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *VodStartWorkflowRequest) GetVid() string {
@@ -3385,7 +3433,7 @@ type VodRetrieveTranscodeResultRequest struct {
 func (x *VodRetrieveTranscodeResultRequest) Reset() {
 	*x = VodRetrieveTranscodeResultRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[40]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3398,7 +3446,7 @@ func (x *VodRetrieveTranscodeResultRequest) String() string {
 func (*VodRetrieveTranscodeResultRequest) ProtoMessage() {}
 
 func (x *VodRetrieveTranscodeResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[40]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3411,7 +3459,7 @@ func (x *VodRetrieveTranscodeResultRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodRetrieveTranscodeResultRequest.ProtoReflect.Descriptor instead.
 func (*VodRetrieveTranscodeResultRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{40}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *VodRetrieveTranscodeResultRequest) GetVid() string {
@@ -3453,7 +3501,7 @@ type VodListWorkflowExecutionRequest struct {
 func (x *VodListWorkflowExecutionRequest) Reset() {
 	*x = VodListWorkflowExecutionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[41]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3466,7 +3514,7 @@ func (x *VodListWorkflowExecutionRequest) String() string {
 func (*VodListWorkflowExecutionRequest) ProtoMessage() {}
 
 func (x *VodListWorkflowExecutionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[41]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3479,7 +3527,7 @@ func (x *VodListWorkflowExecutionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListWorkflowExecutionRequest.ProtoReflect.Descriptor instead.
 func (*VodListWorkflowExecutionRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{41}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *VodListWorkflowExecutionRequest) GetRunId() string {
@@ -3591,7 +3639,7 @@ type VodGetWorkflowExecutionDetailRequest struct {
 func (x *VodGetWorkflowExecutionDetailRequest) Reset() {
 	*x = VodGetWorkflowExecutionDetailRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[42]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3604,7 +3652,7 @@ func (x *VodGetWorkflowExecutionDetailRequest) String() string {
 func (*VodGetWorkflowExecutionDetailRequest) ProtoMessage() {}
 
 func (x *VodGetWorkflowExecutionDetailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[42]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3617,7 +3665,7 @@ func (x *VodGetWorkflowExecutionDetailRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use VodGetWorkflowExecutionDetailRequest.ProtoReflect.Descriptor instead.
 func (*VodGetWorkflowExecutionDetailRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{42}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *VodGetWorkflowExecutionDetailRequest) GetRunId() string {
@@ -3638,7 +3686,7 @@ type VodGetWorkflowResultRequest struct {
 func (x *VodGetWorkflowResultRequest) Reset() {
 	*x = VodGetWorkflowResultRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[43]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3651,7 +3699,7 @@ func (x *VodGetWorkflowResultRequest) String() string {
 func (*VodGetWorkflowResultRequest) ProtoMessage() {}
 
 func (x *VodGetWorkflowResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[43]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3664,7 +3712,7 @@ func (x *VodGetWorkflowResultRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetWorkflowResultRequest.ProtoReflect.Descriptor instead.
 func (*VodGetWorkflowResultRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{43}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *VodGetWorkflowResultRequest) GetRunId() string {
@@ -3686,7 +3734,7 @@ type VodGetWorkflowExecutionStatusRequest struct {
 func (x *VodGetWorkflowExecutionStatusRequest) Reset() {
 	*x = VodGetWorkflowExecutionStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[44]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3699,7 +3747,7 @@ func (x *VodGetWorkflowExecutionStatusRequest) String() string {
 func (*VodGetWorkflowExecutionStatusRequest) ProtoMessage() {}
 
 func (x *VodGetWorkflowExecutionStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[44]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3712,7 +3760,7 @@ func (x *VodGetWorkflowExecutionStatusRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use VodGetWorkflowExecutionStatusRequest.ProtoReflect.Descriptor instead.
 func (*VodGetWorkflowExecutionStatusRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{44}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *VodGetWorkflowExecutionStatusRequest) GetRunId() string {
@@ -3755,7 +3803,7 @@ type VodCreateTaskTemplateRequest struct {
 func (x *VodCreateTaskTemplateRequest) Reset() {
 	*x = VodCreateTaskTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[45]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3768,7 +3816,7 @@ func (x *VodCreateTaskTemplateRequest) String() string {
 func (*VodCreateTaskTemplateRequest) ProtoMessage() {}
 
 func (x *VodCreateTaskTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[45]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3781,7 +3829,7 @@ func (x *VodCreateTaskTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateTaskTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateTaskTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{45}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *VodCreateTaskTemplateRequest) GetSpaceName() string {
@@ -3866,7 +3914,7 @@ type VodUpdateTaskTemplateRequest struct {
 func (x *VodUpdateTaskTemplateRequest) Reset() {
 	*x = VodUpdateTaskTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[46]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3879,7 +3927,7 @@ func (x *VodUpdateTaskTemplateRequest) String() string {
 func (*VodUpdateTaskTemplateRequest) ProtoMessage() {}
 
 func (x *VodUpdateTaskTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[46]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3892,7 +3940,7 @@ func (x *VodUpdateTaskTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateTaskTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateTaskTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{46}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *VodUpdateTaskTemplateRequest) GetTemplateId() string {
@@ -3963,7 +4011,7 @@ type VodDeleteTaskTemplateRequest struct {
 func (x *VodDeleteTaskTemplateRequest) Reset() {
 	*x = VodDeleteTaskTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[47]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3976,7 +4024,7 @@ func (x *VodDeleteTaskTemplateRequest) String() string {
 func (*VodDeleteTaskTemplateRequest) ProtoMessage() {}
 
 func (x *VodDeleteTaskTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[47]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3989,7 +4037,7 @@ func (x *VodDeleteTaskTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteTaskTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteTaskTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{47}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *VodDeleteTaskTemplateRequest) GetTemplateId() string {
@@ -4011,7 +4059,7 @@ type VodGetTaskTemplateRequest struct {
 func (x *VodGetTaskTemplateRequest) Reset() {
 	*x = VodGetTaskTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[48]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4024,7 +4072,7 @@ func (x *VodGetTaskTemplateRequest) String() string {
 func (*VodGetTaskTemplateRequest) ProtoMessage() {}
 
 func (x *VodGetTaskTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[48]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4037,7 +4085,7 @@ func (x *VodGetTaskTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetTaskTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodGetTaskTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{48}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *VodGetTaskTemplateRequest) GetTemplateId() string {
@@ -4075,7 +4123,7 @@ type VodListTaskTemplateRequest struct {
 func (x *VodListTaskTemplateRequest) Reset() {
 	*x = VodListTaskTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[49]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4088,7 +4136,7 @@ func (x *VodListTaskTemplateRequest) String() string {
 func (*VodListTaskTemplateRequest) ProtoMessage() {}
 
 func (x *VodListTaskTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[49]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4101,7 +4149,7 @@ func (x *VodListTaskTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListTaskTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodListTaskTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{49}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *VodListTaskTemplateRequest) GetSpaceName() string {
@@ -4191,7 +4239,7 @@ type VodCreateWatermarkRequest struct {
 func (x *VodCreateWatermarkRequest) Reset() {
 	*x = VodCreateWatermarkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[50]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4204,7 +4252,7 @@ func (x *VodCreateWatermarkRequest) String() string {
 func (*VodCreateWatermarkRequest) ProtoMessage() {}
 
 func (x *VodCreateWatermarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[50]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4217,7 +4265,7 @@ func (x *VodCreateWatermarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateWatermarkRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateWatermarkRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{50}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *VodCreateWatermarkRequest) GetSpaceName() string {
@@ -4293,7 +4341,7 @@ type VodUpdateWatermarkRequest struct {
 func (x *VodUpdateWatermarkRequest) Reset() {
 	*x = VodUpdateWatermarkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[51]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4306,7 +4354,7 @@ func (x *VodUpdateWatermarkRequest) String() string {
 func (*VodUpdateWatermarkRequest) ProtoMessage() {}
 
 func (x *VodUpdateWatermarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[51]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4319,7 +4367,7 @@ func (x *VodUpdateWatermarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateWatermarkRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateWatermarkRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{51}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *VodUpdateWatermarkRequest) GetTemplateId() string {
@@ -4383,7 +4431,7 @@ type VodDeleteWatermarkRequest struct {
 func (x *VodDeleteWatermarkRequest) Reset() {
 	*x = VodDeleteWatermarkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[52]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4396,7 +4444,7 @@ func (x *VodDeleteWatermarkRequest) String() string {
 func (*VodDeleteWatermarkRequest) ProtoMessage() {}
 
 func (x *VodDeleteWatermarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[52]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4409,7 +4457,7 @@ func (x *VodDeleteWatermarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteWatermarkRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteWatermarkRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{52}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *VodDeleteWatermarkRequest) GetTemplateId() string {
@@ -4431,7 +4479,7 @@ type VodGetWatermarkRequest struct {
 func (x *VodGetWatermarkRequest) Reset() {
 	*x = VodGetWatermarkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[53]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4444,7 +4492,7 @@ func (x *VodGetWatermarkRequest) String() string {
 func (*VodGetWatermarkRequest) ProtoMessage() {}
 
 func (x *VodGetWatermarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[53]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4457,7 +4505,7 @@ func (x *VodGetWatermarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetWatermarkRequest.ProtoReflect.Descriptor instead.
 func (*VodGetWatermarkRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{53}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *VodGetWatermarkRequest) GetTemplateId() string {
@@ -4493,7 +4541,7 @@ type VodListWatermarkRequest struct {
 func (x *VodListWatermarkRequest) Reset() {
 	*x = VodListWatermarkRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[54]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4506,7 +4554,7 @@ func (x *VodListWatermarkRequest) String() string {
 func (*VodListWatermarkRequest) ProtoMessage() {}
 
 func (x *VodListWatermarkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[54]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4519,7 +4567,7 @@ func (x *VodListWatermarkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListWatermarkRequest.ProtoReflect.Descriptor instead.
 func (*VodListWatermarkRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{54}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *VodListWatermarkRequest) GetSpaceName() string {
@@ -4596,7 +4644,7 @@ type VodCreateWorkflowTemplateRequest struct {
 func (x *VodCreateWorkflowTemplateRequest) Reset() {
 	*x = VodCreateWorkflowTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[55]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4609,7 +4657,7 @@ func (x *VodCreateWorkflowTemplateRequest) String() string {
 func (*VodCreateWorkflowTemplateRequest) ProtoMessage() {}
 
 func (x *VodCreateWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[55]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4622,7 +4670,7 @@ func (x *VodCreateWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateWorkflowTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateWorkflowTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{55}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *VodCreateWorkflowTemplateRequest) GetSpaceName() string {
@@ -4671,7 +4719,7 @@ type VodUpdateWorkflowTemplateRequest struct {
 func (x *VodUpdateWorkflowTemplateRequest) Reset() {
 	*x = VodUpdateWorkflowTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[56]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4684,7 +4732,7 @@ func (x *VodUpdateWorkflowTemplateRequest) String() string {
 func (*VodUpdateWorkflowTemplateRequest) ProtoMessage() {}
 
 func (x *VodUpdateWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[56]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4697,7 +4745,7 @@ func (x *VodUpdateWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateWorkflowTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateWorkflowTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{56}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *VodUpdateWorkflowTemplateRequest) GetTemplateId() string {
@@ -4740,7 +4788,7 @@ type VodDeleteWorkflowTemplateRequest struct {
 func (x *VodDeleteWorkflowTemplateRequest) Reset() {
 	*x = VodDeleteWorkflowTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[57]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4753,7 +4801,7 @@ func (x *VodDeleteWorkflowTemplateRequest) String() string {
 func (*VodDeleteWorkflowTemplateRequest) ProtoMessage() {}
 
 func (x *VodDeleteWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[57]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4766,7 +4814,7 @@ func (x *VodDeleteWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDeleteWorkflowTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodDeleteWorkflowTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{57}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *VodDeleteWorkflowTemplateRequest) GetTemplateId() string {
@@ -4788,7 +4836,7 @@ type VodGetWorkflowTemplateRequest struct {
 func (x *VodGetWorkflowTemplateRequest) Reset() {
 	*x = VodGetWorkflowTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[58]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4801,7 +4849,7 @@ func (x *VodGetWorkflowTemplateRequest) String() string {
 func (*VodGetWorkflowTemplateRequest) ProtoMessage() {}
 
 func (x *VodGetWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[58]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4814,7 +4862,7 @@ func (x *VodGetWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetWorkflowTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodGetWorkflowTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{58}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *VodGetWorkflowTemplateRequest) GetTemplateId() string {
@@ -4850,7 +4898,7 @@ type VodListWorkflowTemplateRequest struct {
 func (x *VodListWorkflowTemplateRequest) Reset() {
 	*x = VodListWorkflowTemplateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[59]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4863,7 +4911,7 @@ func (x *VodListWorkflowTemplateRequest) String() string {
 func (*VodListWorkflowTemplateRequest) ProtoMessage() {}
 
 func (x *VodListWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[59]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4876,7 +4924,7 @@ func (x *VodListWorkflowTemplateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListWorkflowTemplateRequest.ProtoReflect.Descriptor instead.
 func (*VodListWorkflowTemplateRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{59}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *VodListWorkflowTemplateRequest) GetSpaceName() string {
@@ -4954,7 +5002,7 @@ type VodSubmitDirectEditTaskAsyncRequest struct {
 func (x *VodSubmitDirectEditTaskAsyncRequest) Reset() {
 	*x = VodSubmitDirectEditTaskAsyncRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[60]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4967,7 +5015,7 @@ func (x *VodSubmitDirectEditTaskAsyncRequest) String() string {
 func (*VodSubmitDirectEditTaskAsyncRequest) ProtoMessage() {}
 
 func (x *VodSubmitDirectEditTaskAsyncRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[60]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4980,7 +5028,7 @@ func (x *VodSubmitDirectEditTaskAsyncRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use VodSubmitDirectEditTaskAsyncRequest.ProtoReflect.Descriptor instead.
 func (*VodSubmitDirectEditTaskAsyncRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{60}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *VodSubmitDirectEditTaskAsyncRequest) GetUploader() string {
@@ -5036,7 +5084,7 @@ type VodGetDirectEditResultRequest struct {
 func (x *VodGetDirectEditResultRequest) Reset() {
 	*x = VodGetDirectEditResultRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[61]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5049,7 +5097,7 @@ func (x *VodGetDirectEditResultRequest) String() string {
 func (*VodGetDirectEditResultRequest) ProtoMessage() {}
 
 func (x *VodGetDirectEditResultRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[61]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5062,7 +5110,7 @@ func (x *VodGetDirectEditResultRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetDirectEditResultRequest.ProtoReflect.Descriptor instead.
 func (*VodGetDirectEditResultRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{61}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *VodGetDirectEditResultRequest) GetReqIds() []string {
@@ -5083,7 +5131,7 @@ type VodGetDirectEditProgressRequest struct {
 func (x *VodGetDirectEditProgressRequest) Reset() {
 	*x = VodGetDirectEditProgressRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[62]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5096,7 +5144,7 @@ func (x *VodGetDirectEditProgressRequest) String() string {
 func (*VodGetDirectEditProgressRequest) ProtoMessage() {}
 
 func (x *VodGetDirectEditProgressRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[62]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5109,7 +5157,7 @@ func (x *VodGetDirectEditProgressRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetDirectEditProgressRequest.ProtoReflect.Descriptor instead.
 func (*VodGetDirectEditProgressRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{62}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *VodGetDirectEditProgressRequest) GetReqId() string {
@@ -5122,6 +5170,53 @@ func (x *VodGetDirectEditProgressRequest) GetReqId() string {
 // **********************************************************************
 // 空间管理
 // **********************************************************************
+type VodDeleteSpaceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+}
+
+func (x *VodDeleteSpaceRequest) Reset() {
+	*x = VodDeleteSpaceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[64]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodDeleteSpaceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodDeleteSpaceRequest) ProtoMessage() {}
+
+func (x *VodDeleteSpaceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[64]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodDeleteSpaceRequest.ProtoReflect.Descriptor instead.
+func (*VodDeleteSpaceRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{64}
+}
+
+func (x *VodDeleteSpaceRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
 type VodCreateSpaceRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5142,7 +5237,7 @@ type VodCreateSpaceRequest struct {
 func (x *VodCreateSpaceRequest) Reset() {
 	*x = VodCreateSpaceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[63]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5155,7 +5250,7 @@ func (x *VodCreateSpaceRequest) String() string {
 func (*VodCreateSpaceRequest) ProtoMessage() {}
 
 func (x *VodCreateSpaceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[63]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5168,7 +5263,7 @@ func (x *VodCreateSpaceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateSpaceRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateSpaceRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{63}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *VodCreateSpaceRequest) GetSpaceName() string {
@@ -5218,7 +5313,7 @@ type VodGetSpaceDetailRequest struct {
 func (x *VodGetSpaceDetailRequest) Reset() {
 	*x = VodGetSpaceDetailRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[64]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5231,7 +5326,7 @@ func (x *VodGetSpaceDetailRequest) String() string {
 func (*VodGetSpaceDetailRequest) ProtoMessage() {}
 
 func (x *VodGetSpaceDetailRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[64]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5244,7 +5339,7 @@ func (x *VodGetSpaceDetailRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetSpaceDetailRequest.ProtoReflect.Descriptor instead.
 func (*VodGetSpaceDetailRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{64}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *VodGetSpaceDetailRequest) GetSpaceName() string {
@@ -5268,7 +5363,7 @@ type VodListSpaceRequest struct {
 func (x *VodListSpaceRequest) Reset() {
 	*x = VodListSpaceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[65]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5281,7 +5376,7 @@ func (x *VodListSpaceRequest) String() string {
 func (*VodListSpaceRequest) ProtoMessage() {}
 
 func (x *VodListSpaceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[65]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5294,7 +5389,7 @@ func (x *VodListSpaceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListSpaceRequest.ProtoReflect.Descriptor instead.
 func (*VodListSpaceRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{65}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *VodListSpaceRequest) GetOffset() float64 {
@@ -5329,7 +5424,7 @@ type VodUpdateSpaceRequest struct {
 func (x *VodUpdateSpaceRequest) Reset() {
 	*x = VodUpdateSpaceRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[66]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5342,7 +5437,7 @@ func (x *VodUpdateSpaceRequest) String() string {
 func (*VodUpdateSpaceRequest) ProtoMessage() {}
 
 func (x *VodUpdateSpaceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[66]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5355,7 +5450,7 @@ func (x *VodUpdateSpaceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateSpaceRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSpaceRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{66}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *VodUpdateSpaceRequest) GetSpaceName() string {
@@ -5404,7 +5499,7 @@ type VodUpdateSpaceUploadConfigRequest struct {
 func (x *VodUpdateSpaceUploadConfigRequest) Reset() {
 	*x = VodUpdateSpaceUploadConfigRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[67]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5417,7 +5512,7 @@ func (x *VodUpdateSpaceUploadConfigRequest) String() string {
 func (*VodUpdateSpaceUploadConfigRequest) ProtoMessage() {}
 
 func (x *VodUpdateSpaceUploadConfigRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[67]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5430,7 +5525,7 @@ func (x *VodUpdateSpaceUploadConfigRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodUpdateSpaceUploadConfigRequest.ProtoReflect.Descriptor instead.
 func (*VodUpdateSpaceUploadConfigRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{67}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *VodUpdateSpaceUploadConfigRequest) GetSpaceName() string {
@@ -5470,7 +5565,7 @@ type VodDescribeVodSpaceStorageDataRequest struct {
 func (x *VodDescribeVodSpaceStorageDataRequest) Reset() {
 	*x = VodDescribeVodSpaceStorageDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[68]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5483,7 +5578,7 @@ func (x *VodDescribeVodSpaceStorageDataRequest) String() string {
 func (*VodDescribeVodSpaceStorageDataRequest) ProtoMessage() {}
 
 func (x *VodDescribeVodSpaceStorageDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[68]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5496,7 +5591,7 @@ func (x *VodDescribeVodSpaceStorageDataRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use VodDescribeVodSpaceStorageDataRequest.ProtoReflect.Descriptor instead.
 func (*VodDescribeVodSpaceStorageDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{68}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *VodDescribeVodSpaceStorageDataRequest) GetSpaceList() string {
@@ -5534,9 +5629,416 @@ func (x *VodDescribeVodSpaceStorageDataRequest) GetType() string {
 	return ""
 }
 
-// **********************************************************************
-// 分发加速管理
-// **********************************************************************
+type VodUpdateDomainPlayRuleRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName     string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DefaultDomain string `protobuf:"bytes,2,opt,name=DefaultDomain,proto3" json:"DefaultDomain,omitempty"` //默认域名
+	PlayRule      string `protobuf:"bytes,3,opt,name=PlayRule,proto3" json:"PlayRule,omitempty"`           // 0 随机模式 1 默认域名模式
+}
+
+func (x *VodUpdateDomainPlayRuleRequest) Reset() {
+	*x = VodUpdateDomainPlayRuleRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[71]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodUpdateDomainPlayRuleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodUpdateDomainPlayRuleRequest) ProtoMessage() {}
+
+func (x *VodUpdateDomainPlayRuleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[71]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodUpdateDomainPlayRuleRequest.ProtoReflect.Descriptor instead.
+func (*VodUpdateDomainPlayRuleRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{71}
+}
+
+func (x *VodUpdateDomainPlayRuleRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodUpdateDomainPlayRuleRequest) GetDefaultDomain() string {
+	if x != nil {
+		return x.DefaultDomain
+	}
+	return ""
+}
+
+func (x *VodUpdateDomainPlayRuleRequest) GetPlayRule() string {
+	if x != nil {
+		return x.PlayRule
+	}
+	return ""
+}
+
+type VodAddDomainToSchedulerRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName         string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DomainType        string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
+	Domain            string `protobuf:"bytes,3,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	SourceStationType int32  `protobuf:"varint,4,opt,name=SourceStationType,proto3" json:"SourceStationType,omitempty"` // 0未定义 1点播源站 2第三方源站
+}
+
+func (x *VodAddDomainToSchedulerRequest) Reset() {
+	*x = VodAddDomainToSchedulerRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[72]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodAddDomainToSchedulerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodAddDomainToSchedulerRequest) ProtoMessage() {}
+
+func (x *VodAddDomainToSchedulerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[72]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodAddDomainToSchedulerRequest.ProtoReflect.Descriptor instead.
+func (*VodAddDomainToSchedulerRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *VodAddDomainToSchedulerRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodAddDomainToSchedulerRequest) GetDomainType() string {
+	if x != nil {
+		return x.DomainType
+	}
+	return ""
+}
+
+func (x *VodAddDomainToSchedulerRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *VodAddDomainToSchedulerRequest) GetSourceStationType() int32 {
+	if x != nil {
+		return x.SourceStationType
+	}
+	return 0
+}
+
+type VodRemoveDomainFromSchedulerRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName         string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DomainType        string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
+	Domain            string `protobuf:"bytes,3,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	SourceStationType int32  `protobuf:"varint,4,opt,name=SourceStationType,proto3" json:"SourceStationType,omitempty"` // 0未定义 1点播源站 2第三方源站
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) Reset() {
+	*x = VodRemoveDomainFromSchedulerRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[73]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodRemoveDomainFromSchedulerRequest) ProtoMessage() {}
+
+func (x *VodRemoveDomainFromSchedulerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[73]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodRemoveDomainFromSchedulerRequest.ProtoReflect.Descriptor instead.
+func (*VodRemoveDomainFromSchedulerRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) GetDomainType() string {
+	if x != nil {
+		return x.DomainType
+	}
+	return ""
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *VodRemoveDomainFromSchedulerRequest) GetSourceStationType() int32 {
+	if x != nil {
+		return x.SourceStationType
+	}
+	return 0
+}
+
+type VodDeleteDomainRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName  string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DomainType string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
+	Domain     string `protobuf:"bytes,3,opt,name=Domain,proto3" json:"Domain,omitempty"`
+}
+
+func (x *VodDeleteDomainRequest) Reset() {
+	*x = VodDeleteDomainRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodDeleteDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodDeleteDomainRequest) ProtoMessage() {}
+
+func (x *VodDeleteDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodDeleteDomainRequest.ProtoReflect.Descriptor instead.
+func (*VodDeleteDomainRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *VodDeleteDomainRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodDeleteDomainRequest) GetDomainType() string {
+	if x != nil {
+		return x.DomainType
+	}
+	return ""
+}
+
+func (x *VodDeleteDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+type VodStartDomainRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName         string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DomainType        string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
+	Domain            string `protobuf:"bytes,3,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	SourceStationType int32  `protobuf:"varint,4,opt,name=SourceStationType,proto3" json:"SourceStationType,omitempty"` // 0未定义 1点播源站 2第三方源站
+}
+
+func (x *VodStartDomainRequest) Reset() {
+	*x = VodStartDomainRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodStartDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodStartDomainRequest) ProtoMessage() {}
+
+func (x *VodStartDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodStartDomainRequest.ProtoReflect.Descriptor instead.
+func (*VodStartDomainRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *VodStartDomainRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodStartDomainRequest) GetDomainType() string {
+	if x != nil {
+		return x.DomainType
+	}
+	return ""
+}
+
+func (x *VodStartDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *VodStartDomainRequest) GetSourceStationType() int32 {
+	if x != nil {
+		return x.SourceStationType
+	}
+	return 0
+}
+
+type VodStopDomainRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SpaceName         string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
+	DomainType        string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
+	Domain            string `protobuf:"bytes,3,opt,name=Domain,proto3" json:"Domain,omitempty"`
+	SourceStationType int32  `protobuf:"varint,4,opt,name=SourceStationType,proto3" json:"SourceStationType,omitempty"` // 0未定义 1点播源站 2第三方源站
+}
+
+func (x *VodStopDomainRequest) Reset() {
+	*x = VodStopDomainRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[76]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodStopDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodStopDomainRequest) ProtoMessage() {}
+
+func (x *VodStopDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[76]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodStopDomainRequest.ProtoReflect.Descriptor instead.
+func (*VodStopDomainRequest) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{76}
+}
+
+func (x *VodStopDomainRequest) GetSpaceName() string {
+	if x != nil {
+		return x.SpaceName
+	}
+	return ""
+}
+
+func (x *VodStopDomainRequest) GetDomainType() string {
+	if x != nil {
+		return x.DomainType
+	}
+	return ""
+}
+
+func (x *VodStopDomainRequest) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
+func (x *VodStopDomainRequest) GetSourceStationType() int32 {
+	if x != nil {
+		return x.SourceStationType
+	}
+	return 0
+}
+
 type VodListDomainRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -5561,7 +6063,7 @@ type VodListDomainRequest struct {
 func (x *VodListDomainRequest) Reset() {
 	*x = VodListDomainRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[69]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5574,7 +6076,7 @@ func (x *VodListDomainRequest) String() string {
 func (*VodListDomainRequest) ProtoMessage() {}
 
 func (x *VodListDomainRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[69]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5587,7 +6089,7 @@ func (x *VodListDomainRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListDomainRequest.ProtoReflect.Descriptor instead.
 func (*VodListDomainRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{69}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *VodListDomainRequest) GetSpaceName() string {
@@ -5641,7 +6143,7 @@ type VodCreateCdnRefreshTaskRequest struct {
 func (x *VodCreateCdnRefreshTaskRequest) Reset() {
 	*x = VodCreateCdnRefreshTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[70]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5654,7 +6156,7 @@ func (x *VodCreateCdnRefreshTaskRequest) String() string {
 func (*VodCreateCdnRefreshTaskRequest) ProtoMessage() {}
 
 func (x *VodCreateCdnRefreshTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[70]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5667,7 +6169,7 @@ func (x *VodCreateCdnRefreshTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateCdnRefreshTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateCdnRefreshTaskRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{70}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *VodCreateCdnRefreshTaskRequest) GetSpaceName() string {
@@ -5705,7 +6207,7 @@ type VodCreateCdnPreloadTaskRequest struct {
 func (x *VodCreateCdnPreloadTaskRequest) Reset() {
 	*x = VodCreateCdnPreloadTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[71]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5718,7 +6220,7 @@ func (x *VodCreateCdnPreloadTaskRequest) String() string {
 func (*VodCreateCdnPreloadTaskRequest) ProtoMessage() {}
 
 func (x *VodCreateCdnPreloadTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[71]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5731,7 +6233,7 @@ func (x *VodCreateCdnPreloadTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateCdnPreloadTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodCreateCdnPreloadTaskRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{71}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *VodCreateCdnPreloadTaskRequest) GetSpaceName() string {
@@ -5776,7 +6278,7 @@ type VodListCdnTasksRequest struct {
 func (x *VodListCdnTasksRequest) Reset() {
 	*x = VodListCdnTasksRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[72]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5789,7 +6291,7 @@ func (x *VodListCdnTasksRequest) String() string {
 func (*VodListCdnTasksRequest) ProtoMessage() {}
 
 func (x *VodListCdnTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[72]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5802,7 +6304,7 @@ func (x *VodListCdnTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnTasksRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnTasksRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{72}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *VodListCdnTasksRequest) GetSpaceName() string {
@@ -5886,7 +6388,7 @@ type VodListCdnAccessLogRequest struct {
 func (x *VodListCdnAccessLogRequest) Reset() {
 	*x = VodListCdnAccessLogRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[73]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5899,7 +6401,7 @@ func (x *VodListCdnAccessLogRequest) String() string {
 func (*VodListCdnAccessLogRequest) ProtoMessage() {}
 
 func (x *VodListCdnAccessLogRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[73]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5912,7 +6414,7 @@ func (x *VodListCdnAccessLogRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnAccessLogRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnAccessLogRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{73}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *VodListCdnAccessLogRequest) GetDomains() string {
@@ -5961,7 +6463,7 @@ type VodListCdnTopAccessUrlRequest struct {
 func (x *VodListCdnTopAccessUrlRequest) Reset() {
 	*x = VodListCdnTopAccessUrlRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[74]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5974,7 +6476,7 @@ func (x *VodListCdnTopAccessUrlRequest) String() string {
 func (*VodListCdnTopAccessUrlRequest) ProtoMessage() {}
 
 func (x *VodListCdnTopAccessUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[74]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5987,7 +6489,7 @@ func (x *VodListCdnTopAccessUrlRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnTopAccessUrlRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnTopAccessUrlRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{74}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *VodListCdnTopAccessUrlRequest) GetDomains() string {
@@ -6039,7 +6541,7 @@ type VodListCdnTopAccessRequest struct {
 func (x *VodListCdnTopAccessRequest) Reset() {
 	*x = VodListCdnTopAccessRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[75]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6052,7 +6554,7 @@ func (x *VodListCdnTopAccessRequest) String() string {
 func (*VodListCdnTopAccessRequest) ProtoMessage() {}
 
 func (x *VodListCdnTopAccessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[75]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6065,7 +6567,7 @@ func (x *VodListCdnTopAccessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnTopAccessRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnTopAccessRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{75}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *VodListCdnTopAccessRequest) GetDomains() string {
@@ -6127,7 +6629,7 @@ type VodDescribeVodDomainBandwidthDataRequest struct {
 func (x *VodDescribeVodDomainBandwidthDataRequest) Reset() {
 	*x = VodDescribeVodDomainBandwidthDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[76]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6140,7 +6642,7 @@ func (x *VodDescribeVodDomainBandwidthDataRequest) String() string {
 func (*VodDescribeVodDomainBandwidthDataRequest) ProtoMessage() {}
 
 func (x *VodDescribeVodDomainBandwidthDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[76]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6153,7 +6655,7 @@ func (x *VodDescribeVodDomainBandwidthDataRequest) ProtoReflect() protoreflect.M
 
 // Deprecated: Use VodDescribeVodDomainBandwidthDataRequest.ProtoReflect.Descriptor instead.
 func (*VodDescribeVodDomainBandwidthDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{76}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *VodDescribeVodDomainBandwidthDataRequest) GetDomainList() string {
@@ -6234,7 +6736,7 @@ type VodListCdnUsageDataRequest struct {
 func (x *VodListCdnUsageDataRequest) Reset() {
 	*x = VodListCdnUsageDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[77]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6247,7 +6749,7 @@ func (x *VodListCdnUsageDataRequest) String() string {
 func (*VodListCdnUsageDataRequest) ProtoMessage() {}
 
 func (x *VodListCdnUsageDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[77]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6260,7 +6762,7 @@ func (x *VodListCdnUsageDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnUsageDataRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnUsageDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{77}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *VodListCdnUsageDataRequest) GetDomains() string {
@@ -6377,7 +6879,7 @@ type VodListCdnStatusDataRequest struct {
 func (x *VodListCdnStatusDataRequest) Reset() {
 	*x = VodListCdnStatusDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[78]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6390,7 +6892,7 @@ func (x *VodListCdnStatusDataRequest) String() string {
 func (*VodListCdnStatusDataRequest) ProtoMessage() {}
 
 func (x *VodListCdnStatusDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[78]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6403,7 +6905,7 @@ func (x *VodListCdnStatusDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnStatusDataRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnStatusDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{78}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *VodListCdnStatusDataRequest) GetDomains() string {
@@ -6466,7 +6968,7 @@ type VodDescribeIPInfoRequest struct {
 func (x *VodDescribeIPInfoRequest) Reset() {
 	*x = VodDescribeIPInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[79]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[87]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6479,7 +6981,7 @@ func (x *VodDescribeIPInfoRequest) String() string {
 func (*VodDescribeIPInfoRequest) ProtoMessage() {}
 
 func (x *VodDescribeIPInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[79]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[87]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6492,7 +6994,7 @@ func (x *VodDescribeIPInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodDescribeIPInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodDescribeIPInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{79}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{87}
 }
 
 func (x *VodDescribeIPInfoRequest) GetIps() string {
@@ -6523,7 +7025,7 @@ type VodListCdnPvDataRequest struct {
 func (x *VodListCdnPvDataRequest) Reset() {
 	*x = VodListCdnPvDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[80]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[88]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6536,7 +7038,7 @@ func (x *VodListCdnPvDataRequest) String() string {
 func (*VodListCdnPvDataRequest) ProtoMessage() {}
 
 func (x *VodListCdnPvDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[80]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[88]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6549,7 +7051,7 @@ func (x *VodListCdnPvDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnPvDataRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnPvDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{80}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{88}
 }
 
 func (x *VodListCdnPvDataRequest) GetDomains() string {
@@ -6615,7 +7117,7 @@ type VodListCdnHitrateDataRequest struct {
 func (x *VodListCdnHitrateDataRequest) Reset() {
 	*x = VodListCdnHitrateDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[81]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[89]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6628,7 +7130,7 @@ func (x *VodListCdnHitrateDataRequest) String() string {
 func (*VodListCdnHitrateDataRequest) ProtoMessage() {}
 
 func (x *VodListCdnHitrateDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[81]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[89]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6641,7 +7143,7 @@ func (x *VodListCdnHitrateDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListCdnHitrateDataRequest.ProtoReflect.Descriptor instead.
 func (*VodListCdnHitrateDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{81}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{89}
 }
 
 func (x *VodListCdnHitrateDataRequest) GetDomains() string {
@@ -6703,7 +7205,7 @@ type VodDescribeVodDomainTrafficDataRequest struct {
 func (x *VodDescribeVodDomainTrafficDataRequest) Reset() {
 	*x = VodDescribeVodDomainTrafficDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[82]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[90]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6716,7 +7218,7 @@ func (x *VodDescribeVodDomainTrafficDataRequest) String() string {
 func (*VodDescribeVodDomainTrafficDataRequest) ProtoMessage() {}
 
 func (x *VodDescribeVodDomainTrafficDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[82]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[90]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6729,7 +7231,7 @@ func (x *VodDescribeVodDomainTrafficDataRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use VodDescribeVodDomainTrafficDataRequest.ProtoReflect.Descriptor instead.
 func (*VodDescribeVodDomainTrafficDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{82}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{90}
 }
 
 func (x *VodDescribeVodDomainTrafficDataRequest) GetDomainList() string {
@@ -6796,7 +7298,7 @@ type VodSubmitBlockTasksRequest struct {
 func (x *VodSubmitBlockTasksRequest) Reset() {
 	*x = VodSubmitBlockTasksRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[83]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[91]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6809,7 +7311,7 @@ func (x *VodSubmitBlockTasksRequest) String() string {
 func (*VodSubmitBlockTasksRequest) ProtoMessage() {}
 
 func (x *VodSubmitBlockTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[83]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[91]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6822,7 +7324,7 @@ func (x *VodSubmitBlockTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSubmitBlockTasksRequest.ProtoReflect.Descriptor instead.
 func (*VodSubmitBlockTasksRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{83}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{91}
 }
 
 func (x *VodSubmitBlockTasksRequest) GetFileUrls() string {
@@ -6874,7 +7376,7 @@ type VodGetContentBlockTasksRequest struct {
 func (x *VodGetContentBlockTasksRequest) Reset() {
 	*x = VodGetContentBlockTasksRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[84]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[92]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6887,7 +7389,7 @@ func (x *VodGetContentBlockTasksRequest) String() string {
 func (*VodGetContentBlockTasksRequest) ProtoMessage() {}
 
 func (x *VodGetContentBlockTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[84]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[92]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6900,7 +7402,7 @@ func (x *VodGetContentBlockTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetContentBlockTasksRequest.ProtoReflect.Descriptor instead.
 func (*VodGetContentBlockTasksRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{84}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{92}
 }
 
 func (x *VodGetContentBlockTasksRequest) GetUrl() string {
@@ -6984,7 +7486,7 @@ type VodCreateDomainV2Request struct {
 func (x *VodCreateDomainV2Request) Reset() {
 	*x = VodCreateDomainV2Request{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[85]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[93]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6997,7 +7499,7 @@ func (x *VodCreateDomainV2Request) String() string {
 func (*VodCreateDomainV2Request) ProtoMessage() {}
 
 func (x *VodCreateDomainV2Request) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[85]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[93]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7010,7 +7512,7 @@ func (x *VodCreateDomainV2Request) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodCreateDomainV2Request.ProtoReflect.Descriptor instead.
 func (*VodCreateDomainV2Request) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{85}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{93}
 }
 
 func (x *VodCreateDomainV2Request) GetSpaceName() string {
@@ -7083,7 +7585,7 @@ type VodUpdateDomainExpireV2Request struct {
 func (x *VodUpdateDomainExpireV2Request) Reset() {
 	*x = VodUpdateDomainExpireV2Request{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[86]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[94]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7096,7 +7598,7 @@ func (x *VodUpdateDomainExpireV2Request) String() string {
 func (*VodUpdateDomainExpireV2Request) ProtoMessage() {}
 
 func (x *VodUpdateDomainExpireV2Request) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[86]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[94]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7109,7 +7611,7 @@ func (x *VodUpdateDomainExpireV2Request) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodUpdateDomainExpireV2Request.ProtoReflect.Descriptor instead.
 func (*VodUpdateDomainExpireV2Request) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{86}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{94}
 }
 
 func (x *VodUpdateDomainExpireV2Request) GetSpaceName() string {
@@ -7156,7 +7658,7 @@ type VodUpdateDomainAuthConfigV2Request struct {
 func (x *VodUpdateDomainAuthConfigV2Request) Reset() {
 	*x = VodUpdateDomainAuthConfigV2Request{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[87]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[95]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7169,7 +7671,7 @@ func (x *VodUpdateDomainAuthConfigV2Request) String() string {
 func (*VodUpdateDomainAuthConfigV2Request) ProtoMessage() {}
 
 func (x *VodUpdateDomainAuthConfigV2Request) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[87]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[95]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7182,7 +7684,7 @@ func (x *VodUpdateDomainAuthConfigV2Request) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use VodUpdateDomainAuthConfigV2Request.ProtoReflect.Descriptor instead.
 func (*VodUpdateDomainAuthConfigV2Request) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{87}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{95}
 }
 
 func (x *VodUpdateDomainAuthConfigV2Request) GetSpaceName() string {
@@ -7242,7 +7744,7 @@ type AddOrUpdateCertificateV2Request struct {
 func (x *AddOrUpdateCertificateV2Request) Reset() {
 	*x = AddOrUpdateCertificateV2Request{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[88]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[96]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7255,7 +7757,7 @@ func (x *AddOrUpdateCertificateV2Request) String() string {
 func (*AddOrUpdateCertificateV2Request) ProtoMessage() {}
 
 func (x *AddOrUpdateCertificateV2Request) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[88]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[96]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7268,7 +7770,7 @@ func (x *AddOrUpdateCertificateV2Request) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOrUpdateCertificateV2Request.ProtoReflect.Descriptor instead.
 func (*AddOrUpdateCertificateV2Request) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{88}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{96}
 }
 
 func (x *AddOrUpdateCertificateV2Request) GetSpaceName() string {
@@ -7327,7 +7829,7 @@ type VodAddCallbackSubscriptionRequest struct {
 func (x *VodAddCallbackSubscriptionRequest) Reset() {
 	*x = VodAddCallbackSubscriptionRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[89]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[97]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7340,7 +7842,7 @@ func (x *VodAddCallbackSubscriptionRequest) String() string {
 func (*VodAddCallbackSubscriptionRequest) ProtoMessage() {}
 
 func (x *VodAddCallbackSubscriptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[89]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[97]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7353,7 +7855,7 @@ func (x *VodAddCallbackSubscriptionRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodAddCallbackSubscriptionRequest.ProtoReflect.Descriptor instead.
 func (*VodAddCallbackSubscriptionRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{89}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{97}
 }
 
 func (x *VodAddCallbackSubscriptionRequest) GetSpaceName() string {
@@ -7395,7 +7897,7 @@ type VodSetCallbackEventRequest struct {
 func (x *VodSetCallbackEventRequest) Reset() {
 	*x = VodSetCallbackEventRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[90]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[98]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7408,7 +7910,7 @@ func (x *VodSetCallbackEventRequest) String() string {
 func (*VodSetCallbackEventRequest) ProtoMessage() {}
 
 func (x *VodSetCallbackEventRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[90]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[98]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7421,7 +7923,7 @@ func (x *VodSetCallbackEventRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSetCallbackEventRequest.ProtoReflect.Descriptor instead.
 func (*VodSetCallbackEventRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{90}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{98}
 }
 
 func (x *VodSetCallbackEventRequest) GetSpaceName() string {
@@ -7489,7 +7991,7 @@ type VodGetSmartStrategyLitePlayInfoRequest struct {
 func (x *VodGetSmartStrategyLitePlayInfoRequest) Reset() {
 	*x = VodGetSmartStrategyLitePlayInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[91]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[99]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7502,7 +8004,7 @@ func (x *VodGetSmartStrategyLitePlayInfoRequest) String() string {
 func (*VodGetSmartStrategyLitePlayInfoRequest) ProtoMessage() {}
 
 func (x *VodGetSmartStrategyLitePlayInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[91]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[99]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7515,7 +8017,7 @@ func (x *VodGetSmartStrategyLitePlayInfoRequest) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use VodGetSmartStrategyLitePlayInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodGetSmartStrategyLitePlayInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{91}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{99}
 }
 
 func (x *VodGetSmartStrategyLitePlayInfoRequest) GetPlayUrl() string {
@@ -7607,7 +8109,7 @@ type VodGetAppInfoRequest struct {
 func (x *VodGetAppInfoRequest) Reset() {
 	*x = VodGetAppInfoRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[92]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[100]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7620,7 +8122,7 @@ func (x *VodGetAppInfoRequest) String() string {
 func (*VodGetAppInfoRequest) ProtoMessage() {}
 
 func (x *VodGetAppInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[92]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[100]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7633,7 +8135,7 @@ func (x *VodGetAppInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetAppInfoRequest.ProtoReflect.Descriptor instead.
 func (*VodGetAppInfoRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{92}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{100}
 }
 
 func (x *VodGetAppInfoRequest) GetAppId() uint64 {
@@ -7665,7 +8167,7 @@ type DescribeVodSpaceTranscodeDataRequest struct {
 func (x *DescribeVodSpaceTranscodeDataRequest) Reset() {
 	*x = DescribeVodSpaceTranscodeDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[93]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[101]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7678,7 +8180,7 @@ func (x *DescribeVodSpaceTranscodeDataRequest) String() string {
 func (*DescribeVodSpaceTranscodeDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceTranscodeDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[93]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[101]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7691,7 +8193,7 @@ func (x *DescribeVodSpaceTranscodeDataRequest) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use DescribeVodSpaceTranscodeDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceTranscodeDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{93}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{101}
 }
 
 func (x *DescribeVodSpaceTranscodeDataRequest) GetSpaceList() string {
@@ -7769,7 +8271,7 @@ type DescribeVodSpaceAIStatisDataRequest struct {
 func (x *DescribeVodSpaceAIStatisDataRequest) Reset() {
 	*x = DescribeVodSpaceAIStatisDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[94]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[102]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7782,7 +8284,7 @@ func (x *DescribeVodSpaceAIStatisDataRequest) String() string {
 func (*DescribeVodSpaceAIStatisDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceAIStatisDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[94]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[102]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7795,7 +8297,7 @@ func (x *DescribeVodSpaceAIStatisDataRequest) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use DescribeVodSpaceAIStatisDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceAIStatisDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{94}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{102}
 }
 
 func (x *DescribeVodSpaceAIStatisDataRequest) GetSpaceList() string {
@@ -7865,7 +8367,7 @@ type DescribeVodSpaceSubtitleStatisDataRequest struct {
 func (x *DescribeVodSpaceSubtitleStatisDataRequest) Reset() {
 	*x = DescribeVodSpaceSubtitleStatisDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[95]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[103]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7878,7 +8380,7 @@ func (x *DescribeVodSpaceSubtitleStatisDataRequest) String() string {
 func (*DescribeVodSpaceSubtitleStatisDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceSubtitleStatisDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[95]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[103]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7891,7 +8393,7 @@ func (x *DescribeVodSpaceSubtitleStatisDataRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use DescribeVodSpaceSubtitleStatisDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceSubtitleStatisDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{95}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{103}
 }
 
 func (x *DescribeVodSpaceSubtitleStatisDataRequest) GetSpaceList() string {
@@ -7962,7 +8464,7 @@ type DescribeVodSpaceDetectStatisDataRequest struct {
 func (x *DescribeVodSpaceDetectStatisDataRequest) Reset() {
 	*x = DescribeVodSpaceDetectStatisDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[96]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[104]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7975,7 +8477,7 @@ func (x *DescribeVodSpaceDetectStatisDataRequest) String() string {
 func (*DescribeVodSpaceDetectStatisDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceDetectStatisDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[96]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[104]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7988,7 +8490,7 @@ func (x *DescribeVodSpaceDetectStatisDataRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use DescribeVodSpaceDetectStatisDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceDetectStatisDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{96}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{104}
 }
 
 func (x *DescribeVodSpaceDetectStatisDataRequest) GetSpaceList() string {
@@ -8058,7 +8560,7 @@ type DescribeVodSnapshotDataRequest struct {
 func (x *DescribeVodSnapshotDataRequest) Reset() {
 	*x = DescribeVodSnapshotDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[97]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[105]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8071,7 +8573,7 @@ func (x *DescribeVodSnapshotDataRequest) String() string {
 func (*DescribeVodSnapshotDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSnapshotDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[97]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[105]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8084,7 +8586,7 @@ func (x *DescribeVodSnapshotDataRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DescribeVodSnapshotDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSnapshotDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{97}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{105}
 }
 
 func (x *DescribeVodSnapshotDataRequest) GetSpaceList() string {
@@ -8153,7 +8655,7 @@ type DescribeVodSpaceWorkflowDetailDataRequest struct {
 func (x *DescribeVodSpaceWorkflowDetailDataRequest) Reset() {
 	*x = DescribeVodSpaceWorkflowDetailDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[98]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[106]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8166,7 +8668,7 @@ func (x *DescribeVodSpaceWorkflowDetailDataRequest) String() string {
 func (*DescribeVodSpaceWorkflowDetailDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceWorkflowDetailDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[98]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[106]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8179,7 +8681,7 @@ func (x *DescribeVodSpaceWorkflowDetailDataRequest) ProtoReflect() protoreflect.
 
 // Deprecated: Use DescribeVodSpaceWorkflowDetailDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceWorkflowDetailDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{98}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{106}
 }
 
 func (x *DescribeVodSpaceWorkflowDetailDataRequest) GetRegion() string {
@@ -8241,7 +8743,7 @@ type DescribeVodSpaceEditDetailDataRequest struct {
 func (x *DescribeVodSpaceEditDetailDataRequest) Reset() {
 	*x = DescribeVodSpaceEditDetailDataRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[99]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[107]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8254,7 +8756,7 @@ func (x *DescribeVodSpaceEditDetailDataRequest) String() string {
 func (*DescribeVodSpaceEditDetailDataRequest) ProtoMessage() {}
 
 func (x *DescribeVodSpaceEditDetailDataRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[99]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[107]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8267,7 +8769,7 @@ func (x *DescribeVodSpaceEditDetailDataRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use DescribeVodSpaceEditDetailDataRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceEditDetailDataRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{99}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{107}
 }
 
 func (x *DescribeVodSpaceEditDetailDataRequest) GetRegion() string {
@@ -8326,7 +8828,7 @@ type DescribeVodPlayFileLogByDomainRequest struct {
 func (x *DescribeVodPlayFileLogByDomainRequest) Reset() {
 	*x = DescribeVodPlayFileLogByDomainRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[100]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[108]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8339,7 +8841,7 @@ func (x *DescribeVodPlayFileLogByDomainRequest) String() string {
 func (*DescribeVodPlayFileLogByDomainRequest) ProtoMessage() {}
 
 func (x *DescribeVodPlayFileLogByDomainRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[100]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[108]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8352,7 +8854,7 @@ func (x *DescribeVodPlayFileLogByDomainRequest) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use DescribeVodPlayFileLogByDomainRequest.ProtoReflect.Descriptor instead.
 func (*DescribeVodPlayFileLogByDomainRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{100}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{108}
 }
 
 func (x *DescribeVodPlayFileLogByDomainRequest) GetStartTime() string {
@@ -8389,7 +8891,7 @@ type VodSubmitBlockMediaTaskRequest struct {
 func (x *VodSubmitBlockMediaTaskRequest) Reset() {
 	*x = VodSubmitBlockMediaTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[101]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[109]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8402,7 +8904,7 @@ func (x *VodSubmitBlockMediaTaskRequest) String() string {
 func (*VodSubmitBlockMediaTaskRequest) ProtoMessage() {}
 
 func (x *VodSubmitBlockMediaTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[101]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[109]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8415,7 +8917,7 @@ func (x *VodSubmitBlockMediaTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSubmitBlockMediaTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodSubmitBlockMediaTaskRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{101}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{109}
 }
 
 func (x *VodSubmitBlockMediaTaskRequest) GetSpaceName() string {
@@ -8444,7 +8946,7 @@ type VodSubmitUnblockMediaTaskRequest struct {
 func (x *VodSubmitUnblockMediaTaskRequest) Reset() {
 	*x = VodSubmitUnblockMediaTaskRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[102]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[110]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8457,7 +8959,7 @@ func (x *VodSubmitUnblockMediaTaskRequest) String() string {
 func (*VodSubmitUnblockMediaTaskRequest) ProtoMessage() {}
 
 func (x *VodSubmitUnblockMediaTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[102]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[110]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8470,7 +8972,7 @@ func (x *VodSubmitUnblockMediaTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSubmitUnblockMediaTaskRequest.ProtoReflect.Descriptor instead.
 func (*VodSubmitUnblockMediaTaskRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{102}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{110}
 }
 
 func (x *VodSubmitUnblockMediaTaskRequest) GetSpaceName() string {
@@ -8499,7 +9001,7 @@ type VodQueryMediaBlockStatusRequest struct {
 func (x *VodQueryMediaBlockStatusRequest) Reset() {
 	*x = VodQueryMediaBlockStatusRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[103]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[111]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8512,7 +9014,7 @@ func (x *VodQueryMediaBlockStatusRequest) String() string {
 func (*VodQueryMediaBlockStatusRequest) ProtoMessage() {}
 
 func (x *VodQueryMediaBlockStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[103]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[111]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8525,7 +9027,7 @@ func (x *VodQueryMediaBlockStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodQueryMediaBlockStatusRequest.ProtoReflect.Descriptor instead.
 func (*VodQueryMediaBlockStatusRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{103}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{111}
 }
 
 func (x *VodQueryMediaBlockStatusRequest) GetSpaceName() string {
@@ -8554,7 +9056,7 @@ type VodListProjectsRequest struct {
 func (x *VodListProjectsRequest) Reset() {
 	*x = VodListProjectsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[104]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[112]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8567,7 +9069,7 @@ func (x *VodListProjectsRequest) String() string {
 func (*VodListProjectsRequest) ProtoMessage() {}
 
 func (x *VodListProjectsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[104]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[112]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8580,7 +9082,7 @@ func (x *VodListProjectsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListProjectsRequest.ProtoReflect.Descriptor instead.
 func (*VodListProjectsRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{104}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{112}
 }
 
 // **********************************************************************
@@ -8595,7 +9097,7 @@ type VodGetTradeConfigurationRequest struct {
 func (x *VodGetTradeConfigurationRequest) Reset() {
 	*x = VodGetTradeConfigurationRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[105]
+		mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[113]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -8608,7 +9110,7 @@ func (x *VodGetTradeConfigurationRequest) String() string {
 func (*VodGetTradeConfigurationRequest) ProtoMessage() {}
 
 func (x *VodGetTradeConfigurationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[105]
+	mi := &file_volcengine_vod_request_request_vod_proto_msgTypes[113]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -8621,7 +9123,7 @@ func (x *VodGetTradeConfigurationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetTradeConfigurationRequest.ProtoReflect.Descriptor instead.
 func (*VodGetTradeConfigurationRequest) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{105}
+	return file_volcengine_vod_request_request_vod_proto_rawDescGZIP(), []int{113}
 }
 
 var File_volcengine_vod_request_request_vod_proto protoreflect.FileDescriptor
@@ -8741,7 +9243,10 @@ var file_volcengine_vod_request_request_vod_proto_rawDesc = []byte{
 	0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x34, 0x0a, 0x15, 0x4e, 0x65, 0x65, 0x64, 0x43, 0x6f, 0x6d,
 	0x70, 0x6f, 0x73, 0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x15, 0x4e, 0x65, 0x65, 0x64, 0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x73,
-	0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x81, 0x01, 0x0a, 0x13,
+	0x65, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x2e, 0x0a, 0x1c, 0x56,
+	0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x44, 0x72, 0x6d, 0x44, 0x61, 0x74,
+	0x61, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x41,
+	0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x41, 0x6b, 0x22, 0x81, 0x01, 0x0a, 0x13,
 	0x56, 0x6f, 0x64, 0x55, 0x72, 0x6c, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d,
@@ -9421,506 +9926,565 @@ var file_volcengine_vod_request_request_vod_proto_rawDesc = []byte{
 	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x44, 0x69, 0x72, 0x65, 0x63, 0x74, 0x45, 0x64, 0x69, 0x74,
 	0x50, 0x72, 0x6f, 0x67, 0x72, 0x65, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
 	0x14, 0x0a, 0x05, 0x52, 0x65, 0x71, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x52, 0x65, 0x71, 0x49, 0x64, 0x22, 0xad, 0x01, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a,
-	0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12,
-	0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
-	0x6e, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x55, 0x73, 0x65,
-	0x72, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x55, 0x73, 0x65,
-	0x72, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x38, 0x0a, 0x18, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22,
-	0x43, 0x0a, 0x13, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x14,
-	0x0a, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x4c,
-	0x69, 0x6d, 0x69, 0x74, 0x22, 0xb3, 0x01, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61,
+	0x52, 0x65, 0x71, 0x49, 0x64, 0x22, 0x35, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x6c, 0x65,
 	0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
 	0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x11,
+	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0xad, 0x01, 0x0a,
+	0x15, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x50, 0x72, 0x6f, 0x6a, 0x65,
+	0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69,
+	0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
+	0x12, 0x1a, 0x0a, 0x08, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x55, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x38, 0x0a, 0x18,
+	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x43, 0x0a, 0x13, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73,
+	0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a,
+	0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x4f,
+	0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0xb3, 0x01, 0x0a, 0x15,
+	0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x50, 0x72, 0x6f,
+	0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
 	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d,
-	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x50,
-	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x54, 0x61,
-	0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x6f,
-	0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63,
-	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x81, 0x01, 0x0a, 0x21, 0x56,
-	0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x55, 0x70, 0x6c,
-	0x6f, 0x61, 0x64, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c,
-	0x0a, 0x09, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x4b, 0x65, 0x79, 0x12, 0x20, 0x0a, 0x0b,
-	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0b, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xb3,
-	0x01, 0x0a, 0x25, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f,
-	0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x44, 0x61, 0x74,
+	0x65, 0x12, 0x2c, 0x0a, 0x11, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65,
+	0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x54, 0x61,
+	0x72, 0x67, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x20, 0x0a, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f,
+	0x6e, 0x22, 0x81, 0x01, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x4b,
+	0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x4b, 0x65, 0x79, 0x12, 0x20, 0x0a, 0x0b, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x56, 0x61, 0x6c,
+	0x75, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0xb3, 0x01, 0x0a, 0x25, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53, 0x74, 0x6f,
+	0x72, 0x61, 0x67, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a,
+	0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72,
+	0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x22, 0x80, 0x01, 0x0a, 0x1e,
+	0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x50,
+	0x6c, 0x61, 0x79, 0x52, 0x75, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
+	0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d,
+	0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0d, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x44, 0x6f, 0x6d, 0x61,
+	0x69, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x6c, 0x61, 0x79, 0x52, 0x75, 0x6c, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50, 0x6c, 0x61, 0x79, 0x52, 0x75, 0x6c, 0x65, 0x22, 0xa4,
+	0x01, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x41, 0x64, 0x64, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54,
+	0x6f, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x54, 0x79, 0x70, 0x65, 0x22, 0xa9, 0x01, 0x0a, 0x23, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x6d,
+	0x6f, 0x76, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x46, 0x72, 0x6f, 0x6d, 0x53, 0x63, 0x68,
+	0x65, 0x64, 0x75, 0x6c, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a,
+	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d,
+	0x61, 0x69, 0x6e, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11,
+	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70,
+	0x65, 0x22, 0x6e, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x44, 0x6f,
+	0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d,
+	0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d,
+	0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x22, 0x9b, 0x01, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x44, 0x6f,
+	0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d,
+	0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d,
+	0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x53, 0x6f,
+	0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x22,
+	0x9a, 0x01, 0x0a, 0x14, 0x56, 0x6f, 0x64, 0x53, 0x74, 0x6f, 0x70, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61,
+	0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x2c,
+	0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54,
+	0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x22, 0xb0, 0x01, 0x0a,
+	0x14, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54,
+	0x79, 0x70, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11,
+	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x16, 0x0a, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x4c, 0x69, 0x6d,
+	0x69, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x22,
+	0x66, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x52,
+	0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55,
+	0x72, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x22, 0x52, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x50, 0x72, 0x65, 0x6c, 0x6f, 0x61, 0x64, 0x54, 0x61,
+	0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70,
+	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x22, 0xa4, 0x02, 0x0a, 0x16,
+	0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a,
+	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08,
+	0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08,
+	0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73,
+	0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c,
+	0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x18, 0x0a, 0x07,
+	0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x50,
+	0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69,
+	0x7a, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69,
+	0x7a, 0x65, 0x22, 0xa0, 0x01, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64,
+	0x6e, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53,
+	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69,
+	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0xa1, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73,
+	0x74, 0x43, 0x64, 0x6e, 0x54, 0x6f, 0x70, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x55, 0x72, 0x6c,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74,
+	0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a,
+	0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70, 0x65, 0x22, 0xb2, 0x01, 0x0a, 0x1a, 0x56, 0x6f,
+	0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x54, 0x6f, 0x70, 0x41, 0x63, 0x63, 0x65, 0x73,
+	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61,
+	0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05,
+	0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a,
+	0x0a, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x49, 0x74,
+	0x65, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x22, 0x8c,
+	0x02, 0x0a, 0x28, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f,
+	0x64, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x42, 0x61, 0x6e, 0x64, 0x77, 0x69, 0x64, 0x74, 0x68,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x11, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74,
+	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69,
+	0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x24, 0x0a, 0x0d, 0x42, 0x61, 0x6e, 0x64, 0x77, 0x69, 0x64, 0x74, 0x68,
+	0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x42, 0x61, 0x6e, 0x64,
+	0x77, 0x69, 0x64, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65,
+	0x61, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x41, 0x72, 0x65, 0x61, 0x22, 0x90, 0x03,
+	0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x55, 0x73, 0x61, 0x67,
+	0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07,
+	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76,
+	0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76,
+	0x61, 0x6c, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e,
+	0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a,
+	0x0a, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65,
+	0x74, 0x72, 0x69, 0x63, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x72,
+	0x69, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65, 0x61, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x41, 0x72, 0x65, 0x61, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x10,
+	0x0a, 0x03, 0x49, 0x73, 0x70, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x49, 0x73, 0x70,
+	0x12, 0x1a, 0x0a, 0x08, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x18, 0x0b, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x63, 0x6f, 0x6c, 0x12, 0x1c, 0x0a, 0x09,
+	0x49, 0x70, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x49, 0x70, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x0a, 0x0d, 0x42, 0x69,
+	0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x0d, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0d, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e,
+	0x22, 0xf3, 0x01, 0x0a, 0x1b, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e,
+	0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22,
+	0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65,
+	0x74, 0x61, 0x69, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64,
+	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0x2c, 0x0a, 0x18, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x62, 0x65, 0x49, 0x50, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x49, 0x70, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x49, 0x70, 0x73, 0x22, 0xd7, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74,
+	0x43, 0x64, 0x6e, 0x50, 0x76, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54,
+	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e,
+	0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22,
+	0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1e,
+	0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0xd8,
+	0x01, 0x0a, 0x1c, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x48, 0x69, 0x74,
+	0x72, 0x61, 0x74, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74,
+	0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69,
+	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x53,
+	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a,
+	0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
+	0x70, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65,
+	0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x4e,
+	0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0x86, 0x02, 0x0a, 0x26, 0x56, 0x6f,
+	0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x44, 0x6f, 0x6d, 0x61,
+	0x69, 0x6e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69,
+	0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x4c, 0x69, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x11, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x11, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69,
+	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67,
+	0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x20, 0x0a, 0x0b,
+	0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0b, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12,
+	0x0a, 0x04, 0x41, 0x72, 0x65, 0x61, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x41, 0x72,
+	0x65, 0x61, 0x22, 0x56, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42,
+	0x6c, 0x6f, 0x63, 0x6b, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x1a, 0x0a, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x55, 0x72, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x55, 0x72, 0x6c, 0x73, 0x12, 0x1c, 0x0a, 0x09,
+	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x84, 0x02, 0x0a, 0x1e, 0x56,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x42, 0x6c, 0x6f, 0x63,
+	0x6b, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a,
+	0x03, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x72, 0x6c, 0x12,
+	0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49,
+	0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x12,
+	0x1a, 0x0a, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
+	0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x50,
+	0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x08, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x50, 0x61,
+	0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a,
+	0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a,
+	0x65, 0x22, 0xa8, 0x02, 0x0a, 0x18, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x56, 0x32, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
+	0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a,
+	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06,
+	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f,
+	0x6d, 0x61, 0x69, 0x6e, 0x12, 0x2c, 0x0a, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x3a, 0x0a, 0x18, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x18, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x54, 0x79, 0x70, 0x65, 0x12, 0x18,
+	0x0a, 0x07, 0x4f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x07, 0x4f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65, 0x61,
+	0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x41, 0x72, 0x65, 0x61, 0x12, 0x1e, 0x0a, 0x0a,
+	0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0a, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x8e, 0x01, 0x0a,
+	0x1e, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x56, 0x32, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a,
+	0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a,
+	0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44,
+	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x22, 0xca, 0x01,
+	0x0a, 0x22, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x41, 0x75, 0x74, 0x68, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x56, 0x32, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d,
+	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x4d, 0x61,
+	0x69, 0x6e, 0x4b, 0x65, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x4d, 0x61, 0x69,
+	0x6e, 0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a, 0x09, 0x42, 0x61, 0x63, 0x6b, 0x75, 0x70, 0x4b, 0x65,
+	0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x42, 0x61, 0x63, 0x6b, 0x75, 0x70, 0x4b,
+	0x65, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0xbf, 0x01, 0x0a, 0x1f, 0x41,
+	0x64, 0x64, 0x4f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x65, 0x72, 0x74, 0x69, 0x66,
+	0x69, 0x63, 0x61, 0x74, 0x65, 0x56, 0x32, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
+	0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06,
+	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f,
+	0x6d, 0x61, 0x69, 0x6e, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79,
+	0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x43, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63,
+	0x61, 0x74, 0x65, 0x49, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x43, 0x65, 0x72,
+	0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x48, 0x74,
+	0x74, 0x70, 0x73, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0b, 0x48, 0x74, 0x74, 0x70, 0x73, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x75, 0x0a, 0x21,
+	0x56, 0x6f, 0x64, 0x41, 0x64, 0x64, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x53, 0x75,
+	0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
+	0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x72,
+	0x6c, 0x12, 0x20, 0x0a, 0x0b, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x54,
+	0x79, 0x70, 0x65, 0x22, 0x94, 0x01, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43, 0x61,
+	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x16, 0x0a, 0x06, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x75, 0x74, 0x68,
+	0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x41,
+	0x75, 0x74, 0x68, 0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x50, 0x72,
+	0x69, 0x76, 0x61, 0x74, 0x65, 0x4b, 0x65, 0x79, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
+	0x50, 0x72, 0x69, 0x76, 0x61, 0x74, 0x65, 0x4b, 0x65, 0x79, 0x22, 0xe8, 0x02, 0x0a, 0x26, 0x56,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x6d, 0x61, 0x72, 0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65,
+	0x67, 0x79, 0x4c, 0x69, 0x74, 0x65, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x6c, 0x61, 0x79, 0x55, 0x72, 0x6c,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x50, 0x6c, 0x61, 0x79, 0x55, 0x72, 0x6c, 0x12,
+	0x16, 0x0a, 0x06, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x06, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x43, 0x6f, 0x64, 0x65, 0x63,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x43, 0x6f, 0x64, 0x65, 0x63, 0x12, 0x1e, 0x0a,
+	0x0a, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0a, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a,
+	0x08, 0x46, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x08, 0x46, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x4c, 0x6f, 0x67,
+	0x6f, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x4c, 0x6f, 0x67,
+	0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x53, 0x73, 0x6c, 0x18, 0x07, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x03, 0x53, 0x73, 0x6c, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x54,
+	0x68, 0x75, 0x6d, 0x62, 0x73, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x4e, 0x65, 0x65,
+	0x64, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x73, 0x12, 0x28, 0x0a, 0x0f, 0x4e, 0x65, 0x65, 0x64, 0x42,
+	0x61, 0x72, 0x72, 0x61, 0x67, 0x65, 0x4d, 0x61, 0x73, 0x6b, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0f, 0x4e, 0x65, 0x65, 0x64, 0x42, 0x61, 0x72, 0x72, 0x61, 0x67, 0x65, 0x4d, 0x61, 0x73,
+	0x6b, 0x12, 0x1c, 0x0a, 0x09, 0x55, 0x6e, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x0a,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x55, 0x6e, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x12,
+	0x24, 0x0a, 0x0d, 0x48, 0x44, 0x52, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x48, 0x44, 0x52, 0x44, 0x65, 0x66, 0x69, 0x6e,
+	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x2c, 0x0a, 0x14, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41,
+	0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a,
+	0x05, 0x41, 0x70, 0x70, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x41, 0x70,
+	0x70, 0x49, 0x64, 0x22, 0xba, 0x02, 0x0a, 0x24, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65,
+	0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64,
+	0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74,
+	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53,
+	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69,
+	0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x54,
+	0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x72, 0x61, 0x6e, 0x73,
+	0x63, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x53, 0x70, 0x65, 0x63,
+	0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0d, 0x53, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24,
+	0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65,
+	0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65,
+	0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74,
+	0x22, 0x8f, 0x02, 0x0a, 0x23, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x41, 0x49, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
 	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63,
 	0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61,
 	0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54,
 	0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74,
 	0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18,
 	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20,
-	0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x05, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x12, 0x12, 0x0a, 0x04, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x54, 0x79, 0x70, 0x65, 0x22, 0xb0, 0x01, 0x0a, 0x14, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a,
-	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44,
-	0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2c, 0x0a, 0x11, 0x53,
-	0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x4f, 0x66, 0x66,
-	0x73, 0x65, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x4f, 0x66, 0x66, 0x73, 0x65,
-	0x74, 0x12, 0x14, 0x0a, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x05, 0x4c, 0x69, 0x6d, 0x69, 0x74, 0x22, 0x66, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x52, 0x65, 0x66, 0x72, 0x65, 0x73, 0x68, 0x54, 0x61,
-	0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61,
-	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70,
-	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x54,
-	0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x54, 0x79, 0x70, 0x65, 0x22,
-	0x52, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x64, 0x6e, 0x50,
-	0x72, 0x65, 0x6c, 0x6f, 0x61, 0x64, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12,
-	0x12, 0x0a, 0x04, 0x55, 0x72, 0x6c, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x55,
-	0x72, 0x6c, 0x73, 0x22, 0xa4, 0x02, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43,
-	0x64, 0x6e, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c,
-	0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06,
-	0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x54, 0x61,
-	0x73, 0x6b, 0x49, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4e, 0x61,
-	0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
-	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65,
-	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72,
-	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x18, 0x07, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73,
-	0x74, 0x61, 0x6d, 0x70, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18,
-	0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x1a,
-	0x0a, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x05,
-	0x52, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0xa0, 0x01, 0x0a, 0x1a, 0x56,
-	0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x4c,
-	0x6f, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d,
-	0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61,
-	0x69, 0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45,
-	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12,
-	0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0xa1, 0x01,
-	0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x54, 0x6f, 0x70, 0x41,
-	0x63, 0x63, 0x65, 0x73, 0x73, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d,
-	0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70,
-	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79, 0x70,
-	0x65, 0x22, 0xb2, 0x01, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e,
-	0x54, 0x6f, 0x70, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74,
-	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x05, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79,
-	0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x6f, 0x72, 0x74, 0x54, 0x79,
-	0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x22, 0x8c, 0x02, 0x0a, 0x28, 0x56, 0x6f, 0x64, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x42,
-	0x61, 0x6e, 0x64, 0x77, 0x69, 0x64, 0x74, 0x68, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73,
-	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c,
-	0x69, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x11, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73,
-	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12,
-	0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67,
-	0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b,
-	0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x0a, 0x0d, 0x42,
-	0x61, 0x6e, 0x64, 0x77, 0x69, 0x64, 0x74, 0x68, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x0d, 0x42, 0x61, 0x6e, 0x64, 0x77, 0x69, 0x64, 0x74, 0x68, 0x54, 0x79, 0x70,
-	0x65, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65, 0x61, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x04, 0x41, 0x72, 0x65, 0x61, 0x22, 0x90, 0x03, 0x0a, 0x1a, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73,
-	0x74, 0x43, 0x64, 0x6e, 0x55, 0x73, 0x61, 0x67, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x73, 0x12, 0x1a,
-	0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26, 0x0a, 0x0e, 0x53, 0x74,
-	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01,
-	0x28, 0x03, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79,
-	0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x61, 0x74, 0x61, 0x54, 0x79,
-	0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65,
-	0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a,
-	0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72,
-	0x65, 0x61, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x41, 0x72, 0x65, 0x61, 0x12, 0x16,
-	0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x49, 0x73, 0x70, 0x18, 0x0a, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x49, 0x73, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x63, 0x6f, 0x6c, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x63, 0x6f, 0x6c, 0x12, 0x1c, 0x0a, 0x09, 0x49, 0x70, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f,
-	0x6e, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x49, 0x70, 0x56, 0x65, 0x72, 0x73, 0x69,
-	0x6f, 0x6e, 0x12, 0x24, 0x0a, 0x0d, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x67,
-	0x69, 0x6f, 0x6e, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x42, 0x69, 0x6c, 0x6c, 0x69,
-	0x6e, 0x67, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x22, 0xf3, 0x01, 0x0a, 0x1b, 0x56, 0x6f, 0x64,
-	0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61,
-	0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26,
-	0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e,
-	0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x61,
-	0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x61,
-	0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x12, 0x1e,
-	0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18, 0x07, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0x2c,
-	0x0a, 0x18, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x49, 0x50, 0x49,
-	0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x49, 0x70,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x49, 0x70, 0x73, 0x22, 0xd7, 0x01, 0x0a,
-	0x17, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x43, 0x64, 0x6e, 0x50, 0x76, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61,
-	0x69, 0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26,
-	0x0a, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e,
-	0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x1a, 0x0a, 0x08, 0x44, 0x61,
-	0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x44, 0x61,
-	0x74, 0x61, 0x54, 0x79, 0x70, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64,
-	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0xd8, 0x01, 0x0a, 0x1c, 0x56, 0x6f, 0x64, 0x4c, 0x69,
-	0x73, 0x74, 0x43, 0x64, 0x6e, 0x48, 0x69, 0x74, 0x72, 0x61, 0x74, 0x65, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
-	0x73, 0x12, 0x1a, 0x0a, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c, 0x12, 0x26, 0x0a,
-	0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65,
-	0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0c, 0x45, 0x6e, 0x64,
-	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x4d, 0x65, 0x74,
-	0x72, 0x69, 0x63, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x4d, 0x65, 0x74, 0x72, 0x69,
-	0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x18,
-	0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x44, 0x65, 0x74, 0x61, 0x69,
-	0x6c, 0x22, 0x86, 0x02, 0x0a, 0x26, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
-	0x65, 0x56, 0x6f, 0x64, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69,
-	0x63, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1e, 0x0a, 0x0a,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x2c, 0x0a, 0x11,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49, 0x6e, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73,
-	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x11, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x49,
-	0x6e, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74,
-	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53,
-	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54,
-	0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69,
-	0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x12, 0x20, 0x0a, 0x0b, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x54,
-	0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x54, 0x72, 0x61, 0x66, 0x66,
-	0x69, 0x63, 0x54, 0x79, 0x70, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65, 0x61, 0x18, 0x07,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x41, 0x72, 0x65, 0x61, 0x22, 0x56, 0x0a, 0x1a, 0x56, 0x6f,
-	0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x54, 0x61, 0x73, 0x6b,
-	0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x46, 0x69, 0x6c, 0x65,
-	0x55, 0x72, 0x6c, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x46, 0x69, 0x6c, 0x65,
-	0x55, 0x72, 0x6c, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x22, 0x84, 0x02, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x43, 0x6f, 0x6e,
-	0x74, 0x65, 0x6e, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x54, 0x61, 0x73, 0x6b, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x03, 0x55, 0x72, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12,
-	0x16, 0x0a, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x44, 0x12, 0x1a, 0x0a, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54,
-	0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x54, 0x61, 0x73, 0x6b, 0x54,
-	0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x1c, 0x0a, 0x09, 0x53,
-	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
-	0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64,
-	0x54, 0x69, 0x6d, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54,
-	0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x08,
-	0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x12, 0x1a, 0x0a,
-	0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x03, 0x52,
-	0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0xa8, 0x02, 0x0a, 0x18, 0x56, 0x6f,
-	0x64, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x56, 0x32, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
-	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
-	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79,
-	0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
-	0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x2c, 0x0a, 0x11,
-	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70,
-	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x11, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53,
-	0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x3a, 0x0a, 0x18, 0x53, 0x6f,
-	0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x05, 0x52, 0x18, 0x53, 0x6f,
-	0x75, 0x72, 0x63, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x64, 0x64, 0x72, 0x65,
-	0x73, 0x73, 0x54, 0x79, 0x70, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x4f, 0x72, 0x69, 0x67, 0x69, 0x6e,
-	0x73, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x4f, 0x72, 0x69, 0x67, 0x69, 0x6e, 0x73,
-	0x12, 0x12, 0x0a, 0x04, 0x41, 0x72, 0x65, 0x61, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x41, 0x72, 0x65, 0x61, 0x12, 0x1e, 0x0a, 0x0a, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74, 0x4e, 0x61,
-	0x6d, 0x65, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x42, 0x75, 0x63, 0x6b, 0x65, 0x74,
-	0x4e, 0x61, 0x6d, 0x65, 0x22, 0x8e, 0x01, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x56, 0x32,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
-	0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63,
-	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54,
-	0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x16, 0x0a,
-	0x06, 0x45, 0x78, 0x70, 0x69, 0x72, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x45,
-	0x78, 0x70, 0x69, 0x72, 0x65, 0x22, 0xca, 0x01, 0x0a, 0x22, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x41, 0x75, 0x74, 0x68, 0x43, 0x6f, 0x6e,
-	0x66, 0x69, 0x67, 0x56, 0x32, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09,
-	0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f,
-	0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f,
-	0x6d, 0x61, 0x69, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61,
-	0x69, 0x6e, 0x12, 0x18, 0x0a, 0x07, 0x4d, 0x61, 0x69, 0x6e, 0x4b, 0x65, 0x79, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x07, 0x4d, 0x61, 0x69, 0x6e, 0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a, 0x09,
-	0x42, 0x61, 0x63, 0x6b, 0x75, 0x70, 0x4b, 0x65, 0x79, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x42, 0x61, 0x63, 0x6b, 0x75, 0x70, 0x4b, 0x65, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x22, 0xbf, 0x01, 0x0a, 0x1f, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x55, 0x70, 0x64, 0x61,
-	0x74, 0x65, 0x43, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x56, 0x32, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
-	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65,
-	0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x1e, 0x0a, 0x0a,
-	0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d,
-	0x43, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x49, 0x64, 0x18, 0x04, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0d, 0x43, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65,
-	0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x48, 0x74, 0x74, 0x70, 0x73, 0x53, 0x74, 0x61, 0x74, 0x75,
-	0x73, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x48, 0x74, 0x74, 0x70, 0x73, 0x53, 0x74,
-	0x61, 0x74, 0x75, 0x73, 0x22, 0x75, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x41, 0x64, 0x64, 0x43, 0x61,
-	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61,
-	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70,
-	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x72, 0x6c, 0x12, 0x20, 0x0a, 0x0b, 0x43, 0x6f, 0x6e,
-	0x74, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
-	0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x54, 0x79, 0x70, 0x65, 0x22, 0x94, 0x01, 0x0a, 0x1a,
-	0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x45, 0x76,
-	0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70,
-	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x45, 0x76, 0x65, 0x6e,
-	0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x73,
-	0x12, 0x20, 0x0a, 0x0b, 0x41, 0x75, 0x74, 0x68, 0x45, 0x6e, 0x61, 0x62, 0x6c, 0x65, 0x64, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x41, 0x75, 0x74, 0x68, 0x45, 0x6e, 0x61, 0x62, 0x6c,
-	0x65, 0x64, 0x12, 0x1e, 0x0a, 0x0a, 0x50, 0x72, 0x69, 0x76, 0x61, 0x74, 0x65, 0x4b, 0x65, 0x79,
-	0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x50, 0x72, 0x69, 0x76, 0x61, 0x74, 0x65, 0x4b,
-	0x65, 0x79, 0x22, 0xe8, 0x02, 0x0a, 0x26, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x6d, 0x61,
-	0x72, 0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x4c, 0x69, 0x74, 0x65, 0x50, 0x6c,
-	0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a,
-	0x07, 0x50, 0x6c, 0x61, 0x79, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07,
-	0x50, 0x6c, 0x61, 0x79, 0x55, 0x72, 0x6c, 0x12, 0x16, 0x0a, 0x06, 0x46, 0x6f, 0x72, 0x6d, 0x61,
-	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x46, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x12,
-	0x14, 0x0a, 0x05, 0x43, 0x6f, 0x64, 0x65, 0x63, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
-	0x43, 0x6f, 0x64, 0x65, 0x63, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74,
-	0x69, 0x6f, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x65, 0x66, 0x69, 0x6e,
-	0x69, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1a, 0x0a, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70,
-	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x46, 0x69, 0x6c, 0x65, 0x54, 0x79, 0x70,
-	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x4c, 0x6f, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x18, 0x06, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x08, 0x4c, 0x6f, 0x67, 0x6f, 0x54, 0x79, 0x70, 0x65, 0x12, 0x10, 0x0a,
-	0x03, 0x53, 0x73, 0x6c, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x53, 0x73, 0x6c, 0x12,
-	0x1e, 0x0a, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x73, 0x18, 0x08, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0a, 0x4e, 0x65, 0x65, 0x64, 0x54, 0x68, 0x75, 0x6d, 0x62, 0x73, 0x12,
-	0x28, 0x0a, 0x0f, 0x4e, 0x65, 0x65, 0x64, 0x42, 0x61, 0x72, 0x72, 0x61, 0x67, 0x65, 0x4d, 0x61,
-	0x73, 0x6b, 0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x4e, 0x65, 0x65, 0x64, 0x42, 0x61,
-	0x72, 0x72, 0x61, 0x67, 0x65, 0x4d, 0x61, 0x73, 0x6b, 0x12, 0x1c, 0x0a, 0x09, 0x55, 0x6e, 0x69,
-	0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x18, 0x0a, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x55, 0x6e,
-	0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x24, 0x0a, 0x0d, 0x48, 0x44, 0x52, 0x44, 0x65,
-	0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d,
-	0x48, 0x44, 0x52, 0x44, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x2c, 0x0a,
-	0x14, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x41, 0x70, 0x70, 0x49, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x41, 0x70, 0x70, 0x49, 0x64, 0x22, 0xba, 0x02, 0x0a, 0x24,
-	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65,
-	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73,
-	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69,
-	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
-	0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x72,
-	0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x0d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x24, 0x0a, 0x0d, 0x53, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x53, 0x70, 0x65, 0x63, 0x69, 0x66, 0x69,
-	0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74,
-	0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54,
-	0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b,
-	0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28,
-	0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73,
-	0x74, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46,
-	0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x8f, 0x02, 0x0a, 0x23, 0x44, 0x65, 0x73,
-	0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x41, 0x49, 0x53,
+	0x0a, 0x0b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x41, 0x69, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x41, 0x69, 0x54, 0x79, 0x70, 0x65,
+	0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73,
+	0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61,
+	0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67,
+	0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69,
+	0x73, 0x74, 0x22, 0x97, 0x02, 0x0a, 0x29, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56,
+	0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53,
 	0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
 	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c,
 	0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
 	0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07,
 	0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45,
-	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x41,
-	0x69, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x4d, 0x65, 0x64,
-	0x69, 0x61, 0x41, 0x69, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b,
-	0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20,
-	0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20,
-	0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c,
-	0x69, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69,
-	0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x97, 0x02, 0x0a, 0x29, 0x44,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53,
-	0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
+	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74,
+	0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x53, 0x75,
+	0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61,
+	0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c,
+	0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x91, 0x02, 0x0a,
+	0x27, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
 	0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63,
 	0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61,
 	0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54,
 	0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74,
 	0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x22,
-	0x0a, 0x0c, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x54, 0x79,
-	0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c,
-	0x69, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53,
-	0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72,
-	0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41,
-	0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x07, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64,
-	0x4c, 0x69, 0x73, 0x74, 0x22, 0x91, 0x02, 0x0a, 0x27, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
-	0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x53,
-	0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c,
-	0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07,
-	0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45,
-	0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74,
-	0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x65, 0x74, 0x65,
-	0x63, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74,
-	0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54,
-	0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b,
-	0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28,
-	0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28,
-	0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73,
-	0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46,
-	0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x8c, 0x02, 0x0a, 0x1e, 0x44, 0x65, 0x73,
-	0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74,
-	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
-	0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74,
-	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69,
-	0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x54, 0x79, 0x70,
-	0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f,
-	0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61,
-	0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61,
-	0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41,
-	0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
-	0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a,
+	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e,
+	0x0a, 0x0a, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0a, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24,
+	0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65,
+	0x4c, 0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65,
+	0x67, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74,
-	0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69,
-	0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22, 0xc7, 0x01, 0x0a, 0x29, 0x44, 0x65, 0x73, 0x63,
-	0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b,
-	0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a,
-	0x05, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x70,
-	0x61, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d,
-	0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50,
-	0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x50,
-	0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e,
-	0x75, 0x6d, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75,
-	0x6d, 0x22, 0xc3, 0x01, 0x0a, 0x25, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f,
-	0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
-	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x52,
-	0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67,
-	0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x05, 0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61,
-	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74,
-	0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69,
-	0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
-	0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x05, 0x20,
-	0x01, 0x28, 0x03, 0x52, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x18, 0x0a,
-	0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07,
-	0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x22, 0x7f, 0x0a, 0x25, 0x44, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f,
-	0x67, 0x42, 0x79, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18,
-	0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61,
-	0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f,
-	0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x22, 0x52, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x53,
-	0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54,
-	0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70,
-	0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22, 0x54, 0x0a, 0x20,
-	0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b,
-	0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12,
-	0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69,
-	0x64, 0x73, 0x22, 0x53, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65,
-	0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61,
-	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e,
-	0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22, 0x18, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x4c, 0x69,
-	0x73, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x22, 0x21, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65,
-	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x42, 0xc8, 0x01, 0x0a, 0x28, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c,
-	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
-	0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x50, 0x01, 0x5a,
-	0x40, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63,
-	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d,
-	0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76,
-	0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02, 0x1f, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x5c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63,
-	0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x8c, 0x02, 0x0a, 0x1e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
+	0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73, 0x74,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4c, 0x69, 0x73,
+	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x53, 0x6e, 0x61,
+	0x70, 0x73, 0x68, 0x6f, 0x74, 0x54, 0x79, 0x70, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x0c, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x24, 0x0a,
+	0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x53, 0x74, 0x61, 0x67, 0x65, 0x4c,
+	0x69, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x41, 0x67, 0x67, 0x72, 0x65, 0x67,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x28, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46,
+	0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0f,
+	0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x22,
+	0xc7, 0x01, 0x0a, 0x29, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74, 0x61,
+	0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a,
+	0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52,
+	0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x53,
+	0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64,
+	0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54,
+	0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18,
+	0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x50, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x18, 0x06, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x22, 0xc3, 0x01, 0x0a, 0x25, 0x44, 0x65,
+	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64,
+	0x69, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61, 0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x50, 0x61, 0x67,
+	0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x50, 0x61, 0x67,
+	0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x50, 0x61, 0x67, 0x65, 0x4e, 0x75, 0x6d, 0x22,
+	0x7f, 0x0a, 0x25, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c,
+	0x61, 0x79, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67, 0x42, 0x79, 0x44, 0x6f, 0x6d, 0x61, 0x69,
+	0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x74, 0x61,
+	0x72, 0x74, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x45, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65,
+	0x12, 0x1e, 0x0a, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x4c, 0x69, 0x73, 0x74,
+	0x22, 0x52, 0x0a, 0x1e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f,
+	0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65,
+	0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x56, 0x69, 0x64, 0x73, 0x22, 0x54, 0x0a, 0x20, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69,
+	0x74, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73,
+	0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x56, 0x69, 0x64, 0x73, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22, 0x53, 0x0a, 0x1f, 0x56, 0x6f,
+	0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b,
+	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a,
+	0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x53, 0x70, 0x61, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x56,
+	0x69, 0x64, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x56, 0x69, 0x64, 0x73, 0x22,
+	0x18, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63,
+	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22, 0x21, 0x0a, 0x1f, 0x56, 0x6f, 0x64,
+	0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0xc8, 0x01, 0x0a,
+	0x28, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
+	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65,
+	0x6c, 0x2e, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0x56, 0x6f, 0x64, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x50, 0x01, 0x5a, 0x40, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76,
+	0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca,
+	0x02, 0x1f, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56,
+	0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -9935,155 +10499,163 @@ func file_volcengine_vod_request_request_vod_proto_rawDescGZIP() []byte {
 	return file_volcengine_vod_request_request_vod_proto_rawDescData
 }
 
-var file_volcengine_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 106)
+var file_volcengine_vod_request_request_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 114)
 var file_volcengine_vod_request_request_vod_proto_goTypes = []interface{}{
 	(*VodGetAllPlayInfoRequest)(nil),                        // 0: Volcengine.Vod.Models.Request.VodGetAllPlayInfoRequest
 	(*VodGetPlayInfoRequest)(nil),                           // 1: Volcengine.Vod.Models.Request.VodGetPlayInfoRequest
 	(*VodGetPrivateDrmPlayAuthRequest)(nil),                 // 2: Volcengine.Vod.Models.Request.VodGetPrivateDrmPlayAuthRequest
 	(*VodGetHlsDecryptionKeyRequest)(nil),                   // 3: Volcengine.Vod.Models.Request.VodGetHlsDecryptionKeyRequest
 	(*VodGetPlayInfoWithLiveTimeShiftSceneRequest)(nil),     // 4: Volcengine.Vod.Models.Request.VodGetPlayInfoWithLiveTimeShiftSceneRequest
-	(*VodUrlUploadRequest)(nil),                             // 5: Volcengine.Vod.Models.Request.VodUrlUploadRequest
-	(*VodQueryUploadTaskInfoRequest)(nil),                   // 6: Volcengine.Vod.Models.Request.VodQueryUploadTaskInfoRequest
-	(*VodApplyUploadInfoRequest)(nil),                       // 7: Volcengine.Vod.Models.Request.VodApplyUploadInfoRequest
-	(*VodUploadMediaRequest)(nil),                           // 8: Volcengine.Vod.Models.Request.VodUploadMediaRequest
-	(*VodUploadMaterialRequest)(nil),                        // 9: Volcengine.Vod.Models.Request.VodUploadMaterialRequest
-	(*VodUploadObjectRequest)(nil),                          // 10: Volcengine.Vod.Models.Request.VodUploadObjectRequest
-	(*VodCommitUploadInfoRequest)(nil),                      // 11: Volcengine.Vod.Models.Request.VodCommitUploadInfoRequest
-	(*VodUrlUploadJsonRequest)(nil),                         // 12: Volcengine.Vod.Models.Request.VodUrlUploadJsonRequest
-	(*VodListFileMetaInfosByFileNamesRequest)(nil),          // 13: Volcengine.Vod.Models.Request.VodListFileMetaInfosByFileNamesRequest
-	(*VodGetRecommendedPosterRequest)(nil),                  // 14: Volcengine.Vod.Models.Request.VodGetRecommendedPosterRequest
-	(*VodUpdateMediaPublishStatusRequest)(nil),              // 15: Volcengine.Vod.Models.Request.VodUpdateMediaPublishStatusRequest
-	(*VodUpdateMediaStorageClassRequest)(nil),               // 16: Volcengine.Vod.Models.Request.VodUpdateMediaStorageClassRequest
-	(*VodUpdateMediaInfoRequest)(nil),                       // 17: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest
-	(*VodGetMediaInfosRequest)(nil),                         // 18: Volcengine.Vod.Models.Request.VodGetMediaInfosRequest
-	(*VodDeleteMediaRequest)(nil),                           // 19: Volcengine.Vod.Models.Request.VodDeleteMediaRequest
-	(*VodDeleteTranscodesRequest)(nil),                      // 20: Volcengine.Vod.Models.Request.VodDeleteTranscodesRequest
-	(*VodDeleteMediaTosFileRequest)(nil),                    // 21: Volcengine.Vod.Models.Request.VodDeleteMediaTosFileRequest
-	(*VodGetMediaListRequest)(nil),                          // 22: Volcengine.Vod.Models.Request.VodGetMediaListRequest
-	(*VodGetSubtitleInfoListRequest)(nil),                   // 23: Volcengine.Vod.Models.Request.VodGetSubtitleInfoListRequest
-	(*VodUpdateSubtitleStatusRequest)(nil),                  // 24: Volcengine.Vod.Models.Request.VodUpdateSubtitleStatusRequest
-	(*VodUpdateSubtitleInfoRequest)(nil),                    // 25: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest
-	(*VodGetAuditFramesForAuditRequest)(nil),                // 26: Volcengine.Vod.Models.Request.VodGetAuditFramesForAuditRequest
-	(*VodGetMLFramesForAuditRequest)(nil),                   // 27: Volcengine.Vod.Models.Request.VodGetMLFramesForAuditRequest
-	(*VodGetBetterFramesForAuditRequest)(nil),               // 28: Volcengine.Vod.Models.Request.VodGetBetterFramesForAuditRequest
-	(*VodGetAudioInfoForAuditRequest)(nil),                  // 29: Volcengine.Vod.Models.Request.VodGetAudioInfoForAuditRequest
-	(*VodGetAutomaticSpeechRecognitionForAuditRequest)(nil), // 30: Volcengine.Vod.Models.Request.VodGetAutomaticSpeechRecognitionForAuditRequest
-	(*VodGetAudioEventDetectionForAuditRequest)(nil),        // 31: Volcengine.Vod.Models.Request.VodGetAudioEventDetectionForAuditRequest
-	(*VodCreateVideoClassificationRequest)(nil),             // 32: Volcengine.Vod.Models.Request.VodCreateVideoClassificationRequest
-	(*VodUpdateVideoClassificationRequest)(nil),             // 33: Volcengine.Vod.Models.Request.VodUpdateVideoClassificationRequest
-	(*VodDeleteVideoClassificationRequest)(nil),             // 34: Volcengine.Vod.Models.Request.VodDeleteVideoClassificationRequest
-	(*VodListVideoClassificationsRequest)(nil),              // 35: Volcengine.Vod.Models.Request.VodListVideoClassificationsRequest
-	(*VodListSnapshotsRequest)(nil),                         // 36: Volcengine.Vod.Models.Request.VodListSnapshotsRequest
-	(*VodGetFileListRequest)(nil),                           // 37: Volcengine.Vod.Models.Request.VodGetFileListRequest
-	(*VodExtractMediaMetaTaskRequest)(nil),                  // 38: Volcengine.Vod.Models.Request.VodExtractMediaMetaTaskRequest
-	(*VodStartWorkflowRequest)(nil),                         // 39: Volcengine.Vod.Models.Request.VodStartWorkflowRequest
-	(*VodRetrieveTranscodeResultRequest)(nil),               // 40: Volcengine.Vod.Models.Request.VodRetrieveTranscodeResultRequest
-	(*VodListWorkflowExecutionRequest)(nil),                 // 41: Volcengine.Vod.Models.Request.VodListWorkflowExecutionRequest
-	(*VodGetWorkflowExecutionDetailRequest)(nil),            // 42: Volcengine.Vod.Models.Request.VodGetWorkflowExecutionDetailRequest
-	(*VodGetWorkflowResultRequest)(nil),                     // 43: Volcengine.Vod.Models.Request.VodGetWorkflowResultRequest
-	(*VodGetWorkflowExecutionStatusRequest)(nil),            // 44: Volcengine.Vod.Models.Request.VodGetWorkflowExecutionStatusRequest
-	(*VodCreateTaskTemplateRequest)(nil),                    // 45: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest
-	(*VodUpdateTaskTemplateRequest)(nil),                    // 46: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest
-	(*VodDeleteTaskTemplateRequest)(nil),                    // 47: Volcengine.Vod.Models.Request.VodDeleteTaskTemplateRequest
-	(*VodGetTaskTemplateRequest)(nil),                       // 48: Volcengine.Vod.Models.Request.VodGetTaskTemplateRequest
-	(*VodListTaskTemplateRequest)(nil),                      // 49: Volcengine.Vod.Models.Request.VodListTaskTemplateRequest
-	(*VodCreateWatermarkRequest)(nil),                       // 50: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest
-	(*VodUpdateWatermarkRequest)(nil),                       // 51: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest
-	(*VodDeleteWatermarkRequest)(nil),                       // 52: Volcengine.Vod.Models.Request.VodDeleteWatermarkRequest
-	(*VodGetWatermarkRequest)(nil),                          // 53: Volcengine.Vod.Models.Request.VodGetWatermarkRequest
-	(*VodListWatermarkRequest)(nil),                         // 54: Volcengine.Vod.Models.Request.VodListWatermarkRequest
-	(*VodCreateWorkflowTemplateRequest)(nil),                // 55: Volcengine.Vod.Models.Request.VodCreateWorkflowTemplateRequest
-	(*VodUpdateWorkflowTemplateRequest)(nil),                // 56: Volcengine.Vod.Models.Request.VodUpdateWorkflowTemplateRequest
-	(*VodDeleteWorkflowTemplateRequest)(nil),                // 57: Volcengine.Vod.Models.Request.VodDeleteWorkflowTemplateRequest
-	(*VodGetWorkflowTemplateRequest)(nil),                   // 58: Volcengine.Vod.Models.Request.VodGetWorkflowTemplateRequest
-	(*VodListWorkflowTemplateRequest)(nil),                  // 59: Volcengine.Vod.Models.Request.VodListWorkflowTemplateRequest
-	(*VodSubmitDirectEditTaskAsyncRequest)(nil),             // 60: Volcengine.Vod.Models.Request.VodSubmitDirectEditTaskAsyncRequest
-	(*VodGetDirectEditResultRequest)(nil),                   // 61: Volcengine.Vod.Models.Request.VodGetDirectEditResultRequest
-	(*VodGetDirectEditProgressRequest)(nil),                 // 62: Volcengine.Vod.Models.Request.VodGetDirectEditProgressRequest
-	(*VodCreateSpaceRequest)(nil),                           // 63: Volcengine.Vod.Models.Request.VodCreateSpaceRequest
-	(*VodGetSpaceDetailRequest)(nil),                        // 64: Volcengine.Vod.Models.Request.VodGetSpaceDetailRequest
-	(*VodListSpaceRequest)(nil),                             // 65: Volcengine.Vod.Models.Request.VodListSpaceRequest
-	(*VodUpdateSpaceRequest)(nil),                           // 66: Volcengine.Vod.Models.Request.VodUpdateSpaceRequest
-	(*VodUpdateSpaceUploadConfigRequest)(nil),               // 67: Volcengine.Vod.Models.Request.VodUpdateSpaceUploadConfigRequest
-	(*VodDescribeVodSpaceStorageDataRequest)(nil),           // 68: Volcengine.Vod.Models.Request.VodDescribeVodSpaceStorageDataRequest
-	(*VodListDomainRequest)(nil),                            // 69: Volcengine.Vod.Models.Request.VodListDomainRequest
-	(*VodCreateCdnRefreshTaskRequest)(nil),                  // 70: Volcengine.Vod.Models.Request.VodCreateCdnRefreshTaskRequest
-	(*VodCreateCdnPreloadTaskRequest)(nil),                  // 71: Volcengine.Vod.Models.Request.VodCreateCdnPreloadTaskRequest
-	(*VodListCdnTasksRequest)(nil),                          // 72: Volcengine.Vod.Models.Request.VodListCdnTasksRequest
-	(*VodListCdnAccessLogRequest)(nil),                      // 73: Volcengine.Vod.Models.Request.VodListCdnAccessLogRequest
-	(*VodListCdnTopAccessUrlRequest)(nil),                   // 74: Volcengine.Vod.Models.Request.VodListCdnTopAccessUrlRequest
-	(*VodListCdnTopAccessRequest)(nil),                      // 75: Volcengine.Vod.Models.Request.VodListCdnTopAccessRequest
-	(*VodDescribeVodDomainBandwidthDataRequest)(nil),        // 76: Volcengine.Vod.Models.Request.VodDescribeVodDomainBandwidthDataRequest
-	(*VodListCdnUsageDataRequest)(nil),                      // 77: Volcengine.Vod.Models.Request.VodListCdnUsageDataRequest
-	(*VodListCdnStatusDataRequest)(nil),                     // 78: Volcengine.Vod.Models.Request.VodListCdnStatusDataRequest
-	(*VodDescribeIPInfoRequest)(nil),                        // 79: Volcengine.Vod.Models.Request.VodDescribeIPInfoRequest
-	(*VodListCdnPvDataRequest)(nil),                         // 80: Volcengine.Vod.Models.Request.VodListCdnPvDataRequest
-	(*VodListCdnHitrateDataRequest)(nil),                    // 81: Volcengine.Vod.Models.Request.VodListCdnHitrateDataRequest
-	(*VodDescribeVodDomainTrafficDataRequest)(nil),          // 82: Volcengine.Vod.Models.Request.VodDescribeVodDomainTrafficDataRequest
-	(*VodSubmitBlockTasksRequest)(nil),                      // 83: Volcengine.Vod.Models.Request.VodSubmitBlockTasksRequest
-	(*VodGetContentBlockTasksRequest)(nil),                  // 84: Volcengine.Vod.Models.Request.VodGetContentBlockTasksRequest
-	(*VodCreateDomainV2Request)(nil),                        // 85: Volcengine.Vod.Models.Request.VodCreateDomainV2Request
-	(*VodUpdateDomainExpireV2Request)(nil),                  // 86: Volcengine.Vod.Models.Request.VodUpdateDomainExpireV2Request
-	(*VodUpdateDomainAuthConfigV2Request)(nil),              // 87: Volcengine.Vod.Models.Request.VodUpdateDomainAuthConfigV2Request
-	(*AddOrUpdateCertificateV2Request)(nil),                 // 88: Volcengine.Vod.Models.Request.AddOrUpdateCertificateV2Request
-	(*VodAddCallbackSubscriptionRequest)(nil),               // 89: Volcengine.Vod.Models.Request.VodAddCallbackSubscriptionRequest
-	(*VodSetCallbackEventRequest)(nil),                      // 90: Volcengine.Vod.Models.Request.VodSetCallbackEventRequest
-	(*VodGetSmartStrategyLitePlayInfoRequest)(nil),          // 91: Volcengine.Vod.Models.Request.VodGetSmartStrategyLitePlayInfoRequest
-	(*VodGetAppInfoRequest)(nil),                            // 92: Volcengine.Vod.Models.Request.VodGetAppInfoRequest
-	(*DescribeVodSpaceTranscodeDataRequest)(nil),            // 93: Volcengine.Vod.Models.Request.DescribeVodSpaceTranscodeDataRequest
-	(*DescribeVodSpaceAIStatisDataRequest)(nil),             // 94: Volcengine.Vod.Models.Request.DescribeVodSpaceAIStatisDataRequest
-	(*DescribeVodSpaceSubtitleStatisDataRequest)(nil),       // 95: Volcengine.Vod.Models.Request.DescribeVodSpaceSubtitleStatisDataRequest
-	(*DescribeVodSpaceDetectStatisDataRequest)(nil),         // 96: Volcengine.Vod.Models.Request.DescribeVodSpaceDetectStatisDataRequest
-	(*DescribeVodSnapshotDataRequest)(nil),                  // 97: Volcengine.Vod.Models.Request.DescribeVodSnapshotDataRequest
-	(*DescribeVodSpaceWorkflowDetailDataRequest)(nil),       // 98: Volcengine.Vod.Models.Request.DescribeVodSpaceWorkflowDetailDataRequest
-	(*DescribeVodSpaceEditDetailDataRequest)(nil),           // 99: Volcengine.Vod.Models.Request.DescribeVodSpaceEditDetailDataRequest
-	(*DescribeVodPlayFileLogByDomainRequest)(nil),           // 100: Volcengine.Vod.Models.Request.DescribeVodPlayFileLogByDomainRequest
-	(*VodSubmitBlockMediaTaskRequest)(nil),                  // 101: Volcengine.Vod.Models.Request.VodSubmitBlockMediaTaskRequest
-	(*VodSubmitUnblockMediaTaskRequest)(nil),                // 102: Volcengine.Vod.Models.Request.VodSubmitUnblockMediaTaskRequest
-	(*VodQueryMediaBlockStatusRequest)(nil),                 // 103: Volcengine.Vod.Models.Request.VodQueryMediaBlockStatusRequest
-	(*VodListProjectsRequest)(nil),                          // 104: Volcengine.Vod.Models.Request.VodListProjectsRequest
-	(*VodGetTradeConfigurationRequest)(nil),                 // 105: Volcengine.Vod.Models.Request.VodGetTradeConfigurationRequest
-	(*business.VodUrlUploadURLSet)(nil),                     // 106: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	(*wrapperspb.StringValue)(nil),                          // 107: google.protobuf.StringValue
-	(*wrapperspb.Int64Value)(nil),                           // 108: google.protobuf.Int64Value
-	(*business.WorkflowParams)(nil),                         // 109: Volcengine.Vod.Models.Business.WorkflowParams
-	(*business.DirectUrl)(nil),                              // 110: Volcengine.Vod.Models.Business.DirectUrl
-	(*business.TranscodeVideoTaskParams)(nil),               // 111: Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
-	(*business.ByteHDTaskParams)(nil),                       // 112: Volcengine.Vod.Models.Business.ByteHDTaskParams
-	(*business.TranscodeAudioTaskParams)(nil),               // 113: Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
-	(*business.SnapshotTaskParams)(nil),                     // 114: Volcengine.Vod.Models.Business.SnapshotTaskParams
-	(*business.AdaptLogo)(nil),                              // 115: Volcengine.Vod.Models.Business.AdaptLogo
-	(*business.AdaptConcat)(nil),                            // 116: Volcengine.Vod.Models.Business.AdaptConcat
-	(*business.HiddenWatermarkAdd)(nil),                     // 117: Volcengine.Vod.Models.Business.HiddenWatermarkAdd
-	(*business.Activity)(nil),                               // 118: Volcengine.Vod.Models.Business.Activity
+	(*VodDescribeDrmDataKeyRequest)(nil),                    // 5: Volcengine.Vod.Models.Request.VodDescribeDrmDataKeyRequest
+	(*VodUrlUploadRequest)(nil),                             // 6: Volcengine.Vod.Models.Request.VodUrlUploadRequest
+	(*VodQueryUploadTaskInfoRequest)(nil),                   // 7: Volcengine.Vod.Models.Request.VodQueryUploadTaskInfoRequest
+	(*VodApplyUploadInfoRequest)(nil),                       // 8: Volcengine.Vod.Models.Request.VodApplyUploadInfoRequest
+	(*VodUploadMediaRequest)(nil),                           // 9: Volcengine.Vod.Models.Request.VodUploadMediaRequest
+	(*VodUploadMaterialRequest)(nil),                        // 10: Volcengine.Vod.Models.Request.VodUploadMaterialRequest
+	(*VodUploadObjectRequest)(nil),                          // 11: Volcengine.Vod.Models.Request.VodUploadObjectRequest
+	(*VodCommitUploadInfoRequest)(nil),                      // 12: Volcengine.Vod.Models.Request.VodCommitUploadInfoRequest
+	(*VodUrlUploadJsonRequest)(nil),                         // 13: Volcengine.Vod.Models.Request.VodUrlUploadJsonRequest
+	(*VodListFileMetaInfosByFileNamesRequest)(nil),          // 14: Volcengine.Vod.Models.Request.VodListFileMetaInfosByFileNamesRequest
+	(*VodGetRecommendedPosterRequest)(nil),                  // 15: Volcengine.Vod.Models.Request.VodGetRecommendedPosterRequest
+	(*VodUpdateMediaPublishStatusRequest)(nil),              // 16: Volcengine.Vod.Models.Request.VodUpdateMediaPublishStatusRequest
+	(*VodUpdateMediaStorageClassRequest)(nil),               // 17: Volcengine.Vod.Models.Request.VodUpdateMediaStorageClassRequest
+	(*VodUpdateMediaInfoRequest)(nil),                       // 18: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest
+	(*VodGetMediaInfosRequest)(nil),                         // 19: Volcengine.Vod.Models.Request.VodGetMediaInfosRequest
+	(*VodDeleteMediaRequest)(nil),                           // 20: Volcengine.Vod.Models.Request.VodDeleteMediaRequest
+	(*VodDeleteTranscodesRequest)(nil),                      // 21: Volcengine.Vod.Models.Request.VodDeleteTranscodesRequest
+	(*VodDeleteMediaTosFileRequest)(nil),                    // 22: Volcengine.Vod.Models.Request.VodDeleteMediaTosFileRequest
+	(*VodGetMediaListRequest)(nil),                          // 23: Volcengine.Vod.Models.Request.VodGetMediaListRequest
+	(*VodGetSubtitleInfoListRequest)(nil),                   // 24: Volcengine.Vod.Models.Request.VodGetSubtitleInfoListRequest
+	(*VodUpdateSubtitleStatusRequest)(nil),                  // 25: Volcengine.Vod.Models.Request.VodUpdateSubtitleStatusRequest
+	(*VodUpdateSubtitleInfoRequest)(nil),                    // 26: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest
+	(*VodGetAuditFramesForAuditRequest)(nil),                // 27: Volcengine.Vod.Models.Request.VodGetAuditFramesForAuditRequest
+	(*VodGetMLFramesForAuditRequest)(nil),                   // 28: Volcengine.Vod.Models.Request.VodGetMLFramesForAuditRequest
+	(*VodGetBetterFramesForAuditRequest)(nil),               // 29: Volcengine.Vod.Models.Request.VodGetBetterFramesForAuditRequest
+	(*VodGetAudioInfoForAuditRequest)(nil),                  // 30: Volcengine.Vod.Models.Request.VodGetAudioInfoForAuditRequest
+	(*VodGetAutomaticSpeechRecognitionForAuditRequest)(nil), // 31: Volcengine.Vod.Models.Request.VodGetAutomaticSpeechRecognitionForAuditRequest
+	(*VodGetAudioEventDetectionForAuditRequest)(nil),        // 32: Volcengine.Vod.Models.Request.VodGetAudioEventDetectionForAuditRequest
+	(*VodCreateVideoClassificationRequest)(nil),             // 33: Volcengine.Vod.Models.Request.VodCreateVideoClassificationRequest
+	(*VodUpdateVideoClassificationRequest)(nil),             // 34: Volcengine.Vod.Models.Request.VodUpdateVideoClassificationRequest
+	(*VodDeleteVideoClassificationRequest)(nil),             // 35: Volcengine.Vod.Models.Request.VodDeleteVideoClassificationRequest
+	(*VodListVideoClassificationsRequest)(nil),              // 36: Volcengine.Vod.Models.Request.VodListVideoClassificationsRequest
+	(*VodListSnapshotsRequest)(nil),                         // 37: Volcengine.Vod.Models.Request.VodListSnapshotsRequest
+	(*VodGetFileListRequest)(nil),                           // 38: Volcengine.Vod.Models.Request.VodGetFileListRequest
+	(*VodExtractMediaMetaTaskRequest)(nil),                  // 39: Volcengine.Vod.Models.Request.VodExtractMediaMetaTaskRequest
+	(*VodStartWorkflowRequest)(nil),                         // 40: Volcengine.Vod.Models.Request.VodStartWorkflowRequest
+	(*VodRetrieveTranscodeResultRequest)(nil),               // 41: Volcengine.Vod.Models.Request.VodRetrieveTranscodeResultRequest
+	(*VodListWorkflowExecutionRequest)(nil),                 // 42: Volcengine.Vod.Models.Request.VodListWorkflowExecutionRequest
+	(*VodGetWorkflowExecutionDetailRequest)(nil),            // 43: Volcengine.Vod.Models.Request.VodGetWorkflowExecutionDetailRequest
+	(*VodGetWorkflowResultRequest)(nil),                     // 44: Volcengine.Vod.Models.Request.VodGetWorkflowResultRequest
+	(*VodGetWorkflowExecutionStatusRequest)(nil),            // 45: Volcengine.Vod.Models.Request.VodGetWorkflowExecutionStatusRequest
+	(*VodCreateTaskTemplateRequest)(nil),                    // 46: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest
+	(*VodUpdateTaskTemplateRequest)(nil),                    // 47: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest
+	(*VodDeleteTaskTemplateRequest)(nil),                    // 48: Volcengine.Vod.Models.Request.VodDeleteTaskTemplateRequest
+	(*VodGetTaskTemplateRequest)(nil),                       // 49: Volcengine.Vod.Models.Request.VodGetTaskTemplateRequest
+	(*VodListTaskTemplateRequest)(nil),                      // 50: Volcengine.Vod.Models.Request.VodListTaskTemplateRequest
+	(*VodCreateWatermarkRequest)(nil),                       // 51: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest
+	(*VodUpdateWatermarkRequest)(nil),                       // 52: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest
+	(*VodDeleteWatermarkRequest)(nil),                       // 53: Volcengine.Vod.Models.Request.VodDeleteWatermarkRequest
+	(*VodGetWatermarkRequest)(nil),                          // 54: Volcengine.Vod.Models.Request.VodGetWatermarkRequest
+	(*VodListWatermarkRequest)(nil),                         // 55: Volcengine.Vod.Models.Request.VodListWatermarkRequest
+	(*VodCreateWorkflowTemplateRequest)(nil),                // 56: Volcengine.Vod.Models.Request.VodCreateWorkflowTemplateRequest
+	(*VodUpdateWorkflowTemplateRequest)(nil),                // 57: Volcengine.Vod.Models.Request.VodUpdateWorkflowTemplateRequest
+	(*VodDeleteWorkflowTemplateRequest)(nil),                // 58: Volcengine.Vod.Models.Request.VodDeleteWorkflowTemplateRequest
+	(*VodGetWorkflowTemplateRequest)(nil),                   // 59: Volcengine.Vod.Models.Request.VodGetWorkflowTemplateRequest
+	(*VodListWorkflowTemplateRequest)(nil),                  // 60: Volcengine.Vod.Models.Request.VodListWorkflowTemplateRequest
+	(*VodSubmitDirectEditTaskAsyncRequest)(nil),             // 61: Volcengine.Vod.Models.Request.VodSubmitDirectEditTaskAsyncRequest
+	(*VodGetDirectEditResultRequest)(nil),                   // 62: Volcengine.Vod.Models.Request.VodGetDirectEditResultRequest
+	(*VodGetDirectEditProgressRequest)(nil),                 // 63: Volcengine.Vod.Models.Request.VodGetDirectEditProgressRequest
+	(*VodDeleteSpaceRequest)(nil),                           // 64: Volcengine.Vod.Models.Request.VodDeleteSpaceRequest
+	(*VodCreateSpaceRequest)(nil),                           // 65: Volcengine.Vod.Models.Request.VodCreateSpaceRequest
+	(*VodGetSpaceDetailRequest)(nil),                        // 66: Volcengine.Vod.Models.Request.VodGetSpaceDetailRequest
+	(*VodListSpaceRequest)(nil),                             // 67: Volcengine.Vod.Models.Request.VodListSpaceRequest
+	(*VodUpdateSpaceRequest)(nil),                           // 68: Volcengine.Vod.Models.Request.VodUpdateSpaceRequest
+	(*VodUpdateSpaceUploadConfigRequest)(nil),               // 69: Volcengine.Vod.Models.Request.VodUpdateSpaceUploadConfigRequest
+	(*VodDescribeVodSpaceStorageDataRequest)(nil),           // 70: Volcengine.Vod.Models.Request.VodDescribeVodSpaceStorageDataRequest
+	(*VodUpdateDomainPlayRuleRequest)(nil),                  // 71: Volcengine.Vod.Models.Request.VodUpdateDomainPlayRuleRequest
+	(*VodAddDomainToSchedulerRequest)(nil),                  // 72: Volcengine.Vod.Models.Request.VodAddDomainToSchedulerRequest
+	(*VodRemoveDomainFromSchedulerRequest)(nil),             // 73: Volcengine.Vod.Models.Request.VodRemoveDomainFromSchedulerRequest
+	(*VodDeleteDomainRequest)(nil),                          // 74: Volcengine.Vod.Models.Request.VodDeleteDomainRequest
+	(*VodStartDomainRequest)(nil),                           // 75: Volcengine.Vod.Models.Request.VodStartDomainRequest
+	(*VodStopDomainRequest)(nil),                            // 76: Volcengine.Vod.Models.Request.VodStopDomainRequest
+	(*VodListDomainRequest)(nil),                            // 77: Volcengine.Vod.Models.Request.VodListDomainRequest
+	(*VodCreateCdnRefreshTaskRequest)(nil),                  // 78: Volcengine.Vod.Models.Request.VodCreateCdnRefreshTaskRequest
+	(*VodCreateCdnPreloadTaskRequest)(nil),                  // 79: Volcengine.Vod.Models.Request.VodCreateCdnPreloadTaskRequest
+	(*VodListCdnTasksRequest)(nil),                          // 80: Volcengine.Vod.Models.Request.VodListCdnTasksRequest
+	(*VodListCdnAccessLogRequest)(nil),                      // 81: Volcengine.Vod.Models.Request.VodListCdnAccessLogRequest
+	(*VodListCdnTopAccessUrlRequest)(nil),                   // 82: Volcengine.Vod.Models.Request.VodListCdnTopAccessUrlRequest
+	(*VodListCdnTopAccessRequest)(nil),                      // 83: Volcengine.Vod.Models.Request.VodListCdnTopAccessRequest
+	(*VodDescribeVodDomainBandwidthDataRequest)(nil),        // 84: Volcengine.Vod.Models.Request.VodDescribeVodDomainBandwidthDataRequest
+	(*VodListCdnUsageDataRequest)(nil),                      // 85: Volcengine.Vod.Models.Request.VodListCdnUsageDataRequest
+	(*VodListCdnStatusDataRequest)(nil),                     // 86: Volcengine.Vod.Models.Request.VodListCdnStatusDataRequest
+	(*VodDescribeIPInfoRequest)(nil),                        // 87: Volcengine.Vod.Models.Request.VodDescribeIPInfoRequest
+	(*VodListCdnPvDataRequest)(nil),                         // 88: Volcengine.Vod.Models.Request.VodListCdnPvDataRequest
+	(*VodListCdnHitrateDataRequest)(nil),                    // 89: Volcengine.Vod.Models.Request.VodListCdnHitrateDataRequest
+	(*VodDescribeVodDomainTrafficDataRequest)(nil),          // 90: Volcengine.Vod.Models.Request.VodDescribeVodDomainTrafficDataRequest
+	(*VodSubmitBlockTasksRequest)(nil),                      // 91: Volcengine.Vod.Models.Request.VodSubmitBlockTasksRequest
+	(*VodGetContentBlockTasksRequest)(nil),                  // 92: Volcengine.Vod.Models.Request.VodGetContentBlockTasksRequest
+	(*VodCreateDomainV2Request)(nil),                        // 93: Volcengine.Vod.Models.Request.VodCreateDomainV2Request
+	(*VodUpdateDomainExpireV2Request)(nil),                  // 94: Volcengine.Vod.Models.Request.VodUpdateDomainExpireV2Request
+	(*VodUpdateDomainAuthConfigV2Request)(nil),              // 95: Volcengine.Vod.Models.Request.VodUpdateDomainAuthConfigV2Request
+	(*AddOrUpdateCertificateV2Request)(nil),                 // 96: Volcengine.Vod.Models.Request.AddOrUpdateCertificateV2Request
+	(*VodAddCallbackSubscriptionRequest)(nil),               // 97: Volcengine.Vod.Models.Request.VodAddCallbackSubscriptionRequest
+	(*VodSetCallbackEventRequest)(nil),                      // 98: Volcengine.Vod.Models.Request.VodSetCallbackEventRequest
+	(*VodGetSmartStrategyLitePlayInfoRequest)(nil),          // 99: Volcengine.Vod.Models.Request.VodGetSmartStrategyLitePlayInfoRequest
+	(*VodGetAppInfoRequest)(nil),                            // 100: Volcengine.Vod.Models.Request.VodGetAppInfoRequest
+	(*DescribeVodSpaceTranscodeDataRequest)(nil),            // 101: Volcengine.Vod.Models.Request.DescribeVodSpaceTranscodeDataRequest
+	(*DescribeVodSpaceAIStatisDataRequest)(nil),             // 102: Volcengine.Vod.Models.Request.DescribeVodSpaceAIStatisDataRequest
+	(*DescribeVodSpaceSubtitleStatisDataRequest)(nil),       // 103: Volcengine.Vod.Models.Request.DescribeVodSpaceSubtitleStatisDataRequest
+	(*DescribeVodSpaceDetectStatisDataRequest)(nil),         // 104: Volcengine.Vod.Models.Request.DescribeVodSpaceDetectStatisDataRequest
+	(*DescribeVodSnapshotDataRequest)(nil),                  // 105: Volcengine.Vod.Models.Request.DescribeVodSnapshotDataRequest
+	(*DescribeVodSpaceWorkflowDetailDataRequest)(nil),       // 106: Volcengine.Vod.Models.Request.DescribeVodSpaceWorkflowDetailDataRequest
+	(*DescribeVodSpaceEditDetailDataRequest)(nil),           // 107: Volcengine.Vod.Models.Request.DescribeVodSpaceEditDetailDataRequest
+	(*DescribeVodPlayFileLogByDomainRequest)(nil),           // 108: Volcengine.Vod.Models.Request.DescribeVodPlayFileLogByDomainRequest
+	(*VodSubmitBlockMediaTaskRequest)(nil),                  // 109: Volcengine.Vod.Models.Request.VodSubmitBlockMediaTaskRequest
+	(*VodSubmitUnblockMediaTaskRequest)(nil),                // 110: Volcengine.Vod.Models.Request.VodSubmitUnblockMediaTaskRequest
+	(*VodQueryMediaBlockStatusRequest)(nil),                 // 111: Volcengine.Vod.Models.Request.VodQueryMediaBlockStatusRequest
+	(*VodListProjectsRequest)(nil),                          // 112: Volcengine.Vod.Models.Request.VodListProjectsRequest
+	(*VodGetTradeConfigurationRequest)(nil),                 // 113: Volcengine.Vod.Models.Request.VodGetTradeConfigurationRequest
+	(*business.VodUrlUploadURLSet)(nil),                     // 114: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	(*wrapperspb.StringValue)(nil),                          // 115: google.protobuf.StringValue
+	(*wrapperspb.Int64Value)(nil),                           // 116: google.protobuf.Int64Value
+	(*business.WorkflowParams)(nil),                         // 117: Volcengine.Vod.Models.Business.WorkflowParams
+	(*business.DirectUrl)(nil),                              // 118: Volcengine.Vod.Models.Business.DirectUrl
+	(*business.TranscodeVideoTaskParams)(nil),               // 119: Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
+	(*business.ByteHDTaskParams)(nil),                       // 120: Volcengine.Vod.Models.Business.ByteHDTaskParams
+	(*business.TranscodeAudioTaskParams)(nil),               // 121: Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
+	(*business.SnapshotTaskParams)(nil),                     // 122: Volcengine.Vod.Models.Business.SnapshotTaskParams
+	(*business.AdaptLogo)(nil),                              // 123: Volcengine.Vod.Models.Business.AdaptLogo
+	(*business.AdaptConcat)(nil),                            // 124: Volcengine.Vod.Models.Business.AdaptConcat
+	(*business.HiddenWatermarkAdd)(nil),                     // 125: Volcengine.Vod.Models.Business.HiddenWatermarkAdd
+	(*business.Activity)(nil),                               // 126: Volcengine.Vod.Models.Business.Activity
 }
 var file_volcengine_vod_request_request_vod_proto_depIdxs = []int32{
-	106, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	107, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
-	107, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
-	107, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
-	107, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
-	108, // 5: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.ClassificationId:type_name -> google.protobuf.Int64Value
-	107, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
-	107, // 7: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
-	109, // 8: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
-	110, // 9: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.DirectUrl:type_name -> Volcengine.Vod.Models.Business.DirectUrl
-	111, // 10: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.TranscodeVideoTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
-	112, // 11: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.ByteHDTaskParams:type_name -> Volcengine.Vod.Models.Business.ByteHDTaskParams
-	113, // 12: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.TranscodeAudioTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
-	114, // 13: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.SnapshotTaskParams:type_name -> Volcengine.Vod.Models.Business.SnapshotTaskParams
-	111, // 14: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.TranscodeVideoTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
-	112, // 15: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.ByteHDTaskParams:type_name -> Volcengine.Vod.Models.Business.ByteHDTaskParams
-	113, // 16: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.TranscodeAudioTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
-	114, // 17: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.SnapshotTaskParams:type_name -> Volcengine.Vod.Models.Business.SnapshotTaskParams
-	115, // 18: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.Logos:type_name -> Volcengine.Vod.Models.Business.AdaptLogo
-	116, // 19: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.Concats:type_name -> Volcengine.Vod.Models.Business.AdaptConcat
-	117, // 20: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.HiddenWatermark:type_name -> Volcengine.Vod.Models.Business.HiddenWatermarkAdd
-	115, // 21: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.Logos:type_name -> Volcengine.Vod.Models.Business.AdaptLogo
-	116, // 22: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.Concats:type_name -> Volcengine.Vod.Models.Business.AdaptConcat
-	117, // 23: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.HiddenWatermark:type_name -> Volcengine.Vod.Models.Business.HiddenWatermarkAdd
-	118, // 24: Volcengine.Vod.Models.Request.VodCreateWorkflowTemplateRequest.Activities:type_name -> Volcengine.Vod.Models.Business.Activity
-	118, // 25: Volcengine.Vod.Models.Request.VodUpdateWorkflowTemplateRequest.Activities:type_name -> Volcengine.Vod.Models.Business.Activity
+	114, // 0: Volcengine.Vod.Models.Request.VodUrlUploadRequest.URLSets:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	115, // 1: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.PosterUri:type_name -> google.protobuf.StringValue
+	115, // 2: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Title:type_name -> google.protobuf.StringValue
+	115, // 3: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Description:type_name -> google.protobuf.StringValue
+	115, // 4: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.Tags:type_name -> google.protobuf.StringValue
+	116, // 5: Volcengine.Vod.Models.Request.VodUpdateMediaInfoRequest.ClassificationId:type_name -> google.protobuf.Int64Value
+	115, // 6: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Title:type_name -> google.protobuf.StringValue
+	115, // 7: Volcengine.Vod.Models.Request.VodUpdateSubtitleInfoRequest.Tag:type_name -> google.protobuf.StringValue
+	117, // 8: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.Input:type_name -> Volcengine.Vod.Models.Business.WorkflowParams
+	118, // 9: Volcengine.Vod.Models.Request.VodStartWorkflowRequest.DirectUrl:type_name -> Volcengine.Vod.Models.Business.DirectUrl
+	119, // 10: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.TranscodeVideoTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
+	120, // 11: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.ByteHDTaskParams:type_name -> Volcengine.Vod.Models.Business.ByteHDTaskParams
+	121, // 12: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.TranscodeAudioTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
+	122, // 13: Volcengine.Vod.Models.Request.VodCreateTaskTemplateRequest.SnapshotTaskParams:type_name -> Volcengine.Vod.Models.Business.SnapshotTaskParams
+	119, // 14: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.TranscodeVideoTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeVideoTaskParams
+	120, // 15: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.ByteHDTaskParams:type_name -> Volcengine.Vod.Models.Business.ByteHDTaskParams
+	121, // 16: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.TranscodeAudioTaskParams:type_name -> Volcengine.Vod.Models.Business.TranscodeAudioTaskParams
+	122, // 17: Volcengine.Vod.Models.Request.VodUpdateTaskTemplateRequest.SnapshotTaskParams:type_name -> Volcengine.Vod.Models.Business.SnapshotTaskParams
+	123, // 18: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.Logos:type_name -> Volcengine.Vod.Models.Business.AdaptLogo
+	124, // 19: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.Concats:type_name -> Volcengine.Vod.Models.Business.AdaptConcat
+	125, // 20: Volcengine.Vod.Models.Request.VodCreateWatermarkRequest.HiddenWatermark:type_name -> Volcengine.Vod.Models.Business.HiddenWatermarkAdd
+	123, // 21: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.Logos:type_name -> Volcengine.Vod.Models.Business.AdaptLogo
+	124, // 22: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.Concats:type_name -> Volcengine.Vod.Models.Business.AdaptConcat
+	125, // 23: Volcengine.Vod.Models.Request.VodUpdateWatermarkRequest.HiddenWatermark:type_name -> Volcengine.Vod.Models.Business.HiddenWatermarkAdd
+	126, // 24: Volcengine.Vod.Models.Request.VodCreateWorkflowTemplateRequest.Activities:type_name -> Volcengine.Vod.Models.Business.Activity
+	126, // 25: Volcengine.Vod.Models.Request.VodUpdateWorkflowTemplateRequest.Activities:type_name -> Volcengine.Vod.Models.Business.Activity
 	26,  // [26:26] is the sub-list for method output_type
 	26,  // [26:26] is the sub-list for method input_type
 	26,  // [26:26] is the sub-list for extension type_name
@@ -10158,7 +10730,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUrlUploadRequest); i {
+			switch v := v.(*VodDescribeDrmDataKeyRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10170,7 +10742,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodQueryUploadTaskInfoRequest); i {
+			switch v := v.(*VodUrlUploadRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10182,7 +10754,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodApplyUploadInfoRequest); i {
+			switch v := v.(*VodQueryUploadTaskInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10194,7 +10766,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUploadMediaRequest); i {
+			switch v := v.(*VodApplyUploadInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10206,7 +10778,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUploadMaterialRequest); i {
+			switch v := v.(*VodUploadMediaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10218,7 +10790,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUploadObjectRequest); i {
+			switch v := v.(*VodUploadMaterialRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10230,7 +10802,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCommitUploadInfoRequest); i {
+			switch v := v.(*VodUploadObjectRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10242,7 +10814,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUrlUploadJsonRequest); i {
+			switch v := v.(*VodCommitUploadInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10254,7 +10826,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListFileMetaInfosByFileNamesRequest); i {
+			switch v := v.(*VodUrlUploadJsonRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10266,7 +10838,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetRecommendedPosterRequest); i {
+			switch v := v.(*VodListFileMetaInfosByFileNamesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10278,7 +10850,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateMediaPublishStatusRequest); i {
+			switch v := v.(*VodGetRecommendedPosterRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10290,7 +10862,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateMediaStorageClassRequest); i {
+			switch v := v.(*VodUpdateMediaPublishStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10302,7 +10874,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateMediaInfoRequest); i {
+			switch v := v.(*VodUpdateMediaStorageClassRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10314,7 +10886,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetMediaInfosRequest); i {
+			switch v := v.(*VodUpdateMediaInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10326,7 +10898,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteMediaRequest); i {
+			switch v := v.(*VodGetMediaInfosRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10338,7 +10910,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteTranscodesRequest); i {
+			switch v := v.(*VodDeleteMediaRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10350,7 +10922,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteMediaTosFileRequest); i {
+			switch v := v.(*VodDeleteTranscodesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10362,7 +10934,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetMediaListRequest); i {
+			switch v := v.(*VodDeleteMediaTosFileRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10374,7 +10946,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetSubtitleInfoListRequest); i {
+			switch v := v.(*VodGetMediaListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10386,7 +10958,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateSubtitleStatusRequest); i {
+			switch v := v.(*VodGetSubtitleInfoListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10398,7 +10970,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateSubtitleInfoRequest); i {
+			switch v := v.(*VodUpdateSubtitleStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10410,7 +10982,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAuditFramesForAuditRequest); i {
+			switch v := v.(*VodUpdateSubtitleInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10422,7 +10994,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetMLFramesForAuditRequest); i {
+			switch v := v.(*VodGetAuditFramesForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10434,7 +11006,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetBetterFramesForAuditRequest); i {
+			switch v := v.(*VodGetMLFramesForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10446,7 +11018,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAudioInfoForAuditRequest); i {
+			switch v := v.(*VodGetBetterFramesForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10458,7 +11030,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAutomaticSpeechRecognitionForAuditRequest); i {
+			switch v := v.(*VodGetAudioInfoForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10470,7 +11042,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAudioEventDetectionForAuditRequest); i {
+			switch v := v.(*VodGetAutomaticSpeechRecognitionForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10482,7 +11054,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateVideoClassificationRequest); i {
+			switch v := v.(*VodGetAudioEventDetectionForAuditRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10494,7 +11066,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateVideoClassificationRequest); i {
+			switch v := v.(*VodCreateVideoClassificationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10506,7 +11078,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteVideoClassificationRequest); i {
+			switch v := v.(*VodUpdateVideoClassificationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10518,7 +11090,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListVideoClassificationsRequest); i {
+			switch v := v.(*VodDeleteVideoClassificationRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10530,7 +11102,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListSnapshotsRequest); i {
+			switch v := v.(*VodListVideoClassificationsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10542,7 +11114,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetFileListRequest); i {
+			switch v := v.(*VodListSnapshotsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10554,7 +11126,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodExtractMediaMetaTaskRequest); i {
+			switch v := v.(*VodGetFileListRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10566,7 +11138,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodStartWorkflowRequest); i {
+			switch v := v.(*VodExtractMediaMetaTaskRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10578,7 +11150,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodRetrieveTranscodeResultRequest); i {
+			switch v := v.(*VodStartWorkflowRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10590,7 +11162,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListWorkflowExecutionRequest); i {
+			switch v := v.(*VodRetrieveTranscodeResultRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10602,7 +11174,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetWorkflowExecutionDetailRequest); i {
+			switch v := v.(*VodListWorkflowExecutionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10614,7 +11186,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetWorkflowResultRequest); i {
+			switch v := v.(*VodGetWorkflowExecutionDetailRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10626,7 +11198,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetWorkflowExecutionStatusRequest); i {
+			switch v := v.(*VodGetWorkflowResultRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10638,7 +11210,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateTaskTemplateRequest); i {
+			switch v := v.(*VodGetWorkflowExecutionStatusRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10650,7 +11222,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateTaskTemplateRequest); i {
+			switch v := v.(*VodCreateTaskTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10662,7 +11234,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteTaskTemplateRequest); i {
+			switch v := v.(*VodUpdateTaskTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10674,7 +11246,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetTaskTemplateRequest); i {
+			switch v := v.(*VodDeleteTaskTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10686,7 +11258,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListTaskTemplateRequest); i {
+			switch v := v.(*VodGetTaskTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10698,7 +11270,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateWatermarkRequest); i {
+			switch v := v.(*VodListTaskTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10710,7 +11282,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateWatermarkRequest); i {
+			switch v := v.(*VodCreateWatermarkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10722,7 +11294,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteWatermarkRequest); i {
+			switch v := v.(*VodUpdateWatermarkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10734,7 +11306,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetWatermarkRequest); i {
+			switch v := v.(*VodDeleteWatermarkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10746,7 +11318,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListWatermarkRequest); i {
+			switch v := v.(*VodGetWatermarkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10758,7 +11330,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateWorkflowTemplateRequest); i {
+			switch v := v.(*VodListWatermarkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10770,7 +11342,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateWorkflowTemplateRequest); i {
+			switch v := v.(*VodCreateWorkflowTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10782,7 +11354,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDeleteWorkflowTemplateRequest); i {
+			switch v := v.(*VodUpdateWorkflowTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10794,7 +11366,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetWorkflowTemplateRequest); i {
+			switch v := v.(*VodDeleteWorkflowTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10806,7 +11378,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListWorkflowTemplateRequest); i {
+			switch v := v.(*VodGetWorkflowTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10818,7 +11390,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitDirectEditTaskAsyncRequest); i {
+			switch v := v.(*VodListWorkflowTemplateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10830,7 +11402,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetDirectEditResultRequest); i {
+			switch v := v.(*VodSubmitDirectEditTaskAsyncRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10842,7 +11414,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetDirectEditProgressRequest); i {
+			switch v := v.(*VodGetDirectEditResultRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10854,7 +11426,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateSpaceRequest); i {
+			switch v := v.(*VodGetDirectEditProgressRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10866,7 +11438,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetSpaceDetailRequest); i {
+			switch v := v.(*VodDeleteSpaceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10878,7 +11450,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListSpaceRequest); i {
+			switch v := v.(*VodCreateSpaceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10890,7 +11462,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateSpaceRequest); i {
+			switch v := v.(*VodGetSpaceDetailRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10902,7 +11474,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateSpaceUploadConfigRequest); i {
+			switch v := v.(*VodListSpaceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10914,7 +11486,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDescribeVodSpaceStorageDataRequest); i {
+			switch v := v.(*VodUpdateSpaceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10926,7 +11498,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListDomainRequest); i {
+			switch v := v.(*VodUpdateSpaceUploadConfigRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10938,7 +11510,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateCdnRefreshTaskRequest); i {
+			switch v := v.(*VodDescribeVodSpaceStorageDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10950,7 +11522,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateCdnPreloadTaskRequest); i {
+			switch v := v.(*VodUpdateDomainPlayRuleRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10962,7 +11534,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnTasksRequest); i {
+			switch v := v.(*VodAddDomainToSchedulerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10974,7 +11546,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnAccessLogRequest); i {
+			switch v := v.(*VodRemoveDomainFromSchedulerRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10986,7 +11558,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnTopAccessUrlRequest); i {
+			switch v := v.(*VodDeleteDomainRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -10998,7 +11570,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnTopAccessRequest); i {
+			switch v := v.(*VodStartDomainRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11010,7 +11582,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDescribeVodDomainBandwidthDataRequest); i {
+			switch v := v.(*VodStopDomainRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11022,7 +11594,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnUsageDataRequest); i {
+			switch v := v.(*VodListDomainRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11034,7 +11606,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnStatusDataRequest); i {
+			switch v := v.(*VodCreateCdnRefreshTaskRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11046,7 +11618,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDescribeIPInfoRequest); i {
+			switch v := v.(*VodCreateCdnPreloadTaskRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11058,7 +11630,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnPvDataRequest); i {
+			switch v := v.(*VodListCdnTasksRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11070,7 +11642,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListCdnHitrateDataRequest); i {
+			switch v := v.(*VodListCdnAccessLogRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11082,7 +11654,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodDescribeVodDomainTrafficDataRequest); i {
+			switch v := v.(*VodListCdnTopAccessUrlRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11094,7 +11666,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitBlockTasksRequest); i {
+			switch v := v.(*VodListCdnTopAccessRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11106,7 +11678,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetContentBlockTasksRequest); i {
+			switch v := v.(*VodDescribeVodDomainBandwidthDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11118,7 +11690,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodCreateDomainV2Request); i {
+			switch v := v.(*VodListCdnUsageDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11130,7 +11702,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateDomainExpireV2Request); i {
+			switch v := v.(*VodListCdnStatusDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11142,7 +11714,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodUpdateDomainAuthConfigV2Request); i {
+			switch v := v.(*VodDescribeIPInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11154,7 +11726,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[88].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddOrUpdateCertificateV2Request); i {
+			switch v := v.(*VodListCdnPvDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11166,7 +11738,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[89].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodAddCallbackSubscriptionRequest); i {
+			switch v := v.(*VodListCdnHitrateDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11178,7 +11750,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[90].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSetCallbackEventRequest); i {
+			switch v := v.(*VodDescribeVodDomainTrafficDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11190,7 +11762,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[91].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetSmartStrategyLitePlayInfoRequest); i {
+			switch v := v.(*VodSubmitBlockTasksRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11202,7 +11774,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[92].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAppInfoRequest); i {
+			switch v := v.(*VodGetContentBlockTasksRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11214,7 +11786,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[93].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceTranscodeDataRequest); i {
+			switch v := v.(*VodCreateDomainV2Request); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11226,7 +11798,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[94].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceAIStatisDataRequest); i {
+			switch v := v.(*VodUpdateDomainExpireV2Request); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11238,7 +11810,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[95].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceSubtitleStatisDataRequest); i {
+			switch v := v.(*VodUpdateDomainAuthConfigV2Request); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11250,7 +11822,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[96].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceDetectStatisDataRequest); i {
+			switch v := v.(*AddOrUpdateCertificateV2Request); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11262,7 +11834,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[97].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSnapshotDataRequest); i {
+			switch v := v.(*VodAddCallbackSubscriptionRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11274,7 +11846,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[98].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceWorkflowDetailDataRequest); i {
+			switch v := v.(*VodSetCallbackEventRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11286,7 +11858,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[99].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceEditDetailDataRequest); i {
+			switch v := v.(*VodGetSmartStrategyLitePlayInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11298,7 +11870,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[100].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodPlayFileLogByDomainRequest); i {
+			switch v := v.(*VodGetAppInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11310,7 +11882,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[101].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitBlockMediaTaskRequest); i {
+			switch v := v.(*DescribeVodSpaceTranscodeDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11322,7 +11894,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[102].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitUnblockMediaTaskRequest); i {
+			switch v := v.(*DescribeVodSpaceAIStatisDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11334,7 +11906,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[103].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodQueryMediaBlockStatusRequest); i {
+			switch v := v.(*DescribeVodSpaceSubtitleStatisDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11346,7 +11918,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[104].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListProjectsRequest); i {
+			switch v := v.(*DescribeVodSpaceDetectStatisDataRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11358,6 +11930,102 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_request_request_vod_proto_msgTypes[105].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DescribeVodSnapshotDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[106].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DescribeVodSpaceWorkflowDetailDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[107].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DescribeVodSpaceEditDetailDataRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[108].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DescribeVodPlayFileLogByDomainRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[109].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitBlockMediaTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[110].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitUnblockMediaTaskRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[111].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodQueryMediaBlockStatusRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[112].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodListProjectsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_request_request_vod_proto_msgTypes[113].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodGetTradeConfigurationRequest); i {
 			case 0:
 				return &v.state
@@ -11376,7 +12044,7 @@ func file_volcengine_vod_request_request_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_volcengine_vod_request_request_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   106,
+			NumMessages:   114,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
