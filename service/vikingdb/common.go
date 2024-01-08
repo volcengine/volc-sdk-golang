@@ -15,8 +15,11 @@ const (
 	COSINE = "cosine"
 	FLAT   = "flat"
 	HNSW   = "hnsw"
+	IVF    = "ivf"
 	Float  = "float"
 	Int8   = "int8"
+	Fix16  = "fix16"
+	PQ     = "pq"
 
 	Asc  = "asc"
 	Desc = "desc"
