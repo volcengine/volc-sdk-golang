@@ -822,6 +822,14 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"UpdateDomainUrlAuthConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDomainUrlAuthConfig"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************
