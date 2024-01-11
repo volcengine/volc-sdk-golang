@@ -517,3 +517,25 @@ func Test_AddOrUpdateCertificate(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_UpdateDomainUrlAuthConfig(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateDomainUrlAuthConfigV2Request{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+		MainKey:    "your MainKey",
+		BackupKey:  "your BackupKey",
+		Status:     "your Status",
+	}
+
+	resp, status, err := instance.UpdateDomainUrlAuthConfig(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
