@@ -6,12 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gogo/protobuf/proto"
+	"io"
+	"net/http"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
-	"io"
-	"net/http"
 )
 
 // MaaS ... use base client
@@ -300,8 +300,6 @@ func (r *MaaS) initCertByReq(req *api.ChatReq) (*KeyAgreementClient, error) {
 }
 
 func (cli *MaaS) encryptChatRequest(req *api.ChatReq) ([]byte, []byte, *api.ChatReq, error) {
-	req = proto.Clone(req).(*api.ChatReq)
-
 	ka, err := cli.initCertByReq(req)
 	if err != nil {
 		return nil, nil, nil, fmt.Errorf("failed to init cert: %w", err)

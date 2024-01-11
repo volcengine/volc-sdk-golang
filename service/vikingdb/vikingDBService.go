@@ -155,6 +155,16 @@ func getApiInfo() map[string]*base.ApiInfo {
 	}
 	return apiInfos
 }
+func (vikingDBService *VikingDBService) SetHeader(header map[string]string) {
+	apiInfo := vikingDBService.Client.ApiInfoList
+	for key, _ := range apiInfo {
+		for item, _ := range header {
+			apiInfo[key].Header[item] = []string{header[item]}
+		}
+	}
+	vikingDBService.Client.ApiInfoList = apiInfo
+}
+
 func (vikingDBService *VikingDBService) DoRequest(ctx context.Context, api string, query url.Values, body string) (map[string]interface{}, error) {
 	res, code, err := vikingDBService.Client.CtxJson(ctx, api, query, body)
 	if err != nil {
