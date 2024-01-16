@@ -152,6 +152,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"Rerank": {
+			Method: http.MethodPost,
+			Path:   "/api/index/rerank",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 	return apiInfos
 }
@@ -1070,4 +1078,13 @@ func (vikingDBService *VikingDBService) UpdateIndex(collectionName string, index
 	}
 	_, err := vikingDBService.DoRequest(context.Background(), "UpdateIndex", nil, vikingDBService.convertMapToJson(params))
 	return err
+}
+func (vikingDBService *VikingDBService) Rerank(query string, content string, title string) (float64, error) {
+	params := map[string]interface{}{
+		"query":   query,
+		"content": content,
+		"title":   title,
+	}
+	data, err := vikingDBService.DoRequest(context.Background(), "Rerank", nil, vikingDBService.convertMapToJson(params))
+	return data["data"].(float64), err
 }
