@@ -66,8 +66,13 @@ func createIndex(topicID string, fulltextInfo *FullTextInfo, KeyValue *[]KeyValu
 		KeyValue: KeyValue,
 	}
 	_, err := cli.CreateIndex(createIndexReq)
+	if err != nil {
+		return err
+	}
 
-	return err
+	time.Sleep(time.Minute)
+
+	return nil
 }
 
 func (suite *SDKProducerTestSuite) SetupTest() {
@@ -168,7 +173,7 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 	}
 
 	// wait for consumption
-	time.Sleep(50 * time.Second)
+	time.Sleep(60 * time.Second)
 
 	// test search logs
 	searchRes, err := suite.cli.SearchLogs(&SearchLogsRequest{
@@ -180,7 +185,7 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 	})
 	suite.NoError(err)
 
-	suite.Equal(10, searchRes.HitCount)
+	suite.Equal(10, searchRes.Count)
 
 	logMap := make(map[string]struct{})
 	for _, searchLog := range searchRes.Logs {

@@ -84,3 +84,42 @@ func (c *LsClient) ModifyCheckPoint(request *ModifyCheckPointRequest) (*CommonRe
 
 	return response, nil
 }
+
+func (c *LsClient) ResetCheckPoint(request *ResetCheckPointRequest) (*CommonResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	reqBody := map[string]interface{}{
+		"ProjectID":         request.ProjectID,
+		"ConsumerGroupName": request.ConsumerGroupName,
+		"Position":          request.Position,
+	}
+
+	jsonBody, err := json.Marshal(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPut, PathResetCheckPoint, nil, reqHeaders, jsonBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	if rawResponse.StatusCode != http.StatusOK {
+		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.New(string(errorMessage))
+	}
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
+}

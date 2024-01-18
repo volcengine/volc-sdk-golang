@@ -61,6 +61,9 @@ func (c *LsClient) DescribeDownloadTasks(request *DescribeDownloadTasksRequest) 
 	if request.PageSize != nil {
 		params["PageSize"] = strconv.Itoa(*request.PageSize)
 	}
+	if request.TaskName != nil {
+		params["TaskName"] = *request.TaskName
+	}
 
 	bytesBody, err := json.Marshal(request)
 	if err != nil {

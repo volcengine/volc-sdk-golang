@@ -17,7 +17,7 @@ import (
 const (
 	TimeoutException = "TimeoutException"
 
-	MaxLogSize       = 1048576
+	MaxLogSize       = 10 * 1024 * 1024
 	intMax     int   = 0x7FFFFFFF
 	int64Max   int64 = 0x7FFFFFFFFFFFFFFF
 )
@@ -75,7 +75,7 @@ func newProducer(producerConfig *Config) *producer {
 func validateProducerConfig(producerConfig *Config) *Config {
 	producerConfig.MaxReservedAttempts = validateField(producerConfig.MaxReservedAttempts, 0, intMax, 11).(int)
 	producerConfig.MaxBatchCount = validateField(producerConfig.MaxBatchCount, 0, 40960, 40960).(int)
-	producerConfig.MaxBatchSize = validateField(producerConfig.MaxBatchSize, int64(0), int64(1024*1024*5), int64(1024*1024*5)).(int64)
+	producerConfig.MaxBatchSize = validateField(producerConfig.MaxBatchSize, int64(0), int64(1024*1024*10), int64(1024*1024*5)).(int64)
 	producerConfig.MaxSenderCount = validateField(producerConfig.MaxSenderCount, int64(0), int64Max, int64(50)).(int64)
 	producerConfig.BaseRetryBackoffMs = validateField(producerConfig.BaseRetryBackoffMs, int64(0), int64Max, int64(100)).(int64)
 	producerConfig.MaxRetryBackoffMs = validateField(producerConfig.MaxRetryBackoffMs, int64(0), int64Max, int64(100)).(int64)

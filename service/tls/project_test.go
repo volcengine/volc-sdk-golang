@@ -274,20 +274,20 @@ func (suite *SDKProjectTestSuite) TestDescribeProjectsNormally() {
 
 	testcases := map[*DescribeProjectsRequest]int{
 		{
-			ProjectName: "sdk-a",
+			ProjectName: "sdk-a-group",
 			PageNumber:  1,
 		}: 2,
 		{
-			ProjectName: "sdk-b",
+			ProjectName: "sdk-b-group",
 			PageNumber:  1,
 		}: 1,
 		{
-			ProjectName: "sdk-c",
+			ProjectName: "sdk-c-group",
 			PageNumber:  1,
 			PageSize:    1,
 		}: 1,
 		{
-			ProjectName:    "sdk-c",
+			ProjectName:    "sdk-c-group",
 			PageNumber:     1,
 			PageSize:       1,
 			IamProjectName: &iamProjectName,

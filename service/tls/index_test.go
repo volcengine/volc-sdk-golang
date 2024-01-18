@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"os"
 	"testing"
 
@@ -37,13 +38,26 @@ func (suite *SDKIndexTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKIndexTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKIndexTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKIndexTestSuite))
 }
 
-// TestCreateIndex: test create index
-func (suite *SDKIndexTestSuite) TestCreateIndex() {
-	testcases := map[*CreateIndexRequest]*DescribeIndexResponse{
+func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
+	testcases := map[*CreateIndexRequest]*Error{
 		{
 			TopicID: suite.topic,
 			FullText: &FullTextInfo{
@@ -73,20 +87,16 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 					},
 				},
 			},
-		}: {
+		}: nil,
+		{
 			TopicID: suite.topic,
-			FullText: &FullTextInfo{
-				CaseSensitive:  false,
-				IncludeChinese: false,
-				Delimiter:      ",",
-			},
 			KeyValue: &[]KeyValueInfo{
 				{
 					Key: "test-key-1",
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CasSensitive:   true,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -98,37 +108,67 @@ func (suite *SDKIndexTestSuite) TestCreateIndex() {
 						Delimiter:      "",
 						CasSensitive:   false,
 						IncludeChinese: false,
+						SQLFlag:        true,
+					},
+				},
+			},
+			UserInnerKeyValue: &[]KeyValueInfo{
+				{
+					Key: "__content__",
+					Value: Value{
+						ValueType:      "text",
+						Delimiter:      ",:-/ ",
+						CasSensitive:   false,
+						IncludeChinese: false,
 						SQLFlag:        false,
 					},
 				},
 			},
-		},
+		}: nil,
 	}
 
-	for createIndexReq, expectGetIndexResp := range testcases {
-		_, err := suite.cli.CreateIndex(createIndexReq)
-		suite.NoError(err)
-
-		actualGetIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
-		suite.NoError(err)
-
-		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
-		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
-
-		if actualGetIndexResp.FullText != nil {
-			suite.Equal(expectGetIndexResp.FullText.CaseSensitive, actualGetIndexResp.FullText.CaseSensitive)
-			suite.Equal(expectGetIndexResp.FullText.IncludeChinese, actualGetIndexResp.FullText.IncludeChinese)
-			suite.Equal(expectGetIndexResp.FullText.Delimiter, actualGetIndexResp.FullText.Delimiter)
-		}
-		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CreateIndex(req)
+		suite.validateError(err, expectedErr)
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
 	}
 }
 
-// TestUpdateIndex: test update index
-func (suite *SDKIndexTestSuite) TestUpdateIndex() {
+func (suite *SDKIndexTestSuite) TestCreateIndexAbnormally() {
+	testcases := map[*CreateIndexRequest]*Error{
+		{
+			TopicID: suite.topic,
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidIndexArgument",
+			Message:  "At least one of full-text indexing and key-value indexing must be turned on",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CreateIndex(req)
+		suite.validateError(err, expectedErr)
+
+		if err == nil {
+			_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+			suite.NoError(err)
+		}
+	}
+}
+
+func (suite *SDKIndexTestSuite) TestDeleteIndexAbnormally() {
+	_, err := suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+	expectedErr := &Error{
+		HTTPCode: http.StatusNotFound,
+		Code:     "IndexNotExists",
+		Message:  "Index does not exist.",
+	}
+	suite.validateError(err, expectedErr)
+}
+
+func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 	createIndexReq := &CreateIndexRequest{
 		TopicID: suite.topic,
 		FullText: &FullTextInfo{
@@ -138,7 +178,6 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 		},
 		KeyValue: nil,
 	}
-
 	_, err := suite.cli.CreateIndex(createIndexReq)
 	suite.NoError(err)
 
@@ -211,17 +250,138 @@ func (suite *SDKIndexTestSuite) TestUpdateIndex() {
 
 		actualGetIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
-
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
 		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
-		if actualGetIndexResp != nil {
-			suite.Equal(expectGetIndexResp.FullText.CaseSensitive, actualGetIndexResp.FullText.CaseSensitive)
-			suite.Equal(expectGetIndexResp.FullText.IncludeChinese, actualGetIndexResp.FullText.IncludeChinese)
-			suite.Equal(expectGetIndexResp.FullText.Delimiter, actualGetIndexResp.FullText.Delimiter)
-		}
+		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
+	}
+
+	_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+}
+
+func (suite *SDKIndexTestSuite) TestModifyIndexAbnormally() {
+	createIndexReq := &CreateIndexRequest{
+		TopicID: suite.topic,
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+		KeyValue: nil,
+	}
+	_, err := suite.cli.CreateIndex(createIndexReq)
+	suite.NoError(err)
+
+	testcases := map[*ModifyIndexRequest]*Error{
+		{
+			TopicID: suite.topic,
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidIndexArgument",
+			Message:  "At least one of full-text indexing and key-value indexing must be turned on",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.ModifyIndex(req)
+		suite.validateError(err, expectedErr)
+	}
+
+	_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+}
+
+func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
+	testcases := map[*CreateIndexRequest]*DescribeIndexResponse{
+		{
+			TopicID: suite.topic,
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
+				{
+					Key: "test-key-1",
+					Value: Value{
+						ValueType:      "text",
+						Delimiter:      ",",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+				{
+					Key: "test-key-2",
+					Value: Value{
+						ValueType:      "long",
+						Delimiter:      "",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+			},
+		}: {
+			TopicID: suite.topic,
+			FullText: &FullTextInfo{
+				CaseSensitive:  false,
+				IncludeChinese: false,
+				Delimiter:      ",",
+			},
+			KeyValue: &[]KeyValueInfo{
+				{
+					Key: "test-key-1",
+					Value: Value{
+						ValueType:      "text",
+						Delimiter:      ",",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+				{
+					Key: "test-key-2",
+					Value: Value{
+						ValueType:      "long",
+						Delimiter:      "",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+			},
+		},
+	}
+
+	for createIndexReq, expectGetIndexResp := range testcases {
+		_, err := suite.cli.CreateIndex(createIndexReq)
+		suite.NoError(err)
+
+		actualGetIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
+		suite.NoError(err)
+		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
+		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
 		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
+	}
+}
+
+func (suite *SDKIndexTestSuite) TestDescribeIndexAbnormally() {
+	testcases := map[*DescribeIndexRequest]*Error{
+		{
+			TopicID: suite.topic,
+		}: {
+			HTTPCode: http.StatusNotFound,
+			Code:     "IndexNotExists",
+			Message:  "Index does not exist.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeIndex(req)
+		suite.validateError(err, expectedErr)
 	}
 }

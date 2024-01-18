@@ -67,6 +67,7 @@ type Client interface {
 	DeleteHost(request *DeleteHostRequest) (*CommonResponse, error)
 	DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (*DescribeHostGroupRulesResponse, error)
 	ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdateRequest) (*ModifyHostGroupsAutoUpdateResponse, error)
+	DeleteAbnormalHosts(request *DeleteAbnormalHostsRequest) (*CommonResponse, error)
 
 	CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmResponse, error)
 	DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, error)
@@ -97,4 +98,8 @@ type Client interface {
 	ConsumerHeartbeat(request *ConsumerHeartbeatRequest) (*ConsumerHeartbeatResponse, error)
 	DescribeCheckPoint(request *DescribeCheckPointRequest) (*DescribeCheckPointResponse, error)
 	ModifyCheckPoint(request *ModifyCheckPointRequest) (*CommonResponse, error)
+	ResetCheckPoint(request *ResetCheckPointRequest) (*CommonResponse, error)
+
+	AddTagsToResource(request *AddTagsToResourceRequest) (*CommonResponse, error)
+	RemoveTagsFromResource(request *RemoveTagsFromResourceRequest) (*CommonResponse, error)
 }
