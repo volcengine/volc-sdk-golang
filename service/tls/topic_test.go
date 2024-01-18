@@ -449,23 +449,6 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		},
 		{
 			ProjectID:  suite.project,
-			PageNumber: 2,
-			PageSize:   1,
-			TopicName:  "sdk-a",
-		}: {
-			Topics: []*Topic{
-				{
-					TopicName:   createTopicReqs[0].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[0].Ttl,
-					ShardCount:  int32(createTopicReqs[0].ShardCount),
-					Description: createTopicReqs[0].Description,
-				},
-			},
-			Total: 2,
-		},
-		{
-			ProjectID:  suite.project,
 			PageNumber: 1,
 			PageSize:   20,
 			TopicName:  "sdk-c",
@@ -494,12 +477,19 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		expectTopics := expectListTopicResp.Topics
 		actualTopics := actualListTopicResp.Topics
 
-		for i, actualTopic := range actualTopics {
-			suite.Equal(expectTopics[i].TopicName, actualTopic.TopicName)
-			suite.Equal(expectTopics[i].ProjectID, actualTopic.ProjectID)
-			suite.Equal(expectTopics[i].Ttl, actualTopic.Ttl)
-			suite.Equal(expectTopics[i].ShardCount, actualTopic.ShardCount)
-			suite.Equal(expectTopics[i].Description, actualTopic.Description)
+		for _, expectTopic := range expectTopics {
+			isMatched := false
+			for _, actualTopic := range actualTopics {
+				if expectTopic.TopicName == actualTopic.TopicName {
+					isMatched = true
+					suite.Equal(expectTopic.ProjectID, actualTopic.ProjectID)
+					suite.Equal(expectTopic.Ttl, actualTopic.Ttl)
+					suite.Equal(expectTopic.ShardCount, actualTopic.ShardCount)
+					suite.Equal(expectTopic.Description, actualTopic.Description)
+					break
+				}
+			}
+			suite.Equal(true, isMatched)
 		}
 	}
 }

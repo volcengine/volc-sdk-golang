@@ -53,8 +53,9 @@ const (
 	PathDescribeHostGroupRules     = "/DescribeHostGroupRules"
 	PathModifyHostGroupsAutoUpdate = "/ModifyHostGroupsAutoUpdate"
 
-	PathDeleteHost    = "/DeleteHost"
-	PathDescribeHosts = "/DescribeHosts"
+	PathDeleteHost          = "/DeleteHost"
+	PathDescribeHosts       = "/DescribeHosts"
+	PathDeleteAbnormalHosts = "/DeleteAbnormalHosts"
 
 	PathCreateAlarmNotifyGroup    = "/CreateAlarmNotifyGroup"
 	PathDeleteAlarmNotifyGroup    = "/DeleteAlarmNotifyGroup"
@@ -86,6 +87,10 @@ const (
 
 	PathDescribeCheckPoint = "/DescribeCheckPoint"
 	PathModifyCheckPoint   = "/ModifyCheckPoint"
+	PathResetCheckPoint    = "/ResetCheckPoint"
+
+	PathAddTagsToResource      = "/AddTagsToResource"
+	PathRemoveTagsFromResource = "/RemoveTagsFromResource"
 
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"

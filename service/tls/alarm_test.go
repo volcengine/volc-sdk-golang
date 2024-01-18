@@ -98,7 +98,7 @@ func createAlarmNotifyGroup(cli Client, groupName string) (string, error) {
 		Receivers: []Receiver{
 			{
 				ReceiverType:     "User",
-				ReceiverNames:    []string{"test_xiaoping"},
+				ReceiverNames:    []string{"zhengyu1"},
 				ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
 				StartTime:        "00:00:00",
 				EndTime:          "23:59:59",
@@ -190,7 +190,7 @@ func (suite *SDKAlarmTaskTestSuite) TestCreateAlarmNotifyGroupNormally() {
 			Receivers: []Receiver{
 				{
 					ReceiverType:     "User",
-					ReceiverNames:    []string{"test_xiaoping"},
+					ReceiverNames:    []string{"zhengyu1"},
 					ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
 					StartTime:        "00:00:00",
 					EndTime:          "23:59:59",
@@ -206,7 +206,7 @@ func (suite *SDKAlarmTaskTestSuite) TestCreateAlarmNotifyGroupNormally() {
 			Receivers: []Receiver{
 				{
 					ReceiverType:     "User",
-					ReceiverNames:    []string{"test_xiaoping"},
+					ReceiverNames:    []string{"zhengyu1"},
 					ReceiverChannels: []ReceiverChannel{"Phone"},
 					StartTime:        "00:00:00",
 					EndTime:          "23:59:59",

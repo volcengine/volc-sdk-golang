@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"os"
 	"testing"
 
@@ -19,12 +20,12 @@ type SDKKafkaTestSuite struct {
 func (suite *SDKKafkaTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
@@ -60,90 +61,73 @@ func (suite *SDKKafkaTestSuite) TearDownTest() {
 	suite.NoError(deleteProjectErr)
 }
 
+func (suite *SDKKafkaTestSuite) validateError(err error, expectErr *Error) {
+	sdkErr, ok := err.(*Error)
+
+	if sdkErr == nil {
+		suite.Nil(sdkErr)
+		return
+	}
+
+	suite.Equal(true, ok)
+	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
+	suite.Equal(expectErr.Code, sdkErr.Code)
+	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
 func TestSDKKafkaTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKKafkaTestSuite))
 }
 
-// TestOpenKafkaConsumer
-func (suite *SDKKafkaTestSuite) TestKafkaConsumer() {
-	{
-		testcases := map[*OpenKafkaConsumerRequest]*OpenKafkaConsumerResponse{
-			{
-				TopicID: suite.topic,
-			}: {},
-		}
+func (suite *SDKKafkaTestSuite) TestOpenKafkaConsumerNormally() {
+	_, err := suite.cli.OpenKafkaConsumer(&OpenKafkaConsumerRequest{TopicID: suite.topic})
+	suite.NoError(err)
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.OpenKafkaConsumer(req)
-			suite.NoError(err)
-		}
+func (suite *SDKKafkaTestSuite) TestOpenKafkaConsumerAbnormally() {
+	topicID := uuid.New().String()
+	_, err := suite.cli.OpenKafkaConsumer(&OpenKafkaConsumerRequest{TopicID: topicID})
+	expectedErr := &Error{
+		HTTPCode: http.StatusNotFound,
+		Code:     "TopicNotExist",
+		Message:  "Topic does not exist.",
 	}
+	suite.validateError(err, expectedErr)
+}
 
-	{
-		testcases := map[*DescribeKafkaConsumerRequest]*DescribeKafkaConsumerResponse{
-			{
-				TopicID: suite.topic,
-			}: {
-				AllowConsume: true,
-			},
-		}
+func (suite *SDKKafkaTestSuite) TestCloseKafkaConsumerNormally() {
+	_, err := suite.cli.OpenKafkaConsumer(&OpenKafkaConsumerRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	_, err = suite.cli.CloseKafkaConsumer(&CloseKafkaConsumerRequest{TopicID: suite.topic})
+	suite.NoError(err)
+}
 
-		for req, resp := range testcases {
-			actualResp, err := suite.cli.DescribeKafkaConsumer(req)
-			suite.NoError(err)
-			suite.Equal(actualResp.AllowConsume, resp.AllowConsume)
-		}
+func (suite *SDKKafkaTestSuite) TestCloseKafkaConsumerAbnormally() {
+	topicID := uuid.New().String()
+	_, err := suite.cli.CloseKafkaConsumer(&CloseKafkaConsumerRequest{TopicID: topicID})
+	expectedErr := &Error{
+		HTTPCode: http.StatusNotFound,
+		Code:     "TopicNotExist",
+		Message:  "Topic does not exist.",
 	}
+	suite.validateError(err, expectedErr)
+}
 
-	{
-		testcases := map[*CloseKafkaConsumerRequest]*CloseKafkaConsumerResponse{
-			{
-				TopicID: suite.topic,
-			}: {},
-		}
+func (suite *SDKKafkaTestSuite) TestDescribeKafkaConsumerNormally() {
+	_, err := suite.cli.OpenKafkaConsumer(&OpenKafkaConsumerRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	resp, err := suite.cli.DescribeKafkaConsumer(&DescribeKafkaConsumerRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	suite.Equal(true, resp.AllowConsume)
+}
 
-		for req, _ := range testcases {
-			_, err := suite.cli.CloseKafkaConsumer(req)
-			suite.NoError(err)
-		}
+func (suite *SDKKafkaTestSuite) TestDescribeKafkaConsumerAbnormally() {
+	topicID := uuid.New().String()
+	_, err := suite.cli.DescribeKafkaConsumer(&DescribeKafkaConsumerRequest{TopicID: topicID})
+	expectedErr := &Error{
+		HTTPCode: http.StatusNotFound,
+		Code:     "TopicNotExist",
+		Message:  "Topic does not exist.",
 	}
-
-	{
-		testcases := map[*OpenKafkaConsumerRequest]*OpenKafkaConsumerResponse{
-			{
-				TopicID: "Test",
-			}: {},
-		}
-
-		for req, _ := range testcases {
-			_, err := suite.cli.OpenKafkaConsumer(req)
-			suite.Error(err)
-		}
-	}
-
-	{
-		testcases := map[*DescribeKafkaConsumerRequest]*DescribeKafkaConsumerResponse{
-			{
-				TopicID: "Test",
-			}: {},
-		}
-
-		for req, _ := range testcases {
-			_, err := suite.cli.DescribeKafkaConsumer(req)
-			suite.Error(err)
-		}
-	}
-
-	{
-		testcases := map[*CloseKafkaConsumerRequest]*CloseKafkaConsumerResponse{
-			{
-				TopicID: "Test",
-			}: {},
-		}
-
-		for req, _ := range testcases {
-			_, err := suite.cli.CloseKafkaConsumer(req)
-			suite.Error(err)
-		}
-	}
+	suite.validateError(err, expectedErr)
 }
