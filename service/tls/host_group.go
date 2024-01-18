@@ -184,6 +184,18 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *De
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
+	if request.AutoUpdate != nil {
+		params["AutoUpdate"] = strconv.FormatBool(*request.AutoUpdate)
+	}
+
+	if request.ServiceLogging != nil {
+		params["ServiceLogging"] = strconv.FormatBool(*request.ServiceLogging)
+	}
+
+	if request.IamProjectName != nil {
+		params["IamProjectName"] = *request.IamProjectName
+	}
+
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 
@@ -374,6 +386,41 @@ func (c *LsClient) ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdat
 	}
 
 	var response = &ModifyHostGroupsAutoUpdateResponse{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *LsClient) DeleteAbnormalHosts(request *DeleteAbnormalHostsRequest) (*CommonResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	bytesBody, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAbnormalHosts, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &CommonResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

@@ -114,6 +114,7 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
+
 	if response.FullText != nil && len(response.FullText.Delimiter) > 0 {
 		response.FullText.Delimiter = ReplaceWhiteSpaceCharacter(response.FullText.Delimiter)
 	}
@@ -123,6 +124,13 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 			(*response.KeyValue)[k] = v
 		}
 	}
+	if len(*response.UserInnerKeyValue) > 0 {
+		for k, v := range *response.UserInnerKeyValue {
+			v.Value.Delimiter = ReplaceWhiteSpaceCharacter(v.Value.Delimiter)
+			(*response.KeyValue)[k] = v
+		}
+	}
+
 	return response, nil
 }
 

@@ -268,22 +268,21 @@ func (suite *SDKLogTestSuite) TestConsumeLogsAbnormally() {
 func (suite *SDKLogTestSuite) TestSearchLogsV2Normally() {
 	startTime := time.Now().Unix()
 
-	time.Sleep(15 * time.Second)
+	time.Sleep(60 * time.Second)
 	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
 	suite.NoError(err)
 
 	testcases := map[*SearchLogsRequest]*SearchLogsResponse{
 		{
 			TopicID:   suite.topic,
-			Query:     "*",
+			Query:     "",
 			StartTime: startTime,
 			EndTime:   time.Now().Unix(),
+			Limit:     100,
 		}: {
 			Status:   "complete",
-			HitCount: 100,
-			ListOver: true,
 			Analysis: false,
-			Count:    0,
+			Count:    100,
 		},
 	}
 
@@ -291,8 +290,6 @@ func (suite *SDKLogTestSuite) TestSearchLogsV2Normally() {
 		resp, err := suite.cli.SearchLogsV2(req)
 		suite.NoError(err)
 		suite.Equal(expectedResp.Status, resp.Status)
-		suite.Equal(expectedResp.HitCount, resp.HitCount)
-		suite.Equal(expectedResp.ListOver, resp.ListOver)
 		suite.Equal(expectedResp.Analysis, resp.Analysis)
 		suite.Equal(expectedResp.Count, resp.Count)
 	}

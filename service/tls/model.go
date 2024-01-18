@@ -288,9 +288,10 @@ func (c KeyValueList) Value() (driver.Value, error) {
 
 type CreateIndexRequest struct {
 	CommonRequest
-	TopicID  string          `json:"TopicId"`
-	FullText *FullTextInfo   `json:",omitempty"`
-	KeyValue *[]KeyValueInfo `json:",omitempty"`
+	TopicID           string          `json:"TopicId"`
+	FullText          *FullTextInfo   `json:",omitempty"`
+	KeyValue          *[]KeyValueInfo `json:",omitempty"`
+	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
 }
 
 func (v *CreateIndexRequest) CheckValidation() error {
@@ -342,18 +343,20 @@ func (v *DescribeIndexRequest) CheckValidation() error {
 
 type DescribeIndexResponse struct {
 	CommonResponse
-	TopicID    string          `json:"TopicId"`
-	FullText   *FullTextInfo   `json:"FullText"`
-	KeyValue   *[]KeyValueInfo `json:"KeyValue"`
-	CreateTime string          `json:"CreateTime"`
-	ModifyTime string          `json:"ModifyTime"`
+	TopicID           string          `json:"TopicId"`
+	FullText          *FullTextInfo   `json:"FullText"`
+	KeyValue          *[]KeyValueInfo `json:"KeyValue"`
+	UserInnerKeyValue *[]KeyValueInfo `json:"UserInnerKeyValue"`
+	CreateTime        string          `json:"CreateTime"`
+	ModifyTime        string          `json:"ModifyTime"`
 }
 
 type ModifyIndexRequest struct {
 	CommonRequest
-	TopicID  string          `json:"TopicId"`
-	FullText *FullTextInfo   `json:",omitempty"`
-	KeyValue *[]KeyValueInfo `json:",omitempty"`
+	TopicID           string          `json:"TopicId"`
+	FullText          *FullTextInfo   `json:",omitempty"`
+	KeyValue          *[]KeyValueInfo `json:",omitempty"`
+	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
 }
 
 func (v *ModifyIndexRequest) CheckValidation() error {
@@ -734,6 +737,8 @@ type HostGroupInfo struct {
 	UpdateStartTime               string `json:"UpdateStartTime"`
 	UpdateEndTime                 string `json:"UpdateEndTime"`
 	AgentLatestVersion            string `json:"AgentLatestVersion"`
+	ServiceLogging                bool   `json:"ServiceLogging"`
+	IamProjectName                string `json:"IamProjectName"`
 }
 
 type DescribeRulesRequest struct {
@@ -763,6 +768,8 @@ type CreateHostGroupRequest struct {
 	AutoUpdate      *bool     `json:",omitempty"`
 	UpdateStartTime *string   `json:",omitempty"`
 	UpdateEndTime   *string   `json:",omitempty"`
+	ServiceLogging  *bool     `json:",omitempty"`
+	IamProjectName  *string   `json:",omitempty"`
 }
 
 func (v *CreateHostGroupRequest) CheckValidation() error {
@@ -840,6 +847,7 @@ type ModifyHostGroupRequest struct {
 	AutoUpdate      *bool     `json:",omitempty"`
 	UpdateStartTime *string   `json:",omitempty"`
 	UpdateEndTime   *string   `json:",omitempty"`
+	ServiceLogging  *bool     `json:",omitempty"`
 }
 
 func (v *ModifyHostGroupRequest) CheckValidation() error {
@@ -885,6 +893,9 @@ type DescribeHostGroupsRequest struct {
 	HostGroupID    *string `json:",omitempty"`
 	HostGroupName  *string `json:",omitempty"`
 	HostIdentifier *string `json:",omitempty"`
+	AutoUpdate     *bool   `json:",omitempty"`
+	ServiceLogging *bool   `json:",omitempty"`
+	IamProjectName *string `json:",omitempty"`
 }
 
 func (v *DescribeHostGroupsRequest) CheckValidation() error {
@@ -972,6 +983,19 @@ func (v *ModifyHostGroupsAutoUpdateRequest) CheckValidation() error {
 
 type ModifyHostGroupsAutoUpdateResponse struct {
 	CommonResponse
+}
+
+type DeleteAbnormalHostsRequest struct {
+	CommonRequest
+	HostGroupID string `json:"HostGroupId"`
+}
+
+func (v *DeleteAbnormalHostsRequest) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupId")
+	}
+
+	return nil
 }
 
 type AlarmPeriodSetting struct {
@@ -1275,9 +1299,10 @@ type CreateDownloadTaskResponse struct {
 
 type DescribeDownloadTasksRequest struct {
 	CommonRequest
-	TopicID    string `json:"-"`
-	PageNumber *int   `json:"-"`
-	PageSize   *int   `json:"-"`
+	TopicID    string  `json:"-"`
+	PageNumber *int    `json:"-"`
+	PageSize   *int    `json:"-"`
+	TaskName   *string `json:"-"`
 }
 
 func (v *DescribeDownloadTasksRequest) CheckValidation() error {
@@ -1523,6 +1548,68 @@ type ModifyCheckPointRequest struct {
 
 type ModifyCheckPointResponse struct {
 	CommonResponse
+}
+
+type ResetCheckPointRequest struct {
+	ProjectID         string `json:","`
+	ConsumerGroupName string `json:","`
+	Position          string `json:","`
+}
+
+func (v *ResetCheckPointRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.ConsumerGroupName) <= 0 {
+		return errors.New("Invalid argument, empty ConsumerGroupName")
+	}
+	if len(v.Position) <= 0 {
+		return errors.New("Invalid argument, empty Position")
+	}
+
+	return nil
+}
+
+type AddTagsToResourceRequest struct {
+	CommonRequest
+	ResourceType  string    `json:","`
+	ResourcesList []string  `json:","`
+	Tags          []TagInfo `json:","`
+}
+
+func (v *AddTagsToResourceRequest) CheckValidation() error {
+	if len(v.ResourceType) <= 0 {
+		return errors.New("Invalid argument, empty ResourceType")
+	}
+	if v.ResourcesList == nil || len(v.ResourcesList) == 0 {
+		return errors.New("Invalid argument, empty ResourceList")
+	}
+	if v.Tags == nil || len(v.Tags) == 0 {
+		return errors.New("Invalid argument, empty Tags")
+	}
+
+	return nil
+}
+
+type RemoveTagsFromResourceRequest struct {
+	CommonRequest
+	ResourceType  string   `json:","`
+	ResourcesList []string `json:","`
+	TagKeyList    []string `json:","`
+}
+
+func (v *RemoveTagsFromResourceRequest) CheckValidation() error {
+	if len(v.ResourceType) <= 0 {
+		return errors.New("Invalid argument, empty ResourceType")
+	}
+	if v.ResourcesList == nil || len(v.ResourcesList) == 0 {
+		return errors.New("Invalid argument, empty ResourceList")
+	}
+	if v.TagKeyList == nil || len(v.TagKeyList) == 0 {
+		return errors.New("Invalid argument, empty TagKeyList")
+	}
+
+	return nil
 }
 
 func (response *CommonResponse) FillRequestId(httpResponse *http.Response) {
