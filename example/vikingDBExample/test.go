@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/volcengine/volc-sdk-golang/service/vikingdb"
 	"math/rand"
 	"time"
@@ -8,6 +9,13 @@ import (
 
 func main() {
 	service := vikingdb.NewVikingDBService("host", "region", "ak", "sk", "http")
+
+	rerank, err := service.Rerank("退改", "如果您需要人工服务，可以拨打人工客服电话：4006660921", "转人工")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(rerank)
+
 	//fields := []vikingdb.Field{
 	//	{
 	//		FieldName:    "doc_id",
