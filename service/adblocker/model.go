@@ -21,9 +21,22 @@ type AdBlockResponse struct {
 }
 
 type DecisionData struct {
-	Decision string   `json:"Decision"`
-	Detail   string   `json:"Detail"`
-	Tags     []string `json:"Tags"`
+	Decision string     `json:"Decision"`
+	Detail   string     `json:"Detail"`
+	Tags     []string   `json:"Tags"`
+	Contexts []*Context `json:"Contexts"`
+}
+
+type Context struct {
+	MatchedWords []string   `json:"MatchedWords"`
+	LibName      string     `json:"LibName"`
+	Description  string     `json:"Description"`
+	Positions    []Position `json:"Positions"`
+}
+
+type Position struct {
+	StartPos int `json:"StartPos"`
+	EndPos   int `json:"EndPos"`
 }
 
 func UnmarshalResultInto(data []byte, result interface{}) error {
