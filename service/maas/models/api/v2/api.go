@@ -231,6 +231,16 @@ type Parameters struct {
 
 	// TopP corresponds to the JSON schema field "top_p".
 	TopP float64 `json:"top_p,omitempty" yaml:"top_p,omitempty" mapstructure:"top_p,omitempty"`
+
+	Seed int `json:"seed,omitempty" yaml:"seed,omitempty" mapstructure:"seed,omitempty"`
+
+	Strength float32 `json:"strength,omitempty" yaml:"strength,omitempty" mapstructure:"strength,omitempty"`
+
+	Height int `json:"height,omitempty" yaml:"height,omitempty" mapstructure:"height,omitempty"`
+
+	Width int `json:"width,omitempty" yaml:"width,omitempty" mapstructure:"width,omitempty"`
+
+	NumInferenceSteps int `json:"num_inference_steps,omitempty" yaml:"num_inference_steps,omitempty" mapstructure:"num_inference_steps,omitempty"`
 }
 
 type Reference struct {
@@ -546,4 +556,50 @@ type TokenizeResp struct {
 	TotalTokens int `json:"total_tokens,omitempty" yaml:"total_tokens,omitempty" mapstructure:"total_tokens,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+}
+
+type ImagesParameters struct {
+	Seed int `json:"seed,omitempty" yaml:"seed,omitempty" mapstructure:"seed,omitempty"`
+
+	Strength float32 `json:"strength,omitempty" yaml:"strength,omitempty" mapstructure:"strength,omitempty"`
+
+	Height int `json:"height,omitempty" yaml:"height,omitempty" mapstructure:"height,omitempty"`
+
+	Width int `json:"width,omitempty" yaml:"width,omitempty" mapstructure:"width,omitempty"`
+
+	NumInferenceSteps int `json:"num_inference_steps,omitempty" yaml:"num_inference_steps,omitempty" mapstructure:"num_inference_steps,omitempty"`
+}
+
+type ImagesQuickGenReq struct {
+	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	Prompt string `json:"prompt,omitempty" yaml:"prompt,omitempty" mapstructure:"prompt,omitempty"`
+
+	NegativePrompt string `json:"negative_prompt,omitempty" yaml:"negative_prompt,omitempty" mapstructure:"negative_prompt,omitempty"`
+
+	InitImage []byte `json:"init_image,omitempty" yaml:"init_image,omitempty" mapstructure:"init_image,omitempty"`
+
+	ControlImage []byte `json:"control_image,omitempty" yaml:"control_image,omitempty" mapstructure:"control_image,omitempty"`
+
+	// Parameters corresponds to the JSON schema field "parameters".
+	Parameters *ImagesParameters `json:"parameters,omitempty" yaml:"parameters,omitempty" mapstructure:"parameters,omitempty"`
+}
+
+type ImageUrl struct {
+	// Detail corresponds to the JSON schema field "detail".
+	Detail string `json:"detail,omitempty" yaml:"detail,omitempty" mapstructure:"detail,omitempty"`
+
+	// ImageBytes corresponds to the JSON schema field "image_bytes".
+	ImageBytes []byte `json:"image_bytes,omitempty" yaml:"image_bytes,omitempty" mapstructure:"image_bytes,omitempty"`
+
+	// Url corresponds to the JSON schema field "url".
+	Url string `json:"url,omitempty" yaml:"url,omitempty" mapstructure:"url,omitempty"`
+}
+
+type ImagesQuickGenResp struct {
+	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	Data []*ImageUrl `json:"data,omitempty" yaml:"data,omitempty" mapstructure:"data,omitempty"`
+
+	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }

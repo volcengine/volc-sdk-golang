@@ -765,13 +765,14 @@ func (p *AIoT) UpdateStream(request *UpdateStreamRequest) (*StreamResponse, int,
 
 func (p *AIoT) StartStream(request *StreamRequest) (*StartStreamResponse, int, error) {
 	resp := new(StartStreamResponse)
-	transOption := "0"
-	if request.EnableAudioTrans {
-		transOption = "1"
-	}
 	query := url.Values{
 		"StreamID": []string{request.StreamID},
-		"EnableAudioTranscode":[]string{transOption},
+	}
+	if request.EnableAudioTranscode {
+		query.Set("EnableAudioTranscode", "1")
+	}
+	if request.IgnoreAudio {
+		query.Set("IgnoreAudio", "1")
 	}
 	statusCode, err := p.commonHandlerJson("StartStream", query, resp, request)
 	if err != nil {

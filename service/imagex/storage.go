@@ -17,12 +17,21 @@ import (
 	"github.com/volcengine/volc-sdk-golang/base"
 )
 
+const (
+	ResourceServiceIdTRN = "trn:ImageX:*:*:ServiceId/%s"
+	ResourceStoreKeyTRN  = "trn:ImageX:*:*:StoreKeys/%s"
+
+	MinChunkSize   = 1024 * 1024 * 20
+	LargeFileSize  = 1024 * 1024 * 1024
+	UploadRoutines = 4
+)
+
 func (c *ImageX) ImageXGet(action string, query url.Values, result interface{}) error {
 	respBody, _, err := c.Client.Query(action, query)
 	if err != nil {
 		return fmt.Errorf("%s: fail to do request, %v", action, err)
 	}
-	if err := UnmarshalResultInto(respBody, result); err != nil {
+	if err := unmarshalInto(respBody, result); err != nil {
 		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
 	}
 	return nil
@@ -37,70 +46,10 @@ func (c *ImageX) ImageXPost(action string, query url.Values, req, result interfa
 	if err != nil {
 		return fmt.Errorf("%s: fail to do request, %v", action, err)
 	}
-	if err := UnmarshalResultInto(data, result); err != nil {
+	if err := unmarshalInto(data, result); err != nil {
 		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
 	}
 	return nil
-}
-
-// GetAllImageServices 获取所有服务信息
-func (c *ImageX) GetImageServices(searchPtn string) (*GetServicesResult, error) {
-	query := url.Values{}
-	if searchPtn != "" {
-		query.Add("SearchPtn", searchPtn)
-	}
-
-	respBody, _, err := c.Client.Query("GetAllImageServices", query)
-	if err != nil {
-		return nil, fmt.Errorf("GetAllImageServices: fail to do request, %v", err)
-	}
-
-	result := new(GetServicesResult)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
-		return nil, fmt.Errorf("GetAllImageServices: fail to unmarshal response, %v", err)
-	}
-	return result, nil
-}
-
-// GetServiceDomains 获取服务下的所有域名
-func (c *ImageX) GetImageDomains(serviceId string) ([]DomainResult, error) {
-	query := url.Values{}
-	query.Add("ServiceId", serviceId)
-
-	respBody, _, err := c.Client.Query("GetServiceDomains", query)
-	if err != nil {
-		return nil, fmt.Errorf("GetServiceDomains: fail to do request, %v", err)
-	}
-
-	result := make([]DomainResult, 0)
-	if err := UnmarshalResultInto(respBody, &result); err != nil {
-		return nil, fmt.Errorf("GetServiceDomains: fail to unmarshal response, %v", err)
-	}
-	return result, nil
-}
-
-// DeleteImageUploadFiles 删除图片
-func (c *ImageX) DeleteImages(serviceId string, uris []string) (*DeleteImageResult, error) {
-	query := url.Values{}
-	query.Add("ServiceId", serviceId)
-	param := new(DeleteImageParam)
-	param.StoreUris = uris
-
-	body, err := json.Marshal(param)
-	if err != nil {
-		return nil, fmt.Errorf("DeleteImages: fail to marshal request, %v", err)
-	}
-
-	data, _, err := c.Client.Json("DeleteImageUploadFiles", query, string(body))
-	if err != nil {
-		return nil, fmt.Errorf("DeleteImages: fail to do request, %v", err)
-	}
-
-	result := new(DeleteImageResult)
-	if err := UnmarshalResultInto(data, result); err != nil {
-		return nil, fmt.Errorf("DeleteImages: fail to unmarshal response, %v", err)
-	}
-	return result, nil
 }
 
 // ApplyImageUpload 获取图片上传地址
@@ -124,7 +73,7 @@ func (c *ImageX) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 	}
 
 	result := new(ApplyUploadImageResult)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
+	if err := unmarshalResultInto(respBody, result); err != nil {
 		return nil, fmt.Errorf("ApplyUploadImage: fail to unmarshal response, %v", err)
 	}
 	return result, nil
@@ -147,7 +96,7 @@ func (c *ImageX) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploa
 	}
 
 	result := new(CommitUploadImageResult)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
+	if err := unmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
 	return result, nil
@@ -427,150 +376,4 @@ func (c *ImageX) GetUploadAuthWithExpire(serviceIds []string, expire time.Durati
 	}
 
 	return c.Client.SignSts2(inlinePolicy, expire)
-}
-
-func (c *ImageX) CreateImageContentTask(req *CreateImageContentTaskReq) (*CreateImageContentTaskResp, error) {
-	query, err := MarshalToQuery(req, SkipEmptyValue())
-	if err != nil {
-		return nil, err
-	}
-
-	resp := &CreateImageContentTaskResp{}
-	err = c.ImageXPost("CreateImageContentTask", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, err
-}
-
-func (c *ImageX) GetImageContentTaskDetail(req *GetImageContentTaskDetailReq) (*GetImageContentTaskDetailResp, error) {
-	query, err := MarshalToQuery(req, SkipEmptyValue())
-	if err != nil {
-		return nil, err
-	}
-
-	resp := &GetImageContentTaskDetailResp{}
-	err = c.ImageXPost("GetImageContentTaskDetail", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, err
-}
-
-func (c *ImageX) GetImageContentBlockList(req *GetImageContentBlockListReq) (*GetImageContentBlockListResp, error) {
-	query, err := MarshalToQuery(req, SkipEmptyValue())
-	if err != nil {
-		return nil, err
-	}
-
-	resp := &GetImageContentBlockListResp{}
-	err = c.ImageXPost("GetImageContentBlockList", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, err
-}
-
-func (c *ImageX) FetchImageUrl(req *FetchUrlReq) (*FetchUrlResp, error) {
-	resp := new(FetchUrlResp)
-	err := c.ImageXPost("FetchImageUrl", nil, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetUrlFetchTask(req *GetUrlFetchTaskReq) (*GetUrlFetchTaskResp, error) {
-	query, err := MarshalToQuery(req, SkipEmptyValue())
-	if err != nil {
-		return nil, err
-	}
-
-	resp := new(GetUrlFetchTaskResp)
-	err = c.ImageXGet("GetUrlFetchTask", query, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetImageUploadFile(param *GetImageUploadFileParam) (*GetImageUploadFileResult, error) {
-	query := make(url.Values)
-	query.Add("ServiceId", param.ServiceId)
-	query.Add("StoreUri", param.StoreUri)
-
-	result := new(GetImageUploadFileResult)
-	err := c.ImageXGet("GetImageUploadFile", query, result)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
-func (c *ImageX) GetImageUploadFiles(param *GetImageUploadFilesParam) (*GetImageUploadFilesResult, error) {
-	query := make(url.Values)
-	query.Add("ServiceId", param.ServiceId)
-	query.Add("Limit", strconv.Itoa(param.Limit))
-	query.Add("Marker", strconv.FormatInt(param.Marker, 10))
-
-	result := new(GetImageUploadFilesResult)
-	err := c.ImageXGet("GetImageUploadFiles", query, result)
-	if err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
-func (c *ImageX) UpdateImageStorageTTL(req *UpdateImageStorageTTLReq) (*UpdateImageStorageTTLResp, error) {
-	resp := new(UpdateImageStorageTTLResp)
-	err := c.ImageXPost("UpdateImageStorageTTL", nil, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) CreateImageCompressTask(req *CreateImageCompressTaskReq) (*CreateImageCompressTaskResp, error) {
-	query := make(url.Values)
-	query.Add("ServiceId", req.ServiceId)
-	resp := new(CreateImageCompressTaskResp)
-	err := c.ImageXPost("CreateImageCompressTask", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetImageCompressTaskInfo(req *GetImageCompressTaskInfoReq) (*GetImageCompressTaskInfoResp, error) {
-	query := make(url.Values)
-	query.Add("ServiceId", req.ServiceId)
-	query.Add("TaskId", req.TaskId)
-	resp := new(GetImageCompressTaskInfoResp)
-	err := c.ImageXGet("GetCompressTaskInfo", query, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetAiGenerateImage(req *GetAiGenerateImageReq) (*GetAiGenerateImageResp, error) {
-	query := make(url.Values)
-	query.Add("ServiceId", req.ServiceId)
-	resp := new(GetAiGenerateImageResp)
-	err := c.ImageXPost("GetAiGenerateImage", query, req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *ImageX) GetImageAiGenerateTask(req *GetImageAiGenerateTaskReq) (*GetImageAiGenerateTaskResp, error) {
-	query := make(url.Values)
-	query.Add("TaskId", req.TaskId)
-	resp := new(GetImageAiGenerateTaskResp)
-	err := c.ImageXGet("GetImageAiGenerateTask", query, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
 }

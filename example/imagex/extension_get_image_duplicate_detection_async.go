@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -8,7 +9,7 @@ import (
 )
 
 // 重复图片检测（异步）
-func main() {
+func main_GetImageDuplicateDetection() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.NewInstance()
 
@@ -17,14 +18,18 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.GetImageDuplicateDetectionAsyncParam{
-		Callback: "https://example.com/callback/", // 回调地址
-	}
-	param.ServiceId = "service id"        // 服务 ID
-	param.Urls = []string{"url1", "url2"} // 待检测的图片地址
-
 	// 创建检测任务
-	resp, err := instance.GetImageDuplicateDetectionAsync(param)
+	resp, err := instance.GetImageDuplicateDetection(context.Background(), &imagex.GetImageDuplicateDetectionReq{
+		GetImageDuplicateDetectionQuery: &imagex.GetImageDuplicateDetectionQuery{
+			ServiceID: "service id", // 服务 ID
+		},
+		GetImageDuplicateDetectionBody: &imagex.GetImageDuplicateDetectionBody{
+			Urls:       []string{"url1", "url2"}, // 待检测的图片地址
+			Async:      true,                     // 是否使用异步
+			Callback:   "",                       // 回调地址
+			Similarity: 0.84,                     // 相似度阈值
+		},
+	})
 	if err != nil {
 		fmt.Printf("error %v\n", err)
 	} else {
@@ -41,7 +46,9 @@ func main() {
 
 	// 也可以主动获取结果
 	// 获取检测任务状态
-	resp1, err := instance.GetDedupTaskStatus(resp.TaskId)
+	resp1, err := instance.GetDedupTaskStatus(context.Background(), &imagex.GetDedupTaskStatusQuery{
+		TaskID: resp.Result.TaskID, // 任务 ID
+	})
 	if err != nil {
 		fmt.Printf("error %v\n", err)
 	} else {

@@ -62,9 +62,17 @@ func NewInstance(host, region string) *MaaS {
 			Method: http.MethodPost,
 			Path:   "/api/v2/endpoint/%s/embeddings",
 		},
+		maas.APIImagesQuickGen: {
+			Method: http.MethodPost,
+			Path:   "/api/v2/endpoint/%s/images/quick-gen",
+		},
 	})
 
 	return instance
+}
+
+func (cli *MaaS) Images() *images {
+	return &images{cli}
 }
 
 // POST method

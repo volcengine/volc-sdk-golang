@@ -10,7 +10,7 @@ import (
 
 // 通用 API 调用例程
 // 您可以在 https://www.volcengine.cn/docs/508/14106 查到 API 定义
-func main() {
+func main_common() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
