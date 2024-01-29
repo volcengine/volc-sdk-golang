@@ -3,6 +3,7 @@ package aiot
 import "testing"
 
 func TestSample(t *testing.T) {
+	// this is just an example
 	ak := "************"
 	sk := "*****************=="
 	host := "open.volcengineapi.com"
