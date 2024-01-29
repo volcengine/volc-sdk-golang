@@ -18,6 +18,7 @@ const (
 	APITokenization   = "tokenization"
 	APIClassification = "classification"
 	APIEmbeddings     = "embeddings"
+	APIImagesQuickGen = "images.quick_gen"
 
 	ServiceTimeout = time.Minute
 
