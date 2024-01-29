@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -8,7 +9,7 @@ import (
 )
 
 // 获取文件列表
-func main() {
+func main_GetImageUploadFiles() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
@@ -17,10 +18,9 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	params := &imagex.GetImageUploadFilesParam{
-		ServiceId: "service id", // 服务 ID
-	}
-	resp, err := instance.GetImageUploadFiles(params)
+	resp, err := instance.GetImageUploadFiles(context.Background(), &imagex.GetImageUploadFilesQuery{
+		ServiceID: "",
+	})
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {

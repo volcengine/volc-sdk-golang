@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -8,7 +9,7 @@ import (
 )
 
 // 图片降噪
-func main() {
+func main_GetDenoisingImage() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.NewInstance()
 
@@ -17,20 +18,20 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.GetDenoisingImageParam{
-		ServiceId: "service id", // 服务 ID
-		StoreUri:  "store uri",  // 文件的 Store URI
-		// ImageUrl:    "image uri",  // 文件的网址
-		OutFormat:   "png", // 输出的文件格式
-		Intensity:   0.1,   // 降噪强度
-		CanDemotion: true,  // 是否允许降级
-	}
-
-	resp, err := instance.GetDenoisingImage(param)
+	resp, err := instance.GetDenoisingImage(context.Background(), &imagex.GetDenoisingImageReq{
+		GetDenoisingImageQuery: &imagex.GetDenoisingImageQuery{
+			ServiceID: "service id",
+		},
+		GetDenoisingImageBody: &imagex.GetDenoisingImageBody{
+			CanDemotion: true,
+			Intensity:   0.1,
+			OutFormat:   "png",
+		},
+	})
 	if err != nil {
-		fmt.Printf("GetImageQuality error %v\n", err)
+		fmt.Printf("GetDenoisingImage error %v\n", err)
 	} else {
-		fmt.Printf("GetImageQuality success %+v\n", resp)
+		fmt.Printf("GetDenoisingImage success %+v\n", resp)
 	}
 
 }
