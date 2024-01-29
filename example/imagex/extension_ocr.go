@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -8,7 +9,7 @@ import (
 )
 
 // 光学字符识别
-func main() {
+func main_GetImageOCRV2() {
 	// 默认 ImageX 实例为 `cn-north-1`，如果您想使用其他区域的实例，请使用 `imagex.NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := imagex.DefaultInstance
 
@@ -17,14 +18,15 @@ func main() {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.GetImageOCRParam{
-		ServiceId: "service id", // 服务 ID
-		StoreUri:  "store uri",  // 文件的 Store URI
-		ImageUrl:  "",           //若StoreUri为空则访问url
-		Scene:     "general",    // 识别场景
-	}
-
-	resp, err := instance.GetImageOCRV2(param)
+	resp, err := instance.GetImageOCRV2(context.Background(), &imagex.GetImageOCRV2Req{
+		GetImageOCRV2Query: &imagex.GetImageOCRV2Query{
+			ServiceID: "service id", // 服务 ID,
+		},
+		GetImageOCRV2Body: &imagex.GetImageOCRV2Body{
+			Scene:    "general",   // 识别场景
+			StoreURI: "store uri", // 文件的 Store URI
+		},
+	})
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
