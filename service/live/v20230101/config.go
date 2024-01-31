@@ -70,11 +70,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DeleteWatermarkPreset": {
+		"CreateWatermarkPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DeleteWatermarkPreset"},
+				"Action":  []string{"CreateWatermarkPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -83,6 +83,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateWatermarkPreset"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteWatermarkPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteWatermarkPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -99,14 +107,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListVhostWatermarkPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"CreateWatermarkPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreateWatermarkPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -190,6 +190,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"UpdateSnapshotPresetV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSnapshotPresetV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeCDNSnapshotHistory": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -206,11 +214,27 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"ListVhostSnapshotPresetV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListVhostSnapshotPresetV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"CreateSnapshotPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSnapshotPreset"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"CreateSnapshotPresetV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSnapshotPresetV2"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
