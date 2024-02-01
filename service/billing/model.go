@@ -33,6 +33,7 @@ type Bill struct {
 	Currency               string
 	PayStatus              string
 	SettlementType         string
+	BillDetailNum          string
 }
 
 type BillList struct {
