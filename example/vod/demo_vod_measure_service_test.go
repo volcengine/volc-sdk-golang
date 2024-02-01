@@ -29,6 +29,7 @@ func Test_DescribeVodSpaceTranscodeData(t *testing.T) {
 		TaskStageList:   "your TaskStageList",
 		Aggregation:     0,
 		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSpaceTranscodeData(query)
@@ -52,6 +53,7 @@ func Test_DescribeVodSpaceAIStatisData(t *testing.T) {
 		TaskStageList:   "your TaskStageList",
 		Aggregation:     0,
 		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSpaceAIStatisData(query)
@@ -75,6 +77,7 @@ func Test_DescribeVodSpaceSubtitleStatisData(t *testing.T) {
 		TaskStageList:   "your TaskStageList",
 		Aggregation:     0,
 		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSpaceSubtitleStatisData(query)
@@ -98,6 +101,7 @@ func Test_DescribeVodSpaceDetectStatisData(t *testing.T) {
 		TaskStageList:   "your TaskStageList",
 		Aggregation:     0,
 		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSpaceDetectStatisData(query)
@@ -165,6 +169,7 @@ func Test_DescribeVodSnapshotData(t *testing.T) {
 		TaskStageList:   "your TaskStageList",
 		Aggregation:     0,
 		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSnapshotData(query)
@@ -205,6 +210,7 @@ func Test_DescribeVodSpaceStorageData(t *testing.T) {
 		EndTime:     "your EndTime",
 		Aggregation: 0,
 		Type:        "your Type",
+		RegionList:  "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodSpaceStorageData(query)
@@ -228,6 +234,7 @@ func Test_DescribeVodDomainTrafficData(t *testing.T) {
 		Aggregation:       0,
 		TrafficType:       "your TrafficType",
 		Area:              "your Area",
+		RegionList:        "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodDomainTrafficData(query)
@@ -251,6 +258,7 @@ func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 		Aggregation:       0,
 		BandwidthType:     "your BandwidthType",
 		Area:              "your Area",
+		RegionList:        "your RegionList",
 	}
 
 	resp, status, err := instance.DescribeVodDomainBandwidthData(query)
