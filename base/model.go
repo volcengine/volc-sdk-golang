@@ -15,6 +15,8 @@ const (
 	RegionUsEast1     = "us-east-1"
 	RegionApSingapore = "ap-singapore-1"
 
+	RegionApSouthEast1 = "ap-southeast-1"
+
 	timeFormatV4 = "20060102T150405Z"
 )
 

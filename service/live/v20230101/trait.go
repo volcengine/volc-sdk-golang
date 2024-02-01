@@ -231,18 +231,18 @@ func (c *Live) CreateTranscodePreset(ctx context.Context, arg *CreateTranscodePr
 	return result, nil
 }
 
-func (c *Live) DeleteWatermarkPreset(ctx context.Context, arg *DeleteWatermarkPresetBody) (*DeleteWatermarkPresetRes, error) {
+func (c *Live) CreateWatermarkPreset(ctx context.Context, arg *CreateWatermarkPresetBody) (*CreateWatermarkPresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DeleteWatermarkPreset", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "CreateWatermarkPreset", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DeleteWatermarkPresetRes)
+	result := new(CreateWatermarkPresetRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -263,6 +263,26 @@ func (c *Live) UpdateWatermarkPreset(ctx context.Context, arg *UpdateWatermarkPr
 	}
 
 	result := new(UpdateWatermarkPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteWatermarkPreset(ctx context.Context, arg *DeleteWatermarkPresetBody) (*DeleteWatermarkPresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteWatermarkPreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteWatermarkPresetRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -303,26 +323,6 @@ func (c *Live) ListVhostWatermarkPreset(ctx context.Context, arg *ListVhostWater
 	}
 
 	result := new(ListVhostWatermarkPresetRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) CreateWatermarkPreset(ctx context.Context, arg *CreateWatermarkPresetBody) (*CreateWatermarkPresetRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreateWatermarkPreset", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(CreateWatermarkPresetRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -531,6 +531,26 @@ func (c *Live) UpdateSnapshotPreset(ctx context.Context, arg *UpdateSnapshotPres
 	return result, nil
 }
 
+func (c *Live) UpdateSnapshotPresetV2(ctx context.Context, arg *UpdateSnapshotPresetV2Body) (*UpdateSnapshotPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateSnapshotPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateSnapshotPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeCDNSnapshotHistory(ctx context.Context, arg *DescribeCDNSnapshotHistoryBody) (*DescribeCDNSnapshotHistoryRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -571,6 +591,26 @@ func (c *Live) ListVhostSnapshotPreset(ctx context.Context, arg *ListVhostSnapsh
 	return result, nil
 }
 
+func (c *Live) ListVhostSnapshotPresetV2(ctx context.Context, arg *ListVhostSnapshotPresetV2Body) (*ListVhostSnapshotPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListVhostSnapshotPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListVhostSnapshotPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) CreateSnapshotPreset(ctx context.Context, arg *CreateSnapshotPresetBody) (*CreateSnapshotPresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -583,6 +623,26 @@ func (c *Live) CreateSnapshotPreset(ctx context.Context, arg *CreateSnapshotPres
 	}
 
 	result := new(CreateSnapshotPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreateSnapshotPresetV2(ctx context.Context, arg *CreateSnapshotPresetV2Body) (*CreateSnapshotPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateSnapshotPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateSnapshotPresetV2Res)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

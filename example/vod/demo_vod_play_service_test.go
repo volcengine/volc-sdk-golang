@@ -73,6 +73,7 @@ func Test_GetPlayInfo(t *testing.T) {
 		Quality:            "your Quality",
 		PlayConfig:         "your PlayConfig",
 		NeedOriginal:       "your NeedOriginal",
+		ForceExpire:        "your ForceExpire",
 	}
 
 	resp, status, err := instance.GetPlayInfo(query)

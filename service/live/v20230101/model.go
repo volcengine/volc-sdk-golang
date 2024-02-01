@@ -68,6 +68,21 @@ type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertie
 	StorageDir string `json:"StorageDir"`
 }
 
+type Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam struct {
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
+}
+
+type Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam struct {
+	ServiceID       string  `json:"ServiceID"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+}
+
 // Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesTosparam
 // - TOS 存储相关配置
 // 说明
@@ -152,6 +167,18 @@ type ComponentsFuamuzSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
+// ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam
+// - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+type ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam struct {
+	Enable bool `json:"Enable"`
+
+	ExactObject string `json:"ExactObject"`
+
+	OverwriteObject string `json:"OverwriteObject"`
+
+	ServiceID string `json:"ServiceID"`
+}
+
 // ComponentsKovkk9SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparamPropertiesVodparam
 // - VOD 存储相关配置。
 type ComponentsKovkk9SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparamPropertiesVodparam struct {
@@ -218,6 +245,14 @@ type ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
 	WorkflowID *string `json:"WorkflowID,omitempty"`
+}
+
+// ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam
+// - 截图格式为 JPG 时的截图参数。
+type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam struct {
+	Enable      *bool                                                                                                                                                                                      `json:"Enable,omitempty"`
+	ImageXParam *Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
+	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
 }
 
 type CreateCertBody struct {
@@ -309,7 +344,7 @@ type CreateDomainBody struct {
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// 区域，默认指为 cn，包含 3 种类型。
+	// 区域，默认指为 cn，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
@@ -351,19 +386,19 @@ type CreateDomainV2Body struct {
 	// REQUIRED; 域名列表，总和最多十个。
 	Domains []CreateDomainV2BodyDomainsItem `json:"Domains"`
 
-	// REQUIRED; 区域，包含四种类型。
+	// REQUIRED; 区域，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
-	// * cn-oversea：海外及港澳台
+	// * cn-oversea：海外及港澳台。
 	Region string `json:"Region"`
 
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
 
-	// 项目名称，vhost 将归类这个项目里，新创建的 vhost 才需要。
+	// 项目名称，vhost 将归类这个项目里，仅在新创建 vhost 时需要设置。
 	ProjectName *string `json:"ProjectName,omitempty"`
 
-	// 标签列表，vhost 将归类这个 tag 里，新创建的 vhost 才需要。
+	// 标签列表，vhost 将归类这个 tag 里。
 	Tags []*CreateDomainV2BodyTagsItem `json:"Tags,omitempty"`
 }
 
@@ -372,26 +407,26 @@ type CreateDomainV2BodyDomainsItem struct {
 	// REQUIRED; 域名名称。
 	DomainName string `json:"DomainName"`
 
-	// REQUIRED; 域名类型。
+	// REQUIRED; 域名类型，支持以下取值。
 	// * push：推流域名
 	// * pull-flv：拉流域名
 	Type string `json:"Type"`
 
-	// 证书ID。
+	// 证书 ID。
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
 type CreateDomainV2BodyTagsItem struct {
 
-	// REQUIRED; 标签类型。
-	// * System
-	// * Custom
+	// REQUIRED; 标签类型，支持以下取值。
+	// * System：系统内置标签
+	// * Custom：自定义标签
 	Category string `json:"Category"`
 
-	// REQUIRED; 标签KEY值。
+	// REQUIRED; 标签 Key 值。
 	Key string `json:"Key"`
 
-	// REQUIRED; 标签Value值。
+	// REQUIRED; 标签 Value 值。
 	Value string `json:"Value"`
 }
 
@@ -675,7 +710,9 @@ type CreatePullToPushTaskResResult struct {
 
 type CreateRecordPresetV2Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// * 支持填写星号"*"，表示录制策略对该域名空间内的所有 AppName 生效；该策略即当前域名空间的全局策略；
+	// * 如果为某 AppName 同时配置了全局策略和单独的策略，则默认使用单独的策略进行录制。 :::warning 当 App 取值为 “*” 时，Stream 取值必须为 “*”。 :::
 	App string `json:"App"`
 
 	// REQUIRED; 录制模板详细配置
@@ -684,7 +721,8 @@ type CreateRecordPresetV2Body struct {
 	// REQUIRED; 域名空间名称
 	Vhost string `json:"Vhost"`
 
-	// 流名称
+	// 流名称，支持填写星号"*"，表示录制策略对该域名空间内的所有 Stream 生效；该策略即当前域名空间的全局策略。
+	// :::warning 当 App 取值为 “*” 时，Stream 取值必须为 “*”。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -1020,16 +1058,20 @@ type CreateRelaySourceV4Body struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV 和 HLS 协议的直播地址。
+	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播推流地址。
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
 	Stream string `json:"Stream"`
 
-	// 结束时间，Unix 时间戳，单位为 s，结束时间需晚于 StartTime，且与 StartTime 的最大时间跨度为 7 天。 :::tipStartTime 与 EndTime 同时缺省，表示永久回源。 :::
+	// 回源结束时间，Unix 时间戳，单位为秒。 :::tip
+	// * 回源开始到结束最大时间跨度为 7 天；
+	// * 开始时间与结束时间同时缺省，表示永久回源。 :::
 	EndTime *int32 `json:"EndTime,omitempty"`
 
-	// 开始时间，Unix 时间戳，单位为 s :::tipStartTime 与 EndTime 同时缺省，表示永久回源。 :::
+	// 回源开始时间，Unix 时间戳，单位为秒。 :::tip
+	// * 回源开始到结束最大时间跨度为 7 天；
+	// * 开始时间与结束时间同时缺省，表示永久回源。 :::
 	StartTime *int32 `json:"StartTime,omitempty"`
 }
 
@@ -1070,7 +1112,7 @@ type CreateRelaySourceV4ResResponseMetadataError struct {
 
 type CreateRelaySourceV4ResResult struct {
 
-	// REQUIRED; 固定回源的任务 ID。
+	// REQUIRED; 固定回源配置的 ID。
 	TaskID string `json:"TaskId"`
 }
 
@@ -1255,6 +1297,148 @@ type CreateSnapshotPresetResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type CreateSnapshotPresetV2Body struct {
+
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	App string `json:"App"`
+
+	// REQUIRED; 截图配置的详细参数配置。
+	SnapshotPresetConfig CreateSnapshotPresetV2BodySnapshotPresetConfig `json:"SnapshotPresetConfig"`
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+
+	// 截图配置生效状态，默认为生效。
+	// * 1：生效；
+	// * 0：不生效。
+	Status *int32 `json:"Status,omitempty"`
+}
+
+// CreateSnapshotPresetV2BodySnapshotPresetConfig - 截图配置的详细参数配置。
+type CreateSnapshotPresetV2BodySnapshotPresetConfig struct {
+
+	// 截图间隔时间，单位为秒，默认值为 10，取值范围为正整数。
+	Interval *int32 `json:"Interval,omitempty"`
+
+	// 图片格式为 JPEG 时的截图参数，开启 JPEG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。 :::
+	JPEGParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam `json:"JpegParam,omitempty"`
+
+	// 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。 :::
+	JpgParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam `json:"JpgParam,omitempty"`
+}
+
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam - 图片格式为 JPEG 时的截图参数，开启 JPEG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
+// :::
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
+
+	// 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	ImageXParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam `json:"ImageXParam,omitempty"`
+
+	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	TOSParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam `json:"TOSParam,omitempty"`
+}
+
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
+// 配置且配置其中一个。 :::
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam struct {
+
+	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
+	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
+	ServiceID *string `json:"ServiceID,omitempty"`
+}
+
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
+// :::
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
+
+	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
+	// 为必填项。 :::
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
+	// ToS 存储对应的 bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	StorageDir *string `json:"StorageDir,omitempty"`
+}
+
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
+// :::
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
+	Enable      *bool                                                              `json:"Enable,omitempty"`
+	ImageXParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
+	TOSParam    *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
+}
+
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	ServiceID       *string `json:"ServiceID,omitempty"`
+}
+
+type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
+}
+
+type CreateSnapshotPresetV2Res struct {
+
+	// REQUIRED
+	ResponseMetadata CreateSnapshotPresetV2ResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type CreateSnapshotPresetV2ResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type CreateTimeShiftPresetV3Body struct {
 
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
@@ -1324,76 +1508,130 @@ type CreateTranscodePresetBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、_uhd 例如，配置的转码流后缀名为 _hd，则拉转码流时转码的流名为 stream-123456789_hd。
+	// REQUIRED; 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、_uhd。 例如，配置的转码流后缀名为 _hd，则拉转码流时转码的流名为 stream-123456789_hd。
 	SuffixName string `json:"SuffixName"`
 
-	// REQUIRED; 视频编码格式。
+	// REQUIRED; 视频编码格式，支持的取值及含义如下所示。
 	// * h264：使用 H.264 编码格式；
 	// * h265：使用 H.265 编码格式；
+	// * h266：使用 H.266 编码格式；
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec string `json:"Vcodec"`
 
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
 
-	// 音频编码格式。默认格式为 acc，支持以下 3 种类型。
-	// * aac：使用 aac 编码格式；
+	// 音频编码格式，默认值为 acc，支持以下 3 种类型。
+	// * aac：使用 AAC 编码格式；
 	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 opus 编码格式。
+	// * opus：使用 Opus 编码格式。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 宽高自适应模式开关。默认值为 0。支持的取值包括。
-	// * 0：关闭宽高自适应，按照 Width 和 Height 的取值进行拉伸；
-	// * 1：开启宽高自适应，按照 ShortSide 或 LongSide 等比缩放。
+	// 宽高自适应模式开关，默认值为 0。支持的取值及含义如下。
+	// * 0：关闭宽高自适应
+	// * 1：开启宽高自适应 :::tip
+	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数。不同编码格式的取值存在差异。
-	// * H.264：取值范围为 [0,7]，默认值为 3；
-	// * H.265：取值范围为 [0,1,2,3,7,15]，默认值为 3；
-	// BFrames 取 0 时，表示去 B 帧。
+	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
+
+	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
+
+	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
+
+	// 2 个参考帧之间的最大 B 帧数，默认值为 3。配置不同的视频编码格式时，最大 B 帧数的取值存在如下差异。
+	// * H.264：取值范围为 [0,7]；
+	// * H.265：取值范围为 [0,3]、7、15；
+	// * H.266：取值范围为 [0,3]、7、15。
+	// 取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 视频帧率，单位为 fps，取值范围为 [0,60]，默认为 25fps。帧率越大，画面越流畅。
+	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
+	// * H.264：取值范围为 [0,60]；
+	// * H.265：取值范围为 [0,60]；
+	// * H.266：取值范围为 [0,35]。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s，默认值为 0，取值范围为 [0,1000]
+	// IDR 帧之间的最大间隔，单位为秒，默认值为 4，取值范围为 [1,20]。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。默认值为 0，取值范围为 [0,8192]。 :::tip
-	// * 当 As 的取值为 0 时，参数生效；反之则不生效；
-	// * 当 As 的取值为 0 时，如果 Width 和 Height 任意取值为 0，表示保持源流尺寸。 :::
+	// 视频高度，默认值为 0。配置不同视频编码格式时，视频高度的取值存在如下差异。
+	// * H.264：取值范围为 [150,1920]；
+	// * H.265：取值范围为 [150,1920]。
+	// :::tip
+	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度。默认值为 0。
-	// * Roi 取 false 时，取值范围为 [0,8192]；
-	// * Roi 取 true 时，取值范围为 [0,1920]。 :::tip
-	// * 当 As 的取值为 1 时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 同时取 0，表示保持源流尺寸。
-	// * 当 As 的取值为 1 时，如果同时配置 LongSide 和 ShortSide 的值，则按照 ShortSide 进行等比缩放。 :::
+	// 长边长度，默认值为 0。配置不同的视频编码方式和转码类型时，长边长度的取值范围存在如下差异。
+	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,4096]；
+	// * H.265：取值范围为 0 和 [150,7680]；
+	// * H.266：取值范围为 0 和 [150,1280]。
+	//
+	//
+	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
+	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	//
+	//
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码。默认值为 false。
-	// * true：极智超清；
+	// 是否极智超清转码，默认值为 false，取值及含义如下。
+	// * true：极智超清转码；
 	// * false：标准转码。
+	// :::tip 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度。默认值为 0。
-	// * Roi 取 false 时，取值范围为 [0,4096]；
-	// * Roi 取 true 时，取值范围为 [0,1080]。 :::tip
-	// * 当 As 的取值为 1 时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 同时取 0，表示保持源流尺寸。
-	// * 当 As 的取值为 1 时，如果同时配置 LongSide 和 ShortSide 的值，则按照 ShortSide 进行等比缩放。 :::
+	// 短边长度，默认值为 0。配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
+	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
+	// * H.265：取值范围为 0 和 [150,4096]；
+	// * H.266：取值范围为 0 和 [150,720]。
+	//
+	//
+	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
+	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	//
+	//
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 视频码率，单位为 bps，取值范围为 [0,30000000]；默认值为 1000000；取 0 时，表示使用源流码率。
+	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为-1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	StopInterval *int32 `json:"StopInterval,omitempty"`
+
+	// 转码触发方式，默认值为 Pull，支持的取值及含义如下。
+	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
+	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
+	TransType *string `json:"TransType,omitempty"`
+
+	// 视频码率，单位为 bps，默认值为 1000000；取 0 时，表示使用源流码率。 配置不同的编码格式时，视频码率的取值范围存在如下差异。
+	// * H.264：取值范围为 [0,30000000]；
+	// * H.265：取值范围为 [0,30000000]；
+	// * H.266：取值范围为 [0,6000000]。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。默认值为 0，取值范围为 [0,8192]。 :::tip
-	// * 当 As 的取值为 0 时，参数生效；反之则不生效；
-	// * 当 As 的取值为 0 时，如果 Width 和 Height 任意取值为 0，表示保持源流尺寸。 :::
+	// 视频宽度，默认值为 0。 配置不同视频编码格式时，视频宽度取值存在如下差异。
+	// * H.264：取值范围为 [150,1920]；
+	// * H.265：取值范围为 [150,1920]。
+	// :::tip
+	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -1480,28 +1718,39 @@ type CreateWatermarkPresetBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 需要添加水印的直播画面方向，支持 2 种取值。
-	// * vertical：竖屏；
-	// * horizontal：横屏。
-	Orientation string `json:"Orientation"`
-
-	// REQUIRED; 水印图片字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:[<mediatype>];[base64],<data>。
-	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；
-	// * data：base64 编码的图片字符串。
-	// 例如，data:image/png;base64,iVBORw0KGg****mCC
-	Picture string `json:"Picture"`
-
 	// REQUIRED; 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosX float32 `json:"PosX"`
 
 	// REQUIRED; 垂直偏移，表示水印顶部边与转码流画面顶部边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosY float32 `json:"PosY"`
 
-	// REQUIRED; 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。
-	RelativeWidth float32 `json:"RelativeWidth"`
-
-	// REQUIRED; 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
 	Vhost string `json:"Vhost"`
+
+	// 需要添加水印的直播画面方向，支持 2 种取值。
+	// * vertical：竖屏；
+	// * horizontal：横屏。 :::tip 该参数属于历史版本参数，预计将于未来移除。建议使用预览背景高度（PreviewHeight）、预览背景宽度（PreviewWidth）参数代替。 :::
+	Orientation *string `json:"Orientation,omitempty"`
+
+	// 水印图片字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:[<mediatype>];[base64],<data>。
+	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；
+	// * data：base64 编码的图片字符串。
+	Picture *string `json:"Picture,omitempty"`
+
+	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入，同时传入时，以水印图片字符串参数为准。
+	PictureURL *string `json:"PictureUrl,omitempty"`
+
+	// 水印图片预览背景高度，单位为 px。
+	PreviewHeight *float32 `json:"PreviewHeight,omitempty"`
+
+	// 水印图片预览背景宽度，单位为 px。
+	PreviewWidth *float32 `json:"PreviewWidth,omitempty"`
+
+	// 水印相对高度，水印高度占直播转码流画面高度的比例，取值范围为 [0,1]，水印宽度会随高度等比缩放。与水印相对宽度字段冲突，请选择其中一个传参。
+	RelativeHeight *float32 `json:"RelativeHeight,omitempty"`
+
+	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。与水印相对高度字段冲突，请选择其中一个传参。
+	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
 }
 
 type CreateWatermarkPresetRes struct {
@@ -1877,7 +2126,7 @@ type DeleteRelaySourceV4Body struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
 	Stream string `json:"Stream"`
 }
 
@@ -1969,13 +2218,13 @@ type DeleteSnapshotAuditPresetResResponseMetadataError struct {
 
 type DeleteSnapshotPresetBody struct {
 
-	// REQUIRED; 模版名称。
+	// REQUIRED; 截图配置名称。
 	Preset string `json:"Preset"`
 
 	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App *string `json:"App,omitempty"`
 
-	// 视频直播服务的域名空间。
+	// 域名空间名称。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2110,7 +2359,7 @@ type DeleteTranscodePresetBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 转码模版名称。
+	// REQUIRED; 转码配置名称。
 	Preset string `json:"Preset"`
 
 	// REQUIRED; 域名空间名称。
@@ -2302,27 +2551,29 @@ type DescribeCDNSnapshotHistoryBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 查询时间范围的开始时间，RFC3339 格式的 UTC 时间，精度为 s。当您查询指定截图任务详情时，DateFrom 应设置为开始时间之前的任意时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip
+	// * 当您查询指定截图任务详情时，DateFrom 应设置为推流开始时间之前的任意时间。
+	// * 查询的最大时间跨度为 7 天。 :::
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 查询时间范围的结束时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	DateTo string `json:"DateTo"`
 
-	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
 	Vhost string `json:"Vhost"`
 
-	// 分页查询页码。
+	// 查询数据的页码，默认为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 单个分页中，查询的结果数量。
+	// 每页显示的数据条数，默认为 10，最大值为 1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 
-	// 截图文件保存位置。默认取值为 tos。
-	// * tos
-	// * imageX
+	// 截图文件保存位置，默认取值为 tos。
+	// * tos：TOS 对象存储服务；
+	// * imageX：veImageX 图片服务。
 	Type *string `json:"Type,omitempty"`
 }
 
@@ -2366,35 +2617,16 @@ type DescribeCDNSnapshotHistoryResResult struct {
 	// REQUIRED; 分页信息。
 	Pagination DescribeCDNSnapshotHistoryResResultPagination `json:"Pagination"`
 
-	// 截图历史列表记录。
-	StreamInfoList []*DescribeCDNSnapshotHistoryResResultStreamInfoListItem `json:"StreamInfoList,omitempty"`
+	// 截图文件信息。
+	Data []*DescribeCDNSnapshotHistoryResResultDataItem `json:"Data,omitempty"`
 }
 
-// DescribeCDNSnapshotHistoryResResultPagination - 分页信息。
-type DescribeCDNSnapshotHistoryResResultPagination struct {
-
-	// REQUIRED; 当前页。
-	PageCur int32 `json:"PageCur"`
-
-	// REQUIRED; 当前页的大小。
-	PageSize int32 `json:"PageSize"`
-
-	// REQUIRED; 当前页的数据量。
-	PageTotal int32 `json:"PageTotal"`
-
-	// REQUIRED; 数据总量。
-	TotalCount int32 `json:"TotalCount"`
-}
-
-type DescribeCDNSnapshotHistoryResResultStreamInfoListItem struct {
+type DescribeCDNSnapshotHistoryResResultDataItem struct {
 
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 文件大小。
-	FileSize float32 `json:"FileSize"`
-
-	// REQUIRED; 视频高度。
+	// REQUIRED; 截图高度。
 	Height int32 `json:"Height"`
 
 	// REQUIRED; 截图文件保存的路径。
@@ -2403,14 +2635,30 @@ type DescribeCDNSnapshotHistoryResResultStreamInfoListItem struct {
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 截图时间戳。
+	// REQUIRED; 截图时间戳，精度为毫秒。
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
 
-	// REQUIRED; 视频宽度。
+	// REQUIRED; 截图宽度。
 	Width int32 `json:"Width"`
+}
+
+// DescribeCDNSnapshotHistoryResResultPagination - 分页信息。
+type DescribeCDNSnapshotHistoryResResultPagination struct {
+
+	// REQUIRED; 查询数据的页码。
+	PageCur int32 `json:"PageCur"`
+
+	// REQUIRED; 每页显示的数据量条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果的数据总页数。
+	PageTotal int32 `json:"PageTotal"`
+
+	// REQUIRED; 查询结果的数据总条数。
+	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeCallbackBody struct {
@@ -2626,6 +2874,11 @@ type DescribeClosedStreamInfoByPageQuery struct {
 	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的历史流列表。 :::
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
+	// 指定是否模糊匹配流名称，缺省情况为精准匹配。支持如下取值。
+	// * fuzzy：模糊匹配；
+	// * strict：精准匹配。
+	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
+
 	// 排列方式，根据结束时间排序。支持两种形式。缺省情况下为 desc。
 	// * asc：按从小到大升序排列；
 	// * desc：按从大到小降序排列。
@@ -2835,7 +3088,7 @@ type DescribeDomainResResult struct {
 
 type DescribeDomainResResultDomainListItem struct {
 
-	// REQUIRED; C 信息。
+	// REQUIRED; CNAME 信息。
 	CName string `json:"CName"`
 
 	// REQUIRED; 所绑定证书支持的泛域名。
@@ -2861,13 +3114,13 @@ type DescribeDomainResResultDomainListItem struct {
 	// * 2：不可用，域名为其他的不可用状态。
 	DomainCheck int32 `json:"DomainCheck"`
 
-	// REQUIRED; IPC 备案校验是否通过，是否过期信息。
+	// REQUIRED; ICP 备案校验是否通过，是否过期信息。
 	ICPCheck int32 `json:"ICPCheck"`
 
 	// REQUIRED; 绑定的推流域名。
 	PushDomain string `json:"PushDomain"`
 
-	// REQUIRED; 区域，包含 4 种类型。
+	// REQUIRED; 区域，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
@@ -2901,6 +3154,11 @@ type DescribeForbiddenStreamInfoByPageQuery struct {
 
 	// 应用名称，默认查询所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App *string `json:"App,omitempty" query:"App"`
+
+	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持以下取值。
+	// * fuzzy：模糊匹配；
+	// * strict：精准匹配。
+	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
 
 	// 排列方式，根据推流结束时间排序。支持两种形式。缺省情况下为 desc。
 	// * asc：按从小到大升序排列；
@@ -2984,22 +3242,22 @@ type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 
 type DescribeLiveActivityBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
-	// * 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下表示所有运营商。支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -3012,34 +3270,35 @@ type DescribeLiveActivityBandwidthDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveActivityBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveActivityBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveActivityBandwidthDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -3084,89 +3343,111 @@ type DescribeLiveActivityBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveActivityBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 峰值带宽，单位为 Mbps。
+	// REQUIRED; 当前查询条件下的峰值带宽，单位为 Mbps。
 	PeakBandwidth int32 `json:"PeakBandwidth"`
 
-	// REQUIRED; 峰值时间
+	// REQUIRED; 峰值带宽的时间戳，RFC3339 格式的 UTC 时间，精度为秒。
 	PeakTimestamp string `json:"PeakTimestamp"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 域名列表，代表所查询的域名。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLiveActivityBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLiveActivityBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的峰值带宽，单位为 Mbps。
 	Bandwidth int32 `json:"Bandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveActivityBandwidthDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveActivityBandwidthDataResResultUserRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveAuditDataBody struct {
 
-	// REQUIRED; 查询的结束时间。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，当前仅支持天粒度，默认值为 86400。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 用于指定数据拆分的维度。缺省情况下，表示只显示截图总张数，不做数据拆维展示。支持的取值为 Domain，表示按域名拆分数据。
-	// 例如，"DetailField":["Domain"]，则返回 DomainList 中每个域名的截图张数。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 }
 
@@ -3207,49 +3488,51 @@ type DescribeLiveAuditDataResResponseMetadataError struct {
 
 type DescribeLiveAuditDataResResult struct {
 
-	// REQUIRED; 时间粒度，单位为 s。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 审核截图数据。
+	// REQUIRED; 所有时间粒度的数据。
 	AuditDataList []DescribeLiveAuditDataResResultAuditDataListItem `json:"AuditDataList"`
 
-	// REQUIRED; 按维度拆分后的详细数据。
+	// REQUIRED; 按维度拆分后的数据。
 	AuditDetailDataList []DescribeLiveAuditDataResResultAuditDetailDataListItem `json:"AuditDetailDataList"`
 
-	// REQUIRED; 数据拆分的维度。取值为 Domain 时，表示按域名拆分数据。
+	// REQUIRED; 数据拆分的维度，维度说明如下。
+	// * Domain：域名。
 	DetailField []string `json:"DetailField"`
 
 	// REQUIRED; 域名列表。
 	DomainList []string `json:"DomainList"`
 
-	// REQUIRED; 查询的结束时间。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 所选域名的已经审核的截图总张数。
+	// REQUIRED; 当前查询条件下的截图审核总张数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeLiveAuditDataResResultAuditDataListItem struct {
 
-	// REQUIRED; 截图审核总张数。
+	// REQUIRED; 当前数据聚合时间粒度内的截图审核总张数。
 	Count int32 `json:"Count"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveAuditDataResResultAuditDetailDataListItem struct {
 
-	// REQUIRED; 审核数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	AuditDataList []DescribeLiveAuditDataResResultAuditDetailDataListPropertiesItemsItem `json:"AuditDataList"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 审核总张数。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的截图审核总张数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
@@ -3264,59 +3547,69 @@ type DescribeLiveAuditDataResResultAuditDetailDataListPropertiesItemsItem struct
 
 type DescribeLiveBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
-	// * 86400：支持单次查询时间跨度为 366 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"ISP"，"Protocol"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下表示所有运营商。支持的运营商如下所示。
-	// * telecom：中国电信；
-	// * unicom：中国联通；
-	// * mobile：中国移动；
-	// * btvn：广电网；
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
 	// * huashu：华数；
-	// * drpeng：鹏博士。
+	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveBandwidthDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -3361,76 +3654,101 @@ type DescribeLiveBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 下行峰值，单位为 Mbps。
+	// REQUIRED; 查询时间范围内的下行峰值带宽，单位为 Mbps。
 	PeakDownBandwidth float32 `json:"PeakDownBandwidth"`
 
-	// REQUIRED; 上行峰值，单位为 Mbps。
+	// REQUIRED; 查询时间范围内的上行峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 按维度拆分的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。
+	// 优化：当配置了数据拆分的维度，且对应的维度参数传入多个值时会返回按维度拆分的数据。 :::
 	BandwidthDetailDataList []*DescribeLiveBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，代表所查询的域名。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLiveBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLiveBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 下行带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的下行峰值带宽，单位为 Mbps。
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 上行带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的上行峰值带宽，单位为 Mbps。
 	UpBandwidth float32 `json:"UpBandwidth"`
 }
 
 type DescribeLiveBandwidthDataResResultBandwidthDetailDataListItem struct {
 
-	// REQUIRED; 带宽用量数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 下行峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的下行峰值带宽，单位为 Mbps。
 	PeakDownBandwidth float32 `json:"PeakDownBandwidth"`
 
-	// REQUIRED; 上行峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的上行峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 运营商。
+	// 按运营商维度进行数据拆分时的运营商信息。
 	ISP *string `json:"ISP,omitempty"`
 
-	// 推拉流协议。
+	// 按推拉流协议维度进行数据拆分时的协议信息。
 	Protocol *string `json:"Protocol,omitempty"`
 }
 
@@ -3448,13 +3766,13 @@ type DescribeLiveBandwidthDataResResultBandwidthDetailDataListPropertiesItemsIte
 
 type DescribeLiveBandwidthDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -3475,19 +3793,23 @@ type DescribeLiveBatchPushStreamMetricsBody struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。结束时间需晚于 StartTime，且与 StartTime 间隔不超过 24h，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。支持最近 31d 内的任意时间点，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s。支持的取值为 5、30 和 60，默认值为 60。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 5：5 秒；
+	// * 30：30 秒；
+	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 流名称。 :::tip 如果传了 Stream，需要同时传入 App。 :::
+	// 流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -3520,16 +3842,19 @@ type DescribeLiveBatchPushStreamMetricsResResponseMetadata struct {
 
 type DescribeLiveBatchPushStreamMetricsResResult struct {
 
-	// REQUIRED; 聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 5：5 秒；
+	// * 30：30 秒；
+	// * 60：1 分钟。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 按指定时间粒度聚合的监控数据。
@@ -3538,7 +3863,7 @@ type DescribeLiveBatchPushStreamMetricsResResult struct {
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 推流名称。
+	// 流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -3553,40 +3878,40 @@ type DescribeLiveBatchPushStreamMetricsResResultStreamMetricListItem struct {
 	// REQUIRED; 按指定时间粒度聚合的监控数据。
 	MetricList []DescribeLiveBatchPushStreamMetricsResResultStreamMetricListPropertiesItemsItem `json:"MetricList"`
 
-	// REQUIRED; 推流名称。
+	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 }
 
 type DescribeLiveBatchPushStreamMetricsResResultStreamMetricListPropertiesItemsItem struct {
 
-	// REQUIRED; 音频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频码率最大值，单位为 kbps。
 	AudioBitrate float32 `json:"AudioBitrate"`
 
-	// REQUIRED; 音频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻音频帧显示时间戳差值的最大值，单位为毫秒。
 	AudioFrameGap int32 `json:"AudioFrameGap"`
 
-	// REQUIRED; 音频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频帧率最大值，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个音频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	AudioPts int32 `json:"AudioPts"`
 
-	// REQUIRED; 视频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频码率最大值，单位为 kbps。
 	Bitrate float32 `json:"Bitrate"`
 
-	// REQUIRED; 视频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频帧率最大值，单位为 fps。
 	Framerate float32 `json:"Framerate"`
 
-	// REQUIRED; 音视频时间戳差值，即 AudioPts 与 VideoPts 之间的差值，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 时间戳。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 视频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
 	VideoFrameGap int32 `json:"VideoFrameGap"`
 
-	// REQUIRED; 视频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
 }
 
@@ -3595,13 +3920,16 @@ type DescribeLiveBatchSourceStreamMetricsBody struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。结束时间需晚于 StartTime，且与 StartTime 间隔不超过 24h，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。支持最近 31d 内的任意时间点，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位 s。支持的取值均为 30 和 60，默认值为 60。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 30：30 秒；
+	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 应用名称。
@@ -3640,19 +3968,21 @@ type DescribeLiveBatchSourceStreamMetricsResResponseMetadata struct {
 
 type DescribeLiveBatchSourceStreamMetricsResResult struct {
 
-	// REQUIRED; 聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 30：30 秒；
+	// * 60：1 分钟。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 按指定时间粒度聚合的监控数据。
+	// REQUIRED; 流的监控数据。
 	StreamMetricList []DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListItem `json:"StreamMetricList"`
 
 	// 应用名称。
@@ -3679,63 +4009,66 @@ type DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListItem struct {
 
 type DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListPropertiesItemsItem struct {
 
-	// REQUIRED; 音频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频码率最大值，单位为 kbps。
 	AudioBitrate float32 `json:"AudioBitrate"`
 
-	// REQUIRED; 音频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻音频帧显示时间戳差值的最大值，单位为毫秒。
 	AudioFrameGap int32 `json:"AudioFrameGap"`
 
-	// REQUIRED; 音频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频帧率最大值，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个音频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	AudioPts int32 `json:"AudioPts"`
 
-	// REQUIRED; 视频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频码率最大值，单位为 kbps。
 	Bitrate float32 `json:"Bitrate"`
 
-	// REQUIRED; 视频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频帧率最大值，单位为 fps。
 	Framerate float32 `json:"Framerate"`
 
-	// REQUIRED; 音视频时间戳差值，即 AudioPts 与 VideoPts 之间的差值，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 时间戳。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 视频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
 	VideoFrameGap int32 `json:"VideoFrameGap"`
 
-	// REQUIRED; 视频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
 }
 
 type DescribeLiveBatchStreamTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，支持查询最近 93 天内的数据。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，支持查询最近 93 天内的数据。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// :::tip 查询历史数据的时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 域名列表。缺省情况下，表示当前账号下的所有域名。
+	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 分页查询页码，默认值为 1，即查询第一页的信息。
+	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 单个分页中，查询的流数量。默认值为 1000，取值范围为 [100,1000]。
+	// 每页显示的数据条数，默认值为 1000，取值范围为 100～1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 
-	// 推拉流协议。支持查询的协议包括：
-	// * RTMP
-	// * RTM
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * SRT
-	// * QUIC :::warning
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip
+	// * 如果查询推拉流协议为 QUIC，不能同时查询其他协议。
 	// * 缺省情况下，查询的总流量数据为实际产生的上下行流量。
-	// * 如果传入协议进行查询，并对各协议的流量求和，结果将大于实际总流量。 :::
+	// * 如果传入单个协议进行查询，并对各协议的流量求和，结果将大于实际总流量。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 }
 
@@ -3768,41 +4101,47 @@ type DescribeLiveBatchStreamTrafficDataResResponseMetadata struct {
 
 type DescribeLiveBatchStreamTrafficDataResResult struct {
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 数据分页的信息。
 	Pagination DescribeLiveBatchStreamTrafficDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 查询的起始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流维度的用量信息详情。
+	// REQUIRED; 流维度的流量用量信息详情。
 	StreamInfoList []DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem `json:"StreamInfoList"`
 
-	// REQUIRED; 查询结果中，所有流的下行总流量，单位为 GB。
+	// REQUIRED; 当前查询条件下，所有流的下行总流量，单位为 GB。
 	TotalDownTraffic float32 `json:"TotalDownTraffic"`
 
-	// REQUIRED; 查询结果中，所有流的上行总流量，单位为 GB。
+	// REQUIRED; 当前查询条件下，所有流的上行总流量，单位为 GB。
 	TotalUpTraffic float32 `json:"TotalUpTraffic"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 }
 
-// DescribeLiveBatchStreamTrafficDataResResultPagination - 分页信息。
+// DescribeLiveBatchStreamTrafficDataResResultPagination - 数据分页的信息。
 type DescribeLiveBatchStreamTrafficDataResResultPagination struct {
 
-	// REQUIRED; 页数。
+	// REQUIRED; 当前所在分页的页码。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 当前页的大小。
+	// REQUIRED; 每页显示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 总流数。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
@@ -3826,19 +4165,19 @@ type DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem struct {
 
 type DescribeLiveBatchStreamTranscodeDataBody struct {
 
-	// REQUIRED; 结束时间，支持查询最近 93 天内的数据。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 开始时间，支持查询最近 93 天内的数据。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 查询历史数据的时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 域名列表。缺省情况下，表示当前账号下的所有域名。
+	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 分页查询页码，默认值为 1，即查询第一页的信息。
+	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 单个分页中，查询的流数量。默认值为 1000，取值范围为 [100,1000]。
+	// 每页显示的数据条数，默认值为 1000，取值范围为 100～1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 }
 
@@ -3871,35 +4210,35 @@ type DescribeLiveBatchStreamTranscodeDataResResponseMetadata struct {
 
 type DescribeLiveBatchStreamTranscodeDataResResult struct {
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 数据分页的信息。
 	Pagination DescribeLiveBatchStreamTranscodeDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 查询的起始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流维度的转码用量信息详情。
 	StreamInfoList []DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem `json:"StreamInfoList"`
 
-	// REQUIRED; 查询结果中，所有流的转码总时长，单位为分钟。
+	// REQUIRED; 当前查询条件下，所有流的转码总时长，单位为分钟。
 	TotalDuration float32 `json:"TotalDuration"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 }
 
-// DescribeLiveBatchStreamTranscodeDataResResultPagination - 分页信息。
+// DescribeLiveBatchStreamTranscodeDataResResultPagination - 数据分页的信息。
 type DescribeLiveBatchStreamTranscodeDataResResultPagination struct {
 
-	// REQUIRED; 页数。
+	// REQUIRED; 当前所在分页的页码。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 当前页的大小。
+	// REQUIRED; 每页展示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 总流数。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
@@ -3908,22 +4247,22 @@ type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 码率。
+	// REQUIRED; 当前流的转码码率。
 	Coderate int32 `json:"Coderate"`
 
 	// REQUIRED; 域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 当前流的转码总时长，单位为分钟。
+	// REQUIRED; 当前流在查询时间内的转码总时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 当前流的分辨率，支持的取值如下所示。
+	// REQUIRED; 当前流的转码分辨率档位，以 480P 为例，表示转码配置的长边 x 短边计算而出的面积小于 640 x 480。
 	// * 480P：640 × 480；
 	// * 720P：1280 × 720；
 	// * 1080P：1936 × 1088；
 	// * 2K：2560 × 1440；
 	// * 4K：4096 × 2160；
-	// * 0P：纯音频流。
+	// * 0P：纯音频转码。
 	Resolution string `json:"Resolution"`
 
 	// REQUIRED; 流名称。
@@ -3940,22 +4279,22 @@ type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
 
 type DescribeLiveCustomizedLogDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。当前仅支持查询最近 31 天的日志数据。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为 s。当前仅支持查询最近 31 天的日志数据。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 当前仅支持查询最近 31 天的日志数据。 :::
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 日志类型，请联系技术支持同学获取参数值。
 	Type string `json:"Type"`
 
-	// 查询日志的域名列表；日志类型为拉流转推日志（Type=relay）时，该参数无效。
+	// 域名列表，缺省情况下表示当前用户的所有推流域名和拉流域名。 :::tip 日志类型为拉流转推日志（Type=relay）时，该参数无效。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 页码，默认为 1。
+	// 查询数据的页码，默认为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 每页数量，默认为 20。
+	// 每页显示的数据条数，默认为 20，最大值为 1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 }
 
@@ -3988,19 +4327,19 @@ type DescribeLiveCustomizedLogDataResResponseMetadata struct {
 
 type DescribeLiveCustomizedLogDataResResult struct {
 
-	// REQUIRED; 查询日志的域名列表。
+	// REQUIRED; 域名列表。
 	DomainList []string `json:"DomainList"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 日志文件的信息列表。
 	LogInfoList []DescribeLiveCustomizedLogDataResResultLogInfoListItem `json:"LogInfoList"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 数据分页信息。
 	Pagination DescribeLiveCustomizedLogDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 查询的日志类型。
@@ -4009,13 +4348,13 @@ type DescribeLiveCustomizedLogDataResResult struct {
 
 type DescribeLiveCustomizedLogDataResResultLogInfoListItem struct {
 
-	// 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为 s。
+	// 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为秒。
 	DateTime *string `json:"DateTime,omitempty"`
 
-	// 域名；查询拉流转推日志（Type=relay）时，该字段为空。
+	// 域名。 :::tip 查询拉流转推日志（Type=relay）时，该字段为空。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 日志文件下载链接链接。
+	// 日志文件下载链接。
 	DownloadURL *string `json:"DownloadUrl,omitempty"`
 
 	// 日志文件名称。
@@ -4025,16 +4364,16 @@ type DescribeLiveCustomizedLogDataResResultLogInfoListItem struct {
 	LogSize *int32 `json:"LogSize,omitempty"`
 }
 
-// DescribeLiveCustomizedLogDataResResultPagination - 分页信息。
+// DescribeLiveCustomizedLogDataResResultPagination - 数据分页信息。
 type DescribeLiveCustomizedLogDataResResultPagination struct {
 
-	// REQUIRED; 当前所在的分页。
+	// REQUIRED; 当前所在分页的页码。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 每页显示的信息条数。
+	// REQUIRED; 每页显示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 查询结果总条数。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
@@ -4067,7 +4406,7 @@ type DescribeLiveISPDataResResponseMetadata struct {
 
 type DescribeLiveISPDataResResult struct {
 
-	// REQUIRED; 运营商信息。 视频直播提供的网络运营商标识，支持的运营商如下所示。
+	// REQUIRED; 运营商信息，视频直播提供的网络运营商标识，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -4100,20 +4439,20 @@ type DescribeLiveLogDataBody struct {
 	// REQUIRED; 仅支持查询最近31天的数据
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 日志类型，支持如下枚举值：
+	// REQUIRED; 日志类型，支持的类型如下所示。
 	// * pull：拉流日志
 	// * push：推流日志
 	// * source：回源日志
 	// * relay：拉流转推日志
 	Type string `json:"Type"`
 
-	// 查询日志的域名列表；日志类型为拉流转推日志（Type=relay）时，该参数无效。
+	// 域名列表，缺省情况下表示当前用户的所有推流域名和拉流域名。 :::tip 日志类型为拉流转推日志（Type=relay）时，该参数无效。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 页码，默认为 1。
+	// 查询数据的页码，默认为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 每页数量，默认为 20。
+	// 每页显示的数据条数，默认为 20，最大值为 1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 }
 
@@ -4146,83 +4485,95 @@ type DescribeLiveLogDataResResponseMetadata struct {
 
 type DescribeLiveLogDataResResult struct {
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 日志文件信息列表。
+	// REQUIRED; 日志文件的信息列表。
 	LogInfoList []DescribeLiveLogDataResResultLogInfoListItem `json:"LogInfoList"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 数据分页信息。
 	Pagination DescribeLiveLogDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 查询的日志类型。
+	// REQUIRED; 日志类型，类型说明如下所示。
+	// * pull：拉流日志
+	// * push：推流日志
+	// * source：回源日志
+	// * relay：拉流转推日志
 	Type string `json:"Type"`
 
-	// 查询日志的域名列表。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 }
 
 type DescribeLiveLogDataResResultLogInfoListItem struct {
 
-	// REQUIRED; 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为秒。
 	DateTime string `json:"DateTime"`
 
-	// REQUIRED; 日志文件下载链接链接。
+	// REQUIRED; 日志文件下载链接。
 	DownloadURL string `json:"DownloadUrl"`
 
-	// REQUIRED; 日志文件名。
+	// REQUIRED; 日志文件名称，日志文件命名规则如下。
+	// * 与域名相关时：加速域名年月日时间开始时间结束文件拆分序号。例如，www.example.com_2023_08_11_000000_010000_0.gz；
+	// * 与域名无关时：年月日时间开始时间结束_文件拆分序号。例如，2023_08_11_000000_010000_0.gz；
+	// * 如果某个小时内，当前事件产生的日志大于 150 万条，则会生成为多个日志文件，用文件名最后的序号标注日志文件顺序，例如，2023_08_11_000000_010000_0.gz、2023_08_11_000000_010000_1.gz。
 	LogName string `json:"LogName"`
 
 	// REQUIRED; 日志文件大小，单位为 byte。
 	LogSize int32 `json:"LogSize"`
 
-	// 域名；查询拉流转推日志（Type=relay）时，该字段为空。
+	// 域名。 :::tip 查询拉流转推日志（Type=relay）时，该字段为空。 :::
 	Domain *string `json:"Domain,omitempty"`
 }
 
-// DescribeLiveLogDataResResultPagination - 分页信息。
+// DescribeLiveLogDataResResultPagination - 数据分页信息。
 type DescribeLiveLogDataResResultPagination struct {
 
-	// REQUIRED; 当前所在分页。
+	// REQUIRED; 当前所在分页的页码。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 每页显示信息条数。
+	// REQUIRED; 每页显示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 结果总条数。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeLiveMetricBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名参数。
+	// 查询流粒度数据时的应用名称。 :::tip 使用App构造请求时，需同时定义Stream参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"Protocol"，"IP"，"ISP"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * Protocol：推拉流协议；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
+	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表。缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 查询单个或多个出口外网 IP 地址数据，第四个地址位需要改为 000。例如，实际 IP 地址为 10.255.159.10，则请求时取 10.255.159.000
+	// 查询单个或多个出口外网 IP 地址数据，第四个地址位需要改为 000。例如，实际 IP 地址为 10.255.159.10，则请求时取 10.255.159.000。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -4235,37 +4586,38 @@ type DescribeLiveMetricBandwidthDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下，表示查询所有协议，支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveMetricBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。
+	// 查询流粒度数据时的流名称参数。 :::tip 使用Stream构造请求时，需同时定义App参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveMetricBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricBandwidthDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4310,88 +4662,113 @@ type DescribeLiveMetricBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveMetricBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 下行峰值，单位为 Mbps。
+	// REQUIRED; 查询时间范围内的下行峰值，单位为 Mbps。
 	PeakDownBandwidth float32 `json:"PeakDownBandwidth"`
 
-	// REQUIRED; 上行峰值，单位为 Mbps。
+	// REQUIRED; 查询时间范围内的上行峰值，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分维度字段和时间聚合后的数据 :::tip 请求时，DomainList、ProtocolList、IPList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分后的数据。
 	BandwidthDetailDataList []*DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * Protocol：推拉流协议；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// IP 地址。
+	// 出口外网的 IP 地址列表。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLiveMetricBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 直播流名称。
+	// 查询流粒度数据时的流名称。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLiveMetricBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 下行带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的下行峰值带宽，单位为 Mbps。
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 上行带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的上行峰值带宽，单位为 Mbps。
 	UpBandwidth float32 `json:"UpBandwidth"`
 }
 
 type DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListItem struct {
 
-	// REQUIRED; 时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 下行峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的下行峰值带宽，单位为 Mbps。
 	PeakDownBandwidth float32 `json:"PeakDownBandwidth"`
 
-	// REQUIRED; 上行峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的上行峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// IP 地址。
+	// 按 IP 地址维度进行数据拆分时的 IP 地址信息。
 	IP *string `json:"IP,omitempty"`
 
-	// 运营商。
+	// 按运营商维度进行数据拆分时的运营商信息。
 	ISP *string `json:"ISP,omitempty"`
 
-	// 推拉流协议。
+	// 按推拉流协议维度进行数据拆分时的协议信息。
 	Protocol *string `json:"Protocol,omitempty"`
 }
 
@@ -4409,13 +4786,13 @@ type DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListPropertiesIt
 
 type DescribeLiveMetricBandwidthDataResResultRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]。
+	// 区域信息中的身份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4427,36 +4804,36 @@ type DescribeLiveMetricBandwidthDataResResultUserRegionListItem struct {
 
 type DescribeLiveMetricTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名参数。
+	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，支持以下取值。
-	// * Domain
-	// * Protocol
-	// * IP
-	// * ISP
-	// 设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * Protocol：推拉流协议；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
+	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表。缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 查询单个或多个出口外网 IP 地址数据，第四个地址位需要改为 000。例如，实际 IP 地址为 10.255.159.10，则请求时取 10.255.159.000。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -4469,37 +4846,38 @@ type DescribeLiveMetricTrafficDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下，表示查询所有协议，支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveMetricTrafficDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。
+	// 流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveMetricTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4544,100 +4922,125 @@ type DescribeLiveMetricTrafficDataResResponseMetadata struct {
 
 type DescribeLiveMetricTrafficDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 下行总流量，单位为 GB。
+	// REQUIRED; 查询时间范围内的下行总流量，单位为 GB。
 	TotalDownTraffic float32 `json:"TotalDownTraffic"`
 
-	// REQUIRED; 上行总流量，单位为 GB。
+	// REQUIRED; 查询时间范围内的上行总流量，单位为 GB。
 	TotalUpTraffic float32 `json:"TotalUpTraffic"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TrafficDataList []DescribeLiveMetricTrafficDataResResultTrafficDataListItem `json:"TrafficDataList"`
 
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 是否返回过滤字段和时间聚合后的数据。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * Protocol：推拉流协议；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// IP 地址。
+	// 出口外网的 IP 地址。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLiveMetricTrafficDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 直播流名称。
+	// 流名称。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 进行维度拆分后的数据。 :::tip 请求时，DomainList、ProtocolList、IPList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分后的数据。 :::tip 请求时，DomainList、ProtocolList、IPList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
 	TrafficDetailDataList []*DescribeLiveMetricTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLiveMetricTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataResResultTrafficDataListItem struct {
 
-	// REQUIRED; 下行流量，单位 GB。
+	// REQUIRED; 当前数据聚合时间粒度内产生的总下行流量，单位 GB。
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 上行流量，单位 GB。
+	// REQUIRED; 当前数据聚合时间粒度内产生的总上行流量，单位 GB。
 	UpTraffic float32 `json:"UpTraffic"`
 }
 
 type DescribeLiveMetricTrafficDataResResultTrafficDetailDataListItem struct {
 
-	// REQUIRED; 下行总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的下行总流量，单位为 GB。
 	TotalDownTraffic float32 `json:"TotalDownTraffic"`
 
-	// REQUIRED; 上行总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的上行总流量，单位为 GB。
 	TotalUpTraffic float32 `json:"TotalUpTraffic"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	TrafficDataList []DescribeLiveMetricTrafficDataResResultTrafficDetailDataListPropertiesItemsItem `json:"TrafficDataList"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// IP地址。
+	// 按 IP 地址维度进行数据拆分时的 IP 地址信息。
 	IP *string `json:"IP,omitempty"`
 
-	// 运营商。
+	// 按运营商维度进行数据拆分时的运营商信息。
 	ISP *string `json:"ISP,omitempty"`
 
-	// 推拉流协议。
+	// 按推拉流协议维度进行数据拆分时的协议信息。
 	Protocol *string `json:"Protocol,omitempty"`
 }
 
@@ -4661,44 +5064,45 @@ type DescribeLiveMetricTrafficDataResResultUserRegionListItem struct {
 
 type DescribeLiveP95PeakBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300，支持的取值为 300。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 域名列表，缺省情况下表示查询所有域名。
+	// 域名列表，缺省情况下表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。 :::tip 不支持同时传入RegionList和UserRegionList。 :::
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveP95PeakBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 不支持同时传入RegionList和UserRegionList。 :::
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveP95PeakBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4743,43 +5147,50 @@ type DescribeLiveP95PeakBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveP95PeakBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 上下行带宽 95 峰值。 :::tip 如果请求时，Regionlist中传入多个 region，则返回这些 region 的上下行带宽 95 峰值总和。 :::
+	// REQUIRED; 时间范围内的上下行 95 峰值带宽总和。 :::tip 如果请求时，Regionlist中传入多个 region，则返回这些 region 的上下行带宽 95 峰值总和。 :::
 	P95PeakBandwidth float32 `json:"P95PeakBandwidth"`
 
-	// REQUIRED; 95 带宽峰值对应的时间点。
+	// REQUIRED; 95 峰值带宽的时间戳，RFC3339 格式的 UTC 时间，精度为秒。
 	P95PeakTimestamp string `json:"P95PeakTimestamp"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表。
 	RegionList []*DescribeLiveP95PeakBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表。
 	UserRegionList []*DescribeLiveP95PeakBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4791,25 +5202,28 @@ type DescribeLiveP95PeakBandwidthDataResResultUserRegionListItem struct {
 
 type DescribeLivePlayStatusCodeDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位秒，默认值为 60。支持以下粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：（默认值）1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"ISP"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * ISP：运营商。
+	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 拉流域名列表，默认为账号下全部域名。
+	// 域名列表，缺省情况下表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -4822,48 +5236,25 @@ type DescribeLivePlayStatusCodeDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。区域代号和区域的映射关系如下所示。
-	// * all：全部，独立查询；
-	// * CN：中国内地；
-	// * OverSeas：海外所有大区，包含下属所有大区，独立查询；
-	// * AP1：亚太一区；
-	// * AP2：亚太二区；
-	// * AP3：亚太三区；
-	// * EU：欧洲；
-	// * MEAA：中东；
-	// * SA：南美；
-	// * NA：北美；
-	// * Other：无法定位的数据，独立查询。
-	// :::tipRegionList和UserRegionList传且仅传一个 :::
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLivePlayStatusCodeDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。区域代号和区域的映射关系如下所示。
-	// * all：全部，独立查询；
-	// * CN：中国内地；
-	// * OverSeas：海外所有大区，包含下属所有大区，独立查询；
-	// * AP1：亚太一区；
-	// * AP2：亚太二区；
-	// * AP3：亚太三区；
-	// * EU：欧洲；
-	// * MEAA：中东；
-	// * SA：南美；
-	// * NA：北美；
-	// * Other：无法定位的数据，独立查询。
-	// :::tipRegionList和UserRegionList传且仅传一个 :::
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLivePlayStatusCodeDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4908,58 +5299,63 @@ type DescribeLivePlayStatusCodeDataResResponseMetadata struct {
 
 type DescribeLivePlayStatusCodeDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 起始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 每个时间点的粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	StatusDataList []DescribeLivePlayStatusCodeDataResResultStatusDataListItem `json:"StatusDataList"`
 
-	// REQUIRED; 所有时间数据总量。
+	// REQUIRED; 当前查询条件下的状态码占比数据。
 	StatusSummaryDataList []DescribeLivePlayStatusCodeDataResResultStatusSummaryDataListItem `json:"StatusSummaryDataList"`
 
-	// 是否返回过滤字段和时间聚合后的数据。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * ISP：运营商。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 拉流域名列表。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 运营商。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLivePlayStatusCodeDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 字段和时间聚合后数据。
+	// 按维度拆分后的数据。
 	StatusDetailDataList []*DescribeLivePlayStatusCodeDataResResultStatusDetailDataListItem `json:"StatusDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLivePlayStatusCodeDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataResResultStatusDataListItem struct {
 
-	// REQUIRED; 按状态码区分的数据列表。
+	// REQUIRED; 当前数据聚合时间粒度内的状态码详细数据。
 	StatusSummaryDataList []DescribeLivePlayStatusCodeDataResResultStatusDataListPropertiesItemsItem `json:"StatusSummaryDataList"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -5010,13 +5406,13 @@ type DescribeLivePlayStatusCodeDataResResultStatusDetailDataListPropertiesItemsS
 
 type DescribeLivePlayStatusCodeDataResResultStatusSummaryDataListItem struct {
 
-	// 占比。
+	// 当前状态码出现次数在总状态码次数中的占比。
 	Percent *float32 `json:"Percent,omitempty"`
 
-	// 状态码。
+	// 请求的状态码。
 	StatusCode *int32 `json:"StatusCode,omitempty"`
 
-	// 出现次数。
+	// 当前状态码出现的次数。
 	Value *int32 `json:"Value,omitempty"`
 }
 
@@ -5028,27 +5424,29 @@ type DescribeLivePlayStatusCodeDataResResultUserRegionListItem struct {
 
 type DescribeLivePullToPushBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300。
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
-	// * 86400：支持单次查询时间跨度为 366 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"DstAddrType"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * DstAddrType：推流地址类型。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 推流域名列表，缺省情况表示当前账号下的所有域名。
+	// 推流域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推流地址类型，缺省情况下表示查询 Third，支持 2 种取值。
+	// 推流地址类型，可选值如下所示。
 	// * Live：非第三方；
-	// * Third：第三方。
+	// * Third：（默认值）第三方。
 	DstAddrTypeList []*string `json:"DstAddrTypeList,omitempty"`
 }
 
@@ -5089,25 +5487,30 @@ type DescribeLivePullToPushBandwidthDataResResponseMetadataError struct {
 
 type DescribeLivePullToPushBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLivePullToPushBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 转推带宽峰值，单位为 Mbps。
+	// REQUIRED; 当前查询条件下的拉流转推峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 查询的起始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 过滤字段和时间聚合后的数据。
+	// 按维度拆分的数据。
 	BandwidthDetailDataList []*DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下。
+	// * Domain：域名；
+	// * DstAddrType：推流地址类型。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
@@ -5121,25 +5524,25 @@ type DescribeLivePullToPushBandwidthDataResResult struct {
 
 type DescribeLivePullToPushBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 转推带宽，单位为 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的拉流转推峰值带宽，单位为 Mbps。
 	UpBandwidth float32 `json:"UpBandwidth"`
 }
 
 type DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListItem struct {
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	BandwidthDataList []DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 转推带宽峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下的拉流转推峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 推流地址类型。
+	// 按推流地址类型维度进行数据拆分时的地址类型信息。
 	// * Live：非第三方；
 	// * Third：第三方。
 	DstAddrType *string `json:"DstAddrType,omitempty"`
@@ -5156,26 +5559,29 @@ type DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListProperti
 
 type DescribeLivePullToPushDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 86400。支持如下时间粒度。
-	// 60：支持单次查询时间跨度为 1 天，历史查询时间范围为 7 天。 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93天。 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 1 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需同时定义 Stream 参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，可取值为 Domain，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -5216,31 +5622,35 @@ type DescribeLivePullToPushDataResResponseMetadataError struct {
 
 type DescribeLivePullToPushDataResResult struct {
 
-	// REQUIRED; 时间粒度，单位为 s。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 各时间片详细数据。
+	// REQUIRED; 所有时间粒度的数据。
 	PullToPushDataList []DescribeLivePullToPushDataResResultPullToPushDataListItem `json:"PullToPushDataList"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 查询范围内拉流转推总时长，单位分钟，保留小数点后 2 位。
+	// REQUIRED; 当前查询条件下的拉流转推总时长，单位为分钟。
 	TotalDuration float32 `json:"TotalDuration"`
 
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下。
+	// * Domain：域名。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 聚合数据。
+	// 按维度拆分后的数据。
 	PullToPushDetailDataList []*DescribeLivePullToPushDataResResultPullToPushDetailDataListItem `json:"PullToPushDetailDataList,omitempty"`
 
 	// 流名称。
@@ -5249,22 +5659,22 @@ type DescribeLivePullToPushDataResResult struct {
 
 type DescribeLivePullToPushDataResResultPullToPushDataListItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 该时间片内的拉流转推总时长，单位分钟，保留小数点后 2 位。
+	// REQUIRED; 当前数据聚合时间粒度内的拉流转推总时长，单位为分钟。
 	Value float32 `json:"Value"`
 }
 
 type DescribeLivePullToPushDataResResultPullToPushDetailDataListItem struct {
 
-	// REQUIRED; 各时间片详细数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	PullToPushDataList []DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsItem `json:"PullToPushDataList"`
 
-	// REQUIRED; 查询范围内拉流转推总时长，单位分钟，保留小数点后 2 位。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的拉流转推总时长，单位分钟。
 	TotalDuration float32 `json:"TotalDuration"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -5279,27 +5689,28 @@ type DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsI
 
 type DescribeLivePushStreamCountDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，支持以下取值：
-	// * 60s：查询支持的时间跨度为 24h、历史查询时间范围为 7d
-	// * 300s：查询支持的时间跨度为 31d、历史查询时间范围为 93d
-	// * 3600s：查询支持的时间跨度为 93d、历史查询时间范围为93d
-	// * 1d：查询支持的时间跨度为 93d、历史查询时间范围为93d，
-	// 默认 300s。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取元素"Domain"，设置为空时不安维度不拆分数据。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。
+	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推流域名和拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -5312,6 +5723,7 @@ type DescribeLivePushStreamCountDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
 	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
@@ -5320,13 +5732,13 @@ type DescribeLivePushStreamCountDataBody struct {
 
 type DescribeLivePushStreamCountDataBodyUserRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5359,31 +5771,48 @@ type DescribeLivePushStreamCountDataResResponseMetadata struct {
 
 type DescribeLivePushStreamCountDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 峰值流数量。
+	// REQUIRED; 查询时间范围内的推流数量最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 按指定时间粒度聚合后的峰值流数数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TotalStreamDataList []DescribeLivePushStreamCountDataResResultTotalStreamDataListItem `json:"TotalStreamDataList"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 拆分维度字段和时间聚合后数据。
+	// 按维度拆分后的数据。
 	StreamDetailDataList []*DescribeLivePushStreamCountDataResResultStreamDetailDataListItem `json:"StreamDetailDataList,omitempty"`
 
 	// 客户端 IP 所属区域列表。
@@ -5392,10 +5821,10 @@ type DescribeLivePushStreamCountDataResResult struct {
 
 type DescribeLivePushStreamCountDataResResultStreamDetailDataListItem struct {
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 当前数据拆分维度下所有时间粒度的数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下的所有时间粒度数据。
 	TotalStreamDataList []DescribeLivePushStreamCountDataResResultStreamDetailDataListPropertiesItemsItem `json:"TotalStreamDataList"`
 }
 
@@ -5410,22 +5839,22 @@ type DescribeLivePushStreamCountDataResResultStreamDetailDataListPropertiesItems
 
 type DescribeLivePushStreamCountDataResResultTotalStreamDataListItem struct {
 
-	// REQUIRED; 峰值流数量。
+	// REQUIRED; 当前数据聚合时间粒度内的推流数量最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 时间片的开始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLivePushStreamCountDataResResultUserRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5437,16 +5866,19 @@ type DescribeLivePushStreamMetricsBody struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。结束时间需晚于 StartTime，且与 StartTime 间隔不超过 24h，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。支持最近 31d 内的任意时间点，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// 聚合的时间粒度，单位为 s。支持的取值为 5 和 30，默认值为 30。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 5：5 秒；
+	// * 30：（默认值）30 秒。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 }
 
@@ -5487,7 +5919,9 @@ type DescribeLivePushStreamMetricsResResponseMetadataError struct {
 
 type DescribeLivePushStreamMetricsResResult struct {
 
-	// REQUIRED; 聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 5：5 秒；
+	// * 30：30 秒。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 应用名称。
@@ -5496,13 +5930,13 @@ type DescribeLivePushStreamMetricsResResult struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 按指定时间粒度聚合的监控数据。
+	// REQUIRED; 所有时间粒度的数据。
 	MetricList []DescribeLivePushStreamMetricsResResultMetricListItem `json:"MetricList"`
 
-	// REQUIRED; 查询的开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
@@ -5511,59 +5945,62 @@ type DescribeLivePushStreamMetricsResResult struct {
 
 type DescribeLivePushStreamMetricsResResultMetricListItem struct {
 
-	// REQUIRED; 音频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频码率最大值，单位为 kbps。
 	AudioBitrate float32 `json:"AudioBitrate"`
 
-	// REQUIRED; 音频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻音频帧显示时间戳差值的最大值，单位为毫秒。
 	AudioFrameGap int32 `json:"AudioFrameGap"`
 
-	// REQUIRED; 音频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频帧率最大值，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个音频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	AudioPts int32 `json:"AudioPts"`
 
-	// REQUIRED; 视频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频码率最大值，单位为 kbps。
 	Bitrate float32 `json:"Bitrate"`
 
-	// REQUIRED; 视频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频帧率最大值，单位为 fps。
 	Framerate float32 `json:"Framerate"`
 
-	// REQUIRED; 音视频时间戳差值，即 AudioPts 与 VideoPts 之间的差值，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 时间戳。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 视频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
 	VideoFrameGap int32 `json:"VideoFrameGap"`
 
-	// REQUIRED; 视频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
 }
 
 type DescribeLiveRecordDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s。默认值为 300。支持如下时间粒度。
-	// 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天； 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天； 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需同时定义 Stream 参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，可取值为 Domain，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称， :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -5604,55 +6041,59 @@ type DescribeLiveRecordDataResResponseMetadataError struct {
 
 type DescribeLiveRecordDataResResult struct {
 
-	// REQUIRED; 时间粒度，单位为 s。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 录制峰值数据。
+	// REQUIRED; 所有时间粒度的数据。
 	RecordDataList []DescribeLiveRecordDataResResultRecordDataListItem `json:"RecordDataList"`
 
-	// REQUIRED; 查询时间范围内录制峰值。
+	// REQUIRED; 当前查询条件下的录制并发路数最大值。
 	RecordPeak int32 `json:"RecordPeak"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下。
+	// * Domain：域名。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 数据拆分后的详细数据。
+	// 按维度拆分后的数据。
 	RecordDetailDataList []*DescribeLiveRecordDataResResultRecordDetailDataListItem `json:"RecordDetailDataList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveRecordDataResResultRecordDataListItem struct {
 
-	// REQUIRED; 时间。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 录制峰值。
+	// REQUIRED; 当前数据聚合时间粒度内录制并发路数最大值。
 	Value int32 `json:"Value"`
 }
 
 type DescribeLiveRecordDataResResultRecordDetailDataListItem struct {
 
-	// REQUIRED; 录制峰值数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	RecordDataList []DescribeLiveRecordDataResResultRecordDetailDataListPropertiesItemsItem `json:"RecordDataList"`
 
-	// REQUIRED; 查询时间范围内录制峰值。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的录制并发路数最大值。
 	RecordPeak int32 `json:"RecordPeak"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -5694,7 +6135,7 @@ type DescribeLiveRegionDataResResponseMetadata struct {
 
 type DescribeLiveRegionDataResResult struct {
 
-	// REQUIRED; 大区信息。
+	// REQUIRED; 区域信息。
 	Areas []DescribeLiveRegionDataResResultAreasItem `json:"Areas"`
 }
 
@@ -5733,26 +6174,29 @@ type DescribeLiveRegionDataResResultAreasPropertiesItemsProvincesItem struct {
 
 type DescribeLiveSnapshotDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 86400。支持如下时间粒度。
-	// 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天； 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天； 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Stream 参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，可取值为 Domain，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -5793,55 +6237,59 @@ type DescribeLiveSnapshotDataResResponseMetadataError struct {
 
 type DescribeLiveSnapshotDataResResult struct {
 
-	// REQUIRED; 时间粒度，单位为 s。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 每个聚合时间片的截图张数详情。
+	// REQUIRED; 所有时间粒度的数据。
 	SnapshotDataList []DescribeLiveSnapshotDataResResultSnapshotDataListItem `json:"SnapshotDataList"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 所选域名的截图总张数。
+	// REQUIRED; 当前查询条件下的截图总张数。
 	Total int32 `json:"Total"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下。
+	// * Domain：域名。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 按维度拆分后的详细数据。
+	// 按维度拆分后的数据。
 	SnapshotDetailData []*DescribeLiveSnapshotDataResResultSnapshotDetailDataItem `json:"SnapshotDetailData,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveSnapshotDataResResultSnapshotDataListItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 截图总张数。
+	// REQUIRED; 当前数据聚合时间粒度内的截图总张数。
 	Value int32 `json:"Value"`
 }
 
 type DescribeLiveSnapshotDataResResultSnapshotDetailDataItem struct {
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 每个聚合时间片的截图张数详情。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	SnapshotDataList []DescribeLiveSnapshotDataResResultSnapshotDetailDataPropertiesItemsItem `json:"SnapshotDataList"`
 
-	// REQUIRED; 所选域名的截图总张数。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的截图总张数。
 	Total int32 `json:"Total"`
 }
 
@@ -5856,37 +6304,38 @@ type DescribeLiveSnapshotDataResResultSnapshotDetailDataPropertiesItemsItem stru
 
 type DescribeLiveSourceBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天。
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名参数。 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。
+	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 用于指定数据拆分的维度。缺省情况下，表示只显示总回源带宽峰值，不做数据拆维展示。支持的取值如下所示。
-	// * Domain：按域名拆分数据；
-	// * ISP：按运营商拆分数据。
-	// 例如，"DetailField":["Domain"]，则返回 DomainList 中每个域名的回源带宽峰值。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
+	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名参数，支持拉流域名。 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。
+	// 查询流粒度数据时的域名，支持填写拉流域名。 :::tip 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名列表。缺省情况表示该用户的所有域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
+	// 拉流域名列表，缺省情况表示当前用户的所有推拉流域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 查询单个或多个出口外网 IP 地址数据，第四个地址位需要改为 000。例如，实际 IP 地址为 10.255.159.10，则请求时取 10.255.159.000。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -5899,24 +6348,25 @@ type DescribeLiveSourceBandwidthDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。
+	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 区域列表。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
 	UserRegionList []*DescribeLiveSourceBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceBandwidthDataBodyUserRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入 Area 和 Country。
+	// 区域信息的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入 Area 和 Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// 区域信息的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入 Area、Country 和 Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5957,73 +6407,91 @@ type DescribeLiveSourceBandwidthDataResResponseMetadataError struct {
 
 type DescribeLiveSourceBandwidthDataResResult struct {
 
-	// REQUIRED; 时间粒度
+	// REQUIRED; 聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 查询流粒度数据时的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 所有时间粒度数据
+	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 过滤字段和时间聚合后的数据
+	// REQUIRED; 按维度拆分后的数据。
 	BandwidthDetailDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList"`
 
-	// REQUIRED; 数据拆分的维度。
+	// REQUIRED; 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
 	DetailField []string `json:"DetailField"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 查询流粒度数据时的域名。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 域名列表。
 	DomainList []string `json:"DomainList"`
 
-	// REQUIRED; 结束时间
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; IP 地址。
+	// REQUIRED; 出口外网的 IP 地址列表。
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; 运营商。
+	// REQUIRED; 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []string `json:"ISPList"`
 
-	// REQUIRED; 回源带宽峰值，单位为 Mbps
+	// REQUIRED; 查询时间范围内的回源峰值带宽，单位为 Mbps。
 	PeakBandwidth float32 `json:"PeakBandwidth"`
 
-	// REQUIRED; 起始时间
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 查询流粒度数据时的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 区域。
+	// REQUIRED; 客户端 IP 所属区域列表。
 	UserRegionList []DescribeLiveSourceBandwidthDataResResultUserRegionListItem `json:"UserRegionList"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 时间片内回源带宽峰值，单位 Mbps。
+	// REQUIRED; 当前数据聚合时间粒度内的回源峰值带宽，单位为 Mbps。
 	Bandwidth float32 `json:"Bandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListItem struct {
 
-	// REQUIRED; 时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; IP 地址。
+	// REQUIRED; 按出口外网的 IP 地址维度进行数据拆分后的 IP 地址信息。
 	IP string `json:"IP"`
 
-	// REQUIRED; 运营商。
+	// REQUIRED; 按运营商维度进行数据拆分时的运营商信息。
 	ISP string `json:"ISP"`
 
-	// REQUIRED; 回源带宽峰值，单位为 Mbps。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的回源峰值带宽，单位为 Mbps。
 	PeakBandwidth float32 `json:"PeakBandwidth"`
 }
 
@@ -6038,13 +6506,13 @@ type DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListPropertiesIt
 
 type DescribeLiveSourceBandwidthDataResResultUserRegionListItem struct {
 
-	// REQUIRED; 大区标识符。
+	// REQUIRED; 区域信息中的大区标识符。
 	Area string `json:"Area"`
 
-	// REQUIRED; 国际标识符。
+	// REQUIRED; 区域信息中的国际标识符。
 	Country string `json:"Country"`
 
-	// REQUIRED; 省份标识符。
+	// REQUIRED; 区域信息中的省份标识符。
 	Province string `json:"Province"`
 }
 
@@ -6056,16 +6524,18 @@ type DescribeLiveSourceStreamMetricsBody struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。结束时间需晚于 StartTime，且与 StartTime 间隔不超过 24h，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间。支持最近 31d 内的任意时间点，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// 聚合的时间粒度，单位秒。默认值和支持的取值均为 30。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 30：（默认值）30 秒。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 }
 
@@ -6098,7 +6568,8 @@ type DescribeLiveSourceStreamMetricsResResponseMetadata struct {
 
 type DescribeLiveSourceStreamMetricsResResult struct {
 
-	// REQUIRED; 聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 30：30 秒。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 应用名称。
@@ -6107,13 +6578,13 @@ type DescribeLiveSourceStreamMetricsResResult struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 按指定时间粒度聚合的监控数据。
+	// REQUIRED; 所有时间粒度的数据。
 	MetricList []DescribeLiveSourceStreamMetricsResResultMetricListItem `json:"MetricList"`
 
-	// REQUIRED; 查询的开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
@@ -6122,71 +6593,71 @@ type DescribeLiveSourceStreamMetricsResResult struct {
 
 type DescribeLiveSourceStreamMetricsResResultMetricListItem struct {
 
-	// REQUIRED; 音频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频码率最大值，单位为 kbps。
 	AudioBitrate float32 `json:"AudioBitrate"`
 
-	// REQUIRED; 音频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻音频帧显示时间戳差值的最大值，单位为毫秒。
 	AudioFrameGap int32 `json:"AudioFrameGap"`
 
-	// REQUIRED; 音频帧率，单位为 fps。
+	// REQUIRED; 当前数据聚合时间粒度内的音频帧率最大值，单位为 fps。
 	AudioFramerate float32 `json:"AudioFramerate"`
 
-	// REQUIRED; 音频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个音频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	AudioPts int32 `json:"AudioPts"`
 
-	// REQUIRED; 视频码率，单位为 kbps。
+	// REQUIRED; 当前数据聚合时间粒度内的视频码率最大值，单位为 kbps。
 	Bitrate float32 `json:"Bitrate"`
 
-	// REQUIRED; 视频帧率，单位为 fps
+	// REQUIRED; 当前数据聚合时间粒度内的视频帧率最大值，单位为 fps
 	Framerate float32 `json:"Framerate"`
 
-	// REQUIRED; 音视频时间戳差值，即 AudioPts 与 VideoPts 之间的差值，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 时间戳。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 视频帧间隔，单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
 	VideoFrameGap int32 `json:"VideoFrameGap"`
 
-	// REQUIRED; 视频显示时间戳 PTS（Presentation Time Stamp），单位为 ms。
+	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
 }
 
 type DescribeLiveSourceTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名参数。 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。
+	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 用于指定数据拆分的维度。缺省情况下，表示只显示回源总流量，不做数据拆维展示。支持的取值如下所示。
-	// * Domain：按域名拆分数据；
-	// * ISP：按运营商拆分数据；
-	// * IP：按出口外网 IP 拆分数据。
-	// 例如，"DetailField":["Domain"]，则返回 DomainList 中每个域名的回源流量
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
+	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名参数，支持拉流域名。 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。
+	// 查询流粒度数据时的域名，支持拉流域名。 :::tip 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名列表。缺省情况表示该用户的所有域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
+	// 拉流域名列表，缺省情况表示当前用户的所有推拉流域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 查询单个或多个出口外网 IP 地址数据，第四个地址位需要改为 000。例如，实际 IP 地址为 10.255.159.10，则请求时取 10.255.159.000。
 	IPList []*string `json:"IPList,omitempty"`
 
-	// 运营商，缺省情况下，表示查询所有运营商，支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -6199,24 +6670,25 @@ type DescribeLiveSourceTrafficDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。
+	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 区域列表。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
 	UserRegionList []*DescribeLiveSourceTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceTrafficDataBodyUserRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6257,75 +6729,91 @@ type DescribeLiveSourceTrafficDataResResponseMetadataError struct {
 
 type DescribeLiveSourceTrafficDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 查询流粒度数据时的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 数据拆分的维度。
-	// * Domain：按域名拆分数据；
-	// * ISP：按运营商拆分数据。
+	// REQUIRED; 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * IP：出口外网的 IP 地址；
+	// * ISP：运营商。
 	DetailField []string `json:"DetailField"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 查询流粒度数据时的域名。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 域名列表。
 	DomainList []string `json:"DomainList"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; IP 地址。
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; 运营商。
+	// REQUIRED; 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []string `json:"ISPList"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 查询流粒度数据时的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 回源总流量，单位为 GB。
+	// REQUIRED; 查询时间范围内的回源总流量，单位为 GB。
 	TotalTraffic float32 `json:"TotalTraffic"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TrafficDataList []DescribeLiveSourceTrafficDataResResultTrafficDataListItem `json:"TrafficDataList"`
 
-	// REQUIRED; 按维度拆分后的详细数据。
+	// REQUIRED; 按维度拆分后的数据。
 	TrafficDetailDataList []DescribeLiveSourceTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList"`
 
-	// REQUIRED; 区域。
+	// REQUIRED; 客户端 IP 所属区域列表。
 	UserRegionList []DescribeLiveSourceTrafficDataResResultUserRegionListItem `json:"UserRegionList"`
 }
 
 type DescribeLiveSourceTrafficDataResResultTrafficDataListItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 回源流量，单位 GB。
+	// REQUIRED; 当前数据聚合时间粒度内产生的回源流量，单位 GB。
 	Traffic float32 `json:"Traffic"`
 }
 
 type DescribeLiveSourceTrafficDataResResultTrafficDetailDataListItem struct {
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; IP 地址。
+	// REQUIRED; 按出口外网的 IP 地址维度进行数据拆分时的 IP 地址信息。
 	IP string `json:"IP"`
 
-	// REQUIRED; 运营商。
+	// REQUIRED; 按运营商维度进行数据拆分时的运营商信息。
 	ISP string `json:"ISP"`
 
-	// REQUIRED; 回源总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的回源中总流量，单位为 GB。
 	TotalTraffic float32 `json:"TotalTraffic"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	TrafficDataList []DescribeLiveSourceTrafficDataResResultTrafficDetailDataListPropertiesItemsItem `json:"TrafficDataList"`
 }
 
@@ -6340,43 +6828,43 @@ type DescribeLiveSourceTrafficDataResResultTrafficDetailDataListPropertiesItemsI
 
 type DescribeLiveSourceTrafficDataResResultUserRegionListItem struct {
 
-	// REQUIRED; 大区标识符。
+	// REQUIRED; 区域信息中的大区标识符。
 	Area string `json:"Area"`
 
-	// REQUIRED; 国家标识符。
+	// REQUIRED; 区域信息中的国家标识符。
 	Country string `json:"Country"`
 
-	// REQUIRED; 省份标识符。
+	// REQUIRED; 区域信息中的省份标识符。
 	Province string `json:"Province"`
 }
 
 type DescribeLiveStreamCountDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，支持以下取值：
-	// * 60s：查询支持的时间跨度为 24h、历史查询时间范围为 7d
-	// * 300s：查询支持的时间跨度为 31d、历史查询时间范围为 93d
-	// * 3600s：查询支持的时间跨度为 93d、历史查询时间范围为93d
-	// * 1d：查询支持的时间跨度为 93d、历史查询时间范围为93d，
-	// 默认 300s。
+	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
+	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取元素"Domain"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名。
+	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流类型，默认查全部，支持以下取值：
-	// * 推流：push
-	// * 拉流：pull
-	// * 回源流：relay-source
-	// * 转码：transcode
+	// 流类型，缺省情况下表示全部类型，支持的流类型取值如下。
+	// * push：推流；
+	// * relay-source：回源流；
+	// * transcode：转码流。
 	StreamType []*string `json:"StreamType,omitempty"`
 }
 
@@ -6409,40 +6897,48 @@ type DescribeLiveStreamCountDataResResponseMetadata struct {
 
 type DescribeLiveStreamCountDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 峰值流数。
+	// REQUIRED; 当前查询条件下流数最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 查询开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 按指定时间粒度聚合的峰值流数数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TotalStreamDataList []DescribeLiveStreamCountDataResResultTotalStreamDataListItem `json:"TotalStreamDataList"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 按指定维度拆分后的峰值流数数据。
+	// 按维度拆分后的数据。
 	StreamDetailDataList []*DescribeLiveStreamCountDataResResultStreamDetailDataListItem `json:"StreamDetailDataList,omitempty"`
 
-	// 流类型。
+	// 流类型，流类型说明如下。
+	// * push：拉流；
+	// * relay-source：回源流；
+	// * transcode：转码流。
 	StreamType []*string `json:"StreamType,omitempty"`
 }
 
 type DescribeLiveStreamCountDataResResultStreamDetailDataListItem struct {
 
-	// REQUIRED; 域名。
+	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 当前数据拆分维维度下的峰值流数数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下的所有时间粒度数据。
 	TotalStreamDataList []DescribeLiveStreamCountDataResResultStreamDetailDataListPropertiesItemsItem `json:"TotalStreamDataList"`
 }
 
@@ -6457,10 +6953,10 @@ type DescribeLiveStreamCountDataResResultStreamDetailDataListPropertiesItemsItem
 
 type DescribeLiveStreamCountDataResResultTotalStreamDataListItem struct {
 
-	// REQUIRED; 峰值流数。
+	// REQUIRED; 当前数据聚合时间粒度内的流数最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 时间片的开始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -6479,6 +6975,11 @@ type DescribeLiveStreamInfoByPageQuery struct {
 	// * 如果同时传入 Domain 和对应的 Vhost，会返回 Domain 下的在线流列表；
 	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的在线流列表。 :::
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
+
+	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持以下取值。
+	// * fuzzy：模糊匹配；
+	// * strict：精准匹配。
+	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
 
 	// 表示推流方式，缺省情况查询全部推流方式。支持如下取值。
 	// * push：直推流；
@@ -6536,7 +7037,7 @@ type DescribeLiveStreamInfoByPageResResponseMetadataError struct {
 
 type DescribeLiveStreamInfoByPageResResult struct {
 
-	// REQUIRED; 当前分页的在线流数量。
+	// REQUIRED; 在线流总数量。
 	RoughCount int32 `json:"RoughCount"`
 
 	// 流信息列表。
@@ -6571,33 +7072,36 @@ type DescribeLiveStreamInfoByPageResResultStreamInfoListItem struct {
 
 type DescribeLiveStreamSessionDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 60：支持单次查询时间跨度为 24 小时，历史查询时间范围为 7 天；
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
+	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
+	// * 3600：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名参数。
-	// 使用App构造请求时，需要同时定义Domain和Stream参数，不可缺省。
+	// 查询流粒度数据时的应用名。 :::tip 使用App构造请求时，需要同时定义Domain和Stream参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"ISP"，"Protocol"，"Referer"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议；
+	// * Referer：请求的 Referer 信息。
+	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名参数，支持推流域名和拉流域名。
-	// 使用Domain构造请求时，需要同时定义App和Stream参数，不可缺省。
+	// 查询流粒度数据时的域名参数。 :::tip 使用Domain构造请求时，需要同时定义App和Stream参数，不可缺省。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名列表。缺省情况表示该用户的所有域名。 :::tipDomainList和Domain传且仅传一个。 :::
+	// 域名列表，缺省情况表示该用户的所有推拉流域名。 :::tipDomainList和Domain传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下表示所有运营商。支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -6610,38 +7114,38 @@ type DescribeLiveStreamSessionDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// 请求的 Referer
+	// 请求的 Referer 信息。
 	RefererList []*string `json:"RefererList,omitempty"`
 
-	// 区域列表，缺省情况表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。
 	RegionList []*DescribeLiveStreamSessionDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。
-	// 使用Stream构造请求时，需要同时定义Domain和App参数，不可缺省。
+	// 查询流粒度数据时的流名称。 :::tip 使用Stream构造请求时，需要同时定义Domain和App参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveStreamSessionDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6674,28 +7178,35 @@ type DescribeLiveStreamSessionDataResResponseMetadata struct {
 
 type DescribeLiveStreamSessionDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 60：1 分钟；
+	// * 300：5 分钟；
+	// * 3600：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 在线人数峰值。
+	// REQUIRED; 查询时间范围内的在线人数峰值。
 	PeakOnlineUser int32 `json:"PeakOnlineUser"`
 
-	// REQUIRED; 查询范围内的汇总信息。
+	// REQUIRED; 所有时间粒度的数据。
 	SessionDataList []DescribeLiveStreamSessionDataResResultSessionDataListItem `json:"SessionDataList"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 总的请求数。
+	// REQUIRED; 查询时间范围内的请求数。
 	TotalRequest int32 `json:"TotalRequest"`
 
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议；
+	// * Referer：请求的 Referer 信息。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名。
@@ -6704,70 +7215,88 @@ type DescribeLiveStreamSessionDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// 请求的 Referer。
+	// 请求的 Referer 信息。
 	RefererList []*string `json:"RefererList,omitempty"`
 
-	// 区域。
+	// 区域列表。
 	RegionList []*DescribeLiveStreamSessionDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 按维度拆分后的详细数据。 :::tip 请求时，DomainList、RefererList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分的数据。
 	SessionDetailDataList []*DescribeLiveStreamSessionDataResResultSessionDetailDataListItem `json:"SessionDetailDataList,omitempty"`
 
-	// 直播流名称。
+	// 流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveStreamSessionDataResResultRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveStreamSessionDataResResultSessionDataListItem struct {
 
-	// REQUIRED; 在线人数。
+	// REQUIRED; 当前数据聚合时间粒度内的在线人数最大值。
 	OnlineUser int32 `json:"OnlineUser"`
 
-	// REQUIRED; 请求数。
+	// REQUIRED; 当前数据聚合时间粒度内的请求数。
 	Request int32 `json:"Request"`
 
-	// REQUIRED; 时间片开始时刻。RFC3339 时间，精度为 s。
+	// REQUIRED; 数据按时间粒度聚合时，诶个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveStreamSessionDataResResultSessionDetailDataListItem struct {
 
-	// REQUIRED; 在线人数峰值。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的在线人数峰值。
 	PeakOnlineUser int32 `json:"PeakOnlineUser"`
 
-	// REQUIRED; 查询范围内的汇总信息。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	SessionDataList []DescribeLiveStreamSessionDataResResultSessionDetailDataListPropertiesItemsItem `json:"SessionDataList"`
 
-	// REQUIRED; 总的请求数。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的请求数。
 	TotalRequest int32 `json:"TotalRequest"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 运营商。
+	// 按运营商维度进行数据拆分时的运营商信息。
 	ISP *string `json:"ISP,omitempty"`
 
-	// 推拉流协议。
+	// 按推拉流协议维度进行数据拆分时的协议信息。
 	Protocol *string `json:"Protocol,omitempty"`
 
-	// 请求的 Referer。
+	// 按请求的 Referer 信息进行数据拆分时的 Referer 信息。
 	Referer *string `json:"Referer,omitempty"`
 }
 
@@ -6913,16 +7442,17 @@ type DescribeLiveStreamUsageDataResResponseDataInfoListItem struct {
 
 type DescribeLiveTimeShiftDataBody struct {
 
-	// REQUIRED; 结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 开始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，支持配置为 86400，单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 86400：（默认值）1 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 域名空间列表，缺省情况表示查询该用户的所有域名空间。
+	// 域名空间列表，缺省情况表示查询当前用户的所有域名空间。
 	Vhosts []*string `json:"Vhosts,omitempty"`
 }
 
@@ -6955,16 +7485,17 @@ type DescribeLiveTimeShiftDataResResponseMetadata struct {
 
 type DescribeLiveTimeShiftDataResResult struct {
 
-	// REQUIRED; 聚合时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 时移存储数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TimeShiftDataList []DescribeLiveTimeShiftDataResResultTimeShiftDataListItem `json:"TimeShiftDataList"`
 
 	// 域名空间列表。
@@ -6973,34 +7504,37 @@ type DescribeLiveTimeShiftDataResResult struct {
 
 type DescribeLiveTimeShiftDataResResultTimeShiftDataListItem struct {
 
-	// REQUIRED; 存储用量，单位为 GB。
+	// REQUIRED; 当前数据聚合时间粒度内的时移文件存储用量，单位为 GB。
 	Storage float32 `json:"Storage"`
 
-	// REQUIRED; 时间点，默认为每日的结束时间。例如，返回 2022-02-16T00:00:00+08:00，表示取该时刻的存储用量作为 2 月 16 日的计费用量。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，默认值为 300。支持如下时间粒度。
-	// * 300：支持单次查询时间跨度为 31 天，历史查询时间范围为 93 天；
-	// * 3600：支持单次查询时间跨度为 93 天，历史查询时间范围为 93 天；
-	// * 86400：支持单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 300：（默认值）5 分钟。聚合粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
+	// * 3600：1 小时。聚合粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天；
+	// * 86400：1 天。聚合粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，可取值为 "Domain"，"ISP"，"Protocol"，设置为空时不进行数据拆分。
+	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商，缺省情况下表示所有运营商。支持的运营商如下所示。
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
 	// * unicom：联通；
 	// * railcom：铁通；
 	// * telecom：电信；
@@ -7013,34 +7547,35 @@ type DescribeLiveTrafficDataBody struct {
 	// * btvn：广电；
 	// * huashu：华数；
 	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型。支持的协议如下所示。
-	// * HTTP-FLV
-	// * HTTP-HLS
-	// * RTMP
-	// * RTM
-	// * SRT
-	// * QUIC
-	// :::tip 如果设置推拉流协议为 QUIC，不能同时传其他协议。 :::
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。缺省情况下表示所有区域。
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	RegionList []*DescribeLiveTrafficDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
 	UserRegionList []*DescribeLiveTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveTrafficDataBodyRegionListItem struct {
 
-	// 大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -7085,88 +7620,112 @@ type DescribeLiveTrafficDataResResponseMetadata struct {
 
 type DescribeLiveTrafficDataResResult struct {
 
-	// REQUIRED; 时间粒度。
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 300：5 分钟；
+	// * 3600：1 小时；
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 结束时间。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 开始时间。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 下行总流量，单位为 GB。
+	// REQUIRED; 查询时间范围内的下行总流量，单位为 GB。
 	TotalDownTraffic float32 `json:"TotalDownTraffic"`
 
-	// REQUIRED; 上行总流量，单位为 GB。
+	// REQUIRED; 查询时间范围内的上行总流量，单位为 GB。
 	TotalUpTraffic float32 `json:"TotalUpTraffic"`
 
-	// REQUIRED; 所有时间粒度数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TrafficDataList []DescribeLiveTrafficDataResResultTrafficDataListItem `json:"TrafficDataList"`
 
-	// 数据拆分的维度。
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * ISP：运营商；
+	// * Protocol：推拉流协议。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，代表所查询的域名。
+	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议。
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域。
+	// CDN 节点 IP 所属区域列表。
 	RegionList []*DescribeLiveTrafficDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 数据拆分后的详细数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分后的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
 	TrafficDetailDataList []*DescribeLiveTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域。
+	// 客户端 IP 所属区域列表。
 	UserRegionList []*DescribeLiveTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveTrafficDataResResultRegionListItem struct {
 
-	// 大区标识符。
+	// 区域信息中的大区标识符。
 	Area *string `json:"Area,omitempty"`
 
-	// 国家标识符。
+	// 区域信息中的国家标识符。
 	Country *string `json:"Country,omitempty"`
 
-	// 省份标识符。
+	// 区域信息中的省份标识符。
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveTrafficDataResResultTrafficDataListItem struct {
 
-	// REQUIRED; 下行流量，单位 GB。
+	// REQUIRED; 当前数据聚合时间粒度内产生的总下行流量，单位 GB。
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 时间片开始时间。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 上行流量，单位 GB。
+	// REQUIRED; 当前数据聚合时间粒度内产生的总上行流量，单位 GB。
 	UpTraffic float32 `json:"UpTraffic"`
 }
 
 type DescribeLiveTrafficDataResResultTrafficDetailDataListItem struct {
 
-	// REQUIRED; 下行总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的下行总流量，单位为 GB。
 	TotalDownTraffic float32 `json:"TotalDownTraffic"`
 
-	// REQUIRED; 上行总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的上行总流量，单位为 GB。
 	TotalUpTraffic float32 `json:"TotalUpTraffic"`
 
-	// REQUIRED; 时间粒度数据。
+	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	TrafficDataList []DescribeLiveTrafficDataResResultTrafficDetailDataListPropertiesItemsItem `json:"TrafficDataList"`
 
-	// 域名。
+	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 运营商。
+	// 按运营商维度进行数据拆分时的运营商信息。
 	ISP *string `json:"ISP,omitempty"`
 
-	// 推拉流协议。
+	// 按推拉流协议维度进行数据拆分时的协议信息。
 	Protocol *string `json:"Protocol,omitempty"`
 }
 
@@ -7196,22 +7755,23 @@ type DescribeLiveTrafficDataResResultUserRegionListItem struct {
 
 type DescribeLiveTranscodeDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 时间粒度，单位为 s，当前仅支持天粒度，默认值为 86400。单次查询时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
+	// * 86400：（默认值）1 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。 :::tip 使用App构造请求时，需要同时定义Stream参数，不可缺省。 :::
 	App *string `json:"App,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有域名。
+	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。 :::tip 使用Stream构造请求时，需要同时定义App参数，不可缺省。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -7252,54 +7812,55 @@ type DescribeLiveTranscodeDataResResponseMetadataError struct {
 
 type DescribeLiveTranscodeDataResResult struct {
 
-	// REQUIRED; 时间粒度，单位为 s
+	// REQUIRED; 数据聚合的时间粒度，单位为秒。
+	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 转码总时长，单位为分钟。
+	// REQUIRED; 查询时间范围内的转码总时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 聚合转码数据。
+	// REQUIRED; 所有时间粒度的数据。
 	TranscodeDataList []DescribeLiveTranscodeDataResResultTranscodeDataListItem `json:"TranscodeDataList"`
 
-	// 应用名称。
+	// 查询流粒度数据时的应用名称。
 	App *string `json:"App,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 流名称。
+	// 查询流粒度数据时的流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 
-	// REQUIRED; 当前时间片内的转码时长，单位为分钟。
+	// REQUIRED; 当前数据聚合时间粒度内的转码时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 分辨率。
+	// REQUIRED; 转码分辨率档位，以 480P 为例，表示转码配置的长边 x 短边计算而出的面积小于 640 x 480。
 	// * 480P：640 × 480；
 	// * 720P：1280 × 720；
-	// * 1080P：1920 × 1088；
+	// * 1080P：1936 × 1088；
 	// * 2K：2560 × 1440；
-	// * 4K：4096 × 21600；
-	// * 0：纯音频流。
+	// * 4K：4096 × 2160；
+	// * 0P：纯音频转码。
 	Resolution string `json:"Resolution"`
 
-	// REQUIRED; 聚合时刻。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。
+	// REQUIRED; 转码格式，支持的取值和含义如下所示。
 	// * Normal_H264：H.264 标准转码；
 	// * Normal_H265：H.265 标准转码；
 	// * ByteHD_H264：H.264 极智超清；
 	// * ByteHD_H265：H.265 极智超清；
-	// * Audio：纯音频流。
+	// * Audio：纯音频转码。
 	TranscodeType string `json:"TranscodeType"`
 }
 
@@ -7517,13 +8078,13 @@ type DescribeRefererResResultRefererListPropertiesItemsItem struct {
 
 type DescribeRelaySourceV3Body struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
 	Vhost string `json:"Vhost"`
 
-	// App名称。
+	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App *string `json:"App,omitempty"`
 
-	// 组名称。
+	// 回源组名称。
 	Group *string `json:"Group,omitempty"`
 }
 
@@ -7570,7 +8131,7 @@ type DescribeRelaySourceV3ResResult struct {
 
 type DescribeRelaySourceV3ResResultRelaySourceConfigListItem struct {
 
-	// REQUIRED; App名称。
+	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
 	// REQUIRED; 回源组配置详情。
@@ -8434,24 +8995,26 @@ type ListCommonTransPresetDetailResResponseMetadataError struct {
 
 type ListCommonTransPresetDetailResResult struct {
 
-	// 极智超清模板信息。
+	// 极智超清转码配置。
 	NarrowBandHDPresetDetail []*ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem `json:"NarrowBandHDPresetDetail,omitempty"`
 
-	// 标准模板信息。
+	// 标准转码配置。
 	StandardPresetDetail []*ListCommonTransPresetDetailResResultStandardPresetDetailItem `json:"StandardPresetDetail,omitempty"`
 }
 
 type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 
-	// 音频编码格式。包括以下 3 种类型。
-	// * aac：使用 aac 编码格式；
+	// 音频编码格式，支持的取值及含义如下。
+	// * aac：使用 AAC 编码格式；
 	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 opus 编码格式。
+	// * opus：使用 Opus 编码格式。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 宽高自适应模式开关。
-	// * 0：关闭宽高自适应，按照Width和Height的取值进行拉伸；
-	// * 1：开启宽高自适应，按照ShortSide或LongSide等比缩放。
+	// 宽高自适应模式开关，支持的取值及含义如下。
+	// * 0：关闭宽高自适应
+	// * 1：开启宽高自适应 :::tip
+	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
@@ -8463,21 +9026,28 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	// 帧率，单位为 fps。帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s。
+	// IDR 帧之间的最大间隔，单位为秒。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。 :::tip 当 As 的取值为 0 时，Width 和 Height 中任意参数取 0，表示保持源流尺寸。 :::
+	// 视频高度。 :::tip
+	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度。 :::tip 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 都取 0，表示保持源流尺寸。 :::
+	// 长边长度。 :::tip
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码。
-	// * true：极智超清；
+	// 是否极智超清转码，取值及含义如下。
+	// * true：极智超清转码；
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度。 :::tip 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 都取 0，表示保持源流尺寸。 :::
+	// 短边长度。 :::tip
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
 	// 转码流后缀名。
@@ -8492,7 +9062,10 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	// 视频码率，单位为 kbps
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。 :::tip 当 As 的取值为 0 时，如果 Width 和 Height 中任意参数取 0，表示保持源流尺寸。 :::
+	// 视频宽度。 :::tip
+	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -8658,16 +9231,16 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 2：不可用，域名为其他的不可用状态。
 	DomainCheck int32 `json:"DomainCheck"`
 
-	// REQUIRED; IPC 备案校验是否通过，是否过期信息。
+	// REQUIRED; ICP 备案校验是否通过，是否过期信息。
 	ICPCheck int32 `json:"ICPCheck"`
 
-	// REQUIRED; 项目名称
+	// REQUIRED; 项目名称。
 	ProjectName string `json:"ProjectName"`
 
 	// REQUIRED; 绑定的推流域名。
 	PushDomain string `json:"PushDomain"`
 
-	// REQUIRED; 区域，包含 4 种类型。
+	// REQUIRED; 区域，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
@@ -8682,7 +9255,7 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 5：欠费关停。
 	Status int32 `json:"Status"`
 
-	// REQUIRED; 标签
+	// REQUIRED; 标签信息。
 	Tags []ListDomainDetailResResultDomainListPropertiesItemsItem `json:"Tags"`
 
 	// REQUIRED; 域名类型，包含两种类型。
@@ -8696,13 +9269,15 @@ type ListDomainDetailResResultDomainListItem struct {
 
 type ListDomainDetailResResultDomainListPropertiesItemsItem struct {
 
-	// REQUIRED; 分类。
+	// REQUIRED; 标签类型。
+	// * System：系统内置标签
+	// * Custom：自定义标签
 	Category string `json:"Category"`
 
-	// REQUIRED; 标签 Key。
+	// REQUIRED; 标签 Key 值。
 	Key string `json:"Key"`
 
-	// REQUIRED; 标签 value。
+	// REQUIRED; 标签 Value 值。
 	Value string `json:"Value"`
 }
 
@@ -9020,10 +9595,10 @@ type ListRelaySourceV4Body struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// 页码，默认值为 1，取值范围为正整数。
+	// 查询数据的页码，默认为 1，表示查询第一页的数据。
 	Page *int32 `json:"Page,omitempty"`
 
-	// 每页数量，取值范围为 [1,500]，默认值为 20。
+	// 每页显示的数据条数，默认为 20，最大值为 500。
 	Size *int32 `json:"Size,omitempty"`
 }
 
@@ -9079,13 +9654,13 @@ type ListRelaySourceV4ResResultListItem struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 结束时间，StartTime 和 EndTime 同时缺省的情况下，表示永久回源。
+	// REQUIRED; 回源结束时间，StartTime 和 EndTime 同时缺省的情况下，表示永久回源。
 	EndTime int32 `json:"EndTime"`
 
 	// REQUIRED; 回源地址列表。
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 开始时间，StartTime 和 EndTime 同时缺省的情况下，表示永久回源。
+	// REQUIRED; 回源开始时间，StartTime 和 EndTime 同时缺省的情况下，表示永久回源。
 	StartTime int32 `json:"StartTime"`
 
 	// REQUIRED; 流名称。
@@ -9095,16 +9670,16 @@ type ListRelaySourceV4ResResultListItem struct {
 // ListRelaySourceV4ResResultPagination - 页码信息。
 type ListRelaySourceV4ResResultPagination struct {
 
-	// REQUIRED; 当前页码。
+	// REQUIRED; 当前查询的页码。
 	PageCur int32 `json:"PageCur"`
 
-	// REQUIRED; 单页数据量。
+	// REQUIRED; 每页显示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 总页数。
+	// REQUIRED; 查询结果的数据总页数。
 	PageTotal int32 `json:"PageTotal"`
 
-	// REQUIRED; 总数据量。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
@@ -9495,6 +10070,128 @@ type ListVhostSnapshotPresetResResultPresetListPropertiesItemsItem struct {
 	CallbackType *string `json:"CallbackType,omitempty"`
 }
 
+type ListVhostSnapshotPresetV2Body struct {
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+
+	// 截图配置中截图文件的存储位置，缺省情况下表示不对存储位置进行过滤，取值及含义如下所示。
+	// * tos：TOS 对象存储服务；
+	// * imageX：veImageX 图片服务。
+	Type *string `json:"Type,omitempty"`
+}
+
+type ListVhostSnapshotPresetV2Res struct {
+
+	// REQUIRED
+	ResponseMetadata ListVhostSnapshotPresetV2ResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *ListVhostSnapshotPresetV2ResResult `json:"Result,omitempty"`
+}
+
+type ListVhostSnapshotPresetV2ResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// ListVhostSnapshotPresetV2ResResult - 视请求的接口而定
+type ListVhostSnapshotPresetV2ResResult struct {
+
+	// REQUIRED; 截图配置列表。
+	PresetList []ListVhostSnapshotPresetV2ResResultPresetListItem `json:"PresetList"`
+}
+
+type ListVhostSnapshotPresetV2ResResultPresetListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 截图配置基础信息。
+	SlicePresetV2 ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 `json:"SlicePresetV2"`
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+}
+
+// ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 - 截图配置基础信息。
+type ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 struct {
+
+	// REQUIRED; 截图配置名称。
+	Name string `json:"Name"`
+
+	// REQUIRED; 截图配置详细信息。
+	SnapshotPresetConfig ListVhostSnapshotPresetV2ResResultPresetListProperties `json:"SnapshotPresetConfig"`
+
+	// REQUIRED; 截图配置生效状态。
+	// * 1：生效；
+	// * 0：不生效。
+	Status int32 `json:"Status"`
+}
+
+// ListVhostSnapshotPresetV2ResResultPresetListProperties - 截图配置详细信息。
+type ListVhostSnapshotPresetV2ResResultPresetListProperties struct {
+
+	// REQUIRED; 截图间隔时间，单位为秒。
+	Interval int32 `json:"Interval"`
+
+	// 图片格式为 JPEG 时的截图参数。
+	JPEGParam *ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesProperties `json:"JpegParam,omitempty"`
+
+	// 截图格式为 JPG 时的截图参数。
+	JpgParam *ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam `json:"JpgParam,omitempty"`
+}
+
+// ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesProperties - 图片格式为 JPEG 时的截图参数。
+type ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesProperties struct {
+
+	// REQUIRED; 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
+	Enable bool `json:"Enable"`
+
+	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	ImageXParam *ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
+
+	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	TOSParam *ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesPropertiesProperties `json:"TOSParam,omitempty"`
+}
+
+// ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesPropertiesProperties - 截图存储到 TOS 时的配置。 :::tip TOSParam
+// 和 ImageXParam 配置且配置其中一个。 :::
+type ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesPropertiesProperties struct {
+
+	// REQUIRED; TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。
+	Bucket string `json:"Bucket"`
+
+	// REQUIRED; 截图是否使用 TOS 存储，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。
+	ExactObject string `json:"ExactObject"`
+
+	// REQUIRED; 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。
+	OverwriteObject string `json:"OverwriteObject"`
+
+	// REQUIRED; Bucket 目录。 例如，存储路径为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	StorageDir string `json:"StorageDir"`
+}
+
 type ListVhostTransCodePresetBody struct {
 
 	// REQUIRED; 域名空间。
@@ -9536,13 +10233,13 @@ type ListVhostTransCodePresetResResponseMetadataError struct {
 
 type ListVhostTransCodePresetResResult struct {
 
-	// REQUIRED; 全部转码配置列表
+	// REQUIRED; 全部转码配置列表。
 	AllPresetList []ListVhostTransCodePresetResResultAllPresetListItem `json:"AllPresetList"`
 
-	// REQUIRED; 使用内置参数的转码配置列表
+	// REQUIRED; 使用内置参数的转码配置列表。
 	CommonPresetList []ListVhostTransCodePresetResResultCommonPresetListItem `json:"CommonPresetList"`
 
-	// REQUIRED; 使用自定义配置的转码配置列表
+	// REQUIRED; 使用自定义配置的转码配置列表。
 	CustomizePresetList []ListVhostTransCodePresetResResultCustomizePresetListItem `json:"CustomizePresetList"`
 }
 
@@ -9573,7 +10270,10 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
-	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
+	AudioBitrate        *int32 `json:"AudioBitrate,omitempty"`
+	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
+	AutoTransVb         *int32 `json:"AutoTransVb,omitempty"`
+	AutoTransVr         *int32 `json:"AutoTransVr,omitempty"`
 
 	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
@@ -9600,9 +10300,11 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 
 	// 短边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
+	Status    *int32 `json:"Status,omitempty"`
 
 	// 转码流后缀名
 	SuffixName *string `json:"SuffixName,omitempty"`
+	TransType  *string `json:"TransType,omitempty"`
 
 	// 视频编码格式。
 	// * h264：使用 H.264 编码格式；
@@ -9619,72 +10321,102 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 
 type ListVhostTransCodePresetResResultCommonPresetListItem struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 转码配置具体信息
+	// 转码配置具体信息。
 	TranscodePreset *ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset `json:"TranscodePreset,omitempty"`
 }
 
-// ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset - 转码配置具体信息
+// ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset - 转码配置具体信息。
 type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct {
 
-	// 音频编码格式。包括以下 3 种类型。
-	// * aac：使用 aac 编码格式；
+	// 音频编码格式，取值含义如下。
+	// * aac：使用 AAC 编码格式；
 	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 opus 编码格式。
+	// * opus：使用 Opus 编码格式。
 	Acodec *string `json:"Acodec,omitempty"`
 
 	// 宽高自适应模式开关。
-	// * 0：关闭宽高自适应，按照Width和Height的取值进行拉伸；
-	// * 1：开启宽高自适应，按照ShortSide或LongSide等比缩放。
+	// * 0：关闭宽高自适应；
+	// * 1：开启宽高自适应。 :::tip
+	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
+	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
+
+	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
+
+	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
+
+	// 2 个参考帧之间的最大 B 帧数。取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 帧率，单位为 fps。帧率越大，画面越流畅
+	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s
+	// IDR 帧之间的最大间隔，单位为秒。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频高度。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
+	// 长边长度。 :::tip
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 转码配置名称
+	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
-	// 是否极智超清转码。
-	// * true：极智超清；
+	// 是否极智超清转码，取值及含义如下。
+	// * true：极智超清转码；
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
+	// 短边长度。 :::tip
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码流后缀名
+	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为 s，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	StopInterval *int32 `json:"StopInterval,omitempty"`
+
+	// 转码流后缀名。
 	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 转码触发方式，取值及含义如下。
+	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
+	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
+	TransType *string `json:"TransType,omitempty"`
 
 	// 视频编码格式。
 	// * h264：使用 H.264 编码格式；
 	// * h265：使用 H.265 编码格式；
+	// * h266：使用 H.266 编码格式；
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 视频码率，单位为 kbps
+	// 视频码率，单位为 kbps。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频宽度。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -9712,7 +10444,10 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
-	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
+	AudioBitrate        *int32 `json:"AudioBitrate,omitempty"`
+	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
+	AutoTransVb         *int32 `json:"AutoTransVb,omitempty"`
+	AutoTransVr         *int32 `json:"AutoTransVr,omitempty"`
 
 	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
@@ -9738,10 +10473,12 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 	Roi *bool `json:"Roi,omitempty"`
 
 	// 短边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
-	ShortSide *int32 `json:"ShortSide,omitempty"`
+	ShortSide    *int32 `json:"ShortSide,omitempty"`
+	StopInterval *int32 `json:"StopInterval,omitempty"`
 
 	// 转码流后缀名
 	SuffixName *string `json:"SuffixName,omitempty"`
+	TransType  *string `json:"TransType,omitempty"`
 
 	// 视频编码格式。
 	// * h264：使用 H.264 编码格式；
@@ -9846,14 +10583,29 @@ type ListVhostWatermarkPresetResResultWatermarkPresetListItem struct {
 	// 水印图片文件名。
 	PictureKey *string `json:"PictureKey,omitempty"`
 
+	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入，同时传入时，以水印图片字符串参数为准。
+	PictureURL *string `json:"PictureURL,omitempty"`
+
 	// 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosX *float32 `json:"PosX,omitempty"`
 
 	// 垂直偏移，表示水印顶部边与转码流画面顶部边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosY *float32 `json:"PosY,omitempty"`
 
+	// 水印图片预览背景高度，单位为 px。
+	PreviewHeight *float32 `json:"PreviewHeight,omitempty"`
+
+	// 水印图片预览背景宽度，单位为 px。
+	PreviewWidth *float32 `json:"PreviewWidth,omitempty"`
+
+	// 水印相对高度，水印高度占直播转码流画面高度的比例，取值范围为 [0,1]，水印宽度会随高度等比缩放。
+	RelativeHeight *float32 `json:"RelativeHeight,omitempty"`
+
 	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。
 	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
+
+	// 流名称。
+	Stream *string `json:"Stream,omitempty"`
 
 	// 域名空间名称。
 	Vhost *string `json:"Vhost,omitempty"`
@@ -9978,14 +10730,29 @@ type ListWatermarkPresetResResultPreset struct {
 	// 水印图片文件名。
 	PictureKey *string `json:"PictureKey,omitempty"`
 
+	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入，同时传入时，以水印图片字符串参数为准。
+	PictureURL *string `json:"PictureURL,omitempty"`
+
 	// 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosX *float32 `json:"PosX,omitempty"`
 
 	// 垂直偏移，表示水印顶部边与转码流画面顶部边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosY *float32 `json:"PosY,omitempty"`
 
+	// 水印图片预览背景高度，单位为 px。
+	PreviewHeight *float32 `json:"PreviewHeight,omitempty"`
+
+	// 水印图片预览背景宽度，单位为 px。
+	PreviewWidth *float32 `json:"PreviewWidth,omitempty"`
+
+	// 水印相对高度，水印高度占直播转码流画面高度的比例，取值范围为 [0,1]，水印宽度会随高度等比缩放。
+	RelativeHeight *float32 `json:"RelativeHeight,omitempty"`
+
 	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。
 	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
+
+	// 流名称。
+	Stream *string `json:"Stream,omitempty"`
 
 	// 域名空间名称。
 	Vhost *string `json:"Vhost,omitempty"`
@@ -11033,7 +11800,7 @@ type UpdateRelaySourceV3Body struct {
 	// REQUIRED; 回源组配置详情。
 	GroupDetails []UpdateRelaySourceV3BodyGroupDetailsItem `json:"GroupDetails"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11052,8 +11819,8 @@ type UpdateRelaySourceV3BodyGroupDetailsPropertiesItemsItem struct {
 	RelaySourceDomain string `json:"RelaySourceDomain"`
 
 	// REQUIRED; 回源协议，支持两种回源协议。
-	// * rtmp
-	// * flv
+	// * rtmp：RTMP 回源协议；
+	// * flv：FLV 回源协议。
 	RelaySourceProtocol string `json:"RelaySourceProtocol"`
 
 	// 自定义回源参数，缺省情况下为空。格式为"Key":"Value"，例如，"domain":"live.push.net"。
@@ -11102,16 +11869,20 @@ type UpdateRelaySourceV4Body struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV 和 HLS 协议的直播地址。
+	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播地址。
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
 	Stream string `json:"Stream"`
 
-	// 结束时间，Unix 时间戳，单位为 s，结束时间需晚于 StartTime，且与 StartTime 的最大时间跨度为 7 天。 :::tipStartTime 与 EndTime 同时缺省，表示永久回源。 :::
+	// 结束时间，Unix 时间戳，单位为秒。 :::tip
+	// * 回源开始到结束最大时间跨度为 7 天；
+	// * 开始时间与结束时间同时缺省，表示永久回源。 :::
 	EndTime *int32 `json:"EndTime,omitempty"`
 
-	// 开始时间，Unix 时间戳，单位为 s。 :::tipStartTime 与 EndTime 同时缺省，表示永久回源。 :::
+	// 开始时间，Unix 时间戳，单位为秒。 :::tip
+	// * 回源开始到结束最大时间跨度为 7 天；
+	// * 开始时间与结束时间同时缺省，表示永久回源。 :::
 	StartTime *int32 `json:"StartTime,omitempty"`
 }
 
@@ -11337,6 +12108,151 @@ type UpdateSnapshotPresetResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type UpdateSnapshotPresetV2Body struct {
+
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	App string `json:"App"`
+
+	// REQUIRED; 截图配置的名称。
+	Preset string `json:"Preset"`
+
+	// REQUIRED; 截图配置的详细参数配置。
+	SnapshotPresetConfig UpdateSnapshotPresetV2BodySnapshotPresetConfig `json:"SnapshotPresetConfig"`
+
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+
+	// 截图配置生效状态，默认为生效。
+	// * 1：生效；
+	// * 0：不生效。
+	Status *int32 `json:"Status,omitempty"`
+}
+
+// UpdateSnapshotPresetV2BodySnapshotPresetConfig - 截图配置的详细参数配置。
+type UpdateSnapshotPresetV2BodySnapshotPresetConfig struct {
+
+	// 截图间隔时间，单位为秒，默认值为 10，取值范围为正整数。
+	Interval *int32 `json:"Interval,omitempty"`
+
+	// 图片格式为 JPEG 时的截图参数，开启 JPEG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。 :::
+	JPEGParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam `json:"JpegParam,omitempty"`
+
+	// 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。 :::
+	JpgParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam `json:"JpgParam,omitempty"`
+}
+
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam - 图片格式为 JPEG 时的截图参数，开启 JPEG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
+// :::
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
+
+	// 当前格式的截图配置是否开启，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	ImageXParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam `json:"ImageXParam,omitempty"`
+
+	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	TOSParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam `json:"TOSParam,omitempty"`
+}
+
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
+// 配置且配置其中一个。 :::
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam struct {
+
+	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、*" 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
+	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
+	ServiceID *string `json:"ServiceID,omitempty"`
+}
+
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
+// :::
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
+
+	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
+	// 为必填项。 :::
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+
+	// Bucket 目录，默认为空。 例如，存储路径为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	StorageDir *string `json:"StorageDir,omitempty"`
+}
+
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
+// :::
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
+	Enable      *bool                                                              `json:"Enable,omitempty"`
+	ImageXParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
+	TOSParam    *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
+}
+
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	ServiceID       *string `json:"ServiceID,omitempty"`
+}
+
+type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
+}
+
+type UpdateSnapshotPresetV2Res struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateSnapshotPresetV2ResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateSnapshotPresetV2ResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type UpdateStreamQuotaConfigBody struct {
 
 	// REQUIRED; 需要配置限额的推流域名或拉流域名。
@@ -11488,21 +12404,26 @@ type UpdateTimeShiftPresetV3ResResponseMetadataError struct {
 
 type UpdateTranscodePresetBody struct {
 
-	// REQUIRED; 模板名称。
+	// REQUIRED; 转码配置的名称。
 	Preset string `json:"Preset"`
 
-	// 音频编码格式。支持以下 3 种类型。
-	// * aac：使用 aac 编码格式；
+	// REQUIRED; 域名空间名称。
+	Vhost string `json:"Vhost"`
+
+	// 音频编码格式，支持以下 3 种类型。
+	// * aac：使用 AAC 编码格式；
 	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 opus 编码格式。
+	// * opus：使用 Opus 编码格式。
 	Acodec *string `json:"Acodec,omitempty"`
 
 	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App *string `json:"App,omitempty"`
 
-	// 宽高自适应模式开关。支持两种取值。
-	// * 0：关闭宽高自适应，按照 Width 和 Height 的取值进行拉伸；
-	// * 1：开启宽高自适应，按照 ShortSide 或 LongSide 等比缩放。 :::warning
+	// 宽高自适应模式开关，默认值为 0。支持的取值及含义如下。
+	// * 0：关闭宽高自适应
+	// * 1：开启宽高自适应 :::tip
+	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。
 	// * 修改 As 为 0 时，请确认 Width 和 Height 的取值是否超出阈值；
 	// * 修改 As 为 1 时，请确认 ShortSide 和 LongSide 的取值是否超出阈值。 :::
 	As *string `json:"As,omitempty"`
@@ -11510,62 +12431,111 @@ type UpdateTranscodePresetBody struct {
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数。不同编码格式的取值存在差异。
+	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
+
+	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
+
+	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
+
+	// 2 个参考帧之间的最大 B 帧数，默认值为 3。配置不同的视频编码格式时，最大 B 帧数的取值存在如下差异。
 	// * H.264：取值范围为 [0,7]；
-	// * H.265：取值范围为 [0,1,2,3,7,15]；
-	// BFrames 取 0 时，表示去 B 帧。
+	// * H.265：取值范围为 [0,3]、7、15；
+	// * H.266：取值范围为 [0,3]、7、15。
+	// 取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 视频帧率，单位为 fps，取值范围为 [0,60]，帧率越大，画面越流畅
+	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
+	// * H.264：取值范围为 [0,60]；
+	// * H.265：取值范围为 [0,60]；
+	// * H.266：取值范围为 [0,35]。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s，取值范围为 [0,1000]。
+	// IDR 帧之间的最大间隔，单位为秒，默认值为 4，取值范围为 [1,20]。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。取值范围为 [0,8192]。 :::tip
+	// 视频高度，默认值为 0。配置不同视频编码格式时，视频高度的取值存在如下差异。
+	// * H.264：取值范围为 [150,1920]；
+	// * H.265：取值范围为 [150,1920]。
+	// :::tip
 	// * 当 As 的取值为 0 时，参数生效；反之则不生效；
-	// * 当 As 的取值为 0 时，如果 Width 和 Height 任意取值为 0，表示保持源流尺寸。 :::
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度。
-	// * Roi 取 false 时，取值范围为 [0,8192]；
-	// * Roi 取 true 时，取值范围为 [0,1920]。 :::tip
-	// * 当 As 的取值为 1 时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 同时取 0，表示保持源流尺寸。
-	// * 当 As 的取值为 1 时，如果同时配置 LongSide 和 ShortSide 的值，则按照 ShortSide 进行等比缩放。 :::
+	// 长边长度，配置不同的视频编码方式和转码类型时，长边长度的取值范围存在如下差异。
+	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,4096]；
+	// * H.265：取值范围为 0 和 [150,7680]；
+	// * H.266：取值范围为 0 和 [150,1280]。
+	//
+	//
+	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
+	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	//
+	//
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码。
-	// * true：极智超清；
-	// * false：标准转码。 :::warning 修改 Roi 为 true，且 As 为 1 时，请确认 ShortSide 和 LongSide 的取值是否超出阈值。 :::
+	// 是否极智超清转码，取值及含义如下。
+	// * true：极智超清转码；
+	// * false：标准转码。 :::tip
+	// * 修改 Roi 为 true，且 As 为 1 时，请确认 ShortSide 和 LongSide 的取值是否超出阈值。
+	// * 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度。
-	// * Roi 取 false 时，取值范围为 [0,4096]；
-	// * Roi 取 true 时，取值范围为 [0,1080]。 :::tip
-	// * 当 As 的取值为 1 时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 和 ShortSide 同时取 0，表示保持源流尺寸。
-	// * 当 As 的取值为 1 时，如果同时配置 LongSide 和 ShortSide 的值，则按照 ShortSide 进行等比缩放。 :::
+	// 短边长度，配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
+	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
+	// * H.265：取值范围为 0 和 [150,4096]；
+	// * H.266：取值范围为 0 和 [150,720]。
+	//
+	//
+	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
+	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	//
+	//
+	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
+	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
+
+	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	StopInterval *int32 `json:"StopInterval,omitempty"`
 
 	// 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、uhd。 例如，配置的转码流后缀名为hd，则拉转码流时转码的流名为 stream-123456789_hd。
 	SuffixName *string `json:"SuffixName,omitempty"`
 
-	// 视频编码格式。
+	// 转码触发方式，默认值为 Pull，支持的取值及含义如下。
+	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
+	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
+	TransType *string `json:"TransType,omitempty"`
+
+	// 视频编码格式，支持的取值及含义如下所示。
 	// * h264：使用 H.264 编码格式；
 	// * h265：使用 H.265 编码格式；
+	// * h266：使用 H.266 编码格式；
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 域名空间名称。
-	Vhost *string `json:"Vhost,omitempty"`
-
-	// 视频码率，单位为 bps，取值范围为 [0,30000000]；取值为 0 时，表示使用源流码率。
+	// 视频码率，单位为 bps，默认值为 1000000；取 0 时，表示使用源流码率。 配置不同的视频编码格式时，视频码率的取值范围存在如下差异。
+	// * H.264：取值范围为 [0,30000000]；
+	// * H.265：取值范围为 [0,30000000]；
+	// * H.266：取值范围为 [0,6000000]。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。取值范围为 [0,8192]。 :::tip
-	// * 当 As 的取值为 0 时，参数生效；反之则不生效；
-	// * 当 As 的取值为 0 时，如果 Width 和 Height 任意取值为 0，表示保持源流尺寸。 :::
+	// 视频宽度，默认值为 0。配置不同视频编码格式时，视频宽度的取值存在如下差异。
+	// * H.264：取值范围为 [150,1920]；
+	// * H.265：取值范围为 [150,1920]。
+	// :::tip
+	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -11614,14 +12584,17 @@ type UpdateWatermarkPresetBody struct {
 
 	// 直播画面方向，支持 2 种取值。
 	// * vertical：竖屏；
-	// * horizontal：横屏。
+	// * horizontal：横屏。 :::tip 该参数属于历史版本参数，预计将于未来移除。建议使用预览背景高度（PreviewHeight）、预览背景宽度（PreviewWidth）参数代替。 :::
 	Orientation *string `json:"Orientation,omitempty"`
 
 	// 水印图片链接，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片使用 data URI 协议，格式为：data:[<mediatype>];[base64],<data>。
 	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；
 	// * data：base64 编码的图片字符串。
-	// 例如，data:image/png;base64,iVBORw0KGg****mCC:::warning 如果水印图片不更新，请勿传入该参数。否则会造成水印无法显示。 :::
+	// :::warning 如果水印图片不更新，请勿在更新配置时传入该参数，否则会造成水印无法显示。 :::
 	Picture *string `json:"Picture,omitempty"`
+
+	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入。同时传入时，以水印图片字符串参数为准。 :::warning 如果水印图片不更新，请勿在更新配置时传入该参数，否则会造成水印无法显示。 :::
+	PictureURL *string `json:"PictureUrl,omitempty"`
 
 	// 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosX *float32 `json:"PosX,omitempty"`
@@ -11629,7 +12602,16 @@ type UpdateWatermarkPresetBody struct {
 	// 垂直偏移，表示水印顶部边与转码流画面顶部边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosY *float32 `json:"PosY,omitempty"`
 
-	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。
+	// 水印图片预览背景高度，单位为 px。
+	PreviewHeight *float32 `json:"PreviewHeight,omitempty"`
+
+	// 水印图片预览背景宽度，单位为 px。
+	PreviewWidth *float32 `json:"PreviewWidth,omitempty"`
+
+	// 水印相对高度，水印高度占直播转码流画面高度的比例，取值范围为 [0,1]，水印宽度会随高度等比缩放。与水印相对宽度字段冲突，请选择其中一个传参。
+	RelativeHeight *float32 `json:"RelativeHeight,omitempty"`
+
+	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。与水印相对高度字段冲突，请选择其中一个传参。
 	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
 }
 
@@ -11711,665 +12693,881 @@ type VerifyDomainOwnerResResult struct {
 	// REQUIRED; 检查结果
 	CheckResult bool `json:"CheckResult"`
 }
-type DescribeLiveStreamSessionDataQuery struct {
-}
-type DeleteTimeShiftPresetV3Query struct {
-}
-type CreatePullToPushTask struct {
-}
-type UpdateSnapshotPresetQuery struct {
-}
-type ListVhostSnapshotAuditPresetQuery struct {
-}
 type DeleteRefererQuery struct {
-}
-type DescribeLiveP95PeakBandwidthDataQuery struct {
-}
-type CreateCert struct {
-}
-type DescribeAuthQuery struct {
-}
-type UpdateTimeShiftPresetV3 struct {
-}
-type UpdateRelaySourceV3 struct {
-}
-type CreateSnapshotPresetQuery struct {
-}
-type CreateVerifyContent struct {
-}
-type ListVhostTransCodePreset struct {
-}
-type DescribeLiveStreamSessionData struct {
-}
-type DescribeLivePlayStatusCodeData struct {
-}
-type DeleteSnapshotAuditPresetQuery struct {
-}
-type DescribeDomain struct {
-}
-type ResumeStreamQuery struct {
-}
-type CreateDomain struct {
-}
-type CreateDomainV2Query struct {
-}
-type ListVqosMetricsDimensions struct {
-}
-type UpdateWatermarkPresetQuery struct {
-}
-type DescribeForbiddenStreamInfoByPage struct {
-}
-type GetPullCDNSnapshotTaskQuery struct {
-}
-type ListVhostWatermarkPresetQuery struct {
-}
-type DescribeLiveBatchStreamTrafficDataQuery struct {
-}
-type ListPullRecordTaskQuery struct {
-}
-type ListVqosMetricsDimensionsBody struct {
-}
-type ListVhostSnapshotPresetQuery struct {
-}
-type DescribeLivePushStreamCountData struct {
-}
-type UpdateRelaySourceV4 struct {
-}
-type DescribeRelaySourceV3Query struct {
-}
-type UnbindCert struct {
-}
-type CreatePullToPushTaskQuery struct {
-}
-type DeleteSnapshotPresetQuery struct {
-}
-type ListVhostSnapshotPreset struct {
-}
-type DescribeLiveAuditData struct {
-}
-type DescribeCertDetailSecretV2Query struct {
-}
-type DescribeLiveLogDataQuery struct {
-}
-type DeleteSnapshotAuditPreset struct {
-}
-type DescribeLiveSourceBandwidthDataQuery struct {
-}
-type DeleteSnapshotPreset struct {
-}
-type UpdateAuthKeyQuery struct {
-}
-type DescribeLiveISPData struct {
-}
-type UpdateAuthKey struct {
-}
-type ListWatermarkPreset struct {
-}
-type UpdateDomainVhostQuery struct {
-}
-type DescribeLivePushStreamMetrics struct {
-}
-type DescribeRecordTaskFileHistoryQuery struct {
-}
-type DescribeLiveISPDataQuery struct {
-}
-type BindCertQuery struct {
-}
-type CreatePullCDNSnapshotTaskQuery struct {
-}
-type RestartPullToPushTask struct {
-}
-type GeneratePlayURL struct {
-}
-type UpdateStreamQuotaConfigQuery struct {
-}
-type VerifyDomainOwnerQuery struct {
-}
-type DescribeLiveTranscodeData struct {
-}
-type ListCommonTransPresetDetail struct {
-}
-type DescribeLiveLogData struct {
-}
-type DescribeLiveMetricTrafficDataQuery struct {
-}
-type UpdateTranscodePreset struct {
-}
-type DescribeIPInfo struct {
-}
-type ListWatermarkPresetQuery struct {
-}
-type DeleteWatermarkPreset struct {
-}
-type DeleteTranscodePreset struct {
-}
-type DescribeLiveTimeShiftData struct {
-}
-type CreateRecordPresetV2Query struct {
-}
-type DescribeLiveBandwidthDataQuery struct {
-}
-type DescribeLiveBatchSourceStreamMetrics struct {
-}
-type DescribeLiveSourceBandwidthData struct {
 }
 type ListCertV2 struct {
 }
-type DescribeDenyConfig struct {
+type ListPullToPushTask struct {
 }
-type DescribeLiveBatchStreamTranscodeData struct {
+type DescribeForbiddenStreamInfoByPageBody struct {
 }
-type CreateSnapshotPreset struct {
+type CreateDomainQuery struct {
 }
-type DescribeDenyConfigQuery struct {
-}
-type StopPullToPushTaskQuery struct {
-}
-type StopPullCDNSnapshotTask struct {
-}
-type DeleteRelaySourceV3Query struct {
-}
-type ListCertV2Query struct {
-}
-type GeneratePushURLQuery struct {
-}
-type DescribeLiveISPDataBody struct {
-}
-type DeleteRecordPreset struct {
-}
-type UpdateReferer struct {
-}
-type DescribeDomainQuery struct {
-}
-type DescribeClosedStreamInfoByPage struct {
-}
-type UpdateRecordPresetV2 struct {
-}
-type DescribeCallbackQuery struct {
-}
-type DescribeLiveRecordData struct {
-}
-type DescribeLiveStreamInfoByPage struct {
-}
-type UpdateWatermarkPreset struct {
-}
-type UpdateTranscodePresetQuery struct {
-}
-type DeleteDomain struct {
-}
-type UpdateSnapshotAuditPresetQuery struct {
-}
-type DescribeIPInfoQuery struct {
-}
-type CreateTimeShiftPresetV3 struct {
-}
-type DescribeReferer struct {
-}
-type CreateTranscodePreset struct {
-}
-type UpdateDenyConfig struct {
-}
-type DeleteCallback struct {
-}
-type DescribeLiveTrafficData struct {
-}
-type DescribeCertDetailSecretV2 struct {
-}
-type DescribeLiveRegionDataBody struct {
-}
-type ResumeStream struct {
-}
-type DescribeAuth struct {
-}
-type ListPullToPushTaskBody struct {
-}
-type DescribeLivePushStreamCountDataQuery struct {
-}
-type DescribeIPInfoBody struct {
-}
-type DisableDomain struct {
-}
-type DeleteStreamQuotaConfigQuery struct {
-}
-type CreatePullCDNSnapshotTask struct {
-}
-type UpdatePullToPushTaskQuery struct {
-}
-type DescribeLiveTranscodeDataQuery struct {
-}
-type StopPullRecordTask struct {
-}
-type CreateRelaySourceV4Query struct {
-}
-type ListDomainDetail struct {
-}
-type DescribeLiveSourceTrafficDataQuery struct {
-}
-type DescribeLiveRegionData struct {
-}
-type UpdateRelaySourceV4Query struct {
-}
-type UpdateRelaySourceV3Query struct {
-}
-type DescribeLiveStreamState struct {
-}
-type DescribeLiveSourceStreamMetricsQuery struct {
+type DescribeLiveBatchStreamTrafficDataQuery struct {
 }
 type UpdateCallback struct {
 }
 type CreateDomainV2 struct {
 }
+type KillStreamQuery struct {
+}
+type DescribeLiveSourceStreamMetricsQuery struct {
+}
+type ListVhostTransCodePresetQuery struct {
+}
+type CreateSnapshotPresetQuery struct {
+}
+type DescribeReferer struct {
+}
+type DescribeLiveAuditData struct {
+}
+type DeleteSnapshotPreset struct {
+}
+type ListVhostSnapshotPresetQuery struct {
+}
+type UpdateRelaySourceV3Query struct {
+}
+type KillStream struct {
+}
+type DescribeLiveBatchStreamTranscodeDataQuery struct {
+}
+type UpdateDenyConfigQuery struct {
+}
+type ForbidStreamQuery struct {
+}
+type DescribeIPInfo struct {
+}
+type DescribeLiveLogDataQuery struct {
+}
+type UpdateTimeShiftPresetV3 struct {
+}
+type DeleteDomainQuery struct {
+}
+type DescribeLiveStreamStateBody struct {
+}
+type EnableDomain struct {
+}
+type UpdateTranscodePreset struct {
+}
+type ListVhostWatermarkPresetQuery struct {
+}
+type StopPullCDNSnapshotTaskQuery struct {
+}
+type CreateTranscodePresetQuery struct {
+}
+type CreateSnapshotPreset struct {
+}
+type UpdateDomainVhost struct {
+}
+type DeleteSnapshotAuditPresetQuery struct {
+}
+type DescribeLiveBatchSourceStreamMetricsQuery struct {
+}
+type UpdateTimeShiftPresetV3Query struct {
+}
+type DescribeLivePullToPushBandwidthDataQuery struct {
+}
+type DeleteTimeShiftPresetV3 struct {
+}
+type DeleteCertQuery struct {
+}
+type DescribeLiveRecordData struct {
+}
+type ListPullCDNSnapshotTask struct {
+}
+type DescribeLiveActivityBandwidthDataQuery struct {
+}
+type DeleteWatermarkPresetQuery struct {
+}
+type UpdateRecordPresetV2Query struct {
+}
+type DescribeIPInfoRes struct {
+}
+type GetPullCDNSnapshotTaskQuery struct {
+}
+type DescribeLiveP95PeakBandwidthData struct {
+}
+type UpdateReferer struct {
+}
+type ListVqosMetricsDimensions struct {
+}
+type DeleteSnapshotAuditPreset struct {
+}
+type CreateTimeShiftPresetV3 struct {
+}
+type CreateTranscodePreset struct {
+}
+type CreateSnapshotAuditPreset struct {
+}
+type DescribeLiveStreamState struct {
+}
+type UpdateRelaySourceV4 struct {
+}
+type StopPullRecordTaskQuery struct {
+}
+type DisableDomainQuery struct {
+}
+type GetPullRecordTaskQuery struct {
+}
+type CreateCertQuery struct {
+}
+type DescribeLiveSnapshotDataQuery struct {
+}
+type DescribeLivePushStreamCountDataQuery struct {
+}
+type DescribeLiveCustomizedLogData struct {
+}
+type DeleteRelaySourceV3Query struct {
+}
+type CreateRelaySourceV4 struct {
+}
+type UpdateSnapshotPresetV2 struct {
+}
+type DescribeLiveMetricTrafficData struct {
+}
+type DescribeRelaySourceV3 struct {
+}
+type DescribeLiveRecordDataQuery struct {
+}
+type CreateSnapshotPresetV2Query struct {
+}
+type CreateRelaySourceV4Query struct {
+}
+type DeleteTranscodePresetQuery struct {
+}
+type UpdateAuthKey struct {
+}
+type UpdateRelaySourceV4Query struct {
+}
+type DescribeLivePullToPushBandwidthData struct {
+}
+type RestartPullToPushTaskQuery struct {
+}
+type DeleteTranscodePreset struct {
+}
+type UpdateTranscodePresetQuery struct {
+}
+type EnableDomainQuery struct {
+}
+type DescribeCertDetailSecretV2 struct {
+}
+type DeleteStreamQuotaConfig struct {
+}
+type DeleteTimeShiftPresetV3Query struct {
+}
+type UpdateRelaySourceV3 struct {
+}
+type DescribeLiveBatchStreamTranscodeData struct {
+}
+type DescribeClosedStreamInfoByPage struct {
+}
+type DeletePullToPushTask struct {
+}
+type UpdateStreamQuotaConfig struct {
+}
+type DeleteRelaySourceV4Query struct {
+}
+type GetPullRecordTask struct {
+}
+type DescribeLivePushStreamCountData struct {
+}
+type DescribeLiveBandwidthDataQuery struct {
+}
+type DescribeCertDetailSecretV2Query struct {
+}
+type DescribeLiveMetricBandwidthDataQuery struct {
+}
+type UpdateSnapshotPresetQuery struct {
+}
+type DescribeLiveCustomizedLogDataQuery struct {
+}
+type DescribeRecordTaskFileHistory struct {
+}
+type DescribeLiveBatchPushStreamMetricsQuery struct {
+}
+type ListPullRecordTask struct {
+}
+type DescribeDomainQuery struct {
+}
+type DescribeLiveBatchSourceStreamMetrics struct {
+}
+type GeneratePushURL struct {
+}
+type DeleteStreamQuotaConfigQuery struct {
+}
+type ListVhostSnapshotPreset struct {
+}
+type DeleteRecordPreset struct {
+}
+type GeneratePlayURL struct {
+}
+type CreatePullCDNSnapshotTaskQuery struct {
+}
+type UpdateSnapshotPreset struct {
+}
+type ListWatermarkPreset struct {
+}
+type DescribeCDNSnapshotHistoryQuery struct {
+}
+type UpdateSnapshotAuditPresetQuery struct {
+}
+type ForbidStream struct {
+}
+type DescribeSnapshotAuditPresetDetailQuery struct {
+}
+type ListTimeShiftPresetV2 struct {
+}
+type DescribeCallback struct {
+}
+type UpdatePullToPushTask struct {
+}
+type DescribeLiveTimeShiftDataQuery struct {
+}
+type DeleteReferer struct {
+}
+type DeleteCallbackQuery struct {
+}
+type DescribeSnapshotAuditPresetDetail struct {
+}
+type DescribeLivePullToPushData struct {
+}
+type CreateVerifyContent struct {
+}
+type DescribeLiveRegionDataBody struct {
+}
+type DeleteCert struct {
+}
+type CreatePullToPushTaskQuery struct {
+}
+type StopPullCDNSnapshotTask struct {
+}
+type DescribeLiveBandwidthData struct {
+}
+type DescribeLiveStreamSessionData struct {
+}
+type DescribeForbiddenStreamInfoByPage struct {
+}
+type DescribeStreamQuotaConfig struct {
+}
+type DescribeLivePushStreamMetricsQuery struct {
+}
+type DescribeLivePullToPushDataQuery struct {
+}
+type UpdateStreamQuotaConfigQuery struct {
+}
+type DescribeCDNSnapshotHistory struct {
+}
+type UpdateWatermarkPresetQuery struct {
+}
+type DescribeClosedStreamInfoByPageBody struct {
+}
+type DeleteCallback struct {
+}
+type CreateWatermarkPreset struct {
+}
+type CreateTimeShiftPresetV3Query struct {
+}
+type DescribeIPInfoBody struct {
+}
+type CreatePullRecordTaskQuery struct {
+}
+type ListWatermarkPresetQuery struct {
+}
+type CreatePullToPushTask struct {
+}
+type RestartPullToPushTask struct {
+}
+type DescribeLiveRegionDataQuery struct {
+}
+type DeleteDomain struct {
+}
+type ListPullToPushTaskBody struct {
+}
+type DescribeLiveStreamUsageData struct {
+}
+type DescribeLiveISPData struct {
+}
+type DisableDomain struct {
+}
+type CreateDomain struct {
+}
+type UpdateCallbackQuery struct {
+}
+type DescribeAuthQuery struct {
+}
+type UpdateDenyConfig struct {
+}
+type DescribeRecordTaskFileHistoryQuery struct {
+}
+type DescribeDomain struct {
+}
+type DescribeLiveTranscodeDataQuery struct {
+}
+type DescribeLiveMetricTrafficDataQuery struct {
+}
+type VerifyDomainOwnerQuery struct {
+}
+type ListVhostSnapshotAuditPreset struct {
+}
+type DescribeLiveStreamInfoByPage struct {
+}
+type UpdateSnapshotAuditPreset struct {
+}
+type DescribeLiveStreamInfoByPageBody struct {
+}
+type DeleteRecordPresetQuery struct {
+}
+type ResumeStream struct {
+}
+type DescribeLiveRegionData struct {
+}
+type CreateRecordPresetV2Query struct {
+}
+type CreatePullCDNSnapshotTask struct {
+}
+type ListVhostWatermarkPreset struct {
+}
+type ListPullCDNSnapshotTaskQuery struct {
+}
+type DescribeDenyConfigQuery struct {
+}
+type ListVhostSnapshotPresetV2 struct {
+}
+type ListVhostRecordPresetV2Query struct {
+}
+type DeleteRelaySourceV4 struct {
+}
+type DescribeLiveP95PeakBandwidthDataQuery struct {
+}
+type CreateCert struct {
+}
+type UpdateSnapshotPresetV2Query struct {
+}
+type DescribeLiveSnapshotData struct {
+}
+type UnbindCertQuery struct {
+}
+type CreatePullRecordTask struct {
+}
+type CreateDomainV2Query struct {
+}
+type DescribeLiveLogData struct {
+}
+type UpdatePullToPushTaskQuery struct {
+}
+type DescribeRefererQuery struct {
+}
+type ListVhostTransCodePreset struct {
+}
+type UpdateDomainVhostQuery struct {
+}
+type CreateRecordPresetV2 struct {
+}
+type BindCert struct {
+}
+type DescribeLiveStreamCountDataQuery struct {
+}
+type BindCertQuery struct {
+}
+type UpdateRecordPresetV2 struct {
+}
+type DeleteRelaySourceV3 struct {
+}
+type DescribeDenyConfig struct {
+}
+type UpdateAuthKeyQuery struct {
+}
+type DescribeLivePlayStatusCodeDataQuery struct {
+}
+type ListCommonTransPresetDetail struct {
+}
+type ListCommonTransPresetDetailQuery struct {
+}
+type CreateSnapshotPresetV2 struct {
+}
+type UpdateWatermarkPreset struct {
+}
+type DescribeLiveStreamSessionDataQuery struct {
+}
+type DescribeLiveBatchStreamTrafficData struct {
+}
+type ListVqosMetricsDimensionsBody struct {
+}
+type DescribeLiveStreamCountData struct {
+}
+type DeleteSnapshotPresetQuery struct {
+}
+type ListPullRecordTaskQuery struct {
+}
+type VerifyDomainOwner struct {
+}
+type DescribeLiveBatchPushStreamMetrics struct {
+}
+type ListCertV2Query struct {
+}
+type DescribeLiveTrafficDataQuery struct {
+}
+type DescribeCallbackQuery struct {
+}
+type GeneratePushURLQuery struct {
+}
+type ListDomainDetail struct {
+}
+type DeleteWatermarkPreset struct {
+}
+type GeneratePlayURLQuery struct {
+}
+type DescribeIPInfoQuery struct {
+}
+type DescribeLiveSourceBandwidthData struct {
+}
+type DescribeLiveActivityBandwidthData struct {
+}
+type ListTimeShiftPresetV2Query struct {
+}
+type DescribeLiveISPDataBody struct {
+}
+type ListRelaySourceV4Query struct {
+}
+type StopPullToPushTaskQuery struct {
+}
+type DescribeStreamQuotaConfigQuery struct {
+}
+type UpdateRefererQuery struct {
+}
+type DeletePullToPushTaskQuery struct {
+}
+type ListRelaySourceV4 struct {
+}
+type GetPullCDNSnapshotTask struct {
+}
+type DescribeLiveTranscodeData struct {
+}
+type DescribeLiveTrafficData struct {
+}
+type DescribeLiveSourceBandwidthDataQuery struct {
+}
+type ListVhostSnapshotPresetV2Query struct {
+}
+type DescribeAuth struct {
+}
+type ListVhostSnapshotAuditPresetQuery struct {
+}
+type DescribeLiveStreamUsageDataQuery struct {
+}
+type DescribeLiveSourceTrafficDataQuery struct {
+}
+type DescribeLivePushStreamMetrics struct {
+}
+type ListDomainDetailQuery struct {
+}
 type DescribeLiveSourceTrafficData struct {
 }
 type CreateSnapshotAuditPresetQuery struct {
 }
-type StopPullRecordTaskQuery struct {
-}
-type ForbidStream struct {
-}
 type DescribeLiveMetricBandwidthData struct {
 }
-type DescribeLiveStreamCountDataQuery struct {
+type DescribeLiveISPDataQuery struct {
 }
-type CreateDomainQuery struct {
-}
-type DescribeLiveStreamUsageData struct {
-}
-type ListPullRecordTask struct {
-}
-type UpdateSnapshotPreset struct {
-}
-type CreateWatermarkPreset struct {
-}
-type UpdateSnapshotAuditPreset struct {
-}
-type DescribeLivePullToPushDataQuery struct {
-}
-type DeleteReferer struct {
-}
-type DescribeRefererQuery struct {
-}
-type DescribeCDNSnapshotHistoryQuery struct {
-}
-type CreateTranscodePresetQuery struct {
-}
-type ListPullCDNSnapshotTask struct {
-}
-type DescribeLiveSnapshotDataQuery struct {
-}
-type EnableDomain struct {
-}
-type DescribeLivePushStreamMetricsQuery struct {
-}
-type DescribeLiveActivityBandwidthData struct {
-}
-type UpdateDenyConfigQuery struct {
-}
-type CreateCertQuery struct {
-}
-type DescribeLivePullToPushBandwidthData struct {
-}
-type UpdateRecordPresetV2Query struct {
-}
-type DeleteRelaySourceV4Query struct {
-}
-type DescribeLiveStreamStateBody struct {
-}
-type DescribeRelaySourceV3 struct {
-}
-type GetPullCDNSnapshotTask struct {
-}
-type DeleteRecordPresetQuery struct {
-}
-type VerifyDomainOwner struct {
-}
-type DisableDomainQuery struct {
-}
-type CreateSnapshotAuditPreset struct {
+type StopPullRecordTask struct {
 }
 type CreateWatermarkPresetQuery struct {
 }
-type DeleteTranscodePresetQuery struct {
+type ResumeStreamQuery struct {
 }
-type DeletePullToPushTaskQuery struct {
+type DescribeLivePlayStatusCodeData struct {
 }
-type DeleteCert struct {
-}
-type DeleteStreamQuotaConfig struct {
-}
-type DescribeLiveRegionDataQuery struct {
-}
-type DescribeLiveBatchStreamTrafficData struct {
-}
-type DescribeLiveStreamUsageDataQuery struct {
-}
-type DescribeLiveBandwidthData struct {
-}
-type DescribeLiveStreamCountData struct {
-}
-type DescribeLivePullToPushData struct {
-}
-type StopPullToPushTask struct {
-}
-type DescribeLivePullToPushBandwidthDataQuery struct {
-}
-type ListVhostTransCodePresetQuery struct {
-}
-type DescribeStreamQuotaConfig struct {
-}
-type DescribeLiveTrafficDataQuery struct {
-}
-type DescribeCallback struct {
-}
-type UpdateRefererQuery struct {
-}
-type ListVhostRecordPresetV2 struct {
-}
-type DescribeForbiddenStreamInfoByPageBody struct {
-}
-type ListTimeShiftPresetV2 struct {
-}
-type CreateTimeShiftPresetV3Query struct {
-}
-type ListVhostSnapshotAuditPreset struct {
-}
-type BindCert struct {
-}
-type RestartPullToPushTaskQuery struct {
-}
-type GeneratePushURL struct {
-}
-type ListPullCDNSnapshotTaskQuery struct {
-}
-type DescribeLiveSnapshotData struct {
-}
-type DeleteWatermarkPresetQuery struct {
-}
-type DescribeLiveCustomizedLogData struct {
-}
-type ListDomainDetailQuery struct {
-}
-type UpdateCallbackQuery struct {
+type UnbindCert struct {
 }
 type DescribeLiveAuditDataQuery struct {
 }
-type DescribeLivePlayStatusCodeDataQuery struct {
-}
-type CreatePullRecordTaskQuery struct {
-}
-type DescribeLiveMetricTrafficData struct {
-}
-type DescribeStreamQuotaConfigQuery struct {
-}
-type ListVhostRecordPresetV2Query struct {
-}
-type ListRelaySourceV4Query struct {
-}
-type CreateRelaySourceV4 struct {
-}
-type StopPullCDNSnapshotTaskQuery struct {
-}
-type DeletePullToPushTask struct {
-}
-type DescribeClosedStreamInfoByPageBody struct {
-}
-type DescribeSnapshotAuditPresetDetailQuery struct {
-}
-type DescribeLiveMetricBandwidthDataQuery struct {
-}
-type DescribeIPInfoRes struct {
-}
-type DescribeLiveCustomizedLogDataQuery struct {
-}
-type DescribeLiveActivityBandwidthDataQuery struct {
-}
-type DescribeCDNSnapshotHistory struct {
-}
-type DescribeLiveBatchSourceStreamMetricsQuery struct {
-}
-type DescribeLiveBatchStreamTranscodeDataQuery struct {
-}
-type DescribeSnapshotAuditPresetDetail struct {
-}
-type DescribeLiveBatchPushStreamMetrics struct {
-}
-type GetPullRecordTask struct {
-}
-type GetPullRecordTaskQuery struct {
-}
 type DescribeLiveSourceStreamMetrics struct {
-}
-type DescribeLiveBatchPushStreamMetricsQuery struct {
-}
-type ListTimeShiftPresetV2Query struct {
-}
-type DeleteDomainQuery struct {
-}
-type UpdateDomainVhost struct {
-}
-type DeleteRelaySourceV4 struct {
-}
-type CreateRecordPresetV2 struct {
-}
-type DescribeLiveStreamInfoByPageBody struct {
-}
-type DeleteCallbackQuery struct {
-}
-type ForbidStreamQuery struct {
-}
-type EnableDomainQuery struct {
-}
-type DescribeLiveP95PeakBandwidthData struct {
-}
-type UnbindCertQuery struct {
 }
 type CreateVerifyContentQuery struct {
 }
-type KillStream struct {
+type ListVhostRecordPresetV2 struct {
 }
-type UpdateStreamQuotaConfig struct {
+type DescribeRelaySourceV3Query struct {
 }
-type DescribeLiveTimeShiftDataQuery struct {
+type DescribeLiveTimeShiftData struct {
 }
-type DescribeRecordTaskFileHistory struct {
-}
-type UpdatePullToPushTask struct {
-}
-type DeleteCertQuery struct {
-}
-type ListPullToPushTask struct {
-}
-type DescribeLiveRecordDataQuery struct {
-}
-type ListRelaySourceV4 struct {
-}
-type ListVhostWatermarkPreset struct {
-}
-type CreatePullRecordTask struct {
-}
-type DeleteRelaySourceV3 struct {
-}
-type DeleteTimeShiftPresetV3 struct {
-}
-type GeneratePlayURLQuery struct {
-}
-type UpdateTimeShiftPresetV3Query struct {
-}
-type KillStreamQuery struct {
-}
-type ListCommonTransPresetDetailQuery struct {
-}
-type DescribeAuthReq struct {
-	*DescribeAuthQuery
-	*DescribeAuthBody
-}
-type DeleteDomainReq struct {
-	*DeleteDomainQuery
-	*DeleteDomainBody
-}
-type DescribeLivePushStreamCountDataReq struct {
-	*DescribeLivePushStreamCountDataQuery
-	*DescribeLivePushStreamCountDataBody
-}
-type DescribeLiveSourceBandwidthDataReq struct {
-	*DescribeLiveSourceBandwidthDataQuery
-	*DescribeLiveSourceBandwidthDataBody
-}
-type UpdateAuthKeyReq struct {
-	*UpdateAuthKeyQuery
-	*UpdateAuthKeyBody
-}
-type DeleteTranscodePresetReq struct {
-	*DeleteTranscodePresetQuery
-	*DeleteTranscodePresetBody
-}
-type DeleteCertReq struct {
-	*DeleteCertQuery
-	*DeleteCertBody
-}
-type BindCertReq struct {
-	*BindCertQuery
-	*BindCertBody
-}
-type ListVqosMetricsDimensionsReq struct {
-	*ListVqosMetricsDimensionsQuery
-	*ListVqosMetricsDimensionsBody
-}
-type DescribeLivePushStreamMetricsReq struct {
-	*DescribeLivePushStreamMetricsQuery
-	*DescribeLivePushStreamMetricsBody
-}
-type DisableDomainReq struct {
-	*DisableDomainQuery
-	*DisableDomainBody
-}
-type DeleteRecordPresetReq struct {
-	*DeleteRecordPresetQuery
-	*DeleteRecordPresetBody
-}
-type ListDomainDetailReq struct {
-	*ListDomainDetailQuery
-	*ListDomainDetailBody
-}
-type DeleteRelaySourceV3Req struct {
-	*DeleteRelaySourceV3Query
-	*DeleteRelaySourceV3Body
-}
-type DescribeClosedStreamInfoByPageReq struct {
-	*DescribeClosedStreamInfoByPageQuery
-	*DescribeClosedStreamInfoByPageBody
-}
-type DescribeLiveTranscodeDataReq struct {
-	*DescribeLiveTranscodeDataQuery
-	*DescribeLiveTranscodeDataBody
-}
-type DescribeLiveLogDataReq struct {
-	*DescribeLiveLogDataQuery
-	*DescribeLiveLogDataBody
-}
-type DescribeRefererReq struct {
-	*DescribeRefererQuery
-	*DescribeRefererBody
-}
-type DeleteCallbackReq struct {
-	*DeleteCallbackQuery
-	*DeleteCallbackBody
-}
-type CreateDomainReq struct {
-	*CreateDomainQuery
-	*CreateDomainBody
-}
-type RestartPullToPushTaskReq struct {
-	*RestartPullToPushTaskQuery
-	*RestartPullToPushTaskBody
-}
-type DescribeLiveBatchPushStreamMetricsReq struct {
-	*DescribeLiveBatchPushStreamMetricsQuery
-	*DescribeLiveBatchPushStreamMetricsBody
-}
-type DescribeLiveActivityBandwidthDataReq struct {
-	*DescribeLiveActivityBandwidthDataQuery
-	*DescribeLiveActivityBandwidthDataBody
-}
-type CreateSnapshotPresetReq struct {
-	*CreateSnapshotPresetQuery
-	*CreateSnapshotPresetBody
-}
-type ListCertV2Req struct {
-	*ListCertV2Query
-	*ListCertV2Body
-}
-type CreatePullToPushTaskReq struct {
-	*CreatePullToPushTaskQuery
-	*CreatePullToPushTaskBody
-}
-type DescribeLiveMetricBandwidthDataReq struct {
-	*DescribeLiveMetricBandwidthDataQuery
-	*DescribeLiveMetricBandwidthDataBody
-}
-type UpdateWatermarkPresetReq struct {
-	*UpdateWatermarkPresetQuery
-	*UpdateWatermarkPresetBody
-}
-type DescribeCallbackReq struct {
-	*DescribeCallbackQuery
-	*DescribeCallbackBody
-}
-type CreateDomainV2Req struct {
-	*CreateDomainV2Query
-	*CreateDomainV2Body
+type StopPullToPushTask struct {
 }
 type StopPullRecordTaskReq struct {
 	*StopPullRecordTaskQuery
 	*StopPullRecordTaskBody
 }
-type CreatePullRecordTaskReq struct {
-	*CreatePullRecordTaskQuery
-	*CreatePullRecordTaskBody
+type DescribeSnapshotAuditPresetDetailReq struct {
+	*DescribeSnapshotAuditPresetDetailQuery
+	*DescribeSnapshotAuditPresetDetailBody
+}
+type DescribeLiveBatchPushStreamMetricsReq struct {
+	*DescribeLiveBatchPushStreamMetricsQuery
+	*DescribeLiveBatchPushStreamMetricsBody
+}
+type DeleteRefererReq struct {
+	*DeleteRefererQuery
+	*DeleteRefererBody
+}
+type DescribeRefererReq struct {
+	*DescribeRefererQuery
+	*DescribeRefererBody
+}
+type KillStreamReq struct {
+	*KillStreamQuery
+	*KillStreamBody
+}
+type DescribeLiveStreamStateReq struct {
+	*DescribeLiveStreamStateQuery
+	*DescribeLiveStreamStateBody
+}
+type GeneratePlayURLReq struct {
+	*GeneratePlayURLQuery
+	*GeneratePlayURLBody
+}
+type UpdateSnapshotPresetReq struct {
+	*UpdateSnapshotPresetQuery
+	*UpdateSnapshotPresetBody
+}
+type DeleteTimeShiftPresetV3Req struct {
+	*DeleteTimeShiftPresetV3Query
+	*DeleteTimeShiftPresetV3Body
+}
+type CreateTimeShiftPresetV3Req struct {
+	*CreateTimeShiftPresetV3Query
+	*CreateTimeShiftPresetV3Body
+}
+type UpdateDomainVhostReq struct {
+	*UpdateDomainVhostQuery
+	*UpdateDomainVhostBody
+}
+type CreatePullToPushTaskReq struct {
+	*CreatePullToPushTaskQuery
+	*CreatePullToPushTaskBody
+}
+type CreateRelaySourceV4Req struct {
+	*CreateRelaySourceV4Query
+	*CreateRelaySourceV4Body
+}
+type DescribeLiveSourceTrafficDataReq struct {
+	*DescribeLiveSourceTrafficDataQuery
+	*DescribeLiveSourceTrafficDataBody
+}
+type DescribeLivePullToPushDataReq struct {
+	*DescribeLivePullToPushDataQuery
+	*DescribeLivePullToPushDataBody
+}
+type UpdateAuthKeyReq struct {
+	*UpdateAuthKeyQuery
+	*UpdateAuthKeyBody
 }
 type DescribeCertDetailSecretV2Req struct {
 	*DescribeCertDetailSecretV2Query
 	*DescribeCertDetailSecretV2Body
 }
-type DescribeLiveSourceStreamMetricsReq struct {
-	*DescribeLiveSourceStreamMetricsQuery
-	*DescribeLiveSourceStreamMetricsBody
+type DescribeLiveMetricTrafficDataReq struct {
+	*DescribeLiveMetricTrafficDataQuery
+	*DescribeLiveMetricTrafficDataBody
 }
-type DescribeLiveBatchStreamTranscodeDataReq struct {
-	*DescribeLiveBatchStreamTranscodeDataQuery
-	*DescribeLiveBatchStreamTranscodeDataBody
+type DescribeLiveSourceBandwidthDataReq struct {
+	*DescribeLiveSourceBandwidthDataQuery
+	*DescribeLiveSourceBandwidthDataBody
 }
-type DescribeLiveP95PeakBandwidthDataReq struct {
-	*DescribeLiveP95PeakBandwidthDataQuery
-	*DescribeLiveP95PeakBandwidthDataBody
+type DescribeDenyConfigReq struct {
+	*DescribeDenyConfigQuery
+	*DescribeDenyConfigBody
+}
+type DescribeRelaySourceV3Req struct {
+	*DescribeRelaySourceV3Query
+	*DescribeRelaySourceV3Body
+}
+type UpdateRelaySourceV3Req struct {
+	*UpdateRelaySourceV3Query
+	*UpdateRelaySourceV3Body
+}
+type DescribeClosedStreamInfoByPageReq struct {
+	*DescribeClosedStreamInfoByPageQuery
+	*DescribeClosedStreamInfoByPageBody
+}
+type DescribeLiveBatchSourceStreamMetricsReq struct {
+	*DescribeLiveBatchSourceStreamMetricsQuery
+	*DescribeLiveBatchSourceStreamMetricsBody
+}
+type DescribeCDNSnapshotHistoryReq struct {
+	*DescribeCDNSnapshotHistoryQuery
+	*DescribeCDNSnapshotHistoryBody
+}
+type UpdateRelaySourceV4Req struct {
+	*UpdateRelaySourceV4Query
+	*UpdateRelaySourceV4Body
+}
+type ListRelaySourceV4Req struct {
+	*ListRelaySourceV4Query
+	*ListRelaySourceV4Body
+}
+type DescribeLiveMetricBandwidthDataReq struct {
+	*DescribeLiveMetricBandwidthDataQuery
+	*DescribeLiveMetricBandwidthDataBody
+}
+type DescribeLiveCustomizedLogDataReq struct {
+	*DescribeLiveCustomizedLogDataQuery
+	*DescribeLiveCustomizedLogDataBody
+}
+type UpdateRefererReq struct {
+	*UpdateRefererQuery
+	*UpdateRefererBody
+}
+type CreateDomainReq struct {
+	*CreateDomainQuery
+	*CreateDomainBody
+}
+type DeletePullToPushTaskReq struct {
+	*DeletePullToPushTaskQuery
+	*DeletePullToPushTaskBody
+}
+type DescribeLivePushStreamMetricsReq struct {
+	*DescribeLivePushStreamMetricsQuery
+	*DescribeLivePushStreamMetricsBody
 }
 type UpdateCallbackReq struct {
 	*UpdateCallbackQuery
 	*UpdateCallbackBody
 }
-type CreateVerifyContentReq struct {
-	*CreateVerifyContentQuery
-	*CreateVerifyContentBody
+type RestartPullToPushTaskReq struct {
+	*RestartPullToPushTaskQuery
+	*RestartPullToPushTaskBody
 }
-type ListPullToPushTaskReq struct {
-	*ListPullToPushTaskQuery
-	*ListPullToPushTaskBody
-}
-type GetPullCDNSnapshotTaskReq struct {
-	*GetPullCDNSnapshotTaskQuery
-	*GetPullCDNSnapshotTaskBody
-}
-type CreatePullCDNSnapshotTaskReq struct {
-	*CreatePullCDNSnapshotTaskQuery
-	*CreatePullCDNSnapshotTaskBody
+type DeleteRelaySourceV4Req struct {
+	*DeleteRelaySourceV4Query
+	*DeleteRelaySourceV4Body
 }
 type DescribeLiveBatchStreamTrafficDataReq struct {
 	*DescribeLiveBatchStreamTrafficDataQuery
 	*DescribeLiveBatchStreamTrafficDataBody
 }
-type DeleteRefererReq struct {
-	*DeleteRefererQuery
-	*DeleteRefererBody
+type DescribeLiveP95PeakBandwidthDataReq struct {
+	*DescribeLiveP95PeakBandwidthDataQuery
+	*DescribeLiveP95PeakBandwidthDataBody
+}
+type DisableDomainReq struct {
+	*DisableDomainQuery
+	*DisableDomainBody
+}
+type DescribeForbiddenStreamInfoByPageReq struct {
+	*DescribeForbiddenStreamInfoByPageQuery
+	*DescribeForbiddenStreamInfoByPageBody
+}
+type DeleteStreamQuotaConfigReq struct {
+	*DeleteStreamQuotaConfigQuery
+	*DeleteStreamQuotaConfigBody
+}
+type UpdateStreamQuotaConfigReq struct {
+	*UpdateStreamQuotaConfigQuery
+	*UpdateStreamQuotaConfigBody
+}
+type CreateSnapshotPresetReq struct {
+	*CreateSnapshotPresetQuery
+	*CreateSnapshotPresetBody
+}
+type DescribeLiveAuditDataReq struct {
+	*DescribeLiveAuditDataQuery
+	*DescribeLiveAuditDataBody
+}
+type GetPullCDNSnapshotTaskReq struct {
+	*GetPullCDNSnapshotTaskQuery
+	*GetPullCDNSnapshotTaskBody
+}
+type ListPullCDNSnapshotTaskReq struct {
+	*ListPullCDNSnapshotTaskQuery
+	*ListPullCDNSnapshotTaskBody
+}
+type DescribeLivePushStreamCountDataReq struct {
+	*DescribeLivePushStreamCountDataQuery
+	*DescribeLivePushStreamCountDataBody
+}
+type DescribeLiveISPDataReq struct {
+	*DescribeLiveISPDataQuery
+	*DescribeLiveISPDataBody
+}
+type DescribeLiveTimeShiftDataReq struct {
+	*DescribeLiveTimeShiftDataQuery
+	*DescribeLiveTimeShiftDataBody
+}
+type DescribeLiveStreamUsageDataReq struct {
+	*DescribeLiveStreamUsageDataQuery
+	*DescribeLiveStreamUsageDataBody
+}
+type ListCommonTransPresetDetailReq struct {
+	*ListCommonTransPresetDetailQuery
+	*ListCommonTransPresetDetailBody
+}
+type DescribeCallbackReq struct {
+	*DescribeCallbackQuery
+	*DescribeCallbackBody
+}
+type DescribeAuthReq struct {
+	*DescribeAuthQuery
+	*DescribeAuthBody
+}
+type DescribeLiveTranscodeDataReq struct {
+	*DescribeLiveTranscodeDataQuery
+	*DescribeLiveTranscodeDataBody
+}
+type CreateTranscodePresetReq struct {
+	*CreateTranscodePresetQuery
+	*CreateTranscodePresetBody
+}
+type DeleteRecordPresetReq struct {
+	*DeleteRecordPresetQuery
+	*DeleteRecordPresetBody
+}
+type ListTimeShiftPresetV2Req struct {
+	*ListTimeShiftPresetV2Query
+	*ListTimeShiftPresetV2Body
+}
+type ListVqosMetricsDimensionsReq struct {
+	*ListVqosMetricsDimensionsQuery
+	*ListVqosMetricsDimensionsBody
+}
+type DescribeLiveSnapshotDataReq struct {
+	*DescribeLiveSnapshotDataQuery
+	*DescribeLiveSnapshotDataBody
+}
+type DescribeLiveTrafficDataReq struct {
+	*DescribeLiveTrafficDataQuery
+	*DescribeLiveTrafficDataBody
+}
+type CreatePullCDNSnapshotTaskReq struct {
+	*CreatePullCDNSnapshotTaskQuery
+	*CreatePullCDNSnapshotTaskBody
+}
+type DescribeLivePullToPushBandwidthDataReq struct {
+	*DescribeLivePullToPushBandwidthDataQuery
+	*DescribeLivePullToPushBandwidthDataBody
+}
+type CreateWatermarkPresetReq struct {
+	*CreateWatermarkPresetQuery
+	*CreateWatermarkPresetBody
+}
+type ListPullRecordTaskReq struct {
+	*ListPullRecordTaskQuery
+	*ListPullRecordTaskBody
+}
+type DeleteCertReq struct {
+	*DeleteCertQuery
+	*DeleteCertBody
+}
+type ListCertV2Req struct {
+	*ListCertV2Query
+	*ListCertV2Body
+}
+type DescribeDomainReq struct {
+	*DescribeDomainQuery
+	*DescribeDomainBody
+}
+type StopPullToPushTaskReq struct {
+	*StopPullToPushTaskQuery
+	*StopPullToPushTaskBody
+}
+type DeleteTranscodePresetReq struct {
+	*DeleteTranscodePresetQuery
+	*DeleteTranscodePresetBody
+}
+type BindCertReq struct {
+	*BindCertQuery
+	*BindCertBody
+}
+type DescribeStreamQuotaConfigReq struct {
+	*DescribeStreamQuotaConfigQuery
+	*DescribeStreamQuotaConfigBody
+}
+type DescribeLivePlayStatusCodeDataReq struct {
+	*DescribeLivePlayStatusCodeDataQuery
+	*DescribeLivePlayStatusCodeDataBody
+}
+type UpdateDenyConfigReq struct {
+	*UpdateDenyConfigQuery
+	*UpdateDenyConfigBody
+}
+type ListWatermarkPresetReq struct {
+	*ListWatermarkPresetQuery
+	*ListWatermarkPresetBody
+}
+type ResumeStreamReq struct {
+	*ResumeStreamQuery
+	*ResumeStreamBody
+}
+type DescribeLiveActivityBandwidthDataReq struct {
+	*DescribeLiveActivityBandwidthDataQuery
+	*DescribeLiveActivityBandwidthDataBody
+}
+type UnbindCertReq struct {
+	*UnbindCertQuery
+	*UnbindCertBody
+}
+type GeneratePushURLReq struct {
+	*GeneratePushURLQuery
+	*GeneratePushURLBody
+}
+type StopPullCDNSnapshotTaskReq struct {
+	*StopPullCDNSnapshotTaskQuery
+	*StopPullCDNSnapshotTaskBody
+}
+type DescribeLiveBatchStreamTranscodeDataReq struct {
+	*DescribeLiveBatchStreamTranscodeDataQuery
+	*DescribeLiveBatchStreamTranscodeDataBody
+}
+type ListVhostTransCodePresetReq struct {
+	*ListVhostTransCodePresetQuery
+	*ListVhostTransCodePresetBody
+}
+type UpdateWatermarkPresetReq struct {
+	*UpdateWatermarkPresetQuery
+	*UpdateWatermarkPresetBody
+}
+type ListVhostSnapshotPresetReq struct {
+	*ListVhostSnapshotPresetQuery
+	*ListVhostSnapshotPresetBody
+}
+type CreateCertReq struct {
+	*CreateCertQuery
+	*CreateCertBody
+}
+type ListPullToPushTaskReq struct {
+	*ListPullToPushTaskQuery
+	*ListPullToPushTaskBody
+}
+type DeleteSnapshotAuditPresetReq struct {
+	*DeleteSnapshotAuditPresetQuery
+	*DeleteSnapshotAuditPresetBody
+}
+type CreateSnapshotPresetV2Req struct {
+	*CreateSnapshotPresetV2Query
+	*CreateSnapshotPresetV2Body
+}
+type DeleteCallbackReq struct {
+	*DeleteCallbackQuery
+	*DeleteCallbackBody
+}
+type ListVhostSnapshotAuditPresetReq struct {
+	*ListVhostSnapshotAuditPresetQuery
+	*ListVhostSnapshotAuditPresetBody
+}
+type DescribeLiveSourceStreamMetricsReq struct {
+	*DescribeLiveSourceStreamMetricsQuery
+	*DescribeLiveSourceStreamMetricsBody
+}
+type ListVhostSnapshotPresetV2Req struct {
+	*ListVhostSnapshotPresetV2Query
+	*ListVhostSnapshotPresetV2Body
+}
+type GetPullRecordTaskReq struct {
+	*GetPullRecordTaskQuery
+	*GetPullRecordTaskBody
+}
+type CreateSnapshotAuditPresetReq struct {
+	*CreateSnapshotAuditPresetQuery
+	*CreateSnapshotAuditPresetBody
 }
 type DeleteWatermarkPresetReq struct {
 	*DeleteWatermarkPresetQuery
@@ -12379,303 +13577,111 @@ type ListVhostWatermarkPresetReq struct {
 	*ListVhostWatermarkPresetQuery
 	*ListVhostWatermarkPresetBody
 }
-type DeleteSnapshotPresetReq struct {
-	*DeleteSnapshotPresetQuery
-	*DeleteSnapshotPresetBody
-}
-type EnableDomainReq struct {
-	*EnableDomainQuery
-	*EnableDomainBody
-}
-type DescribeLiveAuditDataReq struct {
-	*DescribeLiveAuditDataQuery
-	*DescribeLiveAuditDataBody
-}
-type DescribeLivePullToPushBandwidthDataReq struct {
-	*DescribeLivePullToPushBandwidthDataQuery
-	*DescribeLivePullToPushBandwidthDataBody
-}
-type KillStreamReq struct {
-	*KillStreamQuery
-	*KillStreamBody
-}
-type DescribeIPInfoReq struct {
-	*DescribeIPInfoQuery
-	*DescribeIPInfoBody
-}
-type DescribeLivePlayStatusCodeDataReq struct {
-	*DescribeLivePlayStatusCodeDataQuery
-	*DescribeLivePlayStatusCodeDataBody
-}
-type UpdateSnapshotPresetReq struct {
-	*UpdateSnapshotPresetQuery
-	*UpdateSnapshotPresetBody
-}
-type CreateCertReq struct {
-	*CreateCertQuery
-	*CreateCertBody
-}
-type DescribeDomainReq struct {
-	*DescribeDomainQuery
-	*DescribeDomainBody
-}
-type UpdatePullToPushTaskReq struct {
-	*UpdatePullToPushTaskQuery
-	*UpdatePullToPushTaskBody
-}
-type ListVhostRecordPresetV2Req struct {
-	*ListVhostRecordPresetV2Query
-	*ListVhostRecordPresetV2Body
-}
-type CreateTimeShiftPresetV3Req struct {
-	*CreateTimeShiftPresetV3Query
-	*CreateTimeShiftPresetV3Body
-}
-type DeletePullToPushTaskReq struct {
-	*DeletePullToPushTaskQuery
-	*DeletePullToPushTaskBody
-}
-type DescribeSnapshotAuditPresetDetailReq struct {
-	*DescribeSnapshotAuditPresetDetailQuery
-	*DescribeSnapshotAuditPresetDetailBody
-}
-type DescribeLiveCustomizedLogDataReq struct {
-	*DescribeLiveCustomizedLogDataQuery
-	*DescribeLiveCustomizedLogDataBody
-}
-type DeleteRelaySourceV4Req struct {
-	*DeleteRelaySourceV4Query
-	*DeleteRelaySourceV4Body
-}
-type UpdateSnapshotAuditPresetReq struct {
-	*UpdateSnapshotAuditPresetQuery
-	*UpdateSnapshotAuditPresetBody
-}
-type ListVhostSnapshotAuditPresetReq struct {
-	*ListVhostSnapshotAuditPresetQuery
-	*ListVhostSnapshotAuditPresetBody
-}
-type DescribeLiveBatchSourceStreamMetricsReq struct {
-	*DescribeLiveBatchSourceStreamMetricsQuery
-	*DescribeLiveBatchSourceStreamMetricsBody
-}
-type ListCommonTransPresetDetailReq struct {
-	*ListCommonTransPresetDetailQuery
-	*ListCommonTransPresetDetailBody
-}
 type CreateRecordPresetV2Req struct {
 	*CreateRecordPresetV2Query
 	*CreateRecordPresetV2Body
 }
-type UpdateDomainVhostReq struct {
-	*UpdateDomainVhostQuery
-	*UpdateDomainVhostBody
+type CreateDomainV2Req struct {
+	*CreateDomainV2Query
+	*CreateDomainV2Body
 }
-type DescribeLiveSourceTrafficDataReq struct {
-	*DescribeLiveSourceTrafficDataQuery
-	*DescribeLiveSourceTrafficDataBody
+type DescribeLiveLogDataReq struct {
+	*DescribeLiveLogDataQuery
+	*DescribeLiveLogDataBody
 }
-type UpdateRecordPresetV2Req struct {
-	*UpdateRecordPresetV2Query
-	*UpdateRecordPresetV2Body
-}
-type ListPullRecordTaskReq struct {
-	*ListPullRecordTaskQuery
-	*ListPullRecordTaskBody
-}
-type ListVhostSnapshotPresetReq struct {
-	*ListVhostSnapshotPresetQuery
-	*ListVhostSnapshotPresetBody
-}
-type CreateRelaySourceV4Req struct {
-	*CreateRelaySourceV4Query
-	*CreateRelaySourceV4Body
-}
-type UpdateRefererReq struct {
-	*UpdateRefererQuery
-	*UpdateRefererBody
-}
-type ListVhostTransCodePresetReq struct {
-	*ListVhostTransCodePresetQuery
-	*ListVhostTransCodePresetBody
-}
-type DeleteTimeShiftPresetV3Req struct {
-	*DeleteTimeShiftPresetV3Query
-	*DeleteTimeShiftPresetV3Body
-}
-type StopPullToPushTaskReq struct {
-	*StopPullToPushTaskQuery
-	*StopPullToPushTaskBody
-}
-type DescribeLiveStreamSessionDataReq struct {
-	*DescribeLiveStreamSessionDataQuery
-	*DescribeLiveStreamSessionDataBody
-}
-type UpdateTranscodePresetReq struct {
-	*UpdateTranscodePresetQuery
-	*UpdateTranscodePresetBody
-}
-type DescribeRecordTaskFileHistoryReq struct {
-	*DescribeRecordTaskFileHistoryQuery
-	*DescribeRecordTaskFileHistoryBody
-}
-type DescribeLiveStreamStateReq struct {
-	*DescribeLiveStreamStateQuery
-	*DescribeLiveStreamStateBody
-}
-type DeleteStreamQuotaConfigReq struct {
-	*DeleteStreamQuotaConfigQuery
-	*DeleteStreamQuotaConfigBody
-}
-type CreateWatermarkPresetReq struct {
-	*CreateWatermarkPresetQuery
-	*CreateWatermarkPresetBody
-}
-type UpdateTimeShiftPresetV3Req struct {
-	*UpdateTimeShiftPresetV3Query
-	*UpdateTimeShiftPresetV3Body
-}
-type DeleteSnapshotAuditPresetReq struct {
-	*DeleteSnapshotAuditPresetQuery
-	*DeleteSnapshotAuditPresetBody
-}
-type DescribeLiveTrafficDataReq struct {
-	*DescribeLiveTrafficDataQuery
-	*DescribeLiveTrafficDataBody
+type DeleteSnapshotPresetReq struct {
+	*DeleteSnapshotPresetQuery
+	*DeleteSnapshotPresetBody
 }
 type ForbidStreamReq struct {
 	*ForbidStreamQuery
 	*ForbidStreamBody
 }
-type DescribeLivePullToPushDataReq struct {
-	*DescribeLivePullToPushDataQuery
-	*DescribeLivePullToPushDataBody
+type UpdateTranscodePresetReq struct {
+	*UpdateTranscodePresetQuery
+	*UpdateTranscodePresetBody
 }
-type DescribeLiveISPDataReq struct {
-	*DescribeLiveISPDataQuery
-	*DescribeLiveISPDataBody
+type UpdateSnapshotPresetV2Req struct {
+	*UpdateSnapshotPresetV2Query
+	*UpdateSnapshotPresetV2Body
 }
-type UpdateRelaySourceV3Req struct {
-	*UpdateRelaySourceV3Query
-	*UpdateRelaySourceV3Body
-}
-type ListPullCDNSnapshotTaskReq struct {
-	*ListPullCDNSnapshotTaskQuery
-	*ListPullCDNSnapshotTaskBody
-}
-type DescribeLiveStreamCountDataReq struct {
-	*DescribeLiveStreamCountDataQuery
-	*DescribeLiveStreamCountDataBody
-}
-type DescribeLiveTimeShiftDataReq struct {
-	*DescribeLiveTimeShiftDataQuery
-	*DescribeLiveTimeShiftDataBody
-}
-type VerifyDomainOwnerReq struct {
-	*VerifyDomainOwnerQuery
-	*VerifyDomainOwnerBody
+type UpdateTimeShiftPresetV3Req struct {
+	*UpdateTimeShiftPresetV3Query
+	*UpdateTimeShiftPresetV3Body
 }
 type DescribeLiveStreamInfoByPageReq struct {
 	*DescribeLiveStreamInfoByPageQuery
 	*DescribeLiveStreamInfoByPageBody
 }
-type GeneratePushURLReq struct {
-	*GeneratePushURLQuery
-	*GeneratePushURLBody
+type UpdateSnapshotAuditPresetReq struct {
+	*UpdateSnapshotAuditPresetQuery
+	*UpdateSnapshotAuditPresetBody
 }
-type CreateSnapshotAuditPresetReq struct {
-	*CreateSnapshotAuditPresetQuery
-	*CreateSnapshotAuditPresetBody
+type UpdateRecordPresetV2Req struct {
+	*UpdateRecordPresetV2Query
+	*UpdateRecordPresetV2Body
 }
-type UpdateDenyConfigReq struct {
-	*UpdateDenyConfigQuery
-	*UpdateDenyConfigBody
+type ListVhostRecordPresetV2Req struct {
+	*ListVhostRecordPresetV2Query
+	*ListVhostRecordPresetV2Body
 }
-type ListTimeShiftPresetV2Req struct {
-	*ListTimeShiftPresetV2Query
-	*ListTimeShiftPresetV2Body
+type DeleteDomainReq struct {
+	*DeleteDomainQuery
+	*DeleteDomainBody
 }
-type GeneratePlayURLReq struct {
-	*GeneratePlayURLQuery
-	*GeneratePlayURLBody
+type EnableDomainReq struct {
+	*EnableDomainQuery
+	*EnableDomainBody
 }
-type DescribeLiveRegionDataReq struct {
-	*DescribeLiveRegionDataQuery
-	*DescribeLiveRegionDataBody
+type ListDomainDetailReq struct {
+	*ListDomainDetailQuery
+	*ListDomainDetailBody
 }
-type DescribeLiveSnapshotDataReq struct {
-	*DescribeLiveSnapshotDataQuery
-	*DescribeLiveSnapshotDataBody
+type DeleteRelaySourceV3Req struct {
+	*DeleteRelaySourceV3Query
+	*DeleteRelaySourceV3Body
 }
-type ListWatermarkPresetReq struct {
-	*ListWatermarkPresetQuery
-	*ListWatermarkPresetBody
+type DescribeIPInfoReq struct {
+	*DescribeIPInfoQuery
+	*DescribeIPInfoBody
 }
-type UpdateStreamQuotaConfigReq struct {
-	*UpdateStreamQuotaConfigQuery
-	*UpdateStreamQuotaConfigBody
-}
-type ListRelaySourceV4Req struct {
-	*ListRelaySourceV4Query
-	*ListRelaySourceV4Body
-}
-type DescribeForbiddenStreamInfoByPageReq struct {
-	*DescribeForbiddenStreamInfoByPageQuery
-	*DescribeForbiddenStreamInfoByPageBody
-}
-type GetPullRecordTaskReq struct {
-	*GetPullRecordTaskQuery
-	*GetPullRecordTaskBody
-}
-type DescribeStreamQuotaConfigReq struct {
-	*DescribeStreamQuotaConfigQuery
-	*DescribeStreamQuotaConfigBody
+type DescribeLiveStreamSessionDataReq struct {
+	*DescribeLiveStreamSessionDataQuery
+	*DescribeLiveStreamSessionDataBody
 }
 type DescribeLiveBandwidthDataReq struct {
 	*DescribeLiveBandwidthDataQuery
 	*DescribeLiveBandwidthDataBody
 }
-type DescribeLiveStreamUsageDataReq struct {
-	*DescribeLiveStreamUsageDataQuery
-	*DescribeLiveStreamUsageDataBody
+type CreateVerifyContentReq struct {
+	*CreateVerifyContentQuery
+	*CreateVerifyContentBody
 }
-type CreateTranscodePresetReq struct {
-	*CreateTranscodePresetQuery
-	*CreateTranscodePresetBody
+type VerifyDomainOwnerReq struct {
+	*VerifyDomainOwnerQuery
+	*VerifyDomainOwnerBody
 }
-type DescribeRelaySourceV3Req struct {
-	*DescribeRelaySourceV3Query
-	*DescribeRelaySourceV3Body
+type DescribeLiveStreamCountDataReq struct {
+	*DescribeLiveStreamCountDataQuery
+	*DescribeLiveStreamCountDataBody
 }
-type ResumeStreamReq struct {
-	*ResumeStreamQuery
-	*ResumeStreamBody
+type CreatePullRecordTaskReq struct {
+	*CreatePullRecordTaskQuery
+	*CreatePullRecordTaskBody
 }
-type DescribeDenyConfigReq struct {
-	*DescribeDenyConfigQuery
-	*DescribeDenyConfigBody
+type DescribeLiveRegionDataReq struct {
+	*DescribeLiveRegionDataQuery
+	*DescribeLiveRegionDataBody
 }
-type DescribeLiveMetricTrafficDataReq struct {
-	*DescribeLiveMetricTrafficDataQuery
-	*DescribeLiveMetricTrafficDataBody
+type DescribeRecordTaskFileHistoryReq struct {
+	*DescribeRecordTaskFileHistoryQuery
+	*DescribeRecordTaskFileHistoryBody
+}
+type UpdatePullToPushTaskReq struct {
+	*UpdatePullToPushTaskQuery
+	*UpdatePullToPushTaskBody
 }
 type DescribeLiveRecordDataReq struct {
 	*DescribeLiveRecordDataQuery
 	*DescribeLiveRecordDataBody
-}
-type DescribeCDNSnapshotHistoryReq struct {
-	*DescribeCDNSnapshotHistoryQuery
-	*DescribeCDNSnapshotHistoryBody
-}
-type UnbindCertReq struct {
-	*UnbindCertQuery
-	*UnbindCertBody
-}
-type UpdateRelaySourceV4Req struct {
-	*UpdateRelaySourceV4Query
-	*UpdateRelaySourceV4Body
-}
-type StopPullCDNSnapshotTaskReq struct {
-	*StopPullCDNSnapshotTaskQuery
-	*StopPullCDNSnapshotTaskBody
 }
