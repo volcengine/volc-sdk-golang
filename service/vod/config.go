@@ -47,6 +47,15 @@ var (
 			},
 			Credentials: base.Credentials{Region: base.RegionCnNorth1, Service: "vod"},
 		},
+		base.RegionApSouthEast1: {
+			Timeout: 60 * time.Second,
+			Scheme:  "https",
+			Host:    "vod.ap-southeast-1.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: base.RegionApSouthEast1, Service: "vod"},
+		},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
