@@ -128,24 +128,37 @@ const (
 )
 
 type InstanceAreaNum struct {
-	AreaName     string       `json:"area_name"`
-	Isp          string       `json:"isp"`
-	ClusterName  *string      `json:"cluster_name,omitempty"`
-	ClusterAlias *string      `json:"cluster_alias,omitempty"`
-	VpcIdentity  *string      `json:"vpc_identity,omitempty"`
-	Num          int32        `json:"num"`
-	Region       *string      `json:"region,omitempty"`
-	City         *string      `json:"city,omitempty"`
-	DefaultIsp   *string      `json:"default_isp,omitempty"`
-	MultiIPMode  *MULTIIPMODE `json:"multi_ip_mode,omitempty"`
+	AreaName            string               `json:"area_name"`
+	Isp                 string               `json:"isp"`
+	ClusterName         *string              `json:"cluster_name,omitempty"`
+	ClusterAlias        *string              `json:"cluster_alias,omitempty"`
+	VpcIdentity         *string              `json:"vpc_identity,omitempty"`
+	Num                 int32                `json:"num"`
+	Region              *string              `json:"region,omitempty"`
+	City                *string              `json:"city,omitempty"`
+	DefaultIsp          *string              `json:"default_isp,omitempty"`
+	VeenIDList          []string             `json:"veen_id_list,omitempty"`
+	HostNameList        []string             `json:"host_name_list,omitempty"`
+	ExternalNetworkMode *EXTERNALNETWORKMODE `json:"external_network_mode,omitempty"`
+	SubnetIdentity      *string              `json:"subnet_identity,omitempty"`
 }
 
-type MULTIIPMODE = string
+type EXTERNALNETWORKMODE = string
 
 const (
-	MULTIIPMODESINGLEINTERFACE = "single_interface"
+	EXTERNALNETWORKMODESINGLEINTERFACESINGLEIP = "single_interface_single_ip"
 
-	MULTIIPMODEMULTIINTERFACE = "multi_interface"
+	EXTERNALNETWORKMODESINGLEINTERFACEMULTIIP = "single_interface_multi_ip"
+
+	EXTERNALNETWORKMODESINGLEINTERFACECMCCIP = "single_interface_cmcc_ip"
+
+	EXTERNALNETWORKMODESINGLEINTERFACECUCCIP = "single_interface_cucc_ip"
+
+	EXTERNALNETWORKMODESINGLEINTERFACECTCCIP = "single_interface_ctcc_ip"
+
+	EXTERNALNETWORKMODEMULTIINTERFACEMULTIIP = "multi_interface_multi_ip"
+
+	EXTERNALNETWORKMODENOINTERFACE = "no_interface"
 )
 
 type ScheduleStrategy struct {
@@ -551,38 +564,38 @@ const (
 )
 
 type NetworkConfig struct {
-	InternalInterface           *NetworkInterfaceConfig   `thrift:"internal_interface,1,required" frugal:"1,required,NetworkInterfaceConfig" json:"internal_interface"`
-	ExternalInterface           *NetworkInterfaceConfig   `thrift:"external_interface,2,required" frugal:"2,required,NetworkInterfaceConfig" json:"external_interface"`
-	ExternalInterfaces          []*NetworkInterfaceConfig `thrift:"external_interfaces,8,optional" frugal:"8,optional,list<NetworkInterfaceConfig>" json:"external_interfaces,omitempty"`
-	VfPassthrough               *bool                     `thrift:"vf_passthrough,3,optional" frugal:"3,optional,bool" json:"vf_passthrough,omitempty"`
-	DisableIpv4                 *bool                     `thrift:"disable_ipv4,11,optional" frugal:"11,optional,bool" json:"disable_ipv4,omitempty"`
-	EnableIpv6                  *bool                     `thrift:"enable_ipv6,4,optional" frugal:"4,optional,bool" json:"enable_ipv6,omitempty"`
-	DefaultIsp                  *string                   `thrift:"default_isp,5,optional" frugal:"5,optional,string" json:"default_isp,omitempty"`
-	VlanVfPassthrough           *bool                     `thrift:"vlan_vf_passthrough,6,optional" frugal:"6,optional,bool" json:"vlan_vf_passthrough,omitempty"`
-	MultiIPMode                 *MULTIIPMODE              `thrift:"multi_ip_mode,7,optional" frugal:"7,optional,string" json:"multi_ip_mode,omitempty"`
-	WantedSecondaryIPNum        *int32                    `thrift:"wanted_secondary_ip_num,9,optional" frugal:"9,optional,i32" json:"wanted_secondary_ip_num,omitempty"`
-	ActualSecondaryIPNum        *int32                    `thrift:"actual_secondary_ip_num,10,optional" frugal:"10,optional,i32" json:"actual_secondary_ip_num,omitempty"`
-	CustomInternalInterfaceName *string                   `thrift:"custom_internal_interface_name,12,optional" frugal:"12,optional,string" json:"custom_internal_interface_name,omitempty"`
-	CustomExternalInterfaceName *string                   `thrift:"custom_external_interface_name,13,optional" frugal:"13,optional,string" json:"custom_external_interface_name,omitempty"`
+	InternalInterface           *NetworkInterfaceConfig   `json:"internal_interface"`
+	ExternalInterface           *NetworkInterfaceConfig   `json:"external_interface"`
+	ExternalInterfaces          []*NetworkInterfaceConfig `json:"external_interfaces,omitempty"`
+	VfPassthrough               *bool                     `json:"vf_passthrough,omitempty"`
+	DisableIpv4                 *bool                     `json:"disable_ipv4,omitempty"`
+	EnableIpv6                  *bool                     `json:"enable_ipv6,omitempty"`
+	DefaultIsp                  *string                   `json:"default_isp,omitempty"`
+	VlanVfPassthrough           *bool                     `json:"vlan_vf_passthrough,omitempty"`
+	ExternalNetworkMode         *EXTERNALNETWORKMODE      `json:"external_network_mode,omitempty"`
+	WantedSecondaryIPNum        *int32                    `json:"wanted_secondary_ip_num,omitempty"`
+	ActualSecondaryIPNum        *int32                    `json:"actual_secondary_ip_num,omitempty"`
+	CustomInternalInterfaceName *string                   `json:"custom_internal_interface_name,omitempty"`
+	CustomExternalInterfaceName *string                   `json:"custom_external_interface_name,omitempty"`
 }
 
 type NetworkInterfaceConfig struct {
-	IPAddr             string  `thrift:"ip_addr,1,required" frugal:"1,required,string" json:"ip_addr"`
-	Mask               string  `thrift:"mask,2,required" frugal:"2,required,string" json:"mask"`
-	IP6Addr            *string `thrift:"ip6_addr,5,optional" frugal:"5,optional,string" json:"ip6_addr,omitempty"`
-	Mask6              *string `thrift:"mask6,6,optional" frugal:"6,optional,string" json:"mask6,omitempty"`
-	Ips                []*IP   `thrift:"ips,7,optional" frugal:"7,optional,list<IP>" json:"ips,omitempty"`
-	MacAddr            string  `thrift:"mac_addr,3,required" frugal:"3,required,string" json:"mac_addr"`
-	BandwidthPeak      string  `thrift:"bandwidth_peak,4,required" frugal:"4,required,string" json:"bandwidth_peak"`
-	BandwidthPackageID *int64  `thrift:"bandwidth_package_id,8,optional" frugal:"8,optional,i64" json:"bandwidth_package_id,omitempty"`
+	IPAddr             string  `json:"ip_addr"`
+	Mask               string  `json:"mask"`
+	IP6Addr            *string `json:"ip6_addr,omitempty"`
+	Mask6              *string `json:"mask6,omitempty"`
+	Ips                []*IP   `json:"ips,omitempty"`
+	MacAddr            string  `json:"mac_addr"`
+	BandwidthPeak      string  `json:"bandwidth_peak"`
+	BandwidthPackageID *int64  `json:"bandwidth_package_id,omitempty"`
 }
 
 type IP struct {
-	Addr      string    `thrift:"addr,1,required" frugal:"1,required,string" json:"addr"`
-	Mask      string    `thrift:"mask,2,required" frugal:"2,required,string" json:"mask"`
-	Isp       string    `thrift:"isp,3,required" frugal:"3,required,string" json:"isp"`
-	IPVersion IPVERSION `thrift:"ip_version,4,required" frugal:"4,required,string" json:"ip_version"`
-	Primary   *bool     `thrift:"primary,5,optional" frugal:"5,optional,bool" json:"primary,omitempty"`
+	Addr      string    `json:"addr"`
+	Mask      string    `json:"mask"`
+	Isp       string    `json:"isp"`
+	IPVersion IPVERSION `json:"ip_version"`
+	Primary   *bool     `json:"primary,omitempty"`
 }
 
 type IPVERSION = string
@@ -594,8 +607,8 @@ const (
 )
 
 type Account struct {
-	AccountIdentity int64  `thrift:"account_identity,1,required" frugal:"1,required,i64" json:"account_identity"`
-	UserIdentity    *int64 `thrift:"user_identity,2,optional" frugal:"2,optional,i64" json:"user_identity,omitempty"`
+	AccountIdentity int64  `json:"account_identity"`
+	UserIdentity    *int64 `json:"user_identity,omitempty"`
 }
 
 type GetInstanceReq struct {
@@ -712,10 +725,10 @@ type GetInstanceCloudDiskInfoResult struct {
 }
 
 type CloudDiskInfo struct {
-	StorageType string `thrift:"storage_type,1,required" frugal:"1,required,string" json:"storage_type"`
-	Capacity    string `thrift:"capacity,2,required" frugal:"2,required,string" json:"capacity"`
-	PvcName     string `thrift:"pvc_name,3,required" frugal:"3,required,string" json:"pvc_name"`
-	DeviceName  string `thrift:"device_name,4,required" frugal:"4,required,string" json:"device_name"`
+	StorageType string `json:"storage_type"`
+	Capacity    string `json:"capacity"`
+	PvcName     string `json:"pvc_name"`
+	DeviceName  string `json:"device_name"`
 }
 
 type ScaleInstanceCloudDiskCapacityReq struct {
@@ -734,8 +747,8 @@ type ScaleInstanceCloudDiskCapacityReq struct {
 }
 
 type ScaleCloudDiskInfo struct {
-	DeviceName string `thrift:"device_name,1,required" frugal:"1,required,string" json:"device_name"`
-	Capacity   string `thrift:"capacity,2,required" frugal:"2,required,string" json:"capacity"`
+	DeviceName string `json:"device_name"`
+	Capacity   string `json:"capacity"`
 }
 
 type ScaleInstanceCloudDiskCapacityResp struct {
@@ -784,60 +797,60 @@ type StorageType = string
 type AttachmentType = string
 
 type EbsPagination struct {
-	PageNo   int32 `thrift:"page_no,1,optional" frugal:"1,optional,i32" json:"page_no,omitempty"`
-	PageSize int32 `thrift:"page_size,2,optional" frugal:"2,optional,i32" json:"page_size,omitempty"`
+	PageNo   int32 `json:"page_no,omitempty"`
+	PageSize int32 `json:"page_size,omitempty"`
 }
 
 type EbsOrderOption struct {
-	OrderBy string `thrift:"order_by,1,optional" frugal:"1,optional,string" json:"order_by,omitempty"`
-	Asc     bool   `thrift:"asc,2,optional" frugal:"2,optional,bool" json:"asc,omitempty"`
+	OrderBy string `json:"order_by,omitempty"`
+	Asc     bool   `json:"asc,omitempty"`
 }
 
 type EbsAttachment struct {
-	EbsID   string         `thrift:"ebs_id,1,required" frugal:"1,required,string" json:"ebs_id"`
-	ResType AttachmentType `thrift:"res_type,2,required" frugal:"2,required,string" json:"res_type"`
-	ResID   string         `thrift:"res_id,3,required" frugal:"3,required,string" json:"res_id"`
-	ResName *string        `thrift:"res_name,4,optional" frugal:"4,optional,string" json:"res_name,omitempty"`
+	EbsID   string         `json:"ebs_id"`
+	ResType AttachmentType `json:"res_type"`
+	ResID   string         `json:"res_id"`
+	ResName *string        `json:"res_name,omitempty"`
 }
 
 type EbsCluster struct {
-	ClusterName string `thrift:"cluster_name,1,required" frugal:"1,required,string" json:"cluster_name"`
-	Country     string `thrift:"country,2,required" frugal:"2,required,string" json:"country"`
-	Region      string `thrift:"region,3,required" frugal:"3,required,string" json:"region"`
-	Province    string `thrift:"province,4,required" frugal:"4,required,string" json:"province"`
-	City        string `thrift:"city,5,required" frugal:"5,required,string" json:"city"`
-	Isp         string `thrift:"isp,6,required" frugal:"6,required,string" json:"isp"`
-	Alias       string `thrift:"alias,7,required" frugal:"7,required,string" json:"alias"`
+	ClusterName string `json:"cluster_name"`
+	Country     string `json:"country"`
+	Region      string `json:"region"`
+	Province    string `json:"province"`
+	City        string `json:"city"`
+	Isp         string `json:"isp"`
+	Alias       string `json:"alias"`
 }
 
 type EbsInstance struct {
-	AccountID      int64          `thrift:"account_id,1,required" frugal:"1,required,i64" json:"account_id"`
-	EbsID          string         `thrift:"ebs_id,2,required" frugal:"2,required,string" json:"ebs_id"`
-	EbsName        string         `thrift:"ebs_name,3,required" frugal:"3,required,string" json:"ebs_name"`
-	Status         EbsStatus      `thrift:"status,4,required" frugal:"4,required,string" json:"status"`
-	Cluster        *EbsCluster    `thrift:"cluster,5,required" frugal:"5,required,EbsCluster" json:"cluster"`
-	StorageType    StorageType    `thrift:"storage_type,6,required" frugal:"6,required,string" json:"storage_type"`
-	Capacity       string         `thrift:"capacity,7,required" frugal:"7,required,string" json:"capacity"`
-	EbsType        EbsType        `thrift:"ebs_type,8,required" frugal:"8,required,string" json:"ebs_type"`
-	ChargeType     ChargeType     `thrift:"charge_type,9,required" frugal:"9,required,string" json:"charge_type"`
-	Desc           *string        `thrift:"desc,10,optional" frugal:"10,optional,string" json:"desc,omitempty"`
-	Attachment     *EbsAttachment `thrift:"attachment,11,optional" frugal:"11,optional,EbsAttachment" json:"attachment,omitempty"`
-	DeleteWithVeen *bool          `thrift:"delete_with_veen,12,optional" frugal:"12,optional,bool" json:"delete_with_veen,omitempty"`
-	StartTime      *int64         `thrift:"start_time,128,optional" frugal:"128,optional,i64" json:"start_time,omitempty"`
-	EndTime        *int64         `thrift:"end_time,129,optional" frugal:"129,optional,i64" json:"end_time,omitempty"`
-	CreateTime     int64          `thrift:"create_time,130,required" frugal:"130,required,i64" json:"create_time"`
-	UpdateTime     int64          `thrift:"update_time,131,required" frugal:"131,required,i64" json:"update_time"`
+	AccountID      int64          `json:"account_id"`
+	EbsID          string         `json:"ebs_id"`
+	EbsName        string         `json:"ebs_name"`
+	Status         EbsStatus      `json:"status"`
+	Cluster        *EbsCluster    `json:"cluster"`
+	StorageType    StorageType    `json:"storage_type"`
+	Capacity       string         `json:"capacity"`
+	EbsType        EbsType        `json:"ebs_type"`
+	ChargeType     ChargeType     `json:"charge_type"`
+	Desc           *string        `json:"desc,omitempty"`
+	Attachment     *EbsAttachment `json:"attachment,omitempty"`
+	DeleteWithVeen *bool          `json:"delete_with_veen,omitempty"`
+	StartTime      *int64         `json:"start_time,omitempty"`
+	EndTime        *int64         `json:"end_time,omitempty"`
+	CreateTime     int64          `json:"create_time"`
+	UpdateTime     int64          `json:"update_time"`
 }
 
 type CreateEbsInstancesReq struct {
-	ClusterName string      `thrift:"cluster_name,3,required" frugal:"3,required,string" json:"cluster_name"`
-	ChargeType  ChargeType  `thrift:"charge_type,4,required" frugal:"4,required,string" json:"charge_type"`
-	EbsType     EbsType     `thrift:"ebs_type,5,required" frugal:"5,required,string" json:"ebs_type"`
-	StorageType StorageType `thrift:"storage_type,6,required" frugal:"6,required,string" json:"storage_type"`
-	Capacity    string      `thrift:"capacity,7,required" frugal:"7,required,string" json:"capacity"`
-	Number      int64       `thrift:"number,8,required" frugal:"8,required,i64" json:"number"`
-	Name        string      `thrift:"name,9,required" frugal:"9,required,string" json:"name"`
-	Desc        string      `thrift:"desc,10,optional" frugal:"10,optional,string" json:"desc,omitempty"`
+	ClusterName string      `json:"cluster_name"`
+	ChargeType  ChargeType  `json:"charge_type"`
+	EbsType     EbsType     `json:"ebs_type"`
+	StorageType StorageType `json:"storage_type"`
+	Capacity    string      `json:"capacity"`
+	Number      int64       `json:"number"`
+	Name        string      `json:"name"`
+	Desc        string      `json:"desc,omitempty"`
 }
 
 type CreateEbsInstancesResp struct {
@@ -846,7 +859,7 @@ type CreateEbsInstancesResp struct {
 }
 
 type CreateEbsInstancesResult struct {
-	EbsIds []string `thrift:"ebs_ids,1,optional" frugal:"1,optional,list<string>" json:"ebs_ids,omitempty"`
+	EbsIds []string `json:"ebs_ids,omitempty"`
 }
 
 type ListEbsInstancesReq struct {
@@ -889,8 +902,8 @@ type GetEbsInstanceResult struct {
 }
 
 type ScaleEbsInstanceCapacityReq struct {
-	EbsID    string `thrift:"ebs_id,3,required" frugal:"3,required,string" json:"ebs_id"`
-	Capacity string `thrift:"capacity,4,required" frugal:"4,required,string" json:"capacity"`
+	EbsID    string `json:"ebs_id"`
+	Capacity string `json:"capacity"`
 }
 
 type ScaleEbsInstanceCapacityResp struct {
@@ -902,9 +915,9 @@ type ScaleEbsInstanceCapacityResult struct {
 }
 
 type AttachEbsReq struct {
-	EbsIds  []string       `thrift:"ebs_ids,3,required" frugal:"3,required,list<string>" json:"ebs_ids"`
-	ResType AttachmentType `thrift:"res_type,4,required" frugal:"4,required,string" json:"res_type"`
-	ResID   string         `thrift:"res_id,5,required" frugal:"5,required,string" json:"res_id"`
+	EbsIds  []string       `json:"ebs_ids"`
+	ResType AttachmentType `json:"res_type"`
+	ResID   string         `json:"res_id"`
 }
 
 type AttachEbsResp struct {
@@ -916,7 +929,7 @@ type AttachEbsResult struct {
 }
 
 type DetachEbsReq struct {
-	EbsIds []string `thrift:"ebs_ids,3,required" frugal:"3,required,list<string>" json:"ebs_ids"`
+	EbsIds []string `json:"ebs_ids"`
 }
 
 type DetachEbsResp struct {
@@ -928,7 +941,7 @@ type DetachEbsResult struct {
 }
 
 type DeleteEbsInstanceReq struct {
-	EbsIds []string `thrift:"ebs_ids,3,required" frugal:"3,required,list<string>" json:"ebs_ids"`
+	EbsIds []string `json:"ebs_ids"`
 }
 
 type DeleteEbsInstanceResp struct {
