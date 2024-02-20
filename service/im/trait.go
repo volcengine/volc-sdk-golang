@@ -131,6 +131,46 @@ func unmarshalResultInto(data []byte, result interface{}) error {
 	return nil
 }
 
+func (c *Im) GetConversationMarks(ctx context.Context, arg *GetConversationMarksBody) (*GetConversationMarksRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetConversationMarks", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetConversationMarksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) MarkConversation(ctx context.Context, arg *MarkConversationBody) (*MarkConversationRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "MarkConversation", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(MarkConversationRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Im) ModifyParticipantReadIndex(ctx context.Context, arg *ModifyParticipantReadIndexBody) (*ModifyParticipantReadIndexRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -991,6 +1031,26 @@ func (c *Im) AddBlackList(ctx context.Context, arg *AddBlackListBody) (*AddBlack
 	return result, nil
 }
 
+func (c *Im) GetAppToken(ctx context.Context, arg *GetAppTokenBody) (*GetAppTokenRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetAppToken", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetAppTokenRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Im) RemoveBlackList(ctx context.Context, arg *RemoveBlackListBody) (*RemoveBlackListRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1003,6 +1063,126 @@ func (c *Im) RemoveBlackList(ctx context.Context, arg *RemoveBlackListBody) (*Re
 	}
 
 	result := new(RemoveBlackListRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) UserBroadcast(ctx context.Context, arg *UserBroadcastBody) (*UserBroadcastRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UserBroadcast", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UserBroadcastRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) BatchUpdateUserTags(ctx context.Context, arg *BatchUpdateUserTagsBody) (*BatchUpdateUserTagsRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "BatchUpdateUserTags", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(BatchUpdateUserTagsRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) RegisterUsers(ctx context.Context, arg *RegisterUsersBody) (*RegisterUsersRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "RegisterUsers", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(RegisterUsersRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) UnRegisterUsers(ctx context.Context, arg *UnRegisterUsersBody) (*UnRegisterUsersRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UnRegisterUsers", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UnRegisterUsersRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) BatchUpdateUser(ctx context.Context, arg *BatchUpdateUserBody) (*BatchUpdateUserRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "BatchUpdateUser", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(BatchUpdateUserRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Im) BatchGetUser(ctx context.Context, arg *BatchGetUserBody) (*BatchGetUserRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "BatchGetUser", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(BatchGetUserRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
