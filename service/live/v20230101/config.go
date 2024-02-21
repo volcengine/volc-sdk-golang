@@ -766,11 +766,27 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveBatchSourceStreamAvgMetrics": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveBatchSourceStreamAvgMetrics"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeLiveBatchPushStreamMetrics": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveBatchPushStreamMetrics"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeLiveBatchPushStreamAvgMetrics": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveBatchPushStreamAvgMetrics"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -1011,6 +1027,30 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveStreamUsageData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteIPAccessRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteIPAccessRule"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateIPAccessRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateIPAccessRule"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeIPAccessRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeIPAccessRule"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
