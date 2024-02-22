@@ -27,9 +27,37 @@ var (
 				Service: ServiceName,
 			},
 		},
+		"ap-southeast-1": {
+			Timeout: DefaultTimeout,
+			Scheme:  "https",
+			Host:    "rtc.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: common.Credentials{
+				Region:  "ap-southeast-1",
+				Service: ServiceName,
+			},
+		},
 	}
 	ApiListInfo = map[string]*common.ApiInfo{
 
+		"GetConversationMarks": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetConversationMarks"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"MarkConversation": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"MarkConversation"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
 		"ModifyParticipantReadIndex": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -374,11 +402,67 @@ var (
 				"Version": []string{"2020-12-01"},
 			},
 		},
+		"GetAppToken": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAppToken"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
 		"RemoveBlackList": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"RemoveBlackList"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"UserBroadcast": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UserBroadcast"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"BatchUpdateUserTags": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchUpdateUserTags"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"RegisterUsers": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RegisterUsers"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"UnRegisterUsers": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnRegisterUsers"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"BatchUpdateUser": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchUpdateUser"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"BatchGetUser": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchGetUser"},
 				"Version": []string{"2020-12-01"},
 			},
 		},
