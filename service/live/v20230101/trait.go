@@ -1967,6 +1967,26 @@ func (c *Live) DescribeLiveBatchSourceStreamMetrics(ctx context.Context, arg *De
 	return result, nil
 }
 
+func (c *Live) DescribeLiveBatchSourceStreamAvgMetrics(ctx context.Context, arg *DescribeLiveBatchSourceStreamAvgMetricsBody) (*DescribeLiveBatchSourceStreamAvgMetricsRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchSourceStreamAvgMetrics", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveBatchSourceStreamAvgMetricsRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLiveBatchPushStreamMetrics(ctx context.Context, arg *DescribeLiveBatchPushStreamMetricsBody) (*DescribeLiveBatchPushStreamMetricsRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1979,6 +1999,26 @@ func (c *Live) DescribeLiveBatchPushStreamMetrics(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeLiveBatchPushStreamMetricsRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveBatchPushStreamAvgMetrics(ctx context.Context, arg *DescribeLiveBatchPushStreamAvgMetricsBody) (*DescribeLiveBatchPushStreamAvgMetricsRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchPushStreamAvgMetrics", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveBatchPushStreamAvgMetricsRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2575,6 +2615,66 @@ func (c *Live) DescribeLiveStreamUsageData(ctx context.Context, arg *DescribeLiv
 	}
 
 	result := new(DescribeLiveStreamUsageDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteIPAccessRule(ctx context.Context, arg *DeleteIPAccessRuleBody) (*DeleteIPAccessRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteIPAccessRule", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteIPAccessRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateIPAccessRule(ctx context.Context, arg *UpdateIPAccessRuleBody) (*UpdateIPAccessRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateIPAccessRule", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateIPAccessRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeIPAccessRule(ctx context.Context, arg *DescribeIPAccessRuleBody) (*DescribeIPAccessRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeIPAccessRule", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeIPAccessRuleRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
