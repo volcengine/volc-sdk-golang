@@ -6,16 +6,17 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/cenkalti/backoff/v4"
-	"github.com/volcengine/volc-sdk-golang/base"
-	"github.com/volcengine/volc-sdk-golang/service/maas"
-	"github.com/volcengine/volc-sdk-golang/service/maas/models/api/v2"
-	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/cenkalti/backoff/v4"
+	"github.com/volcengine/volc-sdk-golang/base"
+	"github.com/volcengine/volc-sdk-golang/service/maas"
+	"github.com/volcengine/volc-sdk-golang/service/maas/models/api/v2"
+	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
 )
 
 // MaaS ... use base client
@@ -187,35 +188,36 @@ func (cli *MaaS) StreamChatWithCtx(ctx context.Context, endpointId string, req *
 }
 
 func (cli *MaaS) ChatImpl(ctx context.Context, endpointId string, body []byte) (*api.ChatResp, int, error) {
-	respBody, status, err, logId := cli.request(ctx, maas.APIChat, nil, endpointId, body)
+	ctx = getContext(ctx)
+
+	respBody, status, err := cli.request(ctx, maas.APIChat, nil, endpointId, body)
 	if err != nil {
-		errVal := &api.ChatResp{}
-		if er := json.Unmarshal(respBody, errVal); er != nil {
-			errVal.Error = api.NewClientSDKRequestError(err.Error(), logId)
-		}
-		errVal.Error.ReqId = errVal.ReqId
-		return errVal, status, errVal.Error
+		return nil, status, err
 	}
 
 	output := new(api.ChatResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
+	output.ReqId = reqIdFromCtx(ctx)
 	return output, status, nil
 }
 
 func (cli *MaaS) StreamChatImpl(ctx context.Context, endpointId string, body []byte) (<-chan *api.ChatResp, error) {
+	ctx = getContext(ctx)
+
 	apiInfo := cli.ApiInfoList[maas.APIStreamChat]
 	if apiInfo == nil {
-		return nil, api.NewClientSDKRequestError("the related api does not exist", "")
+		return nil, api.NewClientSDKRequestError("the related api does not exist", reqIdFromCtx(ctx))
 	}
 
 	// build request
 	req, err := maas.MakeRequest(apiInfo, endpointId, cli.ServiceInfo, nil, "application/json")
 	if err != nil {
-		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), "")
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), reqIdFromCtx(ctx))
 	}
-	req.Body = io.NopCloser(bytes.NewReader(body))
+	req.Header.Add(reqIdHeaderKey, reqIdFromCtx(ctx))
+	req.Body = ioutil.NopCloser(bytes.NewReader(body))
 	timeout := maas.GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 
 	req = cli.ServiceInfo.Credentials.Sign(req)
@@ -225,16 +227,15 @@ func (cli *MaaS) StreamChatImpl(ctx context.Context, endpointId string, body []b
 
 	// do request
 	resp, err := cli.Client.Client.Do(req)
-	logId := resp.Header.Get("x-tt-logid")
 	if err != nil {
 		cancel()
-		return nil, api.NewClientSDKRequestError(fmt.Sprintf("request error: %v", err), logId)
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("request error: %v", err), reqIdFromCtx(ctx))
 	}
 
 	if resp.StatusCode != 200 { // fast fail
 		res := &api.ChatResp{}
 		if er := json.NewDecoder(resp.Body).Decode(res); er != nil {
-			res.Error = api.NewClientSDKRequestError(fmt.Sprintf("failed to call service: http status_code=%d", resp.StatusCode), logId)
+			res.Error = api.NewClientSDKRequestError(fmt.Sprintf("failed to call service: http status_code=%d", resp.StatusCode), reqIdFromCtx(ctx))
 		}
 		cancel()
 		_ = resp.Body.Close()
@@ -260,11 +261,11 @@ func (cli *MaaS) StreamChatImpl(ctx context.Context, endpointId string, body []b
 				}
 				if errors.Is(err, context.DeadlineExceeded) {
 					ch <- &api.ChatResp{
-						Error: api.NewClientSDKRequestError(fmt.Sprintf("call service timeout: timeout=%s", timeout.String()), logId),
+						Error: api.NewClientSDKRequestError(fmt.Sprintf("call service timeout: timeout=%s", timeout.String()), reqIdFromCtx(ctx)),
 					}
 				} else {
 					ch <- &api.ChatResp{
-						Error: api.NewClientSDKRequestError(err.Error(), logId),
+						Error: api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx)),
 					}
 				}
 				return
@@ -277,13 +278,13 @@ func (cli *MaaS) StreamChatImpl(ctx context.Context, endpointId string, body []b
 				item := &api.ChatResp{}
 				if err = json.Unmarshal(event.Data, item); err != nil {
 					ch <- &api.ChatResp{
-						Error: api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response(data=%s): %v", string(event.Data), err), logId),
+						Error: api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response(data=%s): %v", string(event.Data), err), reqIdFromCtx(ctx)),
 					}
 					return
 				}
-				item.ReqId = logId
+				item.ReqId = reqIdFromCtx(ctx)
 				if item.Error != nil {
-					item.Error.ReqId = logId
+					item.Error.ReqId = reqIdFromCtx(ctx)
 				}
 				ch <- item
 			}
@@ -297,15 +298,15 @@ func (cli *MaaS) initCertByReq(ctx context.Context, endpointId string, req *api.
 	certReq := &api.CertReq{}
 	body, err := json.Marshal(certReq)
 	if err != nil {
-		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), "")
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), reqIdFromCtx(ctx))
 	}
-	respBody, _, err, logId := cli.request(ctx, maas.APICert, nil, endpointId, body)
+	respBody, _, err := cli.request(ctx, maas.APICert, nil, endpointId, body)
 	if err != nil {
-		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to get CA from proxy: %s", err.Error()), logId)
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to get CA from proxy: %s", err.Error()), reqIdFromCtx(ctx))
 	}
 	output := new(api.CertResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
 
 	// todo: check chain
@@ -367,20 +368,18 @@ func (cli *MaaS) TokenizationWithCtx(ctx context.Context, endpointId string, req
 }
 
 func (cli *MaaS) tokenizationImpl(ctx context.Context, endpointId string, body []byte) (*api.TokenizeResp, int, error) {
-	respBody, status, err, logId := cli.request(ctx, maas.APITokenization, nil, endpointId, body)
+	ctx = getContext(ctx)
+
+	respBody, status, err := cli.request(ctx, maas.APITokenization, nil, endpointId, body)
 	if err != nil {
-		errVal := &api.TokenizeResp{}
-		if er := json.Unmarshal(respBody, errVal); er != nil {
-			errVal.Error = api.NewClientSDKRequestError(err.Error(), logId)
-		}
-		errVal.Error.ReqId = errVal.ReqId
-		return nil, status, errVal.Error
+		return nil, status, err
 	}
 
 	output := new(api.TokenizeResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
+	output.ReqId = reqIdFromCtx(ctx)
 	return output, status, nil
 }
 
@@ -393,26 +392,24 @@ func (cli *MaaS) Classification(endpointId string, req *api.ClassificationReq) (
 func (cli *MaaS) ClassificationWithCtx(ctx context.Context, endpointId string, req *api.ClassificationReq) (*api.ClassificationResp, int, error) {
 	bts, err := json.Marshal(req)
 	if err != nil {
-		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), "")
+		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), reqIdFromCtx(ctx))
 	}
 	return cli.classificationImpl(ctx, endpointId, bts)
 }
 
 func (cli *MaaS) classificationImpl(ctx context.Context, endpointId string, body []byte) (*api.ClassificationResp, int, error) {
-	respBody, status, err, logId := cli.request(ctx, maas.APIClassification, nil, endpointId, body)
+	ctx = getContext(ctx)
+
+	respBody, status, err := cli.request(ctx, maas.APIClassification, nil, endpointId, body)
 	if err != nil {
-		errVal := &api.ClassificationResp{}
-		if er := json.Unmarshal(respBody, errVal); er != nil {
-			errVal.Error = api.NewClientSDKRequestError(err.Error(), logId)
-		}
-		errVal.Error.ReqId = errVal.ReqId
-		return nil, status, errVal.Error
+		return nil, status, err
 	}
 
 	output := new(api.ClassificationResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
+	output.ReqId = reqIdFromCtx(ctx)
 	return output, status, nil
 }
 
@@ -431,24 +428,22 @@ func (cli *MaaS) EmbeddingsWithCtx(ctx context.Context, endpointId string, req *
 }
 
 func (cli *MaaS) embeddingsImpl(ctx context.Context, endpointId string, body []byte) (*api.EmbeddingsResp, int, error) {
-	respBody, status, err, logId := cli.request(ctx, maas.APIEmbeddings, nil, endpointId, body)
+	ctx = getContext(ctx)
+
+	respBody, status, err := cli.request(ctx, maas.APIEmbeddings, nil, endpointId, body)
 	if err != nil {
-		errVal := &api.EmbeddingsResp{}
-		if er := json.Unmarshal(respBody, errVal); er != nil {
-			errVal.Error = api.NewClientSDKRequestError(err.Error(), logId)
-		}
-		errVal.Error.ReqId = errVal.ReqId
-		return nil, status, errVal.Error
+		return nil, status, err
 	}
 
 	output := new(api.EmbeddingsResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
+	output.ReqId = reqIdFromCtx(ctx)
 	return output, status, nil
 }
 
-func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration) ([]byte, int, error, bool, string) {
+func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration) ([]byte, int, bool, error) {
 	req = cli.ServiceInfo.Credentials.Sign(req)
 
 	ctx := inputContext
@@ -463,14 +458,13 @@ func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.R
 	resp, err := cli.Client.Client.Do(req)
 	if err != nil {
 		// should retry when client sends request error.
-		return []byte(""), 500, err, true, ""
+		return []byte(""), 500, true, err
 	}
 	defer resp.Body.Close()
 
-	logId := resp.Header.Get("x-tt-logid")
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return []byte(""), resp.StatusCode, err, false, logId
+		return []byte(""), resp.StatusCode, false, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
@@ -479,30 +473,30 @@ func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.R
 		if resp.StatusCode >= http.StatusInternalServerError {
 			needRetry = true
 		}
-		return body, resp.StatusCode, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body)), needRetry, logId
+		return body, resp.StatusCode, needRetry, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body))
 	}
 
-	return body, resp.StatusCode, nil, false, logId
+	return body, resp.StatusCode, false, nil
 }
 
-func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, endpointId string, body []byte) ([]byte, int, error, string) {
+func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, endpointId string, body []byte) ([]byte, int, error) {
 	apiInfo := cli.ApiInfoList[apiKey]
 	if apiInfo == nil {
-		return []byte(""), 500, errors.New("The related api does not exist"), ""
+		return nil, 500, api.NewClientSDKRequestError("the related api does not exist", reqIdFromCtx(ctx))
 	}
 
 	// build request
 	req, err := maas.MakeRequest(apiInfo, endpointId, cli.ServiceInfo, query, "application/json")
 	if err != nil {
-		return nil, 500, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), ""), ""
+		return nil, 500, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), reqIdFromCtx(ctx))
 	}
+	req.Header.Add(reqIdHeaderKey, reqIdFromCtx(ctx))
 	requestBody := bytes.NewReader(body)
 	timeout := maas.GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 	retrySettings := maas.GetRetrySetting(&cli.ServiceInfo.Retry, &apiInfo.Retry)
 
 	var resp []byte
 	var code int
-	var logId string
 
 	err = backoff.Retry(func() error {
 		_, err = requestBody.Seek(0, io.SeekStart)
@@ -512,12 +506,22 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		resp, code, err, needRetry, logId = cli.doRequest(ctx, apiKey, req, timeout)
+		resp, code, needRetry, err = cli.doRequest(ctx, apiKey, req, timeout)
 		if needRetry {
 			return err
 		} else {
 			return backoff.Permanent(err)
 		}
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
-	return resp, code, err, logId
+
+	if err != nil {
+		errVal := &api.ErrorResp{}
+		if er := json.Unmarshal(resp, errVal); er != nil {
+			errVal.Error = api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
+		}
+		errVal.Error.ReqId = reqIdFromCtx(ctx)
+		err = errVal.Error
+	}
+
+	return resp, code, err
 }

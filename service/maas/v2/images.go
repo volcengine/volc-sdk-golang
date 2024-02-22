@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
 	"github.com/volcengine/volc-sdk-golang/service/maas"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api/v2"
 )
@@ -27,19 +28,17 @@ func (i *images) ImagesQuickGenWithCtx(ctx context.Context, endpointId string, r
 }
 
 func (i *images) imagesQuickGenImpl(ctx context.Context, endpointId string, body []byte) (*api.ImagesQuickGenResp, int, error) {
-	respBody, status, err, logId := i.m.request(ctx, maas.APIImagesQuickGen, nil, endpointId, body)
+	ctx = getContext(ctx)
+
+	respBody, status, err := i.m.request(ctx, maas.APIImagesQuickGen, nil, endpointId, body)
 	if err != nil {
-		errVal := &api.ImagesQuickGenResp{}
-		if er := json.Unmarshal(respBody, errVal); er != nil {
-			errVal.Error = api.NewClientSDKRequestError(err.Error(), logId)
-		}
-		errVal.Error.ReqId = errVal.ReqId
-		return nil, status, errVal.Error
+		return nil, status, err
 	}
 
 	output := new(api.ImagesQuickGenResp)
 	if err = json.Unmarshal(respBody, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), logId)
+		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), reqIdFromCtx(ctx))
 	}
+	output.ReqId = reqIdFromCtx(ctx)
 	return output, status, nil
 }

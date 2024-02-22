@@ -1,8 +1,10 @@
 package api
 
-import "encoding/json"
-import "fmt"
-import "reflect"
+import (
+	"encoding/json"
+	"fmt"
+	"reflect"
+)
 
 type MessageContent struct {
 	// ImageUrl corresponds to the JSON schema field "image_url".
@@ -496,9 +498,6 @@ func (j *CertResp) UnmarshalJSON(b []byte) error {
 }
 
 type ClassificationResp struct {
-	// Error corresponds to the JSON schema field "error".
-	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
-
 	// Label corresponds to the JSON schema field "label".
 	Label string `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
 
@@ -528,9 +527,6 @@ type EmbeddingsResp struct {
 	// Data corresponds to the JSON schema field "data".
 	Data []Embedding `json:"data,omitempty" yaml:"data,omitempty" mapstructure:"data,omitempty"`
 
-	// Error corresponds to the JSON schema field "error".
-	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
-
 	// Object corresponds to the JSON schema field "object".
 	Object string `json:"object,omitempty" yaml:"object,omitempty" mapstructure:"object,omitempty"`
 
@@ -546,9 +542,6 @@ type TokenizeReq struct {
 }
 
 type TokenizeResp struct {
-	// Error corresponds to the JSON schema field "error".
-	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
-
 	// Tokens corresponds to the JSON schema field "tokens".
 	Tokens []string `json:"tokens,omitempty" yaml:"tokens,omitempty" mapstructure:"tokens,omitempty"`
 
@@ -600,6 +593,9 @@ type ImagesQuickGenResp struct {
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
 
 	Data []*ImageUrl `json:"data,omitempty" yaml:"data,omitempty" mapstructure:"data,omitempty"`
+}
 
+type ErrorResp struct {
+	// Error corresponds to the JSON schema field "error".
 	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
