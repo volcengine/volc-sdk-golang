@@ -93,6 +93,29 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 			return nil, err
 		}
 		return index.getData(res, outputFields)
+	} else if order == nil {
+		search := map[string]interface{}{
+			"limit":     searchOptions.limit,
+			"partition": searchOptions.partition,
+		}
+		if searchOptions.filter != nil {
+			search["filter"] = searchOptions.filter
+		}
+		var outputFields interface{} = nil
+		if searchOptions.outputFields != nil {
+			search["output_fields"] = searchOptions.outputFields
+			outputFields = searchOptions.outputFields
+		}
+		params := map[string]interface{}{
+			"collection_name": index.CollectionName,
+			"index_name":      index.IndexName,
+			"search":          search,
+		}
+		res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+		if err != nil {
+			return nil, err
+		}
+		return index.getData(res, outputFields)
 	}
 	return nil, nil
 }
