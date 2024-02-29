@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	service := vikingdb.NewVikingDBService("host", "region", "ak", "sk", "http")
+	service := vikingdb.NewVikingDBService("", "", "", "", "http")
 
-	rerank, err := service.Rerank("退改", "如果您需要人工服务，可以拨打人工客服电话：4006660921", "转人工")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(rerank)
+	//rerank, err := service.Rerank("退改", "如果您需要人工服务，可以拨打人工客服电话：4006660921", "转人工")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(rerank)
 
 	//fields := []vikingdb.Field{
 	//	{
@@ -221,6 +221,16 @@ func main() {
 	//for _, item := range res {
 	//	fmt.Println(item)
 	//}
+
+	index, _ := service.GetIndex("example", "example_index")
+	searchOption := vikingdb.NewSearchOptions().SetFilter(map[string]interface{}{"op": "range", "field": "price", "lt": 3.5}).SetLimit(5).SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
+	res, err := index.Search(nil, searchOption)
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, item := range res {
+		fmt.Println(item)
+	}
 
 	//index, _ := service.GetIndex("go", "goIndex")
 	//searchOption := vikingdb.NewSearchOptions().SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
