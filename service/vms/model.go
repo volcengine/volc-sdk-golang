@@ -407,6 +407,7 @@ type QueryCallRecordMsgNew struct {
 	CallerCallingTime      int64
 	CallerRingingTime      int64
 	CallerDuration         int32
+	SecretCallType         int32
 }
 
 type QueryCallRecordMsgNewResponse struct {
