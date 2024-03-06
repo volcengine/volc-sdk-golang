@@ -481,7 +481,7 @@ func (p *Visual) FaceFusionMovieSubmitTask(req *model.FaceFusionMovieSubmitTaskR
 	if req.SourceSimilarity == "" {
 		req.SourceSimilarity = "1"
 	}
-	
+
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
@@ -916,6 +916,36 @@ func (p *Visual) FaceCompare(bodyMap interface{}) (*model.FaceCompareResult, int
 	}
 	resp := new(model.FaceCompareResult)
 	statusCode, err := p.commonJsonHandler("FaceCompare", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// FaceSwapV3 入参说明，接口文档：https://www.volcengine.com/docs/6791/1130928
+// bodyMap: 按照接口文档填写入参，其中 req_key：- 3.0版本取固定值faceswap ｜ 3.3版本取固定值face_swap3_3
+func (p *Visual) FaceSwapV3(bodyMap interface{}) (*model.FaceSwapV3Result, int, error) {
+	jsonStr, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceSwapV3Result)
+	statusCode, err := p.commonJsonHandler("FaceSwapV3", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// FaceSwapAI 入参说明，接口文档：https://www.volcengine.com/docs/6791/1167911
+// bodyMap: 按照接口文档填写入参，其中 req_key：取固定值faceswap_ai
+func (p *Visual) FaceSwapAI(bodyMap interface{}) (*model.FaceSwapAIResult, int, error) {
+	jsonStr, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error")
+	}
+	resp := new(model.FaceSwapAIResult)
+	statusCode, err := p.commonJsonHandler("FaceSwapAI", string(jsonStr), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
