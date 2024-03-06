@@ -90,11 +90,18 @@ func (p *Vod) GetDirectEditResult(req *request.VodGetDirectEditResultRequest) (*
 	if err != nil {
 		return nil, status, errors.New(string(respBody))
 	}
+	for _, res := range resultMap.Result {
+		if v, exist := res["EditParam"]; exist {
+			tempStr, _ := json.Marshal(v)
+			res["EditParam"] = tempStr
+		}
+	}
+	jsonStr, _ := json.Marshal(resultMap)
 	output := &response.VodGetDirectEditResultResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
 		DiscardUnknown: true,
 	}
-	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	errUnmarshal := unmarshaler.Unmarshal(jsonStr, output)
 	if err != nil || status != http.StatusOK {
 		// if exist http err,check whether the respBody's type is defined struct,
 		// if it is ,
