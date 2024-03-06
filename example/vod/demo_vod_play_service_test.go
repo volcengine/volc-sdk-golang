@@ -141,20 +141,3 @@ func Test_GetPlayInfoWithLiveTimeShiftScene(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
-
-func Test_DescribeDrmDataKey(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodDescribeDrmDataKeyRequest{
-		Ak: "your Ak",
-	}
-
-	resp, status, err := instance.DescribeDrmDataKey(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
