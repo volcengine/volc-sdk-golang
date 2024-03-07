@@ -9,6 +9,7 @@ import (
 
 func DetachEbs(t *testing.T) {
 	resp, err := veen.NewInstance(ak, sk).DetachEbs(&veen.DetachEbsReq{
+		EbsID:  "",
 		EbsIds: []string{"disk-t9p44586fn6cbs9", "disk-fz26fhklggjnbhj"},
 	})
 	assert.NoError(t, err)
