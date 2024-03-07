@@ -225,5 +225,13 @@ var (
 				"Version": []string{ServiceVersion},
 			},
 		},
+		"BatchResetSystem": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchResetSystem"},
+				"Version": []string{ServiceVersion},
+			},
+		},
 	}
 )
