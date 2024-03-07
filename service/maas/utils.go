@@ -19,6 +19,7 @@ const (
 	APIClassification = "classification"
 	APIEmbeddings     = "embeddings"
 	APIImagesQuickGen = "images.quick_gen"
+	APIAudioSpeech    = "audio.speech"
 
 	ServiceTimeout = time.Minute
 

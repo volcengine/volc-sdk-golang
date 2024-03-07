@@ -599,3 +599,15 @@ type ErrorResp struct {
 	// Error corresponds to the JSON schema field "error".
 	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
+
+type SpeechReq struct {
+	Input string `json:"input,omitempty" yaml:"input,omitempty" mapstructure:"input,omitempty"`
+
+	Voice string `json:"voice,omitempty" yaml:"voice,omitempty" mapstructure:"voice,omitempty"`
+
+	ResponseFormat string `json:"response_format,omitempty" yaml:"response_format,omitempty" mapstructure:"response_format,omitempty"`
+
+	Speed float64 `json:"speed,omitempty" yaml:"speed,omitempty" mapstructure:"speed,omitempty"`
+
+	Extra RequestExtra `json:"extra,omitempty" yaml:"extra,omitempty" mapstructure:"extra,omitempty"`
+}

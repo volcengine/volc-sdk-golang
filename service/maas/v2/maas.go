@@ -67,6 +67,10 @@ func NewInstance(host, region string) *MaaS {
 			Method: http.MethodPost,
 			Path:   "/api/v2/endpoint/%s/images/quick-gen",
 		},
+		maas.APIAudioSpeech: {
+			Method: http.MethodPost,
+			Path:   "/api/v2/endpoint/%s/audio/speech",
+		},
 	})
 
 	return instance
@@ -74,6 +78,12 @@ func NewInstance(host, region string) *MaaS {
 
 func (cli *MaaS) Images() *images {
 	return &images{cli}
+}
+
+func (cli *MaaS) Audio() *audio {
+	return &audio{
+		Speech{m: cli},
+	}
 }
 
 // POST method
