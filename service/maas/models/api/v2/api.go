@@ -430,6 +430,9 @@ type CertResp struct {
 	Cert string `json:"cert,omitempty" yaml:"cert,omitempty" mapstructure:"cert,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	// Error corresponds to the JSON schema field "error".
+	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
 
 type ClassificationReq struct {
@@ -508,6 +511,9 @@ type ClassificationResp struct {
 	Usage *Usage `json:"usage,omitempty" yaml:"usage,omitempty" mapstructure:"usage,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	// Error corresponds to the JSON schema field "error".
+	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
 
 type ClassificationRespLabelLogprobos map[string]*LabelLogprobosValue
@@ -534,6 +540,9 @@ type EmbeddingsResp struct {
 	Usage *Usage `json:"usage,omitempty" yaml:"usage,omitempty" mapstructure:"usage,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	// Error corresponds to the JSON schema field "error".
+	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
 
 type TokenizeReq struct {
@@ -549,6 +558,9 @@ type TokenizeResp struct {
 	TotalTokens int `json:"total_tokens,omitempty" yaml:"total_tokens,omitempty" mapstructure:"total_tokens,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	// Error corresponds to the JSON schema field "error".
+	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
 
 type ImagesParameters struct {
@@ -598,4 +610,26 @@ type ImagesQuickGenResp struct {
 type ErrorResp struct {
 	// Error corresponds to the JSON schema field "error".
 	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
+}
+
+type CreateOrRefreshApiKeyRequest struct {
+	Ttl            int64    `json:"Ttl,omitempty" yaml:"Ttl,omitempty" mapstructure:"Ttl,omitempty"`
+	EndpointIdList []string `json:"EndpointIdList,omitempty" yaml:"EndpointIdList,omitempty" mapstructure:"EndpointIdList,omitempty"`
+}
+
+type CreateOrRefreshApiKeyResponse struct {
+	ApiKey string `json:"ApiKey,omitempty" yaml:"ApiKey,omitempty" mapstructure:"ApiKey,omitempty"`
+	Error  *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
+}
+
+type SpeechReq struct {
+	Input string `json:"input,omitempty" yaml:"input,omitempty" mapstructure:"input,omitempty"`
+
+	Voice string `json:"voice,omitempty" yaml:"voice,omitempty" mapstructure:"voice,omitempty"`
+
+	ResponseFormat string `json:"response_format,omitempty" yaml:"response_format,omitempty" mapstructure:"response_format,omitempty"`
+
+	Speed float64 `json:"speed,omitempty" yaml:"speed,omitempty" mapstructure:"speed,omitempty"`
+
+	Extra RequestExtra `json:"extra,omitempty" yaml:"extra,omitempty" mapstructure:"extra,omitempty"`
 }

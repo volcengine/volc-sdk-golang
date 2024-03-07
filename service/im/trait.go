@@ -171,6 +171,26 @@ func (c *Im) MarkConversation(ctx context.Context, arg *MarkConversationBody) (*
 	return result, nil
 }
 
+func (c *Im) GetMessagesReadReceipt(ctx context.Context, arg *GetMessagesReadReceiptBody) (*GetMessagesReadReceiptRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetMessagesReadReceipt", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetMessagesReadReceiptRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Im) ModifyParticipantReadIndex(ctx context.Context, arg *ModifyParticipantReadIndexBody) (*ModifyParticipantReadIndexRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {

@@ -160,6 +160,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"BatchRerank": {
+			Method: http.MethodPost,
+			Path:   "/api/index/batch_rerank",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 	return apiInfos
 }
@@ -1087,4 +1095,15 @@ func (vikingDBService *VikingDBService) Rerank(query string, content string, tit
 	}
 	data, err := vikingDBService.DoRequest(context.Background(), "Rerank", nil, vikingDBService.convertMapToJson(params))
 	return data["data"].(float64), err
+}
+func (vikingDBService *VikingDBService) BatchRerank(datas []map[string]interface{}) ([]float64, error) {
+	params := map[string]interface{}{
+		"datas": datas,
+	}
+	data, err := vikingDBService.DoRequest(context.Background(), "BatchRerank", nil, vikingDBService.convertMapToJson(params))
+	var res []float64
+	for _, score := range data["data"].([]interface{}) {
+		res = append(res, score.(float64))
+	}
+	return res, err
 }

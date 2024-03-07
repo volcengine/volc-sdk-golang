@@ -17,7 +17,8 @@ var (
 )
 
 const (
-	reqIdHeaderKey = "x-tt-logid"
+	reqIdHeaderKey            = "x-tt-logid"
+	reqAuthorizationHeaderKey = "Authorization"
 )
 
 func ctxWithReqId(ctx context.Context, reqId string) context.Context {

@@ -6,12 +6,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
-	"net/http"
-
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"github.com/volcengine/volc-sdk-golang/service/maas/sse"
+	"io"
+	"net/http"
 )
 
 // MaaS ... use base client
@@ -57,6 +56,10 @@ func NewInstance(host, region string) *MaaS {
 		APIEmbeddings: {
 			Method: http.MethodPost,
 			Path:   "/api/v1/embeddings",
+		},
+		TOP: {
+			Method: http.MethodPost,
+			Path:   "/",
 		},
 	})
 

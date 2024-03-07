@@ -58,6 +58,14 @@ var (
 				"Version": []string{"2020-12-01"},
 			},
 		},
+		"GetMessagesReadReceipt": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMessagesReadReceipt"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
 		"ModifyParticipantReadIndex": {
 			Method: http.MethodPost,
 			Path:   "/",

@@ -2358,6 +2358,80 @@ type GetConversationUserCountResResult struct {
 	Count int64 `json:"Count"`
 }
 
+type GetMessagesReadReceiptBody struct {
+
+	// REQUIRED; 应用的唯一标志
+	AppID int32 `json:"AppId"`
+
+	// REQUIRED; 会话Id
+	ConversationShortID int64 `json:"ConversationShortId"`
+
+	// REQUIRED; 消息Id
+	MessageIDs []int64 `json:"MessageIds"`
+}
+
+type GetMessagesReadReceiptRes struct {
+
+	// REQUIRED
+	ResponseMetadata GetMessagesReadReceiptResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetMessagesReadReceiptResResult `json:"Result,omitempty"`
+}
+
+type GetMessagesReadReceiptResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string                                          `json:"Version"`
+	Error   *GetMessagesReadReceiptResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type GetMessagesReadReceiptResResponseMetadataError struct {
+
+	// REQUIRED
+	Code string `json:"Code"`
+
+	// REQUIRED
+	Message string `json:"Message"`
+}
+
+// GetMessagesReadReceiptResResult - 视请求的接口而定
+type GetMessagesReadReceiptResResult struct {
+
+	// REQUIRED; 已读回执详情
+	ReadReceipt []GetMessagesReadReceiptResResultReadReceiptItem `json:"ReadReceipt"`
+}
+
+type GetMessagesReadReceiptResResultReadReceiptItem struct {
+
+	// REQUIRED; 会话Id
+	ConversationShortID int64 `json:"ConversationShortId"`
+
+	// REQUIRED; 消息Id
+	MessageID int64 `json:"MessageId"`
+
+	// REQUIRED; 消息已读的UserId列表
+	ReadUserIDs []int64 `json:"ReadUserIds"`
+
+	// REQUIRED; 单聊中消息的接收方是否已读（只有单聊会话这个字段才有意义）
+	ReceiverIsRead bool `json:"ReceiverIsRead"`
+
+	// REQUIRED; 消息未读的UserId列表
+	UnReadUserIDs []int64 `json:"UnReadUserIds"`
+}
+
 type GetMessagesBody struct {
 
 	// REQUIRED; 应用的唯一标志
@@ -4200,6 +4274,7 @@ type GetMessagesQuery struct{}
 type UpdateFriend struct{}
 type BatchUpdateLiveParticipants struct{}
 type UnRegisterUsers struct{}
+type GetMessagesReadReceiptQuery struct{}
 type BatchGetBlockParticipants struct{}
 type BatchGetConversations struct{}
 type DeleteMessage struct{}
@@ -4237,6 +4312,7 @@ type AddBlackList struct{}
 type DeleteMessageQuery struct{}
 type DeleteFriend struct{}
 type AddFriend struct{}
+type GetMessagesReadReceipt struct{}
 type BatchDeleteConversationParticipantReq struct {
 	*BatchDeleteConversationParticipantQuery
 	*BatchDeleteConversationParticipantBody
@@ -4448,4 +4524,9 @@ type DeleteFriendReq struct {
 type AddBlackListReq struct {
 	*AddBlackListQuery
 	*AddBlackListBody
+}
+
+type GetMessagesReadReceiptReq struct {
+	*GetMessagesReadReceiptQuery
+	*GetMessagesReadReceiptBody
 }
