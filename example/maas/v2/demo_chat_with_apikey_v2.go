@@ -4,36 +4,27 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"os"
-
-	"github.com/volcengine/volc-sdk-golang/service/maas"
-	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
+	api "github.com/volcengine/volc-sdk-golang/service/maas/models/api/v2"
+	client "github.com/volcengine/volc-sdk-golang/service/maas/v2"
 )
 
 func main() {
-	r := maas.NewInstance("maas-api.ml-platform-cn-beijing.volces.com", "cn-beijing")
+	r := client.NewInstance("maas-api.ml-platform-cn-beijing.volces.com", "cn-beijing")
 
-	// fetch ak&sk from environmental variables
-	r.SetAccessKey(os.Getenv("VOLC_ACCESSKEY"))
-	r.SetSecretKey(os.Getenv("VOLC_SECRETKEY"))
-
-	//https://console.volcengine.com/api/top/ml_maas/cn-beijing/2024-01-01/CreateInferenceService
-
+	apikey := "{YOUR_APIKEY}"
+	r.SetApikey(apikey)
 	req := &api.ChatReq{
-		Model: &api.Model{
-			Name: "${YOUR_MODEL_NAME}",
-		},
 		Messages: []*api.Message{
 			{
-				Role:    maas.ChatRoleOfUser,
+				Role:    api.ChatRoleUser,
 				Content: "天为什么这么蓝？",
 			},
 			{
-				Role:    maas.ChatRoleOfAssistant,
+				Role:    api.ChatRoleAssistant,
 				Content: "因为有你",
 			},
 			{
-				Role:    maas.ChatRoleOfUser,
+				Role:    api.ChatRoleUser,
 				Content: "花儿为什么这么香？",
 			},
 		},
@@ -42,12 +33,14 @@ func main() {
 			Temperature:  0.8,
 		},
 	}
-	TestNormalChat(r, req)
-	TestStreamChat(r, req)
+
+	endpointId := "{YOUR_ENDPOINT_ID}"
+	testNormalChat(r, endpointId, req)
+	testStreamChat(r, endpointId, req)
 }
 
-func TestNormalChat(r *maas.MaaS, req *api.ChatReq) {
-	got, status, err := r.Chat(req)
+func testNormalChat(r *client.MaaS, endpointId string, req *api.ChatReq) {
+	got, status, err := r.Chat(endpointId, req)
 	if err != nil {
 		errVal := &api.Error{}
 		if errors.As(err, &errVal) { // the returned error always type of *api.Error
@@ -55,11 +48,11 @@ func TestNormalChat(r *maas.MaaS, req *api.ChatReq) {
 		}
 		return
 	}
-	fmt.Println("chat answer", mustMarshalJson(got))
+	fmt.Println("chat answer", marshalJson(got))
 }
 
-func TestStreamChat(r *maas.MaaS, req *api.ChatReq) {
-	ch, err := r.StreamChat(req)
+func testStreamChat(r *client.MaaS, endpointId string, req *api.ChatReq) {
+	ch, err := r.StreamChat(endpointId, req)
 	if err != nil {
 		errVal := &api.Error{}
 		if errors.As(err, &errVal) { // the returned error always type of *api.Error
@@ -71,19 +64,19 @@ func TestStreamChat(r *maas.MaaS, req *api.ChatReq) {
 	for resp := range ch {
 		if resp.Error != nil {
 			// it is possible that error occurs during response processing
-			fmt.Println(mustMarshalJson(resp.Error))
+			fmt.Println(marshalJson(resp.Error))
 			return
 		}
-		fmt.Println(mustMarshalJson(resp))
+		fmt.Println(marshalJson(resp))
 		// last response may contain `usage`
 		if resp.Usage != nil {
 			// last message, will return full response including usage, role, finish_reason, etc.
-			fmt.Println(mustMarshalJson(resp.Usage))
+			fmt.Println(marshalJson(resp.Usage))
 		}
 	}
 }
 
-func mustMarshalJson(v interface{}) string {
+func marshalJson(v interface{}) string {
 	s, _ := json.Marshal(v)
 	return string(s)
 }
