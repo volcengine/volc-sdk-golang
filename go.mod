@@ -11,9 +11,9 @@ require (
 	github.com/go-kit/kit v0.12.0
 	github.com/gogo/protobuf v1.3.2
 	github.com/google/go-querystring v1.1.0
+	github.com/google/martian v2.1.0+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/klauspost/compress v1.15.9 // indirect
-	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
 	github.com/pierrec/lz4 v2.6.1+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0
