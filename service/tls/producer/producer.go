@@ -2,7 +2,6 @@ package producer
 
 import (
 	"errors"
-	"fmt"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -17,9 +16,8 @@ import (
 const (
 	TimeoutException = "TimeoutException"
 
-	MaxLogSize       = 10 * 1024 * 1024
-	intMax     int   = 0x7FFFFFFF
-	int64Max   int64 = 0x7FFFFFFFFFFFFFFF
+	intMax   int   = 0x7FFFFFFF
+	int64Max int64 = 0x7FFFFFFFFFFFFFFF
 )
 
 type producer struct {
@@ -41,6 +39,14 @@ func newProducer(producerConfig *Config) *producer {
 
 	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret, "", producerConfig.Region)
 	producerConfig = validateProducerConfig(producerConfig)
+	if producerConfig.MaxBatchCount > 10000 {
+		level.Warn(logger).Log("msg", "MaxBatchCount is adjusted to 10000 (the maximum allowed value)")
+		producerConfig.MaxBatchCount = 10000
+	}
+	if producerConfig.MaxBatchSize > 5*1024*1024 {
+		level.Warn(logger).Log("msg", "MaxBatchSize is adjusted to 5 MB (the maximum allowed value)")
+		producerConfig.MaxBatchSize = 5 * 1024 * 1024
+	}
 
 	errorStatusMap := func() map[int]struct{} {
 		errorCodeMap := make(map[int]struct{})
@@ -195,7 +201,6 @@ func (producer *producer) waitTime() error {
 }
 
 func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
-
 	if batchLog.Log.Time == 0 {
 		batchLog.Log.Time = time.Now().Unix()
 	}
@@ -204,13 +209,6 @@ func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
 	case <-producer.closeCh:
 		return errors.New("the producer is closed")
 	default:
-	}
-
-	logSize := GetLogSize(batchLog.Log)
-	if logSize > MaxLogSize {
-		level.Warn(producer.logger).Log("msg", "failed to put log, log size too large")
-		level.Warn(producer.logger).Log("log_content", batchLog.Log.String())
-		return fmt.Errorf("the input log size: %d exceeds limitation: %d", logSize, MaxLogSize)
 	}
 
 	select {

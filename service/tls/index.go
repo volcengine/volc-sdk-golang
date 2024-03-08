@@ -127,7 +127,7 @@ func (c *LsClient) DescribeIndex(request *DescribeIndexRequest) (r *DescribeInde
 	if len(*response.UserInnerKeyValue) > 0 {
 		for k, v := range *response.UserInnerKeyValue {
 			v.Value.Delimiter = ReplaceWhiteSpaceCharacter(v.Value.Delimiter)
-			(*response.KeyValue)[k] = v
+			(*response.UserInnerKeyValue)[k] = v
 		}
 	}
 

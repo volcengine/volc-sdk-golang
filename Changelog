@@ -1,5 +1,8 @@
 ### Change log
 
+2024-03-08 Bumped to version v1.0.147
+- Updated service maas/tls
+
 2024-03-07 Bumped to version v1.0.146
 - Updated service maas/veen/vikingdb/im/visual
 
