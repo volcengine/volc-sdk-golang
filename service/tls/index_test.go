@@ -352,6 +352,35 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 				},
 			},
 		},
+		{
+			TopicID: suite.topic,
+			UserInnerKeyValue: &[]KeyValueInfo{
+				{
+					Key: "__content__",
+					Value: Value{
+						ValueType:      "text",
+						Delimiter:      ",:-/ ",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+			},
+		}: {
+			TopicID: suite.topic,
+			UserInnerKeyValue: &[]KeyValueInfo{
+				{
+					Key: "__content__",
+					Value: Value{
+						ValueType:      "text",
+						Delimiter:      ",:-/ ",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        false,
+					},
+				},
+			},
+		},
 	}
 
 	for createIndexReq, expectGetIndexResp := range testcases {
@@ -362,7 +391,16 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 		suite.NoError(err)
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
 		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
-		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
+		if expectGetIndexResp.KeyValue != nil {
+			suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
+		} else {
+			suite.Equal(0, len(*actualGetIndexResp.KeyValue))
+		}
+		if expectGetIndexResp.UserInnerKeyValue != nil {
+			suite.Equal(expectGetIndexResp.UserInnerKeyValue, actualGetIndexResp.UserInnerKeyValue)
+		} else {
+			suite.Equal(0, len(*actualGetIndexResp.UserInnerKeyValue))
+		}
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
