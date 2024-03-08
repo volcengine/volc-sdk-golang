@@ -1,11 +1,10 @@
 package tls
 
 const (
-	defaultLogUserAgent = "volc-sdk-golang/v1.0.1"
-	RequestIDHeader     = "x-tls-requestid"
-	AgentHeader         = "User-Agent"
-	ContentMd5Header    = "Content-MD5"
-	ServiceName         = "TLS"
+	RequestIDHeader  = "x-tls-requestid"
+	AgentHeader      = "User-Agent"
+	ContentMd5Header = "Content-MD5"
+	ServiceName      = "TLS"
 
 	CompressLz4  = "lz4"
 	CompressNone = "none"

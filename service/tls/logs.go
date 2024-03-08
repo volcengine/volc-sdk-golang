@@ -49,9 +49,6 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 	if err != nil {
 		return nil, err
 	}
-	if len(bodyBytes) >= 11*1024*1024 {
-		return nil, NewClientError(errors.New("LogGroupList size too big, should be smaller than 11M"))
-	}
 
 	headers := map[string]string{
 		rawBodySizeHeader:    strconv.Itoa(originalLength),

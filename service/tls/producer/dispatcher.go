@@ -61,7 +61,7 @@ func initDispatcher(config *Config, sender *Sender, logger log.Logger, threadPoo
 func (dispatcher *Dispatcher) addOrSendProducerBatch(key string, batchLog *BatchLog, producerBatch *Batch) {
 	totalDataCount := producerBatch.getLogCount() + 1
 
-	if producerBatch.totalDataSize > dispatcher.producerConfig.MaxBatchSize && producerBatch.totalDataSize < 11*1024*1024 && totalDataCount <= dispatcher.producerConfig.MaxBatchCount {
+	if producerBatch.totalDataSize > dispatcher.producerConfig.MaxBatchSize && producerBatch.totalDataSize < 5*1024*1024 && totalDataCount <= dispatcher.producerConfig.MaxBatchCount {
 		producerBatch.addLogToLogGroup(batchLog.Log)
 		if batchLog.Key.CallBackFun != nil {
 			producerBatch.addProducerBatchCallBack(batchLog.Key.CallBackFun)
