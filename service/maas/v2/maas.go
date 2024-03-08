@@ -604,7 +604,7 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		resp, code, needRetry, err = cli.doRequest(ctx, apiKey, req, timeout)
+		resp, code, needRetry, err = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
 		if needRetry {
 			return err
 		} else {
