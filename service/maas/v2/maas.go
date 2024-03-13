@@ -23,12 +23,11 @@ import (
 // MaaS ... use base client
 type MaaS struct {
 	*base.Client
-	apikey    string
-	apikeyTtl int64
+	settedApikey string
 }
 
 func (cli *MaaS) SetApikey(apikey string) {
-	cli.apikey = apikey
+	cli.settedApikey = apikey
 }
 
 // NewInstance ...
@@ -77,10 +76,6 @@ func NewInstance(host, region string) *MaaS {
 		maas.APIAudioSpeech: {
 			Method: http.MethodPost,
 			Path:   "/api/v2/endpoint/%s/audio/speech",
-		},
-		maas.TOP: {
-			Method: http.MethodPost,
-			Path:   "/",
 		},
 	})
 
@@ -211,13 +206,9 @@ func (cli *MaaS) StreamChatWithCtx(ctx context.Context, endpointId string, req *
 func (cli *MaaS) ChatImpl(ctx context.Context, endpointId string, body []byte) (*api.ChatResp, int, error) {
 	ctx = getContext(ctx)
 
-	if endpointId != "" && cli.apikey == "" && cli.apikeyTtl == 0 {
-		if err := cli.getKey(endpointId); err != nil {
-			return nil, 0, err
-		}
-	}
+	apikey := cli.settedApikey
 
-	respBody, status, err := cli.request(ctx, maas.APIChat, nil, endpointId, body, cli.apikey)
+	respBody, status, err := cli.request(ctx, maas.APIChat, nil, endpointId, body, apikey)
 	if err != nil {
 		return nil, status, err
 	}
@@ -247,8 +238,12 @@ func (cli *MaaS) StreamChatImpl(ctx context.Context, endpointId string, body []b
 	req.Body = ioutil.NopCloser(bytes.NewReader(body))
 	timeout := maas.GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 
-	req = cli.ServiceInfo.Credentials.Sign(req)
-	req.Header.Set(reqAuthorizationHeaderKey, "Bearer "+cli.apikey)
+	apikey := cli.settedApikey
+	if apikey == "" {
+		req = cli.ServiceInfo.Credentials.Sign(req)
+	} else if apikey != "" {
+		req.Header.Set(reqAuthorizationHeaderKey, "Bearer "+apikey)
+	}
 
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	req = req.WithContext(ctx)
@@ -328,7 +323,7 @@ func (cli *MaaS) initCertByReq(ctx context.Context, endpointId string, req *api.
 	if err != nil {
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), reqIdFromCtx(ctx))
 	}
-	respBody, _, err := cli.request(ctx, maas.APICert, nil, endpointId, body, cli.apikey)
+	respBody, _, err := cli.request(ctx, maas.APICert, nil, endpointId, body, cli.settedApikey)
 	if err != nil {
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to get CA from proxy: %s", err.Error()), reqIdFromCtx(ctx))
 	}
@@ -398,13 +393,9 @@ func (cli *MaaS) TokenizationWithCtx(ctx context.Context, endpointId string, req
 func (cli *MaaS) tokenizationImpl(ctx context.Context, endpointId string, body []byte) (*api.TokenizeResp, int, error) {
 	ctx = getContext(ctx)
 
-	if endpointId != "" && cli.apikey == "" && cli.apikeyTtl == 0 {
-		if err := cli.getKey(endpointId); err != nil {
-			return nil, 0, err
-		}
-	}
+	apikey := cli.settedApikey
 
-	respBody, status, err := cli.request(ctx, maas.APITokenization, nil, endpointId, body, cli.apikey)
+	respBody, status, err := cli.request(ctx, maas.APITokenization, nil, endpointId, body, apikey)
 	if err != nil {
 		return nil, status, err
 	}
@@ -434,13 +425,9 @@ func (cli *MaaS) ClassificationWithCtx(ctx context.Context, endpointId string, r
 func (cli *MaaS) classificationImpl(ctx context.Context, endpointId string, body []byte) (*api.ClassificationResp, int, error) {
 	ctx = getContext(ctx)
 
-	if endpointId != "" && cli.apikey == "" && cli.apikeyTtl == 0 {
-		if err := cli.getKey(endpointId); err != nil {
-			return nil, 0, err
-		}
-	}
+	apikey := cli.settedApikey
 
-	respBody, status, err := cli.request(ctx, maas.APIClassification, nil, endpointId, body, cli.apikey)
+	respBody, status, err := cli.request(ctx, maas.APIClassification, nil, endpointId, body, apikey)
 	if err != nil {
 		return nil, status, err
 	}
@@ -470,13 +457,8 @@ func (cli *MaaS) EmbeddingsWithCtx(ctx context.Context, endpointId string, req *
 func (cli *MaaS) embeddingsImpl(ctx context.Context, endpointId string, body []byte) (*api.EmbeddingsResp, int, error) {
 	ctx = getContext(ctx)
 
-	if endpointId != "" && cli.apikey == "" && cli.apikeyTtl == 0 {
-		if err := cli.getKey(endpointId); err != nil {
-			return nil, 0, err
-		}
-	}
-
-	respBody, status, err := cli.request(ctx, maas.APIEmbeddings, nil, endpointId, body, cli.apikey)
+	apikey := cli.settedApikey
+	respBody, status, err := cli.request(ctx, maas.APIEmbeddings, nil, endpointId, body, apikey)
 	if err != nil {
 		return nil, status, err
 	}
@@ -489,56 +471,11 @@ func (cli *MaaS) embeddingsImpl(ctx context.Context, endpointId string, body []b
 	return output, status, nil
 }
 
-// POST method
-// Tokenization
-func (cli *MaaS) CreateOrRefreshApiKey(req *api.CreateOrRefreshApiKeyRequest) (*api.CreateOrRefreshApiKeyResponse, int, error) {
-	return cli.CreateOrRefreshApiKeyWithCtx(context.Background(), req)
-}
-
-func (cli *MaaS) CreateOrRefreshApiKeyWithCtx(ctx context.Context, req *api.CreateOrRefreshApiKeyRequest) (*api.CreateOrRefreshApiKeyResponse, int, error) {
-	bts, err := json.Marshal(req)
-	if err != nil {
-		return nil, 0, api.NewClientSDKRequestError(fmt.Sprintf("failed to marshal request: %s", err.Error()), "")
-	}
-	return cli.createOrRefreshApiKeyImpl(ctx, bts)
-}
-
-func (cli *MaaS) createOrRefreshApiKeyImpl(ctx context.Context, body []byte) (*api.CreateOrRefreshApiKeyResponse, int, error) {
-	ctx = getContext(ctx)
-
-	query := map[string][]string{"Version": {"2024-01-01"}, "Action": {"CreateOrRefreshAPIKey"}}
-	respBody, status, err := cli.request(ctx, maas.TOP, query, "", body, "")
-	if err != nil {
-		return nil, status, err
-	}
-
-	var respMap map[string]interface{}
-	err = json.Unmarshal(respBody, &respMap)
-	if err != nil {
-		return nil, status, err
-	}
-
-	respResult, ok := respMap["Result"]
-	if !ok {
-		return nil, status, fmt.Errorf("api_key error, please contact oncall")
-	}
-
-	respResultByteData, err := json.Marshal(respResult)
-	if err != nil {
-		return nil, status, err
-	}
-
-	output := new(api.CreateOrRefreshApiKeyResponse)
-	if err = json.Unmarshal(respResultByteData, output); err != nil {
-		return nil, status, api.NewClientSDKRequestError(fmt.Sprintf("failed to unmarshal response: %s", err.Error()), "")
-	}
-	return output, status, nil
-}
-
 func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration, authApikey string) ([]byte, int, bool, error) {
-	req = cli.ServiceInfo.Credentials.Sign(req)
 
-	if authApikey != "" {
+	if authApikey == "" {
+		req = cli.ServiceInfo.Credentials.Sign(req)
+	} else if authApikey != "" {
 		req.Header.Set(reqAuthorizationHeaderKey, "Bearer "+authApikey)
 	}
 
@@ -622,50 +559,4 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 	}
 
 	return resp, code, err
-}
-
-func (cli *MaaS) getKey(endpointId string) error {
-	var err error
-	apikey := cli.apikey
-	if apikey == "" {
-		cli.apikey, err = cli.applyApikey(endpointId, 0, nil)
-		if err != nil {
-			return err
-		}
-	}
-
-	if time.Now().Unix()+300 > cli.apikeyTtl {
-		cli.apikey, err = cli.applyApikey(endpointId, 0, nil)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-func (cli *MaaS) applyApikey(endpointId string, Ttl int64, endpointIdList []string) (string, error) {
-	topCli := NewInstance("open.volcengineapi.com", "cn-beijing")
-	topCli.ServiceInfo.Credentials.AccessKeyID = cli.ServiceInfo.Credentials.AccessKeyID
-	topCli.ServiceInfo.Credentials.SecretAccessKey = cli.ServiceInfo.Credentials.SecretAccessKey
-
-	if Ttl == 0 {
-		Ttl = 604800
-	}
-	req := &api.CreateOrRefreshApiKeyRequest{
-		Ttl:            Ttl, // expected apiKey expired time
-		EndpointIdList: []string{endpointId},
-	}
-	rsp, _, err := topCli.CreateOrRefreshApiKey(req)
-	if err != nil {
-		errVal := &api.Error{}
-		if errors.As(err, &errVal) { // the returned error always type of *api.Error
-			fmt.Printf("meet maas error=%v", errVal)
-		}
-		return "", err
-	}
-	fmt.Printf("rsp.ApiKey=%v", rsp.ApiKey)
-	apikey := rsp.ApiKey
-	cli.apikey = apikey
-	cli.apikeyTtl = time.Now().Unix() + Ttl
-	return apikey, nil
 }
