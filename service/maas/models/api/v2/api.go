@@ -612,16 +612,6 @@ type ErrorResp struct {
 	Error *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
 }
 
-type CreateOrRefreshApiKeyRequest struct {
-	Ttl            int64    `json:"Ttl,omitempty" yaml:"Ttl,omitempty" mapstructure:"Ttl,omitempty"`
-	EndpointIdList []string `json:"EndpointIdList,omitempty" yaml:"EndpointIdList,omitempty" mapstructure:"EndpointIdList,omitempty"`
-}
-
-type CreateOrRefreshApiKeyResponse struct {
-	ApiKey string `json:"ApiKey,omitempty" yaml:"ApiKey,omitempty" mapstructure:"ApiKey,omitempty"`
-	Error  *Error `json:"error,omitempty" yaml:"error,omitempty" mapstructure:"error,omitempty"`
-}
-
 type SpeechReq struct {
 	Input string `json:"input,omitempty" yaml:"input,omitempty" mapstructure:"input,omitempty"`
 
