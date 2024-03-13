@@ -12,6 +12,7 @@ func main() {
 	r := client.NewInstance("maas-api.ml-platform-cn-beijing.volces.com", "cn-beijing")
 
 	apikey := "{YOUR_APIKEY}"
+
 	r.SetApikey(apikey)
 	req := &api.ChatReq{
 		Messages: []*api.Message{
