@@ -731,7 +731,7 @@ func (p *BusinessSecurity) AsyncLiveVideoRisk(req *AsyncRiskDetectionRequest) (*
 
 // Risk result
 // 风险识别结果获取接口
-func (p *BusinessSecurity) GetVideoLiveResult(req *VideoResultRequest) (*VideoResultResponse, error) {
+func (p *BusinessSecurity) GetVideoLiveResult(req *VideoResultRequest) (*VideoLiveResultResponse, error) {
 	respBody, _, err := p.Client.Query("GetVideoLiveResul", req.ToQuery())
 	if err != nil {
 		// Retry on error
@@ -741,7 +741,7 @@ func (p *BusinessSecurity) GetVideoLiveResult(req *VideoResultRequest) (*VideoRe
 			if err != nil {
 				return nil, fmt.Errorf("GetVideoLiveResult: fail to do request, %v", err)
 			}
-			result := new(VideoResultResponse)
+			result := new(VideoLiveResultResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -749,7 +749,7 @@ func (p *BusinessSecurity) GetVideoLiveResult(req *VideoResultRequest) (*VideoRe
 		}
 		return nil, fmt.Errorf("GetImageResult: fail to do request, %v", err)
 	}
-	result := new(VideoResultResponse)
+	result := new(VideoLiveResultResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -817,7 +817,7 @@ func (p *BusinessSecurity) AsyncLiveAudioRisk(req *AsyncRiskDetectionRequest) (*
 
 // audio Risk result
 // 风险识别结果获取接口
-func (p *BusinessSecurity) GetAudioLiveResult(req *VideoResultRequest) (*AudioResultResponse, error) {
+func (p *BusinessSecurity) GetAudioLiveResult(req *VideoResultRequest) (*AudioLiveResultResponse, error) {
 	respBody, _, err := p.Client.Query("GetAudioLiveResult", req.ToQuery())
 	if err != nil {
 		// Retry on error
@@ -827,7 +827,7 @@ func (p *BusinessSecurity) GetAudioLiveResult(req *VideoResultRequest) (*AudioRe
 			if err != nil {
 				return nil, fmt.Errorf("GetAudioLiveResult: fail to do request, %v", err)
 			}
-			result := new(AudioResultResponse)
+			result := new(AudioLiveResultResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -835,7 +835,7 @@ func (p *BusinessSecurity) GetAudioLiveResult(req *VideoResultRequest) (*AudioRe
 		}
 		return nil, fmt.Errorf("GetAudioLiveResult: fail to do request, %v", err)
 	}
-	result := new(AudioResultResponse)
+	result := new(AudioLiveResultResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
