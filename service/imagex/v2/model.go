@@ -108,11 +108,11 @@ type ApplyImageUploadResResultUploadAddressStoreInfosItem struct {
 type CommitImageUploadBody struct {
 
 	// REQUIRED; 一次上传会话 Key。 :::tip 请参考获取文件上传地址 [https://www.volcengine.com/docs/508/9397]获取。 :::
-	SessionKey string `json:"SessionKey"`
-
-	// REQUIRED; 上传成功的资源 ID。
-	SuccessOids []string `json:"SuccessOids"`
+	SessionKey  string   `json:"SessionKey"`
 	DecryptKeys []string `json:"DecryptKeys,omitempty"`
+
+	// 上传成功的资源 ID。
+	SuccessOids []string `json:"SuccessOids,omitempty"`
 }
 
 type CommitImageUploadQuery struct {
@@ -272,6 +272,18 @@ type Components18K1KvdSchemasGetallimageservicesresPropertiesResultPropertiesSer
 	Value string `json:"Value"`
 }
 
+type Components1D40MkcSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesStoragerulesItems struct {
+	Action string `json:"Action"`
+
+	Day int `json:"Day"`
+
+	Enable bool `json:"Enable"`
+
+	Event string `json:"Event"`
+
+	Prefix string `json:"Prefix"`
+}
+
 type Components1T23IneSchemasGetallimagetemplatesresPropertiesResultPropertiesTemplatesItemsPropertiesFiltersItems struct {
 	Name string `json:"Name"`
 
@@ -316,6 +328,8 @@ type ComponentsPqmsj3SchemasGetallimageservicesresPropertiesResultPropertiesServ
 	Host string `json:"Host"`
 
 	Hosts map[string]int `json:"Hosts"`
+
+	Origin *GetAllImageServicesResResultServicesItemMirrorItemOrigin `json:"Origin"`
 
 	Schema string `json:"Schema"`
 
@@ -974,7 +988,7 @@ type CreateImageMigrateTaskBodyTaskSource struct {
 	// 仅迁移匹配的正则表达式列表的文件。默认为空，表示对该存储 Bucket 内资源执行全量迁移。
 	// :::tip
 	// * 多条正则表达式之间是"或"的关系，即源文件匹配任何一条正则表达式即视为符合迁移条件。
-	// * 正则过滤规则需要遍历源桶中的全部文件，如果源桶中文件数量较多会降低迁移速度。 :::
+	// * 正则过滤规则需要遍历源桶中的全部文件，如果源桶中文件数���较多会降低迁移速度。 :::
 	Regex []string `json:"Regex,omitempty"`
 
 	// Bucket 所在地区。仅当Vendor非URL/OSS/KODO/AWS时为必填。
@@ -1339,22 +1353,41 @@ type CreateImageTemplateBodyFiltersItem struct {
 // CreateImageTemplateBodyOutputExtra - 用于图片服务输出时的图片编码
 type CreateImageTemplateBodyOutputExtra struct {
 
-	// 是否带透明通道编码，"false"/"true"
+	// 仅当OutputFormat取值为heic时配置有效 是否带透明通道编码，取值如下所示：
+	// * true：是
+	// * false：否
 	HeicAlphaReserve string `json:"heic.alpha.reserve,omitempty"`
 
-	// heic位深，"8"/"10"
+	// 仅当OutputFormat取值为heic时配置有效 色位深度，值越大则提供的图像色彩范围越多，使图像颜色变化的更细腻，但图像体积也会增大。取值如下所示：
+	// * 8：8bit
+	// * 10：10bit
 	HeicEncodeDepth string `json:"heic.encode.depth,omitempty"`
 
-	// heic格式是否开启ROI编码"true"/"false"
+	// 仅当OutputFormat取值为heic时配置有效 是否开启 ROI 编码，取值如下所示：
+	// * true：是
+	// * false：否
 	HeicRoi string `json:"heic.roi,omitempty"`
 
-	// heic缩略图比例
+	// 仅当OutputFormat取值为heic时配置有效 缩略图比例。在原图基础上，编码缩小一定倍数的小分辨率图片，跟大图一起封装在同一张图片中，缩小倍数不建议过大，一般为 5~10 之间相对合理。
 	HeicThumbRatio string `json:"heic.thumb.ratio,omitempty"`
 
-	// 是否采用jpeg渐进编码格式,取值为"true" / "false"
+	// jpeg 的 alpha 图片是否降级为 png，指定为 png 时表示降级为 png 格式。缺省情况下默认为空，表示不降级。
+	JPEGAlphaDemotionPNG string `json:"jpeg.alpha.demotion.png,omitempty"`
+
+	// 是否采用 jpeg 渐进编码格式，取值如下所示：
+	// * true：是
+	// * false：否
 	JPEGProgressive string `json:"jpeg.progressive,omitempty"`
 
-	// 是否压缩颜色空间,取值为"true" / "false"
+	// 指定 jpeg 体积的输出大小，需同时设置 jpeg.size.fixed.padding，二者缺一不可。 指定输出体积大小，单位为 Byte。
+	JPEGSizeFixed string `json:"jpeg.size.fixed,omitempty"`
+
+	// 指定 jpeg 体积的输出大小，需同时指定 jpeg.size.fixed，二者缺一不可。 体积填充方式，取值固定为 append。
+	JPEGSizeFixedPadding string `json:"jpeg.size.fixed.padding,omitempty"`
+
+	// 是否压缩颜色空间，取值如下所示：
+	// * true：是
+	// * false：否
 	PNGUseQuant string `json:"png.use_quant,omitempty"`
 }
 
@@ -2023,7 +2056,7 @@ type DeleteImageUploadFilesBody struct {
 type DeleteImageUploadFilesQuery struct {
 
 	// REQUIRED; 服务 ID。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
@@ -2058,8 +2091,11 @@ type DeleteImageUploadFilesResResponseMetadata struct {
 // DeleteImageUploadFilesResResult - 视请求的接口而定
 type DeleteImageUploadFilesResResult struct {
 
-	// REQUIRED; 成功删除的文件 Uri 列表。
+	// REQUIRED; 文件成功删除的 URI 列表
 	DeletedFiles []string `json:"DeletedFiles"`
+
+	// REQUIRED; 文件不存在的无效 URI 列表
+	InvaildFiles []string `json:"InvaildFiles"`
 }
 
 type DeleteTemplatesFromBinBody struct {
@@ -2374,6 +2410,92 @@ type DescribeImageXBillingRequestCntUsageResResultRequestCntDataPropertiesItemsI
 	Value int `json:"Value"`
 }
 
+type DescribeImageXBucketRetrievalUsageQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// Bucket 名称。支持同时查询多个 BucketName，不同的 BucketNmae 使用逗号分隔。 您可以通过调用 GetAllImageServices [https://www.volcengine.com/docs/508/9360]
+	// 获取所需的 Bucket 名称。
+	BucketNames string `json:"BucketNames,omitempty" query:"BucketNames"`
+
+	// 需要分组查询的参数，多个数据用逗号分隔。支持取值如下：
+	// * ServiceId：服务 ID
+	// * BucketName：Bucket 名称
+	// * StorageType：存储类型
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+}
+
+type DescribeImageXBucketRetrievalUsageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXBucketRetrievalUsageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXBucketRetrievalUsageResResult `json:"Result"`
+}
+
+type DescribeImageXBucketRetrievalUsageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXBucketRetrievalUsageResResult struct {
+
+	// REQUIRED; 计量数据列表
+	StorageData []*DescribeImageXBucketRetrievalUsageResResultStorageDataItem `json:"StorageData"`
+}
+
+type DescribeImageXBucketRetrievalUsageResResultStorageDataItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXBucketRetrievalUsageResResultStorageDataPropertiesItemsItem `json:"Data"`
+
+	// Bucket 名称，GroupBy包含BucketName时有返回值。
+	BucketName string `json:"BucketName,omitempty"`
+
+	// 服务 ID，GroupBy包含ServiceId时有返回值。
+	ServiceID string `json:"ServiceId,omitempty"`
+
+	// 存储类型，GroupBy包含StorageType时有返回值。取值：
+	// * STANDARD：标准存储
+	// * IA：低频存储
+	// * ARCHIVE：归档存储
+	// * COLD_ARCHIVE：冷归档存储
+	StorageType string `json:"StorageType,omitempty"`
+}
+
+type DescribeImageXBucketRetrievalUsageResResultStorageDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片结束时刻。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 单位：Byte
+	Value float64 `json:"Value"`
+}
+
 type DescribeImageXBucketUsageQuery struct {
 
 	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。
@@ -2681,7 +2803,7 @@ type DescribeImageXCdnDurationDetailByTimeBody struct {
 	// 需要匹配的国家名称。 不传则匹配所有国家。 取值为海外时，匹配海外所有国家。
 	Country string `json:"Country,omitempty"`
 
-	// 需要匹配的域名，不传则匹配所有域名
+	// 需要匹配的域��，不传则匹配所有域名
 	Domain []string `json:"Domain,omitempty"`
 
 	// 需要匹配的自定义维度项
@@ -6025,7 +6147,7 @@ type DescribeImageXEdgeRequestTrafficQuery struct {
 	Regions string `json:"Regions,omitempty" query:"Regions"`
 
 	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX ���制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
@@ -6201,7 +6323,7 @@ type DescribeImageXHitRateTrafficDataQuery struct {
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
 	// 限制查询的服务 ID，传入多个时用英文逗号分割。缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服��� ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
@@ -8810,6 +8932,9 @@ type GetAllImageServicesResResultServicesItem struct {
 	// REQUIRED; 绑定域名的相关信息。
 	DomainInfos []*GetAllImageServicesResResultServicesPropertiesItemsItem `json:"DomainInfos"`
 
+	// REQUIRED
+	Field5 string `json:"Field5"`
+
 	// REQUIRED; 是否配置鉴权 key，取值如下所示：
 	// * true：是
 	// * false：否
@@ -8819,7 +8944,7 @@ type GetAllImageServicesResResultServicesItem struct {
 	ImageYAttribute *GetAllImageServicesResResultServicesItemImageYAttribute `json:"ImageYAttribute"`
 
 	// REQUIRED; 镜像回源配置。
-	Mirror []*ComponentsPqmsj3SchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesMirrorItems `json:"Mirror"`
+	Mirror *GetAllImageServicesResResultServicesItemMirror `json:"Mirror"`
 
 	// REQUIRED; 是否开启源地址访问，取值如下所示：
 	// * true：是
@@ -8831,6 +8956,9 @@ type GetAllImageServicesResResultServicesItem struct {
 
 	// REQUIRED; 仅tob账号有值
 	ProjectName string `json:"ProjectName"`
+
+	// REQUIRED
+	ResourceLimitedVisit *GetAllImageServicesResResultServicesItemResourceLimitedVisit `json:"ResourceLimitedVisit"`
 
 	// REQUIRED; 仅tob账号有值
 	ResourceTags []*Components18K1KvdSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesResourcetagsItems `json:"ResourceTags"`
@@ -8861,7 +8989,7 @@ type GetAllImageServicesResResultServicesItem struct {
 	ServiceType string `json:"ServiceType"`
 
 	// REQUIRED; 资源配置。
-	Storage []*ComponentsDrd6S5SchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesStorageItems `json:"Storage"`
+	Storage *GetAllImageServicesResResultServicesItemStorage `json:"Storage"`
 
 	// REQUIRED; 该服务的图片模板固定前缀。
 	TemplatePrefix string `json:"TemplatePrefix"`
@@ -8871,8 +8999,14 @@ type GetAllImageServicesResResultServicesItem struct {
 	// * false：否
 	UploadOverwrite bool `json:"UploadOverwrite"`
 
+	// REQUIRED; 绑定点播空间配置
+	VodSpace *GetAllImageServicesResResultServicesItemVodSpace `json:"VodSpace"`
+
 	// 事件通知规则
 	EventRules []*Components16Kv6ElSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesEventrulesItems `json:"EventRules,omitempty"`
+
+	// 降冷存储配置
+	StorageRules []*Components1D40MkcSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesStoragerulesItems `json:"StorageRules,omitempty"`
 }
 
 // GetAllImageServicesResResultServicesItemImageYAttribute - 自定义处理样式具体配置
@@ -8885,6 +9019,74 @@ type GetAllImageServicesResResultServicesItemImageYAttribute struct {
 
 	// REQUIRED; 样式分割符
 	StyleSeparators []string `json:"StyleSeparators"`
+}
+
+// GetAllImageServicesResResultServicesItemMirror - 镜像回源配置。
+type GetAllImageServicesResResultServicesItemMirror struct {
+
+	// REQUIRED; 镜像回源下载原图时，携带的 HTTP 头部，键值都为 String 类型。
+	Headers map[string]interface{} `json:"Headers"`
+
+	// REQUIRED; 镜像回源域名。
+	Host string `json:"Host"`
+
+	// REQUIRED; 带权重回源域名，key 为 String 类型时，代表镜像回源域名；value 为 Integer 类型时，代表域名权重。
+	Hosts map[string]int `json:"Hosts"`
+
+	// REQUIRED; 下载图片的协议，取值如下所示：
+	// * http
+	// * https
+	Schema string `json:"Schema"`
+
+	// REQUIRED; 镜像源 URI，其中图片名用 %s 占位符替代，比如/obj/%s。
+	Source string `json:"Source"`
+}
+
+// GetAllImageServicesResResultServicesItemMirrorItemOrigin - 镜像源站
+type GetAllImageServicesResResultServicesItemMirrorItemOrigin struct {
+
+	// REQUIRED; 镜像源站参数
+	Param interface{} `json:"Param"`
+
+	// REQUIRED; 镜像源站类型
+	Type string `json:"Type"`
+}
+
+type GetAllImageServicesResResultServicesItemResourceLimitedVisit struct {
+
+	// REQUIRED
+	AllowDomains []string `json:"AllowDomains"`
+
+	// REQUIRED
+	Enable bool `json:"Enable"`
+}
+
+// GetAllImageServicesResResultServicesItemStorage - 资源配置。
+type GetAllImageServicesResResultServicesItemStorage struct {
+
+	// REQUIRED; 是否支持任意文件格式上传，取值如下所示：
+	// * true：是
+	// * false：否
+	AllTypes bool `json:"AllTypes"`
+
+	// REQUIRED; 存储 Bucket 名称。
+	BktName string `json:"BktName"`
+
+	// REQUIRED; 保存时间，单位为秒。
+	TTL int `json:"TTL"`
+}
+
+// GetAllImageServicesResResultServicesItemVodSpace - 绑定点播空间配置
+type GetAllImageServicesResResultServicesItemVodSpace struct {
+
+	// REQUIRED; 点播空间存储桶名称
+	Bucket string `json:"Bucket"`
+
+	// REQUIRED; 空间所在地区
+	Region string `json:"Region"`
+
+	// REQUIRED; 点播空间名
+	SpaceName string `json:"SpaceName"`
 }
 
 type GetAllImageServicesResResultServicesPropertiesItemsItem struct {
@@ -8902,6 +9104,9 @@ type GetAllImageServicesResResultServicesPropertiesItemsItem struct {
 
 	// REQUIRED; 域名状态。
 	Status string `json:"Status"`
+
+	// REQUIRED; 是否开启鉴权
+	URLAuth bool `json:"UrlAuth"`
 }
 
 type GetAllImageTemplatesQuery struct {
@@ -9443,6 +9648,9 @@ type GetDomainConfigResResult struct {
 
 	// REQUIRED; 域名状态
 	Status string `json:"status"`
+
+	// 页面优化设置
+	PageOptimization *GetDomainConfigResResultPageOptimization `json:"page_optimization,omitempty"`
 }
 
 // GetDomainConfigResResultAccessControl - 访问控制配置
@@ -9451,8 +9659,11 @@ type GetDomainConfigResResultAccessControl struct {
 	// REQUIRED; IP 访问控制配置
 	IPAuth *GetDomainConfigResResultAccessControlIPAuth `json:"ip_auth"`
 
-	// REQUIRED; Referer 访问限制配置
-	ReferLink *GetDomainConfigResResultAccessControlReferLink `json:"refer_link"`
+	// REQUIRED
+	ReferLink string `json:"refer_link"`
+
+	// REQUIRED; Referer 防盗链配置
+	RefererLink *GetDomainConfigResResultAccessControlRefererLink `json:"referer_link"`
 
 	// REQUIRED; 远程鉴权设置
 	RemoteAuth *GetDomainConfigResResultAccessControlRemoteAuth `json:"remote_auth"`
@@ -9481,28 +9692,38 @@ type GetDomainConfigResResultAccessControlIPAuth struct {
 	Values []string `json:"values"`
 }
 
-// GetDomainConfigResResultAccessControlReferLink - Referer 访问限制配置
-type GetDomainConfigResResultAccessControlReferLink struct {
+// GetDomainConfigResResultAccessControlRefererLink - Referer 防盗链配置
+type GetDomainConfigResResultAccessControlRefererLink struct {
 
-	// REQUIRED; 是否允许空 Referer，取值如下所示：
-	// * true：允许空 Referer
-	// * false：禁止空 Referer
+	// REQUIRED; 是否允许空 Refer，取值如下所示：
+	// * true：允许空 Refer
+	// * false：不允许空 Refer
 	AllowEmptyRefer bool `json:"allow_empty_refer"`
 
-	// REQUIRED; 是否开启 Referer 访问限制，取值如下所示：
-	// * true：开启 Referer 访问限制
-	// * false：关闭 Referer 访问限制
+	// REQUIRED; 是否开启 Referer 防盗链，取值如下所示：
+	// * true：开启
+	// * false：关闭
 	Enabled bool `json:"enabled"`
 
-	// REQUIRED; 是否是 Referer 白名单模式，取值如下所示：
-	// * true：白名单模式
-	// * false：黑名单模式 :::tip 当is_white_mode为false时，即选用黑名单时，需确保allow_empty_refer为true。 :::
+	// REQUIRED; Referers 列表在匹配时是否是大小写敏感的。取值如下所示：
+	// * true: 表示大小写不敏感。
+	// * false: 表示大小写敏感。
+	IgnoreCase bool `json:"ignore_case"`
+
+	// REQUIRED; Referers 列表的 Referer 头部值是否必须以 HTTP 或者 HTTPS 开头。取值如下所示：
+	// * true: 表示不以 HTTP 或者 HTTPS 开头的 Referer 头部值是合法的。
+	// * false: 表示不以 HTTP 或者 HTTPS 开头 Referer 头部值是非法的。
+	IgnoreScheme bool `json:"ignore_scheme"`
+
+	// REQUIRED; 是否选择白名单，取值如下所示：
+	// * true：选择白名单
+	// * false：不选择白名单
 	IsWhiteMode bool `json:"is_white_mode"`
 
-	// REQUIRED; 正则规则列表
+	// REQUIRED; 正则表达式规则列表
 	RegexValues []string `json:"regex_values"`
 
-	// REQUIRED; Referer 列表
+	// REQUIRED; 根据是否为白名单，为对应的白/黑名单的值。
 	Values []string `json:"values"`
 }
 
@@ -9804,6 +10025,11 @@ type GetDomainConfigResResultHTTPSConfig struct {
 	// REQUIRED; 证书 ID，若enable_https为true，则为必选。
 	CertID string `json:"cert_id"`
 
+	// REQUIRED; 是否开启强制跳转，取值如下所示：
+	// * true：开启
+	// * false：关闭
+	EnableForceRedirect bool `json:"enable_force_redirect"`
+
 	// REQUIRED; 是否开启 HTTP2，取值如下所示：
 	// * true：开启 HTTP2
 	// * false：关闭 HTTP2
@@ -9814,10 +10040,52 @@ type GetDomainConfigResResultHTTPSConfig struct {
 	// * false：关闭 HTTPS
 	EnableHTTPS bool `json:"enable_https"`
 
+	// REQUIRED; 是否启用 OCSP 装订配置，取值如下所示：
+	// * true：开启
+	// * false：关闭
+	EnableOcsp bool `json:"enable_ocsp"`
+
 	// REQUIRED; 是否强制使用 HTTPS，取值如下所示：
 	// * true：强制 HTTPS
 	// * false：不强制 HTTPS
 	ForceHTTPS bool `json:"force_https"`
+
+	// REQUIRED; 强制跳转状态码，取值如下所示：
+	// * 301：返回给用户 301 状态码进行重定向。
+	// * 302：返回给用户 302 状态码进行重定向。
+	ForceRedirectCode string `json:"force_redirect_code"`
+
+	// REQUIRED; 强制跳转类型，取值如下所示：
+	// * http2https：HTTP 到 HTTPS
+	// * https2http：HTTPS 到 HTTP
+	ForceRedirectType string `json:"force_redirect_type"`
+
+	// REQUIRED; HSTS 配置
+	Hsts *GetDomainConfigResResultHTTPSConfigHsts `json:"hsts"`
+
+	// REQUIRED; 支持的 tls 版本。取值如下所示：
+	// * tlsv1.0
+	// * tlsv1.1
+	// * tlsv1.2
+	// * tlsv1.3
+	TLSVersions []string `json:"tls_versions"`
+}
+
+// GetDomainConfigResResultHTTPSConfigHsts - HSTS 配置
+type GetDomainConfigResResultHTTPSConfigHsts struct {
+
+	// 是否启用 HSTS 配置，取值如下所示：
+	// * true：启用
+	// * false：关闭
+	Enabled bool `json:"enabled,omitempty"`
+
+	// HSTS 配置是否也应用于加速域名的子域名。取值如下所示：
+	// * include：应用于子域名站点。
+	// * exclude：不应用于子域名站点。
+	Subdomain string `json:"subdomain,omitempty"`
+
+	// Strict-Transport-Security 响应头在浏览器中的缓存过期时间，单位是秒。取值范围是 0 - 31,536,000。31,536,000 秒表示 365 天。如果该参数值为 0，其效果等同于禁用 HSTS 设置。
+	TTL int `json:"ttl,omitempty"`
 }
 
 // GetDomainConfigResResultLockStatus - 域名锁定状态
@@ -9867,7 +10135,30 @@ type GetDomainConfigResResultLockStatus struct {
 	UaAccessRuleLocked bool `json:"ua_access_rule_locked"`
 }
 
+// GetDomainConfigResResultPageOptimization - 页面优化设置
+type GetDomainConfigResResultPageOptimization struct {
+
+	// REQUIRED; 是否开启页面优化，取值如下所示：
+	// * true：启用
+	// * false：关闭
+	Enabled bool `json:"enabled"`
+
+	// REQUIRED; 需要优化的对象列表，取值如下所示：
+	// * html: 表示 HTML 页面。
+	// * js: 表示 Javascript 代码。
+	// * css: 表示 CSS 代码。
+	OptimizationType []string `json:"optimization_type"`
+}
+
 type GetDomainConfigResResultRespHdrsItem struct {
+
+	// REQUIRED
+	AccessOriginControl bool `json:"access_origin_control"`
+
+	// REQUIRED; 头部操作动作，取值如下所示：
+	// * set：设置。
+	// * delete：删除。
+	Action string `json:"action"`
 
 	// REQUIRED; header key
 	Key string `json:"key"`
@@ -9893,7 +10184,7 @@ type GetImageAnalyzeResultQuery struct {
 	// 分页条数。默认值为 10。
 	Limit int `json:"Limit,omitempty" query:"Limit"`
 
-	// 分页偏移量，默认为 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
+	// 分页偏移量，默认��� 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
 	Offset int `json:"Offset,omitempty" query:"Offset"`
 
 	// 任务执行 ID
@@ -10204,7 +10495,7 @@ type GetImageAuditTasksQuery struct {
 	// 任务地区。仅支持默认取值cn，表示国内。
 	Region string `json:"Region,omitempty" query:"Region"`
 
-	// 审核状态，缺省情况下查询全部状态的任务。取值如下所示：
+	// 审核状态，缺省情况下查询全部状态��任务。取值如下所示：
 	// * Running：审核中
 	// * Suspend：已暂停
 	// * Done：已完成
@@ -10738,6 +11029,69 @@ type GetImageContentTaskDetailResResultDataItem struct {
 
 	// REQUIRED; 任务的更新时间
 	UpdateTime int `json:"UpdateTime"`
+}
+
+type GetImageDetectResultBody struct {
+
+	// REQUIRED; 检测类型，取值仅支持 face，表示检测图片中人脸所在坐标。
+	DetectType string `json:"DetectType"`
+
+	// REQUIRED; 指定服务下的待检测图片的 StoreUri 或者公网可访问 Url。
+	ImageURI string `json:"ImageUri"`
+
+	// 选择人脸检测时必填，人脸检测阈值，取值范围（0,1）
+	FaceDetectThresh float64 `json:"FaceDetectThresh,omitempty"`
+}
+
+type GetImageDetectResultQuery struct {
+
+	// REQUIRED; 待检测图片对应的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetImageDetectResultRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageDetectResultResResponseMetadata `json:"ResponseMetadata"`
+	Result           *GetImageDetectResultResResult           `json:"Result,omitempty"`
+}
+
+type GetImageDetectResultResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type GetImageDetectResultResResult struct {
+
+	// REQUIRED; 检测类型
+	DetectType string `json:"DetectType"`
+
+	// REQUIRED; 人脸识别结果
+	Faces []*GetImageDetectResultResResultFacesItem `json:"Faces"`
+}
+
+type GetImageDetectResultResResultFacesItem struct {
+
+	// REQUIRED; 人脸坐标位置。 :::tip 例如[11,22,33,44]，表示人脸的左上角和右下角坐标。其中11为左上角横坐标，22为左上角纵坐标，33为右下角横坐标，44为右下角纵坐标。 :::
+	Box []int `json:"Box"`
+
+	// REQUIRED; 坐标置信度，表示识别内容可信程度。值越大内容越准确。
+	Score float64 `json:"Score"`
 }
 
 type GetImageDuplicateDetectionBody struct {
@@ -11459,7 +11813,7 @@ type GetImageQualityBody struct {
 	// * 图片 URL 格式，例如：https://example.org/tos-example/7a7979974.jpeg~tplv.png :::tip 若传 URL，必须保证 URL 公网可访问。 :::
 	ImageURL string `json:"ImageUrl"`
 
-	// 评估工具，默认选择全部。多个支持的评估工具用逗号隔开，当前支持以下工具：
+	// REQUIRED; 评估工具。指定多个评估工具时使用英文逗号分隔，当前支持以下工具：
 	// * nr_index
 	// * vqscore
 	// * advcolor
@@ -11470,12 +11824,19 @@ type GetImageQualityBody struct {
 	// * cg
 	// * contrast
 	// * texture
-	// * colorfulness
 	// * brightness
 	// * overexposure
 	// * hue
-	// * saturation :::tip nr_index 工具支持评估 contrast、brightness 等多个维度。您也可以单独指定各维度，获取指定维度估值。 :::
-	VqType string `json:"VqType,omitempty"`
+	// * saturation
+	// * psnr
+	// * ssim
+	// * vmaf
+	// * green
+	// * cmartifacts :::tip nr_index 工具支持评估 contrast、brightness 等多个维度。您也可以单独指定各维度，获取指定维度估值。 :::
+	VqType string `json:"VqType"`
+
+	// 指定服务下的评估参照图片存储 Uri 或访问 URL，用于和 ImageUrl 图片进行特定维度的对比。 说明：当 VqType 中包含 psnr、ssim、vmaf等任一字段时，该字段为必填，否则上述评估指标无法正常输出结果。
+	ImageURLRef string `json:"ImageUrlRef,omitempty"`
 }
 
 type GetImageQualityQuery struct {
@@ -11516,10 +11877,91 @@ type GetImageQualityResResponseMetadata struct {
 type GetImageQualityResResult struct {
 
 	// REQUIRED
+	FrScoreResult *GetImageQualityResResultFrScoreResult `json:"FrScoreResult"`
+
+	// REQUIRED
+	FrScores *GetImageQualityResResultFrScores `json:"FrScores"`
+
+	// REQUIRED
+	NrScoreResult *GetImageQualityResResultNrScoreResult `json:"NrScoreResult"`
+
+	// REQUIRED
 	NrScores *GetImageQualityResResultNrScores `json:"NrScores"`
 
 	// REQUIRED
 	VqType string `json:"VqType"`
+}
+
+type GetImageQualityResResultFrScoreResult struct {
+
+	// REQUIRED
+	Psnr float64 `json:"Psnr"`
+
+	// REQUIRED
+	Ssim float64 `json:"Ssim"`
+
+	// REQUIRED
+	Vmaf float64 `json:"Vmaf"`
+}
+
+type GetImageQualityResResultFrScores struct {
+
+	// REQUIRED
+	Psnr float64 `json:"psnr"`
+
+	// REQUIRED
+	Ssim float64 `json:"ssim"`
+
+	// REQUIRED
+	Vmaf float64 `json:"vmaf"`
+}
+
+type GetImageQualityResResultNrScoreResult struct {
+
+	// REQUIRED
+	AdvColor float64 `json:"AdvColor"`
+
+	// REQUIRED
+	Aesthetic float64 `json:"Aesthetic"`
+
+	// REQUIRED
+	Blockiness float64 `json:"Blockiness"`
+
+	// REQUIRED
+	Blur float64 `json:"Blur"`
+
+	// REQUIRED
+	Brightness float64 `json:"Brightness"`
+
+	// REQUIRED
+	Cg float64 `json:"Cg"`
+
+	// REQUIRED
+	CmArtifact float64 `json:"CmArtifact"`
+
+	// REQUIRED
+	Contrast float64 `json:"Contrast"`
+
+	// REQUIRED
+	Green float64 `json:"Green"`
+
+	// REQUIRED
+	Hue float64 `json:"Hue"`
+
+	// REQUIRED
+	Noise float64 `json:"Noise"`
+
+	// REQUIRED
+	OverExposure float64 `json:"OverExposure"`
+
+	// REQUIRED
+	Saturation float64 `json:"Saturation"`
+
+	// REQUIRED
+	Texture float64 `json:"Texture"`
+
+	// REQUIRED
+	VqScore float64 `json:"VqScore"`
 }
 
 type GetImageQualityResResultNrScores struct {
@@ -11534,13 +11976,25 @@ type GetImageQualityResResultNrScores struct {
 	Blockiness float64 `json:"blockiness"`
 
 	// REQUIRED
+	Blur float64 `json:"blur"`
+
+	// REQUIRED
 	Brightness float64 `json:"brightness"`
+
+	// REQUIRED
+	Cg float64 `json:"cg"`
+
+	// REQUIRED
+	Cmartifact float64 `json:"cmartifact"`
 
 	// REQUIRED
 	Colorfulness float64 `json:"colorfulness"`
 
 	// REQUIRED
 	Contrast float64 `json:"contrast"`
+
+	// REQUIRED
+	Green float64 `json:"green"`
 
 	// REQUIRED
 	Hue float64 `json:"hue"`
@@ -11599,7 +12053,9 @@ type GetImageServiceResResult struct {
 	// REQUIRED; 服务的授权 Bucket 列表。
 	AllowBkts []string `json:"AllowBkts"`
 
-	// REQUIRED; 是否允许配置其他镜像站类型
+	// REQUIRED; 是否允许配置其他镜像站类型，取值如下所示：
+	// * true：是
+	// * false：否
 	AllowMirrorTypes bool `json:"AllowMirrorTypes"`
 
 	// REQUIRED; 是否开启精简 URL，取值如下所示：
@@ -11618,10 +12074,12 @@ type GetImageServiceResResult struct {
 	// * false：未配置
 	HasSigkey bool `json:"HasSigkey"`
 
-	// REQUIRED; 是否开启ImageY
+	// REQUIRED; 是否开启自定义处理样式，取值如下所示：
+	// * true：是
+	// * false：否
 	ImageY bool `json:"ImageY"`
 
-	// REQUIRED; ImageY相关配置（tob 展示）
+	// REQUIRED; 自定义处理相关配置
 	ImageYAttribute *GetImageServiceResResultImageYAttribute `json:"ImageYAttribute"`
 
 	// REQUIRED; 镜像回源配置，默认关闭。
@@ -11634,6 +12092,9 @@ type GetImageServiceResResult struct {
 
 	// REQUIRED; 主鉴权 Key。
 	PrimaryKey string `json:"PrimaryKey"`
+
+	// REQUIRED
+	ResourceLimitedVisit *GetImageServiceResResultResourceLimitedVisit `json:"ResourceLimitedVisit"`
 
 	// REQUIRED; 备鉴权 Key。
 	SecondaryKey string `json:"SecondaryKey"`
@@ -11665,31 +12126,21 @@ type GetImageServiceResResult struct {
 
 	// REQUIRED; 该服务的图片模板固定前缀。
 	TemplatePrefix string `json:"TemplatePrefix"`
-	AllowVolcTos   bool   `json:"AllowVolcTos,omitempty"`
-
-	// 内部服务创建人
-	Creator string `json:"Creator,omitempty"`
 
 	// 事件通知规则
 	EventRules []*GetImageServiceResResultEventRulesItem `json:"EventRules,omitempty"`
 
-	// 内部服务安全保密等级 'L1' | 'L2' | 'L3' | 'L4' | 'L5'
-	PrivacyLevel string `json:"PrivacyLevel,omitempty"`
-
-	// 服务绑定的项目。仅对ToB账号请求生效，默认default
+	// 服务绑定的项目，默认为 default。
 	ProjectName string `json:"ProjectName,omitempty"`
 
-	// 服务绑定的标签。仅ToB账号有值
+	// 服务绑定的标签。
 	ResourceTags []*GetImageServiceResResultResourceTagsItem `json:"ResourceTags,omitempty"`
 
-	// 用于保护「数据加密密钥」的密钥，只有加密上传的图片需要做处理时需要申请
+	// 用于保护「数据加密密钥」的密钥，只有加密上传的图片需要做处理时需要申请。
 	RsaPublicKey string `json:"RsaPublicKey,omitempty"`
 
-	// 内部服务内容安全负责人
-	SecurityContact string `json:"SecurityContact,omitempty"`
-
-	// 内部服务服务树节点
-	ServiceTreeNodeID string `json:"ServiceTreeNodeId,omitempty"`
+	// 存储降冷策略
+	StorageRules []*GetImageServiceResResultStorageRulesItem `json:"StorageRules,omitempty"`
 
 	// 是否开启覆盖上传，取值如下所示：
 	// * true：开启
@@ -11697,11 +12148,7 @@ type GetImageServiceResResult struct {
 	UploadOverwrite bool `json:"UploadOverwrite,omitempty"`
 
 	// 绑定的点播空间信息
-	VodSpace     *GetImageServiceResResultVodSpace     `json:"VodSpace,omitempty"`
-	VolTosBucket *GetImageServiceResResultVolTosBucket `json:"VolTosBucket,omitempty"`
-
-	// 内部使用 元数据写入ODM可便于数据鉴权、溯源
-	WriteOdm bool `json:"WriteOdm,omitempty"`
+	VodSpace *GetImageServiceResResultVodSpace `json:"VodSpace,omitempty"`
 }
 
 type GetImageServiceResResultDomainInfosItem struct {
@@ -11719,6 +12166,9 @@ type GetImageServiceResResultDomainInfosItem struct {
 
 	// REQUIRED; 域名状态。
 	Status string `json:"Status"`
+
+	// REQUIRED; 是否开启鉴权
+	URLAuth bool `json:"UrlAuth"`
 }
 
 type GetImageServiceResResultEventRulesItem struct {
@@ -11747,10 +12197,12 @@ type GetImageServiceResResultEventRulesItem struct {
 	MatchRule string `json:"MatchRule"`
 }
 
-// GetImageServiceResResultImageYAttribute - ImageY相关配置（tob 展示）
+// GetImageServiceResResultImageYAttribute - 自定义处理相关配置
 type GetImageServiceResResultImageYAttribute struct {
 
-	// REQUIRED; 是否开启原图保护
+	// REQUIRED; 是否开启原图保护，取值如下所示：
+	// * true：开启
+	// * false：关闭
 	ResourceProtect bool `json:"ResourceProtect"`
 
 	// REQUIRED; 样式分割符
@@ -11769,9 +12221,6 @@ type GetImageServiceResResultMirror struct {
 	// REQUIRED; 带权重回源域名，key 为 String 类型时，代表镜像回源域名；value 为 Integer 类型时，代表域名权重。
 	Hosts map[string]int `json:"Hosts"`
 
-	// REQUIRED; 镜像源站
-	Origin *GetImageServiceResResultMirrorOrigin `json:"Origin"`
-
 	// REQUIRED; 下载图片的协议，支持取值：http、https。
 	Schema string `json:"Schema"`
 
@@ -11779,14 +12228,13 @@ type GetImageServiceResResultMirror struct {
 	Source string `json:"Source"`
 }
 
-// GetImageServiceResResultMirrorOrigin - 镜像源站
-type GetImageServiceResResultMirrorOrigin struct {
+type GetImageServiceResResultResourceLimitedVisit struct {
 
-	// REQUIRED; 镜像源站参数
-	Param interface{} `json:"Param"`
+	// REQUIRED
+	AllowDomains []string `json:"AllowDomains"`
 
-	// REQUIRED; 镜像源站类型
-	Type string `json:"Type"`
+	// REQUIRED
+	Enable bool `json:"Enable"`
 }
 
 type GetImageServiceResResultResourceTagsItem struct {
@@ -11813,26 +12261,41 @@ type GetImageServiceResResultStorage struct {
 	TTL int `json:"TTL"`
 }
 
+type GetImageServiceResResultStorageRulesItem struct {
+
+	// REQUIRED; 策略命中后需要执行的操作，取值如下所示：
+	// * DELETE：删除文件
+	// * IA：文件转低频存储
+	// * ARCHIVE：文件转归档存储
+	// * COLD_ARCHIVE：文件转冷归档存储
+	Action string `json:"Action"`
+
+	// REQUIRED; 策略天数，按照 Event 事件 Day 天后执行 Action 事件，即当匹配文件的上传时间符合指定天数后，自动按照处理策略对资源进行处理。
+	Day int `json:"Day"`
+
+	// REQUIRED; 是否启用策略，取值如下所示：
+	// * true：是
+	// * false：否
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 策略类型，固定取值Upload，表示按上传时间。
+	Event string `json:"Event"`
+
+	// REQUIRED; 文件前缀，例如设置为prefix后，规则将只对名称以prefix开头的存储资源生效。
+	Prefix string `json:"Prefix"`
+}
+
 // GetImageServiceResResultVodSpace - 绑定的点播空间信息
 type GetImageServiceResResultVodSpace struct {
 
-	// REQUIRED; 底层存储名
+	// REQUIRED; 点播空间存储桶名称
 	Bucket string `json:"Bucket"`
 
 	// REQUIRED; 空间所在地区
 	Region string `json:"Region"`
 
-	// REQUIRED; 空间名
+	// REQUIRED; 点播空间名
 	SpaceName string `json:"SpaceName"`
-}
-
-type GetImageServiceResResultVolTosBucket struct {
-
-	// REQUIRED; 绑定存储桶名称
-	Name string `json:"Name"`
-
-	// REQUIRED
-	Region string `json:"Region"`
 }
 
 type GetImageServiceSubscriptionRes struct {
@@ -11894,6 +12357,9 @@ type GetImageServiceSubscriptionResResult struct {
 
 	// REQUIRED; 实例类型：1：正式，2：试用
 	InstanceType int `json:"InstanceType"`
+
+	// REQUIRED; 实例对应的价格版本
+	PriceVersion string `json:"PriceVersion"`
 
 	// REQUIRED; 购买的商品
 	Product string `json:"Product"`
@@ -12655,7 +13121,7 @@ type GetImageUploadFileQuery struct {
 
 	// REQUIRED; 文件 Uri。
 	// * 您可以在 veImageX 控制台资源管理 [https://console.volcengine.com/imagex/resource_manage/]页面，在已上传文件的名称列获取资源 Uri。
-	// * 您也可以通过 OpenAPI 的方式获取Uri，具体请参考文件上传完成上报 [https://www.volcengine.com/docs/508/9398]。
+	// * 您也可以通过 OpenAPI 的方式获取Uri，具体请参考 GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]。
 	StoreURI string `json:"StoreUri" query:"StoreUri"`
 }
 
@@ -12689,16 +13155,28 @@ type GetImageUploadFileResResponseMetadata struct {
 // GetImageUploadFileResResult - 视请求的接口而定
 type GetImageUploadFileResResult struct {
 
+	// 是否被禁用
+	Disabled bool `json:"Disabled,omitempty"`
+
 	// 文件字节数。
 	FileSize int `json:"FileSize,omitempty"`
 
 	// 文件修改时间，即文件修改时的服务器当地时间。
 	LastModified string `json:"LastModified,omitempty"`
 
+	// 文件恢复副本的到期时间。仅当文件执行过恢复操作时有值
+	RestoreExpiryDate string `json:"RestoreExpiryDate,omitempty"`
+
+	// 文件是否处于恢复中状态。
+	Restoring bool `json:"Restoring,omitempty"`
+
 	// 服务 ID。
 	ServiceID string `json:"ServiceId,omitempty"`
 
-	// 底层存储的content-type值
+	// 底层存储类型。 STANDARD：标准存储 IA：低频存储 ARCHIVE：归档存储 COLD_ARCHIVE：冷归档存储
+	StorageClass string `json:"StorageClass,omitempty"`
+
+	// 底层存储的 content-type 值。
 	StorageContentType string `json:"StorageContentType,omitempty"`
 
 	// 文件 Uri。
@@ -13112,7 +13590,7 @@ type GetResourceURLRes struct {
 
 type GetResourceURLResResponseMetadata struct {
 
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	// REQUIRED; 请求的接口名，属于请求的公���参数。
 	Action string `json:"Action"`
 
 	// REQUIRED; 请求的Region，例如：cn-north-1
@@ -14427,6 +14905,48 @@ type UpdateImageObjectAccessResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+type UpdateImageResourceStatusBody struct {
+
+	// REQUIRED
+	ObjectName string `json:"ObjectName"`
+
+	// REQUIRED
+	Status string `json:"Status"`
+}
+
+type UpdateImageResourceStatusQuery struct {
+
+	// REQUIRED
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type UpdateImageResourceStatusRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateImageResourceStatusResResponseMetadata `json:"ResponseMetadata"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateImageResourceStatusResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type UpdateImageStorageTTLBody struct {
 
 	// REQUIRED; 服务 ID 。
@@ -14828,791 +15348,403 @@ type UpdateServiceNameResResponseMetadata struct {
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
 }
-type DescribeImageVolcCdnAccessLog struct{}
-type DescribeImageXUploadErrorCodeByTime struct{}
-type GetImageEnhanceResultQuery struct{}
-type CreateImageHmEmbed struct{}
-type DescribeImageXCdnSuccessRateByTime struct{}
-type DescribeImageXClientTopFileSizeQuery struct{}
-type GetImageStorageFiles struct{}
-type GetImageTranscodeDetails struct{}
-type CreateImageAuditTask struct{}
-type UpdateAuditImageStatusQuery struct{}
-type UpdateImageTranscodeQueueStatus struct{}
-type UpdateImageAnalyzeTaskQuery struct{}
-type UpdateImageAnalyzeTask struct{}
-type DescribeImageXCdnSuccessRateAllQuery struct{}
-type GetImageStorageFilesBody struct{}
-type GetImageAuditTasks struct{}
-type DescribeImageXDomainBandwidthNinetyFiveData struct{}
-type RerunImageMigrateTask struct{}
-type DescribeImageXUploadDurationQuery struct{}
-type CreateImageContentTask struct{}
-type DeleteTemplatesFromBin struct{}
-type DescribeImageXDomainTrafficData struct{}
-type DescribeImageXSensibleTopRAMURLQuery struct{}
-type DeleteImageMigrateTask struct{}
-type DescribeImageXServerQPSUsageBody struct{}
-type GetImageAnalyzeTasksBody struct{}
-type DescribeImageXClientLoadDurationQuery struct{}
-type UpdateRefer struct{}
-type GetImageContentBlockList struct{}
-type GetImageSmartCropResultQuery struct{}
-type UpdateImageTranscodeQueue struct{}
-type GetImageDuplicateDetection struct{}
-type CreateHiddenWatermarkImage struct{}
-type GetImageService struct{}
-type GetImageAnalyzeTasks struct{}
-type DeleteImageAnalyzeTaskQuery struct{}
-type CreateImageTranscodeQueueQuery struct{}
-type GetAuditEntrysCountBody struct{}
-type GetDomainConfigBody struct{}
-type DescribeImageXMirrorRequestHTTPCodeOverview struct{}
-type GetDedupTaskStatusBody struct{}
-type GetTemplatesFromBinBody struct{}
-type GetAllImageServicesBody struct{}
-type GetImageBgFillResultQuery struct{}
-type DeleteImageAuditResultQuery struct{}
-type GetImageContentTaskDetailQuery struct{}
-type GetURLFetchTaskBody struct{}
-type CreateImageTranscodeCallback struct{}
-type DescribeImageXCdnSuccessRateByTimeQuery struct{}
-type GetVendorBucketsQuery struct{}
-type CreateImageHmExtract struct{}
-type GetImageAuditTasksBody struct{}
-type DescribeImageXMirrorRequestTraffic struct{}
-type DescribeImageXSensibleTopUnknownURLQuery struct{}
-type GetAllImageTemplates struct{}
-type DescribeImageXSensibleTopRAMURL struct{}
-type CreateImageMigrateTaskQuery struct{}
-type GetImageMigrateTasks struct{}
-type DeleteImageTranscodeQueueQuery struct{}
-type GetImageOCRV2 struct{}
-type DescribeImageXClientScoreByTimeQuery struct{}
-type DescribeImageXClientFileSize struct{}
-type UpdateServiceName struct{}
-type GetServiceDomains struct{}
-type CreateImageTranscodeCallbackQuery struct{}
-type GetSegmentImage struct{}
-type UpdateHTTPS struct{}
-type GetDomainConfig struct{}
-type DescribeImageXUploadDuration struct{}
-type DescribeImageXEdgeRequestRegionsBody struct{}
-type DescribeImageXServerQPSUsage struct{}
-type DescribeImageXServiceQualityBody struct{}
-type DescribeImageXSensibleCacheHitRateByTimeQuery struct{}
-type DeleteImageAuditResult struct{}
-type GetImageSuperResolutionResultQuery struct{}
-type GetImageEraseModelsBody struct{}
-type DescribeImageXUploadSuccessRateByTimeQuery struct{}
-type DescribeImageXClientLoadDurationAll struct{}
-type GetImageQuality struct{}
-type GetImageXQueryValsBody struct{}
-type DescribeImageXClientFailureRateQuery struct{}
-type GetPrivateImageType struct{}
-type DescribeImageXDomainTrafficDataBody struct{}
-type GetCompressTaskInfo struct{}
-type UpdateImageAnalyzeTaskStatus struct{}
-type GetImageTemplateBody struct{}
-type DescribeImageXCdnReuseRateByTime struct{}
-type DescribeImageXClientTopDemotionURLQuery struct{}
-type GetCompressTaskInfoBody struct{}
-type GetImageServiceSubscriptionBody struct{}
-type DescribeImageXCdnReuseRateByTimeQuery struct{}
-type DeleteImageTranscodeQueue struct{}
-type DescribeImageXEdgeRequestBandwidthBody struct{}
-type GetImageUploadFileBody struct{}
-type DeleteImageAnalyzeTask struct{}
-type DescribeImageXCompressUsage struct{}
-type UpdateImageStorageTTLQuery struct{}
-type GetImageEnhanceResult struct{}
-type DeleteImageAnalyzeTaskRun struct{}
-type GetResponseHeaderValidateKeysBody struct{}
-type DescribeImageXDomainBandwidthNinetyFiveDataBody struct{}
-type DescribeImageXCdnReuseRateAll struct{}
-type DescribeImageXVideoClipDurationUsage struct{}
-type DescribeImageXMirrorRequestHTTPCodeOverviewQuery struct{}
-type SetDefaultDomainQuery struct{}
-type GetURLFetchTask struct{}
-type DescribeImageXSensibleCountByTimeQuery struct{}
-type UpdateImageAuditTask struct{}
-type DescribeImageXClientDecodeDurationByTime struct{}
-type GetImageSmartCropResult struct{}
-type CreateImageAuditTaskQuery struct{}
-type DescribeImageXSensibleCountByTime struct{}
-type GetServiceDomainsBody struct{}
-type GetResourceURLBody struct{}
-type CreateImageTemplate struct{}
-type TerminateImageMigrateTaskBody struct{}
-type DescribeImageXMirrorRequestHTTPCodeByTime struct{}
-type DescribeImageXUploadSuccessRateByTime struct{}
-type DescribeImageXClientTopFileSize struct{}
-type GetImageEraseResult struct{}
-type FetchImageURLQuery struct{}
-type DescribeImageXSensibleTopSizeURLQuery struct{}
-type DescribeImageXUploadSegmentSpeedByTime struct{}
-type UpdateImageTaskStrategyQuery struct{}
-type ApplyImageUploadBody struct{}
-type GetImageStyleResult struct{}
-type DescribeImageXClientTopQualityURLQuery struct{}
-type GetImageAuditResult struct{}
-type DescribeImageXEdgeRequestTrafficBody struct{}
-type DescribeImageXMirrorRequestTrafficQuery struct{}
-type DescribeImageXBaseOpUsageBody struct{}
-type CreateImageAnalyzeTask struct{}
-type DescribeImageXBucketUsage struct{}
-type GetImageBgFillResult struct{}
-type GetImageComicResultQuery struct{}
-type DescribeImageXUploadErrorCodeByTimeQuery struct{}
-type PreviewImageUploadFileBody struct{}
-type DescribeImageXClientQueueDurationByTime struct{}
-type DescribeImageXCDNTopRequestDataBody struct{}
-type GetImageEraseModels struct{}
-type ExportFailedMigrateTaskBody struct{}
-type DescribeImageXEdgeRequestTraffic struct{}
-type UpdateImageMirrorConf struct{}
-type DescribeImageXClientFileSizeQuery struct{}
-type DeleteImageUploadFiles struct{}
-type UpdateImageTranscodeQueueStatusQuery struct{}
-type DescribeImageXServiceQuality struct{}
-type FetchImageURL struct{}
-type DescribeImageXUploadCountByTime struct{}
-type DescribeImageXClientDemotionRateByTimeQuery struct{}
-type DescribeImageXEdgeRequest struct{}
-type DescribeImageXSensibleTopSizeURL struct{}
-type UpdateImageFileKey struct{}
-type GetImageXQueryRegionsBody struct{}
-type GetImageXQueryAppsBody struct{}
-type DescribeImageXClientErrorCodeByTimeQuery struct{}
-type GetImageAuditResultBody struct{}
-type DescribeImageXDomainBandwidthDataBody struct{}
-type DescribeImageXBucketUsageBody struct{}
-type DescribeImageXCdnProtocolRateByTime struct{}
-type DescribeImageXClientDecodeDurationByTimeQuery struct{}
-type DeleteImageAnalyzeTaskRunQuery struct{}
-type DescribeImageXClientQueueDurationByTimeQuery struct{}
-type RerunImageMigrateTaskBody struct{}
-type GetVendorBuckets struct{}
-type GetImageTranscodeQueuesBody struct{}
-type DescribeImageXScreenshotUsageBody struct{}
-type DescribeImageXUploadSegmentSpeedByTimeQuery struct{}
-type UpdateImageAuditTaskQuery struct{}
-type CreateImageCompressTask struct{}
-type UpdateImageAuthKey struct{}
-type DescribeImageXSensibleTopResolutionURL struct{}
-type SetDefaultDomain struct{}
-type GetImageMigrateTasksBody struct{}
-type DescribeImageXHitRateRequestDataBody struct{}
-type DescribeImageXClientDecodeSuccessRateByTimeQuery struct{}
-type DescribeImageXHitRateRequestData struct{}
-type DescribeImageXClientErrorCodeAllQuery struct{}
-type DescribeImageXClientSdkVerByTimeQuery struct{}
-type GetImageAnalyzeResult struct{}
-type GetImageServiceSubscriptionQuery struct{}
-type TerminateImageMigrateTask struct{}
-type UpdateImageAuditTaskStatus struct{}
-type DescribeImageXClientLoadDurationAllQuery struct{}
-type UpdateImageObjectAccess struct{}
-type DescribeImageXMirrorRequestBandwidthQuery struct{}
-type CreateImageRetryAuditTaskQuery struct{}
-type DeleteImageService struct{}
-type GetAuditEntrysCount struct{}
-type PreviewImageUploadFile struct{}
-type GetImageAnalyzeResultBody struct{}
-type GetTemplatesFromBin struct{}
-type DescribeImageXEdgeRequestBody struct{}
-type GetImageXQueryVals struct{}
-type DescribeImageXUploadSpeedQuery struct{}
 type ApplyImageUpload struct{}
-type DescribeImageXSummaryBody struct{}
-type DescribeImageXClientErrorCodeAll struct{}
-type DescribeImageXClientCountByTimeQuery struct{}
-type DescribeImageXUploadCountByTimeQuery struct{}
-type GetImageXQueryRegions struct{}
-type DescribeImageXSensibleTopResolutionURLQuery struct{}
-type DeleteImageMigrateTaskBody struct{}
-type DescribeImageXBaseOpUsage struct{}
-type GetResponseHeaderValidateKeysQuery struct{}
-type GetImageServiceBody struct{}
-type GetResourceURL struct{}
-type UpdateResponseHeader struct{}
-type DescribeImageXSensibleTopUnknownURL struct{}
-type DescribeImageXVideoClipDurationUsageBody struct{}
-type UpdateImageTaskStrategy struct{}
-type CreateImageTranscodeTaskQuery struct{}
-type DeleteImageTranscodeDetail struct{}
-type GetResponseHeaderValidateKeys struct{}
-type DescribeImageXClientQualityRateByTimeQuery struct{}
-type DescribeImageXCdnReuseRateAllQuery struct{}
-type UpdateImageTranscodeQueueQuery struct{}
-type CreateTemplatesFromBin struct{}
-type DescribeImageXCdnErrorCodeByTimeQuery struct{}
-type GetImageTranscodeQueues struct{}
-type CreateImageTranscodeTask struct{}
-type DescribeImageXCdnErrorCodeByTime struct{}
-type GetDedupTaskStatus struct{}
-type DeleteImageTranscodeDetailQuery struct{}
-type DescribeImageXMirrorRequestBandwidth struct{}
-type GetImageXQueryDims struct{}
-type GetImageUpdateFiles struct{}
+type ApplyImageUploadBody struct{}
 type CommitImageUpload struct{}
-type GetComprehensiveEnhanceImage struct{}
-type CreateImageHmExtractBody struct{}
-type DescribeImageXClientQualityRateByTime struct{}
-type CreateImageMigrateTask struct{}
-type DescribeImageXCdnErrorCodeAllQuery struct{}
-type DescribeImageXCdnProtocolRateByTimeQuery struct{}
-type GetImageTranscodeDetailsBody struct{}
-type GetImageComicResult struct{}
-type DescribeImageXEdgeRequestBandwidth struct{}
-type DescribeImageXMirrorRequestHTTPCodeByTimeQuery struct{}
-type DeleteImageServiceBody struct{}
-type GetAllImageServices struct{}
-type DescribeImageXSummary struct{}
-type DescribeImageXCdnDurationAll struct{}
-type DescribeImageXUploadSpeed struct{}
-type DescribeImageXClientTopDemotionURL struct{}
-type CreateImageServiceQuery struct{}
-type UpdateAuditImageStatus struct{}
-type ExportFailedMigrateTask struct{}
-type DelDomain struct{}
-type GetImageUploadFile struct{}
-type DescribeImageXMultiCompressUsageBody struct{}
-type DescribeImageXClientTopQualityURL struct{}
-type CreateImageTranscodeQueue struct{}
-type GetImageAuthKey struct{}
-type DescribeImageXClientLoadDuration struct{}
-type GetImageServiceSubscription struct{}
-type DescribeImageXDomainBandwidthData struct{}
-type UpdateImageUploadFiles struct{}
-type DescribeImageXUploadFileSize struct{}
-type DescribeImageXRequestCntUsage struct{}
-type GetImageSuperResolutionResult struct{}
-type DescribeImageXEdgeRequestRegions struct{}
-type DescribeImageXMultiCompressUsage struct{}
-type DescribeImageXHitRateTrafficData struct{}
-type DescribeImageXClientSdkVerByTime struct{}
-type UpdateImageStorageTTL struct{}
-type GetImagePSDetection struct{}
-type DescribeImageXClientScoreByTime struct{}
-type DescribeImageXSensibleCacheHitRateByTime struct{}
-type UpdateImageAnalyzeTaskStatusQuery struct{}
-type DescribeImageXRequestCntUsageBody struct{}
-type DescribeImageXClientDemotionRateByTime struct{}
-type DescribeImageXUploadFileSizeQuery struct{}
-type DescribeImageXClientErrorCodeByTime struct{}
-type GetImageUpdateFilesBody struct{}
-type GetImageAuthKeyBody struct{}
-type GetAllImageTemplatesBody struct{}
-type DescribeImageXHitRateTrafficDataBody struct{}
-type DescribeImageXCdnSuccessRateAll struct{}
-type DescribeImageXUploadErrorCodeAll struct{}
-type DescribeImageXCdnErrorCodeAll struct{}
-type CreateImageService struct{}
-type DescribeImageXCDNTopRequestData struct{}
-type DescribeImageXClientCountByTime struct{}
-type GetImageUploadFiles struct{}
+type CreateHiddenWatermarkImage struct{}
+type CreateImageAnalyzeTask struct{}
 type CreateImageAnalyzeTaskQuery struct{}
-type DescribeImageXCompressUsageBody struct{}
-type DescribeImageXScreenshotUsage struct{}
-type DescribeImageXClientFailureRate struct{}
-type UpdateImageAuditTaskStatusQuery struct{}
-type DescribeImageXBillingRequestCntUsageBody struct{}
-type GetImageXQueryDimsBody struct{}
-type DescribeImageXUploadErrorCodeAllQuery struct{}
-type DescribeImageXCdnDurationDetailByTimeQuery struct{}
-type GetComprehensiveEnhanceImageQuery struct{}
-type GetImageTemplate struct{}
-type GetImageXQueryApps struct{}
-type DescribeImageXClientDecodeSuccessRateByTime struct{}
-type DeleteImageTemplate struct{}
-type CreateImageRetryAuditTask struct{}
-type DescribeImageXCdnDurationAllQuery struct{}
-type GetImageUploadFilesBody struct{}
-type GetImageEraseResultQuery struct{}
-type DescribeImageXBillingRequestCntUsage struct{}
-type GetImageContentTaskDetail struct{}
+type CreateImageAuditTask struct{}
+type CreateImageAuditTaskQuery struct{}
+type CreateImageCompressTask struct{}
+type CreateImageContentTask struct{}
+type CreateImageHmEmbed struct{}
 type CreateImageHmEmbedQuery struct{}
+type CreateImageHmExtract struct{}
+type CreateImageHmExtractBody struct{}
+type CreateImageMigrateTask struct{}
+type CreateImageMigrateTaskQuery struct{}
+type CreateImageRetryAuditTask struct{}
+type CreateImageRetryAuditTaskQuery struct{}
+type CreateImageService struct{}
+type CreateImageServiceQuery struct{}
+type CreateImageTemplate struct{}
+type CreateImageTranscodeCallback struct{}
+type CreateImageTranscodeCallbackQuery struct{}
+type CreateImageTranscodeQueue struct{}
+type CreateImageTranscodeQueueQuery struct{}
+type CreateImageTranscodeTask struct{}
+type CreateImageTranscodeTaskQuery struct{}
+type CreateTemplatesFromBin struct{}
+type DelDomain struct{}
+type DeleteImageAnalyzeTask struct{}
+type DeleteImageAnalyzeTaskQuery struct{}
+type DeleteImageAnalyzeTaskRun struct{}
+type DeleteImageAnalyzeTaskRunQuery struct{}
+type DeleteImageAuditResult struct{}
+type DeleteImageAuditResultQuery struct{}
+type DeleteImageMigrateTask struct{}
+type DeleteImageMigrateTaskBody struct{}
+type DeleteImageService struct{}
+type DeleteImageServiceBody struct{}
+type DeleteImageTemplate struct{}
+type DeleteImageTranscodeDetail struct{}
+type DeleteImageTranscodeDetailQuery struct{}
+type DeleteImageTranscodeQueue struct{}
+type DeleteImageTranscodeQueueQuery struct{}
+type DeleteImageUploadFiles struct{}
+type DeleteTemplatesFromBin struct{}
+type DescribeImageVolcCdnAccessLog struct{}
+type DescribeImageXBaseOpUsage struct{}
+type DescribeImageXBaseOpUsageBody struct{}
+type DescribeImageXBillingRequestCntUsage struct{}
+type DescribeImageXBillingRequestCntUsageBody struct{}
+type DescribeImageXBucketRetrievalUsage struct{}
+type DescribeImageXBucketRetrievalUsageBody struct{}
+type DescribeImageXBucketUsage struct{}
+type DescribeImageXBucketUsageBody struct{}
+type DescribeImageXCDNTopRequestData struct{}
+type DescribeImageXCDNTopRequestDataBody struct{}
+type DescribeImageXCdnDurationAll struct{}
+type DescribeImageXCdnDurationAllQuery struct{}
 type DescribeImageXCdnDurationDetailByTime struct{}
-type UpdateImageObjectAccessReq struct {
-	*UpdateImageObjectAccessQuery
-	*UpdateImageObjectAccessBody
-}
-type CreateImageMigrateTaskReq struct {
-	*CreateImageMigrateTaskQuery
-	*CreateImageMigrateTaskBody
-}
-type DescribeImageXCdnSuccessRateByTimeReq struct {
-	*DescribeImageXCdnSuccessRateByTimeQuery
-	*DescribeImageXCdnSuccessRateByTimeBody
-}
-type DescribeImageXCdnErrorCodeByTimeReq struct {
-	*DescribeImageXCdnErrorCodeByTimeQuery
-	*DescribeImageXCdnErrorCodeByTimeBody
-}
-type DescribeImageXClientErrorCodeByTimeReq struct {
-	*DescribeImageXClientErrorCodeByTimeQuery
-	*DescribeImageXClientErrorCodeByTimeBody
-}
-type GetImageEraseResultReq struct {
-	*GetImageEraseResultQuery
-	*GetImageEraseResultBody
-}
-type GetImageStyleResultReq struct {
-	*GetImageStyleResultQuery
-	*GetImageStyleResultBody
-}
-type GetAllImageTemplatesReq struct {
-	*GetAllImageTemplatesQuery
-	*GetAllImageTemplatesBody
-}
-type DeleteImageAuditResultReq struct {
-	*DeleteImageAuditResultQuery
-	*DeleteImageAuditResultBody
-}
-type GetServiceDomainsReq struct {
-	*GetServiceDomainsQuery
-	*GetServiceDomainsBody
-}
-type DescribeImageXCDNTopRequestDataReq struct {
-	*DescribeImageXCDNTopRequestDataQuery
-	*DescribeImageXCDNTopRequestDataBody
-}
-type DescribeImageXClientLoadDurationReq struct {
-	*DescribeImageXClientLoadDurationQuery
-	*DescribeImageXClientLoadDurationBody
-}
-type DescribeImageXClientSdkVerByTimeReq struct {
-	*DescribeImageXClientSdkVerByTimeQuery
-	*DescribeImageXClientSdkVerByTimeBody
+type DescribeImageXCdnDurationDetailByTimeQuery struct{}
+type DescribeImageXCdnErrorCodeAll struct{}
+type DescribeImageXCdnErrorCodeAllQuery struct{}
+type DescribeImageXCdnErrorCodeByTime struct{}
+type DescribeImageXCdnErrorCodeByTimeQuery struct{}
+type DescribeImageXCdnProtocolRateByTime struct{}
+type DescribeImageXCdnProtocolRateByTimeQuery struct{}
+type DescribeImageXCdnReuseRateAll struct{}
+type DescribeImageXCdnReuseRateAllQuery struct{}
+type DescribeImageXCdnReuseRateByTime struct{}
+type DescribeImageXCdnReuseRateByTimeQuery struct{}
+type DescribeImageXCdnSuccessRateAll struct{}
+type DescribeImageXCdnSuccessRateAllQuery struct{}
+type DescribeImageXCdnSuccessRateByTime struct{}
+type DescribeImageXCdnSuccessRateByTimeQuery struct{}
+type DescribeImageXClientCountByTime struct{}
+type DescribeImageXClientCountByTimeQuery struct{}
+type DescribeImageXClientDecodeDurationByTime struct{}
+type DescribeImageXClientDecodeDurationByTimeQuery struct{}
+type DescribeImageXClientDecodeSuccessRateByTime struct{}
+type DescribeImageXClientDecodeSuccessRateByTimeQuery struct{}
+type DescribeImageXClientDemotionRateByTime struct{}
+type DescribeImageXClientDemotionRateByTimeQuery struct{}
+type DescribeImageXClientErrorCodeAll struct{}
+type DescribeImageXClientErrorCodeAllQuery struct{}
+type DescribeImageXClientErrorCodeByTime struct{}
+type DescribeImageXClientErrorCodeByTimeQuery struct{}
+type DescribeImageXClientFailureRate struct{}
+type DescribeImageXClientFailureRateQuery struct{}
+type DescribeImageXClientFileSize struct{}
+type DescribeImageXClientFileSizeQuery struct{}
+type DescribeImageXClientLoadDuration struct{}
+type DescribeImageXClientLoadDurationAll struct{}
+type DescribeImageXClientLoadDurationAllQuery struct{}
+type DescribeImageXClientLoadDurationQuery struct{}
+type DescribeImageXClientQualityRateByTime struct{}
+type DescribeImageXClientQualityRateByTimeQuery struct{}
+type DescribeImageXClientQueueDurationByTime struct{}
+type DescribeImageXClientQueueDurationByTimeQuery struct{}
+type DescribeImageXClientScoreByTime struct{}
+type DescribeImageXClientScoreByTimeQuery struct{}
+type DescribeImageXClientSdkVerByTime struct{}
+type DescribeImageXClientSdkVerByTimeQuery struct{}
+type DescribeImageXClientTopDemotionURL struct{}
+type DescribeImageXClientTopDemotionURLQuery struct{}
+type DescribeImageXClientTopFileSize struct{}
+type DescribeImageXClientTopFileSizeQuery struct{}
+type DescribeImageXClientTopQualityURL struct{}
+type DescribeImageXClientTopQualityURLQuery struct{}
+type DescribeImageXCompressUsage struct{}
+type DescribeImageXCompressUsageBody struct{}
+type DescribeImageXDomainBandwidthData struct{}
+type DescribeImageXDomainBandwidthDataBody struct{}
+type DescribeImageXDomainBandwidthNinetyFiveData struct{}
+type DescribeImageXDomainBandwidthNinetyFiveDataBody struct{}
+type DescribeImageXDomainTrafficData struct{}
+type DescribeImageXDomainTrafficDataBody struct{}
+type DescribeImageXEdgeRequest struct{}
+type DescribeImageXEdgeRequestBandwidth struct{}
+type DescribeImageXEdgeRequestBandwidthBody struct{}
+type DescribeImageXEdgeRequestBody struct{}
+type DescribeImageXEdgeRequestRegions struct{}
+type DescribeImageXEdgeRequestRegionsBody struct{}
+type DescribeImageXEdgeRequestTraffic struct{}
+type DescribeImageXEdgeRequestTrafficBody struct{}
+type DescribeImageXHitRateRequestData struct{}
+type DescribeImageXHitRateRequestDataBody struct{}
+type DescribeImageXHitRateTrafficData struct{}
+type DescribeImageXHitRateTrafficDataBody struct{}
+type DescribeImageXMirrorRequestBandwidth struct{}
+type DescribeImageXMirrorRequestBandwidthQuery struct{}
+type DescribeImageXMirrorRequestHTTPCodeByTime struct{}
+type DescribeImageXMirrorRequestHTTPCodeByTimeQuery struct{}
+type DescribeImageXMirrorRequestHTTPCodeOverview struct{}
+type DescribeImageXMirrorRequestHTTPCodeOverviewQuery struct{}
+type DescribeImageXMirrorRequestTraffic struct{}
+type DescribeImageXMirrorRequestTrafficQuery struct{}
+type DescribeImageXMultiCompressUsage struct{}
+type DescribeImageXMultiCompressUsageBody struct{}
+type DescribeImageXRequestCntUsage struct{}
+type DescribeImageXRequestCntUsageBody struct{}
+type DescribeImageXScreenshotUsage struct{}
+type DescribeImageXScreenshotUsageBody struct{}
+type DescribeImageXSensibleCacheHitRateByTime struct{}
+type DescribeImageXSensibleCacheHitRateByTimeQuery struct{}
+type DescribeImageXSensibleCountByTime struct{}
+type DescribeImageXSensibleCountByTimeQuery struct{}
+type DescribeImageXSensibleTopRAMURL struct{}
+type DescribeImageXSensibleTopRAMURLQuery struct{}
+type DescribeImageXSensibleTopResolutionURL struct{}
+type DescribeImageXSensibleTopResolutionURLQuery struct{}
+type DescribeImageXSensibleTopSizeURL struct{}
+type DescribeImageXSensibleTopSizeURLQuery struct{}
+type DescribeImageXSensibleTopUnknownURL struct{}
+type DescribeImageXSensibleTopUnknownURLQuery struct{}
+type DescribeImageXServerQPSUsage struct{}
+type DescribeImageXServerQPSUsageBody struct{}
+type DescribeImageXServiceQuality struct{}
+type DescribeImageXServiceQualityBody struct{}
+type DescribeImageXSummary struct{}
+type DescribeImageXSummaryBody struct{}
+type DescribeImageXUploadCountByTime struct{}
+type DescribeImageXUploadCountByTimeQuery struct{}
+type DescribeImageXUploadDuration struct{}
+type DescribeImageXUploadDurationQuery struct{}
+type DescribeImageXUploadErrorCodeAll struct{}
+type DescribeImageXUploadErrorCodeAllQuery struct{}
+type DescribeImageXUploadErrorCodeByTime struct{}
+type DescribeImageXUploadErrorCodeByTimeQuery struct{}
+type DescribeImageXUploadFileSize struct{}
+type DescribeImageXUploadFileSizeQuery struct{}
+type DescribeImageXUploadSegmentSpeedByTime struct{}
+type DescribeImageXUploadSegmentSpeedByTimeQuery struct{}
+type DescribeImageXUploadSpeed struct{}
+type DescribeImageXUploadSpeedQuery struct{}
+type DescribeImageXUploadSuccessRateByTime struct{}
+type DescribeImageXUploadSuccessRateByTimeQuery struct{}
+type DescribeImageXVideoClipDurationUsage struct{}
+type DescribeImageXVideoClipDurationUsageBody struct{}
+type ExportFailedMigrateTask struct{}
+type ExportFailedMigrateTaskBody struct{}
+type FetchImageURL struct{}
+type FetchImageURLQuery struct{}
+type GetAllImageServices struct{}
+type GetAllImageServicesBody struct{}
+type GetAllImageTemplates struct{}
+type GetAllImageTemplatesBody struct{}
+type GetAuditEntrysCount struct{}
+type GetAuditEntrysCountBody struct{}
+type GetComprehensiveEnhanceImage struct{}
+type GetComprehensiveEnhanceImageQuery struct{}
+type GetCompressTaskInfo struct{}
+type GetCompressTaskInfoBody struct{}
+type GetDedupTaskStatus struct{}
+type GetDedupTaskStatusBody struct{}
+type GetDomainConfig struct{}
+type GetDomainConfigBody struct{}
+type GetImageAnalyzeResult struct{}
+type GetImageAnalyzeResultBody struct{}
+type GetImageAnalyzeTasks struct{}
+type GetImageAnalyzeTasksBody struct{}
+type GetImageAuditResult struct{}
+type GetImageAuditResultBody struct{}
+type GetImageAuditTasks struct{}
+type GetImageAuditTasksBody struct{}
+type GetImageAuthKey struct{}
+type GetImageAuthKeyBody struct{}
+type GetImageBgFillResult struct{}
+type GetImageBgFillResultQuery struct{}
+type GetImageComicResult struct{}
+type GetImageComicResultQuery struct{}
+type GetImageContentBlockList struct{}
+type GetImageContentTaskDetail struct{}
+type GetImageContentTaskDetailQuery struct{}
+type GetImageDetectResult struct{}
+type GetImageDuplicateDetection struct{}
+type GetImageEnhanceResult struct{}
+type GetImageEnhanceResultQuery struct{}
+type GetImageEraseModels struct{}
+type GetImageEraseModelsBody struct{}
+type GetImageEraseResult struct{}
+type GetImageEraseResultQuery struct{}
+type GetImageMigrateTasks struct{}
+type GetImageMigrateTasksBody struct{}
+type GetImageOCRV2 struct{}
+type GetImagePSDetection struct{}
+type GetImageQuality struct{}
+type GetImageService struct{}
+type GetImageServiceBody struct{}
+type GetImageServiceSubscription struct{}
+type GetImageServiceSubscriptionBody struct{}
+type GetImageServiceSubscriptionQuery struct{}
+type GetImageSmartCropResult struct{}
+type GetImageSmartCropResultQuery struct{}
+type GetImageStorageFiles struct{}
+type GetImageStorageFilesBody struct{}
+type GetImageStyleResult struct{}
+type GetImageSuperResolutionResult struct{}
+type GetImageSuperResolutionResultQuery struct{}
+type GetImageTemplate struct{}
+type GetImageTemplateBody struct{}
+type GetImageTranscodeDetails struct{}
+type GetImageTranscodeDetailsBody struct{}
+type GetImageTranscodeQueues struct{}
+type GetImageTranscodeQueuesBody struct{}
+type GetImageUpdateFiles struct{}
+type GetImageUpdateFilesBody struct{}
+type GetImageUploadFile struct{}
+type GetImageUploadFileBody struct{}
+type GetImageUploadFiles struct{}
+type GetImageUploadFilesBody struct{}
+type GetImageXQueryApps struct{}
+type GetImageXQueryAppsBody struct{}
+type GetImageXQueryDims struct{}
+type GetImageXQueryDimsBody struct{}
+type GetImageXQueryRegions struct{}
+type GetImageXQueryRegionsBody struct{}
+type GetImageXQueryVals struct{}
+type GetImageXQueryValsBody struct{}
+type GetPrivateImageType struct{}
+type GetResourceURL struct{}
+type GetResourceURLBody struct{}
+type GetResponseHeaderValidateKeys struct{}
+type GetResponseHeaderValidateKeysBody struct{}
+type GetResponseHeaderValidateKeysQuery struct{}
+type GetSegmentImage struct{}
+type GetServiceDomains struct{}
+type GetServiceDomainsBody struct{}
+type GetTemplatesFromBin struct{}
+type GetTemplatesFromBinBody struct{}
+type GetURLFetchTask struct{}
+type GetURLFetchTaskBody struct{}
+type GetVendorBuckets struct{}
+type GetVendorBucketsQuery struct{}
+type PreviewImageUploadFile struct{}
+type PreviewImageUploadFileBody struct{}
+type RerunImageMigrateTask struct{}
+type RerunImageMigrateTaskBody struct{}
+type SetDefaultDomain struct{}
+type SetDefaultDomainQuery struct{}
+type TerminateImageMigrateTask struct{}
+type TerminateImageMigrateTaskBody struct{}
+type UpdateAuditImageStatus struct{}
+type UpdateAuditImageStatusQuery struct{}
+type UpdateHTTPS struct{}
+type UpdateImageAnalyzeTask struct{}
+type UpdateImageAnalyzeTaskQuery struct{}
+type UpdateImageAnalyzeTaskStatus struct{}
+type UpdateImageAnalyzeTaskStatusQuery struct{}
+type UpdateImageAuditTask struct{}
+type UpdateImageAuditTaskQuery struct{}
+type UpdateImageAuditTaskStatus struct{}
+type UpdateImageAuditTaskStatusQuery struct{}
+type UpdateImageAuthKey struct{}
+type UpdateImageFileKey struct{}
+type UpdateImageMirrorConf struct{}
+type UpdateImageObjectAccess struct{}
+type UpdateImageResourceStatus struct{}
+type UpdateImageStorageTTL struct{}
+type UpdateImageStorageTTLQuery struct{}
+type UpdateImageTaskStrategy struct{}
+type UpdateImageTaskStrategyQuery struct{}
+type UpdateImageTranscodeQueue struct{}
+type UpdateImageTranscodeQueueQuery struct{}
+type UpdateImageTranscodeQueueStatus struct{}
+type UpdateImageTranscodeQueueStatusQuery struct{}
+type UpdateImageUploadFiles struct{}
+type UpdateRefer struct{}
+type UpdateResponseHeader struct{}
+type UpdateServiceName struct{}
+type ApplyImageUploadReq struct {
+	*ApplyImageUploadQuery
+	*ApplyImageUploadBody
 }
 type CommitImageUploadReq struct {
 	*CommitImageUploadQuery
 	*CommitImageUploadBody
 }
-type CreateImageTemplateReq struct {
-	*CreateImageTemplateQuery
-	*CreateImageTemplateBody
-}
-type CreateImageRetryAuditTaskReq struct {
-	*CreateImageRetryAuditTaskQuery
-	*CreateImageRetryAuditTaskBody
-}
-type GetResponseHeaderValidateKeysReq struct {
-	*GetResponseHeaderValidateKeysQuery
-	*GetResponseHeaderValidateKeysBody
-}
-type DescribeImageXMirrorRequestHTTPCodeOverviewReq struct {
-	*DescribeImageXMirrorRequestHTTPCodeOverviewQuery
-	*DescribeImageXMirrorRequestHTTPCodeOverviewBody
-}
-type DescribeImageXHitRateRequestDataReq struct {
-	*DescribeImageXHitRateRequestDataQuery
-	*DescribeImageXHitRateRequestDataBody
-}
-type GetImageStorageFilesReq struct {
-	*GetImageStorageFilesQuery
-	*GetImageStorageFilesBody
-}
-type PreviewImageUploadFileReq struct {
-	*PreviewImageUploadFileQuery
-	*PreviewImageUploadFileBody
-}
-type GetVendorBucketsReq struct {
-	*GetVendorBucketsQuery
-	*GetVendorBucketsBody
-}
-type DescribeImageXServerQPSUsageReq struct {
-	*DescribeImageXServerQPSUsageQuery
-	*DescribeImageXServerQPSUsageBody
-}
-type DescribeImageXClientDecodeDurationByTimeReq struct {
-	*DescribeImageXClientDecodeDurationByTimeQuery
-	*DescribeImageXClientDecodeDurationByTimeBody
-}
-type DescribeImageXClientLoadDurationAllReq struct {
-	*DescribeImageXClientLoadDurationAllQuery
-	*DescribeImageXClientLoadDurationAllBody
-}
-type GetImageSmartCropResultReq struct {
-	*GetImageSmartCropResultQuery
-	*GetImageSmartCropResultBody
-}
-type DeleteImageAnalyzeTaskReq struct {
-	*DeleteImageAnalyzeTaskQuery
-	*DeleteImageAnalyzeTaskBody
-}
-type UpdateReferReq struct {
-	*UpdateReferQuery
-	*UpdateReferBody
-}
-type DescribeImageXEdgeRequestBandwidthReq struct {
-	*DescribeImageXEdgeRequestBandwidthQuery
-	*DescribeImageXEdgeRequestBandwidthBody
-}
-type DescribeImageXCdnDurationAllReq struct {
-	*DescribeImageXCdnDurationAllQuery
-	*DescribeImageXCdnDurationAllBody
-}
-type SetDefaultDomainReq struct {
-	*SetDefaultDomainQuery
-	*SetDefaultDomainBody
-}
 type CreateHiddenWatermarkImageReq struct {
 	*CreateHiddenWatermarkImageQuery
 	*CreateHiddenWatermarkImageBody
-}
-type CreateTemplatesFromBinReq struct {
-	*CreateTemplatesFromBinQuery
-	*CreateTemplatesFromBinBody
-}
-type GetComprehensiveEnhanceImageReq struct {
-	*GetComprehensiveEnhanceImageQuery
-	*GetComprehensiveEnhanceImageBody
-}
-type GetImageAnalyzeTasksReq struct {
-	*GetImageAnalyzeTasksQuery
-	*GetImageAnalyzeTasksBody
-}
-type GetImageXQueryDimsReq struct {
-	*GetImageXQueryDimsQuery
-	*GetImageXQueryDimsBody
-}
-type GetImageXQueryValsReq struct {
-	*GetImageXQueryValsQuery
-	*GetImageXQueryValsBody
-}
-type DescribeImageXUploadFileSizeReq struct {
-	*DescribeImageXUploadFileSizeQuery
-	*DescribeImageXUploadFileSizeBody
-}
-type DeleteImageUploadFilesReq struct {
-	*DeleteImageUploadFilesQuery
-	*DeleteImageUploadFilesBody
-}
-type DeleteImageTranscodeDetailReq struct {
-	*DeleteImageTranscodeDetailQuery
-	*DeleteImageTranscodeDetailBody
-}
-type DescribeImageXDomainTrafficDataReq struct {
-	*DescribeImageXDomainTrafficDataQuery
-	*DescribeImageXDomainTrafficDataBody
-}
-type DescribeImageXClientFileSizeReq struct {
-	*DescribeImageXClientFileSizeQuery
-	*DescribeImageXClientFileSizeBody
-}
-type UpdateImageTranscodeQueueStatusReq struct {
-	*UpdateImageTranscodeQueueStatusQuery
-	*UpdateImageTranscodeQueueStatusBody
-}
-type CreateImageTranscodeTaskReq struct {
-	*CreateImageTranscodeTaskQuery
-	*CreateImageTranscodeTaskBody
-}
-type DelDomainReq struct {
-	*DelDomainQuery
-	*DelDomainBody
-}
-type DescribeImageXUploadSegmentSpeedByTimeReq struct {
-	*DescribeImageXUploadSegmentSpeedByTimeQuery
-	*DescribeImageXUploadSegmentSpeedByTimeBody
-}
-type GetImageServiceReq struct {
-	*GetImageServiceQuery
-	*GetImageServiceBody
-}
-type GetAuditEntrysCountReq struct {
-	*GetAuditEntrysCountQuery
-	*GetAuditEntrysCountBody
-}
-type GetImageXQueryRegionsReq struct {
-	*GetImageXQueryRegionsQuery
-	*GetImageXQueryRegionsBody
-}
-type DescribeImageXClientQueueDurationByTimeReq struct {
-	*DescribeImageXClientQueueDurationByTimeQuery
-	*DescribeImageXClientQueueDurationByTimeBody
-}
-type UpdateImageTranscodeQueueReq struct {
-	*UpdateImageTranscodeQueueQuery
-	*UpdateImageTranscodeQueueBody
-}
-type UpdateImageAuthKeyReq struct {
-	*UpdateImageAuthKeyQuery
-	*UpdateImageAuthKeyBody
-}
-type DeleteTemplatesFromBinReq struct {
-	*DeleteTemplatesFromBinQuery
-	*DeleteTemplatesFromBinBody
-}
-type DescribeImageXDomainBandwidthNinetyFiveDataReq struct {
-	*DescribeImageXDomainBandwidthNinetyFiveDataQuery
-	*DescribeImageXDomainBandwidthNinetyFiveDataBody
-}
-type GetImageXQueryAppsReq struct {
-	*GetImageXQueryAppsQuery
-	*GetImageXQueryAppsBody
-}
-type DescribeImageXUploadErrorCodeAllReq struct {
-	*DescribeImageXUploadErrorCodeAllQuery
-	*DescribeImageXUploadErrorCodeAllBody
-}
-type DescribeImageXSensibleTopUnknownURLReq struct {
-	*DescribeImageXSensibleTopUnknownURLQuery
-	*DescribeImageXSensibleTopUnknownURLBody
-}
-type GetSegmentImageReq struct {
-	*GetSegmentImageQuery
-	*GetSegmentImageBody
-}
-type UpdateImageAnalyzeTaskReq struct {
-	*UpdateImageAnalyzeTaskQuery
-	*UpdateImageAnalyzeTaskBody
-}
-type UpdateImageAuditTaskStatusReq struct {
-	*UpdateImageAuditTaskStatusQuery
-	*UpdateImageAuditTaskStatusBody
-}
-type CreateImageServiceReq struct {
-	*CreateImageServiceQuery
-	*CreateImageServiceBody
-}
-type UpdateImageTaskStrategyReq struct {
-	*UpdateImageTaskStrategyQuery
-	*UpdateImageTaskStrategyBody
-}
-type DescribeImageXUploadDurationReq struct {
-	*DescribeImageXUploadDurationQuery
-	*DescribeImageXUploadDurationBody
-}
-type DescribeImageXClientDemotionRateByTimeReq struct {
-	*DescribeImageXClientDemotionRateByTimeQuery
-	*DescribeImageXClientDemotionRateByTimeBody
-}
-type GetImagePSDetectionReq struct {
-	*GetImagePSDetectionQuery
-	*GetImagePSDetectionBody
-}
-type CreateImageHmExtractReq struct {
-	*CreateImageHmExtractQuery
-	*CreateImageHmExtractBody
-}
-type DescribeImageVolcCdnAccessLogReq struct {
-	*DescribeImageVolcCdnAccessLogQuery
-	*DescribeImageVolcCdnAccessLogBody
-}
-type DescribeImageXCdnReuseRateAllReq struct {
-	*DescribeImageXCdnReuseRateAllQuery
-	*DescribeImageXCdnReuseRateAllBody
-}
-type DescribeImageXCdnProtocolRateByTimeReq struct {
-	*DescribeImageXCdnProtocolRateByTimeQuery
-	*DescribeImageXCdnProtocolRateByTimeBody
-}
-type DescribeImageXClientDecodeSuccessRateByTimeReq struct {
-	*DescribeImageXClientDecodeSuccessRateByTimeQuery
-	*DescribeImageXClientDecodeSuccessRateByTimeBody
-}
-type ApplyImageUploadReq struct {
-	*ApplyImageUploadQuery
-	*ApplyImageUploadBody
-}
-type UpdateImageAuditTaskReq struct {
-	*UpdateImageAuditTaskQuery
-	*UpdateImageAuditTaskBody
-}
-type GetImageMigrateTasksReq struct {
-	*GetImageMigrateTasksQuery
-	*GetImageMigrateTasksBody
-}
-type DescribeImageXSensibleCountByTimeReq struct {
-	*DescribeImageXSensibleCountByTimeQuery
-	*DescribeImageXSensibleCountByTimeBody
-}
-type GetAllImageServicesReq struct {
-	*GetAllImageServicesQuery
-	*GetAllImageServicesBody
-}
-type GetImageQualityReq struct {
-	*GetImageQualityQuery
-	*GetImageQualityBody
-}
-type GetImageTemplateReq struct {
-	*GetImageTemplateQuery
-	*GetImageTemplateBody
-}
-type DescribeImageXBucketUsageReq struct {
-	*DescribeImageXBucketUsageQuery
-	*DescribeImageXBucketUsageBody
-}
-type DescribeImageXCdnSuccessRateAllReq struct {
-	*DescribeImageXCdnSuccessRateAllQuery
-	*DescribeImageXCdnSuccessRateAllBody
-}
-type UpdateImageAnalyzeTaskStatusReq struct {
-	*UpdateImageAnalyzeTaskStatusQuery
-	*UpdateImageAnalyzeTaskStatusBody
-}
-type DescribeImageXMirrorRequestBandwidthReq struct {
-	*DescribeImageXMirrorRequestBandwidthQuery
-	*DescribeImageXMirrorRequestBandwidthBody
-}
-type GetImageUploadFileReq struct {
-	*GetImageUploadFileQuery
-	*GetImageUploadFileBody
-}
-type DeleteImageAnalyzeTaskRunReq struct {
-	*DeleteImageAnalyzeTaskRunQuery
-	*DeleteImageAnalyzeTaskRunBody
-}
-type FetchImageURLReq struct {
-	*FetchImageURLQuery
-	*FetchImageURLBody
-}
-type GetImageDuplicateDetectionReq struct {
-	*GetImageDuplicateDetectionQuery
-	*GetImageDuplicateDetectionBody
-}
-type UpdateImageMirrorConfReq struct {
-	*UpdateImageMirrorConfQuery
-	*UpdateImageMirrorConfBody
-}
-type UpdateResponseHeaderReq struct {
-	*UpdateResponseHeaderQuery
-	*UpdateResponseHeaderBody
-}
-type DescribeImageXEdgeRequestReq struct {
-	*DescribeImageXEdgeRequestQuery
-	*DescribeImageXEdgeRequestBody
-}
-type DescribeImageXMirrorRequestHTTPCodeByTimeReq struct {
-	*DescribeImageXMirrorRequestHTTPCodeByTimeQuery
-	*DescribeImageXMirrorRequestHTTPCodeByTimeBody
-}
-type DescribeImageXClientQualityRateByTimeReq struct {
-	*DescribeImageXClientQualityRateByTimeQuery
-	*DescribeImageXClientQualityRateByTimeBody
-}
-type DescribeImageXClientScoreByTimeReq struct {
-	*DescribeImageXClientScoreByTimeQuery
-	*DescribeImageXClientScoreByTimeBody
-}
-type GetImageAuditTasksReq struct {
-	*GetImageAuditTasksQuery
-	*GetImageAuditTasksBody
-}
-type GetImageAuditResultReq struct {
-	*GetImageAuditResultQuery
-	*GetImageAuditResultBody
-}
-type GetImageAnalyzeResultReq struct {
-	*GetImageAnalyzeResultQuery
-	*GetImageAnalyzeResultBody
-}
-type UpdateAuditImageStatusReq struct {
-	*UpdateAuditImageStatusQuery
-	*UpdateAuditImageStatusBody
-}
-type DescribeImageXHitRateTrafficDataReq struct {
-	*DescribeImageXHitRateTrafficDataQuery
-	*DescribeImageXHitRateTrafficDataBody
-}
-type DescribeImageXClientTopFileSizeReq struct {
-	*DescribeImageXClientTopFileSizeQuery
-	*DescribeImageXClientTopFileSizeBody
-}
-type DescribeImageXSensibleTopSizeURLReq struct {
-	*DescribeImageXSensibleTopSizeURLQuery
-	*DescribeImageXSensibleTopSizeURLBody
-}
-type DeleteImageTranscodeQueueReq struct {
-	*DeleteImageTranscodeQueueQuery
-	*DeleteImageTranscodeQueueBody
-}
-type GetImageOCRV2Req struct {
-	*GetImageOCRV2Query
-	*GetImageOCRV2Body
-}
-type DescribeImageXServiceQualityReq struct {
-	*DescribeImageXServiceQualityQuery
-	*DescribeImageXServiceQualityBody
-}
-type GetPrivateImageTypeReq struct {
-	*GetPrivateImageTypeQuery
-	*GetPrivateImageTypeBody
-}
-type GetImageServiceSubscriptionReq struct {
-	*GetImageServiceSubscriptionQuery
-	*GetImageServiceSubscriptionBody
-}
-type DescribeImageXCdnReuseRateByTimeReq struct {
-	*DescribeImageXCdnReuseRateByTimeQuery
-	*DescribeImageXCdnReuseRateByTimeBody
-}
-type CreateImageTranscodeQueueReq struct {
-	*CreateImageTranscodeQueueQuery
-	*CreateImageTranscodeQueueBody
-}
-type CreateImageHmEmbedReq struct {
-	*CreateImageHmEmbedQuery
-	*CreateImageHmEmbedBody
-}
-type UpdateHTTPSReq struct {
-	*UpdateHTTPSQuery
-	*UpdateHTTPSBody
-}
-type GetDomainConfigReq struct {
-	*GetDomainConfigQuery
-	*GetDomainConfigBody
-}
-type DescribeImageXDomainBandwidthDataReq struct {
-	*DescribeImageXDomainBandwidthDataQuery
-	*DescribeImageXDomainBandwidthDataBody
-}
-type DescribeImageXBillingRequestCntUsageReq struct {
-	*DescribeImageXBillingRequestCntUsageQuery
-	*DescribeImageXBillingRequestCntUsageBody
-}
-type DescribeImageXUploadCountByTimeReq struct {
-	*DescribeImageXUploadCountByTimeQuery
-	*DescribeImageXUploadCountByTimeBody
 }
 type CreateImageAnalyzeTaskReq struct {
 	*CreateImageAnalyzeTaskQuery
 	*CreateImageAnalyzeTaskBody
 }
-type GetTemplatesFromBinReq struct {
-	*GetTemplatesFromBinQuery
-	*GetTemplatesFromBinBody
+type CreateImageAuditTaskReq struct {
+	*CreateImageAuditTaskQuery
+	*CreateImageAuditTaskBody
 }
-type DescribeImageXMultiCompressUsageReq struct {
-	*DescribeImageXMultiCompressUsageQuery
-	*DescribeImageXMultiCompressUsageBody
-}
-type DescribeImageXEdgeRequestTrafficReq struct {
-	*DescribeImageXEdgeRequestTrafficQuery
-	*DescribeImageXEdgeRequestTrafficBody
-}
-type DescribeImageXUploadSpeedReq struct {
-	*DescribeImageXUploadSpeedQuery
-	*DescribeImageXUploadSpeedBody
+type CreateImageCompressTaskReq struct {
+	*CreateImageCompressTaskQuery
+	*CreateImageCompressTaskBody
 }
 type CreateImageContentTaskReq struct {
 	*CreateImageContentTaskQuery
 	*CreateImageContentTaskBody
 }
-type GetImageBgFillResultReq struct {
-	*GetImageBgFillResultQuery
-	*GetImageBgFillResultBody
+type CreateImageHmEmbedReq struct {
+	*CreateImageHmEmbedQuery
+	*CreateImageHmEmbedBody
 }
-type DescribeImageXSensibleCacheHitRateByTimeReq struct {
-	*DescribeImageXSensibleCacheHitRateByTimeQuery
-	*DescribeImageXSensibleCacheHitRateByTimeBody
+type CreateImageHmExtractReq struct {
+	*CreateImageHmExtractQuery
+	*CreateImageHmExtractBody
 }
-type UpdateImageFileKeyReq struct {
-	*UpdateImageFileKeyQuery
-	*UpdateImageFileKeyBody
+type CreateImageMigrateTaskReq struct {
+	*CreateImageMigrateTaskQuery
+	*CreateImageMigrateTaskBody
+}
+type CreateImageRetryAuditTaskReq struct {
+	*CreateImageRetryAuditTaskQuery
+	*CreateImageRetryAuditTaskBody
+}
+type CreateImageServiceReq struct {
+	*CreateImageServiceQuery
+	*CreateImageServiceBody
+}
+type CreateImageTemplateReq struct {
+	*CreateImageTemplateQuery
+	*CreateImageTemplateBody
+}
+type CreateImageTranscodeCallbackReq struct {
+	*CreateImageTranscodeCallbackQuery
+	*CreateImageTranscodeCallbackBody
+}
+type CreateImageTranscodeQueueReq struct {
+	*CreateImageTranscodeQueueQuery
+	*CreateImageTranscodeQueueBody
+}
+type CreateImageTranscodeTaskReq struct {
+	*CreateImageTranscodeTaskQuery
+	*CreateImageTranscodeTaskBody
+}
+type CreateTemplatesFromBinReq struct {
+	*CreateTemplatesFromBinQuery
+	*CreateTemplatesFromBinBody
+}
+type DelDomainReq struct {
+	*DelDomainQuery
+	*DelDomainBody
+}
+type DeleteImageAnalyzeTaskReq struct {
+	*DeleteImageAnalyzeTaskQuery
+	*DeleteImageAnalyzeTaskBody
+}
+type DeleteImageAnalyzeTaskRunReq struct {
+	*DeleteImageAnalyzeTaskRunQuery
+	*DeleteImageAnalyzeTaskRunBody
+}
+type DeleteImageAuditResultReq struct {
+	*DeleteImageAuditResultQuery
+	*DeleteImageAuditResultBody
+}
+type DeleteImageMigrateTaskReq struct {
+	*DeleteImageMigrateTaskQuery
+	*DeleteImageMigrateTaskBody
 }
 type DeleteImageServiceReq struct {
 	*DeleteImageServiceQuery
@@ -15622,179 +15754,583 @@ type DeleteImageTemplateReq struct {
 	*DeleteImageTemplateQuery
 	*DeleteImageTemplateBody
 }
-type GetCompressTaskInfoReq struct {
-	*GetCompressTaskInfoQuery
-	*GetCompressTaskInfoBody
+type DeleteImageTranscodeDetailReq struct {
+	*DeleteImageTranscodeDetailQuery
+	*DeleteImageTranscodeDetailBody
 }
-type GetImageTranscodeDetailsReq struct {
-	*GetImageTranscodeDetailsQuery
-	*GetImageTranscodeDetailsBody
+type DeleteImageTranscodeQueueReq struct {
+	*DeleteImageTranscodeQueueQuery
+	*DeleteImageTranscodeQueueBody
+}
+type DeleteImageUploadFilesReq struct {
+	*DeleteImageUploadFilesQuery
+	*DeleteImageUploadFilesBody
+}
+type DeleteTemplatesFromBinReq struct {
+	*DeleteTemplatesFromBinQuery
+	*DeleteTemplatesFromBinBody
+}
+type DescribeImageVolcCdnAccessLogReq struct {
+	*DescribeImageVolcCdnAccessLogQuery
+	*DescribeImageVolcCdnAccessLogBody
 }
 type DescribeImageXBaseOpUsageReq struct {
 	*DescribeImageXBaseOpUsageQuery
 	*DescribeImageXBaseOpUsageBody
 }
-type DescribeImageXEdgeRequestRegionsReq struct {
-	*DescribeImageXEdgeRequestRegionsQuery
-	*DescribeImageXEdgeRequestRegionsBody
+type DescribeImageXBillingRequestCntUsageReq struct {
+	*DescribeImageXBillingRequestCntUsageQuery
+	*DescribeImageXBillingRequestCntUsageBody
 }
-type DescribeImageXUploadSuccessRateByTimeReq struct {
-	*DescribeImageXUploadSuccessRateByTimeQuery
-	*DescribeImageXUploadSuccessRateByTimeBody
+type DescribeImageXBucketRetrievalUsageReq struct {
+	*DescribeImageXBucketRetrievalUsageQuery
+	*DescribeImageXBucketRetrievalUsageBody
 }
-type UpdateImageUploadFilesReq struct {
-	*UpdateImageUploadFilesQuery
-	*UpdateImageUploadFilesBody
+type DescribeImageXBucketUsageReq struct {
+	*DescribeImageXBucketUsageQuery
+	*DescribeImageXBucketUsageBody
 }
-type CreateImageCompressTaskReq struct {
-	*CreateImageCompressTaskQuery
-	*CreateImageCompressTaskBody
+type DescribeImageXCDNTopRequestDataReq struct {
+	*DescribeImageXCDNTopRequestDataQuery
+	*DescribeImageXCDNTopRequestDataBody
+}
+type DescribeImageXCdnDurationAllReq struct {
+	*DescribeImageXCdnDurationAllQuery
+	*DescribeImageXCdnDurationAllBody
 }
 type DescribeImageXCdnDurationDetailByTimeReq struct {
 	*DescribeImageXCdnDurationDetailByTimeQuery
 	*DescribeImageXCdnDurationDetailByTimeBody
 }
-type GetURLFetchTaskReq struct {
-	*GetURLFetchTaskQuery
-	*GetURLFetchTaskBody
-}
-type UpdateServiceNameReq struct {
-	*UpdateServiceNameQuery
-	*UpdateServiceNameBody
-}
-type CreateImageAuditTaskReq struct {
-	*CreateImageAuditTaskQuery
-	*CreateImageAuditTaskBody
-}
-type GetImageAuthKeyReq struct {
-	*GetImageAuthKeyQuery
-	*GetImageAuthKeyBody
-}
-type ExportFailedMigrateTaskReq struct {
-	*ExportFailedMigrateTaskQuery
-	*ExportFailedMigrateTaskBody
-}
-type DescribeImageXUploadErrorCodeByTimeReq struct {
-	*DescribeImageXUploadErrorCodeByTimeQuery
-	*DescribeImageXUploadErrorCodeByTimeBody
-}
-type DescribeImageXClientErrorCodeAllReq struct {
-	*DescribeImageXClientErrorCodeAllQuery
-	*DescribeImageXClientErrorCodeAllBody
-}
-type DescribeImageXClientTopDemotionURLReq struct {
-	*DescribeImageXClientTopDemotionURLQuery
-	*DescribeImageXClientTopDemotionURLBody
-}
-type GetImageUploadFilesReq struct {
-	*GetImageUploadFilesQuery
-	*GetImageUploadFilesBody
-}
-type TerminateImageMigrateTaskReq struct {
-	*TerminateImageMigrateTaskQuery
-	*TerminateImageMigrateTaskBody
-}
-type GetImageEnhanceResultReq struct {
-	*GetImageEnhanceResultQuery
-	*GetImageEnhanceResultBody
-}
-type CreateImageTranscodeCallbackReq struct {
-	*CreateImageTranscodeCallbackQuery
-	*CreateImageTranscodeCallbackBody
-}
-type GetImageComicResultReq struct {
-	*GetImageComicResultQuery
-	*GetImageComicResultBody
-}
-type DescribeImageXCompressUsageReq struct {
-	*DescribeImageXCompressUsageQuery
-	*DescribeImageXCompressUsageBody
-}
-type DescribeImageXVideoClipDurationUsageReq struct {
-	*DescribeImageXVideoClipDurationUsageQuery
-	*DescribeImageXVideoClipDurationUsageBody
-}
 type DescribeImageXCdnErrorCodeAllReq struct {
 	*DescribeImageXCdnErrorCodeAllQuery
 	*DescribeImageXCdnErrorCodeAllBody
 }
-type UpdateImageStorageTTLReq struct {
-	*UpdateImageStorageTTLQuery
-	*UpdateImageStorageTTLBody
+type DescribeImageXCdnErrorCodeByTimeReq struct {
+	*DescribeImageXCdnErrorCodeByTimeQuery
+	*DescribeImageXCdnErrorCodeByTimeBody
 }
-type GetImageContentBlockListReq struct {
-	*GetImageContentBlockListQuery
-	*GetImageContentBlockListBody
+type DescribeImageXCdnProtocolRateByTimeReq struct {
+	*DescribeImageXCdnProtocolRateByTimeQuery
+	*DescribeImageXCdnProtocolRateByTimeBody
 }
-type DeleteImageMigrateTaskReq struct {
-	*DeleteImageMigrateTaskQuery
-	*DeleteImageMigrateTaskBody
+type DescribeImageXCdnReuseRateAllReq struct {
+	*DescribeImageXCdnReuseRateAllQuery
+	*DescribeImageXCdnReuseRateAllBody
 }
-type RerunImageMigrateTaskReq struct {
-	*RerunImageMigrateTaskQuery
-	*RerunImageMigrateTaskBody
+type DescribeImageXCdnReuseRateByTimeReq struct {
+	*DescribeImageXCdnReuseRateByTimeQuery
+	*DescribeImageXCdnReuseRateByTimeBody
 }
-type DescribeImageXSummaryReq struct {
-	*DescribeImageXSummaryQuery
-	*DescribeImageXSummaryBody
+type DescribeImageXCdnSuccessRateAllReq struct {
+	*DescribeImageXCdnSuccessRateAllQuery
+	*DescribeImageXCdnSuccessRateAllBody
 }
-type DescribeImageXClientTopQualityURLReq struct {
-	*DescribeImageXClientTopQualityURLQuery
-	*DescribeImageXClientTopQualityURLBody
-}
-type GetDedupTaskStatusReq struct {
-	*GetDedupTaskStatusQuery
-	*GetDedupTaskStatusBody
-}
-type DescribeImageXRequestCntUsageReq struct {
-	*DescribeImageXRequestCntUsageQuery
-	*DescribeImageXRequestCntUsageBody
-}
-type DescribeImageXMirrorRequestTrafficReq struct {
-	*DescribeImageXMirrorRequestTrafficQuery
-	*DescribeImageXMirrorRequestTrafficBody
+type DescribeImageXCdnSuccessRateByTimeReq struct {
+	*DescribeImageXCdnSuccessRateByTimeQuery
+	*DescribeImageXCdnSuccessRateByTimeBody
 }
 type DescribeImageXClientCountByTimeReq struct {
 	*DescribeImageXClientCountByTimeQuery
 	*DescribeImageXClientCountByTimeBody
 }
-type DescribeImageXSensibleTopResolutionURLReq struct {
-	*DescribeImageXSensibleTopResolutionURLQuery
-	*DescribeImageXSensibleTopResolutionURLBody
+type DescribeImageXClientDecodeDurationByTimeReq struct {
+	*DescribeImageXClientDecodeDurationByTimeQuery
+	*DescribeImageXClientDecodeDurationByTimeBody
 }
-type GetResourceURLReq struct {
-	*GetResourceURLQuery
-	*GetResourceURLBody
+type DescribeImageXClientDecodeSuccessRateByTimeReq struct {
+	*DescribeImageXClientDecodeSuccessRateByTimeQuery
+	*DescribeImageXClientDecodeSuccessRateByTimeBody
 }
-type GetImageTranscodeQueuesReq struct {
-	*GetImageTranscodeQueuesQuery
-	*GetImageTranscodeQueuesBody
+type DescribeImageXClientDemotionRateByTimeReq struct {
+	*DescribeImageXClientDemotionRateByTimeQuery
+	*DescribeImageXClientDemotionRateByTimeBody
 }
-type GetImageSuperResolutionResultReq struct {
-	*GetImageSuperResolutionResultQuery
-	*GetImageSuperResolutionResultBody
+type DescribeImageXClientErrorCodeAllReq struct {
+	*DescribeImageXClientErrorCodeAllQuery
+	*DescribeImageXClientErrorCodeAllBody
 }
-type GetImageEraseModelsReq struct {
-	*GetImageEraseModelsQuery
-	*GetImageEraseModelsBody
-}
-type DescribeImageXScreenshotUsageReq struct {
-	*DescribeImageXScreenshotUsageQuery
-	*DescribeImageXScreenshotUsageBody
+type DescribeImageXClientErrorCodeByTimeReq struct {
+	*DescribeImageXClientErrorCodeByTimeQuery
+	*DescribeImageXClientErrorCodeByTimeBody
 }
 type DescribeImageXClientFailureRateReq struct {
 	*DescribeImageXClientFailureRateQuery
 	*DescribeImageXClientFailureRateBody
 }
+type DescribeImageXClientFileSizeReq struct {
+	*DescribeImageXClientFileSizeQuery
+	*DescribeImageXClientFileSizeBody
+}
+type DescribeImageXClientLoadDurationReq struct {
+	*DescribeImageXClientLoadDurationQuery
+	*DescribeImageXClientLoadDurationBody
+}
+type DescribeImageXClientLoadDurationAllReq struct {
+	*DescribeImageXClientLoadDurationAllQuery
+	*DescribeImageXClientLoadDurationAllBody
+}
+type DescribeImageXClientQualityRateByTimeReq struct {
+	*DescribeImageXClientQualityRateByTimeQuery
+	*DescribeImageXClientQualityRateByTimeBody
+}
+type DescribeImageXClientQueueDurationByTimeReq struct {
+	*DescribeImageXClientQueueDurationByTimeQuery
+	*DescribeImageXClientQueueDurationByTimeBody
+}
+type DescribeImageXClientScoreByTimeReq struct {
+	*DescribeImageXClientScoreByTimeQuery
+	*DescribeImageXClientScoreByTimeBody
+}
+type DescribeImageXClientSdkVerByTimeReq struct {
+	*DescribeImageXClientSdkVerByTimeQuery
+	*DescribeImageXClientSdkVerByTimeBody
+}
+type DescribeImageXClientTopDemotionURLReq struct {
+	*DescribeImageXClientTopDemotionURLQuery
+	*DescribeImageXClientTopDemotionURLBody
+}
+type DescribeImageXClientTopFileSizeReq struct {
+	*DescribeImageXClientTopFileSizeQuery
+	*DescribeImageXClientTopFileSizeBody
+}
+type DescribeImageXClientTopQualityURLReq struct {
+	*DescribeImageXClientTopQualityURLQuery
+	*DescribeImageXClientTopQualityURLBody
+}
+type DescribeImageXCompressUsageReq struct {
+	*DescribeImageXCompressUsageQuery
+	*DescribeImageXCompressUsageBody
+}
+type DescribeImageXDomainBandwidthDataReq struct {
+	*DescribeImageXDomainBandwidthDataQuery
+	*DescribeImageXDomainBandwidthDataBody
+}
+type DescribeImageXDomainBandwidthNinetyFiveDataReq struct {
+	*DescribeImageXDomainBandwidthNinetyFiveDataQuery
+	*DescribeImageXDomainBandwidthNinetyFiveDataBody
+}
+type DescribeImageXDomainTrafficDataReq struct {
+	*DescribeImageXDomainTrafficDataQuery
+	*DescribeImageXDomainTrafficDataBody
+}
+type DescribeImageXEdgeRequestReq struct {
+	*DescribeImageXEdgeRequestQuery
+	*DescribeImageXEdgeRequestBody
+}
+type DescribeImageXEdgeRequestBandwidthReq struct {
+	*DescribeImageXEdgeRequestBandwidthQuery
+	*DescribeImageXEdgeRequestBandwidthBody
+}
+type DescribeImageXEdgeRequestRegionsReq struct {
+	*DescribeImageXEdgeRequestRegionsQuery
+	*DescribeImageXEdgeRequestRegionsBody
+}
+type DescribeImageXEdgeRequestTrafficReq struct {
+	*DescribeImageXEdgeRequestTrafficQuery
+	*DescribeImageXEdgeRequestTrafficBody
+}
+type DescribeImageXHitRateRequestDataReq struct {
+	*DescribeImageXHitRateRequestDataQuery
+	*DescribeImageXHitRateRequestDataBody
+}
+type DescribeImageXHitRateTrafficDataReq struct {
+	*DescribeImageXHitRateTrafficDataQuery
+	*DescribeImageXHitRateTrafficDataBody
+}
+type DescribeImageXMirrorRequestBandwidthReq struct {
+	*DescribeImageXMirrorRequestBandwidthQuery
+	*DescribeImageXMirrorRequestBandwidthBody
+}
+type DescribeImageXMirrorRequestHTTPCodeByTimeReq struct {
+	*DescribeImageXMirrorRequestHTTPCodeByTimeQuery
+	*DescribeImageXMirrorRequestHTTPCodeByTimeBody
+}
+type DescribeImageXMirrorRequestHTTPCodeOverviewReq struct {
+	*DescribeImageXMirrorRequestHTTPCodeOverviewQuery
+	*DescribeImageXMirrorRequestHTTPCodeOverviewBody
+}
+type DescribeImageXMirrorRequestTrafficReq struct {
+	*DescribeImageXMirrorRequestTrafficQuery
+	*DescribeImageXMirrorRequestTrafficBody
+}
+type DescribeImageXMultiCompressUsageReq struct {
+	*DescribeImageXMultiCompressUsageQuery
+	*DescribeImageXMultiCompressUsageBody
+}
+type DescribeImageXRequestCntUsageReq struct {
+	*DescribeImageXRequestCntUsageQuery
+	*DescribeImageXRequestCntUsageBody
+}
+type DescribeImageXScreenshotUsageReq struct {
+	*DescribeImageXScreenshotUsageQuery
+	*DescribeImageXScreenshotUsageBody
+}
+type DescribeImageXSensibleCacheHitRateByTimeReq struct {
+	*DescribeImageXSensibleCacheHitRateByTimeQuery
+	*DescribeImageXSensibleCacheHitRateByTimeBody
+}
+type DescribeImageXSensibleCountByTimeReq struct {
+	*DescribeImageXSensibleCountByTimeQuery
+	*DescribeImageXSensibleCountByTimeBody
+}
 type DescribeImageXSensibleTopRAMURLReq struct {
 	*DescribeImageXSensibleTopRAMURLQuery
 	*DescribeImageXSensibleTopRAMURLBody
+}
+type DescribeImageXSensibleTopResolutionURLReq struct {
+	*DescribeImageXSensibleTopResolutionURLQuery
+	*DescribeImageXSensibleTopResolutionURLBody
+}
+type DescribeImageXSensibleTopSizeURLReq struct {
+	*DescribeImageXSensibleTopSizeURLQuery
+	*DescribeImageXSensibleTopSizeURLBody
+}
+type DescribeImageXSensibleTopUnknownURLReq struct {
+	*DescribeImageXSensibleTopUnknownURLQuery
+	*DescribeImageXSensibleTopUnknownURLBody
+}
+type DescribeImageXServerQPSUsageReq struct {
+	*DescribeImageXServerQPSUsageQuery
+	*DescribeImageXServerQPSUsageBody
+}
+type DescribeImageXServiceQualityReq struct {
+	*DescribeImageXServiceQualityQuery
+	*DescribeImageXServiceQualityBody
+}
+type DescribeImageXSummaryReq struct {
+	*DescribeImageXSummaryQuery
+	*DescribeImageXSummaryBody
+}
+type DescribeImageXUploadCountByTimeReq struct {
+	*DescribeImageXUploadCountByTimeQuery
+	*DescribeImageXUploadCountByTimeBody
+}
+type DescribeImageXUploadDurationReq struct {
+	*DescribeImageXUploadDurationQuery
+	*DescribeImageXUploadDurationBody
+}
+type DescribeImageXUploadErrorCodeAllReq struct {
+	*DescribeImageXUploadErrorCodeAllQuery
+	*DescribeImageXUploadErrorCodeAllBody
+}
+type DescribeImageXUploadErrorCodeByTimeReq struct {
+	*DescribeImageXUploadErrorCodeByTimeQuery
+	*DescribeImageXUploadErrorCodeByTimeBody
+}
+type DescribeImageXUploadFileSizeReq struct {
+	*DescribeImageXUploadFileSizeQuery
+	*DescribeImageXUploadFileSizeBody
+}
+type DescribeImageXUploadSegmentSpeedByTimeReq struct {
+	*DescribeImageXUploadSegmentSpeedByTimeQuery
+	*DescribeImageXUploadSegmentSpeedByTimeBody
+}
+type DescribeImageXUploadSpeedReq struct {
+	*DescribeImageXUploadSpeedQuery
+	*DescribeImageXUploadSpeedBody
+}
+type DescribeImageXUploadSuccessRateByTimeReq struct {
+	*DescribeImageXUploadSuccessRateByTimeQuery
+	*DescribeImageXUploadSuccessRateByTimeBody
+}
+type DescribeImageXVideoClipDurationUsageReq struct {
+	*DescribeImageXVideoClipDurationUsageQuery
+	*DescribeImageXVideoClipDurationUsageBody
+}
+type ExportFailedMigrateTaskReq struct {
+	*ExportFailedMigrateTaskQuery
+	*ExportFailedMigrateTaskBody
+}
+type FetchImageURLReq struct {
+	*FetchImageURLQuery
+	*FetchImageURLBody
+}
+type GetAllImageServicesReq struct {
+	*GetAllImageServicesQuery
+	*GetAllImageServicesBody
+}
+type GetAllImageTemplatesReq struct {
+	*GetAllImageTemplatesQuery
+	*GetAllImageTemplatesBody
+}
+type GetAuditEntrysCountReq struct {
+	*GetAuditEntrysCountQuery
+	*GetAuditEntrysCountBody
+}
+type GetComprehensiveEnhanceImageReq struct {
+	*GetComprehensiveEnhanceImageQuery
+	*GetComprehensiveEnhanceImageBody
+}
+type GetCompressTaskInfoReq struct {
+	*GetCompressTaskInfoQuery
+	*GetCompressTaskInfoBody
+}
+type GetDedupTaskStatusReq struct {
+	*GetDedupTaskStatusQuery
+	*GetDedupTaskStatusBody
+}
+type GetDomainConfigReq struct {
+	*GetDomainConfigQuery
+	*GetDomainConfigBody
+}
+type GetImageAnalyzeResultReq struct {
+	*GetImageAnalyzeResultQuery
+	*GetImageAnalyzeResultBody
+}
+type GetImageAnalyzeTasksReq struct {
+	*GetImageAnalyzeTasksQuery
+	*GetImageAnalyzeTasksBody
+}
+type GetImageAuditResultReq struct {
+	*GetImageAuditResultQuery
+	*GetImageAuditResultBody
+}
+type GetImageAuditTasksReq struct {
+	*GetImageAuditTasksQuery
+	*GetImageAuditTasksBody
+}
+type GetImageAuthKeyReq struct {
+	*GetImageAuthKeyQuery
+	*GetImageAuthKeyBody
+}
+type GetImageBgFillResultReq struct {
+	*GetImageBgFillResultQuery
+	*GetImageBgFillResultBody
+}
+type GetImageComicResultReq struct {
+	*GetImageComicResultQuery
+	*GetImageComicResultBody
+}
+type GetImageContentBlockListReq struct {
+	*GetImageContentBlockListQuery
+	*GetImageContentBlockListBody
+}
+type GetImageContentTaskDetailReq struct {
+	*GetImageContentTaskDetailQuery
+	*GetImageContentTaskDetailBody
+}
+type GetImageDetectResultReq struct {
+	*GetImageDetectResultQuery
+	*GetImageDetectResultBody
+}
+type GetImageDuplicateDetectionReq struct {
+	*GetImageDuplicateDetectionQuery
+	*GetImageDuplicateDetectionBody
+}
+type GetImageEnhanceResultReq struct {
+	*GetImageEnhanceResultQuery
+	*GetImageEnhanceResultBody
+}
+type GetImageEraseModelsReq struct {
+	*GetImageEraseModelsQuery
+	*GetImageEraseModelsBody
+}
+type GetImageEraseResultReq struct {
+	*GetImageEraseResultQuery
+	*GetImageEraseResultBody
+}
+type GetImageMigrateTasksReq struct {
+	*GetImageMigrateTasksQuery
+	*GetImageMigrateTasksBody
+}
+type GetImageOCRV2Req struct {
+	*GetImageOCRV2Query
+	*GetImageOCRV2Body
+}
+type GetImagePSDetectionReq struct {
+	*GetImagePSDetectionQuery
+	*GetImagePSDetectionBody
+}
+type GetImageQualityReq struct {
+	*GetImageQualityQuery
+	*GetImageQualityBody
+}
+type GetImageServiceReq struct {
+	*GetImageServiceQuery
+	*GetImageServiceBody
+}
+type GetImageServiceSubscriptionReq struct {
+	*GetImageServiceSubscriptionQuery
+	*GetImageServiceSubscriptionBody
+}
+type GetImageSmartCropResultReq struct {
+	*GetImageSmartCropResultQuery
+	*GetImageSmartCropResultBody
+}
+type GetImageStorageFilesReq struct {
+	*GetImageStorageFilesQuery
+	*GetImageStorageFilesBody
+}
+type GetImageStyleResultReq struct {
+	*GetImageStyleResultQuery
+	*GetImageStyleResultBody
+}
+type GetImageSuperResolutionResultReq struct {
+	*GetImageSuperResolutionResultQuery
+	*GetImageSuperResolutionResultBody
+}
+type GetImageTemplateReq struct {
+	*GetImageTemplateQuery
+	*GetImageTemplateBody
+}
+type GetImageTranscodeDetailsReq struct {
+	*GetImageTranscodeDetailsQuery
+	*GetImageTranscodeDetailsBody
+}
+type GetImageTranscodeQueuesReq struct {
+	*GetImageTranscodeQueuesQuery
+	*GetImageTranscodeQueuesBody
 }
 type GetImageUpdateFilesReq struct {
 	*GetImageUpdateFilesQuery
 	*GetImageUpdateFilesBody
 }
-type GetImageContentTaskDetailReq struct {
-	*GetImageContentTaskDetailQuery
-	*GetImageContentTaskDetailBody
+type GetImageUploadFileReq struct {
+	*GetImageUploadFileQuery
+	*GetImageUploadFileBody
+}
+type GetImageUploadFilesReq struct {
+	*GetImageUploadFilesQuery
+	*GetImageUploadFilesBody
+}
+type GetImageXQueryAppsReq struct {
+	*GetImageXQueryAppsQuery
+	*GetImageXQueryAppsBody
+}
+type GetImageXQueryDimsReq struct {
+	*GetImageXQueryDimsQuery
+	*GetImageXQueryDimsBody
+}
+type GetImageXQueryRegionsReq struct {
+	*GetImageXQueryRegionsQuery
+	*GetImageXQueryRegionsBody
+}
+type GetImageXQueryValsReq struct {
+	*GetImageXQueryValsQuery
+	*GetImageXQueryValsBody
+}
+type GetPrivateImageTypeReq struct {
+	*GetPrivateImageTypeQuery
+	*GetPrivateImageTypeBody
+}
+type GetResourceURLReq struct {
+	*GetResourceURLQuery
+	*GetResourceURLBody
+}
+type GetResponseHeaderValidateKeysReq struct {
+	*GetResponseHeaderValidateKeysQuery
+	*GetResponseHeaderValidateKeysBody
+}
+type GetSegmentImageReq struct {
+	*GetSegmentImageQuery
+	*GetSegmentImageBody
+}
+type GetServiceDomainsReq struct {
+	*GetServiceDomainsQuery
+	*GetServiceDomainsBody
+}
+type GetTemplatesFromBinReq struct {
+	*GetTemplatesFromBinQuery
+	*GetTemplatesFromBinBody
+}
+type GetURLFetchTaskReq struct {
+	*GetURLFetchTaskQuery
+	*GetURLFetchTaskBody
+}
+type GetVendorBucketsReq struct {
+	*GetVendorBucketsQuery
+	*GetVendorBucketsBody
+}
+type PreviewImageUploadFileReq struct {
+	*PreviewImageUploadFileQuery
+	*PreviewImageUploadFileBody
+}
+type RerunImageMigrateTaskReq struct {
+	*RerunImageMigrateTaskQuery
+	*RerunImageMigrateTaskBody
+}
+type SetDefaultDomainReq struct {
+	*SetDefaultDomainQuery
+	*SetDefaultDomainBody
+}
+type TerminateImageMigrateTaskReq struct {
+	*TerminateImageMigrateTaskQuery
+	*TerminateImageMigrateTaskBody
+}
+type UpdateAuditImageStatusReq struct {
+	*UpdateAuditImageStatusQuery
+	*UpdateAuditImageStatusBody
+}
+type UpdateHTTPSReq struct {
+	*UpdateHTTPSQuery
+	*UpdateHTTPSBody
+}
+type UpdateImageAnalyzeTaskReq struct {
+	*UpdateImageAnalyzeTaskQuery
+	*UpdateImageAnalyzeTaskBody
+}
+type UpdateImageAnalyzeTaskStatusReq struct {
+	*UpdateImageAnalyzeTaskStatusQuery
+	*UpdateImageAnalyzeTaskStatusBody
+}
+type UpdateImageAuditTaskReq struct {
+	*UpdateImageAuditTaskQuery
+	*UpdateImageAuditTaskBody
+}
+type UpdateImageAuditTaskStatusReq struct {
+	*UpdateImageAuditTaskStatusQuery
+	*UpdateImageAuditTaskStatusBody
+}
+type UpdateImageAuthKeyReq struct {
+	*UpdateImageAuthKeyQuery
+	*UpdateImageAuthKeyBody
+}
+type UpdateImageFileKeyReq struct {
+	*UpdateImageFileKeyQuery
+	*UpdateImageFileKeyBody
+}
+type UpdateImageMirrorConfReq struct {
+	*UpdateImageMirrorConfQuery
+	*UpdateImageMirrorConfBody
+}
+type UpdateImageObjectAccessReq struct {
+	*UpdateImageObjectAccessQuery
+	*UpdateImageObjectAccessBody
+}
+type UpdateImageResourceStatusReq struct {
+	*UpdateImageResourceStatusQuery
+	*UpdateImageResourceStatusBody
+}
+type UpdateImageStorageTTLReq struct {
+	*UpdateImageStorageTTLQuery
+	*UpdateImageStorageTTLBody
+}
+type UpdateImageTaskStrategyReq struct {
+	*UpdateImageTaskStrategyQuery
+	*UpdateImageTaskStrategyBody
+}
+type UpdateImageTranscodeQueueReq struct {
+	*UpdateImageTranscodeQueueQuery
+	*UpdateImageTranscodeQueueBody
+}
+type UpdateImageTranscodeQueueStatusReq struct {
+	*UpdateImageTranscodeQueueStatusQuery
+	*UpdateImageTranscodeQueueStatusBody
+}
+type UpdateImageUploadFilesReq struct {
+	*UpdateImageUploadFilesQuery
+	*UpdateImageUploadFilesBody
+}
+type UpdateReferReq struct {
+	*UpdateReferQuery
+	*UpdateReferBody
+}
+type UpdateResponseHeaderReq struct {
+	*UpdateResponseHeaderQuery
+	*UpdateResponseHeaderBody
+}
+type UpdateServiceNameReq struct {
+	*UpdateServiceNameQuery
+	*UpdateServiceNameBody
 }
