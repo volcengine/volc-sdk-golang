@@ -190,6 +190,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"DescribeImageXBucketRetrievalUsage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXBucketRetrievalUsage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXSummary": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -742,6 +750,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"UpdateImageResourceStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageResourceStatus"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"GetImageStorageFiles": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -811,6 +827,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"PreviewImageUploadFile"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetImageServiceSubscription": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageServiceSubscription"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
@@ -1086,6 +1110,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"GetImageDetectResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageDetectResult"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"CreateImageHmExtract": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1172,14 +1204,6 @@ var (
 			Query: url.Values{
 				"Action":  []string{"UpdateImageMirrorConf"},
 				"Version": []string{"2018-08-01"},
-			},
-		},
-		"GetImageServiceSubscription": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageServiceSubscription"},
-				"Version": []string{"2023-05-01"},
 			},
 		},
 		"GetImageAuthKey": {
