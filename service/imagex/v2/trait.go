@@ -366,6 +366,26 @@ func (c *Imagex) RerunImageMigrateTask(ctx context.Context, arg *RerunImageMigra
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *DescribeImageXBucketRetrievalUsageQuery) (*DescribeImageXBucketRetrievalUsageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXBucketRetrievalUsage", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXBucketRetrievalUsageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXSummary(ctx context.Context, arg *DescribeImageXSummaryQuery) (*DescribeImageXSummaryRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1746,6 +1766,31 @@ func (c *Imagex) DescribeImageXSensibleTopUnknownURL(ctx context.Context, arg *D
 	return result, nil
 }
 
+func (c *Imagex) UpdateImageResourceStatus(ctx context.Context, arg *UpdateImageResourceStatusReq) (*UpdateImageResourceStatusRes, error) {
+	query, err := marshalToQuery(arg.UpdateImageResourceStatusQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateImageResourceStatusBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateImageResourceStatus", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateImageResourceStatusRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) GetImageStorageFiles(ctx context.Context, arg *GetImageStorageFilesQuery) (*GetImageStorageFilesRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1933,6 +1978,22 @@ func (c *Imagex) PreviewImageUploadFile(ctx context.Context, arg *PreviewImageUp
 	}
 
 	result := new(PreviewImageUploadFileRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageServiceSubscription(ctx context.Context) (*GetImageServiceSubscriptionRes, error) {
+
+	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", url.Values{})
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageServiceSubscriptionRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2676,6 +2737,31 @@ func (c *Imagex) CreateHiddenWatermarkImage(ctx context.Context, arg *CreateHidd
 	return result, nil
 }
 
+func (c *Imagex) GetImageDetectResult(ctx context.Context, arg *GetImageDetectResultReq) (*GetImageDetectResultRes, error) {
+	query, err := marshalToQuery(arg.GetImageDetectResultQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetImageDetectResultBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetImageDetectResult", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageDetectResultRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) CreateImageHmExtract(ctx context.Context, arg *CreateImageHmExtractQuery) (*CreateImageHmExtractRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2909,22 +2995,6 @@ func (c *Imagex) UpdateImageMirrorConf(ctx context.Context, arg *UpdateImageMirr
 
 	result := new(UpdateImageMirrorConfRes)
 	err = unmarshalInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Imagex) GetImageServiceSubscription(ctx context.Context) (*GetImageServiceSubscriptionRes, error) {
-
-	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", url.Values{})
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(GetImageServiceSubscriptionRes)
-	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
 	}
