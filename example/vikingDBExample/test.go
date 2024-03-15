@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/volcengine/volc-sdk-golang/service/vikingdb"
 	"math/rand"
 	"time"
@@ -10,27 +9,27 @@ import (
 func main() {
 	service := vikingdb.NewVikingDBService("", "", "", "", "http")
 
-	datas := []map[string]interface{}{
-		{
-			"query":   "退改",
-			"content": "如果您需要人工服务，可以拨打人工客服电话：4006660921",
-			"title":   "无",
-		},
-		{
-			"query":   "退改",
-			"content": "1、1日票 1.5日票 2日票的退款政策： -到访日前2天的00:00前，免费退款 - 到访日前2天的00:00至到访日前夜23:59期间,退款需扣除服务费（人民币80元） - 到访日当天（00:00 之后），不可退款 2、半日票的退款政策： - 未使用的们票可在所选入...",
-			"title":   "门票退改政策｜北京环球影城的门票退改政策",
-		},
-		{
-			"query":   "退改",
-			"content": "如果您需要人工服务，可以拨打人工客服电话：4006660921",
-		},
-	}
-	res, err := service.BatchRerank(datas)
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(res)
+	//datas := []map[string]interface{}{
+	//	{
+	//		"query":   "退改",
+	//		"content": "如果您需要人工服务，可以拨打人工客服电话：4006660921",
+	//		"title":   "无",
+	//	},
+	//	{
+	//		"query":   "退改",
+	//		"content": "1、1日票 1.5日票 2日票的退款政策： -到访日前2天的00:00前，免费退款 - 到访日前2天的00:00至到访日前夜23:59期间,退款需扣除服务费（人民币80元） - 到访日当天（00:00 之后），不可退款 2、半日票的退款政策： - 未使用的们票可在所选入...",
+	//		"title":   "门票退改政策｜北京环球影城的门票退改政策",
+	//	},
+	//	{
+	//		"query":   "退改",
+	//		"content": "如果您需要人工服务，可以拨打人工客服电话：4006660921",
+	//	},
+	//}
+	//res, err := service.BatchRerank(datas)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(res)
 
 	//rerank, err := service.Rerank("退改", "如果您需要人工服务，可以拨打人工客服电话：4006660921", "转人工")
 	//if err != nil {
@@ -70,13 +69,13 @@ func main() {
 	//		DefaultVal: true,
 	//	},
 	//}
-	//collection, err := service.CreateCollection("go", fields, "this is a go example")
+	//collection, err := service.CreateCollection("tt", fields, "this is a go example")
 	//if err != nil {
 	//	print(err.Error())
 	//}
 	//print(collection)
 
-	//collection, err := service.GetCollection("go")
+	//collection, err := service.GetCollection("tt")
 	//if err != nil {
 	//	print(err.Error())
 	//}
@@ -98,28 +97,28 @@ func main() {
 
 	//vectorIndex := &vikingdb.VectorIndexParams{
 	//	Distance:  vikingdb.COSINE,
-	//	IndexType: vikingdb.DiskANN,
+	//	IndexType: vikingdb.HNSW,
 	//	Quant:     vikingdb.Float,
 	//}
 	//indexOptions := vikingdb.NewIndexOptions().SetVectorIndex(vectorIndex).SetCpuQuota(2).SetDescription("this is an index").SetPartitionBy("").SetScalarIndex([]string{"price", "like"}).SetShardCount(12)
-	//index, err := service.CreateIndex("example", "goIndex", indexOptions)
+	//index, err := service.CreateIndex("tt", "tt2", indexOptions)
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
 	//fmt.Println(index)
 
-	//index, err := service.GetIndex("example", "goIndex")
+	//index, err := service.GetIndex("tt", "tt")
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
-	//fmt.Println(index.VectorIndex)
+	//fmt.Println(index)
 
 	//err := service.DropIndex("go", "goIndex")
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
 
-	//indexes, err := service.ListIndexes("go")
+	//indexes, err := service.ListIndexes("tt")
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
@@ -127,7 +126,7 @@ func main() {
 	//	fmt.Println(index)
 	//}
 
-	//collection, _ := service.GetCollection("go")
+	//collection, _ := service.GetCollection("tt")
 	//field1 := map[string]interface{}{
 	//	"doc_id":      "111",
 	//	"text_vector": genRandomVector(12),
@@ -153,7 +152,7 @@ func main() {
 	//	"aim":         true,
 	//}
 	//field4 := map[string]interface{}{
-	//	"doc_id":      "1qw",
+	//	"doc_id":      "444",
 	//	"text_vector": genRandomVector(12),
 	//	"like":        4,
 	//	"price":       4.44,
@@ -162,15 +161,12 @@ func main() {
 	//}
 	//data1 := vikingdb.Data{
 	//	Fields: field1,
-	//	TTL:    100000,
 	//}
 	//data2 := vikingdb.Data{
 	//	Fields: field2,
-	//	TTL:    200000,
 	//}
 	//data3 := vikingdb.Data{
 	//	Fields: field3,
-	//	TTL:    100000,
 	//}
 	//data4 := vikingdb.Data{
 	//	Fields: field4,
@@ -196,7 +192,7 @@ func main() {
 	//	fmt.Println(err.Error())
 	//}
 
-	//collection, _ := service.GetCollection("go")
+	//collection, _ := service.GetCollection("tt")
 	//res, err := collection.FetchData([]string{"111", "222", "333", "444"})
 	//if err != nil {
 	//	fmt.Println(err)
@@ -205,17 +201,15 @@ func main() {
 	//	fmt.Println(item)
 	//}
 
-	//index, _ := service.GetIndex("go", "goIndex")
+	//index, _ := service.GetIndex("tt", "tt")
 	//searchOption := vikingdb.NewSearchOptions().SetFilter(map[string]interface{}{"op": "range", "field": "price", "lt": 3.5}).SetLimit(5).SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
-	//res, err := index.SearchById("111", searchOption)
+	//res, err := index.SearchById("222", searchOption)
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
-	//for _, item := range res {
-	//	fmt.Println(item)
-	//}
+	//fmt.Println(res)
 
-	//index, _ := service.GetIndex("go", "goIndex")
+	//index, _ := service.GetIndex("tt", "tt")
 	//searchOption := vikingdb.NewSearchOptions().SetFilter(map[string]interface{}{"op": "range", "field": "price", "lt": 3.5}).SetLimit(5).SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
 	//res, err := index.SearchByVector(genRandomVector(12), searchOption)
 	//if err != nil {
@@ -255,9 +249,9 @@ func main() {
 	//	fmt.Println(item)
 	//}
 
-	//index, _ := service.GetIndex("go", "goIndex")
+	//index, _ := service.GetIndex("tt", "tt")
 	//searchOption := vikingdb.NewSearchOptions().SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
-	//res, err := index.FetchData([]string{"111", "222"}, searchOption)
+	//res, err := index.FetchData("111", searchOption)
 	//if err != nil {
 	//	fmt.Println(err)
 	//}

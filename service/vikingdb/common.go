@@ -174,6 +174,7 @@ type UpdateIndexOptions struct {
 	description *string
 	cpuQuota    *int64
 	scalarIndex []string
+	shardCount  *int64
 }
 
 func NewUpdateIndexOptions() *UpdateIndexOptions {
@@ -181,6 +182,7 @@ func NewUpdateIndexOptions() *UpdateIndexOptions {
 		description: nil,
 		cpuQuota:    nil,
 		scalarIndex: nil,
+		shardCount:  nil,
 	}
 	return updateIndexOptions
 }
@@ -194,5 +196,9 @@ func (updateIndexOptions *UpdateIndexOptions) SetCpuQuota(cpuQuota int64) *Updat
 }
 func (updateIndexOptions *UpdateIndexOptions) SetScalarIndex(scalarIndex []string) *UpdateIndexOptions {
 	updateIndexOptions.scalarIndex = scalarIndex
+	return updateIndexOptions
+}
+func (updateIndexOptions *UpdateIndexOptions) SetShardCount(shardCount int64) *UpdateIndexOptions {
+	updateIndexOptions.shardCount = &shardCount
 	return updateIndexOptions
 }

@@ -3,6 +3,7 @@ package vikingdb
 import (
 	"context"
 	"errors"
+	"fmt"
 )
 
 type Collection struct {
@@ -99,9 +100,17 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 		if err != nil {
 			return nil, err
 		}
-		_ = res
-		resData := res["data"].([]interface{})
-		fields := resData[0].(map[string]interface{})
+
+		var resData []interface{}
+		var fields map[string]interface{}
+		if d, ok := res["data"]; !ok {
+			return nil, fmt.Errorf("invalid response, data does not exist: %v", res)
+		} else if resData, ok = d.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list: %v", res)
+		} else if fields, ok = resData[0].(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
+		}
+
 		//fmt.Println(res)
 		data := &Data{
 			Id:        id,
@@ -118,10 +127,18 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 		if err != nil {
 			return nil, err
 		}
-		//fmt.Println(res)
-		resData := res["data"].([]interface{})
+		var resData []interface{}
+		if d, ok := res["data"]; !ok {
+			return nil, fmt.Errorf("invalid response, data does not exist: %v", res)
+		} else if resData, ok = d.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list: %v", res)
+		}
 		for _, item := range resData {
-			itemMap := item.(map[string]interface{})
+			var itemMap map[string]interface{}
+			var ok bool
+			if itemMap, ok = item.(map[string]interface{}); !ok {
+				return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
+			}
 			data := &Data{
 				Id:        itemMap[collection.PrimaryKey],
 				Fields:    itemMap,
