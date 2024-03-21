@@ -390,6 +390,30 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"DescribeImageXExceedResolutionRatioAll": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXExceedResolutionRatioAll"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXExceedFileSize": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXExceedFileSize"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXExceedCountByTime": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXExceedCountByTime"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXServiceQuality": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -900,6 +924,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetResourceURL"},
 				"Version": []string{"2023-05-01"},
+			},
+		},
+		"CreateImageFromUri": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageFromUri"},
+				"Version": []string{"2018-08-01"},
 			},
 		},
 		"UpdateImageFileKey": {
