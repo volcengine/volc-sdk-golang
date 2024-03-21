@@ -390,6 +390,13 @@ func WithUploadOverwrite(overwrite bool) UploadAuthOpt {
 	}
 }
 
+func WithUploadPolicy(policy *UploadPolicy) UploadAuthOpt {
+	res, _ := json.Marshal(policy)
+	return func(op *uploadAuthOption) {
+		op.conditions["UploadPolicy"] = string(res)
+	}
+}
+
 // 获取上传临时密钥
 func (c *ImageX) GetUploadAuth(serviceIds []string, opt ...UploadAuthOpt) (*base.SecurityToken2, error) {
 	return c.GetUploadAuthWithExpire(serviceIds, time.Hour, opt...)

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
@@ -21,6 +22,9 @@ func NewVikingDBService(host string, region string, ak string, sk string, scheme
 	}
 	return vikingDBService
 
+}
+func (vikingDBService *VikingDBService) SetConnectionTimeout(connectionTimeout int64) {
+	vikingDBService.Client.ServiceInfo.Timeout = time.Duration(connectionTimeout) * time.Second
 }
 func getApiInfo() map[string]*base.ApiInfo {
 	apiInfos := map[string]*base.ApiInfo{
@@ -228,24 +232,52 @@ func (vikingDBService *VikingDBService) packageCollection(collectionName string,
 	var updateTime string
 	var updatePerson string
 	if value, exist := res["description"]; exist {
-		description = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, description is not string: %v", res)
+		} else {
+			description = v
+		}
 	}
 	if value, exist := res["stat"]; exist {
-		stat = value.(map[string]interface{})
+		if v, ok := value.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, stat is not map: %v", res)
+		} else {
+			stat = v
+		}
 	}
 	if value, exist := res["create_time"]; exist {
-		createTime = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, createTime is not string: %v", res)
+		} else {
+			createTime = v
+		}
 	}
 	if value, exist := res["update_time"]; exist {
-		updateTime = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, updateTime is not string: %v", res)
+		} else {
+			updateTime = v
+		}
 	}
 	if value, exist := res["update_person"]; exist {
-		updatePerson = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, updatePerson is not string: %v", res)
+		} else {
+			updatePerson = v
+		}
 	}
 	if value, exist := res["indexes"]; exist {
-		indexesName := value.([]interface{})
+		var indexesName []interface{}
+		var ok bool
+		if indexesName, ok = value.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, indexes is not list: %v", res)
+		}
 		for _, item := range indexesName {
-			index, err := vikingDBService.GetIndex(collectionName, item.(string))
+			var itemString string
+			if itemString, ok = item.(string); !ok {
+				return nil, fmt.Errorf("invalid response, indexeName is not string: %v", res)
+			}
+			index, err := vikingDBService.GetIndex(collectionName, itemString)
 			if err != nil {
 				return nil, err
 			}
@@ -263,23 +295,40 @@ func (vikingDBService *VikingDBService) packageCollection(collectionName string,
 			var pipelineName string
 			itemMap := item.(map[string]interface{})
 			if value, exist := itemMap["field_name"]; exist {
-				fieldName = value.(string)
+				if v, ok := value.(string); !ok {
+					return nil, fmt.Errorf("invalid response, field_name is not string: %v", res)
+				} else {
+					fieldName = v
+				}
 			}
 			if value, exist := itemMap["field_type"]; exist {
-				fieldType = value.(string)
+				if v, ok := value.(string); !ok {
+					return nil, fmt.Errorf("invalid response, field_type is not string: %v", res)
+				} else {
+					fieldType = v
+				}
 			}
 			if value, exist := itemMap["default_val"]; exist {
 				defaultVal = value
 			}
 			if value, exist := itemMap["dim"]; exist {
-				value := int64(value.(float64))
-				dim = value
+				if v, ok := value.(float64); !ok {
+					return nil, fmt.Errorf("invalid response, dim is not a number: %v", res)
+				} else {
+					dim = int64(v)
+				}
 			}
 			if value, exist := itemMap["pipeline_name"]; exist {
-				pipelineName = value.(string)
+				if v, ok := value.(string); !ok {
+					return nil, fmt.Errorf("invalid response, pipeline_name is not string: %v", res)
+				} else {
+					pipelineName = v
+				}
 			}
 			if value, exist := res["primary_key"]; exist {
-				if value.(string) == fieldName {
+				if v, ok := value.(string); !ok {
+					return nil, fmt.Errorf("invalid response, primary_key is invalid:%v", res)
+				} else if v == fieldName {
 					isPrimaryKey = true
 				}
 			}
@@ -322,37 +371,74 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 	var indexCost interface{}
 	var shard_count int64
 	if value, exist := res["description"]; exist {
-		description = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, description is not string: %v", res)
+		} else {
+			description = v
+		}
 	}
 	if value, exist := res["status"]; exist {
-		stat = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, status is not string: %v", res)
+		} else {
+			stat = v
+		}
 	}
 	if value, exist := res["create_time"]; exist {
-		createTime = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, create_time is not string: %v", res)
+		} else {
+			createTime = v
+		}
 	}
 	if value, exist := res["update_time"]; exist {
-		updateTime = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, update_time is not string: %v", res)
+		} else {
+			updateTime = v
+		}
 	}
 	if value, exist := res["update_person"]; exist {
-		updatePerson = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, update_person is not string: %v", res)
+		} else {
+			updatePerson = v
+		}
 	}
 	if value, exist := res["cpu_quota"]; exist {
-		value := int64(value.(float64))
-		cpuQuota = value
+		if v, ok := value.(float64); !ok {
+			return nil, fmt.Errorf("invalid response, cpu_quota is not a number: %v", res)
+		} else {
+			cpuQuota = int64(v)
+		}
 	}
 	if value, exist := res["partition_by"]; exist {
-		partitionBy = value.(string)
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, partition_by is not string: %v", res)
+		} else {
+			partitionBy = v
+		}
 	}
 	if value, exist := res["index_cost"]; exist {
-		indexCost = value.(map[string]interface{})
+		if v, ok := value.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, index_cost is not a map: %v", res)
+		} else {
+			indexCost = v
+		}
 	}
 	if value, exist := res["shard_count"]; exist {
-		value := value.(float64)
-		valueInt := int64(value)
-		shard_count = valueInt
+		if v, ok := value.(float64); !ok {
+			return nil, fmt.Errorf("invalid response, shard_count is not a number: %v", res)
+		} else {
+			shard_count = int64(v)
+		}
 	}
 	if value, exist := res["vector_index"]; exist {
-		item := value.(map[string]interface{})
+		var item map[string]interface{}
+		var ok bool
+		if item, ok = value.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, vector_index is not a map: %v", res)
+		}
 		vectorIndex = &VectorIndexParams{
 			IndexType: "hnsw",
 			Distance:  "ip",
@@ -362,38 +448,76 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 			HnswCef:   400,
 		}
 		if v, e := item["index_type"]; e {
-			vectorIndex.IndexType = v.(string)
+			if vs, ok := v.(string); !ok {
+				return nil, fmt.Errorf("invalid response, index_type is not string: %v", res)
+			} else {
+				vectorIndex.IndexType = vs
+			}
 		}
 		if v, e := item["distance"]; e {
-			vectorIndex.Distance = v.(string)
+			if vs, ok := v.(string); !ok {
+				return nil, fmt.Errorf("invalid response, distance is not string: %v", res)
+			} else {
+				vectorIndex.Distance = vs
+			}
 		}
 		if v, e := item["quant"]; e {
-			vectorIndex.Quant = v.(string)
+			if vs, ok := v.(string); !ok {
+				return nil, fmt.Errorf("invalid response, quant is not string: %v", res)
+			} else {
+				vectorIndex.Quant = vs
+			}
 		}
 		if v, e := item["hnsw_m"]; e {
-			v := int64(v.(float64))
-			vectorIndex.HnswM = v
+			if vf, ok := v.(float64); !ok {
+				return nil, fmt.Errorf("invalid response, hnsw_m is not a number: %v", res)
+			} else {
+				vectorIndex.HnswM = int64(vf)
+			}
 		}
 		if v, e := item["hnsw_sef"]; e {
-			v := int64(v.(float64))
-			vectorIndex.HnswSef = v
+			if vf, ok := v.(float64); !ok {
+				return nil, fmt.Errorf("invalid response, hnsw_sef is not a number: %v", res)
+			} else {
+				vectorIndex.HnswSef = int64(vf)
+			}
 		}
 		if v, e := item["hnsw_cef"]; e {
-			v := int64(v.(float64))
-			vectorIndex.HnswCef = v
+			if vf, ok := v.(float64); !ok {
+				return nil, fmt.Errorf("invalid response, hnsw_cef is not a number: %v", res)
+			} else {
+				vectorIndex.HnswCef = int64(vf)
+			}
 		}
 	}
 	if value, exist := res["range_index"]; exist {
-		scalarIndex = value.([]interface{})
+		if v, ok := value.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, range_index is not a map: %v", res)
+		} else {
+			scalarIndex = v
+		}
 	}
 	if value, exist := res["enum_index"]; exist {
+		var ok bool
+		var items []interface{}
+		if items, ok = value.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, enum_index is not a map: %v", res)
+		}
 		if scalarIndex == nil {
-			scalarIndex = value.([]interface{})
+			scalarIndex = items
 		} else {
-			for _, itemEnum := range value.([]interface{}) {
+			for _, itemEnum := range items {
 				flag := 1
 				for _, itemScalar := range scalarIndex.([]interface{}) {
-					if itemEnum.(string) == itemScalar.(string) {
+					var enumString string
+					var scalarString string
+					if enumString, ok = itemEnum.(string); !ok {
+						return nil, fmt.Errorf("invalid response, enum_index is not string: %v", res)
+					}
+					if scalarString, ok = itemScalar.(string); !ok {
+						return nil, fmt.Errorf("invalid response, range_index is not string: %v", res)
+					}
+					if enumString == scalarString {
 						flag = 0
 						break
 					}
@@ -475,97 +599,13 @@ func (vikingDBService *VikingDBService) GetCollection(collectionName string) (*C
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(resData)
-	res := resData["data"].(map[string]interface{})
+	var res map[string]interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.(map[string]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a map: %v", resData)
+	}
 	return vikingDBService.packageCollection(collectionName, res)
-	//var description string
-	//var stat map[string]interface{}
-	//var fields []Field
-	//var indexes []*Index
-	//var createTime string
-	//var updateTime string
-	//var updatePerson string
-	//if value, exist := res["description"]; exist {
-	//	description = value.(string)
-	//}
-	//if value, exist := res["stat"]; exist {
-	//	stat = value.(map[string]interface{})
-	//}
-	//if value, exist := res["create_time"]; exist {
-	//	createTime = value.(string)
-	//}
-	//if value, exist := res["update_time"]; exist {
-	//	updateTime = value.(string)
-	//}
-	//if value, exist := res["update_person"]; exist {
-	//	updatePerson = value.(string)
-	//}
-	//if value, exist := res["indexes"]; exist {
-	//	indexesName := value.([]interface{})
-	//	for _, item := range indexesName {
-	//		index, err := vikingDBService.GetIndex(collectionName, item.(string))
-	//		if err != nil {
-	//			return nil, err
-	//		}
-	//		indexes = append(indexes, index)
-	//	}
-	//}
-	//if value, exist := res["fields"]; exist {
-	//	fieldList := value.([]interface{})
-	//	for _, item := range fieldList {
-	//		var fieldName string
-	//		var fieldType string
-	//		var defaultVal interface{}
-	//		var dim int64
-	//		var isPrimaryKey bool
-	//		var pipelineName string
-	//		itemMap := item.(map[string]interface{})
-	//		if value, exist := itemMap["field_name"]; exist {
-	//			fieldName = value.(string)
-	//		}
-	//		if value, exist := itemMap["field_type"]; exist {
-	//			fieldType = value.(string)
-	//		}
-	//		if value, exist := itemMap["default_val"]; exist {
-	//			defaultVal = value
-	//		}
-	//		if value, exist := itemMap["dim"]; exist {
-	//			value := int64(value.(float64))
-	//			dim = value
-	//		}
-	//		if value, exist := itemMap["pipeline_name"]; exist {
-	//			pipelineName = value.(string)
-	//		}
-	//		if value, exist := res["primary_key"]; exist {
-	//			if value.(string) == fieldName {
-	//				isPrimaryKey = true
-	//			}
-	//		}
-	//		field := Field{
-	//			FieldName:    fieldName,
-	//			FieldType:    fieldType,
-	//			DefaultVal:   defaultVal,
-	//			Dim:          dim,
-	//			IsPrimaryKey: isPrimaryKey,
-	//			PipelineName: pipelineName,
-	//		}
-	//		fields = append(fields, field)
-	//	}
-	//
-	//}
-	//collection := &Collection{
-	//	CollectionName:  collectionName,
-	//	Fields:          fields,
-	//	VikingDBService: vikingDBService,
-	//	PrimaryKey:      res["primary_key"].(string),
-	//	Indexes:         indexes,
-	//	Description:     description,
-	//	Stat:            stat,
-	//	CreateTime:      createTime,
-	//	UpdateTime:      updateTime,
-	//	UpdatePerson:    updatePerson,
-	//}
-	//return collection, nil
 }
 func (vikingDBService *VikingDBService) DropCollection(collectionName string) error {
 	params := map[string]interface{}{
@@ -585,105 +625,29 @@ func (vikingDBService *VikingDBService) ListCollections() ([]*Collection, error)
 	}
 	//fmt.Println(res)
 	var collections []*Collection
-	res := resData["data"].([]interface{})
+
+	var res []interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", resData)
+	}
+
 	for _, itemMap := range res {
-		//fmt.Println(item)
-		item := itemMap.(map[string]interface{})
-		collection, err := vikingDBService.packageCollection(item["collection_name"].(string), item)
+		var item map[string]interface{}
+		var ok bool
+		var nameString string
+		if item, ok = itemMap.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
+		} else if name, ok := item["collection_name"]; !ok {
+			return nil, fmt.Errorf("invalid response, collection_name does not exist: %v", res)
+		} else if nameString, ok = name.(string); !ok {
+			return nil, fmt.Errorf("invalid response, collection_name is not string: %v", res)
+		}
+		collection, err := vikingDBService.packageCollection(nameString, item)
 		if err != nil {
 			return nil, err
 		}
-		//var description string
-		//var stat map[string]interface{}
-		//var fields []Field
-		//var indexes []*Index
-		//var createTime string
-		//var updateTime string
-		//var updatePerson string
-		//var collectionName string
-		//if value, exist := item["collection_name"]; exist {
-		//	collectionName = value.(string)
-		//}
-		//if value, exist := item["description"]; exist {
-		//	description = value.(string)
-		//}
-		//if value, exist := item["stat"]; exist {
-		//	stat = value.(map[string]interface{})
-		//}
-		//if value, exist := item["create_time"]; exist {
-		//	createTime = value.(string)
-		//}
-		//if value, exist := item["update_time"]; exist {
-		//	updateTime = value.(string)
-		//}
-		//if value, exist := item["update_person"]; exist {
-		//	updatePerson = value.(string)
-		//}
-		//if value, exist := item["indexes"]; exist {
-		//	indexesName := value.([]interface{})
-		//	for _, item := range indexesName {
-		//		index, err := vikingDBService.GetIndex(collectionName, item.(string))
-		//		if err != nil {
-		//			return nil, err
-		//		}
-		//		indexes = append(indexes, index)
-		//	}
-		//}
-		//if value, exist := item["fields"]; exist {
-		//	fieldList := value.([]interface{})
-		//	for _, itemField := range fieldList {
-		//		var fieldName string
-		//		var fieldType string
-		//		var defaultVal interface{}
-		//		var dim int64
-		//		var isPrimaryKey bool
-		//		var pipelineName string
-		//		itemMap := itemField.(map[string]interface{})
-		//		if value, exist := itemMap["field_name"]; exist {
-		//			fieldName = value.(string)
-		//		}
-		//		if value, exist := itemMap["field_type"]; exist {
-		//			fieldType = value.(string)
-		//		}
-		//		if value, exist := itemMap["default_val"]; exist {
-		//			defaultVal = value
-		//		}
-		//		if value, exist := itemMap["dim"]; exist {
-		//			value := int64(value.(float64))
-		//			dim = value
-		//		}
-		//		if value, exist := itemMap["pipeline_name"]; exist {
-		//			pipelineName = value.(string)
-		//		}
-		//		if value, exist := item["primary_key"]; exist {
-		//			if value.(string) == fieldName {
-		//				isPrimaryKey = true
-		//			}
-		//		}
-		//		field := Field{
-		//			FieldName:    fieldName,
-		//			FieldType:    fieldType,
-		//			DefaultVal:   defaultVal,
-		//			Dim:          dim,
-		//			IsPrimaryKey: isPrimaryKey,
-		//			PipelineName: pipelineName,
-		//		}
-		//		fields = append(fields, field)
-		//	}
-		//
-		//}
-		//collection := &Collection{
-		//	CollectionName:  collectionName,
-		//	Fields:          fields,
-		//	VikingDBService: vikingDBService,
-		//	PrimaryKey:      item["primary_key"].(string),
-		//	Indexes:         indexes,
-		//	Description:     description,
-		//	Stat:            stat,
-		//	CreateTime:      createTime,
-		//	UpdateTime:      updateTime,
-		//	UpdatePerson:    updatePerson,
-		//}
 		collections = append(collections, collection)
 
 	}
@@ -735,121 +699,13 @@ func (vikingDBService *VikingDBService) GetIndex(collectionName string, indexNam
 	if err != nil {
 		return nil, err
 	}
-	res := resData["data"].(map[string]interface{})
+	var res map[string]interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.(map[string]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a map: %v", resData)
+	}
 	return vikingDBService.packageIndex(collectionName, indexName, res)
-	//fmt.Println(resData)
-	//var description string
-	//var stat string
-	//var createTime string
-	//var updateTime string
-	//var updatePerson string
-	//var partitionBy string
-	//var cpuQuota int64
-	//var scalarIndex interface{}
-	//var vectorIndex *VectorIndexParams
-	//var indexCost interface{}
-	//var shard_count int64
-	//if value, exist := res["description"]; exist {
-	//	description = value.(string)
-	//}
-	//if value, exist := res["status"]; exist {
-	//	stat = value.(string)
-	//}
-	//if value, exist := res["create_time"]; exist {
-	//	createTime = value.(string)
-	//}
-	//if value, exist := res["update_time"]; exist {
-	//	updateTime = value.(string)
-	//}
-	//if value, exist := res["update_person"]; exist {
-	//	updatePerson = value.(string)
-	//}
-	//if value, exist := res["cpu_quota"]; exist {
-	//	value := int64(value.(float64))
-	//	cpuQuota = value
-	//}
-	//if value, exist := res["partition_by"]; exist {
-	//	partitionBy = value.(string)
-	//}
-	//if value, exist := res["index_cost"]; exist {
-	//	indexCost = value.(map[string]interface{})
-	//}
-	//if value, exist := res["shard_count"]; exist {
-	//	value := value.(float64)
-	//	valueInt := int64(value)
-	//	shard_count = valueInt
-	//}
-	//if value, exist := res["vector_index"]; exist {
-	//	item := value.(map[string]interface{})
-	//	vectorIndex = &VectorIndexParams{
-	//		IndexType: "hnsw",
-	//		Distance:  "ip",
-	//		Quant:     "int8",
-	//		HnswM:     20,
-	//		HnswSef:   800,
-	//		HnswCef:   400,
-	//	}
-	//	if v, e := item["index_type"]; e {
-	//		vectorIndex.IndexType = v.(string)
-	//	}
-	//	if v, e := item["distance"]; e {
-	//		vectorIndex.Distance = v.(string)
-	//	}
-	//	if v, e := item["quant"]; e {
-	//		vectorIndex.Quant = v.(string)
-	//	}
-	//	if v, e := item["hnsw_m"]; e {
-	//		v := int64(v.(float64))
-	//		vectorIndex.HnswM = v
-	//	}
-	//	if v, e := item["hnsw_sef"]; e {
-	//		v := int64(v.(float64))
-	//		vectorIndex.HnswSef = v
-	//	}
-	//	if v, e := item["hnsw_cef"]; e {
-	//		v := int64(v.(float64))
-	//		vectorIndex.HnswCef = v
-	//	}
-	//}
-	//if value, exist := res["range_index"]; exist {
-	//	scalarIndex = value.([]interface{})
-	//}
-	//if value, exist := res["enum_index"]; exist {
-	//	if scalarIndex == nil {
-	//		scalarIndex = value.([]interface{})
-	//	} else {
-	//		for _, itemEnum := range value.([]interface{}) {
-	//			flag := 1
-	//			for _, itemScalar := range scalarIndex.([]interface{}) {
-	//				if itemEnum.(string) == itemScalar.(string) {
-	//					flag = 0
-	//					break
-	//				}
-	//			}
-	//			if flag == 1 {
-	//				scalarIndex = append(scalarIndex.([]interface{}), itemEnum)
-	//			}
-	//
-	//		}
-	//	}
-	//}
-	//index := &Index{
-	//	CollectionName:  collectionName,
-	//	IndexName:       indexName,
-	//	VectorIndex:     vectorIndex,
-	//	ScalarIndex:     scalarIndex,
-	//	Stat:            stat,
-	//	VikingDBService: vikingDBService,
-	//	Description:     description,
-	//	CpuQuota:        cpuQuota,
-	//	PartitionBy:     partitionBy,
-	//	CreateTime:      createTime,
-	//	UpdateTime:      updateTime,
-	//	UpdatePerson:    updatePerson,
-	//	IndexCost:       indexCost,
-	//	ShardCount:      shard_count,
-	//}
-	//return index, err
 }
 func (vikingDBService *VikingDBService) DropIndex(collectionName string, indexName string) error {
 	params := map[string]interface{}{
@@ -871,130 +727,28 @@ func (vikingDBService *VikingDBService) ListIndexes(collectionName string) ([]*I
 	if err != nil {
 		return nil, err
 	}
-	res := resData["data"].([]interface{})
+	var res []interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", resData)
+	}
 	indexes := []*Index{}
 	for _, itemMap := range res {
-		//fmt.Println(itemMap)
-		item := itemMap.(map[string]interface{})
-		index, err := vikingDBService.packageIndex(collectionName, item["index_name"].(string), item)
+		var item map[string]interface{}
+		var ok bool
+		var nameString string
+		if item, ok = itemMap.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list[map]: %v", itemMap)
+		} else if name, ok := item["index_name"]; !ok {
+			return nil, fmt.Errorf("invalid response, collection_name does not exist: %v", res)
+		} else if nameString, ok = name.(string); !ok {
+			return nil, fmt.Errorf("invalid response, collection_name is not string: %v", res)
+		}
+		index, err := vikingDBService.packageIndex(collectionName, nameString, item)
 		if err != nil {
 			return nil, err
 		}
-		//var description string
-		//var indexName string
-		//var stat string
-		//var createTime string
-		//var updateTime string
-		//var updatePerson string
-		//var partitionBy string
-		//var cpuQuota int64
-		//var scalarIndex interface{}
-		//var vectorIndex *VectorIndexParams
-		//var indexCost interface{}
-		//var shard_count int64
-		//if value, exist := item["description"]; exist {
-		//	description = value.(string)
-		//}
-		//if value, exist := item["index_name"]; exist {
-		//	indexName = value.(string)
-		//}
-		//if value, exist := item["status"]; exist {
-		//	stat = value.(string)
-		//}
-		//if value, exist := item["create_time"]; exist {
-		//	createTime = value.(string)
-		//}
-		//if value, exist := item["update_time"]; exist {
-		//	updateTime = value.(string)
-		//}
-		//if value, exist := item["update_person"]; exist {
-		//	updatePerson = value.(string)
-		//}
-		//if value, exist := item["cpu_quota"]; exist {
-		//	value := int64(value.(float64))
-		//	cpuQuota = value
-		//}
-		//if value, exist := item["partition_by"]; exist {
-		//	partitionBy = value.(string)
-		//}
-		//if value, exist := item["index_cost"]; exist {
-		//	indexCost = value.(map[string]interface{})
-		//}
-		//if value, exist := item["shard_count"]; exist {
-		//	value := value.(float64)
-		//	valueInt := int64(value)
-		//	shard_count = valueInt
-		//}
-		//if value, exist := item["vector_index"]; exist {
-		//	itemVector := value.(map[string]interface{})
-		//	vectorIndex = &VectorIndexParams{
-		//		IndexType: "hnsw",
-		//		Distance:  "ip",
-		//		Quant:     "int8",
-		//		HnswM:     20,
-		//		HnswSef:   800,
-		//		HnswCef:   400,
-		//	}
-		//	if v, e := itemVector["index_type"]; e {
-		//		vectorIndex.IndexType = v.(string)
-		//	}
-		//	if v, e := itemVector["distance"]; e {
-		//		vectorIndex.Distance = v.(string)
-		//	}
-		//	if v, e := itemVector["quant"]; e {
-		//		vectorIndex.Quant = v.(string)
-		//	}
-		//	if v, e := itemVector["hnsw_m"]; e {
-		//		v := int64(v.(float64))
-		//		vectorIndex.HnswM = v
-		//	}
-		//	if v, e := itemVector["hnsw_sef"]; e {
-		//		v := int64(v.(float64))
-		//		vectorIndex.HnswSef = v
-		//	}
-		//	if v, e := itemVector["hnsw_cef"]; e {
-		//		v := int64(v.(float64))
-		//		vectorIndex.HnswCef = v
-		//	}
-		//}
-		//if value, exist := item["range_index"]; exist {
-		//	scalarIndex = value.([]interface{})
-		//}
-		//if value, exist := item["enum_index"]; exist {
-		//	if scalarIndex == nil {
-		//		scalarIndex = value.([]interface{})
-		//	} else {
-		//		for _, itemEnum := range value.([]interface{}) {
-		//			flag := 1
-		//			for _, itemScalar := range scalarIndex.([]interface{}) {
-		//				if itemEnum.(string) == itemScalar.(string) {
-		//					flag = 0
-		//					break
-		//				}
-		//			}
-		//			if flag == 1 {
-		//				scalarIndex = append(scalarIndex.([]interface{}), itemEnum)
-		//			}
-		//
-		//		}
-		//	}
-		//}
-		//index := &Index{
-		//	CollectionName:  collectionName,
-		//	IndexName:       indexName,
-		//	VectorIndex:     vectorIndex,
-		//	ScalarIndex:     scalarIndex,
-		//	Stat:            stat,
-		//	VikingDBService: vikingDBService,
-		//	Description:     description,
-		//	CpuQuota:        cpuQuota,
-		//	PartitionBy:     partitionBy,
-		//	CreateTime:      createTime,
-		//	UpdateTime:      updateTime,
-		//	UpdatePerson:    updatePerson,
-		//	IndexCost:       indexCost,
-		//	ShardCount:      shard_count,
-		//}
 		indexes = append(indexes, index)
 	}
 	return indexes, err
@@ -1060,11 +814,26 @@ func (vikingDBService *VikingDBService) Embedding(embModel EmbModel, rawData int
 	}
 	//fmt.Println(res)
 	var ret [][]float64
-	for _, itemList := range res["data"].([]interface{}) {
+	var items []interface{}
+	if d, ok := res["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", data)
+	} else if items, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", data)
+	}
+
+	for _, itemList := range items {
 		var floatList []float64
-		itemList := itemList.([]interface{})
-		for _, item := range itemList {
-			floatList = append(floatList, item.(float64))
+		var l []interface{}
+		var ok bool
+		if l, ok = itemList.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, dataType is not list: %v", res["data"])
+		}
+		for _, item := range l {
+			if itemFloat, ok := item.(float64); !ok {
+				return nil, fmt.Errorf("invalid response, dataNum is not float64: %v", res["data"])
+			} else {
+				floatList = append(floatList, itemFloat)
+			}
 		}
 		ret = append(ret, floatList)
 	}
@@ -1084,6 +853,9 @@ func (vikingDBService *VikingDBService) UpdateIndex(collectionName string, index
 	if updateIndexOptions.scalarIndex != nil {
 		params["scalar_index"] = updateIndexOptions.scalarIndex
 	}
+	if updateIndexOptions.shardCount != nil {
+		params["shard_count"] = *updateIndexOptions.shardCount
+	}
 	_, err := vikingDBService.DoRequest(context.Background(), "UpdateIndex", nil, vikingDBService.convertMapToJson(params))
 	return err
 }
@@ -1094,16 +866,38 @@ func (vikingDBService *VikingDBService) Rerank(query string, content string, tit
 		"title":   title,
 	}
 	data, err := vikingDBService.DoRequest(context.Background(), "Rerank", nil, vikingDBService.convertMapToJson(params))
-	return data["data"].(float64), err
+	if err != nil {
+		return 0, err
+	}
+	if d, ok := data["data"]; !ok {
+		return 0, fmt.Errorf("invalid response, data does not exist: %v", data)
+	} else if score, ok := d.(float64); !ok {
+		return 0, fmt.Errorf("invalid response, data is not float64: %v", data)
+	} else {
+		return score, nil
+	}
 }
 func (vikingDBService *VikingDBService) BatchRerank(datas []map[string]interface{}) ([]float64, error) {
 	params := map[string]interface{}{
 		"datas": datas,
 	}
 	data, err := vikingDBService.DoRequest(context.Background(), "BatchRerank", nil, vikingDBService.convertMapToJson(params))
-	var res []float64
-	for _, score := range data["data"].([]interface{}) {
-		res = append(res, score.(float64))
+	if err != nil {
+		return nil, err
 	}
-	return res, err
+	var scores []interface{}
+	var res []float64
+	if d, ok := data["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", data)
+	} else if scores, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", data)
+	}
+	for _, score := range scores {
+		if scoreFloat, ok := score.(float64); !ok {
+			return nil, fmt.Errorf("invalid response, data is not list[float64]: %v", data)
+		} else {
+			res = append(res, scoreFloat)
+		}
+	}
+	return res, nil
 }

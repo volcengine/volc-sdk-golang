@@ -2,6 +2,7 @@ package vikingdb
 
 import (
 	"context"
+	"fmt"
 )
 
 type Index struct {
@@ -216,10 +217,17 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 		if err != nil {
 			return nil, err
 		}
-
-		resData := res["data"].([]interface{})
-		fields := resData[0].(map[string]interface{})
 		//fmt.Println(res)
+		var resData []interface{}
+		var fields map[string]interface{}
+		if d, ok := res["data"]; !ok {
+			return nil, fmt.Errorf("invalid response, data does not exist: %v", res)
+		} else if resData, ok = d.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list: %v", res)
+		} else if fields, ok = resData[0].(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
+		}
+		fmt.Println(res)
 		data := &Data{
 			Id: id,
 			Fields: map[string]interface{}{
@@ -228,7 +236,11 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 			Timestamp: nil,
 		}
 		if _, exists := fields["fields"]; exists {
-			dataFields := fields["fields"].(map[string]interface{})
+			var dataFields map[string]interface{}
+			var ok bool
+			if dataFields, ok = fields["fields"].(map[string]interface{}); !ok {
+				return nil, fmt.Errorf("invalid response, fields is not a map: %v", res)
+			}
 			data = &Data{
 				Id:        id,
 				Fields:    dataFields,
@@ -252,9 +264,18 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 			return nil, err
 		}
 		//fmt.Println(res)
-		resData := res["data"].([]interface{})
+		var resData []interface{}
+		if d, ok := res["data"]; !ok {
+			return nil, fmt.Errorf("invalid response, data does not exist: %v", res)
+		} else if resData, ok = d.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list: %v", res)
+		}
 		for _, item := range resData {
-			itemMap := item.(map[string]interface{})
+			var itemMap map[string]interface{}
+			var ok bool
+			if itemMap, ok = item.(map[string]interface{}); !ok {
+				return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
+			}
 			primaryKey, err := index.getPrimaryKey()
 			if err != nil {
 				return nil, err
@@ -267,7 +288,12 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 				Timestamp: nil,
 			}
 			if _, exists := itemMap["fields"]; exists {
-				dataFields := itemMap["fields"].(map[string]interface{})
+				var dataFields map[string]interface{}
+				var ok bool
+				if dataFields, ok = itemMap["fields"].(map[string]interface{}); !ok {
+					return nil, fmt.Errorf("invalid response, fields is not a map: %v", res)
+				}
+
 				primaryKey, err := index.getPrimaryKey()
 				if err != nil {
 					return nil, err
@@ -285,28 +311,56 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 	return datas, nil
 }
 func (index *Index) getData(resData map[string]interface{}, outputField interface{}) ([]*Data, error) {
-	res := resData["data"].([]interface{})
+	var res []interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", resData)
+	}
+
 	datas := []*Data{}
 	for _, items := range res {
-		for _, item := range items.([]interface{}) {
-			item := item.(map[string]interface{})
-			//fmt.Println(item)
+		var itemsList []interface{}
+		var ok bool
+		if itemsList, ok = items.([]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, data is not list[list]: %v", resData)
+		}
+		for _, l := range itemsList {
+			var item map[string]interface{}
+			var ok bool
+			if item, ok = l.(map[string]interface{}); !ok {
+				return nil, fmt.Errorf("invalid response, data is not list[list[map]]: %v", resData)
+			}
 			fields := map[string]interface{}{}
 			if outputField == nil || len(outputField.([]string)) != 0 {
-				fields = item["fields"].(map[string]interface{})
+				if f, ok := item["fields"]; !ok {
+					return nil, fmt.Errorf("invalid response, fields does not exist: %v", resData)
+				} else if fields, ok = f.(map[string]interface{}); !ok {
+					return nil, fmt.Errorf("invalid response, fields is not a map: %v", resData)
+				}
 			}
 			text := ""
 			if value, exists := item["text"]; exists {
-				text = value.(string)
+				if t, ok := value.(string); !ok {
+					return nil, fmt.Errorf("invalid response, text is not string: %v", resData)
+				} else {
+					text = t
+				}
 			}
 			primaryKey, err := index.getPrimaryKey()
 			if err != nil {
 				return nil, err
 			}
+			var scoreFloat float64
+			if s, ok := item["score"]; !ok {
+				return nil, fmt.Errorf("invalid response, score not exists: %v", resData)
+			} else if scoreFloat, ok = s.(float64); !ok {
+				return nil, fmt.Errorf("invalid response, score is not float64: %v", resData)
+			}
 			data := &Data{
 				Fields:    fields,
 				Id:        item[primaryKey],
-				Score:     item["score"].(float64),
+				Score:     scoreFloat,
 				Timestamp: nil,
 				Text:      text,
 			}

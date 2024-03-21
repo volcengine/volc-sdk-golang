@@ -738,6 +738,69 @@ type CreateImageContentTaskResResult struct {
 	TaskID string `json:"TaskId"`
 }
 
+type CreateImageFromURIBody struct {
+
+	// REQUIRED; 待复制资源对应的存储 URI。您可在控制台的资源管理页面，获取上传文件的存储 URI [https://www.volcengine.com/docs/508/1205054]；或者调用 GetImageStorageFiles
+	// [https://www.volcengine.com/docs/508/1158308] 获取指定服务下的存储 URI。
+	StoreURI string `json:"StoreUri"`
+
+	// 复制后资源的存储 Key。缺省情况下与源存储的资源存储 Key 相同。自定义规则如下所示：
+	// * 不支持空格。
+	// * 不支持以/开头或结尾，不支持/连续出现，Key 值最大长度限制为 180 个字节。
+	DstKey string `json:"DstKey,omitempty"`
+
+	// 待复制资源对应的服务 ID
+	OriServiceID string `json:"OriServiceId,omitempty"`
+
+	// 是否保留目标存储中的同名文件。False：不保留目标存储中的同名文件直接覆盖。True：保留目标存储中的同名文件，不覆盖。
+	SkipDuplicate bool `json:"SkipDuplicate,omitempty"`
+}
+
+type CreateImageFromURIQuery struct {
+
+	// REQUIRED; 复制目标对应的服务 ID。
+	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type CreateImageFromURIRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateImageFromURIResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateImageFromURIResResult `json:"Result,omitempty"`
+}
+
+type CreateImageFromURIResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// CreateImageFromURIResResult - 视请求的接口而定
+type CreateImageFromURIResResult struct {
+
+	// REQUIRED; 资源复制到目标服务后的存储 URI
+	DstURI string `json:"DstUri"`
+
+	// REQUIRED; 待复制资源的源存储 URI
+	StoreURI string `json:"StoreUri"`
+}
+
 type CreateImageHmEmbedBody struct {
 
 	// REQUIRED; 自定义盲水印文本内容。
@@ -988,7 +1051,7 @@ type CreateImageMigrateTaskBodyTaskSource struct {
 	// 仅迁移匹配的正则表达式列表的文件。默认为空，表示对该存储 Bucket 内资源执行全量迁移。
 	// :::tip
 	// * 多条正则表达式之间是"或"的关系，即源文件匹配任何一条正则表达式即视为符合迁移条件。
-	// * 正则过滤规则需要遍历源桶中的全部文件，如果源桶中文件数���较多会降低迁移速度。 :::
+	// * 正则过滤规则需要遍历源桶中的全部文件，如果源桶中文件数量较多会降低迁移速度。 :::
 	Regex []string `json:"Regex,omitempty"`
 
 	// Bucket 所在地区。仅当Vendor非URL/OSS/KODO/AWS时为必填。
@@ -2803,7 +2866,7 @@ type DescribeImageXCdnDurationDetailByTimeBody struct {
 	// 需要匹配的国家名称。 不传则匹配所有国家。 取值为海外时，匹配海外所有国家。
 	Country string `json:"Country,omitempty"`
 
-	// 需要匹配的域��，不传则匹配所有域名
+	// 需要匹配的域名，不传则匹配所有域名
 	Domain []string `json:"Domain,omitempty"`
 
 	// 需要匹配的自定义维度项
@@ -6147,7 +6210,7 @@ type DescribeImageXEdgeRequestTrafficQuery struct {
 	Regions string `json:"Regions,omitempty" query:"Regions"`
 
 	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX ���制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
@@ -6209,6 +6272,296 @@ type DescribeImageXEdgeRequestTrafficResResultTrafficDataPropertiesItemsItem str
 
 	// REQUIRED; 流量，单位为 byte。
 	Value float64 `json:"Value"`
+}
+
+type DescribeImageXExceedCountByTimeBody struct {
+
+	// REQUIRED; 获取数据结束时间点，需在起始时间点之后。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 返回数据的时间粒度。 5m：为 5 分钟； 1h：为 1 小时； 1d：为 1 天。
+	Granularity string `json:"Granularity"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	StartTime string `json:"StartTime"`
+
+	// 需要匹配的 App 版本，不传则匹配 App 的所有版本。
+	AppVer []string `json:"AppVer,omitempty"`
+
+	// 应用 ID。默认为空，匹配账号下的所有的App ID。
+	Appid string `json:"Appid,omitempty"`
+
+	// 需要匹配的自定义维度项
+	ExtraDims []*DescribeImageXExceedCountByTimeBodyExtraDimsItem `json:"ExtraDims,omitempty"`
+
+	// 拆分维度。默认为空，表示不拆分。支持取值：公共维度（Appid,OS,AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	GroupBy string `json:"GroupBy,omitempty"`
+
+	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
+	ImageType []string `json:"ImageType,omitempty"`
+
+	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	OS string `json:"OS,omitempty"`
+
+	// 需要匹配的SDK版本，不传则匹配所有版本
+	SdkVer []string `json:"SdkVer,omitempty"`
+}
+
+type DescribeImageXExceedCountByTimeBodyExtraDimsItem struct {
+
+	// REQUIRED; 自定义维度名称。
+	Dim string `json:"Dim"`
+
+	// REQUIRED; 需要匹配的对应维度值
+	Vals []string `json:"Vals"`
+}
+
+type DescribeImageXExceedCountByTimeRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXExceedCountByTimeResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXExceedCountByTimeResResult `json:"Result"`
+}
+
+type DescribeImageXExceedCountByTimeResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXExceedCountByTimeResResult struct {
+
+	// REQUIRED; 上报量数据。
+	ExceedCountData []*DescribeImageXExceedCountByTimeResResultExceedCountDataItem `json:"ExceedCountData"`
+}
+
+type DescribeImageXExceedCountByTimeResResultExceedCountDataItem struct {
+
+	// REQUIRED; 该数据类型对应的上报量
+	Count int `json:"Count"`
+
+	// REQUIRED; 对应的客户端上报量数据列表。
+	Data []*DescribeImageXExceedCountByTimeResResultExceedCountDataPropertiesItemsItem `json:"Data"`
+
+	// REQUIRED; 数据类型，不拆分时值为Total，拆分时为具体的维度值
+	Type string `json:"Type"`
+}
+
+type DescribeImageXExceedCountByTimeResResultExceedCountDataPropertiesItemsItem struct {
+
+	// REQUIRED; 上报量数据
+	Count int `json:"Count"`
+
+	// REQUIRED; 数据对应时间点，按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
+	Timestamp string `json:"Timestamp"`
+
+	// REQUIRED; 上报量数据
+	Value int `json:"Value"`
+}
+
+type DescribeImageXExceedFileSizeBody struct {
+
+	// REQUIRED; 获取数据结束时间点，需在起始时间点之后。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 返回数据的时间粒度。 5m：为 5 分钟； 1h：为 1 小时； 1d：为 1 天。
+	Granularity string `json:"Granularity"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	StartTime string `json:"StartTime"`
+
+	// 需要匹配的 App 版本，不传则匹配 App 的所有版本。
+	AppVer []string `json:"AppVer,omitempty"`
+
+	// 应用 ID。默认为空，匹配账号下的所有的App ID。
+	Appid string `json:"Appid,omitempty"`
+
+	// 需要匹配的自定义维度项
+	ExtraDims []*DescribeImageXExceedFileSizeBodyExtraDimsItem `json:"ExtraDims,omitempty"`
+
+	// 拆分维度。默认为空，表示拆分分位数据。支持取值：Duration（拆分分位数据）、公共维度（Appid,OS,AppVer,SdkVer,ImageType,Country,Province,Isp,Domain），自定义维度（通过"获取自定义维度列表"接口获取）
+	GroupBy string `json:"GroupBy,omitempty"`
+
+	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
+	ImageType []string `json:"ImageType,omitempty"`
+
+	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	OS string `json:"OS,omitempty"`
+
+	// 需要匹配的SDK版本，不传则匹配所有版本
+	SdkVer []string `json:"SdkVer,omitempty"`
+}
+
+type DescribeImageXExceedFileSizeBodyExtraDimsItem struct {
+
+	// REQUIRED; 自定义维度名称。
+	Dim string `json:"Dim"`
+
+	// REQUIRED; 需要匹配的对应维度值
+	Vals []string `json:"Vals"`
+}
+
+type DescribeImageXExceedFileSizeRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXExceedFileSizeResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXExceedFileSizeResResult `json:"Result"`
+}
+
+type DescribeImageXExceedFileSizeResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXExceedFileSizeResResult struct {
+
+	// REQUIRED; 文件大小分布数据
+	FSizeData []*DescribeImageXExceedFileSizeResResultFSizeDataItem `json:"FSizeData"`
+}
+
+type DescribeImageXExceedFileSizeResResultFSizeDataItem struct {
+
+	// REQUIRED; 该数据类型对应的总上报量
+	Count int `json:"Count"`
+
+	// REQUIRED; 对应的文件大小数据列表。
+	Data []*DescribeImageXExceedFileSizeResResultFSizeDataPropertiesItemsItem `json:"Data"`
+
+	// REQUIRED; 数据类型。 当GroupBy为空或Duration时，取值avg/pct25/pct50/pct90/pct99/min/max，否则取值为指定拆分维度的各个值。
+	Type string `json:"Type"`
+}
+
+type DescribeImageXExceedFileSizeResResultFSizeDataPropertiesItemsItem struct {
+
+	// REQUIRED; 数据对应的上报量
+	Count int `json:"Count"`
+
+	// REQUIRED; 数据对应时间点，按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
+	Timestamp string `json:"Timestamp"`
+
+	// REQUIRED; 文件大小，单位byte
+	Value float64 `json:"Value"`
+}
+
+type DescribeImageXExceedResolutionRatioAllBody struct {
+
+	// REQUIRED; 获取数据结束时间点，需在起始时间点之后。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00
+	StartTime string `json:"StartTime"`
+
+	// 需要匹配的 App 版本，不传则匹配 App 的所有版本。
+	AppVer []string `json:"AppVer,omitempty"`
+
+	// 应用 ID。默认为空，匹配账号下的所有的App ID。
+	Appid string `json:"Appid,omitempty"`
+
+	// 需要匹配的自定义维度项
+	ExtraDims []*DescribeImageXExceedResolutionRatioAllBodyExtraDimsItem `json:"ExtraDims,omitempty"`
+
+	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
+	ImageType []string `json:"ImageType,omitempty"`
+
+	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	OS string `json:"OS,omitempty"`
+
+	// 是否升序排序。不传则默认降序排序。
+	OrderAsc string `json:"OrderAsc,omitempty"`
+
+	// * 不传或者传空或者取值为Count时，表示按上报量排序。
+	// * 取值为WidthRatio时，表示按宽比排序。
+	// * 取值为HeightRatio时，表示按高比排序。
+	OrderBy string `json:"OrderBy,omitempty"`
+
+	// 需要匹配的SDK版本，不传则匹配所有版本
+	SdkVer []string `json:"SdkVer,omitempty"`
+}
+
+type DescribeImageXExceedResolutionRatioAllBodyExtraDimsItem struct {
+
+	// REQUIRED; 自定义维度名称。
+	Dim string `json:"Dim"`
+
+	// REQUIRED; 需要匹配的对应维度值
+	Vals []string `json:"Vals"`
+}
+
+type DescribeImageXExceedResolutionRatioAllRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXExceedResolutionRatioAllResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXExceedResolutionRatioAllResResult `json:"Result"`
+}
+
+type DescribeImageXExceedResolutionRatioAllResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXExceedResolutionRatioAllResResult struct {
+
+	// REQUIRED; 文件大小分布数据
+	ResolutionRatioData []*DescribeImageXExceedResolutionRatioAllResResultResolutionRatioDataItem `json:"ResolutionRatioData"`
+}
+
+type DescribeImageXExceedResolutionRatioAllResResultResolutionRatioDataItem struct {
+
+	// REQUIRED; 大图样本量
+	Count int `json:"Count"`
+
+	// REQUIRED; 高比，即为图片高/view高取整
+	HeightRatio int `json:"HeightRatio"`
+
+	// REQUIRED; 格式为：宽比-高比
+	Ratio string `json:"Ratio"`
+
+	// REQUIRED; 宽比，即为图片宽/view宽取整
+	WidthRatio int `json:"WidthRatio"`
 }
 
 type DescribeImageXHitRateRequestDataQuery struct {
@@ -6323,7 +6676,7 @@ type DescribeImageXHitRateTrafficDataQuery struct {
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
 	// 限制查询的服务 ID，传入多个时用英文逗号分割。缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服��� ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
@@ -8932,9 +9285,6 @@ type GetAllImageServicesResResultServicesItem struct {
 	// REQUIRED; 绑定域名的相关信息。
 	DomainInfos []*GetAllImageServicesResResultServicesPropertiesItemsItem `json:"DomainInfos"`
 
-	// REQUIRED
-	Field5 string `json:"Field5"`
-
 	// REQUIRED; 是否配置鉴权 key，取值如下所示：
 	// * true：是
 	// * false：否
@@ -10184,7 +10534,7 @@ type GetImageAnalyzeResultQuery struct {
 	// 分页条数。默认值为 10。
 	Limit int `json:"Limit,omitempty" query:"Limit"`
 
-	// 分页偏移量，默认��� 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
+	// 分页偏移量，默认为 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
 	Offset int `json:"Offset,omitempty" query:"Offset"`
 
 	// 任务执行 ID
@@ -10495,7 +10845,7 @@ type GetImageAuditTasksQuery struct {
 	// 任务地区。仅支持默认取值cn，表示国内。
 	Region string `json:"Region,omitempty" query:"Region"`
 
-	// 审核状态，缺省情况下查询全部状态��任务。取值如下所示：
+	// 审核状态，缺省情况下查询全部状态的任务。取值如下所示：
 	// * Running：审核中
 	// * Suspend：已暂停
 	// * Done：已完成
@@ -13590,7 +13940,7 @@ type GetResourceURLRes struct {
 
 type GetResourceURLResResponseMetadata struct {
 
-	// REQUIRED; 请求的接口名，属于请求的公���参数。
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
 	// REQUIRED; 请求的Region，例如：cn-north-1
@@ -15358,6 +15708,7 @@ type CreateImageAuditTask struct{}
 type CreateImageAuditTaskQuery struct{}
 type CreateImageCompressTask struct{}
 type CreateImageContentTask struct{}
+type CreateImageFromURI struct{}
 type CreateImageHmEmbed struct{}
 type CreateImageHmEmbedQuery struct{}
 type CreateImageHmExtract struct{}
@@ -15473,6 +15824,12 @@ type DescribeImageXEdgeRequestRegions struct{}
 type DescribeImageXEdgeRequestRegionsBody struct{}
 type DescribeImageXEdgeRequestTraffic struct{}
 type DescribeImageXEdgeRequestTrafficBody struct{}
+type DescribeImageXExceedCountByTime struct{}
+type DescribeImageXExceedCountByTimeQuery struct{}
+type DescribeImageXExceedFileSize struct{}
+type DescribeImageXExceedFileSizeQuery struct{}
+type DescribeImageXExceedResolutionRatioAll struct{}
+type DescribeImageXExceedResolutionRatioAllQuery struct{}
 type DescribeImageXHitRateRequestData struct{}
 type DescribeImageXHitRateRequestDataBody struct{}
 type DescribeImageXHitRateTrafficData struct{}
@@ -15685,6 +16042,10 @@ type CreateImageCompressTaskReq struct {
 type CreateImageContentTaskReq struct {
 	*CreateImageContentTaskQuery
 	*CreateImageContentTaskBody
+}
+type CreateImageFromURIReq struct {
+	*CreateImageFromURIQuery
+	*CreateImageFromURIBody
 }
 type CreateImageHmEmbedReq struct {
 	*CreateImageHmEmbedQuery
@@ -15929,6 +16290,18 @@ type DescribeImageXEdgeRequestRegionsReq struct {
 type DescribeImageXEdgeRequestTrafficReq struct {
 	*DescribeImageXEdgeRequestTrafficQuery
 	*DescribeImageXEdgeRequestTrafficBody
+}
+type DescribeImageXExceedCountByTimeReq struct {
+	*DescribeImageXExceedCountByTimeQuery
+	*DescribeImageXExceedCountByTimeBody
+}
+type DescribeImageXExceedFileSizeReq struct {
+	*DescribeImageXExceedFileSizeQuery
+	*DescribeImageXExceedFileSizeBody
+}
+type DescribeImageXExceedResolutionRatioAllReq struct {
+	*DescribeImageXExceedResolutionRatioAllQuery
+	*DescribeImageXExceedResolutionRatioAllBody
 }
 type DescribeImageXHitRateRequestDataReq struct {
 	*DescribeImageXHitRateRequestDataQuery

@@ -2,19 +2,22 @@ package live_v20230101
 
 type BindCertBody struct {
 
-	// REQUIRED; 需要绑定的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
+	// REQUIRED; 需要绑定的 HTTPS 证书的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
 	ChainID string `json:"ChainID"`
 
-	// REQUIRED; 需要绑定证书的域名。
+	// REQUIRED; 填写需要配置 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要绑定证书的域名。
 	Domain string `json:"Domain"`
 
-	// 证书域名。
-	CertDomain *string `json:"CertDomain,omitempty"`
-
-	// 是否开启 HTTPS，默认值为 false。
+	// 是否启用 HTTPS 协议，默认值为 false，取值及含义如下所示。
 	// * false：关闭；
-	// * true：开启。
+	// * true：启用。
 	HTTPS *bool `json:"HTTPS,omitempty"`
+
+	// 最大支持的TLS版本，不填默认不校验，可选值为：TLSv1.0、TLSv1.1、TLSv1.2、TLSv1.3
+	MaxTLSVersion *string `json:"MaxTLSVersion,omitempty"`
+
+	// 最小支持的TLS版本，不填默认为TLSv1.2，可选值为：TLSv1.0、TLSv1.1、TLSv1.2、TLSv1.3
+	MinTLSVersion *string `json:"MinTLSVersion,omitempty"`
 }
 
 type BindCertRes struct {
@@ -257,9 +260,6 @@ type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultProperti
 
 type CreateCertBody struct {
 
-	// REQUIRED; 火山引擎账号 ID
-	AccountID string `json:"AccountID"`
-
 	// REQUIRED; 密钥信息
 	Rsa CreateCertBodyRsa `json:"Rsa"`
 
@@ -465,6 +465,117 @@ type CreateDomainV2ResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type CreateLiveStreamRecordIndexFilesBody struct {
+
+	// REQUIRED; app名字
+	App string `json:"App"`
+
+	// REQUIRED; 域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 结束时间
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 开始时间
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; stream名称
+	Stream string `json:"Stream"`
+
+	// 是否需要进行FFProbe嗅探,默认开启
+	NeedFFProbe *bool `json:"NeedFFProbe,omitempty"`
+
+	// 输出Bucket,默认为对应录制模板下参数
+	OutputBucket *string `json:"OutputBucket,omitempty"`
+
+	// 输出文件名Format,默认为对应录制模板下参数
+	OutputObject *string `json:"OutputObject,omitempty"`
+
+	// 关联的TS文件是否是独立的
+	SeparatedTS *bool `json:"SeparatedTS,omitempty"`
+
+	// 访问网络协议,可选值 http,https
+	TSScheme *string `json:"TSScheme,omitempty"`
+
+	// 自定义上传工作流
+	WorkflowID *string `json:"WorkflowID,omitempty"`
+}
+
+type CreateLiveStreamRecordIndexFilesRes struct {
+
+	// REQUIRED
+	ResponseMetadata CreateLiveStreamRecordIndexFilesResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result CreateLiveStreamRecordIndexFilesResResult `json:"Result"`
+}
+
+type CreateLiveStreamRecordIndexFilesResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type CreateLiveStreamRecordIndexFilesResResult struct {
+
+	// REQUIRED; app名字
+	App string `json:"App"`
+
+	// REQUIRED; 任务创建时间
+	CreateTime string `json:"CreateTime"`
+
+	// REQUIRED; 域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 录制文件长度,单位 秒
+	Duration float32 `json:"Duration"`
+
+	// REQUIRED; 结束时间
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 流嗅探高度
+	Height int32 `json:"Height"`
+
+	// REQUIRED; 录制m3u8文件访问路径
+	RecordURL string `json:"RecordURL"`
+
+	// REQUIRED; 开始时间
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; stream名称
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 流嗅探宽度
+	Width int32 `json:"Width"`
+
+	// tos上传bucket
+	OutputBucket *string `json:"OutputBucket,omitempty"`
+
+	// tos上传文件名
+	OutputObject *string `json:"OutputObject,omitempty"`
+
+	// 点播URI
+	URI *string `json:"URI,omitempty"`
+
+	// 点播VID
+	VID *string `json:"VID,omitempty"`
+
+	// 点播命名空间
+	VodNamespace *string `json:"VodNamespace,omitempty"`
 }
 
 type CreatePullCDNSnapshotTaskBody struct {
@@ -709,61 +820,69 @@ type CreatePullToPushTaskResResult struct {
 
 type CreateRecordPresetV2Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
-	// * 支持填写星号"*"，表示录制策略对该域名空间内的所有 AppName 生效；该策略即当前域名空间的全局策略；
-	// * 如果为某 AppName 同时配置了全局策略和单独的策略，则默认使用单独的策略进行录制。 :::warning 当 App 取值为 “*” 时，Stream 取值必须为 “*”。 :::
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同，支持填写星号（*）或由 1 到 30 位数字（0 - 9）、大写小字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成。
+	// * 应用名称填写星号，即 App 取值为 *时， 流名称也需填写星号，此时表示录制配置为域名空间级别的配置，即直播流使用的域名属于此域名空间时，就会使用此配置进行录制。
+	// * 应用名称填写非星号时，表示录制配置为域名空间 + 应用名称 + 流名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 和 StreamName 字段也同时与 App 和 Stream 的取值匹配时，就会使用此配置进行录制。
+	// :::warning 当 App 取值为 * 时，Stream 取值必须为 *。 :::
 	App string `json:"App"`
 
-	// REQUIRED; 录制模板详细配置
+	// REQUIRED; 直播流录制配置的详细配置。
 	RecordPresetConfig CreateRecordPresetV2BodyRecordPresetConfig `json:"RecordPresetConfig"`
 
-	// REQUIRED; 域名空间名称
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 流名称，支持填写星号"*"，表示录制策略对该域名空间内的所有 Stream 生效；该策略即当前域名空间的全局策略。
-	// :::warning 当 App 取值为 “*” 时，Stream 取值必须为 “*”。 :::
+	// 流名称，取值与直播流地址的 StreamName 字段取值相同，支持填写星号（*）或由 1 到 100 位数字（0 - 9）、字母、下划线（_）、短横线（-）和句点（.）组成。
+	// * 流名称填写星号时，表示录制配置为应用名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 字段也与 App 取值同时匹配时，就会使用此配置进行录制。
+	// * 流名称填写非星号时，表示录制配置为域名空间 + 应用名称 + 流名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 和 StreamName 字段也同时与 App 和 Stream 的取值匹配时，就会使用此配置进行录制。
+	// :::warning 当 App 取值为 * 时，Stream 取值必须为 *。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfig - 录制模板详细配置
+// CreateRecordPresetV2BodyRecordPresetConfig - 直播流录制配置的详细配置。
 type CreateRecordPresetV2BodyRecordPresetConfig struct {
 
-	// FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+	// 录制为 FLV 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	FlvParam *CreateRecordPresetV2BodyRecordPresetConfigFlvParam `json:"FlvParam,omitempty"`
 
-	// HLS 录制参数，开启 HLS 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+	// 录制为 HLS 合适时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	HlsParam *CreateRecordPresetV2BodyRecordPresetConfigHlsParam `json:"HlsParam,omitempty"`
 
-	// MP4 录制参数，开启 MP4 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+	// 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	Mp4Param *CreateRecordPresetV2BodyRecordPresetConfigMp4Param `json:"Mp4Param,omitempty"`
 
-	// 源流录制，默认值为 0。支持的取值如下所示。
+	// 是否源流录制，默认值为 0，支持的取值即含义如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
+	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
-	// 录制 HLS 格式时，单个 TS 切片时长，单位为 s，默认值为 5，取值范围为 [5,30]
+	// 录制为 HLS 格式时，单个 TS 切片时长，单位为秒，默认值为 10，取值范围为 [5,30]。
 	SliceDuration *int32 `json:"SliceDuration,omitempty"`
 
-	// 转码流录制，默认值为 0。支持的取值如下所示。
+	// 是否录制转码流，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
-	// * 1：录制。
-	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命中的转码后缀。
-	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
+	// * 1：录制全部转码流；
+	// * 2：通过转码流后缀列表，即TranscodeSuffixList 字段取值匹配转码流。
+	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
-	// 录制转码流后缀列表，转码流录制配置为全部录制时（TranscodeRecord 配置等于 2）生效。
+	// 转码流后缀列表，转码流录制配置为根据转码流列表匹配（TranscodeRecord 取值为 2）时生效，TranscodeSuffixList 默认配置为空，效果等同于录制全部转码流。
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigFlvParam - FLV 录制参数，开启 FLV 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigFlvParam - 录制为 FLV 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
-	// 断流等待时长，取值范围[0,3600]
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对HLS生效
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -771,26 +890,29 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam `json:"VODParam,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam - TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果启用 TOSParam 配置（Enable
+	// 取值为 true），则 Bucket 必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -798,17 +920,27 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam - VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -816,29 +948,33 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace 必填。
-	// :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果启用 VODParam 配置（Enable 取值为 true），则 VodNamespace
+	// 必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigHlsParam - HLS 录制参数，开启 HLS 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigHlsParam - 录制为 HLS 合适时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 
 	// 断流等待时长，取值范围[0,3600]
@@ -919,7 +1055,8 @@ type CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigMp4Param - MP4 录制参数，开启 MP4 录制时设置 :::tipFlvParam、HlsParam、Mp4Param 至少开启一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigMp4Param - 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 
 	// 断流等待时长，取值范围[0,3600]
@@ -1039,16 +1176,18 @@ type CreateRecordPresetV2ResResponseMetadataError struct {
 
 type CreateRelaySourceV4Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，即直播流地址的AppName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播推流地址。
+	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播推流地址。 :::tip
+	// * 当源站使用了非默认端口时，支持在回源地址中以域名:端口或IP:端口的形式配置端口。
+	// * 最多支持添加 10 个回源地址，回源失败时，将按照您添加的地址顺序轮循尝试。 :::
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 流名称，即直播流地址的StreamName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、字母、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
 	// 回源结束时间，Unix 时间戳，单位为秒。 :::tip
@@ -1496,113 +1635,137 @@ type CreateTimeShiftPresetV3ResResponseMetadataError struct {
 
 type CreateTranscodePresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、_uhd。 例如，配置的转码流后缀名为 _hd，则拉转码流时转码的流名为 stream-123456789_hd。
+	// REQUIRED; 转码后缀，支持由大小写字母（A - Z、a - z）、下划线（_）和短横线（-）组成，长度为 1 到 10 个字符。
+	// 转码后缀通常以流名称后缀的形式来使用，常见的标识有 _sd、_hd、_uhd，例如，当转码配置的标识为 _hd 时，拉取转码流时转码流的流名名称为 源流的流名称_hd。
 	SuffixName string `json:"SuffixName"`
 
 	// REQUIRED; 视频编码格式，支持的取值及含义如下所示。
-	// * h264：使用 H.264 编码格式；
-	// * h265：使用 H.265 编码格式；
-	// * h266：使用 H.266 编码格式；
-	// * copy：不进行转码，所有视频编码参数不生效。
+	// * h264：使用 H.264 视频编码格式；
+	// * h265：使用 H.265 视频编码格式；
+	// * h266：使用 H.266 视频编码格式；
+	// * copy：不进行视频转码，所有视频编码参数不生效，视频编码参数包括视频帧率（FPS）、视频码率（VideoBitrate）、分辨率设置（As、Width、Height、ShortSide、LongSide）、GOP 和 BFrames
+	// 等。
 	Vcodec string `json:"Vcodec"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要转码的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 音频编码格式，默认值为 acc，支持以下 3 种类型。
-	// * aac：使用 AAC 编码格式；
-	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 Opus 编码格式。
+	// 音频编码格式，默认值为 aac，支持的取值及含义如下所示。
+	// * aac：使用 AAC 音频编码格式；
+	// * opus：使用 Opus 音频编码格式。
+	// * copy：不进行音频转码，所有音频编码参数不生效，音频编码参数包括音频码率（AudioBitrate）等。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 宽高自适应模式开关，默认值为 0。支持的取值及含义如下。
-	// * 0：关闭宽高自适应
-	// * 1：开启宽高自适应 :::tip
-	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
-	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
+	// 视频分辨率自适应模式开关，默认值为 0。支持的取值及含义如下。
+	// * 0：关闭视频分辨率自适应；
+	// * 1：开启视频分辨率自适应。 :::tip
+	// * 关闭视频分辨率自适应模式（As 取值为 0）时，转码配置的视频分辨率取视频宽度（Width）和视频高度（Height）的值对转码视频进行拉伸；
+	// * 开启视频分辨率自适应模式（As 取值为 1）时，转码配置的视频分辨率按照短边长度（ShortSide）、长边长度（LongSide）、视频宽度（Width）、视频高度（Height）的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
-	// 音频码率，单位为 kbps。
+	// 音频码率，单位为 kbps，默认值为 128，取值范围为 [0,1000]；取值为 0 时，表示与源流的音频码率相同。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频分辨率不超过源流分辨率，默认值为 1 表示开启。开启后，当源流分辨率低于转码配置分辨率时（即源流宽低于转码配置宽且源流高低于转码配置高时），将按源流视频分辨率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
 
-	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频码率不超过源流码率，默认值为 1 表示开启。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
 
-	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频帧率不超过源流帧率，默认值为 1 表示开启。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数，默认值为 3。配置不同的视频编码格式时，最大 B 帧数的取值存在如下差异。
-	// * H.264：取值范围为 [0,7]；
-	// * H.265：取值范围为 [0,3]、7、15；
-	// * H.266：取值范围为 [0,3]、7、15。
-	// 取值为 0 时，表示去除 B 帧。
+	// 转码输出视频中 2 个参考帧之间的最大 B 帧数量，默认值为 3，取值为 0 时表示去除 B 帧。
+	// 最大 B 帧数量的取值范围根据视频编码格式（Vcodec）的不同有所差异，取值范围如下所示。
+	// * 视频编码格式为 H.264 （Vcodec 取值为 h264）时取值范围为 [0,7]；
+	// * 视频编码格式为 H.265 （Vcodec 取值为 h265）时取值范围为 [0,3]、7、15；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时取值范围为 [0,3]、7、15。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
-	// * H.264：取值范围为 [0,60]；
-	// * H.265：取值范围为 [0,60]；
-	// * H.266：取值范围为 [0,35]。
+	// 动态范围，画质增强类型生效，ParamType=hvq时必填，并且h264只支持SDR
+	// * SDR：输出为SDR
+	// * HDR：输出为HDR
+	DynamicRange *string `json:"DynamicRange,omitempty"`
+
+	// 是否开启智能插帧，只对画质增强类型生效，不填默认为不开启
+	// * 0：不开启
+	// * 1：开启
+	FISwitch *int32 `json:"FISwitch,omitempty"`
+
+	// 视频帧率，单位为 fps，默认值为 25，取值为 0 时表示与源流视频帧率相同。
+	// 视频帧率的取值范围根据视频编码格式（Vcodec）的不同有所差异，视频码率的取值范围如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，视频帧率取值范围为 [0,60]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，视频帧率取值范围为 [0,35]。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为秒，默认值为 4，取值范围为 [1,20]。
+	// IDR 帧之间的最大间隔时间，单位为秒，默认值为 4，取值范围为 [1,20]。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度，默认值为 0。配置不同视频编码格式时，视频高度的取值存在如下差异。
-	// * H.264：取值范围为 [150,1920]；
-	// * H.265：取值范围为 [150,1920]。
+	// 视频高度，默认值为 0。
+	// 视频高度的取值范围根据视频编码格式（Vcodec）的不同所有差异，视频高度取值如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，取值范围为 [150,1920]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，不支持设置 Width 和 Height。
 	// :::tip
-	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
-	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
-	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度，默认值为 0。配置不同的视频编码方式和转码类型时，长边长度的取值范围存在如下差异。
-	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,4096]；
-	// * H.265：取值范围为 0 和 [150,7680]；
-	// * H.266：取值范围为 0 和 [150,1280]。
+	// 长边长度，默认值为 0。配置不同的转码类型（Roi）和视频编码方式（Vcodec）时，短边长度的取值范围存在如下。
+	// * 转码类型为标准转码（Roi 取值为 false）时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）时取值范围为 0 和 [150,4096]；
+	// * 视频编码方式为 H.265 （Vcodec 取值为 h265）时取值范围为 0 和 [150,7680]；
+	// * 视频编码方式为 H.266 （Vcodec 取值为 h266）时取值范围为 0 和 [150,1280]。
 	//
 	//
-	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
-	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	// * 转码类型为极智超清转码（Roi 取值为 true）时： * 视频编码方式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时取值范围为 0 和 [150,1920]。
 	//
 	//
-	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
+	// :::tip
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，参数生效，反之则不生效。
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码，默认值为 false，取值及含义如下。
+	// 转码模板参数的类型
+	// * hvq：表示使用画质增强
+	ParamType *string `json:"ParamType,omitempty"`
+
+	// 转码类型是否为极智超清转码，当画质增强开启时，该参数默认为 true，其余默认值为 false，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。
-	// :::tip 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
+	// :::tip 视频编码格式为 H.266 (Vcodec取值为h266)时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度，默认值为 0。配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
-	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
-	// * H.265：取值范围为 0 和 [150,4096]；
-	// * H.266：取值范围为 0 和 [150,720]。
+	// 使用场景，画质增强时生效，不填不生效
+	// * football：足球场景
+	SceneType *string `json:"SceneType,omitempty"`
+
+	// 短边长度，默认值为 0。配置不同的转码类型（Roi）和视频编码方式（Vcodec）时，短边长度的取值范围存在如下。
+	// * ParamType 取 hvq 时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）取值范围为 0 和 [150,1280]；
+	// * 视频编码方式为 H.265 （Vcodec取值为h265）取值范围为 0 和 [150,1280]；
 	//
 	//
-	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
-	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	// * 转码类型为标准转码（Roi 取值为 false）时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）时取值范围为 0 和 [150,2160]；
+	// * 视频编码方式为 H.265 （Vcodec 取值为 h265）时取值范围为 0 和 [150,4096]；
+	// * 视频编码方式为 H.266 （Vcodec 取值为 h266）时取值范围为 0 和 [150,720]。
 	//
 	//
-	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
+	// * 转码类型为极智超清转码（Roi 取值为 true）时： * 视频编码方式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时取值范围为 0 和 [150,1920]。 :::tip
+	//
+	//
+	// * 当开启视频分辨率自适应模式（As 取值为 1）时，参数生效，反之则不生效。
+	// * 当开启视频分辨率自适应模式（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为-1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	// 转码停止时长，支持触发方式为拉流转码（TransType 取值为 Pull）时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
 	StopInterval *int32 `json:"StopInterval,omitempty"`
 
 	// 转码触发方式，默认值为 Pull，支持的取值及含义如下。
@@ -1610,19 +1773,19 @@ type CreateTranscodePresetBody struct {
 	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
 	TransType *string `json:"TransType,omitempty"`
 
-	// 视频码率，单位为 bps，默认值为 1000000；取 0 时，表示使用源流码率。 配置不同的编码格式时，视频码率的取值范围存在如下差异。
-	// * H.264：取值范围为 [0,30000000]；
-	// * H.265：取值范围为 [0,30000000]；
-	// * H.266：取值范围为 [0,6000000]。
+	// 视频码率，单位为 bps，默认值为 1000000；取值为 0 时，表示与源流的视频码率相同。
+	// 视频码率的取值范围根据视频编码格式（Vcodec）的不同有所差异，视频码率的取值范围如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，视频码率取值范围为 [0,30000000]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，视频码率取值范围为 [0,6000000]。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度，默认值为 0。 配置不同视频编码格式时，视频宽度取值存在如下差异。
-	// * H.264：取值范围为 [150,1920]；
-	// * H.265：取值范围为 [150,1920]。
+	// 视频宽度，单位为 px，默认值为 0。
+	// 视频宽度的取值范围根据视频编码格式（Vcodec）的不同所有差异，视频宽度取值如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，取值范围为 [150,1920]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，不支持设置 Width 和 Height。
 	// :::tip
-	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
-	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
-	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -2101,10 +2264,10 @@ type DeleteRefererResResponseMetadataError struct {
 
 type DeleteRelaySourceV3Body struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 直播流使用的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 应用名称。
+	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示删除当前域名空间的全局播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
 	// 回源组名称。
@@ -2881,47 +3044,47 @@ type DescribeCertDetailSecretV2ResResultSSL struct {
 
 type DescribeClosedStreamInfoByPageQuery struct {
 
-	// REQUIRED; 查询的起始时间，以 RFC3339 格式表示的 UTC 时间戳，精度为 s。筛选结束推流时间符合查询条件的历史流。
+	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
 	EndTimeFrom string `json:"EndTimeFrom" query:"EndTimeFrom"`
 
-	// REQUIRED; 查询的结束时间，以 RFC3339 格式表示的 UTC 时间戳，精度为 s。筛选结束推流时间符合查询条件的历史流。
+	// REQUIRED; 查询的结束时间，RFC3339 格式表示的 UTC 时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
 	EndTimeTo string `json:"EndTimeTo" query:"EndTimeTo"`
 
-	// REQUIRED; 当前页码，取值范围 ≥1。
+	// REQUIRED; 查询数据的页码，取值范围为正整数。
 	PageNum int32 `json:"PageNum" query:"PageNum"`
 
-	// REQUIRED; 分页大小，取值范围为 [1,1000]。
+	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，默认查询所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 推流域名（含删除域名）。 :::tip
-	// * 如果同时传入 Domain 和对应的 Vhost，会返回 Domain 下的历史流列表；
-	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的历史流列表。 :::
+	// 直播流使用的域名，默认为空，表示查询所有当前域名空间（Vhost）下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看需要查询的历史直播流使用的域名。
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
-	// 指定是否模糊匹配流名称，缺省情况为精准匹配。支持如下取值。
+	// 使用流名称进行查询的方式，默认值为 strict，支持的取值即含义如下所示。
 	// * fuzzy：模糊匹配；
 	// * strict：精准匹配。
 	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
 
-	// 排列方式，根据结束时间排序。支持两种形式。缺省情况下为 desc。
-	// * asc：按从小到大升序排列；
-	// * desc：按从大到小降序排列。
+	// 排列方式，根据直播流结束时间排序，默认值为 desc，支持的取值及含义如下所示。
+	// * asc：从时间最远到最近排序；
+	// * desc：从时间最近到最远排序。
 	Sort *string `json:"Sort,omitempty" query:"Sort"`
 
-	// 表示推流方式，缺省情况查询全部推流方式。支持如下取值。
+	// 历史直播流的来源类型，默认为空，表示查询所有来源类型，支持的取值及含义如下所示。
 	// * push：直推流；
 	// * relay：回源流。
 	SourceType *string `json:"SourceType,omitempty" query:"SourceType"`
 
-	// 流名称，默认查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定Stream，必须同时指定App的值。
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
-	// 视频直播服务的配置空间。 :::tip
-	// * 如果同时传入 Domain 和对应的 Vhost，会返回 Domain 下的历史流列表；
-	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的历史流列表。 :::
+	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost），默认为空，表示查询所有域名空间（Vhost）下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
+	// 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的历史直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -2962,36 +3125,36 @@ type DescribeClosedStreamInfoByPageResResponseMetadataError struct {
 
 type DescribeClosedStreamInfoByPageResResult struct {
 
-	// REQUIRED; 流数量。
+	// REQUIRED; 查询结果中历史流的数量。
 	RoughCount int32 `json:"RoughCount"`
 
-	// 流信息列表。
+	// 历史直播流信息列表。
 	StreamInfoList []*DescribeClosedStreamInfoByPageResResultStreamInfoListItem `json:"StreamInfoList,omitempty"`
 }
 
 type DescribeClosedStreamInfoByPageResResultStreamInfoListItem struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 历史直播流使用的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 历史直播流使用的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 直播流结束时间。
+	// REQUIRED; 直播流的结束时间。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 表示推流方式，缺省情况查询全部推流方式。支持如下取值。
+	// REQUIRED; 历史直播流的来源类型，取值及含义如下所示。
 	// * push：直推流；
 	// * relay：回源流。
 	SourceType string `json:"SourceType"`
 
-	// REQUIRED; 直播流开始时间。
+	// REQUIRED; 直播流的开始时间。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 历史直播流使用的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; Vhost 表示视频直播服务的配置空间。
+	// REQUIRED; 历史直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -3116,7 +3279,7 @@ type DescribeDomainResResult struct {
 type DescribeDomainResResultDomainListItem struct {
 
 	// REQUIRED; CNAME 信息。
-	CName string `json:"CName"`
+	CNAME string `json:"CNAME"`
 
 	// REQUIRED; 所绑定证书支持的泛域名。
 	CertDomain string `json:"CertDomain"`
@@ -3173,29 +3336,35 @@ type DescribeDomainResResultDomainListItem struct {
 
 type DescribeForbiddenStreamInfoByPageQuery struct {
 
-	// REQUIRED; 当前页码，取值范围 ≥1。
+	// REQUIRED; 查询数据的页码，取值范围为正整数。
 	PageNum int32 `json:"PageNum" query:"PageNum"`
 
-	// REQUIRED; 分页大小，取值范围为 [1,1000]。
+	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，默认查询所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询当前域名空间（Vhost）下所有的禁推流。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持以下取值。
+	// 直播流使用的域名，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询所有当前域名空间（Vhost）下的禁推直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
+	// 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的禁推直播流使用的域名。
+	Domain *string `json:"Domain,omitempty" query:"Domain"`
+
+	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持的取值及含义如下所示。
 	// * fuzzy：模糊匹配；
 	// * strict：精准匹配。
 	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
 
-	// 排列方式，根据推流结束时间排序。支持两种形式。缺省情况下为 desc。
-	// * asc：按从小到大升序排列；
-	// * desc：按从大到小降序排列。
+	// 排列方式，根据推流结束时间排序，默认值为 desc，支持的取值及含义如下所示。
+	// * asc：从时间最远到最近排序；
+	// * desc：从时间最近到最远排序。
 	Sort *string `json:"Sort,omitempty" query:"Sort"`
 
-	// 流名称，默认查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// 流名称，取值与禁推直播流时设置的流名称相同，默认查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
-	// 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// 域名空间，取值与禁推直播流时设置的域名空间相同，默认为空，表示查询所有域名空间（Vhost）下的禁推流。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的禁推流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -3236,7 +3405,7 @@ type DescribeForbiddenStreamInfoByPageResResponseMetadataError struct {
 
 type DescribeForbiddenStreamInfoByPageResResult struct {
 
-	// REQUIRED; 流数量。
+	// REQUIRED; 查询结果中禁推流数量。
 	RoughCount int32 `json:"RoughCount"`
 
 	// 禁推流的信息列表。
@@ -3245,25 +3414,27 @@ type DescribeForbiddenStreamInfoByPageResResult struct {
 
 type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 禁推流的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 直播流开始时间。
+	// REQUIRED; 禁推流被禁推的开始时间。
 	CreateTime string `json:"CreateTime"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 禁推流的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 直播流结束时间。
+	// REQUIRED; 禁推流结束禁推的时间。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 是否禁用。true：禁用；false：启用。
+	// REQUIRED; 当前流的禁推配置是否启用。
+	// * true：启用；
+	// * false：禁用。
 	Status bool `json:"Status"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 禁推流的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 禁推流的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -4599,7 +4770,7 @@ type DescribeLiveBatchStreamTranscodeDataBody struct {
 	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
 	PageNum *int32 `json:"PageNum,omitempty"`
 
-	// 每页显示的数据条数，默认值为 1000，取值范围为 100～1000。
+	// 每页显示的数据条数，默认值为 1000，取值范围为 [100,1000]。
 	PageSize *int32 `json:"PageSize,omitempty"`
 }
 
@@ -4678,24 +4849,15 @@ type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
 	// REQUIRED; 当前流在查询时间内的转码总时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 当前流的转码分辨率档位，以 480P 为例，表示转码配置的长边 x 短边计算而出的面积小于 640 x 480。
-	// * 480P：640 × 480；
-	// * 720P：1280 × 720；
-	// * 1080P：1936 × 1088；
-	// * 2K：2560 × 1440；
-	// * 4K：4096 × 2160；
-	// * 0P：纯音频转码。
+	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
+	// 0：纯音频流；
 	Resolution string `json:"Resolution"`
 
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。
-	// * Normal_H264：H.264 标准转码；
-	// * Normal_H265：H.265 标准转码；
-	// * ByteHD_H264：H.264 极智超清；
-	// * ByteHD_H265：H.265 极智超清；
-	// * Audio：纯音频流。
+	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
+	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
 	VCodec string `json:"VCodec"`
 }
 
@@ -4704,7 +4866,10 @@ type DescribeLiveCustomizedLogDataBody struct {
 	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 当前仅支持查询最近 31 天的日志数据。 :::
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip
+	// * 当前仅支持查询最近 31 天的日志数据。
+	// * 日志文件按设置的拆分粒度进行拆分（以按 1 小时为拆分粒度为例），请确保查询的开始和结束时间包含所查询时段的所有粒度时间。例如，日志文件按 1 小时拆分时，如需查询某日 07:30:00-08:10:00 日志数据，日志查询开始时间应早于
+	// 07:00:00，结束时间应晚于 09:00:00。 :::
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 日志类型，请联系技术支持同学获取参数值。
@@ -4770,7 +4935,7 @@ type DescribeLiveCustomizedLogDataResResult struct {
 
 type DescribeLiveCustomizedLogDataResResultLogInfoListItem struct {
 
-	// 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为秒。
+	// 日志文件的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	DateTime *string `json:"DateTime,omitempty"`
 
 	// 域名。 :::tip 查询拉流转推日志（Type=relay）时，该字段为空。 :::
@@ -5224,7 +5389,7 @@ type DescribeLiveMetricTrafficDataBody struct {
 	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
 	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
 	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 应用名称。
@@ -5611,7 +5776,7 @@ type DescribeLivePlayStatusCodeDataBody struct {
 	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
 	// * 60：（默认值）1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
 	// * 300：5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
@@ -6713,7 +6878,7 @@ type DescribeLiveSourceBandwidthDataBody struct {
 	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
 	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
 	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
@@ -7024,7 +7189,7 @@ type DescribeLiveSourceTrafficDataBody struct {
 	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
 	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
 	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
 	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
@@ -7340,41 +7505,41 @@ type DescribeLiveStreamCountDataResResultTotalStreamDataListItem struct {
 
 type DescribeLiveStreamInfoByPageQuery struct {
 
-	// REQUIRED; 当前页码，取值范围 ≥1。
+	// REQUIRED; 查询数据的页码，取值为正整数。
 	PageNum int32 `json:"PageNum" query:"PageNum"`
 
-	// REQUIRED; 分页大小，取值范围为 [1,1000]。
+	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，默认查询所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 推流域名（含删除域名）。 :::tip
-	// * 如果同时传入 Domain 和对应的 Vhost，会返回 Domain 下的在线流列表；
-	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的在线流列表。 :::
+	// 直播流使用的域名，默认为空，表示查询所有当前域名空间（Vhost）下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看直播流使用的域名。
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
-	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持以下取值。
+	// 使用流名称进行查询的方式，默认值为 strict，支持的取值即含义如下所示。
 	// * fuzzy：模糊匹配；
 	// * strict：精准匹配。
 	QueryType *string `json:"QueryType,omitempty" query:"QueryType"`
 
-	// 表示推流方式，缺省情况查询全部推流方式。支持如下取值。
+	// 在线流的来源类型，默认为空，表示查询所有来源类型，支持的取值即含义如下所示。
 	// * push：直推流；
 	// * relay：回源流。
 	SourceType *string `json:"SourceType,omitempty" query:"SourceType"`
 
-	// 流名称，缺省情况下，查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
-	// 流类型，缺省情况下表示全选。支持如下取值。
+	// 在线流的流类型，默认为空，表示查询所有类型，支持的取值即含义如下所示。
 	// * origin：原始流；
 	// * trans：转码流。
 	StreamType *string `json:"StreamType,omitempty" query:"StreamType"`
 
-	// 域名空间名称。 :::tip
-	// * 如果同时传入 Domain 和对应的 Vhost，会返回 Domain 下的在线流列表；
-	// * 如果 Domain 和 Vhost 同时缺省，会返回当前 AccountID 下的在线流列表。 :::
+	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost），默认为空，表示查询所有域名空间（Vhost）下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
+	// 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -7415,36 +7580,36 @@ type DescribeLiveStreamInfoByPageResResponseMetadataError struct {
 
 type DescribeLiveStreamInfoByPageResResult struct {
 
-	// REQUIRED; 在线流总数量。
+	// REQUIRED; 查询结果中在线流的数量。
 	RoughCount int32 `json:"RoughCount"`
 
-	// 流信息列表。
+	// 在线流信息列表。
 	StreamInfoList []*DescribeLiveStreamInfoByPageResResultStreamInfoListItem `json:"StreamInfoList,omitempty"`
 }
 
 type DescribeLiveStreamInfoByPageResResultStreamInfoListItem struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 在线流使用的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 域名。
+	// REQUIRED; 在线流使用的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 流 ID。
+	// REQUIRED; 在线流的 ID。
 	ID int64 `json:"ID"`
 
-	// REQUIRED; 开始推流时间。
+	// REQUIRED; 在线流的开始时间。
 	SessionStartTime string `json:"SessionStartTime"`
 
-	// REQUIRED; 表示推流方式，缺省情况查询全部推流方式。支持如下取值。
+	// REQUIRED; 在线流的来源类型，取值及含义如下所示。
 	// * push：直推流；
 	// * relay：回源流。
 	SourceType string `json:"SourceType"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 在线流使用的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 在线流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -7692,16 +7857,20 @@ type DescribeLiveStreamSessionDataResResultSessionDetailDataListPropertiesItemsI
 
 type DescribeLiveStreamStateQuery struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App" query:"App"`
 
-	// REQUIRED; 流名称。由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// REQUIRED; 流名称，取值与直播流地址的 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream" query:"Stream"`
 
-	// 推流域名。 :::tipVhost 和 Domain 传且仅传一个。 :::
+	// 填写直播流使用的域名，默认为空，表示查询所有直推流和回源流的状态和类型。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看需要查询的直播流使用的域名。 :::tipVhost 和 Domain 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
-	// 域名空间名称 :::tipVhost 和 Domain 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看需要查询的直播流使用的域名所属的域名空间。 :::tipVhost 和 Domain 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -7742,15 +7911,15 @@ type DescribeLiveStreamStateResResponseMetadataError struct {
 
 type DescribeLiveStreamStateResResult struct {
 
-	// REQUIRED; 直播流状态。
+	// REQUIRED; 直播流状态，取值及含义如下所示。
 	// * online：在线流；
 	// * offline：历史流；
 	// * forbidden：禁推流。
 	StreamState string `json:"stream_state"`
 
-	// REQUIRED; 直播流类型。
-	// * push：直推直拉；
-	// * pull：回源拉流。
+	// REQUIRED; 直播流类型，取值及含义如下所示。
+	// * push：直推流；
+	// * pull：回源流。
 	Type string `json:"type"`
 }
 
@@ -8221,24 +8390,15 @@ type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的转码时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 转码分辨率档位，以 480P 为例，表示转码配置的长边 x 短边计算而出的面积小于 640 x 480。
-	// * 480P：640 × 480；
-	// * 720P：1280 × 720；
-	// * 1080P：1936 × 1088；
-	// * 2K：2560 × 1440；
-	// * 4K：4096 × 2160；
-	// * 0P：纯音频转码。
+	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
+	// 0：纯音频流；
 	Resolution string `json:"Resolution"`
 
 	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 转码格式，支持的取值和含义如下所示。
-	// * Normal_H264：H.264 标准转码；
-	// * Normal_H265：H.265 标准转码；
-	// * ByteHD_H264：H.264 极智超清；
-	// * ByteHD_H265：H.265 极智超清；
-	// * Audio：纯音频转码。
+	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
+	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
 	TranscodeType string `json:"TranscodeType"`
 }
 
@@ -8456,10 +8616,10 @@ type DescribeRefererResResultRefererListPropertiesItemsItem struct {
 
 type DescribeRelaySourceV3Body struct {
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 直播流使用的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示查询当前域名空间下所有播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
 	// 回源组名称。
@@ -8839,19 +8999,23 @@ type EnableDomainResResponseMetadataError struct {
 
 type ForbidStreamBody struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，取值与直播流地址的 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// 推流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 直播流使用的域名，您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看待禁推的直播流使用的域名。
+	// :::tip 参数 Domain 和
+	// Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 禁推的结束时间，RFC3339 格式的 UTC 时间，精度为 ms，禁推有效期最长为 90 天，默认为当前时间加 90 天。
+	// 禁推的结束时间，RFC3339 格式的 UTC 时间，精度为毫秒，禁推有效期最长为 90 天，默认为当前时间加 90 天。
 	EndTime *string `json:"EndTime,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看待禁推的直播流使用的域名所属的域名空间。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -9203,13 +9367,13 @@ type GetPullRecordTaskResResult struct {
 
 type KillStreamBody struct {
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 直播流使用的应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
+	// 直播流使用的流名称。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间，您可以调用 DescribeLiveStreamInfoByPage [https://www.volcengine.com/docs/6469/1126841] 接口，查看待断开的在线流的信息，包括 Vhost、APP 和 Stream。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -9590,7 +9754,7 @@ type ListDomainDetailResResult struct {
 type ListDomainDetailResResultDomainListItem struct {
 
 	// REQUIRED; CNAME 信息。
-	CName string `json:"CName"`
+	CNAME string `json:"CNAME"`
 
 	// REQUIRED; 所绑定证书支持的泛域名。
 	CertDomain string `json:"CertDomain"`
@@ -9991,7 +10155,7 @@ type ListPullToPushTaskResResultPagination struct {
 
 type ListRelaySourceV4Body struct {
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	Domain string `json:"Domain"`
 
 	// 查询数据的页码，默认为 1，表示查询第一页的数据。
@@ -10050,7 +10214,7 @@ type ListRelaySourceV4ResResultListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 直播流的使用的域名。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 回源结束时间，StartTime 和 EndTime 同时缺省的情况下，表示永久回源。
@@ -10647,17 +10811,17 @@ type ListVhostTransCodePresetResResult struct {
 
 type ListVhostTransCodePresetResResultAllPresetListItem struct {
 
-	// REQUIRED; 应用名称
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 转码配置具体信息
+	// 转码配置具体信息。
 	TranscodePreset *ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset `json:"TranscodePreset,omitempty"`
 }
 
-// ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset - 转码配置具体信息
+// ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset - 转码配置具体信息。
 type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 
 	// 音频编码格式。包括以下 3 种类型。
@@ -10672,27 +10836,53 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
-	AudioBitrate        *int32 `json:"AudioBitrate,omitempty"`
+	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
+
+	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
 	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
-	AutoTransVb         *int32 `json:"AutoTransVb,omitempty"`
-	AutoTransVr         *int32 `json:"AutoTransVr,omitempty"`
+
+	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
+
+	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
 
 	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 帧率，单位为 fps。帧率越大，画面越流畅
+	// 动态范围，画质增强类型生效
+	// * SDR：输出为SDR
+	// * HDR：输出为HDR
+	DynamicRange *string `json:"DynamicRange,omitempty"`
+
+	// 是否开启智能插帧，只对画质增强类型生效
+	// * 0：不开启
+	// * 1：开启
+	FISwitch *string `json:"FISwitch,omitempty"`
+
+	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s
+	// IDR 帧之间的最大间隔，单位为 s。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频高度。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 长边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 模板名称
+	// 转码模板参数的类型
+	// * va：表示使用画质增强
+	ParamType *string `json:"ParamType,omitempty"`
+
+	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
 	// 是否极智超清转码。
@@ -10700,24 +10890,34 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
 
+	// 使用场景，画质增强时生效 football：足球场景
+	SceneType *string `json:"SceneType,omitempty"`
+
 	// 短边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
-	Status    *int32 `json:"Status,omitempty"`
 
-	// 转码流后缀名
+	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为 s，取值范围为 [0,300]，-1 表示不停止转码，默认值为 60。
+	StopInterval *int32 `json:"StopInterval,omitempty"`
+
+	// 转码流后缀名。
 	SuffixName *string `json:"SuffixName,omitempty"`
-	TransType  *string `json:"TransType,omitempty"`
+
+	// 转码触发方式，默认为拉流转码，支持以下取值。
+	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
+	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
+	TransType *string `json:"TransType,omitempty"`
 
 	// 视频编码格式。
 	// * h264：使用 H.264 编码格式；
 	// * h265：使用 H.265 编码格式；
+	// * h266：使用 H.266 编码格式；
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 视频码率，单位为 kbps
+	// 视频码率，单位为 kbps。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频宽度。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -10770,7 +10970,17 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// 2 个参考帧之间的最大 B 帧数。取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
+	// 动态范围，画质增强类型生效
+	// * SDR：输出为SDR
+	// * HDR：输出为HDR
+	DynamicRange *string `json:"DynamicRange,omitempty"`
+
+	// 是否开启智能插帧，只对画质增强类型生效
+	// * 0：不开启
+	// * 1：开启
+	FISwitch *string `json:"FISwitch,omitempty"`
+
+	// 视频帧率，单位为 fps，帧率越大，画面越流畅，开启智能插帧时该值为 0。
 	FPS *int32 `json:"FPS,omitempty"`
 
 	// IDR 帧之间的最大间隔，单位为秒。
@@ -10784,6 +10994,10 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
+	// 转码模板参数的类型
+	// * hvq：表示使用画质增强
+	ParamType *string `json:"ParamType,omitempty"`
+
 	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
@@ -10791,6 +11005,9 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// * true：极智超清转码；
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
+
+	// 使用场景，画质增强时生效 football：足球场景
+	SceneType *string `json:"SceneType,omitempty"`
 
 	// 短边长度。 :::tip
 	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
@@ -10824,14 +11041,17 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 
 type ListVhostTransCodePresetResResultCustomizePresetListItem struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成
+	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间
-	Vhost           string                                                                   `json:"Vhost"`
+	// REQUIRED; 域名空间。
+	Vhost string `json:"Vhost"`
+
+	// 转码配置具体信息。
 	TranscodePreset *ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset `json:"TranscodePreset,omitempty"`
 }
 
+// ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset - 转码配置具体信息。
 type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset struct {
 
 	// 音频编码格式。包括以下 3 种类型。
@@ -10846,27 +11066,53 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
-	AudioBitrate        *int32 `json:"AudioBitrate,omitempty"`
+	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
+
+	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
 	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
-	AutoTransVb         *int32 `json:"AutoTransVb,omitempty"`
-	AutoTransVr         *int32 `json:"AutoTransVr,omitempty"`
+
+	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
+
+	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
+	// * 0：关闭
+	// * 1：开启
+	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
 
 	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 帧率，单位为 fps。帧率越大，画面越流畅
+	// 动态范围，画质增强类型生效
+	// * SDR：输出为SDR
+	// * HDR：输出为HDR
+	DynamicRange *string `json:"DynamicRange,omitempty"`
+
+	// 是否开启智能插帧，只对画质增强类型生效
+	// * 0：不开启
+	// * 1：开启
+	FISwitch *string `json:"FISwitch,omitempty"`
+
+	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为 s
+	// IDR 帧之间的最大间隔，单位为 s。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频高度。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 长边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 模板名称
+	// 转码模板参数的类型
+	// * va：表示使用画质增强
+	ParamType *string `json:"ParamType,omitempty"`
+
+	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
 	// 是否极智超清转码。
@@ -10874,24 +11120,34 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
 
+	// 使用场景，画质增强时生效 football：足球场景
+	SceneType *string `json:"SceneType,omitempty"`
+
 	// 短边长度。 :::tip 当As的取值为 1 时，如果LongSide和ShortSide都取 0，表示保持源流尺寸。 :::
-	ShortSide    *int32 `json:"ShortSide,omitempty"`
+	ShortSide *int32 `json:"ShortSide,omitempty"`
+
+	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为 s，取值范围为 [0,300]，-1 表示不停止转码，默认值为 60。
 	StopInterval *int32 `json:"StopInterval,omitempty"`
 
-	// 转码流后缀名
+	// 转码流后缀名。
 	SuffixName *string `json:"SuffixName,omitempty"`
-	TransType  *string `json:"TransType,omitempty"`
+
+	// 转码触发方式，默认为拉流转码，支持以下取值。
+	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
+	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
+	TransType *string `json:"TransType,omitempty"`
 
 	// 视频编码格式。
 	// * h264：使用 H.264 编码格式；
 	// * h265：使用 H.265 编码格式；
+	// * h266：使用 H.266 编码格式；
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 视频码率，单位为 kbps
+	// 视频码率，单位为 kbps。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。 :::tip 当As的取值为 0 时，如果Width和Height任意取值为 0，表示保持源流尺寸。 :::
+	// 视频宽度。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -11202,16 +11458,17 @@ type RestartPullToPushTaskResResponseMetadataError struct {
 
 type ResumeStreamBody struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 直播流使用的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 直播流使用的流名称。
 	Stream string `json:"Stream"`
 
-	// 推流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 直播流使用的域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间。您可以调用 DescribeForbiddenStreamInfoByPage [https://www.volcengine.com/docs/6469/1126843] 接口，查看禁推直播流的信息，包括 Vhost、Domain、App
+	// 和 Stream。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -12240,14 +12497,14 @@ type UpdateRefererResResponseMetadataError struct {
 
 type UpdateRelaySourceV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
-	App string `json:"App"`
-
 	// REQUIRED; 回源组配置详情。
 	GroupDetails []UpdateRelaySourceV3BodyGroupDetailsItem `json:"GroupDetails"`
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
+
+	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示为当前域名空间的全局播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App *string `json:"App,omitempty"`
 }
 
 type UpdateRelaySourceV3BodyGroupDetailsItem struct {
@@ -12261,7 +12518,9 @@ type UpdateRelaySourceV3BodyGroupDetailsItem struct {
 
 type UpdateRelaySourceV3BodyGroupDetailsPropertiesItemsItem struct {
 
-	// REQUIRED; 回源地址。
+	// REQUIRED; 直播源服务器的地址，支持填写回源服务的域名或 IP 地址。 :::tip
+	// * 当源站使用了非默认端口时，支持在回源地址中以域名:端口或IP:端口的形式配置端口。
+	// * 最多支持添加 10 个回源地址，回源失败时，将按照您添加的地址顺序轮循尝试。 :::
 	RelaySourceDomain string `json:"RelaySourceDomain"`
 
 	// REQUIRED; 回源协议，支持两种回源协议。
@@ -12309,16 +12568,19 @@ type UpdateRelaySourceV3ResResponseMetadataError struct {
 
 type UpdateRelaySourceV4Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，即直播流地址的AppName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播地址。
+	// REQUIRED; 回源地址列表，支持 RTMP、FLV、HLS 和 SRT 回源协议。
+	// :::tip
+	// * 当源站使用了非默认端口时，支持在回源地址中以域名:端口或IP:端口的形式配置端口。
+	// * 最多支持添加 10 个回源地址，回源失败时，将按照您添加的地址顺序轮循尝试。 :::
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 流名称，即直播流地址的StreamName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、字母、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
 	// 结束时间，Unix 时间戳，单位为秒。 :::tip
@@ -12902,6 +13164,16 @@ type UpdateTranscodePresetBody struct {
 	// 取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
+	// 动态范围，画质增强类型生效
+	// * SDR：输出为SDR
+	// * HDR：输出为HDR
+	DynamicRange *string `json:"DynamicRange,omitempty"`
+
+	// 是否开启智能插帧，只对画质增强类型生效
+	// * 0：不开启
+	// * 1：开启
+	FISwitch *int32 `json:"FISwitch,omitempty"`
+
 	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
 	// * H.264：取值范围为 [0,60]；
 	// * H.265：取值范围为 [0,60]；
@@ -12933,6 +13205,10 @@ type UpdateTranscodePresetBody struct {
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
+	// 转码模板参数的类型
+	// * hvq：表示使用画质增强
+	ParamType *string `json:"ParamType,omitempty"`
+
 	// 是否极智超清转码，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。 :::tip
@@ -12940,7 +13216,15 @@ type UpdateTranscodePresetBody struct {
 	// * 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
+	// 使用场景，画质增强时生效
+	// football：足球场景
+	SceneType *string `json:"SceneType,omitempty"`
+
 	// 短边长度，配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
+	// * ParamType取 hvq 时： * H.264：取值范围为 0 和 [150,1280]；
+	// * H.265：取值范围为 0 和 [150,1280]；
+	//
+	//
 	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
 	// * H.265：取值范围为 0 和 [150,4096]；
 	// * H.266：取值范围为 0 和 [150,720]。
@@ -13142,522 +13426,266 @@ type VerifyDomainOwnerResResult struct {
 	// REQUIRED; 检查结果
 	CheckResult bool `json:"CheckResult"`
 }
-type BindCert struct {
-}
-type BindCertQuery struct {
-}
-type CreateCert struct {
-}
-type CreateCertQuery struct {
-}
-type CreateDomain struct {
-}
-type CreateDomainQuery struct {
-}
-type CreateDomainV2 struct {
-}
-type CreateDomainV2Query struct {
-}
-type CreatePullCDNSnapshotTask struct {
-}
-type CreatePullCDNSnapshotTaskQuery struct {
-}
-type CreatePullRecordTask struct {
-}
-type CreatePullRecordTaskQuery struct {
-}
-type CreatePullToPushTask struct {
-}
-type CreatePullToPushTaskQuery struct {
-}
-type CreateRecordPresetV2 struct {
-}
-type CreateRecordPresetV2Query struct {
-}
-type CreateRelaySourceV4 struct {
-}
-type CreateRelaySourceV4Query struct {
-}
-type CreateSnapshotAuditPreset struct {
-}
-type CreateSnapshotAuditPresetQuery struct {
-}
-type CreateSnapshotPreset struct {
-}
-type CreateSnapshotPresetQuery struct {
-}
-type CreateSnapshotPresetV2 struct {
-}
-type CreateSnapshotPresetV2Query struct {
-}
-type CreateTimeShiftPresetV3 struct {
-}
-type CreateTimeShiftPresetV3Query struct {
-}
-type CreateTranscodePreset struct {
-}
-type CreateTranscodePresetQuery struct {
-}
-type CreateVerifyContent struct {
-}
-type CreateVerifyContentQuery struct {
-}
-type CreateWatermarkPreset struct {
-}
-type CreateWatermarkPresetQuery struct {
-}
-type DeleteCallback struct {
-}
-type DeleteCallbackQuery struct {
-}
-type DeleteCert struct {
-}
-type DeleteCertQuery struct {
-}
-type DeleteDomain struct {
-}
-type DeleteDomainQuery struct {
-}
-type DeleteIPAccessRule struct {
-}
-type DeleteIPAccessRuleQuery struct {
-}
-type DeletePullToPushTask struct {
-}
-type DeletePullToPushTaskQuery struct {
-}
-type DeleteRecordPreset struct {
-}
-type DeleteRecordPresetQuery struct {
-}
-type DeleteReferer struct {
-}
-type DeleteRefererQuery struct {
-}
-type DeleteRelaySourceV3 struct {
-}
-type DeleteRelaySourceV3Query struct {
-}
-type DeleteRelaySourceV4 struct {
-}
-type DeleteRelaySourceV4Query struct {
-}
-type DeleteSnapshotAuditPreset struct {
-}
-type DeleteSnapshotAuditPresetQuery struct {
-}
-type DeleteSnapshotPreset struct {
-}
-type DeleteSnapshotPresetQuery struct {
-}
-type DeleteStreamQuotaConfig struct {
-}
-type DeleteStreamQuotaConfigQuery struct {
-}
-type DeleteTimeShiftPresetV3 struct {
-}
-type DeleteTimeShiftPresetV3Query struct {
-}
-type DeleteTranscodePreset struct {
-}
-type DeleteTranscodePresetQuery struct {
-}
-type DeleteWatermarkPreset struct {
-}
-type DeleteWatermarkPresetQuery struct {
-}
-type DescribeAuth struct {
-}
-type DescribeAuthQuery struct {
-}
-type DescribeCDNSnapshotHistory struct {
-}
-type DescribeCDNSnapshotHistoryQuery struct {
-}
-type DescribeCallback struct {
-}
-type DescribeCallbackQuery struct {
-}
-type DescribeCertDetailSecretV2 struct {
-}
-type DescribeCertDetailSecretV2Query struct {
-}
-type DescribeClosedStreamInfoByPage struct {
-}
-type DescribeClosedStreamInfoByPageBody struct {
-}
-type DescribeDenyConfig struct {
-}
-type DescribeDenyConfigQuery struct {
-}
-type DescribeDomain struct {
-}
-type DescribeDomainQuery struct {
-}
-type DescribeForbiddenStreamInfoByPage struct {
-}
-type DescribeForbiddenStreamInfoByPageBody struct {
-}
-type DescribeIPAccessRule struct {
-}
-type DescribeIPAccessRuleQuery struct {
-}
-type DescribeIPInfo struct {
-}
-type DescribeIPInfoQuery struct {
-}
-type DescribeLiveActivityBandwidthData struct {
-}
-type DescribeLiveActivityBandwidthDataQuery struct {
-}
-type DescribeLiveAuditData struct {
-}
-type DescribeLiveAuditDataQuery struct {
-}
-type DescribeLiveBandwidthData struct {
-}
-type DescribeLiveBandwidthDataQuery struct {
-}
-type DescribeLiveBatchPushStreamAvgMetrics struct {
-}
-type DescribeLiveBatchPushStreamAvgMetricsQuery struct {
-}
-type DescribeLiveBatchPushStreamMetrics struct {
-}
-type DescribeLiveBatchPushStreamMetricsQuery struct {
-}
-type DescribeLiveBatchSourceStreamAvgMetrics struct {
-}
-type DescribeLiveBatchSourceStreamAvgMetricsQuery struct {
-}
-type DescribeLiveBatchSourceStreamMetrics struct {
-}
-type DescribeLiveBatchSourceStreamMetricsQuery struct {
-}
-type DescribeLiveBatchStreamTrafficData struct {
-}
-type DescribeLiveBatchStreamTrafficDataQuery struct {
-}
-type DescribeLiveBatchStreamTranscodeData struct {
-}
-type DescribeLiveBatchStreamTranscodeDataQuery struct {
-}
-type DescribeLiveCustomizedLogData struct {
-}
-type DescribeLiveCustomizedLogDataQuery struct {
-}
-type DescribeLiveISPData struct {
-}
-type DescribeLiveISPDataBody struct {
-}
-type DescribeLiveISPDataQuery struct {
-}
-type DescribeLiveLogData struct {
-}
-type DescribeLiveLogDataQuery struct {
-}
-type DescribeLiveMetricBandwidthData struct {
-}
-type DescribeLiveMetricBandwidthDataQuery struct {
-}
-type DescribeLiveMetricTrafficData struct {
-}
-type DescribeLiveMetricTrafficDataQuery struct {
-}
-type DescribeLiveP95PeakBandwidthData struct {
-}
-type DescribeLiveP95PeakBandwidthDataQuery struct {
-}
-type DescribeLivePlayStatusCodeData struct {
-}
-type DescribeLivePlayStatusCodeDataQuery struct {
-}
-type DescribeLivePullToPushBandwidthData struct {
-}
-type DescribeLivePullToPushBandwidthDataQuery struct {
-}
-type DescribeLivePullToPushData struct {
-}
-type DescribeLivePullToPushDataQuery struct {
-}
-type DescribeLivePushStreamCountData struct {
-}
-type DescribeLivePushStreamCountDataQuery struct {
-}
-type DescribeLivePushStreamMetrics struct {
-}
-type DescribeLivePushStreamMetricsQuery struct {
-}
-type DescribeLiveRecordData struct {
-}
-type DescribeLiveRecordDataQuery struct {
-}
-type DescribeLiveRegionData struct {
-}
-type DescribeLiveRegionDataBody struct {
-}
-type DescribeLiveRegionDataQuery struct {
-}
-type DescribeLiveSnapshotData struct {
-}
-type DescribeLiveSnapshotDataQuery struct {
-}
-type DescribeLiveSourceBandwidthData struct {
-}
-type DescribeLiveSourceBandwidthDataQuery struct {
-}
-type DescribeLiveSourceStreamMetrics struct {
-}
-type DescribeLiveSourceStreamMetricsQuery struct {
-}
-type DescribeLiveSourceTrafficData struct {
-}
-type DescribeLiveSourceTrafficDataQuery struct {
-}
-type DescribeLiveStreamCountData struct {
-}
-type DescribeLiveStreamCountDataQuery struct {
-}
-type DescribeLiveStreamInfoByPage struct {
-}
-type DescribeLiveStreamInfoByPageBody struct {
-}
-type DescribeLiveStreamSessionData struct {
-}
-type DescribeLiveStreamSessionDataQuery struct {
-}
-type DescribeLiveStreamState struct {
-}
-type DescribeLiveStreamStateBody struct {
-}
-type DescribeLiveStreamUsageData struct {
-}
-type DescribeLiveStreamUsageDataQuery struct {
-}
-type DescribeLiveTimeShiftData struct {
-}
-type DescribeLiveTimeShiftDataQuery struct {
-}
-type DescribeLiveTrafficData struct {
-}
-type DescribeLiveTrafficDataQuery struct {
-}
-type DescribeLiveTranscodeData struct {
-}
-type DescribeLiveTranscodeDataQuery struct {
-}
-type DescribeRecordTaskFileHistory struct {
-}
-type DescribeRecordTaskFileHistoryQuery struct {
-}
-type DescribeReferer struct {
-}
-type DescribeRefererQuery struct {
-}
-type DescribeRelaySourceV3 struct {
-}
-type DescribeRelaySourceV3Query struct {
-}
-type DescribeSnapshotAuditPresetDetail struct {
-}
-type DescribeSnapshotAuditPresetDetailQuery struct {
-}
-type DescribeStreamQuotaConfig struct {
-}
-type DescribeStreamQuotaConfigQuery struct {
-}
-type DisableDomain struct {
-}
-type DisableDomainQuery struct {
-}
-type EnableDomain struct {
-}
-type EnableDomainQuery struct {
-}
-type ForbidStream struct {
-}
-type ForbidStreamQuery struct {
-}
-type GeneratePlayURL struct {
-}
-type GeneratePlayURLQuery struct {
-}
-type GeneratePushURL struct {
-}
-type GeneratePushURLQuery struct {
-}
-type GetPullCDNSnapshotTask struct {
-}
-type GetPullCDNSnapshotTaskQuery struct {
-}
-type GetPullRecordTask struct {
-}
-type GetPullRecordTaskQuery struct {
-}
-type KillStream struct {
-}
-type KillStreamQuery struct {
-}
-type ListCertV2 struct {
-}
-type ListCertV2Query struct {
-}
-type ListCommonTransPresetDetail struct {
-}
-type ListCommonTransPresetDetailQuery struct {
-}
-type ListDomainDetail struct {
-}
-type ListDomainDetailQuery struct {
-}
-type ListPullCDNSnapshotTask struct {
-}
-type ListPullCDNSnapshotTaskQuery struct {
-}
-type ListPullRecordTask struct {
-}
-type ListPullRecordTaskQuery struct {
-}
-type ListPullToPushTask struct {
-}
-type ListPullToPushTaskBody struct {
-}
-type ListRelaySourceV4 struct {
-}
-type ListRelaySourceV4Query struct {
-}
-type ListTimeShiftPresetV2 struct {
-}
-type ListTimeShiftPresetV2Query struct {
-}
-type ListVhostRecordPresetV2 struct {
-}
-type ListVhostRecordPresetV2Query struct {
-}
-type ListVhostSnapshotAuditPreset struct {
-}
-type ListVhostSnapshotAuditPresetQuery struct {
-}
-type ListVhostSnapshotPreset struct {
-}
-type ListVhostSnapshotPresetQuery struct {
-}
-type ListVhostSnapshotPresetV2 struct {
-}
-type ListVhostSnapshotPresetV2Query struct {
-}
-type ListVhostTransCodePreset struct {
-}
-type ListVhostTransCodePresetQuery struct {
-}
-type ListVhostWatermarkPreset struct {
-}
-type ListVhostWatermarkPresetQuery struct {
-}
-type ListVqosMetricsDimensions struct {
-}
-type ListVqosMetricsDimensionsBody struct {
-}
-type ListWatermarkPreset struct {
-}
-type ListWatermarkPresetQuery struct {
-}
-type RestartPullToPushTask struct {
-}
-type RestartPullToPushTaskQuery struct {
-}
-type ResumeStream struct {
-}
-type ResumeStreamQuery struct {
-}
-type StopPullCDNSnapshotTask struct {
-}
-type StopPullCDNSnapshotTaskQuery struct {
-}
-type StopPullRecordTask struct {
-}
-type StopPullRecordTaskQuery struct {
-}
-type StopPullToPushTask struct {
-}
-type StopPullToPushTaskQuery struct {
-}
-type UnbindCert struct {
-}
-type UnbindCertQuery struct {
-}
-type UpdateAuthKey struct {
-}
-type UpdateAuthKeyQuery struct {
-}
-type UpdateCallback struct {
-}
-type UpdateCallbackQuery struct {
-}
-type UpdateDenyConfig struct {
-}
-type UpdateDenyConfigQuery struct {
-}
-type UpdateDomainVhost struct {
-}
-type UpdateDomainVhostQuery struct {
-}
-type UpdateIPAccessRule struct {
-}
-type UpdateIPAccessRuleQuery struct {
-}
-type UpdatePullToPushTask struct {
-}
-type UpdatePullToPushTaskQuery struct {
-}
-type UpdateRecordPresetV2 struct {
-}
-type UpdateRecordPresetV2Query struct {
-}
-type UpdateReferer struct {
-}
-type UpdateRefererQuery struct {
-}
-type UpdateRelaySourceV3 struct {
-}
-type UpdateRelaySourceV3Query struct {
-}
-type UpdateRelaySourceV4 struct {
-}
-type UpdateRelaySourceV4Query struct {
-}
-type UpdateSnapshotAuditPreset struct {
-}
-type UpdateSnapshotAuditPresetQuery struct {
-}
-type UpdateSnapshotPreset struct {
-}
-type UpdateSnapshotPresetQuery struct {
-}
-type UpdateSnapshotPresetV2 struct {
-}
-type UpdateSnapshotPresetV2Query struct {
-}
-type UpdateStreamQuotaConfig struct {
-}
-type UpdateStreamQuotaConfigQuery struct {
-}
-type UpdateTimeShiftPresetV3 struct {
-}
-type UpdateTimeShiftPresetV3Query struct {
-}
-type UpdateTranscodePreset struct {
-}
-type UpdateTranscodePresetQuery struct {
-}
-type UpdateWatermarkPreset struct {
-}
-type UpdateWatermarkPresetQuery struct {
-}
-type VerifyDomainOwner struct {
-}
-type VerifyDomainOwnerQuery struct {
-}
+type BindCert struct{}
+type BindCertQuery struct{}
+type CreateCert struct{}
+type CreateCertQuery struct{}
+type CreateDomain struct{}
+type CreateDomainQuery struct{}
+type CreateDomainV2 struct{}
+type CreateDomainV2Query struct{}
+type CreateLiveStreamRecordIndexFiles struct{}
+type CreateLiveStreamRecordIndexFilesQuery struct{}
+type CreatePullCDNSnapshotTask struct{}
+type CreatePullCDNSnapshotTaskQuery struct{}
+type CreatePullRecordTask struct{}
+type CreatePullRecordTaskQuery struct{}
+type CreatePullToPushTask struct{}
+type CreatePullToPushTaskQuery struct{}
+type CreateRecordPresetV2 struct{}
+type CreateRecordPresetV2Query struct{}
+type CreateRelaySourceV4 struct{}
+type CreateRelaySourceV4Query struct{}
+type CreateSnapshotAuditPreset struct{}
+type CreateSnapshotAuditPresetQuery struct{}
+type CreateSnapshotPreset struct{}
+type CreateSnapshotPresetQuery struct{}
+type CreateSnapshotPresetV2 struct{}
+type CreateSnapshotPresetV2Query struct{}
+type CreateTimeShiftPresetV3 struct{}
+type CreateTimeShiftPresetV3Query struct{}
+type CreateTranscodePreset struct{}
+type CreateTranscodePresetQuery struct{}
+type CreateVerifyContent struct{}
+type CreateVerifyContentQuery struct{}
+type CreateWatermarkPreset struct{}
+type CreateWatermarkPresetQuery struct{}
+type DeleteCallback struct{}
+type DeleteCallbackQuery struct{}
+type DeleteCert struct{}
+type DeleteCertQuery struct{}
+type DeleteDomain struct{}
+type DeleteDomainQuery struct{}
+type DeleteIPAccessRule struct{}
+type DeleteIPAccessRuleQuery struct{}
+type DeletePullToPushTask struct{}
+type DeletePullToPushTaskQuery struct{}
+type DeleteRecordPreset struct{}
+type DeleteRecordPresetQuery struct{}
+type DeleteReferer struct{}
+type DeleteRefererQuery struct{}
+type DeleteRelaySourceV3 struct{}
+type DeleteRelaySourceV3Query struct{}
+type DeleteRelaySourceV4 struct{}
+type DeleteRelaySourceV4Query struct{}
+type DeleteSnapshotAuditPreset struct{}
+type DeleteSnapshotAuditPresetQuery struct{}
+type DeleteSnapshotPreset struct{}
+type DeleteSnapshotPresetQuery struct{}
+type DeleteStreamQuotaConfig struct{}
+type DeleteStreamQuotaConfigQuery struct{}
+type DeleteTimeShiftPresetV3 struct{}
+type DeleteTimeShiftPresetV3Query struct{}
+type DeleteTranscodePreset struct{}
+type DeleteTranscodePresetQuery struct{}
+type DeleteWatermarkPreset struct{}
+type DeleteWatermarkPresetQuery struct{}
+type DescribeAuth struct{}
+type DescribeAuthQuery struct{}
+type DescribeCDNSnapshotHistory struct{}
+type DescribeCDNSnapshotHistoryQuery struct{}
+type DescribeCallback struct{}
+type DescribeCallbackQuery struct{}
+type DescribeCertDetailSecretV2 struct{}
+type DescribeCertDetailSecretV2Query struct{}
+type DescribeClosedStreamInfoByPage struct{}
+type DescribeClosedStreamInfoByPageBody struct{}
+type DescribeDenyConfig struct{}
+type DescribeDenyConfigQuery struct{}
+type DescribeDomain struct{}
+type DescribeDomainQuery struct{}
+type DescribeForbiddenStreamInfoByPage struct{}
+type DescribeForbiddenStreamInfoByPageBody struct{}
+type DescribeIPAccessRule struct{}
+type DescribeIPAccessRuleQuery struct{}
+type DescribeIPInfo struct{}
+type DescribeIPInfoQuery struct{}
+type DescribeLiveActivityBandwidthData struct{}
+type DescribeLiveActivityBandwidthDataQuery struct{}
+type DescribeLiveAuditData struct{}
+type DescribeLiveAuditDataQuery struct{}
+type DescribeLiveBandwidthData struct{}
+type DescribeLiveBandwidthDataQuery struct{}
+type DescribeLiveBatchPushStreamAvgMetrics struct{}
+type DescribeLiveBatchPushStreamAvgMetricsQuery struct{}
+type DescribeLiveBatchPushStreamMetrics struct{}
+type DescribeLiveBatchPushStreamMetricsQuery struct{}
+type DescribeLiveBatchSourceStreamAvgMetrics struct{}
+type DescribeLiveBatchSourceStreamAvgMetricsQuery struct{}
+type DescribeLiveBatchSourceStreamMetrics struct{}
+type DescribeLiveBatchSourceStreamMetricsQuery struct{}
+type DescribeLiveBatchStreamTrafficData struct{}
+type DescribeLiveBatchStreamTrafficDataQuery struct{}
+type DescribeLiveBatchStreamTranscodeData struct{}
+type DescribeLiveBatchStreamTranscodeDataQuery struct{}
+type DescribeLiveCustomizedLogData struct{}
+type DescribeLiveCustomizedLogDataQuery struct{}
+type DescribeLiveISPData struct{}
+type DescribeLiveISPDataBody struct{}
+type DescribeLiveISPDataQuery struct{}
+type DescribeLiveLogData struct{}
+type DescribeLiveLogDataQuery struct{}
+type DescribeLiveMetricBandwidthData struct{}
+type DescribeLiveMetricBandwidthDataQuery struct{}
+type DescribeLiveMetricTrafficData struct{}
+type DescribeLiveMetricTrafficDataQuery struct{}
+type DescribeLiveP95PeakBandwidthData struct{}
+type DescribeLiveP95PeakBandwidthDataQuery struct{}
+type DescribeLivePlayStatusCodeData struct{}
+type DescribeLivePlayStatusCodeDataQuery struct{}
+type DescribeLivePullToPushBandwidthData struct{}
+type DescribeLivePullToPushBandwidthDataQuery struct{}
+type DescribeLivePullToPushData struct{}
+type DescribeLivePullToPushDataQuery struct{}
+type DescribeLivePushStreamCountData struct{}
+type DescribeLivePushStreamCountDataQuery struct{}
+type DescribeLivePushStreamMetrics struct{}
+type DescribeLivePushStreamMetricsQuery struct{}
+type DescribeLiveRecordData struct{}
+type DescribeLiveRecordDataQuery struct{}
+type DescribeLiveRegionData struct{}
+type DescribeLiveRegionDataBody struct{}
+type DescribeLiveRegionDataQuery struct{}
+type DescribeLiveSnapshotData struct{}
+type DescribeLiveSnapshotDataQuery struct{}
+type DescribeLiveSourceBandwidthData struct{}
+type DescribeLiveSourceBandwidthDataQuery struct{}
+type DescribeLiveSourceStreamMetrics struct{}
+type DescribeLiveSourceStreamMetricsQuery struct{}
+type DescribeLiveSourceTrafficData struct{}
+type DescribeLiveSourceTrafficDataQuery struct{}
+type DescribeLiveStreamCountData struct{}
+type DescribeLiveStreamCountDataQuery struct{}
+type DescribeLiveStreamInfoByPage struct{}
+type DescribeLiveStreamInfoByPageBody struct{}
+type DescribeLiveStreamSessionData struct{}
+type DescribeLiveStreamSessionDataQuery struct{}
+type DescribeLiveStreamState struct{}
+type DescribeLiveStreamStateBody struct{}
+type DescribeLiveStreamUsageData struct{}
+type DescribeLiveStreamUsageDataQuery struct{}
+type DescribeLiveTimeShiftData struct{}
+type DescribeLiveTimeShiftDataQuery struct{}
+type DescribeLiveTrafficData struct{}
+type DescribeLiveTrafficDataQuery struct{}
+type DescribeLiveTranscodeData struct{}
+type DescribeLiveTranscodeDataQuery struct{}
+type DescribeRecordTaskFileHistory struct{}
+type DescribeRecordTaskFileHistoryQuery struct{}
+type DescribeReferer struct{}
+type DescribeRefererQuery struct{}
+type DescribeRelaySourceV3 struct{}
+type DescribeRelaySourceV3Query struct{}
+type DescribeSnapshotAuditPresetDetail struct{}
+type DescribeSnapshotAuditPresetDetailQuery struct{}
+type DescribeStreamQuotaConfig struct{}
+type DescribeStreamQuotaConfigQuery struct{}
+type DisableDomain struct{}
+type DisableDomainQuery struct{}
+type EnableDomain struct{}
+type EnableDomainQuery struct{}
+type ForbidStream struct{}
+type ForbidStreamQuery struct{}
+type GeneratePlayURL struct{}
+type GeneratePlayURLQuery struct{}
+type GeneratePushURL struct{}
+type GeneratePushURLQuery struct{}
+type GetPullCDNSnapshotTask struct{}
+type GetPullCDNSnapshotTaskQuery struct{}
+type GetPullRecordTask struct{}
+type GetPullRecordTaskQuery struct{}
+type KillStream struct{}
+type KillStreamQuery struct{}
+type ListCertV2 struct{}
+type ListCertV2Query struct{}
+type ListCommonTransPresetDetail struct{}
+type ListCommonTransPresetDetailQuery struct{}
+type ListDomainDetail struct{}
+type ListDomainDetailQuery struct{}
+type ListPullCDNSnapshotTask struct{}
+type ListPullCDNSnapshotTaskQuery struct{}
+type ListPullRecordTask struct{}
+type ListPullRecordTaskQuery struct{}
+type ListPullToPushTask struct{}
+type ListPullToPushTaskBody struct{}
+type ListRelaySourceV4 struct{}
+type ListRelaySourceV4Query struct{}
+type ListTimeShiftPresetV2 struct{}
+type ListTimeShiftPresetV2Query struct{}
+type ListVhostRecordPresetV2 struct{}
+type ListVhostRecordPresetV2Query struct{}
+type ListVhostSnapshotAuditPreset struct{}
+type ListVhostSnapshotAuditPresetQuery struct{}
+type ListVhostSnapshotPreset struct{}
+type ListVhostSnapshotPresetQuery struct{}
+type ListVhostSnapshotPresetV2 struct{}
+type ListVhostSnapshotPresetV2Query struct{}
+type ListVhostTransCodePreset struct{}
+type ListVhostTransCodePresetQuery struct{}
+type ListVhostWatermarkPreset struct{}
+type ListVhostWatermarkPresetQuery struct{}
+type ListVqosMetricsDimensions struct{}
+type ListVqosMetricsDimensionsBody struct{}
+type ListWatermarkPreset struct{}
+type ListWatermarkPresetQuery struct{}
+type RestartPullToPushTask struct{}
+type RestartPullToPushTaskQuery struct{}
+type ResumeStream struct{}
+type ResumeStreamQuery struct{}
+type StopPullCDNSnapshotTask struct{}
+type StopPullCDNSnapshotTaskQuery struct{}
+type StopPullRecordTask struct{}
+type StopPullRecordTaskQuery struct{}
+type StopPullToPushTask struct{}
+type StopPullToPushTaskQuery struct{}
+type UnbindCert struct{}
+type UnbindCertQuery struct{}
+type UpdateAuthKey struct{}
+type UpdateAuthKeyQuery struct{}
+type UpdateCallback struct{}
+type UpdateCallbackQuery struct{}
+type UpdateDenyConfig struct{}
+type UpdateDenyConfigQuery struct{}
+type UpdateDomainVhost struct{}
+type UpdateDomainVhostQuery struct{}
+type UpdateIPAccessRule struct{}
+type UpdateIPAccessRuleQuery struct{}
+type UpdatePullToPushTask struct{}
+type UpdatePullToPushTaskQuery struct{}
+type UpdateRecordPresetV2 struct{}
+type UpdateRecordPresetV2Query struct{}
+type UpdateReferer struct{}
+type UpdateRefererQuery struct{}
+type UpdateRelaySourceV3 struct{}
+type UpdateRelaySourceV3Query struct{}
+type UpdateRelaySourceV4 struct{}
+type UpdateRelaySourceV4Query struct{}
+type UpdateSnapshotAuditPreset struct{}
+type UpdateSnapshotAuditPresetQuery struct{}
+type UpdateSnapshotPreset struct{}
+type UpdateSnapshotPresetQuery struct{}
+type UpdateSnapshotPresetV2 struct{}
+type UpdateSnapshotPresetV2Query struct{}
+type UpdateStreamQuotaConfig struct{}
+type UpdateStreamQuotaConfigQuery struct{}
+type UpdateTimeShiftPresetV3 struct{}
+type UpdateTimeShiftPresetV3Query struct{}
+type UpdateTranscodePreset struct{}
+type UpdateTranscodePresetQuery struct{}
+type UpdateWatermarkPreset struct{}
+type UpdateWatermarkPresetQuery struct{}
+type VerifyDomainOwner struct{}
+type VerifyDomainOwnerQuery struct{}
 type BindCertReq struct {
 	*BindCertQuery
 	*BindCertBody
@@ -13673,6 +13701,10 @@ type CreateDomainReq struct {
 type CreateDomainV2Req struct {
 	*CreateDomainV2Query
 	*CreateDomainV2Body
+}
+type CreateLiveStreamRecordIndexFilesReq struct {
+	*CreateLiveStreamRecordIndexFilesQuery
+	*CreateLiveStreamRecordIndexFilesBody
 }
 type CreatePullCDNSnapshotTaskReq struct {
 	*CreatePullCDNSnapshotTaskQuery

@@ -866,6 +866,66 @@ func (c *Imagex) DescribeImageXCDNTopRequestData(ctx context.Context, arg *Descr
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXExceedResolutionRatioAll(ctx context.Context, arg *DescribeImageXExceedResolutionRatioAllBody) (*DescribeImageXExceedResolutionRatioAllRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeImageXExceedResolutionRatioAll", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXExceedResolutionRatioAllRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DescribeImageXExceedFileSize(ctx context.Context, arg *DescribeImageXExceedFileSizeBody) (*DescribeImageXExceedFileSizeRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeImageXExceedFileSize", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXExceedFileSizeRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DescribeImageXExceedCountByTime(ctx context.Context, arg *DescribeImageXExceedCountByTimeBody) (*DescribeImageXExceedCountByTimeRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeImageXExceedCountByTime", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXExceedCountByTimeRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXServiceQuality(ctx context.Context, arg *DescribeImageXServiceQualityQuery) (*DescribeImageXServiceQualityRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2160,6 +2220,31 @@ func (c *Imagex) GetResourceURL(ctx context.Context, arg *GetResourceURLQuery) (
 
 	result := new(GetResourceURLRes)
 	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateImageFromURI(ctx context.Context, arg *CreateImageFromURIReq) (*CreateImageFromURIRes, error) {
+	query, err := marshalToQuery(arg.CreateImageFromURIQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateImageFromURIBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateImageFromUri", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateImageFromURIRes)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
