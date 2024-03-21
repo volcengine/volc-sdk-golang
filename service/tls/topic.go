@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// CreateTopic 创建日志主题
 func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -53,6 +54,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 	return response, nil
 }
 
+// DeleteTopic 删除日志主题
 func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -91,8 +93,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, 
 	return response, nil
 }
 
-// ModifyTopic: 更新日志主题信息
-
+// ModifyTopic 更新日志主题信息
 func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -126,8 +127,7 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, 
 	return response, nil
 }
 
-// DescribeTopic 获取一个日志项目的信息
-
+// DescribeTopic 获取一个日志主题的信息
 func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopicResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -165,8 +165,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopi
 	return response, nil
 }
 
-// DescribeTopics: 获取日志主题列表
-
+// DescribeTopics 获取日志主题列表
 func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTopicsResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -176,8 +175,10 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		"Content-Type": "application/json",
 	}
 
-	params := map[string]string{
-		"ProjectId": request.ProjectID,
+	params := map[string]string{}
+
+	if len(request.ProjectID) != 0 {
+		params["ProjectId"] = request.ProjectID
 	}
 
 	if len(request.TopicName) != 0 {
