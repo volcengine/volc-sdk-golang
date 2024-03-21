@@ -234,9 +234,6 @@ type DescribeTopicsRequest struct {
 }
 
 func (v *DescribeTopicsRequest) CheckValidation() error {
-	if len(v.ProjectID) <= 0 {
-		return errors.New("Invalid argument, empty ProjectID")
-	}
 	return nil
 }
 
@@ -452,11 +449,7 @@ func (v *PutLogsRequest) CheckValidation() error {
 	if v.LogBody == nil {
 		return errors.New("Invalid argument, empty LogBody")
 	}
-	for idx := range v.LogBody.LogGroups {
-		if len(v.LogBody.LogGroups[idx].Logs) > 10000 {
-			return errors.New("Invalid logs count more than 10000 in one single logGroup")
-		}
-	}
+
 	return nil
 }
 

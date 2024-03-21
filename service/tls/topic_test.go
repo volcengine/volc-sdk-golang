@@ -492,6 +492,10 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 			suite.Equal(true, isMatched)
 		}
 	}
+
+	resp, err := suite.cli.DescribeTopics(&DescribeTopicsRequest{})
+	suite.NoError(err)
+	suite.GreaterOrEqual(int(resp.Total), 0)
 }
 
 func (suite *SDKTopicTestSuite) TestDescribeTopicsAbnormally() {
