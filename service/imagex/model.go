@@ -197,6 +197,13 @@ type ImageInfo struct {
 	Duration    int    `json:"Duration"`
 }
 
+type UploadPolicy struct {
+	ContentTypeBlackList []string `json:"ContentTypeBlackList,omitempty"`
+	ContentTypeWhiteList []string `json:"ContentTypeWhiteList,omitempty"`
+	FileSizeUpLimit      string   `json:"FileSizeUpLimit,omitempty"`
+	FileSizeBottomLimit  string   `json:"FileSizeBottomLimit,omitempty"`
+}
+
 // CreateImageContentTask
 type CreateImageContentTaskReq struct {
 	ServiceId string   `query:"ServiceId" json:"-"`
