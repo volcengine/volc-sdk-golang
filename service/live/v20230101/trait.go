@@ -351,6 +351,26 @@ func (c *Live) StopPullRecordTask(ctx context.Context, arg *StopPullRecordTaskBo
 	return result, nil
 }
 
+func (c *Live) CreateLiveStreamRecordIndexFiles(ctx context.Context, arg *CreateLiveStreamRecordIndexFilesBody) (*CreateLiveStreamRecordIndexFilesRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateLiveStreamRecordIndexFiles", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateLiveStreamRecordIndexFilesRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) CreatePullRecordTask(ctx context.Context, arg *CreatePullRecordTaskBody) (*CreatePullRecordTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2027,6 +2047,26 @@ func (c *Live) DescribeLiveBatchPushStreamAvgMetrics(ctx context.Context, arg *D
 	return result, nil
 }
 
+func (c *Live) DescribeLiveBatchStreamTranscodeData(ctx context.Context, arg *DescribeLiveBatchStreamTranscodeDataBody) (*DescribeLiveBatchStreamTranscodeDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTranscodeData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveBatchStreamTranscodeDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLiveStreamCountData(ctx context.Context, arg *DescribeLiveStreamCountDataBody) (*DescribeLiveStreamCountDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2159,26 +2199,6 @@ func (c *Live) DescribeLiveBatchStreamTrafficData(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeLiveBatchStreamTrafficDataRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) DescribeLiveBatchStreamTranscodeData(ctx context.Context, arg *DescribeLiveBatchStreamTranscodeDataBody) (*DescribeLiveBatchStreamTranscodeDataRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTranscodeData", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeLiveBatchStreamTranscodeDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

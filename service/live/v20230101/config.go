@@ -118,6 +118,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"CreateLiveStreamRecordIndexFiles": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateLiveStreamRecordIndexFiles"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"CreatePullRecordTask": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -790,6 +798,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveBatchStreamTranscodeData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveBatchStreamTranscodeData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeLiveStreamCountData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -843,14 +859,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveBatchStreamTrafficData"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"DescribeLiveBatchStreamTranscodeData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeLiveBatchStreamTranscodeData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
