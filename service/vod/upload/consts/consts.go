@@ -13,4 +13,6 @@ const (
 	CategoryDynamicImg = "dynamic_img"
 	CategorySubtitle   = "subtitle"
 	CategoryFont       = "font"
+
+	ResourceSpaceNameTRN = "trn:vod:*:*:space/%s"
 )
