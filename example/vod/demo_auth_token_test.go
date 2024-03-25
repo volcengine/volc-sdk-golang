@@ -3,6 +3,7 @@ package vod
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 	"testing"
 	"time"
 
@@ -101,11 +102,23 @@ func TestVod_GetUploadAuthWithExpiredTime(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetAccessKey("")
 	instance.SetSecretKey("")
-	ret, _ := instance.GetUploadAuth()
+	opts := make([]model.UploadAuthOpt, 0)
+	// 使用 vod.WithUploadKeyPtn("表达式") 来限制上传的FileName路径
+	//     如: "test/*" 表示上传的文件必须包含 "test/" 前缀
+	// opts = append(opts, vod.WithUploadKeyPtn("表达式"))
+
+	// 使用 vod.WithUploadSpaceNames([]string{}) 来限制允许上传的空间
+	// opts = append(opts, vod.WithUploadSpaceNames([]string{}))
+
+	// 使用 vod.WithUploadPolicy()来设置上传策略
+	//opts = append(opts, vod.WithUploadPolicy(&model.UploadPolicy{}))
+
+	// 默认过期时间为1小时
+	ret, _ := instance.GetUploadAuth(opts...)
 	b, _ := json.Marshal(ret)
 	fmt.Println(string(b))
 
-	ret2, _ := instance.GetUploadAuthWithExpiredTime(3 * time.Hour)
+	ret2, _ := instance.GetUploadAuthWithExpiredTime(3*time.Hour, opts...)
 	b2, _ := json.Marshal(ret2)
 	fmt.Println(string(b2))
 }

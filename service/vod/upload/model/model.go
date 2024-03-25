@@ -89,3 +89,18 @@ type VodUploadMediaInnerFuncRequest struct {
 	ClientNetWorkMode string
 	ClientIDCMode     string
 }
+
+type UploadAuthOpt func(option *UploadAuthOption)
+
+type UploadAuthOption struct {
+	KeyPtn       string
+	SpaceNames   []string
+	UploadPolicy *UploadPolicy
+}
+
+type UploadPolicy struct {
+	ContentTypeBlackList []string `json:"ContentTypeBlackList,omitempty"` // 上传文件Content-Type黑名单
+	ContentTypeWhiteList []string `json:"ContentTypeWhiteList,omitempty"` // 上传文件Content-Type白名单，建议不和黑名单同时使用
+	FileSizeUpLimit      string   `json:"FileSizeUpLimit,omitempty"`      // 上传文件大小上限
+	FileSizeBottomLimit  string   `json:"FileSizeBottomLimit,omitempty"`  // 上传文件大小下限
+}

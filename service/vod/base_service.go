@@ -332,17 +332,58 @@ func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInne
 	return commitResp, code, nil
 }
 
-func (p *Vod) GetUploadAuthWithExpiredTime(expiredTime time.Duration) (*base.SecurityToken2, error) {
+func WithUploadKeyPtn(ptn string) model.UploadAuthOpt {
+	return func(o *model.UploadAuthOption) {
+		o.KeyPtn = ptn
+	}
+}
+
+func WithUploadSpaceNames(spaceNames []string) model.UploadAuthOpt {
+	return func(op *model.UploadAuthOption) {
+		op.SpaceNames = spaceNames
+	}
+}
+
+func WithUploadPolicy(policy *model.UploadPolicy) model.UploadAuthOpt {
+	return func(op *model.UploadAuthOption) {
+		op.UploadPolicy = policy
+	}
+}
+
+func (p *Vod) GetUploadAuthWithExpiredTime(expiredTime time.Duration, opt ...model.UploadAuthOpt) (*base.SecurityToken2, error) {
 	inlinePolicy := new(base.Policy)
-	actions := []string{"vod:ApplyUploadInfo", "vod:CommitUploadInfo"}
+	op := &model.UploadAuthOption{}
+	for _, o := range opt {
+		o(op)
+	}
+
+	spaceRes := make([]string, 0)
+	if len(op.SpaceNames) != 0 {
+		for _, space := range op.SpaceNames {
+			spaceRes = append(spaceRes, fmt.Sprintf(consts.ResourceSpaceNameTRN, space))
+		}
+	}
+
 	resources := make([]string, 0)
-	statement := base.NewAllowStatement(actions, resources)
-	inlinePolicy.Statement = append(inlinePolicy.Statement, statement)
+	inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{"vod:ApplyUploadInfo"}, spaceRes))
+	inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{"vod:CommitUploadInfo"}, resources))
+
+	if op.KeyPtn != "" {
+		inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{"FileNamePtn"}, []string{op.KeyPtn}))
+	}
+
+	if op.UploadPolicy != nil {
+		policyStr, err := json.Marshal(op.UploadPolicy)
+		if err != nil {
+			return nil, err
+		}
+		inlinePolicy.Statement = append(inlinePolicy.Statement, base.NewAllowStatement([]string{"UploadPolicy"}, []string{string(policyStr)}))
+	}
 	return p.SignSts2(inlinePolicy, expiredTime)
 }
 
-func (p *Vod) GetUploadAuth() (*base.SecurityToken2, error) {
-	return p.GetUploadAuthWithExpiredTime(time.Hour)
+func (p *Vod) GetUploadAuth(opt ...model.UploadAuthOpt) (*base.SecurityToken2, error) {
+	return p.GetUploadAuthWithExpiredTime(time.Hour, opt...)
 }
 
 func (p *Vod) fillCommitUploadInfoResponseWhenError(logId, errMsg string) *response.VodCommitUploadInfoResponse {
@@ -761,4 +802,30 @@ func (p *Vod) InitUploadPart(tosHost string, oid string, auth string, client *ht
 		return "", errors.New(res.Error.Message)
 	}
 	return res.PayLoad.UploadID, nil
+}
+
+func (p *Vod) MoveObjectCrossSpace(req *request.VodSubmitMoveObjectTaskRequest, cycleNum int) (*response.VodQueryMoveObjectTaskInfoResponse, int, error) {
+	submitResp, submitStatus, err := p.SubmitMoveObjectTask(req)
+	if err != nil || submitStatus != http.StatusOK {
+		return &response.VodQueryMoveObjectTaskInfoResponse{ResponseMetadata: submitResp.GetResponseMetadata()}, submitStatus, err
+	}
+
+	if cycleNum == 0 {
+		cycleNum = 600
+	}
+	for i := 0; i < cycleNum; i++ {
+		queryResp, queryStatus, err := p.QueryMoveObjectTaskInfo(&request.VodQueryMoveObjectTaskInfoRequest{
+			TaskId:      submitResp.GetResult().GetData().GetTaskId(),
+			SourceSpace: req.SourceSpace,
+			TargetSpace: req.TargetSpace,
+		})
+		if err != nil || queryStatus != http.StatusOK {
+			return queryResp, queryStatus, err
+		}
+		if queryResp.GetResult().GetData().GetState() == "success" || queryResp.GetResult().GetData().GetState() == "failed" {
+			return queryResp, queryStatus, err
+		}
+		time.Sleep(time.Second)
+	}
+	return nil, http.StatusGatewayTimeout, errors.New(fmt.Sprintf("task run time out, requestId is %s , please retry or contact volc assistant", submitResp.GetResponseMetadata().GetRequestId()))
 }

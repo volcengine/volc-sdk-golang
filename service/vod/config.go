@@ -112,6 +112,26 @@ var (
 		},
 
 		// **********************************************************************
+		// 文件上传
+		// **********************************************************************
+		"SubmitMoveObjectTask": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitMoveObjectTask"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"QueryMoveObjectTaskInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryMoveObjectTaskInfo"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+
+		// **********************************************************************
 		// 上传
 		// **********************************************************************
 		"UploadMediaByUrl": {
@@ -207,12 +227,21 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+
 		"DeleteTranscodes": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteTranscodes"},
 				"Version": []string{"2020-08-01"},
+			},
+		},
+		"DeleteMediaTosFile": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteMediaTosFile"},
+				"Version": []string{"2022-12-01"},
 			},
 		},
 		"GetMediaList": {

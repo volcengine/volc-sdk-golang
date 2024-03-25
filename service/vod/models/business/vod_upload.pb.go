@@ -2327,6 +2327,392 @@ func (x *ApplyResponse) GetSDKParam() string {
 	return ""
 }
 
+type SubmitMoveObjectTaskParam struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SourceSpace      string `protobuf:"bytes,1,opt,name=SourceSpace,proto3" json:"SourceSpace,omitempty"`
+	SourceFileName   string `protobuf:"bytes,2,opt,name=SourceFileName,proto3" json:"SourceFileName,omitempty"`
+	TargetSpace      string `protobuf:"bytes,3,opt,name=TargetSpace,proto3" json:"TargetSpace,omitempty"`
+	TargetFileName   string `protobuf:"bytes,4,opt,name=TargetFileName,proto3" json:"TargetFileName,omitempty"`
+	SaveSourceObject bool   `protobuf:"varint,5,opt,name=SaveSourceObject,proto3" json:"SaveSourceObject,omitempty"`
+	ForceOverwrite   bool   `protobuf:"varint,6,opt,name=ForceOverwrite,proto3" json:"ForceOverwrite,omitempty"`
+}
+
+func (x *SubmitMoveObjectTaskParam) Reset() {
+	*x = SubmitMoveObjectTaskParam{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[29]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SubmitMoveObjectTaskParam) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitMoveObjectTaskParam) ProtoMessage() {}
+
+func (x *SubmitMoveObjectTaskParam) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[29]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitMoveObjectTaskParam.ProtoReflect.Descriptor instead.
+func (*SubmitMoveObjectTaskParam) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *SubmitMoveObjectTaskParam) GetSourceSpace() string {
+	if x != nil {
+		return x.SourceSpace
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskParam) GetSourceFileName() string {
+	if x != nil {
+		return x.SourceFileName
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskParam) GetTargetSpace() string {
+	if x != nil {
+		return x.TargetSpace
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskParam) GetTargetFileName() string {
+	if x != nil {
+		return x.TargetFileName
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskParam) GetSaveSourceObject() bool {
+	if x != nil {
+		return x.SaveSourceObject
+	}
+	return false
+}
+
+func (x *SubmitMoveObjectTaskParam) GetForceOverwrite() bool {
+	if x != nil {
+		return x.ForceOverwrite
+	}
+	return false
+}
+
+type VodSubmitMoveObjectTaskRespData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data *SubmitMoveObjectTaskRespData `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
+}
+
+func (x *VodSubmitMoveObjectTaskRespData) Reset() {
+	*x = VodSubmitMoveObjectTaskRespData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodSubmitMoveObjectTaskRespData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodSubmitMoveObjectTaskRespData) ProtoMessage() {}
+
+func (x *VodSubmitMoveObjectTaskRespData) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodSubmitMoveObjectTaskRespData.ProtoReflect.Descriptor instead.
+func (*VodSubmitMoveObjectTaskRespData) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *VodSubmitMoveObjectTaskRespData) GetData() *SubmitMoveObjectTaskRespData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type SubmitMoveObjectTaskRespData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TaskId      string `protobuf:"bytes,1,opt,name=TaskId,proto3" json:"TaskId,omitempty"`
+	SourceSpace string `protobuf:"bytes,2,opt,name=SourceSpace,proto3" json:"SourceSpace,omitempty"`
+	TargetSpace string `protobuf:"bytes,3,opt,name=TargetSpace,proto3" json:"TargetSpace,omitempty"`
+}
+
+func (x *SubmitMoveObjectTaskRespData) Reset() {
+	*x = SubmitMoveObjectTaskRespData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[31]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SubmitMoveObjectTaskRespData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubmitMoveObjectTaskRespData) ProtoMessage() {}
+
+func (x *SubmitMoveObjectTaskRespData) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[31]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubmitMoveObjectTaskRespData.ProtoReflect.Descriptor instead.
+func (*SubmitMoveObjectTaskRespData) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *SubmitMoveObjectTaskRespData) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskRespData) GetSourceSpace() string {
+	if x != nil {
+		return x.SourceSpace
+	}
+	return ""
+}
+
+func (x *SubmitMoveObjectTaskRespData) GetTargetSpace() string {
+	if x != nil {
+		return x.TargetSpace
+	}
+	return ""
+}
+
+type QueryMoveObjectTaskInfoParam struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TaskId      string `protobuf:"bytes,1,opt,name=TaskId,proto3" json:"TaskId,omitempty"`
+	SourceSpace string `protobuf:"bytes,2,opt,name=SourceSpace,proto3" json:"SourceSpace,omitempty"`
+	TargetSpace string `protobuf:"bytes,3,opt,name=TargetSpace,proto3" json:"TargetSpace,omitempty"`
+}
+
+func (x *QueryMoveObjectTaskInfoParam) Reset() {
+	*x = QueryMoveObjectTaskInfoParam{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[32]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryMoveObjectTaskInfoParam) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryMoveObjectTaskInfoParam) ProtoMessage() {}
+
+func (x *QueryMoveObjectTaskInfoParam) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[32]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryMoveObjectTaskInfoParam.ProtoReflect.Descriptor instead.
+func (*QueryMoveObjectTaskInfoParam) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *QueryMoveObjectTaskInfoParam) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoParam) GetSourceSpace() string {
+	if x != nil {
+		return x.SourceSpace
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoParam) GetTargetSpace() string {
+	if x != nil {
+		return x.TargetSpace
+	}
+	return ""
+}
+
+type VodQueryMoveObjectTaskInfoResData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Data *QueryMoveObjectTaskInfoRespData `protobuf:"bytes,1,opt,name=Data,proto3" json:"Data,omitempty"`
+}
+
+func (x *VodQueryMoveObjectTaskInfoResData) Reset() {
+	*x = VodQueryMoveObjectTaskInfoResData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodQueryMoveObjectTaskInfoResData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodQueryMoveObjectTaskInfoResData) ProtoMessage() {}
+
+func (x *VodQueryMoveObjectTaskInfoResData) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodQueryMoveObjectTaskInfoResData.ProtoReflect.Descriptor instead.
+func (*VodQueryMoveObjectTaskInfoResData) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *VodQueryMoveObjectTaskInfoResData) GetData() *QueryMoveObjectTaskInfoRespData {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type QueryMoveObjectTaskInfoRespData struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	TaskId        string `protobuf:"bytes,1,opt,name=TaskId,proto3" json:"TaskId,omitempty"`
+	SourceSpace   string `protobuf:"bytes,2,opt,name=SourceSpace,proto3" json:"SourceSpace,omitempty"`
+	TargetSpace   string `protobuf:"bytes,3,opt,name=TargetSpace,proto3" json:"TargetSpace,omitempty"`
+	State         string `protobuf:"bytes,4,opt,name=State,proto3" json:"State,omitempty"`
+	TaskRunResult string `protobuf:"bytes,5,opt,name=TaskRunResult,proto3" json:"TaskRunResult,omitempty"`
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) Reset() {
+	*x = QueryMoveObjectTaskInfoRespData{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryMoveObjectTaskInfoRespData) ProtoMessage() {}
+
+func (x *QueryMoveObjectTaskInfoRespData) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_business_vod_upload_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryMoveObjectTaskInfoRespData.ProtoReflect.Descriptor instead.
+func (*QueryMoveObjectTaskInfoRespData) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_business_vod_upload_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) GetTaskId() string {
+	if x != nil {
+		return x.TaskId
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) GetSourceSpace() string {
+	if x != nil {
+		return x.SourceSpace
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) GetTargetSpace() string {
+	if x != nil {
+		return x.TargetSpace
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *QueryMoveObjectTaskInfoRespData) GetTaskRunResult() string {
+	if x != nil {
+		return x.TaskRunResult
+	}
+	return ""
+}
+
 var File_volcengine_vod_business_vod_upload_proto protoreflect.FileDescriptor
 
 var file_volcengine_vod_business_vod_upload_proto_rawDesc = []byte{
@@ -2704,24 +3090,83 @@ var file_volcengine_vod_business_vod_upload_proto_rawDesc = []byte{
 	0x74, 0x52, 0x11, 0x46, 0x6c, 0x75, 0x73, 0x68, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x52, 0x65,
 	0x73, 0x75, 0x6c, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x53, 0x44, 0x4b, 0x50, 0x61, 0x72, 0x61, 0x6d,
 	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x53, 0x44, 0x4b, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x2a, 0x42, 0x0a, 0x10, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x43, 0x6c, 0x61, 0x73, 0x73,
-	0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x10,
-	0x00, 0x12, 0x0c, 0x0a, 0x08, 0x53, 0x74, 0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x10, 0x01, 0x12,
-	0x0b, 0x0a, 0x07, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x10, 0x02, 0x12, 0x06, 0x0a, 0x02,
-	0x49, 0x41, 0x10, 0x03, 0x42, 0xcd, 0x01, 0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c,
-	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e,
-	0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65,
-	0x73, 0x73, 0x42, 0x09, 0x56, 0x6f, 0x64, 0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x50, 0x01, 0x5a,
-	0x41, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63,
-	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d,
-	0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76,
-	0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65,
-	0x73, 0x73, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xc2, 0x02, 0x00, 0xca, 0x02, 0x20, 0x56, 0x6f,
-	0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0xe2, 0x02,
-	0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f,
-	0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x83, 0x02, 0x0a, 0x19, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4d, 0x6f, 0x76, 0x65, 0x4f,
+	0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x12, 0x20,
+	0x0a, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x12, 0x26, 0x0a, 0x0e, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x46, 0x69, 0x6c, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0e, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x46, 0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x54, 0x61, 0x72, 0x67,
+	0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x54,
+	0x61, 0x72, 0x67, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x26, 0x0a, 0x0e, 0x54, 0x61,
+	0x72, 0x67, 0x65, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0e, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x46, 0x69, 0x6c, 0x65, 0x4e, 0x61,
+	0x6d, 0x65, 0x12, 0x2a, 0x0a, 0x10, 0x53, 0x61, 0x76, 0x65, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x10, 0x53, 0x61,
+	0x76, 0x65, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x26,
+	0x0a, 0x0e, 0x46, 0x6f, 0x72, 0x63, 0x65, 0x4f, 0x76, 0x65, 0x72, 0x77, 0x72, 0x69, 0x74, 0x65,
+	0x18, 0x06, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0e, 0x46, 0x6f, 0x72, 0x63, 0x65, 0x4f, 0x76, 0x65,
+	0x72, 0x77, 0x72, 0x69, 0x74, 0x65, 0x22, 0x73, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62,
+	0x6d, 0x69, 0x74, 0x4d, 0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73,
+	0x6b, 0x52, 0x65, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x50, 0x0a, 0x04, 0x44, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x4d,
+	0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73,
+	0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x44, 0x61, 0x74, 0x61, 0x22, 0x7a, 0x0a, 0x1c, 0x53,
+	0x75, 0x62, 0x6d, 0x69, 0x74, 0x4d, 0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54,
+	0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x12, 0x16, 0x0a, 0x06, 0x54,
+	0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x54, 0x61, 0x73,
+	0x6b, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61,
+	0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65,
+	0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x53,
+	0x70, 0x61, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x54, 0x61, 0x72, 0x67,
+	0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x22, 0x7a, 0x0a, 0x1c, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x4d, 0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x6e,
+	0x66, 0x6f, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x12, 0x16, 0x0a, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12,
+	0x20, 0x0a, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x12, 0x20, 0x0a, 0x0b, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x53, 0x70,
+	0x61, 0x63, 0x65, 0x22, 0x78, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d,
+	0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x65, 0x73, 0x44, 0x61, 0x74, 0x61, 0x12, 0x53, 0x0a, 0x04, 0x44, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
+	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x6f, 0x76,
+	0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x52,
+	0x65, 0x73, 0x70, 0x44, 0x61, 0x74, 0x61, 0x52, 0x04, 0x44, 0x61, 0x74, 0x61, 0x22, 0xb9, 0x01,
+	0x0a, 0x1f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x6f, 0x76, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63,
+	0x74, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x44, 0x61, 0x74,
+	0x61, 0x12, 0x16, 0x0a, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x06, 0x54, 0x61, 0x73, 0x6b, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x53, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x54,
+	0x61, 0x72, 0x67, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0b, 0x54, 0x61, 0x72, 0x67, 0x65, 0x74, 0x53, 0x70, 0x61, 0x63, 0x65, 0x12, 0x14, 0x0a,
+	0x05, 0x53, 0x74, 0x61, 0x74, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x12, 0x24, 0x0a, 0x0d, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x75, 0x6e, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x54, 0x61, 0x73, 0x6b,
+	0x52, 0x75, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x2a, 0x42, 0x0a, 0x10, 0x53, 0x74, 0x6f,
+	0x72, 0x61, 0x67, 0x65, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a,
+	0x07, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x53, 0x74,
+	0x61, 0x6e, 0x64, 0x61, 0x72, 0x64, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x41, 0x72, 0x63, 0x68,
+	0x69, 0x76, 0x65, 0x10, 0x02, 0x12, 0x06, 0x0a, 0x02, 0x49, 0x41, 0x10, 0x03, 0x42, 0xcd, 0x01,
+	0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
+	0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64,
+	0x65, 0x6c, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x42, 0x09, 0x56, 0x6f, 0x64,
+	0x55, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x50, 0x01, 0x5a, 0x41, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62,
+	0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f,
+	0x76, 0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f,
+	0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2f, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0xa0, 0x01, 0x01, 0xd8, 0x01,
+	0x01, 0xc2, 0x02, 0x00, 0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76,
+	0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x42,
+	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2737,71 +3182,79 @@ func file_volcengine_vod_business_vod_upload_proto_rawDescGZIP() []byte {
 }
 
 var file_volcengine_vod_business_vod_upload_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_volcengine_vod_business_vod_upload_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_volcengine_vod_business_vod_upload_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
 var file_volcengine_vod_business_vod_upload_proto_goTypes = []interface{}{
-	(StorageClassType)(0),                   // 0: Volcengine.Vod.Models.Business.StorageClassType
-	(*VodUrlUploadURLSet)(nil),              // 1: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
-	(*VodUrlResponseData)(nil),              // 2: Volcengine.Vod.Models.Business.VodUrlResponseData
-	(*ValuePair)(nil),                       // 3: Volcengine.Vod.Models.Business.ValuePair
-	(*VodQueryData)(nil),                    // 4: Volcengine.Vod.Models.Business.VodQueryData
-	(*VodQueryUploadResult)(nil),            // 5: Volcengine.Vod.Models.Business.VodQueryUploadResult
-	(*VodCommitData)(nil),                   // 6: Volcengine.Vod.Models.Business.VodCommitData
-	(*VodCommitUploadInfoResponseData)(nil), // 7: Volcengine.Vod.Models.Business.VodCommitUploadInfoResponseData
-	(*VodURLSet)(nil),                       // 8: Volcengine.Vod.Models.Business.VodURLSet
-	(*VodApplyUploadInfoResult)(nil),        // 9: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
-	(*VodApplyUploadInfoData)(nil),          // 10: Volcengine.Vod.Models.Business.VodApplyUploadInfoData
-	(*VodUploadAddress)(nil),                // 11: Volcengine.Vod.Models.Business.VodUploadAddress
-	(*VodStoreInfo)(nil),                    // 12: Volcengine.Vod.Models.Business.VodStoreInfo
-	(*VodHeaderPair)(nil),                   // 13: Volcengine.Vod.Models.Business.VodHeaderPair
-	(*VodCommitUploadInfoResult)(nil),       // 14: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
-	(*VodCommitUploadInfoData)(nil),         // 15: Volcengine.Vod.Models.Business.VodCommitUploadInfoData
-	(*VodUploadFunctionInput)(nil),          // 16: Volcengine.Vod.Models.Business.VodUploadFunctionInput
-	(*VodUploadFunction)(nil),               // 17: Volcengine.Vod.Models.Business.VodUploadFunction
-	(*CommitUploadInfoParam)(nil),           // 18: Volcengine.Vod.Models.Business.CommitUploadInfoParam
-	(*CommitRequestBodyJson)(nil),           // 19: Volcengine.Vod.Models.Business.CommitRequestBodyJson
-	(*ApplyUploadInfoParam)(nil),            // 20: Volcengine.Vod.Models.Business.ApplyUploadInfoParam
-	(*CommitResponse)(nil),                  // 21: Volcengine.Vod.Models.Business.CommitResponse
-	(*VodUploadOptionInfo)(nil),             // 22: Volcengine.Vod.Models.Business.VodUploadOptionInfo
-	(*VodUploadCallbackData)(nil),           // 23: Volcengine.Vod.Models.Business.VodUploadCallbackData
-	(*CallbackResponse)(nil),                // 24: Volcengine.Vod.Models.Business.CallbackResponse
-	(*StoreInfo)(nil),                       // 25: Volcengine.Vod.Models.Business.StoreInfo
-	(*HeaderPair)(nil),                      // 26: Volcengine.Vod.Models.Business.HeaderPair
-	(*UploadAddress)(nil),                   // 27: Volcengine.Vod.Models.Business.UploadAddress
-	(*FlushUploadResult)(nil),               // 28: Volcengine.Vod.Models.Business.FlushUploadResult
-	(*ApplyResponse)(nil),                   // 29: Volcengine.Vod.Models.Business.ApplyResponse
-	nil,                                     // 30: Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeadersEntry
-	(*VodSourceInfo)(nil),                   // 31: Volcengine.Vod.Models.Business.VodSourceInfo
+	(StorageClassType)(0),                     // 0: Volcengine.Vod.Models.Business.StorageClassType
+	(*VodUrlUploadURLSet)(nil),                // 1: Volcengine.Vod.Models.Business.VodUrlUploadURLSet
+	(*VodUrlResponseData)(nil),                // 2: Volcengine.Vod.Models.Business.VodUrlResponseData
+	(*ValuePair)(nil),                         // 3: Volcengine.Vod.Models.Business.ValuePair
+	(*VodQueryData)(nil),                      // 4: Volcengine.Vod.Models.Business.VodQueryData
+	(*VodQueryUploadResult)(nil),              // 5: Volcengine.Vod.Models.Business.VodQueryUploadResult
+	(*VodCommitData)(nil),                     // 6: Volcengine.Vod.Models.Business.VodCommitData
+	(*VodCommitUploadInfoResponseData)(nil),   // 7: Volcengine.Vod.Models.Business.VodCommitUploadInfoResponseData
+	(*VodURLSet)(nil),                         // 8: Volcengine.Vod.Models.Business.VodURLSet
+	(*VodApplyUploadInfoResult)(nil),          // 9: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
+	(*VodApplyUploadInfoData)(nil),            // 10: Volcengine.Vod.Models.Business.VodApplyUploadInfoData
+	(*VodUploadAddress)(nil),                  // 11: Volcengine.Vod.Models.Business.VodUploadAddress
+	(*VodStoreInfo)(nil),                      // 12: Volcengine.Vod.Models.Business.VodStoreInfo
+	(*VodHeaderPair)(nil),                     // 13: Volcengine.Vod.Models.Business.VodHeaderPair
+	(*VodCommitUploadInfoResult)(nil),         // 14: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
+	(*VodCommitUploadInfoData)(nil),           // 15: Volcengine.Vod.Models.Business.VodCommitUploadInfoData
+	(*VodUploadFunctionInput)(nil),            // 16: Volcengine.Vod.Models.Business.VodUploadFunctionInput
+	(*VodUploadFunction)(nil),                 // 17: Volcengine.Vod.Models.Business.VodUploadFunction
+	(*CommitUploadInfoParam)(nil),             // 18: Volcengine.Vod.Models.Business.CommitUploadInfoParam
+	(*CommitRequestBodyJson)(nil),             // 19: Volcengine.Vod.Models.Business.CommitRequestBodyJson
+	(*ApplyUploadInfoParam)(nil),              // 20: Volcengine.Vod.Models.Business.ApplyUploadInfoParam
+	(*CommitResponse)(nil),                    // 21: Volcengine.Vod.Models.Business.CommitResponse
+	(*VodUploadOptionInfo)(nil),               // 22: Volcengine.Vod.Models.Business.VodUploadOptionInfo
+	(*VodUploadCallbackData)(nil),             // 23: Volcengine.Vod.Models.Business.VodUploadCallbackData
+	(*CallbackResponse)(nil),                  // 24: Volcengine.Vod.Models.Business.CallbackResponse
+	(*StoreInfo)(nil),                         // 25: Volcengine.Vod.Models.Business.StoreInfo
+	(*HeaderPair)(nil),                        // 26: Volcengine.Vod.Models.Business.HeaderPair
+	(*UploadAddress)(nil),                     // 27: Volcengine.Vod.Models.Business.UploadAddress
+	(*FlushUploadResult)(nil),                 // 28: Volcengine.Vod.Models.Business.FlushUploadResult
+	(*ApplyResponse)(nil),                     // 29: Volcengine.Vod.Models.Business.ApplyResponse
+	(*SubmitMoveObjectTaskParam)(nil),         // 30: Volcengine.Vod.Models.Business.SubmitMoveObjectTaskParam
+	(*VodSubmitMoveObjectTaskRespData)(nil),   // 31: Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData
+	(*SubmitMoveObjectTaskRespData)(nil),      // 32: Volcengine.Vod.Models.Business.SubmitMoveObjectTaskRespData
+	(*QueryMoveObjectTaskInfoParam)(nil),      // 33: Volcengine.Vod.Models.Business.QueryMoveObjectTaskInfoParam
+	(*VodQueryMoveObjectTaskInfoResData)(nil), // 34: Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData
+	(*QueryMoveObjectTaskInfoRespData)(nil),   // 35: Volcengine.Vod.Models.Business.QueryMoveObjectTaskInfoRespData
+	nil,                                       // 36: Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeadersEntry
+	(*VodSourceInfo)(nil),                     // 37: Volcengine.Vod.Models.Business.VodSourceInfo
 }
 var file_volcengine_vod_business_vod_upload_proto_depIdxs = []int32{
-	30, // 0: Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeaders:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeadersEntry
+	36, // 0: Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeaders:type_name -> Volcengine.Vod.Models.Business.VodUrlUploadURLSet.CustomURLHeadersEntry
 	3,  // 1: Volcengine.Vod.Models.Business.VodUrlResponseData.Data:type_name -> Volcengine.Vod.Models.Business.ValuePair
 	5,  // 2: Volcengine.Vod.Models.Business.VodQueryData.Data:type_name -> Volcengine.Vod.Models.Business.VodQueryUploadResult
 	8,  // 3: Volcengine.Vod.Models.Business.VodQueryUploadResult.MediaInfoList:type_name -> Volcengine.Vod.Models.Business.VodURLSet
 	7,  // 4: Volcengine.Vod.Models.Business.VodCommitData.Data:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoResponseData
-	31, // 5: Volcengine.Vod.Models.Business.VodCommitUploadInfoResponseData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
-	31, // 6: Volcengine.Vod.Models.Business.VodURLSet.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 5: Volcengine.Vod.Models.Business.VodCommitUploadInfoResponseData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 6: Volcengine.Vod.Models.Business.VodURLSet.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
 	10, // 7: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult.Data:type_name -> Volcengine.Vod.Models.Business.VodApplyUploadInfoData
 	11, // 8: Volcengine.Vod.Models.Business.VodApplyUploadInfoData.UploadAddress:type_name -> Volcengine.Vod.Models.Business.VodUploadAddress
 	12, // 9: Volcengine.Vod.Models.Business.VodUploadAddress.StoreInfos:type_name -> Volcengine.Vod.Models.Business.VodStoreInfo
 	13, // 10: Volcengine.Vod.Models.Business.VodUploadAddress.UploadHeader:type_name -> Volcengine.Vod.Models.Business.VodHeaderPair
 	15, // 11: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult.Data:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoData
-	31, // 12: Volcengine.Vod.Models.Business.VodCommitUploadInfoData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 12: Volcengine.Vod.Models.Business.VodCommitUploadInfoData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
 	16, // 13: Volcengine.Vod.Models.Business.VodUploadFunction.Input:type_name -> Volcengine.Vod.Models.Business.VodUploadFunctionInput
 	17, // 14: Volcengine.Vod.Models.Business.CommitUploadInfoParam.Functions:type_name -> Volcengine.Vod.Models.Business.VodUploadFunction
-	31, // 15: Volcengine.Vod.Models.Business.CommitResponse.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
-	31, // 16: Volcengine.Vod.Models.Business.VodUploadCallbackData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 15: Volcengine.Vod.Models.Business.CommitResponse.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 16: Volcengine.Vod.Models.Business.VodUploadCallbackData.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
 	22, // 17: Volcengine.Vod.Models.Business.VodUploadCallbackData.OptionInfo:type_name -> Volcengine.Vod.Models.Business.VodUploadOptionInfo
 	23, // 18: Volcengine.Vod.Models.Business.CallbackResponse.Data:type_name -> Volcengine.Vod.Models.Business.VodUploadCallbackData
 	25, // 19: Volcengine.Vod.Models.Business.UploadAddress.StoreInfos:type_name -> Volcengine.Vod.Models.Business.StoreInfo
 	26, // 20: Volcengine.Vod.Models.Business.UploadAddress.UploadHeader:type_name -> Volcengine.Vod.Models.Business.HeaderPair
-	31, // 21: Volcengine.Vod.Models.Business.FlushUploadResult.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
+	37, // 21: Volcengine.Vod.Models.Business.FlushUploadResult.SourceInfo:type_name -> Volcengine.Vod.Models.Business.VodSourceInfo
 	27, // 22: Volcengine.Vod.Models.Business.ApplyResponse.UploadAddress:type_name -> Volcengine.Vod.Models.Business.UploadAddress
 	28, // 23: Volcengine.Vod.Models.Business.ApplyResponse.FlushUploadResult:type_name -> Volcengine.Vod.Models.Business.FlushUploadResult
-	24, // [24:24] is the sub-list for method output_type
-	24, // [24:24] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	32, // 24: Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData.Data:type_name -> Volcengine.Vod.Models.Business.SubmitMoveObjectTaskRespData
+	35, // 25: Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData.Data:type_name -> Volcengine.Vod.Models.Business.QueryMoveObjectTaskInfoRespData
+	26, // [26:26] is the sub-list for method output_type
+	26, // [26:26] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_volcengine_vod_business_vod_upload_proto_init() }
@@ -3159,6 +3612,78 @@ func file_volcengine_vod_business_vod_upload_proto_init() {
 				return nil
 			}
 		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SubmitMoveObjectTaskParam); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitMoveObjectTaskRespData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SubmitMoveObjectTaskRespData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryMoveObjectTaskInfoParam); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodQueryMoveObjectTaskInfoResData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_business_vod_upload_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryMoveObjectTaskInfoRespData); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3166,7 +3691,7 @@ func file_volcengine_vod_business_vod_upload_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_volcengine_vod_business_vod_upload_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   30,
+			NumMessages:   36,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
