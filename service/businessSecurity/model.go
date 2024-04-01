@@ -117,11 +117,12 @@ type VideoLiveResp struct {
 }
 
 type AudioResultV2 struct {
-	Decision    string           `json:"Decision"`
-	DataId      string           `json:"DataId"`
-	AudioText   string           `json:"AudioText"`
-	Details     []*AudioDetailV2 `json:"Details"`
-	PassThrough string           `json:"PassThrough"`
+	Decision       string           `json:"Decision"`
+	DecisionDetail string           `json:"DecisionDetail"`
+	DataId         string           `json:"DataId"`
+	AudioText      string           `json:"AudioText"`
+	Details        []*AudioDetailV2 `json:"Details"`
+	PassThrough    string           `json:"PassThrough"`
 }
 
 type AudioLiveResult struct {
@@ -132,14 +133,15 @@ type AudioLiveResult struct {
 	PassThrough string               `json:"PassThrough"`
 }
 type AudioDetailV2 struct {
-	StartTime    int              `json:"StartTime"`
-	EndTime      int              `json:"EndTime"`
-	FrameUrl     string           `json:"FrameUrl"`
-	AudioText    string           `json:"AudioText"`
-	SliceId      string           `json:"SliceId"`
-	UserId       string           `json:"UserId"`
-	Decision     string           `json:"Decision"`
-	FrameResults []*FrameResultV2 `json:"FrameResults"`
+	StartTime      int              `json:"StartTime"`
+	EndTime        int              `json:"EndTime"`
+	FrameUrl       string           `json:"FrameUrl"`
+	AudioText      string           `json:"AudioText"`
+	SliceId        string           `json:"SliceId"`
+	UserId         string           `json:"UserId"`
+	Decision       string           `json:"Decision"`
+	DecisionDetail string           `json:"DecisionDetail"`
+	FrameResults   []*FrameResultV2 `json:"FrameResults"`
 }
 type AudioLiveDetailV2 struct {
 	StartTime              int              `json:"StartTime"`
@@ -161,6 +163,7 @@ type FrameResultV2 struct {
 
 type VideoResult struct {
 	Decision        string  `json:"Decision"`
+	DecisionDetail  string  `json:"DecisionDetail"`
 	ImageSliceCount int64   `json:"ImageSliceCount"`
 	Frames          []Frame `json:"Frames"`
 }
@@ -170,13 +173,14 @@ type VideoLiveResult struct {
 	Frames          []LiveFrame `json:"Frames"`
 }
 type Frame struct {
-	Url      string   `json:"Url"`
-	Offset   float64  `json:"Offset"`
-	SliceId  string   `json:"SliceId"`
-	UserId   string   `json:"UserId"`
-	Decision string   `json:"Decision"`
-	Text     string   `json:"Text"`
-	Results  []Result `json:"Results"`
+	Url            string   `json:"Url"`
+	Offset         float64  `json:"Offset"`
+	SliceId        string   `json:"SliceId"`
+	UserId         string   `json:"UserId"`
+	Decision       string   `json:"Decision"`
+	DecisionDetail string   `json:"DecisionDetail"`
+	Text           string   `json:"Text"`
+	Results        []Result `json:"Results"`
 }
 type LiveFrame struct {
 	Url      string       `json:"Url"`
