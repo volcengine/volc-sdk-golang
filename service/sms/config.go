@@ -157,6 +157,14 @@ var (
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
+		"GetSmsSendDetails": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSmsSendDetails"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
 	}
 )
 

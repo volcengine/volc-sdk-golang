@@ -97,3 +97,20 @@ func TestSMS_conversion(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestGetSmsSendDetails(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+	req := &GetSmsSendDetailsRequest{
+		SmsAccount:  "smsAccount",
+		PhoneNumber: "188xxxxxxxx",
+		MessageId:   "test_message_id",
+		SendDate:    "20221228",
+		PageSize:    10,
+		PageIndex:   1,
+	}
+	result, statusCode, err := DefaultInstance.GetSmsSendDetails(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
