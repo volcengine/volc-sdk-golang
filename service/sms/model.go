@@ -103,3 +103,48 @@ const (
 	VmsOrder_VENDOR_PASSED    SmsOrderStatus = 8 // 视频短信供应商审核通过
 	VmsOrder_VENDOR_EXPIRED   SmsOrderStatus = 9 // 视频短信模版过期
 )
+
+type SendLogStatus int32
+
+const (
+	DefaultSendLog = SendLogStatus(0)
+	SendNoReceipt  = SendLogStatus(1)
+	SendFail       = SendLogStatus(2)
+	SendAndReceipt = SendLogStatus(3)
+	Verify         = SendLogStatus(4)
+	Click          = SendLogStatus(5)
+)
+
+type GetSmsSendDetailsRequest struct {
+	SmsAccount  string `json:"subAccount"`
+	PhoneNumber string `json:"phoneNumber"`
+	MessageId   string `json:"messageId"`
+	SendDate    string `json:"sendDate"`
+	PageSize    int64  `json:"pageSize"`
+	PageIndex   int64  `json:"pageIndex"`
+}
+
+type GetSmsSendDetailsResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           *struct {
+		List       []*SendDetailsResult `json:"sendDetailsResults"`
+		Total      int                  `json:"total"`
+		Account    string               `json:"account"`
+		SubAccount string               `json:"subAccount"`
+	}
+}
+
+type SendDetailsResult struct {
+	Status       SendLogStatus `json:"status"`
+	ErrorCode    string        `json:"errorCode"`
+	ErrorMessage string        `json:"errorMessage"`
+	PhoneNumber  string        `json:"phoneNumber"`
+	Signature    string        `json:"signature"`
+	TemplateId   string        `json:"templateID"`
+	Content      string        `json:"content"`
+	ChannelType  string        `json:"channelType"`
+	MessageId    string        `json:"messageId"`
+	MsgCount     int32         `json:"msgCount"`
+	SendTime     int64         `json:"sendTime"`
+	ReceiptTime  int64         `json:"receiptTime"`
+}
