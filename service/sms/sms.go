@@ -55,6 +55,16 @@ func (p *SMS) CheckVerifyCode(req *CheckSmsVerifyCodeRequest) (*CheckSmsVerifyCo
 	return resp, statusCode, nil
 }
 
+func (p *SMS) GetSmsSendDetails(req *GetSmsSendDetailsRequest) (*GetSmsSendDetailsResponse, int, error) {
+	resp := new(GetSmsSendDetailsResponse)
+	statusCode, err := p.smsHandler("GetSmsSendDetails", req, resp)
+
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *SMS) smsHandler(api string, req interface{}, resp interface{}) (int, error) {
 	reqJ, err := json.Marshal(req)
 	respBody, statusCode, err := p.Client.Json(api, nil, string(reqJ))
