@@ -235,6 +235,8 @@ type Parameters struct {
 	TopP float64 `json:"top_p,omitempty" yaml:"top_p,omitempty" mapstructure:"top_p,omitempty"`
 
 	LogitBias int `json:"logit_bias,omitempty" yaml:"logit_bias,omitempty" mapstructure:"logit_bias,omitempty"`
+
+	Guidance bool `json:"guidance,omitempty" yaml:"guidance,omitempty" mapstructure:"guidance,omitempty"`
 }
 
 type Reference struct {
