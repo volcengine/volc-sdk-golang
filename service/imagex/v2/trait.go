@@ -158,7 +158,7 @@ func (c *Imagex) GetResponseHeaderValidateKeys(ctx context.Context) (*GetRespons
 	}
 
 	result := new(GetResponseHeaderValidateKeysRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +178,7 @@ func (c *Imagex) GetDomainConfig(ctx context.Context, arg *GetDomainConfigQuery)
 	}
 
 	result := new(GetDomainConfigRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +198,7 @@ func (c *Imagex) GetServiceDomains(ctx context.Context, arg *GetServiceDomainsQu
 	}
 
 	result := new(GetServiceDomainsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +258,7 @@ func (c *Imagex) ExportFailedMigrateTask(ctx context.Context, arg *ExportFailedM
 	}
 
 	result := new(ExportFailedMigrateTaskRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -338,7 +338,7 @@ func (c *Imagex) GetImageMigrateTasks(ctx context.Context, arg *GetImageMigrateT
 	}
 
 	result := new(GetImageMigrateTasksRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +378,7 @@ func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *De
 	}
 
 	result := new(DescribeImageXBucketRetrievalUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +398,7 @@ func (c *Imagex) DescribeImageXSummary(ctx context.Context, arg *DescribeImageXS
 	}
 
 	result := new(DescribeImageXSummaryRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -418,7 +418,7 @@ func (c *Imagex) DescribeImageXDomainTrafficData(ctx context.Context, arg *Descr
 	}
 
 	result := new(DescribeImageXDomainTrafficDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -438,7 +438,7 @@ func (c *Imagex) DescribeImageXDomainBandwidthData(ctx context.Context, arg *Des
 	}
 
 	result := new(DescribeImageXDomainBandwidthDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +458,7 @@ func (c *Imagex) DescribeImageXDomainBandwidthNinetyFiveData(ctx context.Context
 	}
 
 	result := new(DescribeImageXDomainBandwidthNinetyFiveDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -478,7 +478,7 @@ func (c *Imagex) DescribeImageXBucketUsage(ctx context.Context, arg *DescribeIma
 	}
 
 	result := new(DescribeImageXBucketUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -498,7 +498,7 @@ func (c *Imagex) DescribeImageXBillingRequestCntUsage(ctx context.Context, arg *
 	}
 
 	result := new(DescribeImageXBillingRequestCntUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -518,7 +518,7 @@ func (c *Imagex) DescribeImageXRequestCntUsage(ctx context.Context, arg *Describ
 	}
 
 	result := new(DescribeImageXRequestCntUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -538,7 +538,7 @@ func (c *Imagex) DescribeImageXBaseOpUsage(ctx context.Context, arg *DescribeIma
 	}
 
 	result := new(DescribeImageXBaseOpUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +558,7 @@ func (c *Imagex) DescribeImageXCompressUsage(ctx context.Context, arg *DescribeI
 	}
 
 	result := new(DescribeImageXCompressUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -578,7 +578,7 @@ func (c *Imagex) DescribeImageXScreenshotUsage(ctx context.Context, arg *Describ
 	}
 
 	result := new(DescribeImageXScreenshotUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -598,7 +598,7 @@ func (c *Imagex) DescribeImageXVideoClipDurationUsage(ctx context.Context, arg *
 	}
 
 	result := new(DescribeImageXVideoClipDurationUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -618,7 +618,7 @@ func (c *Imagex) DescribeImageXMultiCompressUsage(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeImageXMultiCompressUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +638,7 @@ func (c *Imagex) DescribeImageXEdgeRequest(ctx context.Context, arg *DescribeIma
 	}
 
 	result := new(DescribeImageXEdgeRequestRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -658,7 +658,7 @@ func (c *Imagex) DescribeImageXEdgeRequestBandwidth(ctx context.Context, arg *De
 	}
 
 	result := new(DescribeImageXEdgeRequestBandwidthRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -678,7 +678,7 @@ func (c *Imagex) DescribeImageXEdgeRequestTraffic(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeImageXEdgeRequestTrafficRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -698,7 +698,7 @@ func (c *Imagex) DescribeImageXEdgeRequestRegions(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeImageXEdgeRequestRegionsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +798,7 @@ func (c *Imagex) DescribeImageXServerQPSUsage(ctx context.Context, arg *Describe
 	}
 
 	result := new(DescribeImageXServerQPSUsageRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -818,7 +818,7 @@ func (c *Imagex) DescribeImageXHitRateTrafficData(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeImageXHitRateTrafficDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -838,7 +838,7 @@ func (c *Imagex) DescribeImageXHitRateRequestData(ctx context.Context, arg *Desc
 	}
 
 	result := new(DescribeImageXHitRateRequestDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -858,7 +858,7 @@ func (c *Imagex) DescribeImageXCDNTopRequestData(ctx context.Context, arg *Descr
 	}
 
 	result := new(DescribeImageXCDNTopRequestDataRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -938,7 +938,7 @@ func (c *Imagex) DescribeImageXServiceQuality(ctx context.Context, arg *Describe
 	}
 
 	result := new(DescribeImageXServiceQualityRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -958,7 +958,7 @@ func (c *Imagex) GetImageXQueryApps(ctx context.Context, arg *GetImageXQueryApps
 	}
 
 	result := new(GetImageXQueryAppsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -978,7 +978,7 @@ func (c *Imagex) GetImageXQueryRegions(ctx context.Context, arg *GetImageXQueryR
 	}
 
 	result := new(GetImageXQueryRegionsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -998,7 +998,7 @@ func (c *Imagex) GetImageXQueryDims(ctx context.Context, arg *GetImageXQueryDims
 	}
 
 	result := new(GetImageXQueryDimsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -1018,7 +1018,7 @@ func (c *Imagex) GetImageXQueryVals(ctx context.Context, arg *GetImageXQueryVals
 	}
 
 	result := new(GetImageXQueryValsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -1863,7 +1863,7 @@ func (c *Imagex) GetImageStorageFiles(ctx context.Context, arg *GetImageStorageF
 	}
 
 	result := new(GetImageStorageFilesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -1958,7 +1958,7 @@ func (c *Imagex) ApplyImageUpload(ctx context.Context, arg *ApplyImageUploadQuer
 	}
 
 	result := new(ApplyImageUploadRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -1978,7 +1978,7 @@ func (c *Imagex) GetImageUploadFile(ctx context.Context, arg *GetImageUploadFile
 	}
 
 	result := new(GetImageUploadFileRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -1998,7 +1998,7 @@ func (c *Imagex) GetImageUploadFiles(ctx context.Context, arg *GetImageUploadFil
 	}
 
 	result := new(GetImageUploadFilesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2018,7 +2018,7 @@ func (c *Imagex) GetImageUpdateFiles(ctx context.Context, arg *GetImageUpdateFil
 	}
 
 	result := new(GetImageUpdateFilesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2038,7 +2038,7 @@ func (c *Imagex) PreviewImageUploadFile(ctx context.Context, arg *PreviewImageUp
 	}
 
 	result := new(PreviewImageUploadFileRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2054,7 +2054,7 @@ func (c *Imagex) GetImageServiceSubscription(ctx context.Context) (*GetImageServ
 	}
 
 	result := new(GetImageServiceSubscriptionRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2074,7 +2074,7 @@ func (c *Imagex) GetImageService(ctx context.Context, arg *GetImageServiceQuery)
 	}
 
 	result := new(GetImageServiceRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2094,7 +2094,7 @@ func (c *Imagex) GetAllImageServices(ctx context.Context, arg *GetAllImageServic
 	}
 
 	result := new(GetAllImageServicesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2179,7 +2179,7 @@ func (c *Imagex) GetCompressTaskInfo(ctx context.Context, arg *GetCompressTaskIn
 	}
 
 	result := new(GetCompressTaskInfoRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2199,7 +2199,7 @@ func (c *Imagex) GetURLFetchTask(ctx context.Context, arg *GetURLFetchTaskQuery)
 	}
 
 	result := new(GetURLFetchTaskRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2219,7 +2219,7 @@ func (c *Imagex) GetResourceURL(ctx context.Context, arg *GetResourceURLQuery) (
 	}
 
 	result := new(GetResourceURLRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2439,7 +2439,7 @@ func (c *Imagex) GetImageTranscodeQueues(ctx context.Context, arg *GetImageTrans
 	}
 
 	result := new(GetImageTranscodeQueuesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2479,7 +2479,7 @@ func (c *Imagex) GetImageTranscodeDetails(ctx context.Context, arg *GetImageTran
 	}
 
 	result := new(GetImageTranscodeDetailsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2919,7 +2919,7 @@ func (c *Imagex) GetImageEraseModels(ctx context.Context, arg *GetImageEraseMode
 	}
 
 	result := new(GetImageEraseModelsRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -2939,7 +2939,7 @@ func (c *Imagex) GetDedupTaskStatus(ctx context.Context, arg *GetDedupTaskStatus
 	}
 
 	result := new(GetDedupTaskStatusRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3099,7 +3099,7 @@ func (c *Imagex) GetImageAuthKey(ctx context.Context, arg *GetImageAuthKeyQuery)
 	}
 
 	result := new(GetImageAuthKeyRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3219,7 +3219,7 @@ func (c *Imagex) GetImageAnalyzeTasks(ctx context.Context, arg *GetImageAnalyzeT
 	}
 
 	result := new(GetImageAnalyzeTasksRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3239,7 +3239,7 @@ func (c *Imagex) GetImageAnalyzeResult(ctx context.Context, arg *GetImageAnalyze
 	}
 
 	result := new(GetImageAnalyzeResultRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3384,7 +3384,7 @@ func (c *Imagex) GetImageTemplate(ctx context.Context, arg *GetImageTemplateQuer
 	}
 
 	result := new(GetImageTemplateRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3404,7 +3404,7 @@ func (c *Imagex) GetTemplatesFromBin(ctx context.Context, arg *GetTemplatesFromB
 	}
 
 	result := new(GetTemplatesFromBinRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3424,7 +3424,7 @@ func (c *Imagex) GetAllImageTemplates(ctx context.Context, arg *GetAllImageTempl
 	}
 
 	result := new(GetAllImageTemplatesRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3544,7 +3544,7 @@ func (c *Imagex) GetImageAuditTasks(ctx context.Context, arg *GetImageAuditTasks
 	}
 
 	result := new(GetImageAuditTasksRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3564,7 +3564,7 @@ func (c *Imagex) GetImageAuditResult(ctx context.Context, arg *GetImageAuditResu
 	}
 
 	result := new(GetImageAuditResultRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}
@@ -3584,7 +3584,7 @@ func (c *Imagex) GetAuditEntrysCount(ctx context.Context, arg *GetAuditEntrysCou
 	}
 
 	result := new(GetAuditEntrysCountRes)
-	err = unmarshalResultInto(data, result)
+	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
 	}

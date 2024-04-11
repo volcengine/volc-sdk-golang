@@ -344,6 +344,10 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 	if apiInfo == nil {
 		return []byte(""), 500, errors.New("The related api does not exist")
 	}
+	return client.requestThumb(ctx, api, apiInfo, query, body, ct)
+}
+
+func (client *Client) requestThumb(ctx context.Context, api string, apiInfo *ApiInfo, query url.Values, body []byte, ct string) ([]byte, int, error) {
 	timeout := getTimeout(client.ServiceInfo.Timeout, apiInfo.Timeout, client.CustomTimeout)
 	header := mergeHeader(client.ServiceInfo.Header, apiInfo.Header)
 	query = mergeQuery(query, apiInfo.Query)
@@ -387,4 +391,12 @@ func (client *Client) request(ctx context.Context, api string, query url.Values,
 		}
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
 	return resp, code, err
+}
+
+func (client *Client) CtxQueryThumb(ctx context.Context, api string, apiInfo *ApiInfo, query url.Values) ([]byte, int, error) {
+	return client.requestThumb(ctx, api, apiInfo, query, emptyBytes, "")
+}
+
+func (client *Client) CtxJsonThumb(ctx context.Context, api string, apiInfo *ApiInfo, query url.Values, body []byte) ([]byte, int, error) {
+	return client.requestThumb(ctx, api, apiInfo, query, body, "application/json")
 }

@@ -26,32 +26,6 @@ const (
 	UploadRoutines = 4
 )
 
-func (c *Imagex) ImageXGet(action string, query url.Values, result interface{}) error {
-	respBody, _, err := c.Client.Query(action, query)
-	if err != nil {
-		return fmt.Errorf("%s: fail to do request, %v", action, err)
-	}
-	if err := unmarshalInto(respBody, result); err != nil {
-		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
-	}
-	return nil
-}
-
-func (c *Imagex) ImageXPost(action string, query url.Values, req, result interface{}) error {
-	body, err := json.Marshal(req)
-	if err != nil {
-		return fmt.Errorf("%s: fail to marshal request, %v", action, err)
-	}
-	data, _, err := c.Client.Json(action, query, string(body))
-	if err != nil {
-		return fmt.Errorf("%s: fail to do request, %v", action, err)
-	}
-	if err := unmarshalInto(data, result); err != nil {
-		return fmt.Errorf("%s: fail to unmarshal response, %v", action, err)
-	}
-	return nil
-}
-
 // ApplyImageUpload 获取图片上传地址
 func (c *Imagex) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadImageResult, error) {
 	query := url.Values{}
