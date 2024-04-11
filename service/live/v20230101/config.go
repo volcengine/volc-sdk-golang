@@ -150,6 +150,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"GetPullRecordTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetPullRecordTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeRecordTaskFileHistory": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -190,19 +198,19 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"UpdateSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateSnapshotPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"UpdateSnapshotPresetV2": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotPresetV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateSnapshotPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSnapshotPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -214,14 +222,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"ListVhostSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListVhostSnapshotPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"ListVhostSnapshotPresetV2": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -230,11 +230,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"CreateSnapshotPreset": {
+		"ListVhostSnapshotPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"CreateSnapshotPreset"},
+				"Action":  []string{"ListVhostSnapshotPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -243,6 +243,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSnapshotPresetV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"CreateSnapshotPreset": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSnapshotPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -299,14 +307,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateCallback"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"DescribeAuth": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeAuth"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -678,14 +678,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"GetPullRecordTask": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetPullRecordTask"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DeleteSnapshotAuditPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -819,6 +811,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLivePushStreamCountData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeLivePushStreamInfoData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLivePushStreamInfoData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -998,6 +998,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeAuth": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeAuth"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"UpdateDenyConfig": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1019,6 +1027,38 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateAuthKey"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteHTTPHeaderConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteHTTPHeaderConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"EnableHTTPHeaderConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EnableHTTPHeaderConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeHTTPHeaderConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeHTTPHeaderConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateHTTPHeaderConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateHTTPHeaderConfig"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
