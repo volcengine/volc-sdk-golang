@@ -73,3 +73,19 @@ func Test_GetDirectEditProgress(t *testing.T) {
 	format := op.Format(resp)
 	fmt.Println(format)
 }
+
+func Test_CancelDirectEditTask(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodCancelDirectEditTaskRequest{
+		ReqId: "your ReqId here",
+	}
+	resp, status, err := instance.CancelDirectEditTask(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

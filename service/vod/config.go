@@ -588,6 +588,14 @@ var (
 				"Version": []string{"2018-01-01"},
 			},
 		},
+		"CancelDirectEditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CancelDirectEditTask"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 空间管理
