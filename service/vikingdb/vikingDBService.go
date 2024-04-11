@@ -20,6 +20,10 @@ func NewVikingDBService(host string, region string, ak string, sk string, scheme
 	vikingDBService := &VikingDBService{
 		Client: client,
 	}
+	_, err := vikingDBService.DoRequest(context.Background(), "Ping", nil, "")
+	if err != nil {
+		panic(fmt.Errorf("host or region is incorrect: %v", err))
+	}
 	return vikingDBService
 
 }
@@ -167,6 +171,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 		"BatchRerank": {
 			Method: http.MethodPost,
 			Path:   "/api/index/batch_rerank",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"Ping": {
+			Method: http.MethodGet,
+			Path:   "/api/viking_db/data/ping",
 			Header: http.Header{
 				"Accept":       []string{"application/json"},
 				"Content-Type": []string{"application/json"},

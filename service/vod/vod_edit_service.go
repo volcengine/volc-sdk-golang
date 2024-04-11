@@ -233,3 +233,45 @@ func (p *Vod) GetDirectEditProgress(req *request.VodGetDirectEditProgressRequest
 	}
 	return output, status, nil
 }
+
+// CancelDirectEditTask
+/*
+ * @param *request.VodCancelDirectEditTaskRequest
+ * @return *response.VodCancelDirectEditTaskResponse, int, error
+ */
+func (p *Vod) CancelDirectEditTask(req *request.VodCancelDirectEditTaskRequest) (*response.VodCancelDirectEditTaskResponse, int, error) {
+	marshaler := protojson.MarshalOptions{
+		Multiline:       false,
+		AllowPartial:    false,
+		UseProtoNames:   true,
+		UseEnumNumbers:  false,
+		EmitUnpopulated: false,
+	}
+	jsonData := marshaler.Format(req)
+	respBody, status, err := p.Json("CancelDirectEditTask", url.Values{}, jsonData)
+
+	output := &response.VodCancelDirectEditTaskResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}

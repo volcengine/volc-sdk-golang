@@ -234,15 +234,9 @@ type Parameters struct {
 	// TopP corresponds to the JSON schema field "top_p".
 	TopP float64 `json:"top_p,omitempty" yaml:"top_p,omitempty" mapstructure:"top_p,omitempty"`
 
-	Seed int `json:"seed,omitempty" yaml:"seed,omitempty" mapstructure:"seed,omitempty"`
+	LogitBias int `json:"logit_bias,omitempty" yaml:"logit_bias,omitempty" mapstructure:"logit_bias,omitempty"`
 
-	Strength float32 `json:"strength,omitempty" yaml:"strength,omitempty" mapstructure:"strength,omitempty"`
-
-	Height int `json:"height,omitempty" yaml:"height,omitempty" mapstructure:"height,omitempty"`
-
-	Width int `json:"width,omitempty" yaml:"width,omitempty" mapstructure:"width,omitempty"`
-
-	NumInferenceSteps int `json:"num_inference_steps,omitempty" yaml:"num_inference_steps,omitempty" mapstructure:"num_inference_steps,omitempty"`
+	Guidance bool `json:"guidance,omitempty" yaml:"guidance,omitempty" mapstructure:"guidance,omitempty"`
 }
 
 type Reference struct {
@@ -556,6 +550,10 @@ type TokenizeResp struct {
 
 	// TotalTokens corresponds to the JSON schema field "total_tokens".
 	TotalTokens int `json:"total_tokens,omitempty" yaml:"total_tokens,omitempty" mapstructure:"total_tokens,omitempty"`
+
+	TokenIds []int `json:"token_ids,omitempty" yaml:"token_ids,omitempty" mapstructure:"token_ids,omitempty"`
+
+	OffsetMapping [][]int `json:"offset_mapping,omitempty" yaml:"offset_mapping,omitempty" mapstructure:"offset_mapping,omitempty"`
 
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
 

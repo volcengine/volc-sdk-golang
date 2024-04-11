@@ -58,9 +58,7 @@ type BindCertResResponseMetadataError struct {
 }
 
 // Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesTosparam
-// - TOS 存储相关配置
-// 说明
-// TOSParam和VODParam配置且配置其中一个。
+// - TOS 存储相关配置。
 type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesTosparam struct {
 	Bucket string `json:"Bucket"`
 
@@ -71,25 +69,34 @@ type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertie
 	StorageDir string `json:"StorageDir"`
 }
 
+// Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam
+// - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
 type Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam struct {
-	Bucket          *string `json:"Bucket,omitempty"`
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
-	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-	StorageDir      *string `json:"StorageDir,omitempty"`
+	Bucket string `json:"Bucket"`
+
+	Enable bool `json:"Enable"`
+
+	ExactObject string `json:"ExactObject"`
+
+	OverwriteObject string `json:"OverwriteObject"`
+
+	StorageDir string `json:"StorageDir"`
 }
 
+// Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam
+// - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
 type Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam struct {
-	ServiceID       string  `json:"ServiceID"`
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
-	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	Enable bool `json:"Enable"`
+
+	ExactObject string `json:"ExactObject"`
+
+	OverwriteObject string `json:"OverwriteObject"`
+
+	ServiceID string `json:"ServiceID"`
 }
 
 // Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesTosparam
-// - TOS 存储相关配置
-// 说明
-// TOSParam和VODParam配置且配置其中一个。
+// - TOS 存储相关配置。
 type Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesTosparam struct {
 	Bucket string `json:"Bucket"`
 
@@ -101,7 +108,7 @@ type Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertie
 }
 
 // Components44Na0KSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparam
-// - FLV 录制参数，开启 FLV 录制时设置。
+// - 录制为 FLV 格式时的录制参数。
 type Components44Na0KSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparam struct {
 	Duration *int32 `json:"Duration,omitempty"`
 
@@ -117,7 +124,7 @@ type Components44Na0KSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsAoysk3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparam
-// - HLS 录制参数，开启 HLS 录制时设置。
+// - 录制为 HLS 格式时的录制参数。
 type ComponentsAoysk3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparam struct {
 	Duration *int32 `json:"Duration,omitempty"`
 
@@ -199,7 +206,7 @@ type ComponentsKovkk9SchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsKqy98ZSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4Param
-// - MP4 录制参数，开启 MP4 录制时设置。
+// - 录制为 HLS 格式时的录制参数。
 type ComponentsKqy98ZSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4Param struct {
 	Duration *int32 `json:"Duration,omitempty"`
 
@@ -215,9 +222,7 @@ type ComponentsKqy98ZSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam
-// - VOD 存储相关配置
-// 说明
-// TOSParam和VODParam配置且配置其中一个。
+// - VOD 存储相关配置。
 type ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam struct {
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
@@ -233,9 +238,7 @@ type ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesVodparam
-// - VOD 存储相关配置
-// 说明
-// TOSParam和VODParam配置且配置其中一个。
+// - VOD 存储相关配置。
 type ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesVodparam struct {
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
@@ -253,29 +256,31 @@ type ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultProperties
 // ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam
 // - 截图格式为 JPG 时的截图参数。
 type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam struct {
-	Enable      *bool                                                                                                                                                                                      `json:"Enable,omitempty"`
+	Enable *bool `json:"Enable,omitempty"`
+
 	ImageXParam *Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
-	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
+
+	TOSParam *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam `json:"TOSParam,omitempty"`
 }
 
 type CreateCertBody struct {
 
-	// REQUIRED; 密钥信息
+	// REQUIRED; 证书信息。
 	Rsa CreateCertBodyRsa `json:"Rsa"`
 
-	// REQUIRED; 证书用途，默认为 https，支持的取值包括：
-	// * https：https 认证；
-	// * sign：签名校验。
+	// REQUIRED; 证书用途，默认为 https，取值及含义如下所示。
+	// * https：用于 HTTPS 加密；
+	// * sign：用于签名加密。
 	UseWay string `json:"UseWay"`
 
-	// 证书名称
+	// 证书名称。
 	CertName *string `json:"CertName,omitempty"`
 
-	// 证书链 ID，用于标识整个证书链，包括叶子证书（服务器证书）、中间证书（中间 CA 证书）以及根证书（根 CA 证书）
+	// 证书链 ID，用于标识整个证书链，包括叶子证书（服务器证书）、中间证书（中间 CA 证书）以及根证书（根 CA 证书）。
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
-// CreateCertBodyRsa - 密钥信息
+// CreateCertBodyRsa - 证书信息。
 type CreateCertBodyRsa struct {
 
 	// REQUIRED; 证书私钥。
@@ -322,21 +327,21 @@ type CreateCertResResponseMetadataError struct {
 
 type CreateCertResResult struct {
 
-	// 证书 ID。
+	// 证书链 ID。
 	ChainID *string `json:"ChainID,omitempty"`
 
 	// 使用该证书的域名。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 证书用途，包括两种取值。
-	// * https：HTTPS 认证；
-	// * sign：签名校验。
+	// 证书用途，默认为 https，取值及含义如下所示。
+	// * https：用于 HTTPS 加密；
+	// * sign：用于签名加密。
 	UseWay *string `json:"UseWay,omitempty"`
 }
 
 type CreateDomainBody struct {
 
-	// REQUIRED; 推/拉流域名。
+	// REQUIRED; 待添加到视频直播服务进行加速的域名，域名只能由数字（0 - 9）、字母（A - Z、a -z）和连字符（-） 组成。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 域名类型，包含两种类型。
@@ -344,7 +349,7 @@ type CreateDomainBody struct {
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// 区域，默认指为 cn，包含以下类型。
+	// 域名加速区域，默认指为 cn，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
@@ -383,16 +388,16 @@ type CreateDomainResResponseMetadataError struct {
 
 type CreateDomainV2Body struct {
 
-	// REQUIRED; 域名列表，总和最多十个。
+	// REQUIRED; 待添加到视频直播服务进行加速的域名列表信息。 :::tip 一个域名空间下最多包含 10 个域名。 :::
 	Domains []CreateDomainV2BodyDomainsItem `json:"Domains"`
 
-	// REQUIRED; 区域，包含以下类型。
+	// REQUIRED; 域名加速区域，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
 	Region string `json:"Region"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，是一组关联域名的集合，由字母（A - Z、a -z）、数字（0 - 9）和连字符（-） 组成。您可以自定义新的域名空间或调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口查看已有域名使用的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 项目名称，vhost 将归类这个项目里，仅在新创建 vhost 时需要设置。
@@ -404,23 +409,23 @@ type CreateDomainV2Body struct {
 
 type CreateDomainV2BodyDomainsItem struct {
 
-	// REQUIRED; 域名名称。
+	// REQUIRED; 域名名称，域名由字母（A - Z、a -z）、数字（0 - 9）和连字符（-） 组成，长度为 1 到 60 个字符。
 	DomainName string `json:"DomainName"`
 
-	// REQUIRED; 域名类型，支持以下取值。
-	// * push：推流域名
-	// * pull-flv：拉流域名
+	// REQUIRED; 域名类型，取值及含义如下所示。
+	// * push：推流域名；
+	// * pull-flv：拉流域名。
 	Type string `json:"Type"`
 
-	// 证书 ID。
+	// 证书链 ID。
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
 type CreateDomainV2BodyTagsItem struct {
 
 	// REQUIRED; 标签类型，支持以下取值。
-	// * System：系统内置标签
-	// * Custom：自定义标签
+	// * System：系统内置标签；
+	// * Custom：自定义标签。
 	Category string `json:"Category"`
 
 	// REQUIRED; 标签 Key 值。
@@ -820,12 +825,6 @@ type CreatePullToPushTaskResResult struct {
 
 type CreateRecordPresetV2Body struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同，支持填写星号（*）或由 1 到 30 位数字（0 - 9）、大写小字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成。
-	// * 应用名称填写星号，即 App 取值为 *时， 流名称也需填写星号，此时表示录制配置为域名空间级别的配置，即直播流使用的域名属于此域名空间时，就会使用此配置进行录制。
-	// * 应用名称填写非星号时，表示录制配置为域名空间 + 应用名称 + 流名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 和 StreamName 字段也同时与 App 和 Stream 的取值匹配时，就会使用此配置进行录制。
-	// :::warning 当 App 取值为 * 时，Stream 取值必须为 *。 :::
-	App string `json:"App"`
-
 	// REQUIRED; 直播流录制配置的详细配置。
 	RecordPresetConfig CreateRecordPresetV2BodyRecordPresetConfig `json:"RecordPresetConfig"`
 
@@ -833,10 +832,15 @@ type CreateRecordPresetV2Body struct {
 	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
+	// 应用名称，取值与直播流地址的 AppName 字段取值相同，支持填写星号（*）或由 1 到 30 位数字（0 - 9）、大写小字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，默认为空。 :::tip
+	// * App 取值为空时，Stream 取值也需为空，表示录制配置为 Vhost 级别的全局配置。
+	// * App 取值不为空时，Stream 取值含义请参见 Stream 参数说明。 :::
+	App *string `json:"App,omitempty"`
+
 	// 流名称，取值与直播流地址的 StreamName 字段取值相同，支持填写星号（*）或由 1 到 100 位数字（0 - 9）、字母、下划线（_）、短横线（-）和句点（.）组成。
-	// * 流名称填写星号时，表示录制配置为应用名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 字段也与 App 取值同时匹配时，就会使用此配置进行录制。
-	// * 流名称填写非星号时，表示录制配置为域名空间 + 应用名称 + 流名称级别的配置，即直播流使用的域名属于此域名空间，且 AppName 和 StreamName 字段也同时与 App 和 Stream 的取值匹配时，就会使用此配置进行录制。
-	// :::warning 当 App 取值为 * 时，Stream 取值必须为 *。 :::
+	// :::tip
+	// * App 取值不为空、Stream 取值为空时，表示录制配置为 Vhost + App 级别的配置。
+	// * App 取值不为空、Stream 取值不为空时，表示录制为 Vhost + App + Stream 的配置。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -852,7 +856,7 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	Mp4Param *CreateRecordPresetV2BodyRecordPresetConfigMp4Param `json:"Mp4Param,omitempty"`
 
-	// 是否源流录制，默认值为 0，支持的取值即含义如下所示。
+	// 是否源流录制，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
 	// * 1：录制。
 	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
@@ -864,7 +868,7 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 是否录制转码流，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
 	// * 1：录制全部转码流；
-	// * 2：通过转码流后缀列表，即TranscodeSuffixList 字段取值匹配转码流。
+	// * 2：录制指定转码流，即通过转码后缀列表 TranscodeSuffixList匹配转码流进行录制，如果转码流后缀列表为空仍表示录制全部转码流。
 	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
@@ -881,11 +885,11 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
 	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
 	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长生成录制文件，完成录制后一起上传。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
 	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
+	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
@@ -911,8 +915,8 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 // 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 
-	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果启用 TOSParam 配置（Enable
-	// 取值为 true），则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -943,7 +947,7 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
-	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
+	// 是否使用 VOD 存储，默认为 false，支持的取值及含义如下所示。
 	// * false：不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
@@ -965,8 +969,8 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果启用 VODParam 配置（Enable 取值为 true），则 VodNamespace
-	// 必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
 	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
@@ -977,37 +981,43 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 // 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 
-	// 断流等待时长，取值范围[0,3600]
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对HLS生效
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
+	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam `json:"VODParam,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -1015,43 +1025,56 @@ type CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
-	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
+	// 是否使用 VOD 存储，默认为 false，支持的取值及含义如下所示。
 	// * false：不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace 必填。
-	// :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -1059,37 +1082,43 @@ type CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 // 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 
-	// 断流等待时长，取值范围[0,3600]
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对HLS生效
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
+	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam `json:"VODParam,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -1097,43 +1126,56 @@ type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
-	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
+	// 是否使用 VOD 存储，默认为 false，支持的取值及含义如下所示。
 	// * false：不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace 必填。
-	// :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -1247,9 +1289,6 @@ type CreateSnapshotAuditPresetBody struct {
 	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
 	App string `json:"App"`
 
-	// REQUIRED; 截图审核结果回调地址配置。
-	CallbackDetailList []CreateSnapshotAuditPresetBodyCallbackDetailListItem `json:"CallbackDetailList"`
-
 	// REQUIRED; 截图间隔时间，单位为秒，取值范围为 [0.1,10]，支持保留两位小数。
 	Interval float32 `json:"Interval"`
 
@@ -1293,15 +1332,6 @@ type CreateSnapshotAuditPresetBody struct {
 
 	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
-}
-
-type CreateSnapshotAuditPresetBodyCallbackDetailListItem struct {
-
-	// REQUIRED; 回调地址的类型，当前仅支持 http。
-	CallbackType string `json:"CallbackType"`
-
-	// REQUIRED; 回调地址。
-	URL string `json:"URL"`
 }
 
 type CreateSnapshotAuditPresetRes struct {
@@ -1522,24 +1552,63 @@ type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 // CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
 // :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
-	Enable      *bool                                                              `json:"Enable,omitempty"`
+
+	// 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
 	ImageXParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
-	TOSParam    *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
+
+	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	TOSParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam `json:"TOSParam,omitempty"`
 }
 
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
+// 配置且配置其中一个。 :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
+
+	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-	ServiceID       *string `json:"ServiceID,omitempty"`
+
+	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
+	ServiceID *string `json:"ServiceID,omitempty"`
 }
 
+// CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
+// :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
-	Bucket          *string `json:"Bucket,omitempty"`
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
+
+	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
+	// 为必填项。 :::
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-	StorageDir      *string `json:"StorageDir,omitempty"`
+
+	// ToS 存储对应的 bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
 type CreateSnapshotPresetV2Res struct {
@@ -1571,28 +1640,29 @@ type CreateSnapshotPresetV2ResResponseMetadata struct {
 
 type CreateTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 最大时移时长，即观看时移的最长时间，单位为 s。支持的取值如下所示。
-	// * 86400
-	// * 259200
-	// * 604800
-	// * 1296000
+	// REQUIRED; 最大时移时长，即允许用户回看的最长时间，单位为秒，支持的取值如下所示。
+	// * 86400：1 天；
+	// * 259200：3 天；
+	// * 604800：7 天；
+	// * 1296000：15 天。
 	MaxShiftTime int32 `json:"MaxShiftTime"`
 
-	// REQUIRED; 时移拉流域名
+	// REQUIRED; 时移拉流域名。 :::tip 录制到 TOS 时，需配置直播流对应的拉流域名。录制到 VOD 时，需配置 VOD 的空间对应的分发域名。 :::
 	PullDomain string `json:"PullDomain"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 开启时移的流名称，同一个 App 最多可指定 20 路。
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示当前应用下的所有流都进行时移。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip
+	// 流名称不为空时，表示只为此条流开启时移。通过流名称配置时移时，同一个 App 最多可指定 20 路流开启时移。 :::
 	Stream *string `json:"Stream,omitempty"`
 
 	// 时移类型。支持的取值如下所示。
-	// * 0：录制时移，即时移复用录制模板；
-	// * 1：独立时移，即时移不复用录制模板。
+	// * 0：录制时移，即时移复用录制配置，需提前创建对应级别的录制配置；
+	// * 1：独立时移，即时移不复用录制配置。
 	TimeShiftType *int32 `json:"TimeShiftType,omitempty"`
 }
 
@@ -1692,16 +1762,6 @@ type CreateTranscodePresetBody struct {
 	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时取值范围为 [0,3]、7、15。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 动态范围，画质增强类型生效，ParamType=hvq时必填，并且h264只支持SDR
-	// * SDR：输出为SDR
-	// * HDR：输出为HDR
-	DynamicRange *string `json:"DynamicRange,omitempty"`
-
-	// 是否开启智能插帧，只对画质增强类型生效，不填默认为不开启
-	// * 0：不开启
-	// * 1：开启
-	FISwitch *int32 `json:"FISwitch,omitempty"`
-
 	// 视频帧率，单位为 fps，默认值为 25，取值为 0 时表示与源流视频帧率相同。
 	// 视频帧率的取值范围根据视频编码格式（Vcodec）的不同有所差异，视频码率的取值范围如下所示。
 	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，视频帧率取值范围为 [0,60]；
@@ -1734,25 +1794,13 @@ type CreateTranscodePresetBody struct {
 	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 转码模板参数的类型
-	// * hvq：表示使用画质增强
-	ParamType *string `json:"ParamType,omitempty"`
-
-	// 转码类型是否为极智超清转码，当画质增强开启时，该参数默认为 true，其余默认值为 false，取值及含义如下。
+	// 转码类型是否为极智超清转码，默认值为 false，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。
-	// :::tip 视频编码格式为 H.266 (Vcodec取值为h266)时，转码类型不支持极智超清转码。 :::
+	// :::tip 视频编码格式为 H.266 （Vcodec取值为h266）时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 使用场景，画质增强时生效，不填不生效
-	// * football：足球场景
-	SceneType *string `json:"SceneType,omitempty"`
-
 	// 短边长度，默认值为 0。配置不同的转码类型（Roi）和视频编码方式（Vcodec）时，短边长度的取值范围存在如下。
-	// * ParamType 取 hvq 时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）取值范围为 0 和 [150,1280]；
-	// * 视频编码方式为 H.265 （Vcodec取值为h265）取值范围为 0 和 [150,1280]；
-	//
-	//
 	// * 转码类型为标准转码（Roi 取值为 false）时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）时取值范围为 0 和 [150,2160]；
 	// * 视频编码方式为 H.265 （Vcodec 取值为 h265）时取值范围为 0 和 [150,4096]；
 	// * 视频编码方式为 H.266 （Vcodec 取值为 h266）时取值范围为 0 和 [150,720]。
@@ -1946,21 +1994,22 @@ type CreateWatermarkPresetResResponseMetadataError struct {
 
 type DeleteCallbackBody struct {
 
-	// 应用名称。缺省情况下表示删除 Vhost 下的所有回调配置。如果入参选择 Domain，则不可同时传 App。
+	// 应用名称，与创建回调时传的值一致。您可以调用 DescribeCallback [https://www.volcengine.com/docs/6469/1126931] 接口查看待删除回调配置的 App 取值。
 	App *string `json:"App,omitempty"`
 
-	// 推流域名。如创建回调 UpdateCallback [https://www.volcengine.com/docs/6469/78553] 时传了参数 Domain，删除时需要传 Domain。
+	// 推流域名，与创建回调时传的值一致。您可以调用 DescribeCallback [https://www.volcengine.com/docs/6469/1126931] 接口查看待删除回调配置的 Domain 取值。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 消息类型。缺省情况下表示删除所有消息类型。包括以下类型。
+	// 消息类型，与创建回调时传的值一致。您可以调用 DescribeCallback [https://www.volcengine.com/docs/6469/1126931] 接口查看待删除回调配置的 MessageType 取值。
+	// 缺省情况下为空，表示删除符合 Vhost、Domain、App 配置下的所有回调类型配置。包括以下类型。
 	// * push：推流开始回调；
 	// * push_end：推流结束回调；
 	// * snapshot：截图回调；
-	// * record：录制回调；
-	// * audit_snapshot：截图审核回调。
+	// * record：录制任务状态回调；
+	// * audit_snapshot：截图审核结果回调。
 	MessageType *string `json:"MessageType,omitempty"`
 
-	// 域名空间名称。如创建回调 UpdateCallback [https://www.volcengine.com/docs/6469/78553] 时传了参数 Vhost，删除时需要传 Vhost。
+	// 域名空间，与创建回调时传的值一致。您可以调用 DescribeCallback [https://www.volcengine.com/docs/6469/1126931] 接口查看待删除回调配置的 Vhost 取值。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2003,7 +2052,7 @@ type DeleteCallbackResResponseMetadataError struct {
 
 type DeleteCertBody struct {
 
-	// REQUIRED; 待删除的证书链 ID。
+	// REQUIRED; 待删除的 HTTPS 证书的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
 	ChainID string `json:"ChainID"`
 }
 
@@ -2046,7 +2095,7 @@ type DeleteCertResResponseMetadataError struct {
 
 type DeleteDomainBody struct {
 
-	// REQUIRED; 待删除域名。
+	// REQUIRED; 待删除域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -2082,6 +2131,47 @@ type DeleteDomainResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type DeleteHTTPHeaderConfigBody struct {
+
+	// REQUIRED; HTTP Header 类型，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header
+	// 配置的 Phase 取值。
+	Phase int32 `json:"Phase"`
+
+	// REQUIRED; 域名空间，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header 配置的 Vhost
+	// 取值。
+	Vhost string `json:"Vhost"`
+
+	// 拉流域名，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header 配置的 Domain 取值。
+	Domain *string `json:"Domain,omitempty"`
+}
+
+type DeleteHTTPHeaderConfigRes struct {
+
+	// REQUIRED
+	ResponseMetadata DeleteHTTPHeaderConfigResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DeleteHTTPHeaderConfigResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type DeleteIPAccessRuleBody struct {
@@ -2162,13 +2252,17 @@ type DeletePullToPushTaskResResponseMetadataError struct {
 
 type DeleteRecordPresetBody struct {
 
-	// REQUIRED; 模版名称。可调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口，查询模版名称。
+	// REQUIRED; 录制配置的名称。可调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口，查询配置的名称。
 	Preset string `json:"Preset"`
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，您可以调用ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]接口查看待删除的录制配置 App 取值。
 	App *string `json:"App,omitempty"`
 
-	// 域名空间名称。
+	// 流名称，取值与直播流地址的 StreamName 字段取值相应，用来指定待更新的录制配置，默认为空。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
+	// 接口查看待更新录制配置的 Stream 取值。
+	Stream *string `json:"Stream,omitempty"`
+
+	// 域名空间。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待更新录制配置的 Vhost 取值。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2457,7 +2551,7 @@ type DeleteSnapshotPresetResResponseMetadataError struct {
 
 type DeleteStreamQuotaConfigBody struct {
 
-	// REQUIRED; 待删除限额配置的推流域名或拉流域名。
+	// REQUIRED; 待删除限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 }
 
@@ -2500,10 +2594,10 @@ type DeleteStreamQuotaConfigResResponseMetadataError struct {
 
 type DeleteTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待删除时移配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待删除时移配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2636,18 +2730,21 @@ type DeleteWatermarkPresetResResponseMetadataError struct {
 
 type DescribeAuthBody struct {
 
-	// REQUIRED; 鉴权场景类型。
+	// REQUIRED; 鉴权场景类型，取值及含义如下所示。
 	// * push：推流鉴权；
-	// * pull：拉流鉴权；
+	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
-	// 应用名称，默认为所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 推/拉流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看待配置鉴权的推拉流域名。
+	// :::tip 参数 Domain 和
+	// Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2697,20 +2794,20 @@ type DescribeAuthResResultAuthListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 鉴权状态。
-	// * false：关闭推拉流鉴权；
-	// * true：开启推拉流鉴权。
+	// REQUIRED; 是否开启 URL 地址鉴权。
+	// * false：关闭；
+	// * true：开启。
 	AuthStatus bool `json:"AuthStatus"`
 
 	// REQUIRED; 推/拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 鉴权场景类型。
+	// REQUIRED; 鉴权场景类型，取值及含义如下所示。
 	// * push：推流鉴权；
 	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
-	// REQUIRED; 有效时长，单位为 s。
+	// REQUIRED; 鉴权生成时长，单位为秒。
 	ValidDuration int32 `json:"ValidDuration"`
 
 	// REQUIRED; 域名空间名称。
@@ -2726,7 +2823,7 @@ type DescribeAuthResResultAuthListPropertiesItemsItem struct {
 	// 自定义推拉流地址中，鉴权参数volcSecret和volcTime的名称。
 	AuthField map[string]*string `json:"AuthField,omitempty"`
 
-	// 加密字段。
+	// 生成加密字符串使用的加密字段。
 	EncryptField []*string `json:"EncryptField,omitempty"`
 
 	// 对称加密算法。
@@ -2859,7 +2956,7 @@ type DescribeCallbackBody struct {
 	// domain, app二选一必传
 	Domain *string `json:"Domain,omitempty"`
 
-	// 消息类型，缺省情况下表示查询全部。包括以下类型。
+	// 回调类型。默认为空，表示查询全部回调类型，取值及含义如下所示。
 	// * push：推流开始回调；
 	// * push_end：推流结束回调；
 	// * snapshot：截图回调；
@@ -2867,7 +2964,8 @@ type DescribeCallbackBody struct {
 	// * audit_snapshot：截图审核回调。
 	MessageType *string `json:"MessageType,omitempty"`
 
-	// 域名空间名称，Vhost和Domain传且仅传一个。
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tipVhost和Domain传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2917,16 +3015,18 @@ type DescribeCallbackResResultCallbackListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 开启鉴权。
+	// REQUIRED; 回调消息发送是否开启鉴权，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
 	AuthEnable bool `json:"AuthEnable"`
 
-	// REQUIRED; 密钥。
+	// REQUIRED; 回调消息发送鉴权密钥，开启回调消息鉴权时生效。
 	AuthKeyPrimary string `json:"AuthKeyPrimary"`
 
 	// REQUIRED; 创建时间。
 	CreateTime string `json:"CreateTime"`
 
-	// REQUIRED; 消息类型。包括以下类型。
+	// REQUIRED; 回调的消息类型，取值及含义如下所示。
 	// * push：推流开始回调；
 	// * push_end：推流结束回调；
 	// * snapshot：截图回调；
@@ -2939,7 +3039,7 @@ type DescribeCallbackResResultCallbackListItem struct {
 	// * 1：true，开启。
 	TranscodeCallback int32 `json:"TranscodeCallback"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 回调数据列表。
@@ -2951,16 +3051,16 @@ type DescribeCallbackResResultCallbackListPropertiesItemsItem struct {
 	// REQUIRED; 回调类型，返回 HTTP，表示可以使用 HTTP 和 HTTPS 接收回调事件。
 	CallbackType string `json:"CallbackType"`
 
-	// REQUIRED; 回调的 URL。
+	// REQUIRED; 回调消息接收地址。
 	URL string `json:"URL"`
 }
 
 type DescribeCertDetailSecretV2Body struct {
 
-	// 证书实例 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/81242]接口获取。 :::tip 参数ChainID与CertID传且仅传一个。 :::
+	// 证书实例 ID，您可以通过ListCertV2 [https://www.volcengine.com/docs/6469/81242]接口获取证书示例 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
 	CertID *string `json:"CertID,omitempty"`
 
-	// 证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/81242]接口获取。 :::tip 参数ChainID与CertID传且仅传一个。 :::
+	// 证书链 ID，您可以通过ListcCertV2 [https://www.volcengine.com/docs/6469/81242]接口获取 证书链 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
@@ -3013,13 +3113,13 @@ type DescribeCertDetailSecretV2ResResult struct {
 	// REQUIRED; 证书链 ID。
 	ChainID string `json:"ChainID"`
 
-	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为秒。
 	NotAfter string `json:"NotAfter"`
 
-	// REQUIRED; 证书的生效日期，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 证书的生效日期，RFC3339 格式的 UTC 时间，精度为秒。
 	NotBefore string `json:"NotBefore"`
 
-	// REQUIRED; 证书状态，取值与含义的对应关系如下所示。
+	// REQUIRED; 证书状态，取值及含义如下所示。
 	// * OK：正常；
 	// * Expire：过期；
 	// * 30days：有效期剩余 30 天；
@@ -3231,7 +3331,7 @@ type DescribeDenyConfigResResultDenyListPropertiesItemsItem struct {
 
 type DescribeDomainBody struct {
 
-	// REQUIRED; 域名列表。
+	// REQUIRED; 待查询域名信息的域名列表。
 	DomainList []string `json:"DomainList"`
 }
 
@@ -3281,10 +3381,10 @@ type DescribeDomainResResultDomainListItem struct {
 	// REQUIRED; CNAME 信息。
 	CNAME string `json:"CNAME"`
 
-	// REQUIRED; 所绑定证书支持的泛域名。
+	// REQUIRED; 绑定的 HTTPS 证书支持的泛域名。
 	CertDomain string `json:"CertDomain"`
 
-	// REQUIRED; 绑定的证书信息。
+	// REQUIRED; 绑定的 HTTPS 证书的证书链 ID 信息。
 	ChainID string `json:"ChainID"`
 
 	// REQUIRED; CNAME 状态。
@@ -3292,7 +3392,7 @@ type DescribeDomainResResultDomainListItem struct {
 	// * 1：已配置 CNAME。
 	CnameCheck int32 `json:"CnameCheck"`
 
-	// REQUIRED; 创建时间。
+	// REQUIRED; 域名添加时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	CreateTime string `json:"CreateTime"`
 
 	// REQUIRED; 推/拉流域名。
@@ -3305,12 +3405,14 @@ type DescribeDomainResResultDomainListItem struct {
 	DomainCheck int32 `json:"DomainCheck"`
 
 	// REQUIRED; ICP 备案校验是否通过，是否过期信息。
+	// * 1：备案正常，未过期；
+	// * 2：查存不到备案信息。
 	ICPCheck int32 `json:"ICPCheck"`
 
-	// REQUIRED; 绑定的推流域名。
+	// REQUIRED; 当前域名所属的域名空间下的推流域名。
 	PushDomain string `json:"PushDomain"`
 
-	// REQUIRED; 区域，包含以下类型。
+	// REQUIRED; 域名加速区域，包含以下类型。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
@@ -3319,9 +3421,9 @@ type DescribeDomainResResultDomainListItem struct {
 	// REQUIRED; 域名状态。状态说明如下所示。
 	// * 0：正常；
 	// * 1：审核中；
-	// * 2：禁用，禁止使用，此时 domain 不生效；
+	// * 2：禁用，禁止使用，此时域名加速不生效；
 	// * 3：删除；
-	// * 4：审核被驳回。审核不通过，需要重新创建并审核；
+	// * 4：审核被驳回，审核不通过，需要重新创建并审核；
 	// * 5：欠费关停。
 	Status int32 `json:"Status"`
 
@@ -3330,7 +3432,7 @@ type DescribeDomainResResultDomainListItem struct {
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -3436,6 +3538,92 @@ type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 
 	// REQUIRED; 禁推流的域名空间。
 	Vhost string `json:"Vhost"`
+}
+
+type DescribeHTTPHeaderConfigBody struct {
+
+	// REQUIRED; HTTP Header 的类型，支持的取值及含义如下所示。
+	// * 0：请求响应头；
+	// * 1：回源请求头。
+	Phase int32 `json:"Phase"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
+	Vhost string `json:"Vhost"`
+
+	// 拉流域名。默认为空，表示查询 Vhost 下的全部拉流域名的 HTTP Header 配置。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看待查询的拉流域名。
+	Domain *string `json:"Domain,omitempty"`
+}
+
+type DescribeHTTPHeaderConfigRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeHTTPHeaderConfigResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result DescribeHTTPHeaderConfigResResult `json:"Result"`
+}
+
+type DescribeHTTPHeaderConfigResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// DescribeHTTPHeaderConfigResResult - 视请求的接口而定
+type DescribeHTTPHeaderConfigResResult struct {
+
+	// REQUIRED; HTTP Header 配置信息。
+	HeaderConfigList []DescribeHTTPHeaderConfigResResultHeaderConfigListItem `json:"HeaderConfigList"`
+}
+
+type DescribeHTTPHeaderConfigResResultHeaderConfigListItem struct {
+
+	// REQUIRED; 是否保留原 Header 配置，取值及含义如下所示。
+	// * 0：保留；
+	// * 1：不保留。
+	BlockOriginal int32 `json:"BlockOriginal"`
+
+	// REQUIRED; 拉流域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 配置是否启用，取值及含义如下所示。
+	// * true：启用；
+	// * false：禁用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 域名的 HTTP Header 具体字段配置。
+	HeaderDetailList []DescribeHTTPHeaderConfigResResultHeaderConfigListPropertiesItemsItem `json:"HeaderDetailList"`
+
+	// REQUIRED; 域名空间。
+	Vhost string `json:"Vhost"`
+}
+
+type DescribeHTTPHeaderConfigResResultHeaderConfigListPropertiesItemsItem struct {
+
+	// REQUIRED; Header 配置中字段 Value 值的类型，取值及含义如下所示。
+	// * 0：常量；
+	// * 1：变量。
+	HeaderFieldType int32 `json:"HeaderFieldType"`
+
+	// REQUIRED; Header 配置中字段的 Key 值。
+	HeaderKey string `json:"HeaderKey"`
+
+	// REQUIRED; Header 配置中字段的 Value 值。
+	HeaderValue string `json:"HeaderValue"`
 }
 
 type DescribeIPAccessRuleBody struct {
@@ -6423,6 +6611,119 @@ type DescribeLivePushStreamCountDataResResultUserRegionListItem struct {
 	Province *string `json:"Province,omitempty"`
 }
 
+type DescribeLivePushStreamInfoDataBody struct {
+
+	// REQUIRED; 查询的结束时间。只能查询93d以内的数据
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的起始时间。
+	StartTime string `json:"StartTime"`
+
+	// 应用名称
+	App *string `json:"App,omitempty"`
+
+	// 域名列表，缺省情况表示该用户的所有域名
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 分页页数，默认1
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页大小， 默认20
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 直播流名称
+	Stream *string `json:"Stream,omitempty"`
+}
+
+type DescribeLivePushStreamInfoDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLivePushStreamInfoDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *DescribeLivePushStreamInfoDataResResult `json:"Result,omitempty"`
+}
+
+type DescribeLivePushStreamInfoDataResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// DescribeLivePushStreamInfoDataResResult - 视请求的接口而定
+type DescribeLivePushStreamInfoDataResResult struct {
+
+	// REQUIRED; 结束时间。格式rfc3339
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 分页信息
+	Pagination DescribeLivePushStreamInfoDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 按照搜索过滤字段和时间粒度聚合的数据
+	PushStreamInfoDataList []DescribeLivePushStreamInfoDataResResultPushStreamInfoDataListItem `json:"PushStreamInfoDataList"`
+
+	// REQUIRED; 起始时间。格式rfc3339
+	StartTime string `json:"StartTime"`
+
+	// 应用名称
+	App *string `json:"App,omitempty"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 直播流名称
+	Stream *string `json:"Stream,omitempty"`
+}
+
+// DescribeLivePushStreamInfoDataResResultPagination - 分页信息
+type DescribeLivePushStreamInfoDataResResultPagination struct {
+
+	// REQUIRED; 当前页数
+	PageCur int32 `json:"PageCur"`
+
+	// REQUIRED; 每页大小
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 总共推流个数
+	TotalCount int32 `json:"TotalCount"`
+}
+
+type DescribeLivePushStreamInfoDataResResultPushStreamInfoDataListItem struct {
+
+	// REQUIRED; 应用名称
+	App string `json:"App"`
+
+	// REQUIRED; 推流开始到结束的时长，单位s
+	Duration int32 `json:"Duration"`
+
+	// REQUIRED; 推流结束时间，格式rfc3339
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 显示推流客户端的IP地址，如没有IP信息，返回空
+	IP string `json:"IP"`
+
+	// REQUIRED; 推流开始时间，格式rfc3339
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 直播流名称
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 推流断开原因
+	StreamBreakReason string `json:"StreamBreakReason"`
+}
+
 type DescribeLivePushStreamMetricsBody struct {
 
 	// REQUIRED; 应用名称。
@@ -8404,30 +8705,33 @@ type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 
 type DescribeRecordTaskFileHistoryBody struct {
 
-	// REQUIRED; 开始录制时间，RFC3339 格式的 UTC 时间，精度为 s。当您查询指定录制任务详情时，DateFrom 应设置为开始时间之前的任意时间。
+	// REQUIRED; 开始录制时间，RFC3339 格式的时间字符串，精度为秒。当您查询指定录制任务详情时，DateFrom 应设置为开始时间之前的任意时间。
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 结束录制时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 结束录制时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的时间字符串，精度为秒。
 	DateTo string `json:"DateTo"`
 
-	// REQUIRED; 分页查询页码。
+	// REQUIRED; 查询数据的页码，默认为 1，表示查询第一页的数据，取值范围为正整数。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 单个分页中，查询的结果数量。
+	// REQUIRED; 每页显示的数据条数，取值范围为正整数。
 	PageSize int32 `json:"PageSize"`
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址的 AppName 字段取值相同，默认为空表示查询 vhost 下的所有录制历史。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 流名称，默认查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// 流名称，取值与直播流地址的 StreamName 字段取值相同，默认为空表示查询 App 下的所有录制历史。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip
+	// 如果指定 Stream，必须同时指定 App 的值。 :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 录制文件保存位置。默认取值为 tos。
-	// * tos
-	// * vod
+	// 录制文件保存位置，支持的取值及含义如下所示。
+	// * tos：存储到 TOS（默认值）；
+	// * vod：存储到 VOD。
 	Type *string `json:"Type,omitempty"`
 
-	// 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// 域名空间，即直播流地址的域名所属的域名空间，默认为空表示查询所有录制历史。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -8471,7 +8775,7 @@ type DescribeRecordTaskFileHistoryResResult struct {
 	// REQUIRED; 录制文件列表。
 	Data []DescribeRecordTaskFileHistoryResResultDataItem `json:"Data"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 查询结果的分页信息。
 	Pagination DescribeRecordTaskFileHistoryResResultPagination `json:"Pagination"`
 }
 
@@ -8480,7 +8784,7 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; ToS 存储空间。
+	// REQUIRED; 存储位置为 TOS 时的 Bucket。
 	Bucket string `json:"Bucket"`
 
 	// REQUIRED; 录制时长。
@@ -8495,7 +8799,7 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 录制文件存储格式。
 	Format string `json:"Format"`
 
-	// REQUIRED; ToS 中的保存路径。
+	// REQUIRED; 存储位置为 TOS 时，在 Bucket 中的存储路径。
 	Path string `json:"Path"`
 
 	// REQUIRED; 开始录制时间。
@@ -8504,40 +8808,44 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
 
-	// REQUIRED; 录制文件保存在 VoD 时，录制视频的 ID。
+	// REQUIRED; 录制文件保存在 VOD 时，录制文件的 ID。
 	Vid string `json:"Vid"`
 }
 
-// DescribeRecordTaskFileHistoryResResultPagination - 分页信息。
+// DescribeRecordTaskFileHistoryResResultPagination - 查询结果的分页信息。
 type DescribeRecordTaskFileHistoryResResultPagination struct {
 
-	// REQUIRED; 当前页。
+	// REQUIRED; 当前所在分页的页码。
 	PageCur int32 `json:"PageCur"`
 
-	// REQUIRED; 当前页的大小。
+	// REQUIRED; 每页显示的数据条数。
 	PageSize int32 `json:"PageSize"`
 
-	// REQUIRED; 当前页的数据量。
+	// REQUIRED; 查询结果的数据总页数。
 	PageTotal int32 `json:"PageTotal"`
 
-	// REQUIRED; 数据总量。
+	// REQUIRED; 查询结果的数据总条数。
 	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeRefererBody struct {
 
-	// 应用名称，默认为所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。 :::tip 参数 Domain 和 App 至少传一个。 :::
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。 :::tip
+	// 参数 Domain 和 App 至少传一个。 :::
 	App *string `json:"App,omitempty"`
 
-	// 拉流域名。 :::tip
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	// :::tip
 	// * 参数 Domain 和 Vhost 传且仅传一个。
 	// * 参数 Domain 和 App 至少传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// 页面，查看拉流域名所属的域名空间。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -8584,7 +8892,7 @@ type DescribeRefererResResult struct {
 
 type DescribeRefererResResultRefererListItem struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
 	// REQUIRED; 拉流域名。
@@ -8593,7 +8901,7 @@ type DescribeRefererResResultRefererListItem struct {
 	// REQUIRED; Referer 防盗链详情列表。
 	RefererInfoList []DescribeRefererResResultRefererListPropertiesItemsItem `json:"RefererInfoList"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -8605,12 +8913,12 @@ type DescribeRefererResResultRefererListPropertiesItemsItem struct {
 	// REQUIRED; 优先级，当前默认返回值为 0。当多域名返回值一致时，按照域名输入顺序区分，越早加入列表的域名优先级越高。
 	Priority int32 `json:"Priority"`
 
-	// REQUIRED; 防盗链类型。
+	// REQUIRED; referer 防盗链黑白名单类型，取值即含义如下所示。
 	// * deny：黑名单；
 	// * allow：白名单。
 	Type string `json:"Type"`
 
-	// REQUIRED; 防盗链规则。
+	// REQUIRED; Referer 字段规则，即设置的黑名单或白名单的域名。
 	Value string `json:"Value"`
 }
 
@@ -8753,9 +9061,6 @@ type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem struct {
 	// REQUIRED; ToS 存储空间 bucket。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
 	Bucket string `json:"Bucket"`
 
-	// REQUIRED; 审核结果回调配置。
-	CallbackDetailList []DescribeSnapshotAuditPresetDetailResResultPresetDetailListPropertiesItemsItem `json:"CallbackDetailList"`
-
 	// REQUIRED
 	CreatedAt int32 `json:"CreatedAt"`
 
@@ -8809,18 +9114,9 @@ type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItemSnapshotConfi
 	StorageDir string `json:"StorageDir"`
 }
 
-type DescribeSnapshotAuditPresetDetailResResultPresetDetailListPropertiesItemsItem struct {
-
-	// REQUIRED; 回调的类型 HTTP。
-	CallbackType string `json:"CallbackType"`
-
-	// REQUIRED; 回调地址。
-	URL string `json:"URL"`
-}
-
 type DescribeStreamQuotaConfigBody struct {
 
-	// REQUIRED; 待查询限额配置的推流域名或拉流域名。
+	// REQUIRED; 待查询限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 }
 
@@ -8876,24 +9172,24 @@ type DescribeStreamQuotaConfigResResultQuotaListItem struct {
 	// REQUIRED; 配置详情列表。
 	QuotaDetailList []DescribeStreamQuotaConfigResResultQuotaListPropertiesItemsItem `json:"QuotaDetailList"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
-// DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemBandwidthConfig - 推流域名的推流路数限额配置信息。 :::tipDomain 为拉流域名时返回。
+// DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemBandwidthConfig - 拉流域名的带宽限额配置信息。 :::tipDomain 为拉流域名时返回。
 // :::
 type DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemBandwidthConfig struct {
 
-	// REQUIRED; 拉流带宽限额。
+	// REQUIRED; 拉流域名的带宽限额。
 	Quota int32 `json:"Quota"`
 
-	// REQUIRED; 拉流带宽限额的计量单位。
+	// REQUIRED; 带宽限额的计量单位。
 	QuotaUnit string `json:"QuotaUnit"`
 
-	// 拉流带宽限额告警阈值，缺省情况表示未设置告警。
+	// 带宽限额的告警阈值，缺省情况表示未设置告警。
 	AlarmThreshold *int32 `json:"AlarmThreshold,omitempty"`
 
-	// 拉流带宽限额告警的计量单位，缺省情况表示不未设置告警。
+	// 带宽限额告警的计量单位，缺省情况表示不未设置告警。
 	AlarmThresholdUnit *string `json:"AlarmThresholdUnit,omitempty"`
 }
 
@@ -8901,7 +9197,7 @@ type DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemBandwidth
 // :::
 type DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemStreamConfig struct {
 
-	// REQUIRED; 推流路数限额。
+	// REQUIRED; 推流域名的推流路数限额。
 	Quota int32 `json:"Quota"`
 
 	// 推流路数限额告警阈值，缺省情况表示未设置告警。
@@ -8910,7 +9206,7 @@ type DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemStreamCon
 
 type DescribeStreamQuotaConfigResResultQuotaListPropertiesItemsItem struct {
 
-	// 推流域名的推流路数限额配置信息。 :::tipDomain 为拉流域名时返回。 :::
+	// 拉流域名的带宽限额配置信息。 :::tipDomain 为拉流域名时返回。 :::
 	BandwidthConfig *DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemBandwidthConfig `json:"BandwidthConfig,omitempty"`
 
 	// 推流域名的推流路数限额配置信息。 :::tipDomain 为推流域名时返回。 :::
@@ -8919,7 +9215,7 @@ type DescribeStreamQuotaConfigResResultQuotaListPropertiesItemsItem struct {
 
 type DisableDomainBody struct {
 
-	// REQUIRED; 待禁用域名。
+	// REQUIRED; 待禁用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -8959,7 +9255,7 @@ type DisableDomainResResponseMetadataError struct {
 
 type EnableDomainBody struct {
 
-	// REQUIRED; 待启用域名。
+	// REQUIRED; 待启用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待启用域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -8995,6 +9291,52 @@ type EnableDomainResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type EnableHTTPHeaderConfigBody struct {
+
+	// REQUIRED; 启用或禁用配置，取值及含义如下所示。
+	// * true：启用；
+	// * false：禁用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; HTTP Header 类型，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header
+	// 配置的 Phase 取值。
+	Phase int32 `json:"Phase"`
+
+	// REQUIRED; 域名空间，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header 配置的 Vhost
+	// 取值。
+	Vhost string `json:"Vhost"`
+
+	// 拉流域名，您可以调用 DescribeHTTPHeaderConfig [https://www.volcengine.com/docs/6469/1232744] 接口查看 HTTP Header 配置的 Domain 取值。
+	Domain *string `json:"Domain,omitempty"`
+}
+
+type EnableHTTPHeaderConfigRes struct {
+
+	// REQUIRED
+	ResponseMetadata EnableHTTPHeaderConfigResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type EnableHTTPHeaderConfigResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type ForbidStreamBody struct {
@@ -9058,20 +9400,21 @@ type ForbidStreamResResponseMetadataError struct {
 
 type GeneratePlayURLBody struct {
 
-	// REQUIRED; 应用名称，默认为所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 拉流域名。
+	// REQUIRED; 拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// 过期时间，拉流地址的有效时间，过期后需要重新生成。RFC3339 格式的 UTC 时间，精度为秒，缺省情况下表示 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
-	// :::
+	// 拉流地址的过期时间，RFC3339 格式的 UTC 时间，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime
+	// 的时间为准。 :::
 	ExpiredTime *string `json:"ExpiredTime,omitempty"`
 
-	// 转码流后缀，不传默认为空，可通过调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查询。
+	// 转码流后缀，默认为空，表示生成源流的拉流地址。配置不为空时表示生成转码流的拉流地址，可通过调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853]
+	// 接口查询对应流的转码流后缀。
 	Suffix *string `json:"Suffix,omitempty"`
 
 	// CDN 类型，默认值为 fcdn，支持如下取值。
@@ -9079,7 +9422,7 @@ type GeneratePlayURLBody struct {
 	// * 3rd：第三方 CDN。
 	Type *string `json:"Type,omitempty"`
 
-	// 有效时长，拉流地址的有效时间，过期后需要重新生成。单位为秒，取值 ﹥0，缺省情况下表示 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。 :::
+	// 拉流地址的有效时长，单位为秒，超过有效时长后需要重新生成。缺省情况下表示 7 天，取值范围为正整数。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。 :::
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 }
 
@@ -9131,14 +9474,13 @@ type GeneratePlayURLResResultURLListItem struct {
 	// * 3rd：第三方 CDN。
 	CDN string `json:"CDN"`
 
-	// REQUIRED; 协议类型，包括 hls、flv 和 rtmp。
+	// REQUIRED; 协议类型，包括 hls、flv、rtmp、udp 和 cmaf。
 	Protocol string `json:"Protocol"`
 
-	// REQUIRED; 地址类型，可能的值为：
-	// * push：推流；
-	// * pull：拉流；
-	// * 3rdplay(relaysource)：第三方回源；
-	// * 3rdplay(relaysink)：第三方转推。
+	// REQUIRED; 地址类型，取值及含义如下所示。
+	// * pull：拉流地址；
+	// * 3rd_play(relay_source)：第三方回源地址，当配置了回源且 CDN 类型为第三方 CDN 时返回；
+	// * 3rd_play(relay_sink)：第三方转推地址，当配置了拉流转推且 CDN 类型为第三方 CDN 时返回。
 	Type string `json:"Type"`
 
 	// REQUIRED; 生成的拉流地址。
@@ -9147,23 +9489,25 @@ type GeneratePlayURLResResultURLListItem struct {
 
 type GeneratePushURLBody struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即推流域名（Domain）所属的域名空间（Vhost）。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看推流域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 推流域名名称，需要推流地址的域名，不填返回Vhost下所有推流域名生成的地址。
+	// 推流域名名称，需要推流地址的域名，不填返回Vhost下所有推流域名生成的地址。 推流域名，默认为空，表示生成域名空间下所有推流域名的推流地址。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要的推流域名。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 过期时间，推流地址的有效时间，过期后需要重新生成。RFC3339 格式的 UTC 时间，精度为秒，缺省情况下表示 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
-	// :::
+	// 推流地址的过期时间，RFC3339 格式的 UTC 时间，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime
+	// 的时间为准。 :::
 	ExpiredTime *string `json:"ExpiredTime,omitempty"`
 
-	// 有效时长，推流地址的有效时间，过期后需要重新生成。单位为秒，取值 ﹥0，缺省情况下表示 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。 :::
+	// 推流地址的有效时长，单位为秒，超过有效时长后需要重新生成。缺省情况下表示 7 天，取值范围为正整数。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。 :::
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 }
 
@@ -9302,7 +9646,7 @@ type GetPullCDNSnapshotTaskResResult struct {
 
 type GetPullRecordTaskBody struct {
 
-	// REQUIRED; 直播录制任务的 ID，任务的唯一标识。
+	// REQUIRED; 任务 ID，录制任务的唯一标识。您可以调用 ListPullRecordTask [https://www.volcengine.com/docs/6469/1111480] 获取任务 ID。
 	TaskID string `json:"TaskID"`
 }
 
@@ -9336,32 +9680,32 @@ type GetPullRecordTaskResResponseMetadata struct {
 // GetPullRecordTaskResResult - 视请求的接口而定
 type GetPullRecordTaskResResult struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; 创建录制任务时传入的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 推流/拉流域名
+	// REQUIRED; 创建录制任务时传入的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 任务结束时间
+	// REQUIRED; 任务结束时间。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 任务开始时间。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 任务状态，有以下几种状态：
-	// * 停用
-	// * 未开始
-	// * 生效中
-	// * 已结束
+	// REQUIRED; 录制任务的状态，取值及含义如下所示。
+	// * 停用：录制任务已被停止；
+	// * 未开始：录制任务未到录制开始时间；
+	// * 生效中：录制任务正在录制；
+	// * 已结束：录制已结束。
 	Status string `json:"Status"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; 创建任务时传入的流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 直播录制任务的 ID。
+	// REQUIRED; 任务的 ID。
 	TaskID string `json:"TaskId"`
 
-	// REQUIRED; 域名空间
+	// REQUIRED; 创建录制任务时传入的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -9413,15 +9757,15 @@ type KillStreamResResponseMetadataError struct {
 
 type ListCertV2Body struct {
 
-	// 是否启用证书，默认值为 true，支持的取值包括：
+	// 证书是否启用，默认值为 true，支持的取值及含义如下所示。
 	// * true：启用证书；
 	// * false：禁用证书。
 	Available *bool `json:"Available,omitempty"`
 
-	// 证书名称，支持输入证书名称中的关键字，进行模糊查询
+	// 证书名称，支持输入证书名称中的关键字，进行模糊查询.
 	CertName *string `json:"CertName,omitempty"`
 
-	// 域名，查询该域名对应的证书，支持精确查询
+	// 域名，查询该域名对应的证书，支持精确查询。默认为空，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
 	// 只有填了Available，这个字段才生效。
@@ -9474,7 +9818,7 @@ type ListCertV2ResResultCertListItem struct {
 	// REQUIRED; 与证书绑定的域名列表。
 	CertDomainList []string `json:"CertDomainList"`
 
-	// REQUIRED; 证书实例ID。
+	// REQUIRED; 证书实例 ID。
 	CertID string `json:"CertID"`
 
 	// REQUIRED; 证书名称。
@@ -9483,13 +9827,13 @@ type ListCertV2ResResultCertListItem struct {
 	// REQUIRED; 证书链 ID。
 	ChainID string `json:"ChainID"`
 
-	// REQUIRED; 火山证书中心证书链 ID。
+	// REQUIRED; 火山引擎证书中心证书链 ID。
 	ChainIDVolc string `json:"ChainIDVolc"`
 
-	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为秒。
 	NotAfter string `json:"NotAfter"`
 
-	// REQUIRED; 证书的生效日期，RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; 证书的生效日期，RFC3339 格式的 UTC 时间，精度为秒。
 	NotBefore string `json:"NotBefore"`
 
 	// REQUIRED; 证书状态，由证书管理平台返回，支持的取值如下所示。
@@ -9674,22 +10018,22 @@ type ListCommonTransPresetDetailResResultStandardPresetDetailItem struct {
 
 type ListDomainDetailBody struct {
 
-	// REQUIRED; 当前页码，取值范围为 [1,1000]。
+	// REQUIRED; 查询数据的页码，取值为 1 时表示查询第一页的数据，取值范围为 [1,1000]。
 	PageNum int32 `json:"PageNum"`
 
-	// REQUIRED; 分页大小，取值范围为 [1, 1000]
+	// REQUIRED; 每页显示的数据条数，取值为 10 时表示每页展示 10 条域名信息，取值范围为 [1, 1000]。
 	PageSize int32 `json:"PageSize"`
 
-	// 域名名称列表，缺省情况下表示全部。
+	// 域名名称列表，缺省情况下表示全部域名。
 	DomainNameList []*string `json:"DomainNameList,omitempty"`
 
-	// 域名区域列表。缺省情况下表示全部，区域类型支持以下取值。
+	// 域名加速区域列表，缺省情况下表示查看全部。支持的取值如下所示。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
 	DomainRegionList []*string `json:"DomainRegionList,omitempty"`
 
-	// 域名状态列表。缺省情况下表示全部。支持的取值如下所示。
+	// 域名状态列表，缺省情况下表示查询全部状态的域名。支持的取值如下所示。
 	// * 0：正常；
 	// * 1：审核中；
 	// * 2：禁用，禁止使用，此时 domain 不生效；
@@ -9698,12 +10042,12 @@ type ListDomainDetailBody struct {
 	// * 5：欠费关停。
 	DomainStatusList []*int32 `json:"DomainStatusList,omitempty"`
 
-	// 域名类型列表。缺省情况下表示全部。域名类型支持以下取值。
+	// 域名类型列表，缺省情况下表示全部类型的域名。支持的取值如下所示。
 	// * push：推流域名；
 	// * pull-flv：拉流域名。
 	DomainTypeList []*string `json:"DomainTypeList,omitempty"`
 
-	// 域名空间列表，缺省情况下表示全部。
+	// 域名空间列表，缺省情况下表示查询全部域名空间下的域名。
 	VhostList []*string `json:"VhostList,omitempty"`
 }
 
@@ -9744,7 +10088,7 @@ type ListDomainDetailResResponseMetadataError struct {
 
 type ListDomainDetailResResult struct {
 
-	// REQUIRED; 总记录数。
+	// REQUIRED; 按当前筛选条件查询的结果数量。
 	Total int32 `json:"Total"`
 
 	// 域名详细信息列表。
@@ -9756,45 +10100,47 @@ type ListDomainDetailResResultDomainListItem struct {
 	// REQUIRED; CNAME 信息。
 	CNAME string `json:"CNAME"`
 
-	// REQUIRED; 所绑定证书支持的泛域名。
+	// REQUIRED; 绑定的 HTTPS 证书支持的泛域名。
 	CertDomain string `json:"CertDomain"`
 
-	// REQUIRED; 绑定的证书信息。
+	// REQUIRED; 绑定的 HTTPS 证书的证书链 ID 信息。
 	ChainID string `json:"ChainID"`
 
-	// REQUIRED; CNAME 状态。
+	// REQUIRED; CNAME 状态，取值及含义如下所示。
 	// * 0：未配置 CNAME；
 	// * 1：已配置 CNAME。
 	CnameCheck int32 `json:"CnameCheck"`
 
-	// REQUIRED; 创建时间。
+	// REQUIRED; 域名添加时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	CreateTime string `json:"CreateTime"`
 
 	// REQUIRED; 推/拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 域名是否可用的状态。
+	// REQUIRED; 域名是否可用的状态，取值及含义如下所示。
 	// * 0：正常，域名为可用状态；
 	// * 1：配置中，域名为可用状态；
 	// * 2：不可用，域名为其他的不可用状态。
 	DomainCheck int32 `json:"DomainCheck"`
 
 	// REQUIRED; ICP 备案校验是否通过，是否过期信息。
+	// * 1：备案正常，未过期；
+	// * 2：查存不到备案信息。
 	ICPCheck int32 `json:"ICPCheck"`
 
-	// REQUIRED; 项目名称。
+	// REQUIRED; 域名空间所属的项目名称。
 	ProjectName string `json:"ProjectName"`
 
 	// REQUIRED; 绑定的推流域名。
 	PushDomain string `json:"PushDomain"`
 
-	// REQUIRED; 区域，包含以下类型。
+	// REQUIRED; 域名加速区域，取值及含义如下所示。
 	// * cn：中国大陆；
 	// * cn-global：全球；
 	// * cn-oversea：海外及港澳台。
 	Region string `json:"Region"`
 
-	// REQUIRED; 域名状态。状态说明如下所示。
+	// REQUIRED; 域名状态，取值及含义如下所示。
 	// * 0：正常；
 	// * 1：审核中；
 	// * 2：禁用，禁止使用，此时 domain 不生效；
@@ -9803,23 +10149,23 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 5：欠费关停。
 	Status int32 `json:"Status"`
 
-	// REQUIRED; 标签信息。
+	// REQUIRED; 域名空间的标签信息。
 	Tags []ListDomainDetailResResultDomainListPropertiesItemsItem `json:"Tags"`
 
-	// REQUIRED; 域名类型，包含两种类型。
+	// REQUIRED; 域名类型，取值及含义如下所示。
 	// * push：推流域名；
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
 type ListDomainDetailResResultDomainListPropertiesItemsItem struct {
 
-	// REQUIRED; 标签类型。
-	// * System：系统内置标签
-	// * Custom：自定义标签
+	// REQUIRED; 标签类型，取值及含义如下所示。
+	// * System：系统内置标签；
+	// * Custom：自定义标签。
 	Category string `json:"Category"`
 
 	// REQUIRED; 标签 Key 值。
@@ -9957,10 +10303,10 @@ type ListPullRecordTaskResResponseMetadata struct {
 // ListPullRecordTaskResResult - 视请求的接口而定
 type ListPullRecordTaskResResult struct {
 
-	// REQUIRED; 直播录制列表记录。
+	// REQUIRED; 直播录制任务列表。
 	List []ListPullRecordTaskResResultListItem `json:"List"`
 
-	// REQUIRED; 分页信息。
+	// REQUIRED; 查询结果的分页信息。
 	Pagination ListPullRecordTaskResResultPagination `json:"Pagination"`
 }
 
@@ -9972,10 +10318,10 @@ type ListPullRecordTaskResResultListItem struct {
 	// REQUIRED; 推流域名或拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 录制的结束时间，RFC3339 格式表示的 UTC 时间戳，精度为 s。
+	// REQUIRED; 录制的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 录制的开始时间，RFC3339 格式表示的 UTC 时间戳，精度为 s。
+	// REQUIRED; 录制的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 4种状态: 停用，未开始，生效中，已结束
@@ -9991,7 +10337,7 @@ type ListPullRecordTaskResResultListItem struct {
 	Vhost string `json:"Vhost"`
 }
 
-// ListPullRecordTaskResResultPagination - 分页信息。
+// ListPullRecordTaskResResultPagination - 查询结果的分页信息。
 type ListPullRecordTaskResResultPagination struct {
 
 	// REQUIRED; 目前页数
@@ -10248,12 +10594,12 @@ type ListRelaySourceV4ResResultPagination struct {
 
 type ListTimeShiftPresetV2Body struct {
 
-	// 时移类型。默认类型为 VoD。
-	// * vod：点播时移，获取 vod 类型的时移模板配置信息；
-	// * tos：直播时移，获取 tos 以及 fcdn-tos 类型的时移模板配置信息。
+	// 时移类型，默认类型为 vod。
+	// * vod：点播时移，表示查询时移录制存储在 VOD 中的时移配置；
+	// * tos：直播时移，表示查询时移录制存储在 TOS 以及 fcdn-tos 中的时移配置。
 	Type *string `json:"Type,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -10294,7 +10640,7 @@ type ListTimeShiftPresetV2ResResponseMetadataError struct {
 
 type ListTimeShiftPresetV2ResResult struct {
 
-	// 模板列表。
+	// 时移配置列表。
 	List []*ListTimeShiftPresetV2ResResultListItem `json:"List,omitempty"`
 }
 
@@ -10303,19 +10649,19 @@ type ListTimeShiftPresetV2ResResultListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; ToS 存储目录。
+	// REQUIRED; TOS 存储对应的 Bucket。
 	Bucket string `json:"Bucket"`
 
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 最大时移时长，即观看时移的最长时间，单位为 s。
+	// REQUIRED; 最大时移时长，即允许用户回看的最长时间，单位为秒。
 	MaxShiftTime int32 `json:"MaxShiftTime"`
 
-	// REQUIRED; 模板名称。
+	// REQUIRED; 时移配置名称。
 	Name string `json:"Name"`
 
-	// REQUIRED; 直播时移配置模版状态。
+	// REQUIRED; 直播时移配置启用状态。
 	// * 0：配置中；
 	// * 1：已启用。
 	Status int32 `json:"Status"`
@@ -10323,13 +10669,13 @@ type ListTimeShiftPresetV2ResResultListItem struct {
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 类型。默认类型为 VoD。
-	// * VoD
-	// * ToS
-	// * fcdn-ToS
+	// REQUIRED; 类型。默认类型为 vod。
+	// * vod：录制类型为录制时移时，录制配置中存储位置为 VOD。
+	// * tos：录制类型为录制时移时，录制配置中存储喂食为 TOS。
+	// * fcdn-toS：独立时移。
 	Type string `json:"Type"`
 
-	// REQUIRED; 点播空间。
+	// REQUIRED; 视频点播（VOD）空间名称。
 	VODNamespace string `json:"VODNamespace"`
 
 	// REQUIRED; 域名空间名称。
@@ -10338,10 +10684,11 @@ type ListTimeShiftPresetV2ResResultListItem struct {
 
 type ListVhostRecordPresetV2Body struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 直播录制的存储类型。默认值为 tos，支持以下取值。
+	// 直播录制的存储类型，默认值为 tos，支持的取值及含义如下所示。
 	// * vod：录制文件存在 VOD；
 	// * tos：录制文件存在 TOS。
 	Type *string `json:"Type,omitempty"`
@@ -10384,7 +10731,7 @@ type ListVhostRecordPresetV2ResResponseMetadataError struct {
 
 type ListVhostRecordPresetV2ResResult struct {
 
-	// REQUIRED; 录制模板列表。
+	// REQUIRED; 录制配置列表。
 	PresetList []ListVhostRecordPresetV2ResResultPresetListItem `json:"PresetList"`
 }
 
@@ -10399,17 +10746,17 @@ type ListVhostRecordPresetV2ResResultPresetListItem struct {
 	// REQUIRED; 域名空间名称。
 	Vhost string `json:"Vhost"`
 
-	// 模板详细信息。
+	// 录制参数详细信息。
 	SlicePresetV2 *ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 `json:"SlicePresetV2,omitempty"`
 }
 
-// ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 - 模板详细信息。
+// ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 - 录制参数详细信息。
 type ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 struct {
 
-	// 模板 ID。
+	// 录制配置 ID。
 	ID *int32 `json:"ID,omitempty"`
 
-	// 模板名称。
+	// 录制配置名称。
 	Name *string `json:"Name,omitempty"`
 
 	// 录制模板详细配置。
@@ -10970,17 +11317,7 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// 2 个参考帧之间的最大 B 帧数。取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 动态范围，画质增强类型生效
-	// * SDR：输出为SDR
-	// * HDR：输出为HDR
-	DynamicRange *string `json:"DynamicRange,omitempty"`
-
-	// 是否开启智能插帧，只对画质增强类型生效
-	// * 0：不开启
-	// * 1：开启
-	FISwitch *string `json:"FISwitch,omitempty"`
-
-	// 视频帧率，单位为 fps，帧率越大，画面越流畅，开启智能插帧时该值为 0。
+	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
 
 	// IDR 帧之间的最大间隔，单位为秒。
@@ -10994,10 +11331,6 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 转码模板参数的类型
-	// * hvq：表示使用画质增强
-	ParamType *string `json:"ParamType,omitempty"`
-
 	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
@@ -11005,9 +11338,6 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// * true：极智超清转码；
 	// * false：标准转码。
 	Roi *bool `json:"Roi,omitempty"`
-
-	// 使用场景，画质增强时生效 football：足球场景
-	SceneType *string `json:"SceneType,omitempty"`
 
 	// 短边长度。 :::tip
 	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
@@ -11614,7 +11944,7 @@ type StopPullToPushTaskResResponseMetadataError struct {
 
 type UnbindCertBody struct {
 
-	// REQUIRED; 需要解绑证书的域名。
+	// REQUIRED; 填写需要解绑 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要解绑证书的域名。
 	Domain string `json:"Domain"`
 }
 
@@ -11657,29 +11987,32 @@ type UnbindCertResResponseMetadataError struct {
 
 type UpdateAuthKeyBody struct {
 
-	// REQUIRED; 鉴权详情，数量阈值为 100。
+	// REQUIRED; 鉴权配置参数，包括鉴权密钥、鉴权字段、加密字符串生成算法等。
 	AuthDetailList []UpdateAuthKeyBodyAuthDetailListItem `json:"AuthDetailList"`
 
-	// REQUIRED; 鉴权场景类型。
+	// REQUIRED; 鉴权场景类型，取值及含义如下所示。
 	// * push：推流鉴权；
-	// * pull：拉流鉴权；
+	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
-	// 应用名称，默认为所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 推/拉流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// :::tip 参数 Domain 和 Vhost
+	// 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 鉴权状态。创建推拉流鉴权时，默认值为 false；更新推拉流鉴权时，缺省情况表示不修改推拉流鉴权状态。
-	// * false：关闭推拉流鉴权；
-	// * true：开启推拉流鉴权。
+	// 是否开启 URL 地址鉴权，取值及含义如下所示。
+	// * false：关闭（默认值）；
+	// * true：开启。
 	PushPullEnable *bool `json:"PushPullEnable,omitempty"`
 
-	// 有效时长，单位为 s，默认值为 604800，取值范围为 [60,2592000]。
+	// 鉴权生效时长，单位为秒，默认值为 604800，取值范围为 [60,2592000]，超出生效时长后 URL 无法使用。
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -11740,31 +12073,33 @@ type UpdateCallbackBody struct {
 	// REQUIRED; 回调信息列表。
 	CallbackDetailList []UpdateCallbackBodyCallbackDetailListItem `json:"CallbackDetailList"`
 
-	// REQUIRED; 消息类型。包括以下类型。
+	// REQUIRED; 回调的消息类型，取值及含义如下所示。
 	// * push：推流开始回调；
 	// * push_end：推流结束回调；
 	// * snapshot：截图回调；
-	// * record：录制回调；
-	// * audit_snapshot：截图审核回调。
+	// * record：录制任务状态回调；
+	// * audit_snapshot：截图审核结果回调。
 	MessageType string `json:"MessageType"`
 
 	// domain / app 二选一必传
 	App *string `json:"App,omitempty"`
 
-	// 是否开启鉴权，默认为 false。取值及含义如下所示。
+	// 回调消息发送是否开启鉴权，默认为 false，取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	AuthEnable *bool `json:"AuthEnable,omitempty"`
 
-	// 密钥。 :::tip 如果 AuthEnable 为 true，则密钥必填。 :::
+	// 回调消息发送鉴权密钥。 :::tip 如果 AuthEnable 为 true，则密钥必填。 :::
 	AuthKeyPrimary *string `json:"AuthKeyPrimary,omitempty"`
 
-	// 推流域名。Vhost和Domain传且仅传一个。
+	// 直播流使用的推流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// :::tipVhost和Domain传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 是否开启转码流回调，默认为 0。取值及含义如下所示。
 	// * 0：false，不开启；
 	// * 1：true，开启。
+	// :::tip 回调类型为推流开始或推流结束时生效。 :::
 	TranscodeCallback *int32 `json:"TranscodeCallback,omitempty"`
 
 	// domain / app 二选一必传
@@ -11773,10 +12108,10 @@ type UpdateCallbackBody struct {
 
 type UpdateCallbackBodyCallbackDetailListItem struct {
 
-	// REQUIRED; 回调类型，支持设置为 HTTP，表示可以使用 HTTP 和 HTTPS 接收回调事件。
+	// REQUIRED; 回调类型，支持设置为 HTTP，表示可以使用 HTTP 和 HTTPS 地址接收回调事件。
 	CallbackType string `json:"CallbackType"`
 
-	// REQUIRED; 回调的 URL。
+	// REQUIRED; 回调消息接收地址。
 	URL string `json:"URL"`
 }
 
@@ -11874,10 +12209,10 @@ type UpdateDenyConfigResResponseMetadataError struct {
 
 type UpdateDomainVhostBody struct {
 
-	// REQUIRED; 需要切换的拉流/推流域名。
+	// REQUIRED; 待修改所属域名空间的的拉流/推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 目的域名空间。
+	// REQUIRED; 目的域名空间，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名所属的域名空间信息。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11916,6 +12251,85 @@ type UpdateDomainVhostResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type UpdateHTTPHeaderConfigBody struct {
+
+	// REQUIRED; 配置完成后是否启用，取值及含义如下所示。
+	// * true：启用；
+	// * false：禁用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; Header 具体字段配置。
+	HeaderConfigList []UpdateHTTPHeaderConfigBodyHeaderConfigListItem `json:"HeaderConfigList"`
+
+	// REQUIRED; HTTP Header 的类型，支持的取值及含义如下所示。
+	// * 0：请求响应头；
+	// * 1：回源请求头。
+	Phase int32 `json:"Phase"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
+	Vhost string `json:"Vhost"`
+
+	// 是否保留原 Header 配置，取值及含义如下所示。
+	// * 0：保留（默认值）；
+	// * 1：不保留。
+	BlockOriginal *int32 `json:"BlockOriginal,omitempty"`
+
+	// 拉流域名。默认为空，表示 Vhost 下的全部拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看配置的拉流域名。
+	Domain *string `json:"Domain,omitempty"`
+}
+
+type UpdateHTTPHeaderConfigBodyHeaderConfigListItem struct {
+
+	// REQUIRED; Header 配置中字段 Value 值的类型，取值及含义如下所示。
+	// * 0：常量；
+	// * 1：变量。
+	HeaderFieldType int32 `json:"HeaderFieldType"`
+
+	// Header 配置中字段的 Key 值，最大长度为 1024 个字符，多个 Header 不可重名。
+	HeaderKey *string `json:"HeaderKey,omitempty"`
+
+	// Header 配置中字段的 Value 值，最大长度为 1024 个字符，支持使用常量和变量作为 Value 值。
+	// HTTP Header 类型为回源请求头时，支持使用以下变量为 Value 赋值：
+	// * ${domain}：客户端拉流请求中使用的域名。
+	// * ${uri}：客户端拉流请求中不包括查询参数的路径。如果请求被重写，则表示重写后的路径。
+	// * ${args}：客户端拉流请求中的查询参数。如果请求被重写，则表示重写后的参数。
+	// * ${remote_addr}：发送拉流请求的客户端 IP 地址。
+	// * ${server_addr}：响应客户端拉流请求的 CDN 节点 IP 地址。
+	// HTTP Header 类型为请求响应头时，支持使用以下变量为 Value 赋值：
+	// * ${upstream_host}：客户端拉流请求中使用的域名。
+	// * ${upstream_uri}：客户端拉流请求中不包括查询参数的路径。如果请求被重写，则表示重写后的路径。
+	// * ${upstream_args}：客户端拉流请求中的查询参数。如果请求被重写，则表示重写后的参数。
+	// * ${remote_addr}：发送拉流请求的客户端 IP 地址。
+	HeaderValue *string `json:"HeaderValue,omitempty"`
+}
+
+type UpdateHTTPHeaderConfigRes struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateHTTPHeaderConfigResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateHTTPHeaderConfigResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type UpdateIPAccessRuleBody struct {
@@ -12097,62 +12511,69 @@ type UpdatePullToPushTaskResResponseMetadataError struct {
 
 type UpdateRecordPresetV2Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
-	App string `json:"App"`
-
-	// REQUIRED; 模版名称，由 1 到 50 位数字、字母、下划线及"-"和"."组成。可调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
-	// 接口，查询模版名称。
+	// REQUIRED; 录制配置的名称。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待更新录制配置的 Name 取值。
 	Preset string `json:"Preset"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待更新录制配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
-	// 录制模板详细配置。
+	// 应用名称，取值与直播流地址的 AppName 字段取值相同，用来指定待更新的录制配置，默认为空。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
+	// 接口查看待更新录制配置的 App 取值。
+	App *string `json:"App,omitempty"`
+
+	// 录制配置的详细参数配置。
+	// :::tip 以下录制参数，未传入值时表示与更新前的配置相同。 :::
 	RecordPresetConfig *UpdateRecordPresetV2BodyRecordPresetConfig `json:"RecordPresetConfig,omitempty"`
 
-	// 流名称。
+	// 流名称，取值与直播流地址的 StreamName 字段取值相应，用来指定待更新的录制配置，默认为空。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
+	// 接口查看待更新录制配置的 Stream 取值。
 	Stream *string `json:"Stream,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfig - 录制模板详细配置。
+// UpdateRecordPresetV2BodyRecordPresetConfig - 录制配置的详细参数配置。
+// :::tip 以下录制参数，未传入值时表示与更新前的配置相同。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 
-	// FLV 录制参数，开启 FLV 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+	// 录制为 FLV 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	FlvParam *UpdateRecordPresetV2BodyRecordPresetConfigFlvParam `json:"FlvParam,omitempty"`
 
-	// HLS 录制参数，开启 HLS 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+	// 录制为 HLS 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	HlsParam *UpdateRecordPresetV2BodyRecordPresetConfigHlsParam `json:"HlsParam,omitempty"`
 
-	// MP4 录制参数，开启 MP4 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+	// 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	Mp4Param *UpdateRecordPresetV2BodyRecordPresetConfigMp4Param `json:"Mp4Param,omitempty"`
 
-	// 源流录制，默认值为 0。支持的取值如下所示。
+	// 是否录制源流，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tipTranscodeRecord和OriginRecord的取值至少一个不为 0。 :::
+	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
-	// 录制 HLS 格式时，单个 TS 切片时长，单位为 s，默认值为 5，取值范围为 [5,30]。
+	// 录制为 HLS 格式时，单个 TS 切片时长，单位为秒，默认值为 10，取值范围为 [5,30]。
 	SliceDuration *int32 `json:"SliceDuration,omitempty"`
 
-	// 转码流录制，默认值为 0。支持的取值如下所示。
+	// 是否录制转码流，默认值为 0。支持的取值如下所示。
 	// * 0：不录制；
-	// * 1：录制。
-	// * 2：全部录制，如果录制转码流后缀列表（TranscodeSuffixList）为空则全部录制，不为空则录制 TranscodeSuffixList 命中的转码后缀。
-	// :::tipTranscodeRecord 和 OriginRecord 的取值至少一个不为 0。 :::
+	// * 1：录制全部转码流；
+	// * 2：录制指定转码流，即通过转码后缀列表 TranscodeSuffixList匹配转码流进行录制，如果转码流后缀列表为空仍表示录制全部转码流。
+	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
-	// 录制转码流后缀列表，转码流录制配置为全部录制时（TranscodeRecord 配置等于 2）生效。
+	// 转码流后缀列表，转码流录制配置为根据转码流列表匹配（TranscodeRecord 取值为 2）时生效，TranscodeSuffixList 默认配置为空，效果等同于录制全部转码流。
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigFlvParam - FLV 录制参数，开启 FLV 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigFlvParam - 录制为 FLV 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
-	// 断流等待时长，取值范围[0, 3600]。
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对 HLS 生效。
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12160,26 +12581,29 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]。
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam `json:"VODParam,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam - TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket。 :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -12187,17 +12611,27 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空。
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam - VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -12205,35 +12639,42 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace
-	// 必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID。
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigHlsParam - HLS 录制参数，开启 HLS 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigHlsParam - 录制为 HLS 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 
-	// 断流等待时长，取值范围[0, 3600]。
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对 HLS 生效。
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12241,26 +12682,29 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]。
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam `json:"VODParam,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket。 :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -12268,17 +12712,27 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空。
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -12286,35 +12740,42 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace
-	// 必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID。
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigMp4Param - MP4 录制参数，开启 MP4 录制时设置。 :::tipFlvParam、HlsParam、Mp4Param至少开启一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigMp4Param - 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一个录制格式，即 FlvParam、HlsParam、Mp4Param
+// 至少开启一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 
-	// 断流等待时长，取值范围[0, 3600]。
+	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对 HLS 生效。
+	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
+	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12322,26 +12783,29 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]。
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
-	// * -1：一直拼接；
-	// * 0：不拼接；
-	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
+	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
+	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
+	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
+	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
+	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	TOSParam *UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
 	VODParam *UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam `json:"VODParam,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 
-	// TOS 存储空间，一般使用 CDN 对应的 Bucket。 :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
+	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
+	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -12349,17 +12813,27 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储目录，默认为空。
+	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
+// 配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -12367,25 +12841,28 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
-	// * 支持删除固定路径，如 {App}/{Stream}；
-	// * 不支持以正斜线（/）或者反斜线（\）开头；
-	// * 不支持 “//” 和 “/./” 等字符串；
-	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
-	// * 不支持 “..” 作为文件名；
-	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
+	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
+	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
+	// 存储规则设置注意事项如下。
+	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
+	// * record 为自定义字段；
+	// * {PubDomain} 取值为当前配置的 vhost 值；
+	// * {App} 取值为当前配置的 AppName 值；
+	// * {Stream} 取值为当前配置的 StreamName 值；
+	// * {StartTime} 取值为录制的开始时间戳；
+	// * {EndTime} 取值为录制的结束时间戳。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace
-	// 必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
+	// 为必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID。
+	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -12428,16 +12905,21 @@ type UpdateRecordPresetV2ResResponseMetadataError struct {
 
 type UpdateRefererBody struct {
 
-	// REQUIRED; Referer 防盗链信息列表。
+	// REQUIRED; Referer 防盗链规则列表。 :::tip
+	// * 同一个 Vhost 下，默认支持配置不超过 100 个 Referer 规则，如需提升限额请创建工单 [https://console.volcengine.com/workorder/create?step=2&SubProductID=P00000076]获取技术支持；
+	// * 单次请求最多支持配置 100 个 Referer 规则。 :::
 	RefererInfoList []UpdateRefererBodyRefererInfoListItem `json:"RefererInfoList"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 应用名称，默认为所有应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。 :::tip 参数 Domain 和 App 传且仅传一个。 :::
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。 :::tip
+	// 参数 Domain 和 App 传且仅传一个。 :::
 	App *string `json:"App,omitempty"`
 
-	// 拉流域名。 :::tip 参数 Domain 和 App 传且仅传一个。 :::
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	// :::tip 参数 Domain 和 App
+	// 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -12446,15 +12928,15 @@ type UpdateRefererBodyRefererInfoListItem struct {
 	// REQUIRED; 用于标识 referer 防盗链的关键词默认取值为 referer。
 	Key string `json:"Key"`
 
-	// REQUIRED; 防盗链类型，支持如下取值。
-	// * deny：黑名单；
-	// * allow：白名单。
+	// REQUIRED; Referer 字段规则类型，取值即含义如下所示。
+	// * deny：拒绝，即黑名单；
+	// * allow：通过，即白名单。
 	Type string `json:"Type"`
 
-	// 指定域名的优先级。默认值为 0，取值范围为 [0,100]，数值越大，优先级越高。如果优先级相同，则越早加入列表的域名优先级越高。
+	// Referer 字段规则的匹配优先级，默认为 0，取值范围为 [0,100]，数值越大，优先级越高。如果优先级相同，则越早加入列表的域名优先级越高。
 	Priority *int32 `json:"Priority,omitempty"`
 
-	// 防盗链规则，即设置的黑名单或白名单的域名，最大长度限制 300 个字符。
+	// Referer 字段规则，即设置的黑名单或白名单的域名，最大长度限制 300 个字符。
 	Value *string `json:"Value,omitempty"`
 }
 
@@ -12642,9 +13124,6 @@ type UpdateSnapshotAuditPresetBody struct {
 	// ToS 存储对应的 Bucket。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
-	// 截图审核结果回调地址配置。
-	CallbackDetailList []*UpdateSnapshotAuditPresetBodyCallbackDetailListItem `json:"CallbackDetailList,omitempty"`
-
 	// 截图审核配置的描述。
 	Description *string `json:"Description,omitempty"`
 
@@ -12684,15 +13163,6 @@ type UpdateSnapshotAuditPresetBody struct {
 
 	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
-}
-
-type UpdateSnapshotAuditPresetBodyCallbackDetailListItem struct {
-
-	// REQUIRED; 回调地址的类型，当前仅支持 http。
-	CallbackType string `json:"CallbackType"`
-
-	// REQUIRED; 回调地址。
-	URL string `json:"URL"`
 }
 
 type UpdateSnapshotAuditPresetRes struct {
@@ -12917,24 +13387,63 @@ type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 // UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
 // :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
-	Enable      *bool                                                              `json:"Enable,omitempty"`
+
+	// 当前格式的截图配置是否开启，默认为 false，取值及含义如下所示。
+	// * false：不开启；
+	// * true：开启。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
 	ImageXParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
-	TOSParam    *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
+
+	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	TOSParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam `json:"TOSParam,omitempty"`
 }
 
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
+// 配置且配置其中一个。 :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
+
+	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、*" 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-	ServiceID       *string `json:"ServiceID,omitempty"`
+
+	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
+	ServiceID *string `json:"ServiceID,omitempty"`
 }
 
+// UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
+// :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
-	Bucket          *string `json:"Bucket,omitempty"`
-	Enable          *bool   `json:"Enable,omitempty"`
-	ExactObject     *string `json:"ExactObject,omitempty"`
+
+	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
+	// 为必填项。 :::
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
+	// * false：不使用；
+	// * true：使用。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
+	// OverwriteObject 传且仅传一个。 :::
+	ExactObject *string `json:"ExactObject,omitempty"`
+
+	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
+	// 传且仅传一个。 :::
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-	StorageDir      *string `json:"StorageDir,omitempty"`
+
+	// Bucket 目录，默认为空。 例如，存储路径为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
 type UpdateSnapshotPresetV2Res struct {
@@ -12966,7 +13475,7 @@ type UpdateSnapshotPresetV2ResResponseMetadata struct {
 
 type UpdateStreamQuotaConfigBody struct {
 
-	// REQUIRED; 需要配置限额的推流域名或拉流域名。
+	// REQUIRED; 需要配置限额的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 限额配置详情。
@@ -12991,7 +13500,7 @@ type UpdateStreamQuotaConfigBodyQuotaDetailListItem struct {
 // UpdateStreamQuotaConfigBodyQuotaDetailListItemBandwidthConfig - 拉流域名的带宽限额配置。 :::tipDomain 为拉流域名时，本参数为必选参数。 :::
 type UpdateStreamQuotaConfigBodyQuotaDetailListItemBandwidthConfig struct {
 
-	// REQUIRED; 带宽限额，取值[1~1000]。
+	// REQUIRED; 带宽限额，下行带宽峰值超过此限额的额外访问将会被拒绝，取值范围为 [1,10000]。
 	Quota int32 `json:"Quota"`
 
 	// REQUIRED; 拉流带宽限额的计量单位，支持的取值如下所示。
@@ -13000,7 +13509,7 @@ type UpdateStreamQuotaConfigBodyQuotaDetailListItemBandwidthConfig struct {
 	// * Tbps
 	QuotaUnit string `json:"QuotaUnit"`
 
-	// 拉流带宽限额告警阈值，取值范围为 [1,1000]，缺省情况表示不设置告警。 :::tip 该参数的取值需要小于等于拉流带宽限额Quota，否则会报错。 :::
+	// 拉流带宽限额告警阈值，取值范围为 [1,10000]，缺省情况表示不设置告警。 :::tip 该参数的取值需要小于等于拉流带宽限额Quota，否则会报错。 :::
 	AlarmThreshold *int32 `json:"AlarmThreshold,omitempty"`
 
 	// 拉流带宽限额告警的计量单位，缺省情况表示不设置告警。支持的取值如下所示。
@@ -13059,20 +13568,21 @@ type UpdateStreamQuotaConfigResResponseMetadataError struct {
 
 type UpdateTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待更新时移配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 最大时移时长，即观看时移的最长时间，单位为 s。支持的取值如下所示。
-	// * 86400
-	// * 259200
-	// * 604800
-	// * 1296000
+	// REQUIRED; 最大时移时长，即允许用户回看的最长时间，单位为秒，支持的取值如下所示。
+	// * 86400：1 天；
+	// * 259200：3 天；
+	// * 604800：7 天；
+	// * 1296000：15 天。
 	MaxShiftTime int32 `json:"MaxShiftTime"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待更新时移配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
-	// 开启时移的流名称，同一个 App 最多可指定 20 路。
+	// 开启时移的流名称，默认为空表示更新 App 级别的时移配置，不为空时表示更新 Stream 级别的时移配置。您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]
+	// 接口，获取待更新时移配置的 Stream 取值并进行更新。
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -13164,16 +13674,6 @@ type UpdateTranscodePresetBody struct {
 	// 取值为 0 时，表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 动态范围，画质增强类型生效
-	// * SDR：输出为SDR
-	// * HDR：输出为HDR
-	DynamicRange *string `json:"DynamicRange,omitempty"`
-
-	// 是否开启智能插帧，只对画质增强类型生效
-	// * 0：不开启
-	// * 1：开启
-	FISwitch *int32 `json:"FISwitch,omitempty"`
-
 	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
 	// * H.264：取值范围为 [0,60]；
 	// * H.265：取值范围为 [0,60]；
@@ -13205,10 +13705,6 @@ type UpdateTranscodePresetBody struct {
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 转码模板参数的类型
-	// * hvq：表示使用画质增强
-	ParamType *string `json:"ParamType,omitempty"`
-
 	// 是否极智超清转码，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。 :::tip
@@ -13216,15 +13712,7 @@ type UpdateTranscodePresetBody struct {
 	// * 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 使用场景，画质增强时生效
-	// football：足球场景
-	SceneType *string `json:"SceneType,omitempty"`
-
 	// 短边长度，配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
-	// * ParamType取 hvq 时： * H.264：取值范围为 0 和 [150,1280]；
-	// * H.265：取值范围为 0 和 [150,1280]；
-	//
-	//
 	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
 	// * H.265：取值范围为 0 和 [150,4096]；
 	// * H.266：取值范围为 0 和 [150,720]。
@@ -13466,6 +13954,8 @@ type DeleteCert struct{}
 type DeleteCertQuery struct{}
 type DeleteDomain struct{}
 type DeleteDomainQuery struct{}
+type DeleteHTTPHeaderConfig struct{}
+type DeleteHTTPHeaderConfigQuery struct{}
 type DeleteIPAccessRule struct{}
 type DeleteIPAccessRuleQuery struct{}
 type DeletePullToPushTask struct{}
@@ -13506,6 +13996,8 @@ type DescribeDomain struct{}
 type DescribeDomainQuery struct{}
 type DescribeForbiddenStreamInfoByPage struct{}
 type DescribeForbiddenStreamInfoByPageBody struct{}
+type DescribeHTTPHeaderConfig struct{}
+type DescribeHTTPHeaderConfigQuery struct{}
 type DescribeIPAccessRule struct{}
 type DescribeIPAccessRuleQuery struct{}
 type DescribeIPInfo struct{}
@@ -13549,6 +14041,8 @@ type DescribeLivePullToPushData struct{}
 type DescribeLivePullToPushDataQuery struct{}
 type DescribeLivePushStreamCountData struct{}
 type DescribeLivePushStreamCountDataQuery struct{}
+type DescribeLivePushStreamInfoData struct{}
+type DescribeLivePushStreamInfoDataQuery struct{}
 type DescribeLivePushStreamMetrics struct{}
 type DescribeLivePushStreamMetricsQuery struct{}
 type DescribeLiveRecordData struct{}
@@ -13594,6 +14088,8 @@ type DisableDomain struct{}
 type DisableDomainQuery struct{}
 type EnableDomain struct{}
 type EnableDomainQuery struct{}
+type EnableHTTPHeaderConfig struct{}
+type EnableHTTPHeaderConfigQuery struct{}
 type ForbidStream struct{}
 type ForbidStreamQuery struct{}
 type GeneratePlayURL struct{}
@@ -13658,6 +14154,8 @@ type UpdateDenyConfig struct{}
 type UpdateDenyConfigQuery struct{}
 type UpdateDomainVhost struct{}
 type UpdateDomainVhostQuery struct{}
+type UpdateHTTPHeaderConfig struct{}
+type UpdateHTTPHeaderConfigQuery struct{}
 type UpdateIPAccessRule struct{}
 type UpdateIPAccessRuleQuery struct{}
 type UpdatePullToPushTask struct{}
@@ -13766,6 +14264,10 @@ type DeleteDomainReq struct {
 	*DeleteDomainQuery
 	*DeleteDomainBody
 }
+type DeleteHTTPHeaderConfigReq struct {
+	*DeleteHTTPHeaderConfigQuery
+	*DeleteHTTPHeaderConfigBody
+}
 type DeleteIPAccessRuleReq struct {
 	*DeleteIPAccessRuleQuery
 	*DeleteIPAccessRuleBody
@@ -13845,6 +14347,10 @@ type DescribeDomainReq struct {
 type DescribeForbiddenStreamInfoByPageReq struct {
 	*DescribeForbiddenStreamInfoByPageQuery
 	*DescribeForbiddenStreamInfoByPageBody
+}
+type DescribeHTTPHeaderConfigReq struct {
+	*DescribeHTTPHeaderConfigQuery
+	*DescribeHTTPHeaderConfigBody
 }
 type DescribeIPAccessRuleReq struct {
 	*DescribeIPAccessRuleQuery
@@ -13929,6 +14435,10 @@ type DescribeLivePullToPushDataReq struct {
 type DescribeLivePushStreamCountDataReq struct {
 	*DescribeLivePushStreamCountDataQuery
 	*DescribeLivePushStreamCountDataBody
+}
+type DescribeLivePushStreamInfoDataReq struct {
+	*DescribeLivePushStreamInfoDataQuery
+	*DescribeLivePushStreamInfoDataBody
 }
 type DescribeLivePushStreamMetricsReq struct {
 	*DescribeLivePushStreamMetricsQuery
@@ -14017,6 +14527,10 @@ type DisableDomainReq struct {
 type EnableDomainReq struct {
 	*EnableDomainQuery
 	*EnableDomainBody
+}
+type EnableHTTPHeaderConfigReq struct {
+	*EnableHTTPHeaderConfigQuery
+	*EnableHTTPHeaderConfigBody
 }
 type ForbidStreamReq struct {
 	*ForbidStreamQuery
@@ -14145,6 +14659,10 @@ type UpdateDenyConfigReq struct {
 type UpdateDomainVhostReq struct {
 	*UpdateDomainVhostQuery
 	*UpdateDomainVhostBody
+}
+type UpdateHTTPHeaderConfigReq struct {
+	*UpdateHTTPHeaderConfigQuery
+	*UpdateHTTPHeaderConfigBody
 }
 type UpdateIPAccessRuleReq struct {
 	*UpdateIPAccessRuleQuery

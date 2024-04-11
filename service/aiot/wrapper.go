@@ -58,7 +58,7 @@ func (p *AIoT) commonHandlerJson(api string, query url.Values, resp interface{},
 	return statusCode, nil
 }
 
-//space相关接口
+// space相关接口
 func (p *AIoT) CreateSpace(request *CreateSpaceRequest) (*SpaceResponse, int, error) {
 	resp := new(SpaceResponse)
 	query := url.Values{}
@@ -335,7 +335,7 @@ func (p *AIoT) GetPushStreamCnt(request *GetPushStreamCntRequest) (*GetPushStrea
 	return resp, statusCode, nil
 }
 
-//device相关
+// device相关
 func (p *AIoT) CreateDevice(request *CreateDeviceRequest) (*CreateDeviceResponse, int, error) {
 	resp := new(CreateDeviceResponse)
 	query := url.Values{
@@ -1130,7 +1130,7 @@ func (p *AIoT) UpdateTransTemplate(request *UpdateTemplateRequest) (*TemplateRes
 	return resp, statusCode, nil
 }
 
-//证书相关
+// 证书相关
 func (p *AIoT) UploadCert(request *UploadCertRequest) (*UploadCertResponse, int, error) {
 	resp := new(UploadCertResponse)
 	query := url.Values{}
@@ -1350,16 +1350,16 @@ func (p *AIoT) ListCascadeTask(request *ListCascadeTaskRequest) (*ListCascadeTas
 	query.Add("PageNumber", fmt.Sprintf("%d", request.PageNumber))
 
 	if request.PlatformName != "" {
-		query.Add("PlatformName", request.Order)
+		query.Add("PlatformName", request.PlatformName)
 	}
 	if request.PlatformID != "" {
-		query.Add("PlatformID", request.Order)
+		query.Add("PlatformID", request.PlatformID)
 	}
 	if request.GroupTreeName != "" {
-		query.Add("GroupTreeName", request.Order)
+		query.Add("GroupTreeName", request.GroupTreeName)
 	}
 	if request.GroupTreeID != "" {
-		query.Add("GroupTreeID", request.Order)
+		query.Add("GroupTreeID", request.GroupTreeID)
 	}
 	if request.Order != "" {
 		query.Add("Order", request.Order)
@@ -1551,7 +1551,7 @@ func (p *AIoT) StopVoiceTalk(request *StopVoiceTalkRequest) (*StopVoiceTalkRespo
 	return resp, statusCode, nil
 }
 
-//慢直播相关
+// 慢直播相关
 func (p *AIoT) CreateSlowLive(request *CreateSlowLiveRequest) (*SlowLiveResponse, int, error) {
 	resp := &SlowLiveResponse{}
 	statusCode, err := p.commonHandlerJson("CreateSlowLive", url.Values{}, resp, request)
@@ -1656,7 +1656,7 @@ func (p *AIoT) SignSlowliveWsToken(request *SignSlowliveWsTokenRequest) (*SignSl
 	return resp, statusCode, nil
 }
 
-//视图
+// 视图
 func (p *AIoT) CreateStructuredViewSpace(request *CreateStructuredViewSpaceRequest) (*StructuredViewResponse, int, error) {
 	query := url.Values{}
 	resp := &StructuredViewResponse{}
