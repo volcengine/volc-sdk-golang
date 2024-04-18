@@ -30,11 +30,11 @@ func main() {
 }
 
 func TestSpeech(maas *client.MaaS, endpointId string, req *api.SpeechReq, path string) {
-	resp, err := maas.Audio().Speech.Create(endpointId, req)
+	resp, status, err := maas.Audio().Speech.Create(endpointId, req)
 	if err != nil {
 		errVal := &api.Error{}
 		if errors.As(err, &errVal) { // the returned error always type of *api.Error
-			fmt.Printf("meet maas error, requestId=%s, err=%v", resp.GetRequestId(), errVal.Error())
+			fmt.Printf("meet maas error, requestId=%s, status=%d, err=%v", resp.GetRequestId(), status, errVal.Error())
 		}
 		return
 	}

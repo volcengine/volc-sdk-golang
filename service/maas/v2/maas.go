@@ -6,14 +6,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/google/martian/log"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
 
+	"github.com/google/martian/log"
+
 	"github.com/cenkalti/backoff/v4"
+
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/maas"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api/v2"
@@ -471,7 +473,7 @@ func (cli *MaaS) embeddingsImpl(ctx context.Context, endpointId string, body []b
 	return output, status, nil
 }
 
-func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration, authApikey string) ([]byte, int, bool, error) {
+func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.Request, timeout time.Duration, authApikey string) (*http.Response, int, bool, error, context.CancelFunc) {
 
 	if authApikey == "" {
 		req = cli.ServiceInfo.Credentials.Sign(req)
@@ -487,19 +489,13 @@ func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.R
 	}
 
 	ctx, cancel := context.WithTimeout(ctx, timeout)
-	defer cancel()
+
 	req = req.WithContext(ctx)
 
 	resp, err := cli.Client.Client.Do(req)
 	if err != nil {
 		// should retry when client sends request error.
-		return []byte(""), 500, true, err
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return []byte(""), resp.StatusCode, false, err
+		return nil, 500, true, err, cancel
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
@@ -508,13 +504,13 @@ func (cli *MaaS) doRequest(inputContext context.Context, api string, req *http.R
 		if resp.StatusCode >= http.StatusInternalServerError {
 			needRetry = true
 		}
-		return body, resp.StatusCode, needRetry, fmt.Errorf("api %s http code %d body %s", api, resp.StatusCode, string(body))
+		return resp, resp.StatusCode, needRetry, fmt.Errorf("api %s http code %d", api, resp.StatusCode), cancel
 	}
 
-	return body, resp.StatusCode, false, nil
+	return resp, resp.StatusCode, false, nil, cancel
 }
 
-func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, endpointId string, body []byte, authApikey string) ([]byte, int, error) {
+func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, endpointId string, requestBodyBytes []byte, authApikey string) ([]byte, int, error) {
 	apiInfo := cli.ApiInfoList[apiKey]
 	if apiInfo == nil {
 		return nil, 500, api.NewClientSDKRequestError("the related api does not exist", reqIdFromCtx(ctx))
@@ -526,11 +522,11 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		return nil, 500, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), reqIdFromCtx(ctx))
 	}
 	req.Header.Add(reqIdHeaderKey, reqIdFromCtx(ctx))
-	requestBody := bytes.NewReader(body)
+	requestBody := bytes.NewReader(requestBodyBytes)
 	timeout := maas.GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
 	retrySettings := maas.GetRetrySetting(&cli.ServiceInfo.Retry, &apiInfo.Retry)
 
-	var resp []byte
+	var body []byte
 	var code int
 
 	err = backoff.Retry(func() error {
@@ -541,7 +537,15 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		resp, code, needRetry, err = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
+		var resp *http.Response
+		var cancel context.CancelFunc
+		resp, code, needRetry, err, cancel = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
+		defer cancel()
+		body, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+
 		if needRetry {
 			return err
 		} else {
@@ -551,12 +555,59 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 
 	if err != nil {
 		errVal := &api.ErrorResp{}
-		if er := json.Unmarshal(resp, errVal); er != nil {
+		if er := json.Unmarshal(body, errVal); er != nil {
+			errVal.Error = api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
+		}
+
+		if errVal.Error == nil {
 			errVal.Error = api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
 		}
 		errVal.Error.ReqId = reqIdFromCtx(ctx)
 		err = errVal.Error
 	}
 
-	return resp, code, err
+	return body, code, err
+}
+
+func (cli *MaaS) streamRequest(ctx context.Context, apiKey string, query url.Values, endpointId string, requestBodyBytes []byte, authApikey string) (io.ReadCloser, int, error, context.CancelFunc) {
+	cancel := func() {}
+	apiInfo := cli.ApiInfoList[apiKey]
+	if apiInfo == nil {
+		return nil, 500, api.NewClientSDKRequestError("the related api does not exist", reqIdFromCtx(ctx)), nil
+	}
+
+	// build request
+	req, err := maas.MakeRequest(apiInfo, endpointId, cli.ServiceInfo, query, "application/json")
+	if err != nil {
+		return nil, 500, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err), reqIdFromCtx(ctx)), nil
+	}
+	req.Header.Add(reqIdHeaderKey, reqIdFromCtx(ctx))
+	requestBody := bytes.NewReader(requestBodyBytes)
+	timeout := maas.GetTimeout(cli.ServiceInfo.Timeout, apiInfo.Timeout)
+	retrySettings := maas.GetRetrySetting(&cli.ServiceInfo.Retry, &apiInfo.Retry)
+
+	var body io.ReadCloser
+	var code int
+
+	err = backoff.Retry(func() error {
+		_, err = requestBody.Seek(0, io.SeekStart)
+		if err != nil {
+			// if seek failed, stop retry.
+			return backoff.Permanent(err)
+		}
+		req.Body = ioutil.NopCloser(requestBody)
+		var needRetry bool
+		var resp *http.Response
+		resp, code, needRetry, err, cancel = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
+		body = resp.Body
+
+		if needRetry {
+			cancel()
+			return err
+		} else {
+			return backoff.Permanent(err)
+		}
+	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
+
+	return body, code, err, cancel
 }

@@ -13,8 +13,6 @@ type images struct {
 	m *MaaS
 }
 
-// POST method
-// Tokenization
 func (i *images) ImagesQuickGen(endpointId string, req *api.ImagesQuickGenReq) (*api.ImagesQuickGenResp, int, error) {
 	return i.ImagesQuickGenWithCtx(context.Background(), endpointId, req)
 }
@@ -29,8 +27,8 @@ func (i *images) ImagesQuickGenWithCtx(ctx context.Context, endpointId string, r
 
 func (i *images) imagesQuickGenImpl(ctx context.Context, endpointId string, body []byte) (*api.ImagesQuickGenResp, int, error) {
 	ctx = getContext(ctx)
-
-	respBody, status, err := i.m.request(ctx, maas.APIImagesQuickGen, nil, endpointId, body, "")
+	apikey := i.m.settedApikey
+	respBody, status, err := i.m.request(ctx, maas.APIImagesQuickGen, nil, endpointId, body, apikey)
 	if err != nil {
 		return nil, status, err
 	}
