@@ -24,18 +24,22 @@ type Index struct {
 }
 
 type SearchOptions struct {
-	filter       map[string]interface{}
-	limit        int64
-	outputFields []string
-	partition    string
+	filter         map[string]interface{}
+	limit          int64
+	outputFields   []string
+	partition      string
+	dense_weight   *float64
+	sparse_vectors []map[string]interface{}
 }
 
 func NewSearchOptions() *SearchOptions {
 	searchOptions := &SearchOptions{
-		filter:       nil,
-		limit:        10,
-		outputFields: nil,
-		partition:    "default",
+		filter:         nil,
+		limit:          10,
+		outputFields:   nil,
+		partition:      "default",
+		dense_weight:   nil,
+		sparse_vectors: nil,
 	}
 	return searchOptions
 }
@@ -53,6 +57,14 @@ func (searchOptions *SearchOptions) SetOutputFields(outputFields []string) *Sear
 }
 func (searchOptions *SearchOptions) SetPartition(partition string) *SearchOptions {
 	searchOptions.partition = partition
+	return searchOptions
+}
+func (searchOptions *SearchOptions) SetDenseWeight(dense_weight float64) *SearchOptions {
+	searchOptions.dense_weight = &dense_weight
+	return searchOptions
+}
+func (searchOptions *SearchOptions) SetSparseVectors(sparse_vectors map[string]interface{}) *SearchOptions {
+	searchOptions.sparse_vectors = []map[string]interface{}{sparse_vectors}
 	return searchOptions
 }
 
@@ -130,6 +142,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 	if searchOptions.filter != nil {
 		search["filter"] = searchOptions.filter
 	}
+	if searchOptions.dense_weight != nil {
+		search["dense_weight"] = *searchOptions.dense_weight
+	}
 	var outputFields interface{} = nil
 	if searchOptions.outputFields != nil {
 		search["output_fields"] = searchOptions.outputFields
@@ -148,6 +163,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 }
 func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOptions) ([]*Data, error) {
 	orderByVector := map[string]interface{}{"vectors": []interface{}{vector}}
+	if searchOptions.sparse_vectors != nil {
+		orderByVector["sparse_vectors"] = searchOptions.sparse_vectors
+	}
 	search := map[string]interface{}{
 		"order_by_vector": orderByVector,
 		"limit":           searchOptions.limit,
@@ -155,6 +173,9 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	}
 	if searchOptions.filter != nil {
 		search["filter"] = searchOptions.filter
+	}
+	if searchOptions.dense_weight != nil {
+		search["dense_weight"] = *searchOptions.dense_weight
 	}
 	var outputFields interface{} = nil
 	if searchOptions.outputFields != nil {
@@ -166,10 +187,12 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 		"index_name":      index.IndexName,
 		"search":          search,
 	}
+	//fmt.Println(params)
 	res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
 	if err != nil {
 		return nil, err
 	}
+	//fmt.Printf("%#v\n", res)
 	return index.getData(res, outputFields)
 }
 func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) ([]*Data, error) {
@@ -181,6 +204,9 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 	}
 	if searchOptions.filter != nil {
 		search["filter"] = searchOptions.filter
+	}
+	if searchOptions.dense_weight != nil {
+		search["dense_weight"] = *searchOptions.dense_weight
 	}
 	var outputFields interface{} = nil
 	if searchOptions.outputFields != nil {
@@ -331,6 +357,7 @@ func (index *Index) getData(resData map[string]interface{}, outputField interfac
 			if item, ok = l.(map[string]interface{}); !ok {
 				return nil, fmt.Errorf("invalid response, data is not list[list[map]]: %v", resData)
 			}
+			//fmt.Println(item)
 			fields := map[string]interface{}{}
 			if outputField == nil || len(outputField.([]string)) != 0 {
 				if f, ok := item["fields"]; !ok {

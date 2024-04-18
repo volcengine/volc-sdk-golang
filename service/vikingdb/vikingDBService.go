@@ -184,6 +184,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"EmbeddingV2": {
+			Method: http.MethodPost,
+			Path:   "/api/data/embedding/version/2",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 	return apiInfos
 }
@@ -796,7 +804,7 @@ func (vikingDBService *VikingDBService) UpdateCollection(collectionName string, 
 func (vikingDBService *VikingDBService) Embedding(embModel EmbModel, rawData interface{}) ([][]float64, error) {
 	model := map[string]interface{}{
 		"model_name": embModel.ModelName,
-		"params":     embModel.params,
+		"params":     embModel.Params,
 	}
 	_, single := rawData.(RawData)
 	_, list := rawData.([]RawData)
@@ -912,4 +920,45 @@ func (vikingDBService *VikingDBService) BatchRerank(datas []map[string]interface
 		}
 	}
 	return res, nil
+}
+
+func (vikingDBService *VikingDBService) EmbeddingV2(embModel EmbModel, rawData interface{}) (map[string]interface{}, error) {
+	model := map[string]interface{}{
+		"model_name": embModel.ModelName,
+		"params":     embModel.Params,
+	}
+	_, single := rawData.(RawData)
+	_, list := rawData.([]RawData)
+	var data []interface{}
+	if single {
+		param := map[string]interface{}{
+			"data_type": rawData.(RawData).DataType,
+			"text":      rawData.(RawData).Text,
+		}
+		data = append(data, param)
+	} else if list {
+		for _, item := range rawData.([]RawData) {
+			param := map[string]interface{}{
+				"data_type": item.DataType,
+				"text":      item.Text,
+			}
+			data = append(data, param)
+		}
+	}
+	params := map[string]interface{}{
+		"model": model,
+		"data":  data,
+	}
+	res, err := vikingDBService.DoRequest(context.Background(), "EmbeddingV2", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return nil, err
+	}
+	//fmt.Println(res)
+	var items map[string]interface{}
+	if d, ok := res["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", data)
+	} else if items, ok = d.(map[string]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a map: %v", data)
+	}
+	return items, nil
 }
