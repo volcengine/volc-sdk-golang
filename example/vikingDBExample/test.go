@@ -8,6 +8,149 @@ import (
 
 func main() {
 	service := vikingdb.NewVikingDBService("", "", "", "", "http")
+	//fields := []vikingdb.Field{
+	//	{
+	//		FieldName:    "id",
+	//		FieldType:    vikingdb.String,
+	//		IsPrimaryKey: true,
+	//	},
+	//	{
+	//		FieldName: "vector",
+	//		FieldType: vikingdb.Vector,
+	//		Dim:       12,
+	//	},
+	//	{
+	//		FieldName: "sparse",
+	//		FieldType: vikingdb.Sparse_Vector,
+	//	},
+	//}
+	//collection, err := service.CreateCollection("sparse_go", fields, "this is a go example")
+	//if err != nil {
+	//	print(err.Error())
+	//}
+	//print(collection)
+
+	//res, err := service.GetCollection("sparse_go")
+	//if err != nil {
+	//	print(err.Error())
+	//}
+	//fmt.Println(res)
+
+	//collection, _ := service.GetCollection("sparse_go")
+	//sparse := map[string]float64{"like": 0.5}
+	//field1 := map[string]interface{}{
+	//	"id":     "111",
+	//	"vector": genRandomVector(12),
+	//	"sparse": sparse,
+	//}
+	//field2 := map[string]interface{}{
+	//	"id":     "222",
+	//	"vector": genRandomVector(12),
+	//	"sparse": sparse,
+	//}
+	//field3 := map[string]interface{}{
+	//	"id":     "333",
+	//	"vector": genRandomVector(12),
+	//	"sparse": sparse,
+	//}
+	//field4 := map[string]interface{}{
+	//	"id":     "444",
+	//	"vector": genRandomVector(12),
+	//	"sparse": sparse,
+	//}
+	//data1 := vikingdb.Data{
+	//	Fields: field1,
+	//}
+	//data2 := vikingdb.Data{
+	//	Fields: field2,
+	//}
+	//data3 := vikingdb.Data{
+	//	Fields: field3,
+	//}
+	//data4 := vikingdb.Data{
+	//	Fields: field4,
+	//}
+	//datas := []vikingdb.Data{
+	//	data1,
+	//	data2,
+	//	data3,
+	//	data4,
+	//}
+	//err := collection.UpsertData(datas)
+	//if err != nil {
+	//	print(err.Error())
+	//}
+
+	//collection, _ := service.GetCollection("sparse_go")
+	//res, _ := collection.FetchData("222")
+	//fmt.Println(res[0])
+
+	//vectorIndex := &vikingdb.VectorIndexParams{
+	//	Distance:  vikingdb.COSINE,
+	//	IndexType: vikingdb.HNSW_HYBRID,
+	//	Quant:     vikingdb.Float,
+	//}
+	//indexOptions := vikingdb.NewIndexOptions().SetVectorIndex(vectorIndex)
+	//index, err := service.CreateIndex("sparse_go", "sparse_go", indexOptions)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(index)
+
+	//res, err := service.GetIndex("sparse_go", "sparse_go")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//fmt.Println(res)
+
+	//index, _ := service.GetIndex("sparse_go", "sparse_go")
+	//searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
+	//res, err := index.SearchByVector(genRandomVector(12), searchOption)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for _, item := range res {
+	//	fmt.Println(item)
+	//}
+
+	//index, _ := service.GetIndex("sparse_go", "sparse_go")
+	//searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
+	//res, err := index.SearchById("111", searchOption)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for _, item := range res {
+	//	fmt.Println(item)
+	//}
+
+	//index, _ := service.GetIndex("sparse_go", "sparse_go")
+	//searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
+	//res, err := index.Search(vikingdb.VectorOrder{Vector: genRandomVector(12)}, searchOption)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for _, item := range res {
+	//	fmt.Println(item)
+	//}
+
+	//list := []vikingdb.RawData{
+	//	{
+	//		DataType: "text",
+	//		Text:     "hello1",
+	//	},
+	//	{
+	//		DataType: "text",
+	//		Text:     "hello2",
+	//	},
+	//}
+	//res, err := service.EmbeddingV2(vikingdb.EmbModel{ModelName: "bge-m3", Params: map[string]interface{}{"return_token_usage": true}}, list)
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//for key, item := range res {
+	//	fmt.Println(key, item)
+	//	fmt.Println("------------------------------")
+	//}
 
 	//datas := []map[string]interface{}{
 	//	{

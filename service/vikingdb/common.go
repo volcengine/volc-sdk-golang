@@ -1,26 +1,28 @@
 package vikingdb
 
 const (
-	Vector     = "vector"
-	Int64      = "int64"
-	ListInt64  = "list<int64>"
-	String     = "string"
-	ListString = "list<string>"
-	Float32    = "float32"
-	Bool       = "bool"
-	Text       = "text"
+	Vector        = "vector"
+	Int64         = "int64"
+	ListInt64     = "list<int64>"
+	String        = "string"
+	ListString    = "list<string>"
+	Float32       = "float32"
+	Bool          = "bool"
+	Text          = "text"
+	Sparse_Vector = "sparse_vector"
 
-	L2      = "l2"
-	IP      = "ip"
-	COSINE  = "cosine"
-	FLAT    = "flat"
-	HNSW    = "hnsw"
-	IVF     = "ivf"
-	DiskANN = "DiskANN"
-	Float   = "float"
-	Int8    = "int8"
-	Fix16   = "fix16"
-	PQ      = "pq"
+	L2          = "l2"
+	IP          = "ip"
+	COSINE      = "cosine"
+	FLAT        = "flat"
+	HNSW        = "hnsw"
+	IVF         = "ivf"
+	DiskANN     = "DiskANN"
+	HNSW_HYBRID = "hnsw_hybrid"
+	Float       = "float"
+	Int8        = "int8"
+	Fix16       = "fix16"
+	PQ          = "pq"
 
 	Asc  = "asc"
 	Desc = "desc"
@@ -97,7 +99,7 @@ type TextObject struct {
 }
 type EmbModel struct {
 	ModelName string
-	params    interface{}
+	Params    map[string]interface{}
 }
 type RawData struct {
 	DataType string
