@@ -293,7 +293,7 @@ func (p *Visual) OverResolutionV2(imageBase64 []string) (*model.OverResolutionV2
 
 	jsonStr, err := json.Marshal(jsonBody)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.OverResolutionV2Result)
 	statusCode, err := p.commonJsonHandler("OverResolutionV2", string(jsonStr), resp)
@@ -315,7 +315,7 @@ func (p *Visual) ImageScoreV2(imageBase64 []string) (*model.ImageScoreV2Result, 
 
 	jsonStr, err := json.Marshal(jsonBody)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.ImageScoreV2Result)
 	statusCode, err := p.commonJsonHandler("ImageScoreV2", string(jsonStr), resp)
@@ -337,7 +337,7 @@ func (p *Visual) ImageCorrection(imageBase64 []string) (*model.ImageCorrectionRe
 
 	jsonStr, err := json.Marshal(jsonBody)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.ImageCorrectionResult)
 	statusCode, err := p.commonJsonHandler("ImageCorrection", string(jsonStr), resp)
@@ -357,7 +357,7 @@ func (p *Visual) EnhancePhotoV2(req *model.EnhancePhotoV2Request) (*model.Enhanc
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.EnhancePhotoV2Result)
 	statusCode, err := p.commonJsonHandler("EnhancePhotoV2", string(jsonStr), resp)
@@ -371,7 +371,7 @@ func (p *Visual) T2ILDM(req *model.T2ILDMRequest) (*model.T2ILDMResult, int, err
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.T2ILDMResult)
 	statusCode, err := p.commonJsonHandler("T2ILDM", string(jsonStr), resp)
@@ -391,7 +391,7 @@ func (p *Visual) Img2ImgStyle(req *model.Img2ImgStyleRequest) (*model.Img2ImgSty
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.Img2ImgStyleResult)
 	statusCode, err := p.commonJsonHandler("Img2ImgStyle", string(jsonStr), resp)
@@ -411,7 +411,7 @@ func (p *Visual) Img2ImgAnime(req *model.Img2ImgAnimeRequest) (*model.Img2ImgAni
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.Img2ImgAnimeResult)
 	statusCode, err := p.commonJsonHandler("Img2ImgAnime", string(jsonStr), resp)
@@ -425,7 +425,7 @@ func (p *Visual) BodyDetection(req *model.BodyDetectionRequest) (*model.BodyDete
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.BodyDetectionResult)
 	statusCode, err := p.commonJsonHandler("BodyDetection", string(jsonStr), resp)
@@ -439,7 +439,7 @@ func (p *Visual) AllAgeGeneration(req *model.AllAgeGenerationRequest) (*model.Al
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.AllAgeGenerationResult)
 	statusCode, err := p.commonJsonHandler("AllAgeGeneration", string(jsonStr), resp)
@@ -453,7 +453,7 @@ func (p *Visual) VideoOverResolutionSubmitTaskV2(req *model.VideoOverResolutionS
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.VideoOverResolutionSubmitTaskV2Result)
 	statusCode, err := p.commonJsonHandler("VideoOverResolutionSubmitTaskV2", string(jsonStr), resp)
@@ -467,7 +467,7 @@ func (p *Visual) VideoOverResolutionQueryTaskV2(req *model.VideoOverResolutionQu
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.VideoOverResolutionQueryTaskV2Result)
 	statusCode, err := p.commonJsonHandler("VideoOverResolutionQueryTaskV2", string(jsonStr), resp)
@@ -485,7 +485,7 @@ func (p *Visual) FaceFusionMovieSubmitTask(req *model.FaceFusionMovieSubmitTaskR
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceFusionMovieSubmitTaskResult)
 	statusCode, err := p.commonJsonHandler("FaceFusionMovieSubmitTask", string(jsonStr), resp)
@@ -499,7 +499,7 @@ func (p *Visual) FaceFusionMovieGetResult(req *model.FaceFusionMovieGetResultReq
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceFusionMovieGetResultResult)
 	statusCode, err := p.commonJsonHandler("FaceFusionMovieGetResult", string(jsonStr), resp)
@@ -513,7 +513,7 @@ func (p *Visual) FaceFusionMovie(req *model.FaceFusionMovieRequest) (*model.Face
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceFusionMovieResult)
 	statusCode, err := p.commonJsonHandler("FaceFusionMovie", string(jsonStr), resp)
@@ -543,7 +543,7 @@ func (p *Visual) CertToken(req *model.CertTokenRequest) (*model.CertTokenResult,
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.CertTokenResult)
 	statusCode, err := p.commonJsonHandler("CertToken", string(jsonStr), resp)
@@ -573,7 +573,7 @@ func (p *Visual) CertConfigInit(req *model.CertConfigInitRequest) (*model.CertCo
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.CertConfigInitResult)
 	statusCode, err := p.commonJsonHandler("CertConfigInit", string(jsonStr), resp)
@@ -587,7 +587,7 @@ func (p *Visual) CertVerifyQuery(req *model.CertVerifyQueryRequest) (*model.Cert
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.CertVerifyQueryResult)
 	statusCode, err := p.commonJsonHandler("CertVerifyQuery", string(jsonStr), resp)
@@ -614,7 +614,7 @@ func (p *Visual) Img2Video3D(req *model.Img2Video3DRequest) (*model.Img2Video3DR
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.Img2Video3DResult)
 	statusCode, err := p.commonJsonHandler("Img2Video3D", string(jsonStr), resp)
@@ -628,7 +628,7 @@ func (p *Visual) ConvertPhotoV2(req *model.ConvertPhotoV2Request) (*model.Conver
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.ConvertPhotoV2Result)
 	statusCode, err := p.commonJsonHandler("ConvertPhotoV2", string(jsonStr), resp)
@@ -642,7 +642,7 @@ func (p *Visual) LensVidaVideoSubmitTaskV2(req *model.LensVidaVideoSubmitTaskV2R
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.LensVidaVideoSubmitTaskV2Result)
 	statusCode, err := p.commonJsonHandler("LensVidaVideoSubmitTaskV2", string(jsonStr), resp)
@@ -656,7 +656,7 @@ func (p *Visual) LensVidaVideoGetResultV2(req *model.LensVidaVideoGetResultV2Req
 	jsonStr, err := json.Marshal(req)
 
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.LensVidaVideoGetResultV2Result)
 	statusCode, err := p.commonJsonHandler("LensVidaVideoGetResultV2", string(jsonStr), resp)
@@ -910,12 +910,12 @@ func (p *Visual) VideoOverResolutionQueryTask(query url.Values) (*model.VideoEdi
 }
 
 func (p *Visual) FaceCompare(bodyMap interface{}) (*model.FaceCompareResult, int, error) {
-	jsonStr, err := json.Marshal(bodyMap)
+	reqByte, err := json.Marshal(bodyMap)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceCompareResult)
-	statusCode, err := p.commonJsonHandler("FaceCompare", string(jsonStr), resp)
+	statusCode, err := p.commonJsonHandler("FaceCompare", string(reqByte), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -925,12 +925,12 @@ func (p *Visual) FaceCompare(bodyMap interface{}) (*model.FaceCompareResult, int
 // FaceSwapV3 入参说明，接口文档：https://www.volcengine.com/docs/6791/1130928
 // bodyMap: 按照接口文档填写入参，其中 req_key：- 3.0版本取固定值faceswap ｜ 3.3版本取固定值face_swap3_3
 func (p *Visual) FaceSwapV3(bodyMap interface{}) (*model.FaceSwapV3Result, int, error) {
-	jsonStr, err := json.Marshal(bodyMap)
+	reqByte, err := json.Marshal(bodyMap)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceSwapV3Result)
-	statusCode, err := p.commonJsonHandler("FaceSwapV3", string(jsonStr), resp)
+	statusCode, err := p.commonJsonHandler("FaceSwapV3", string(reqByte), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
@@ -940,12 +940,114 @@ func (p *Visual) FaceSwapV3(bodyMap interface{}) (*model.FaceSwapV3Result, int, 
 // FaceSwapAI 入参说明，接口文档：https://www.volcengine.com/docs/6791/1167911
 // bodyMap: 按照接口文档填写入参，其中 req_key：取固定值faceswap_ai
 func (p *Visual) FaceSwapAI(bodyMap interface{}) (*model.FaceSwapAIResult, int, error) {
-	jsonStr, err := json.Marshal(bodyMap)
+	reqByte, err := json.Marshal(bodyMap)
 	if err != nil {
-		return nil, 500, errors.New("request json marshal error")
+		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
 	resp := new(model.FaceSwapAIResult)
-	statusCode, err := p.commonJsonHandler("FaceSwapAI", string(jsonStr), resp)
+	statusCode, err := p.commonJsonHandler("FaceSwapAI", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// HighAesSmartDrawing 人像人体-智能绘图-高美感xx+单图写真,接口文档：
+// https://www.volcengine.com/docs/6791/1213129
+// https://www.volcengine.com/docs/6791/1214814
+// https://www.volcengine.com/docs/6791/1213130
+// https://www.volcengine.com/docs/6791/1213131
+// https://www.volcengine.com/docs/6791/1213132
+// https://www.volcengine.com/docs/6791/1213737
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) HighAesSmartDrawing(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("HighAesSmartDrawing", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Img2ImgInpainting 涂抹消除。接口文档：https://www.volcengine.com/docs/6791/1223709
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgInpainting(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgInpainting", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Img2ImgInpaintingEdit 涂抹编辑。接口文档：https://www.volcengine.com/docs/6791/1223721
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgInpaintingEdit(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgInpaintingEdit", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Img2ImgOutpainting 智能扩图。接口文档：https://www.volcengine.com/docs/6791/1223722
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgOutpainting(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgOutpainting", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// FaceFusionMovieSubmitTaskNew 视频人脸融合-提交任务
+// QPS-2.x接口文档: https://www.volcengine.com/docs/6792/145429
+// 按量-2.x接口文档: https://www.volcengine.com/docs/6792/271359
+// QPS-3.x接口文档: https://www.volcengine.com/docs/6792/1124893
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) FaceFusionMovieSubmitTaskNew(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("FaceFusionMovieSubmitTask", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// FaceFusionMovieGetResultNew 视频人脸融合-查询任务。
+// QPS-2.x接口文档: https://www.volcengine.com/docs/6792/145429
+// 按量-2.x接口文档: https://www.volcengine.com/docs/6792/271359
+// QPS-3.x接口文档: https://www.volcengine.com/docs/6792/1124893
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) FaceFusionMovieGetResultNew(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("FaceFusionMovieGetResult", string(reqByte), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
