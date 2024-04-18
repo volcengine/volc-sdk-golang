@@ -1,6 +1,7 @@
 package maas
 
 import (
+	"context"
 	"io"
 )
 
@@ -12,12 +13,19 @@ type ResponseContent interface {
 type binaryResponseContent struct {
 	io.ReadCloser
 	requestId string
+	cancel    context.CancelFunc
 }
 
 func (b *binaryResponseContent) GetRequestId() string {
 	return b.requestId
 }
 
-func NewBinaryResponseContent(i io.ReadCloser, requestId string) ResponseContent {
-	return &binaryResponseContent{i, requestId}
+func NewBinaryResponseContent(i io.ReadCloser, requestId string, cancel context.CancelFunc) ResponseContent {
+	return &binaryResponseContent{i, requestId, cancel}
+}
+
+func (b *binaryResponseContent) Close() error {
+	b.ReadCloser.Close()
+	b.cancel()
+	return nil
 }
