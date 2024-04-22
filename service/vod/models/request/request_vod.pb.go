@@ -272,14 +272,11 @@ type VodGetPlayInfoRequest struct {
 	// 音频音质。当FileType为audio和eaudio时起作用,表示音频音质参数.支持: medium,
 	// higher, highest.默认返回所有音频流
 	Quality string `protobuf:"bytes,16,opt,name=Quality,proto3" json:"Quality,omitempty"`
-	//
-	//播放配置,可指定播放域名
+	// 播放配置,可指定播放域名
 	PlayConfig string `protobuf:"bytes,17,opt,name=PlayConfig,proto3" json:"PlayConfig,omitempty"`
-	//
-	//控制是否需要将原片信息置于 VideoInfos 中
+	// 控制是否需要将原片信息置于 VideoInfos 中
 	NeedOriginal string `protobuf:"bytes,18,opt,name=NeedOriginal,proto3" json:"NeedOriginal,omitempty"`
-	//
-	//强行指定本次请求的时间戳防盗链 单位秒
+	// 强行指定本次请求的时间戳防盗链 单位秒
 	ForceExpire string `protobuf:"bytes,19,opt,name=ForceExpire,proto3" json:"ForceExpire,omitempty"`
 }
 
@@ -1664,7 +1661,7 @@ type VodListFileMetaInfosByFileNamesRequest struct {
 	// 需要查询的FileName 为了防止,出现在filename中,需要将filename进行urlencode后
 	// 用,连接进行传入  一次最多传30个
 	FileNameEncodeds string `protobuf:"bytes,2,opt,name=FileNameEncodeds,proto3" json:"FileNameEncodeds,omitempty"`
-	//非必选 挂载Bucket专用
+	// 非必选 挂载Bucket专用
 	BucketName string `protobuf:"bytes,3,opt,name=BucketName,proto3" json:"BucketName,omitempty"`
 }
 
@@ -6266,21 +6263,17 @@ type VodListDomainRequest struct {
 
 	// 空间名
 	SpaceName string `protobuf:"bytes,1,opt,name=SpaceName,proto3" json:"SpaceName,omitempty"`
-	//
-	//域名类型
-	//播放域名:play
-	//封面域名:image
+	// 域名类型
+	// 播放域名:play
+	// 封面域名:image
 	DomainType string `protobuf:"bytes,2,opt,name=DomainType,proto3" json:"DomainType,omitempty"`
-	//
-	//源站类型
-	//回点播源站:1
-	//第三方源站:2
+	// 源站类型
+	// 回点播源站:1
+	// 第三方源站:2
 	SourceStationType int32 `protobuf:"varint,3,opt,name=SourceStationType,proto3" json:"SourceStationType,omitempty"`
-	//
-	//跳过域名组的游标
+	// 跳过域名组的游标
 	Offset int32 `protobuf:"varint,4,opt,name=Offset,proto3" json:"Offset,omitempty"`
-	//
-	//单次查询域名组数量
+	// 单次查询域名组数量
 	Limit int32 `protobuf:"varint,5,opt,name=Limit,proto3" json:"Limit,omitempty"`
 }
 
@@ -7529,10 +7522,9 @@ type VodSubmitBlockTasksRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	//
-	//媒体Url列表：
-	//指定一个或多个内容 URL，内容 URL 以 http:// 或 https:// 开头。多个内容 URL
-	//用\n分隔。 每次最多可提交 100 条。
+	// 媒体Url列表：
+	// 指定一个或多个内容 URL，内容 URL 以 http:// 或 https:// 开头。多个内容 URL
+	// 用\n分隔。 每次最多可提交 100 条。
 	FileUrls  string `protobuf:"bytes,1,opt,name=FileUrls,proto3" json:"FileUrls,omitempty"`
 	Operation string `protobuf:"bytes,2,opt,name=Operation,proto3" json:"Operation,omitempty"` // forbid：禁播，recover：解禁。
 }
@@ -7591,33 +7583,27 @@ type VodGetContentBlockTasksRequest struct {
 	Url    string `protobuf:"bytes,1,opt,name=Url,proto3" json:"Url,omitempty"`       //指定一个内容URL
 	Domain string `protobuf:"bytes,2,opt,name=Domain,proto3" json:"Domain,omitempty"` //指定一个加速域名以包含属于该加速域名的内容 URL。
 	TaskID string `protobuf:"bytes,3,opt,name=TaskID,proto3" json:"TaskID,omitempty"` //指定一个任务 ID，任务 ID 精确匹配。
-	//
-	//指定一个任务类型，该参数的可用值如下：
-	//block_url：封禁任务。
-	//unblock_url：解封任务。
-	//必填
+	// 指定一个任务类型，该参数的可用值如下：
+	// block_url：封禁任务。
+	// unblock_url：解封任务。
+	// 必填
 	TaskType string `protobuf:"bytes,4,opt,name=TaskType,proto3" json:"TaskType,omitempty"`
-	//
-	//指定一个内容 URL 的状态。该参数的可用值如下：
-	//complete：已完成。
-	//running：执行中。
-	//failed：执行失败。
+	// 指定一个内容 URL 的状态。该参数的可用值如下：
+	// complete：已完成。
+	// running：执行中。
+	// failed：执行失败。
 	Status string `protobuf:"bytes,5,opt,name=Status,proto3" json:"Status,omitempty"`
-	//
-	//指定一个时间，时间格式是 Unix
-	//时间戳。该时间用以包含提交时间大于或等于该时间的任务。您无法查询超过 7
-	//天的任务。
+	// 指定一个时间，时间格式是 Unix
+	// 时间戳。该时间用以包含提交时间大于或等于该时间的任务。您无法查询超过 7
+	// 天的任务。
 	StartTime int64 `protobuf:"varint,6,opt,name=StartTime,proto3" json:"StartTime,omitempty"`
-	//
-	//指定一个时间，时间格式是 Unix
-	//时间戳。该时间用以包含提交时间小于或等于该时间的任务。您无法查询超过 7
-	//天的任务。
+	// 指定一个时间，时间格式是 Unix
+	// 时间戳。该时间用以包含提交时间小于或等于该时间的任务。您无法查询超过 7
+	// 天的任务。
 	EndTime int64 `protobuf:"varint,7,opt,name=EndTime,proto3" json:"EndTime,omitempty"`
-	//
-	//指定一个页码。系统只返回该页面上的那些任务。
+	// 指定一个页码。系统只返回该页面上的那些任务。
 	PageNum int64 `protobuf:"varint,8,opt,name=PageNum,proto3" json:"PageNum,omitempty"`
-	//
-	//指定响应正文中每页包含的任务数量。
+	// 指定响应正文中每页包含的任务数量。
 	PageSize int64 `protobuf:"varint,9,opt,name=PageSize,proto3" json:"PageSize,omitempty"`
 }
 
@@ -8675,7 +8661,7 @@ type DescribeVodSpaceAIStatisDataRequest struct {
 	SpaceList string `protobuf:"bytes,1,opt,name=SpaceList,proto3" json:"SpaceList,omitempty"` // 空间列表，多个空间用逗号分割
 	StartTime string `protobuf:"bytes,2,opt,name=StartTime,proto3" json:"StartTime,omitempty"` // 查询的起始时间, rfc3339
 	EndTime   string `protobuf:"bytes,3,opt,name=EndTime,proto3" json:"EndTime,omitempty"`     // 查询的结束时间, rfc3339；查询时间跨度不超过93天
-	//类型：默认全部。VideoClassification(视频分类)，AIVideoSummary(精彩剪辑)，BarrageMask(蒙版弹幕)
+	// 类型：默认全部。VideoClassification(视频分类)，AIVideoSummary(精彩剪辑)，BarrageMask(蒙版弹幕)
 	MediaAiType     string `protobuf:"bytes,4,opt,name=MediaAiType,proto3" json:"MediaAiType,omitempty"`
 	TaskStageList   string `protobuf:"bytes,5,opt,name=TaskStageList,proto3" json:"TaskStageList,omitempty"`     // 闲忙时: busy/free，多个值用逗号分割
 	Aggregation     int64  `protobuf:"varint,6,opt,name=Aggregation,proto3" json:"Aggregation,omitempty"`        //聚合的时间粒度，单位秒，默认3600，支持3600和86400
@@ -8884,7 +8870,7 @@ type DescribeVodSpaceDetectStatisDataRequest struct {
 	SpaceList string `protobuf:"bytes,1,opt,name=SpaceList,proto3" json:"SpaceList,omitempty"` // 空间列表，多个空间用逗号分割
 	StartTime string `protobuf:"bytes,2,opt,name=StartTime,proto3" json:"StartTime,omitempty"` // 查询的起始时间, rfc3339
 	EndTime   string `protobuf:"bytes,3,opt,name=EndTime,proto3" json:"EndTime,omitempty"`     // 查询的结束时间, rfc3339；查询时间跨度不超过93天
-	//类型：默认全部。VQScore，WatermarkDetect(水印检测)，WatermarkEraser(水印擦除)，PatchDetect(贴片检测)，PatchEraser(贴片擦除)，BlackFrameDetect(黑帧检测)，BlackFrameEraser(黑帧擦除)
+	// 类型：默认全部。VQScore，WatermarkDetect(水印检测)，WatermarkEraser(水印擦除)，PatchDetect(贴片检测)，PatchEraser(贴片擦除)，BlackFrameDetect(黑帧检测)，BlackFrameEraser(黑帧擦除)
 	DetectType      string `protobuf:"bytes,4,opt,name=DetectType,proto3" json:"DetectType,omitempty"`
 	TaskStageList   string `protobuf:"bytes,5,opt,name=TaskStageList,proto3" json:"TaskStageList,omitempty"`     // 闲忙时: busy/free，多个值用逗号分割
 	Aggregation     int64  `protobuf:"varint,6,opt,name=Aggregation,proto3" json:"Aggregation,omitempty"`        //聚合的时间粒度，单位秒，默认3600，支持3600和86400
