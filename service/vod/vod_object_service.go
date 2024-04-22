@@ -6,10 +6,11 @@ package vod
 
 import (
 	"encoding/json"
-	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 	"net/url"
 	"strconv"
+
+	"google.golang.org/protobuf/encoding/protojson"
 
 	"github.com/pkg/errors"
 
