@@ -571,6 +571,12 @@ type ImagesParameters struct {
 	Width int `json:"width,omitempty" yaml:"width,omitempty" mapstructure:"width,omitempty"`
 
 	NumInferenceSteps int `json:"num_inference_steps,omitempty" yaml:"num_inference_steps,omitempty" mapstructure:"num_inference_steps,omitempty"`
+
+	SamplerName string `json:"sampler_name,omitempty" yaml:"sampler_name,omitempty" mapstructure:"sampler_name,omitempty"`
+
+	Scheduler string `json:"scheduler,omitempty" yaml:"scheduler,omitempty" mapstructure:"scheduler,omitempty"`
+
+	CfgScale float32 `json:"cfg_scale,omitempty" yaml:"cfg_scale,omitempty" mapstructure:"cfg_scale,omitempty"`
 }
 
 type ImagesQuickGenReq struct {
@@ -583,6 +589,8 @@ type ImagesQuickGenReq struct {
 	InitImage []byte `json:"init_image,omitempty" yaml:"init_image,omitempty" mapstructure:"init_image,omitempty"`
 
 	ControlImage []byte `json:"control_image,omitempty" yaml:"control_image,omitempty" mapstructure:"control_image,omitempty"`
+
+	ControlImageList [][]byte `json:"control_image_list,omitempty" yaml:"control_image_list,omitempty" mapstructure:"control_image_list,omitempty"`
 
 	// Parameters corresponds to the JSON schema field "parameters".
 	Parameters *ImagesParameters `json:"parameters,omitempty" yaml:"parameters,omitempty" mapstructure:"parameters,omitempty"`
@@ -600,6 +608,42 @@ type ImageUrl struct {
 }
 
 type ImagesQuickGenResp struct {
+	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	Data []*ImageUrl `json:"data,omitempty" yaml:"data,omitempty" mapstructure:"data,omitempty"`
+}
+
+type ImagesReq struct {
+	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
+
+	Prompt string `json:"prompt,omitempty" yaml:"prompt,omitempty" mapstructure:"prompt,omitempty"`
+
+	NegativePrompt string `json:"negative_prompt,omitempty" yaml:"negative_prompt,omitempty" mapstructure:"negative_prompt,omitempty"`
+
+	InitImage []byte `json:"init_image,omitempty" yaml:"init_image,omitempty" mapstructure:"init_image,omitempty"`
+
+	ControlImageList [][]byte `json:"control_image_list,omitempty" yaml:"control_image_list,omitempty" mapstructure:"control_image_list,omitempty"`
+
+	Seed int `json:"seed,omitempty" yaml:"seed,omitempty" mapstructure:"seed,omitempty"`
+
+	Strength float32 `json:"strength,omitempty" yaml:"strength,omitempty" mapstructure:"strength,omitempty"`
+
+	Height int `json:"height,omitempty" yaml:"height,omitempty" mapstructure:"height,omitempty"`
+
+	Width int `json:"width,omitempty" yaml:"width,omitempty" mapstructure:"width,omitempty"`
+
+	NumInferenceSteps int `json:"num_inference_steps,omitempty" yaml:"num_inference_steps,omitempty" mapstructure:"num_inference_steps,omitempty"`
+
+	SamplerName string `json:"sampler_name,omitempty" yaml:"sampler_name,omitempty" mapstructure:"sampler_name,omitempty"`
+
+	Scheduler string `json:"scheduler,omitempty" yaml:"scheduler,omitempty" mapstructure:"scheduler,omitempty"`
+
+	CfgScale float32 `json:"cfg_scale,omitempty" yaml:"cfg_scale,omitempty" mapstructure:"cfg_scale,omitempty"`
+
+	Plugin map[string]interface{} `json:"plugin,omitempty" yaml:"plugin,omitempty" mapstructure:"plugin,omitempty"`
+}
+
+type ImagesResp struct {
 	ReqId string `json:"req_id,omitempty" yaml:"req_id,omitempty" mapstructure:"req_id,omitempty"`
 
 	Data []*ImageUrl `json:"data,omitempty" yaml:"data,omitempty" mapstructure:"data,omitempty"`
