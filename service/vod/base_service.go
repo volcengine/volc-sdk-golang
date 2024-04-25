@@ -422,9 +422,6 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
 	}
 
-	data, _ := json.Marshal(resp)
-	fmt.Println("ApplyUploadInfo: ", string(data))
-
 	uploadAddress := resp.GetResult().GetData().GetUploadAddress()
 	if uploadAddress != nil {
 		if len(uploadAddress.GetUploadHosts()) == 0 {

@@ -179,25 +179,6 @@ func Test_DeleteTranscodes(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
-
-func Test_DeleteMediaTosFile(t *testing.T) {
-	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
-
-	query := &request.VodDeleteMediaTosFileRequest{
-		FileNames: []string{"your FileNames"},
-		SpaceName: "your SpaceName",
-	}
-
-	resp, status, err := instance.DeleteMediaTosFile(query)
-	fmt.Println(status)
-	fmt.Println(err)
-	fmt.Println(resp.String())
-}
-
 func Test_GetMediaList(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{

@@ -75,6 +75,10 @@ func NewInstance(host, region string) *MaaS {
 			Method: http.MethodPost,
 			Path:   "/api/v2/endpoint/%s/images/quick-gen",
 		},
+		maas.APIImagesFlexGen: {
+			Method: http.MethodPost,
+			Path:   "/api/v2/endpoint/%s/images/flex-gen",
+		},
 		maas.APIAudioSpeech: {
 			Method: http.MethodPost,
 			Path:   "/api/v2/endpoint/%s/audio/speech",
