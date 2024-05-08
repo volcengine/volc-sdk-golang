@@ -7,7 +7,9 @@ import "github.com/volcengine/volc-sdk-golang/base"
 type ConvertPhotoV2Request struct {
 	ReqKey           string   `json:"req_key"`
 	BinaryDataBase64 []string `json:"binary_data_base64"`
-	IsColor          bool     `json:"is_color"`
+	ImageUrls        []string `json:"image_urls"`
+	IsColor          bool     `json:"is_color"` // Deprecated
+	IfColor          int      `json:"if_color"`
 }
 
 // 响应参数

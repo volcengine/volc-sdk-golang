@@ -20,7 +20,8 @@ func main() {
 	reqBody := &model.ConvertPhotoV2Request{
 		ReqKey:           "lens_opr", // 固定值
 		BinaryDataBase64: []string{"image_base64"},
-		//IsColor: false,
+		//ImageUrls:        []string{"https://xxxx"},
+		IfColor: 1,
 	}
 
 	resp, status, err := visual.DefaultInstance.ConvertPhotoV2(reqBody)
