@@ -933,14 +933,24 @@ func (vikingDBService *VikingDBService) EmbeddingV2(embModel EmbModel, rawData i
 	if single {
 		param := map[string]interface{}{
 			"data_type": rawData.(RawData).DataType,
-			"text":      rawData.(RawData).Text,
+		}
+		if rawData.(RawData).Text != "" {
+			param["text"] = rawData.(RawData).Text
+		}
+		if rawData.(RawData).Image != "" {
+			param["image"] = rawData.(RawData).Image
 		}
 		data = append(data, param)
 	} else if list {
 		for _, item := range rawData.([]RawData) {
 			param := map[string]interface{}{
 				"data_type": item.DataType,
-				"text":      item.Text,
+			}
+			if item.Text != "" {
+				param["text"] = item.Text
+			}
+			if item.Image != "" {
+				param["image"] = item.Image
 			}
 			data = append(data, param)
 		}

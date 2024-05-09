@@ -104,6 +104,7 @@ type EmbModel struct {
 type RawData struct {
 	DataType string
 	Text     string
+	Image    string
 }
 
 type IndexOptions struct {
