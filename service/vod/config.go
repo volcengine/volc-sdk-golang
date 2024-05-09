@@ -962,5 +962,37 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"DescribeVodEnhanceImageData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodEnhanceImageData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeVodSpaceEditStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodSpaceEditStatisData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeVodPlayedStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodPlayedStatisData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeVodMostPlayedStatisData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodMostPlayedStatisData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 	}
 )
