@@ -213,11 +213,13 @@ type ImageResultResponse struct {
 }
 
 type ImageContentRiskResp struct {
-	DataId         string                 `json:"DataId"`
-	Decision       string                 `json:"Decision"`
-	DecisionDetail string                 `json:"DecisionDetail"`
-	Results        []*ImageContentRiskTag `json:"Results"`
-	Scores         map[string]float64     `json:"Scores"`
+	DataId         string                     `json:"DataId"`
+	Decision       string                     `json:"Decision"`
+	OcrText        string                     `json:"OcrText"`
+	DecisionDetail string                     `json:"DecisionDetail"`
+	Results        []*ImageContentRiskTag     `json:"Results"`
+	Scores         map[string]float64         `json:"Scores"`
+	OcrDetails     []*ImageContentFrameDetail `json:"OcrDetails"`
 }
 
 type ImageContentRiskTag struct {
@@ -228,11 +230,23 @@ type ImageContentRiskTag struct {
 	Detail   interface{}          `json:"Detail"`
 	Frames   []*ImageContentFrame `json:"Frames"`
 }
-
 type ImageContentFrame struct {
 	Id  float64 `json:"id"`
 	Url string  `json:"url"`
 	//Score float64 `json:"score"`
+}
+type ImageContentFrameDetail struct {
+	Id           float64      `json:"Id"`
+	OcrFrameText string       `json:"OcrFrameText"`
+	Positions    []*Positions `json:"Positions"`
+}
+type Positions struct {
+	DetPointsRelative []*DetPointsRelative `json:"DetPointsRelative"`
+	Text              string               `json:"Text"`
+}
+type DetPointsRelative struct {
+	X float64 `json:"X"`
+	Y float64 `json:"Y"`
 }
 
 type AudioResultResponse struct {
