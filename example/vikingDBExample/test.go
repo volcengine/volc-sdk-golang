@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/base64"
+	"fmt"
 	"github.com/volcengine/volc-sdk-golang/service/vikingdb"
+	"io/ioutil"
 	"math/rand"
 	"time"
 )
@@ -133,24 +136,32 @@ func main() {
 	//	fmt.Println(item)
 	//}
 
-	//list := []vikingdb.RawData{
-	//	{
-	//		DataType: "text",
-	//		Text:     "hello1",
-	//	},
-	//	{
-	//		DataType: "text",
-	//		Text:     "hello2",
-	//	},
-	//}
-	//res, err := service.EmbeddingV2(vikingdb.EmbModel{ModelName: "bge-m3", Params: map[string]interface{}{"return_token_usage": true}}, list)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//for key, item := range res {
-	//	fmt.Println(key, item)
-	//	fmt.Println("------------------------------")
-	//}
+	filePath := "./test.jpeg"
+	fileContent, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		fmt.Println(err)
+	}
+	encodedImageContent := base64.StdEncoding.EncodeToString(fileContent)
+	list := []vikingdb.RawData{
+		{
+			DataType: "text-image",
+			Image:    encodedImageContent,
+			Text:     "test1",
+		},
+		{
+			DataType: "text-image",
+			Image:    encodedImageContent,
+			Text:     "test2",
+		},
+	}
+	res, err := service.EmbeddingV2(vikingdb.EmbModel{ModelName: "", Params: map[string]interface{}{"return_token_usage": true}}, list)
+	if err != nil {
+		fmt.Println(err)
+	}
+	for key, item := range res {
+		fmt.Println(key, item)
+		fmt.Println("------------------------------")
+	}
 
 	//datas := []map[string]interface{}{
 	//	{

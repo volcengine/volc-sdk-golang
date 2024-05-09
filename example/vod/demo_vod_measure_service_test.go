@@ -266,3 +266,91 @@ func Test_DescribeVodDomainBandwidthData(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_DescribeVodEnhanceImageData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodEnhanceImageDataRequest{
+		SpaceList:     "your SpaceList",
+		StartTime:     "your StartTime",
+		EndTime:       "your EndTime",
+		TaskTypeList:  "your TaskTypeList",
+		TaskStageList: "your TaskStageList",
+		Aggregation:   0,
+		RegionList:    "your RegionList",
+	}
+
+	resp, status, err := instance.DescribeVodEnhanceImageData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodSpaceEditStatisData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodSpaceEditStatisDataRequest{
+		SpaceList:       "your SpaceList",
+		StartTime:       "your StartTime",
+		EndTime:         "your EndTime",
+		Specification:   "your Specification",
+		Aggregation:     0,
+		DetailFieldList: "your DetailFieldList",
+		RegionList:      "your RegionList",
+	}
+
+	resp, status, err := instance.DescribeVodSpaceEditStatisData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodPlayedStatisData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodPlayedStatisDataRequest{
+		Space:     "your Space",
+		StartTime: "your StartTime",
+		EndTime:   "your EndTime",
+		VidList:   "your VidList",
+		OrderType: "your OrderType",
+	}
+
+	resp, status, err := instance.DescribeVodPlayedStatisData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodMostPlayedStatisData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodMostPlayedStatisDataRequest{
+		Space:     "your Space",
+		StartTime: "your StartTime",
+		EndTime:   "your EndTime",
+		OrderType: "your OrderType",
+		TopN:      0,
+	}
+
+	resp, status, err := instance.DescribeVodMostPlayedStatisData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

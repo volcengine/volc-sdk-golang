@@ -531,6 +531,7 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 	retrySettings := maas.GetRetrySetting(&cli.ServiceInfo.Retry, &apiInfo.Retry)
 
 	var body []byte
+	var resp *http.Response
 	var code int
 
 	err = backoff.Retry(func() error {
@@ -541,14 +542,9 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		var resp *http.Response
 		var cancel context.CancelFunc
 		resp, code, needRetry, err, cancel = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
 		defer cancel()
-		body, err = io.ReadAll(resp.Body)
-		if err != nil {
-			return err
-		}
 
 		if needRetry {
 			return err
@@ -556,6 +552,13 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 			return backoff.Permanent(err)
 		}
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
+
+	if resp != nil {
+		body, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return body, code, api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
+		}
+	}
 
 	if err != nil {
 		errVal := &api.ErrorResp{}
@@ -591,6 +594,7 @@ func (cli *MaaS) streamRequest(ctx context.Context, apiKey string, query url.Val
 	retrySettings := maas.GetRetrySetting(&cli.ServiceInfo.Retry, &apiInfo.Retry)
 
 	var body io.ReadCloser
+	var resp *http.Response
 	var code int
 
 	err = backoff.Retry(func() error {
@@ -601,9 +605,7 @@ func (cli *MaaS) streamRequest(ctx context.Context, apiKey string, query url.Val
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		var resp *http.Response
 		resp, code, needRetry, err, cancel = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
-		body = resp.Body
 
 		if needRetry {
 			cancel()
@@ -612,6 +614,14 @@ func (cli *MaaS) streamRequest(ctx context.Context, apiKey string, query url.Val
 			return backoff.Permanent(err)
 		}
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
+
+	if resp != nil {
+		body = resp.Body
+	}
+
+	if err != nil {
+		err = api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
+	}
 
 	return body, code, err, cancel
 }
