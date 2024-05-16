@@ -26,12 +26,8 @@ func initThreadPool(sender *Sender, logger log.Logger) *ThreadPool {
 	}
 }
 
-func (threadPool *ThreadPool) hasTask() bool {
-	return len(threadPool.taskChan) != 0
-}
-
-func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, ThreadPoolWait *sync.WaitGroup) {
-	defer ThreadPoolWait.Done()
+func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, threadPoolWaitGroup *sync.WaitGroup) {
+	defer threadPoolWaitGroup.Done()
 
 	threadPool.ioWaitGroup = senderWaitGroup
 	for {
@@ -39,9 +35,11 @@ func (threadPool *ThreadPool) start(senderWaitGroup *sync.WaitGroup, ThreadPoolW
 		case batch := <-threadPool.taskChan:
 			threadPool.handleBatch(batch)
 		case <-threadPool.stopCh:
-			if len(threadPool.taskChan) == 0 {
-				return
+			for batch := range threadPool.taskChan {
+				threadPool.handleBatch(batch)
 			}
+
+			return
 		case <-threadPool.forceQuitCh:
 			return
 		}
@@ -66,6 +64,7 @@ func (threadPool *ThreadPool) handleBatch(batch *Batch) {
 			threadPool.ioWaitGroup.Done()
 			<-threadPool.sender.maxSender
 		}()
+
 		threadPool.sender.sendToServer(batch)
 	}(batch)
 }

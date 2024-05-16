@@ -901,6 +901,60 @@ func (p *BusinessSecurity) CloseAudioLiveRisk(req *VideoResultRequest) (*AsyncVi
 	return result, nil
 }
 
+// CreateApp
+// 创建app接口
+func (p *BusinessSecurity) CreateApp(req *CreateAppReq) (*CreateAppResponse, error) {
+
+	respBody, _, err := p.Client.Json("CreateApp", req.ToQuery(), "")
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("CreateApp", req.ToQuery(), "")
+			if err != nil {
+				return nil, fmt.Errorf("CreateApp: fail to do request, %v", err)
+			}
+			result := new(CreateAppResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncLiveAudioRisk: fail to do request, %v", err)
+	}
+	result := new(CreateAppResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// ListApps
+// 获取APP列表
+func (p *BusinessSecurity) ListApps(req *ListAppsReq) (*ListAppsResponse, error) {
+	respBody, _, err := p.Client.Query("ListApps", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("ListApps", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("ListApps: fail to do request, %v", err)
+			}
+			result := new(ListAppsResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+		}
+		return nil, fmt.Errorf("ListApps: fail to do request, %v", err)
+	}
+	result := new(ListAppsResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // CreateCustomContents 创建自定义库
 func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
@@ -1282,4 +1336,454 @@ func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest)
 	}()
 
 	return ch, nil
+}
+
+func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CreateCustomLib: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CreateCustomLib", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("CreateCustomLib", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CreateCustomLib: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CreateCustomLib: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) UpdateCustomLib(req *UpdateCustomLibRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UpdateCustomLib: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("UpdateCustomLib", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("UpdateCustomLib", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("UpdateCustomLib: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UpdateCustomLib: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) ChangeCustomContentsStatus(req *ChangeCustomLibStatusRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ChangeCustomContentsStatus: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ChangeCustomContentsStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ChangeCustomContentsStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ChangeCustomContentsStatus: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ChangeCustomContentsStatus: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) DeleteCustomLib(req *DeleteCustomLibRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("DeleteCustomLib: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("DeleteCustomLib", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("DeleteCustomLib", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("DeleteCustomLib: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("DeleteCustomLib: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetCustomLib(req *GetCustomLibRequest) (*CustomLibListResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetCustomLib: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("GetCustomLib", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("GetCustomLib", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetCustomLib: fail to do request, %v", err)
+			}
+			result := new(CustomLibListResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetCustomLib: fail to do request, %v", err)
+	}
+	result := new(CustomLibListResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) CreateAccessConfig(req *CreateAccessConfigRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CreateAccessConfig: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CreateAccessConfig", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("CreateAccessConfig", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CreateAccessConfig: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CreateAccessConfig: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) UpdateAccessConfig(req *UpdateAccessConfigRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UpdateAccessConfig: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("UpdateAccessConfig", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("UpdateAccessConfig", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("UpdateAccessConfig: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UpdateAccessConfig: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) UpdateConfigStatus(req *UpdateAccessConfigStatusRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UpdateConfigStatus: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("UpdateConfigStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("UpdateConfigStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("UpdateConfigStatus: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UpdateConfigStatus: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetAccessConfig(req *GetAccessConfigStatusRequest) (*AccessConfigListResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetAccessConfig: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("GetAccessConfig", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("GetAccessConfig", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetAccessConfig: fail to do request, %v", err)
+			}
+			result := new(AccessConfigListResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetAccessConfig: fail to do request, %v", err)
+	}
+	result := new(AccessConfigListResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetTextLibContent(req *GetCustomTextLibRequest) (*CustomTextLibListResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetTextLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("GetTextLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("GetTextLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetTextLibContent: fail to do request, %v", err)
+			}
+			result := new(CustomTextLibListResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetTextLibContent: fail to do request, %v", err)
+	}
+	result := new(CustomTextLibListResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) DeleteTextLibContent(req *DeleteCustomTextRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("DeleteTextLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("DeleteTextLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("DeleteTextLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("DeleteTextLibContent: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("DeleteTextLibContent: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) UploadTextLibContent(req *UploadCustomTextRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UploadTextLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("UploadTextLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("UploadTextLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("UploadTextLibContent: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UploadTextLibContent: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetImageLibContent(req *GetCustomImgLibRequest) (*CustomImgLibListResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetImageLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("GetImageLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("GetImageLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetImageLibContent: fail to do request, %v", err)
+			}
+			result := new(CustomImgLibListResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetImageLibContent: fail to do request, %v", err)
+	}
+	result := new(CustomImgLibListResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) DeleteImageLibContent(req *DeleteCustomImgRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("DeleteImageLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("DeleteImageLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("DeleteImageLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("DeleteImageLibContent: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("DeleteImageLibContent: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*CommonResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UploadImageLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("UploadImageLibContent", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("UploadImageLibContent", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
+			}
+			result := new(CommonResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
+	}
+	result := new(CommonResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
 }

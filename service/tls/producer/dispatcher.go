@@ -58,6 +58,15 @@ func initDispatcher(config *Config, sender *Sender, logger log.Logger, threadPoo
 	}
 }
 
+func (dispatcher *Dispatcher) IsShutDown() bool {
+	select {
+	case <-dispatcher.stopCh:
+		return true
+	default:
+		return false
+	}
+}
+
 func (dispatcher *Dispatcher) addOrSendProducerBatch(key string, batchLog *BatchLog, producerBatch *Batch) {
 	totalDataCount := producerBatch.getLogCount() + 1
 
@@ -121,7 +130,13 @@ func (dispatcher *Dispatcher) checkBatches(config *Config) {
 	retryProducerBatchList := dispatcher.retryQueue.getRetryBatch(false)
 	if retryProducerBatchList == nil {
 		// If there is nothing to send in the retry queue, just wait for the minimum time that was given to me last time.
-		time.Sleep(sleepMs)
+		for sleepMs > 0 {
+			if dispatcher.IsShutDown() {
+				return
+			}
+			time.Sleep(time.Second)
+			sleepMs -= time.Second
+		}
 	} else {
 		for _, producerBatch := range retryProducerBatchList {
 			dispatcher.threadPool.taskChan <- producerBatch
@@ -131,6 +146,7 @@ func (dispatcher *Dispatcher) checkBatches(config *Config) {
 
 func (dispatcher *Dispatcher) checkBatchTime(dispatcherWaitGroup *sync.WaitGroup, config *Config) {
 	defer dispatcherWaitGroup.Done()
+
 	for {
 		select {
 		case <-dispatcher.stopCh:
@@ -145,6 +161,8 @@ func (dispatcher *Dispatcher) checkBatchTime(dispatcherWaitGroup *sync.WaitGroup
 }
 
 func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
+	defer close(dispatcher.threadPool.taskChan)
+
 	close(dispatcher.newLogRecvChan)
 	for batchLog := range dispatcher.newLogRecvChan {
 		dispatcher.handleLogs(batchLog)
@@ -154,7 +172,6 @@ func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
 	for _, batch := range dispatcher.logGroupData {
 		dispatcher.threadPool.taskChan <- batch
 	}
-
 	dispatcher.logGroupData = make(map[string]*Batch)
 	dispatcher.lock.Unlock()
 
@@ -172,13 +189,13 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	}
 
 	key := dispatcher.getKeyString(batchLog.Key)
+	logSize := int64(GetLogSize(batchLog.Log))
+
 	dispatcher.lock.Lock()
 
-	logSize := int64(GetLogSize(batchLog.Log))
-	if producerBatch, ok := dispatcher.logGroupData[key]; ok == true {
+	if producerBatch, ok := dispatcher.logGroupData[key]; ok {
 		atomic.AddInt64(&producerBatch.totalDataSize, logSize)
 		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
-
 		dispatcher.addOrSendProducerBatch(key, batchLog, producerBatch)
 	} else {
 		dispatcher.createNewProducerBatch(batchLog, key)
