@@ -531,7 +531,55 @@ type ContentRiskStatResult struct {
 func (result *OpenResult) GetErr() error {
 	return errors.New(fmt.Sprintf("err msg is %s, reqId is %s", result.Message, result.RequestId))
 }
+func (r *CreateAppReq) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
+func (r *ListAppsReq) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
 
+type CreateAppReq struct {
+	AppName     string `json:"AppName" form:"AppName" query:"AppName"`
+	AppNameZh   string `json:"AppNameZh" form:"AppNameZh" query:"AppNameZh"`
+	AppType     string `json:"AppType" form:"AppType" query:"AppType"`
+	Description string `json:"Description" form:"Description" query:"Description"`
+}
+type ListAppsReq struct {
+	Limit  int `json:"Limit" form:"Limit" query:"Limit"`
+	Offset int `json:"Offset" form:"Offset" query:"Offset"`
+}
+
+type CreateAppResponse struct {
+	OpenResult
+	Data CreateAppResult `json:"Data"`
+}
+type CreateAppResult struct {
+	AppId       uint   `json:"AppId"`
+	AppName     string `json:"AppName"`
+	AppNameZh   string `json:"AppNameZh"`
+	AppType     string `json:"AppType"`
+	Description string `json:"Description"`
+}
+type ListAppsResponse struct {
+	OpenResult
+	Data ListAppsResult `json:"Data"`
+}
+type ListAppsResult struct {
+	Total  int                 `json:"Total"`
+	Limit  int                 `json:"Limit"`
+	Offset int                 `json:"Offset"`
+	Apps   []*ListAppsAppModel `json:"Apps"`
+}
+type ListAppsAppModel struct {
+	AppId       uint   `json:"AppId"`
+	AppName     string `json:"AppName"`
+	AppNameZh   string `json:"AppNameZh"`
+	AppType     string `json:"AppType"`
+	Description string `json:"Description"`
+	CreatedTime string `json:"CreatedTime"`
+	UpdatedTime string `json:"UpdatedTime"`
+	IsFavor     bool   `json:"IsFavor"`
+}
 type CommonProductStatisticsReq struct {
 	Product    string  `json:"Product" form:"Product" query:"Product"`
 	UnitType   string  `json:"UnitType" form:"UnitType" query:"UnitType"`
@@ -648,8 +696,9 @@ type SecuritySourceResponse struct {
 }
 
 type SecuritySourceData struct {
-	Content    string                      `json:"Content"`
-	References []*SecuritySourceReferences `json:"References"`
+	Content      string                      `json:"Content"`
+	References   []*SecuritySourceReferences `json:"References"`
+	FinishReason string                      `json:"FinishReason"`
 }
 
 type SecuritySourceReferences struct {
@@ -657,4 +706,210 @@ type SecuritySourceReferences struct {
 	Idx      int64  `json:"Idx"`
 	LogoUrl  string `json:"LogoUrl"`
 	SiteName string `json:"SiteName"`
+}
+
+type CommonResponse struct {
+	RequestId string `json:"RequestId"`
+	Code      int    `json:"Code"`
+	Message   string `json:"Message"`
+}
+
+type CreateCustomLibRequest struct {
+	AppId       int64  `json:"app_id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	MatchType   string `json:"match_type"`
+	Decision    string `json:"decision"`
+	BizTypes    string `json:"biztypes"`
+	Service     string `json:"service"`
+	LibType     string `json:"lib_type"`
+}
+
+type UpdateCustomLibRequest struct {
+	AppId       int64  `json:"app_id"`
+	Description string `json:"description"`
+	BizTypes    string `json:"biztypes"`
+	Service     string `json:"service"`
+	LibType     string `json:"lib_type"`
+	Name        string `json:"name"`
+}
+
+type ChangeCustomLibStatusRequest struct {
+	AppId   int64  `json:"app_id"`
+	Service string `json:"service"`
+	LibType string `json:"lib_type"`
+	Name    string `json:"name"`
+	Status  int64  `json:"status"`
+}
+
+type DeleteCustomLibRequest struct {
+	AppId   int64  `json:"app_id"`
+	Name    string `json:"name"`
+	Service string `json:"service"`
+	LibType string `json:"lib_type"`
+}
+
+type GetCustomLibRequest struct {
+	AppId   int64  `json:"app_id"`
+	Service string `json:"service"`
+	LibType string `json:"lib_type"`
+}
+
+type CustomLibListResponse struct {
+	RequestId string               `json:"RequestId"`
+	Code      int                  `json:"Code"`
+	Message   string               `json:"Message"`
+	Data      []*CustomLibListData `json:"Data"`
+}
+
+type CustomLibListData struct {
+	Status      int64  `json:"status"`
+	Decision    string `json:"decision"`
+	Name        string `json:"name"`
+	MatchType   string `json:"matchType"`
+	BizTypes    string `json:"biztypes"`
+	Description string `json:"description"`
+	Count       int64  `json:"count"`
+}
+
+type CreateAccessConfigRequest struct {
+	AppId     int64  `json:"app_id"`
+	Service   string `json:"service_item"`
+	Name      string `json:"name"`
+	BizType   string `json:"biztype"`
+	Scene     string `json:"scene"`
+	Labels    string `json:"labels"`
+	OcrLabels string `json:"ocr_labels"`
+	AsrLabels string `json:"asr_labels"`
+	TextLibs  string `json:"text_libs"`
+	ImageLibs string `json:"image_libs"`
+}
+
+type UpdateAccessConfigRequest struct {
+	Id        int64  `json:"id"`
+	AppId     int64  `json:"app_id"`
+	Service   string `json:"service_item"`
+	Name      string `json:"name"`
+	BizType   string `json:"biztype"`
+	Scene     string `json:"scene"`
+	Labels    string `json:"labels"`
+	OcrLabels string `json:"ocr_labels"`
+	AsrLabels string `json:"asr_labels"`
+	TextLibs  string `json:"text_libs"`
+	ImageLibs string `json:"image_libs"`
+}
+
+type UpdateAccessConfigStatusRequest struct {
+	Id      int64  `json:"id"`
+	AppId   int64  `json:"app_id"`
+	Service string `json:"service_item"`
+	BizType string `json:"biztype"`
+	Status  int64  `json:"status"`
+}
+
+type GetAccessConfigStatusRequest struct {
+	AppId   int64  `json:"app_id"`
+	Service string `json:"service_item"`
+}
+
+type AccessConfigListResponse struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      []*AccessConfigListData `json:"Data"`
+}
+
+type AccessConfigListData struct {
+	Id        int64  `json:"id"`
+	BizType   string `json:"biztype"`
+	Labels    string `json:"labels"`
+	Name      string `json:"name"`
+	Scene     string `json:"scene"`
+	Status    int64  `json:"status"`
+	OcrLabels string `json:"ocrLabels"`
+	AsrLabels string `json:"asrLabels"`
+	TextLibs  string `json:"textLibs"`
+	ImageLibs string `json:"imageLibs"`
+}
+
+type GetCustomTextLibRequest struct {
+	AppId    int64  `json:"app_id"`
+	Service  string `json:"service"`
+	Name     string `json:"name"`
+	KeyWord  string `json:"keyword"`
+	PageNum  int64  `json:"page_num"`
+	PageSize int64  `json:"page_size"`
+}
+
+type CustomTextLibListResponse struct {
+	RequestId string                   `json:"RequestId"`
+	Code      int                      `json:"Code"`
+	Message   string                   `json:"Message"`
+	Data      []*CustomTextLibListData `json:"Data"`
+	Total     int                      `json:"TotalCnt"`
+}
+
+type CustomTextLibListData struct {
+	Content         string `json:"content"`
+	OriginContent   string `json:"originContent"`
+	FirstUploadTime int64  `json:"firstUploadTime"`
+	UpdateTime      int64  `json:"updateTime"`
+}
+
+type DeleteCustomTextRequest struct {
+	AppId   int64    `json:"app_id"`
+	Service string   `json:"service"`
+	Name    string   `json:"name"`
+	Data    []string `json:"data"`
+}
+
+type UploadCustomTextRequest struct {
+	AppId   int64    `json:"app_id"`
+	Service string   `json:"service"`
+	Name    string   `json:"name"`
+	Data    []string `json:"data"`
+}
+
+type GetCustomImgLibRequest struct {
+	AppId    int64  `json:"app_id"`
+	Service  string `json:"service"`
+	Name     string `json:"name"`
+	KeyWord  string `json:"keyword"`
+	PageNum  int64  `json:"page_num"`
+	PageSize int64  `json:"page_size"`
+}
+
+type CustomImgLibListResponse struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      []*CustomImgLibListData `json:"Data"`
+	Total     int                     `json:"TotalCnt"`
+}
+
+type CustomImgLibListData struct {
+	Content    string `json:"content"`
+	ImageName  string `json:"imageName"`
+	ImageId    string `json:"imageId"`
+	UploadTime int64  `json:"uploadTime"`
+}
+
+type DeleteCustomImgRequest struct {
+	AppId   int64    `json:"app_id"`
+	Service string   `json:"service"`
+	Name    string   `json:"name"`
+	Data    []string `json:"data"`
+}
+
+type UploadCustomImgRequest struct {
+	AppId   int64            `json:"app_id"`
+	Service string           `json:"service"`
+	Name    string           `json:"name"`
+	Data    []*CustomImgInfo `json:"data"`
+}
+
+type CustomImgInfo struct {
+	ImageName string `json:"image_name"`
+	Url       string `json:"url"`
+	ImageData string `json:"data"`
 }

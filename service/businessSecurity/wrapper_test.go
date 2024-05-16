@@ -1,8 +1,8 @@
 package businessSecurity
 
 const (
-	Ak = "AK" // write your access key
-	Sk = "SK" // write your secret key
+	Ak = "AK" // fill in your access key
+	Sk = "SK" // fill in your secret key
 )
 
 func init() {

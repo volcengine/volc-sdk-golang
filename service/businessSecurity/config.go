@@ -366,5 +366,158 @@ var (
 				"Version": []string{"2022-12-23"},
 			},
 		},
+		"CreateCustomLib": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCustomLib"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"UpdateCustomLib": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCustomLib"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"ChangeCustomContentsStatus": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ChangeCustomContentsStatus"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"DeleteCustomLib": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCustomLib"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"GetCustomLib": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetCustomLib"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"CreateAccessConfig": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CreateAccessConfig"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"UpdateAccessConfig": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAccessConfig"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"UpdateConfigStatus": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateConfigStatus"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"GetAccessConfig": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetAccessConfig"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"GetTextLibContent": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetTextLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"DeleteTextLibContent": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTextLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"UploadTextLibContent": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"UploadTextLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"GetImageLibContent": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"DeleteImageLibContent": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"UploadImageLibContent": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"UploadImageLibContent"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"CreateApp": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CreateApp"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"ListApps": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ListApps"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
 	}
 )
