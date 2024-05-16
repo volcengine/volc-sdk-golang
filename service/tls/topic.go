@@ -186,7 +186,7 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 	}
 
 	if len(request.TopicID) != 0 {
-		params["TopicID"] = request.TopicID
+		params["TopicId"] = request.TopicID
 	}
 
 	if request.PageNumber != 0 {
