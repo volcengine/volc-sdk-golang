@@ -533,6 +533,7 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 	var body []byte
 	var resp *http.Response
 	var code int
+	cancel := func() {}
 
 	err = backoff.Retry(func() error {
 		_, err = requestBody.Seek(0, io.SeekStart)
@@ -542,11 +543,10 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 		}
 		req.Body = ioutil.NopCloser(requestBody)
 		var needRetry bool
-		var cancel context.CancelFunc
 		resp, code, needRetry, err, cancel = cli.doRequest(ctx, apiKey, req, timeout, authApikey)
-		defer cancel()
 
 		if needRetry {
+			cancel()
 			return err
 		} else {
 			return backoff.Permanent(err)
@@ -559,6 +559,7 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 			return body, code, api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
 		}
 	}
+	defer cancel()
 
 	if err != nil {
 		errVal := &api.ErrorResp{}
