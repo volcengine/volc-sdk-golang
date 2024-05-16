@@ -36,8 +36,9 @@ type producer struct {
 
 func newProducer(producerConfig *Config) *producer {
 	logger := common.LogConfig(producerConfig.LoggerConfig)
+	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret,
+		producerConfig.SecurityToken, producerConfig.Region)
 
-	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret, "", producerConfig.Region)
 	producerConfig = validateProducerConfig(producerConfig)
 	if producerConfig.MaxBatchCount > 10000 {
 		level.Warn(logger).Log("msg", "MaxBatchCount is adjusted to 10000 (the maximum allowed value)")
@@ -180,7 +181,6 @@ func (producer *producer) waitTime() error {
 
 	if producer.config.MaxBlockSec == 0 {
 		if atomic.LoadInt64(&producer.producerLogGroupSize) > producer.config.TotalSizeLnBytes {
-
 			return errors.New(TimeoutException)
 		}
 
@@ -200,26 +200,29 @@ func (producer *producer) waitTime() error {
 	return nil
 }
 
-func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
-	if batchLog.Log.Time == 0 {
-		batchLog.Log.Time = time.Now().Unix()
-	}
-
-	select {
-	case <-producer.closeCh:
-		return errors.New("the producer is closed")
-	default:
-	}
-
-	select {
-	case <-producer.closeCh:
-		return errors.New("the producer is closed")
-	default:
-		select {
-		case <-producer.closeCh:
-			return errors.New("the producer is closed")
-		case producer.dispatcher.newLogRecvChan <- batchLog:
+func (producer *producer) putToDispatcher(batchLog *BatchLog) (err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.New("the producer is closed")
 		}
+	}()
+
+	select {
+	case <-producer.closeCh:
+		err = errors.New("the producer is closed")
+		return err
+	default:
+	}
+
+	if batchLog.Log.Time == 0 {
+		batchLog.Log.Time = time.Now().UnixNano() / time.Millisecond.Nanoseconds()
+	}
+
+	select {
+	case <-producer.closeCh:
+		err = errors.New("the producer is closed")
+		return err
+	case producer.dispatcher.newLogRecvChan <- batchLog:
 	}
 
 	return nil
@@ -228,31 +231,39 @@ func (producer *producer) putToDispatcher(batchLog *BatchLog) error {
 func (producer *producer) Start() {
 	producer.threadPoolWaitGroup.Add(1)
 	go producer.threadPool.start(producer.senderWaitGroup, producer.threadPoolWaitGroup)
+
 	producer.dispatcherWaitGroup.Add(2)
 	go producer.dispatcher.checkBatchTime(producer.dispatcherWaitGroup, producer.config)
 	go producer.dispatcher.run(producer.dispatcherWaitGroup)
+
 	level.Info(producer.logger).Log("msg", "producer start")
 }
 
 func (producer *producer) Close() {
 	close(producer.closeCh)
+	close(producer.threadPool.sender.stopCh)
+
 	close(producer.dispatcher.stopCh)
 	producer.dispatcherWaitGroup.Wait()
+
 	close(producer.threadPool.stopCh)
 	producer.threadPoolWaitGroup.Wait()
-	close(producer.threadPool.sender.stopCh)
 	producer.senderWaitGroup.Wait()
+
 	level.Info(producer.logger).Log("msg", "producer close finish")
 }
 
 func (producer *producer) ForceClose() {
 	close(producer.closeCh)
+	close(producer.threadPool.sender.stopCh)
+
 	close(producer.dispatcher.forceQuitCh)
 	producer.dispatcherWaitGroup.Wait()
+
 	close(producer.threadPool.forceQuitCh)
 	producer.threadPoolWaitGroup.Wait()
-	close(producer.threadPool.sender.stopCh)
 	producer.senderWaitGroup.Wait()
+
 	level.Info(producer.logger).Log("msg", "producer close finish")
 }
 
