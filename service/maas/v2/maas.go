@@ -554,9 +554,10 @@ func (cli *MaaS) request(ctx context.Context, apiKey string, query url.Values, e
 	}, backoff.WithMaxRetries(backoff.NewConstantBackOff(*retrySettings.RetryInterval), *retrySettings.RetryTimes))
 
 	if resp != nil {
-		body, err = io.ReadAll(resp.Body)
-		if err != nil {
-			return body, code, api.NewClientSDKRequestError(err.Error(), reqIdFromCtx(ctx))
+		var errI error
+		body, errI = io.ReadAll(resp.Body)
+		if errI != nil {
+			return body, code, api.NewClientSDKRequestError(errI.Error(), reqIdFromCtx(ctx))
 		}
 	}
 	defer cancel()
