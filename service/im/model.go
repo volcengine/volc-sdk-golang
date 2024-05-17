@@ -790,6 +790,9 @@ type BatchGetConversationsResResultConversationCoreInfosItem struct {
 	// REQUIRED; 会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
 
+	// REQUIRED; 会话Id，字符串类型，含义跟ConversationShortId一样，用来定位唯一的一个会话，历史原因，目前大部分接口都在使用ConversationShortId，但是仍然有比较比较老的接口会使用到ConversationId，如果目前您接入的功能没有使用到ConversationId直接忽略即可
+	ConversationID string `json:"ConversationId"`
+
 	// REQUIRED; 会话类型。 1：单聊 2:群聊 100:直播群
 	ConversationType int32 `json:"ConversationType"`
 
@@ -1534,6 +1537,9 @@ type CreateConversationResResult struct {
 	// REQUIRED; 会话详细信息
 	ConversationInfo CreateConversationResResultConversationInfo `json:"ConversationInfo"`
 
+	// REQUIRED; 会话Id，字符串类型，含义跟ConversationShortId一样，用来定位唯一的一个会话，历史原因，目前大部分接口都在使用ConversationShortId，但是仍然有比较比较老的接口会使用到ConversationId，如果目前您接入的功能没有使用到ConversationId直接忽略即可
+	ConversationID string `json:"ConversationId"`
+
 	// REQUIRED; 会话id
 	ConversationShortID int64 `json:"ConversationShortId"`
 
@@ -1549,6 +1555,9 @@ type CreateConversationResResultConversationInfo struct {
 
 	// REQUIRED; 会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
+
+	// REQUIRED; 会话Id，字符串类型，含义跟ConversationShortId一样，用来定位唯一的一个会话，历史原因，目前大部分接口都在使用ConversationShortId，但是仍然有比较比较老的接口会使用到ConversationId，如果目前您接入的功能没有使用到ConversationId直接忽略即可
+	ConversationID string `json:"ConversationId"`
 
 	// REQUIRED; 会话类型。
 	// * 1：单聊
@@ -2267,6 +2276,9 @@ type GetConversationSettingResResultConversationSettingInfo struct {
 	// REQUIRED; 会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
 
+	// REQUIRED; 会话Id，字符串类型，含义跟ConversationShortId一样，用来定位唯一的一个会话，历史原因，目前大部分接口都在使用ConversationShortId，但是仍然有比较比较老的接口会使用到ConversationId，如果目前您接入的功能没有使用到ConversationId直接忽略即可
+	ConversationID string `json:"ConversationId"`
+
 	// REQUIRED; 会话类型。
 	// * 1：单聊
 	// * 2：群聊
@@ -2704,6 +2716,9 @@ type GetUserConversationsResResultConversationInfosItem struct {
 
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
+
+	// REQUIRED; 会话Id，字符串类型，含义跟ConversationShortId一样，用来定位唯一的一个会话，历史原因，目前大部分接口都在使用ConversationShortId，但是仍然有比较比较老的接口会使用到ConversationId，如果目前您接入的功能没有使用到ConversationId直接忽略即可
+	ConversationID string `json:"ConversationId"`
 
 	// REQUIRED; 会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
@@ -3911,6 +3926,73 @@ type SendMessageResResult struct {
 	MessageID int64 `json:"MessageId"`
 }
 
+type BatchSendMessageBody struct {
+
+	// REQUIRED; 应用的唯一标志
+	AppID int32 `json:"AppId"`
+
+	// REQUIRED; 消息内容。当你给客户端发消息时，Content 内容需符合客户端格式，详细信息请参看消息格式
+	Content string `json:"Content"`
+
+	// REQUIRED; 消息类型
+	MsgType int32 `json:"MsgType"`
+
+	// REQUIRED; 消息接收人 UserId 列表
+	Receiver []int32 `json:"Receiver"`
+
+	// REQUIRED; 消息发送人 UserId
+	Sender int32 `json:"Sender"`
+
+	// 消息的扩展字段，key 的数据类型为 String，value 的数据类型为 String
+	Ext map[string]string `json:"Ext,omitempty"`
+
+	// 信箱，用做逻辑隔离 默认值为 0
+	InboxType *int32 `json:"InboxType,omitempty"`
+}
+
+type BatchSendMessageRes struct {
+
+	// REQUIRED
+	ResponseMetadata BatchSendMessageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result BatchSendMessageResResult `json:"Result"`
+}
+
+type BatchSendMessageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string                                    `json:"Version"`
+	Error   *BatchSendMessageResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type BatchSendMessageResResponseMetadataError struct {
+
+	// REQUIRED
+	Code string `json:"Code"`
+
+	// REQUIRED
+	Message string `json:"Message"`
+}
+
+type BatchSendMessageResResult struct {
+
+	// REQUIRED; 消息Id列表，key为用户UserId，value为消息Id
+	UserMessageID map[string]int64 `json:"UserMessageId"`
+}
+
 type UnRegisterUsersBody struct {
 
 	// REQUIRED; 应用的唯一标志
@@ -4215,6 +4297,8 @@ type ScanConversationParticipantListQuery struct{}
 type GetBlackList struct{}
 type AddFriendQuery struct{}
 type BatchAddWhitelistParticipantQuery struct{}
+type BatchSendMessage struct{}
+type BatchSendMessageQuery struct{}
 type RecallMessage struct{}
 type UserBroadcast struct{}
 type BatchRemoveWhitelistParticipant struct{}
@@ -4353,6 +4437,12 @@ type SendMessageReq struct {
 	*SendMessageQuery
 	*SendMessageBody
 }
+
+type BatchSendMessageReq struct {
+	*BatchSendMessageQuery
+	*BatchSendMessageBody
+}
+
 type GetMessagesReq struct {
 	*GetMessagesQuery
 	*GetMessagesBody
