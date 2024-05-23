@@ -179,6 +179,45 @@ func Test_DeleteTranscodes(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_GetFileInfos(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodGetFileInfosRequest{
+		SpaceName:        "your SpaceName",
+		EncodedFileNames: "your EncodedFileNames",
+		BucketName:       "your BucketName",
+	}
+
+	resp, status, err := instance.GetFileInfos(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_UpdateFileStorageClass(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateFileStorageClassRequest{
+		SpaceName:       "your SpaceName",
+		FileUpdateInfos: nil,
+		BucketName:      "your BucketName",
+	}
+
+	resp, status, err := instance.UpdateFileStorageClass(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_GetMediaList(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
