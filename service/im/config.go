@@ -58,14 +58,6 @@ var (
 				"Version": []string{"2020-12-01"},
 			},
 		},
-		"GetMessagesReadReceipt": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetMessagesReadReceipt"},
-				"Version": []string{"2020-12-01"},
-			},
-		},
 		"ModifyParticipantReadIndex": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -327,6 +319,22 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"RecallMessage"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"BatchSendMessage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchSendMessage"},
+				"Version": []string{"2020-12-01"},
+			},
+		},
+		"GetMessagesReadReceipt": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMessagesReadReceipt"},
 				"Version": []string{"2020-12-01"},
 			},
 		},
