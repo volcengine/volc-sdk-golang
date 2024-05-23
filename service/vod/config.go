@@ -244,6 +244,22 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"GetFileInfos": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetFileInfos"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateFileStorageClass": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateFileStorageClass"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"GetMediaList": {
 			Method: http.MethodGet,
 			Path:   "/",

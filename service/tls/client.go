@@ -25,6 +25,8 @@ var (
 	defaultRetryCounter        int32
 	defaultRetryCounterMaximum int32
 	defaultRequestTimeout      time.Duration
+
+	defaultUserAgent = fmt.Sprintf("%s/%s", base.SDKName, base.SDKVersion)
 )
 
 func init() {
@@ -58,10 +60,15 @@ type LsClient struct {
 	RequestTimeOut  time.Duration
 	Region          string
 	APIVersion      string
+	CustomUserAgent string
 }
 
 func (c *LsClient) SetAPIVersion(version string) {
 	c.APIVersion = version
+}
+
+func (c *LsClient) SetCustomUserAgent(customUserAgent string) {
+	c.CustomUserAgent = customUserAgent
 }
 
 // ResetAccessKeyToken reset client's access key token
@@ -183,7 +190,12 @@ func appendParam(originalUrl string, params map[string]string) string {
 }
 
 func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers map[string]string, body []byte) (*http.Response, error) {
-	headers[AgentHeader] = fmt.Sprintf("%s/%s", base.SDKName, base.SDKVersion)
+	if len(c.CustomUserAgent) == 0 {
+		headers[AgentHeader] = defaultUserAgent
+	} else {
+		headers[AgentHeader] = c.CustomUserAgent
+	}
+
 	// 如果header没有配置api version，增加默认的api version 0.3.0
 	if _, ok := headers[HeaderAPIVersion]; !ok {
 		headers[HeaderAPIVersion] = c.APIVersion

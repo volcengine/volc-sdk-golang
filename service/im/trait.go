@@ -811,6 +811,26 @@ func (c *Im) SendMessage(ctx context.Context, arg *SendMessageBody) (*SendMessag
 	return result, nil
 }
 
+func (c *Im) BatchSendMessage(ctx context.Context, arg *BatchSendMessageBody) (*BatchSendMessageRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "BatchSendMessage", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(BatchSendMessageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Im) GetMessages(ctx context.Context, arg *GetMessagesBody) (*GetMessagesRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {

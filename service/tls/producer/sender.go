@@ -65,23 +65,23 @@ func (sender *Sender) sendToServer(batch *Batch) {
 		putLogsReq.HashKey = *batch.shardHash
 	}
 
-	_, err = sender.client.PutLogs(putLogsReq)
+	resp, err := sender.client.PutLogs(putLogsReq)
 	if err == nil {
-		sender.handleSuccess(batch)
+		sender.handleSuccess(batch, resp)
 		return
 	}
 
 	sender.handleFailure(batch, err)
 }
 
-func (sender *Sender) handleSuccess(batch *Batch) {
+func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 	level.Debug(sender.logger).Log("msg", "sendToServer succeeded,Execute successful callback function")
 	defer atomic.AddInt64(&sender.producer.producerLogGroupSize, -batch.totalDataSize)
 
 	batch.result.SuccessFlag = true
 	if batch.attemptCount < batch.maxReservedAttempts {
 		batch.result.Attempts = append(batch.result.Attempts,
-			newAttempt(true, "", "", "", GetTimeMs(time.Now().UnixNano())))
+			newAttempt(true, putLogsResp.RequestID, "", "", GetTimeMs(time.Now().UnixNano())))
 	}
 
 	for _, callBack := range batch.callBackList {
