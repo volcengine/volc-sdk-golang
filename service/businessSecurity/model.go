@@ -725,6 +725,17 @@ type CreateCustomLibRequest struct {
 	LibType     string `json:"lib_type"`
 }
 
+type CreateCustomLibResponse struct {
+	RequestId string              `json:"RequestId"`
+	Code      int                 `json:"Code"`
+	Message   string              `json:"Message"`
+	Data      CustomLibCreateInfo `json:"Data"`
+}
+
+type CustomLibCreateInfo struct {
+	Id int `json:"id"`
+}
+
 type UpdateCustomLibRequest struct {
 	AppId       int64  `json:"app_id"`
 	Description string `json:"description"`
@@ -783,6 +794,17 @@ type CreateAccessConfigRequest struct {
 	AsrLabels string `json:"asr_labels"`
 	TextLibs  string `json:"text_libs"`
 	ImageLibs string `json:"image_libs"`
+}
+
+type CreateAccessConfigResponse struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      AccessConfigCreateInfo `json:"Data"`
+}
+
+type AccessConfigCreateInfo struct {
+	Id int `json:"id"`
 }
 
 type UpdateAccessConfigRequest struct {
@@ -911,5 +933,16 @@ type UploadCustomImgRequest struct {
 type CustomImgInfo struct {
 	ImageName string `json:"image_name"`
 	Url       string `json:"url"`
-	ImageData string `json:"data"`
+	ImageData string `json:"image_data"`
+}
+
+type UploadCustomImgResponse struct {
+	RequestId string              `json:"RequestId"`
+	Code      int                 `json:"Code"`
+	Message   string              `json:"Message"`
+	Data      UploadCustomImgInfo `json:"Data"`
+}
+
+type UploadCustomImgInfo struct {
+	Ids []int `json:"ids"`
 }
