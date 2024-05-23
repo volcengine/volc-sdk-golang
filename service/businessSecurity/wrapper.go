@@ -9,6 +9,7 @@ import (
 	hi_sse "github.com/volcengine/volc-sdk-golang/service/businessSecurity/sse"
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"io"
+	"io/ioutil"
 )
 
 // Synchronous risk detection
@@ -1265,7 +1266,7 @@ func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest)
 		return nil, api.NewClientSDKRequestError(fmt.Sprintf("failed to make request: %v", err))
 	}
 
-	r.Body = io.NopCloser(bytes.NewReader(reqData))
+	r.Body = ioutil.NopCloser(bytes.NewReader(reqData))
 	timeout := getTimeout(p.ServiceInfo.Timeout, apiInfo.Timeout)
 
 	r = p.ServiceInfo.Credentials.Sign(r)
@@ -1338,7 +1339,7 @@ func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest)
 	return ch, nil
 }
 
-func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*CommonResponse, error) {
+func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*CreateCustomLibResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("CreateCustomLib: fail to marshal request, %v", err)
@@ -1353,7 +1354,7 @@ func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*Common
 			if err != nil {
 				return nil, fmt.Errorf("CreateCustomLib: fail to do request, %v", err)
 			}
-			result := new(CommonResponse)
+			result := new(CreateCustomLibResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1361,7 +1362,7 @@ func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*Common
 		}
 		return nil, fmt.Errorf("CreateCustomLib: fail to do request, %v", err)
 	}
-	result := new(CommonResponse)
+	result := new(CreateCustomLibResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -1488,7 +1489,7 @@ func (p *BusinessSecurity) GetCustomLib(req *GetCustomLibRequest) (*CustomLibLis
 	return result, nil
 }
 
-func (p *BusinessSecurity) CreateAccessConfig(req *CreateAccessConfigRequest) (*CommonResponse, error) {
+func (p *BusinessSecurity) CreateAccessConfig(req *CreateAccessConfigRequest) (*CreateAccessConfigResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("CreateAccessConfig: fail to marshal request, %v", err)
@@ -1503,7 +1504,7 @@ func (p *BusinessSecurity) CreateAccessConfig(req *CreateAccessConfigRequest) (*
 			if err != nil {
 				return nil, fmt.Errorf("CreateAccessConfig: fail to do request, %v", err)
 			}
-			result := new(CommonResponse)
+			result := new(CreateAccessConfigResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1511,7 +1512,7 @@ func (p *BusinessSecurity) CreateAccessConfig(req *CreateAccessConfigRequest) (*
 		}
 		return nil, fmt.Errorf("CreateAccessConfig: fail to do request, %v", err)
 	}
-	result := new(CommonResponse)
+	result := new(CreateAccessConfigResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -1758,7 +1759,7 @@ func (p *BusinessSecurity) DeleteImageLibContent(req *DeleteCustomImgRequest) (*
 	return result, nil
 }
 
-func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*CommonResponse, error) {
+func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*UploadCustomImgResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("UploadImageLibContent: fail to marshal request, %v", err)
@@ -1773,7 +1774,7 @@ func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*
 			if err != nil {
 				return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
 			}
-			result := new(CommonResponse)
+			result := new(UploadCustomImgResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1781,7 +1782,7 @@ func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*
 		}
 		return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
 	}
-	result := new(CommonResponse)
+	result := new(UploadCustomImgResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
