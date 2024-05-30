@@ -486,5 +486,21 @@ var (
 				"Version": []string{"2023-08-01"},
 			},
 		},
+		"ReconfigureDevicesPackage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ReconfigureDevicesPackage"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListTaskInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListTaskInfo"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
 	}
 )
