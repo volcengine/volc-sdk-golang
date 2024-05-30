@@ -2,6 +2,7 @@ package ipaas
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"testing"
@@ -316,4 +317,81 @@ func TestForCloudGame(t *testing.T) {
 		t.Logf("error occur %v", err)
 	}
 	fmt.Println(resp2)
+}
+
+func TestReconfigureDevicesPackage(t *testing.T) {
+	ak := "**"
+	sk := "**"
+	host := ""
+	DefaultInstance := NewInstance()
+	DefaultInstance.Client.SetAccessKey(ak)
+	DefaultInstance.Client.SetSecretKey(sk)
+	DefaultInstance.SetHost(host)
+
+	ctx := context.Background()
+	resp, err := DefaultInstance.ReconfigureDevicesPackage(ctx, &ReconfigureDevicesPackageBody{
+		ProductID: "*",
+		ReconfigureParam: []ReconfigureDevicesPackageBodyReconfigureParamItem{
+			{
+				DeviceID: "h-*",
+				InstancesSpec: []ReconfigureDevicesPackageBodyReconfigureParamPropertiesItemsItem{
+					{
+						BandwidthMbps:      10,
+						DisplayResolutionX: 720,
+						DisplayResolutionY: 1080,
+						ImageID:            "img-*",
+						InstanceID:         "i-*",
+						Properties:         nil,
+					},
+				},
+				PackageID: "pack-*",
+				TimeoutSeconds: func() *int32 {
+					var a int32 = 500
+					return &a
+				}(),
+			},
+		},
+	})
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("%s", func() string { s, _ := json.Marshal(resp); return string(s) }())
+}
+
+func TestListTaskDetail(t *testing.T) {
+	ak := "**"
+	sk := "**"
+	host := ""
+	DefaultInstance := NewInstance()
+	DefaultInstance.Client.SetAccessKey(ak)
+	DefaultInstance.Client.SetSecretKey(sk)
+	DefaultInstance.SetHost(host)
+
+	ctx := context.Background()
+
+	resp, err := DefaultInstance.ListTaskInfo(ctx, &ListTaskInfoQuery{
+		ProductID:    "fake",
+		Count:        nil,
+		CreateAfter:  nil,
+		CreateBefore: nil,
+		DeviceID:     nil,
+		InstanceID:   nil,
+		JobID:        nil,
+		Offset:       nil,
+		StatusIn:     nil,
+		TaskID:       nil,
+		TypeIn:       nil,
+		UpdateAfter:  nil,
+		UpdateBefore: nil,
+	})
+
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	t.Logf("%s", func() string { s, _ := json.Marshal(resp); return string(s) }())
+
 }

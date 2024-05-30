@@ -552,6 +552,8 @@ type CreateDevicesBody struct {
 	// 设备名称，不填默认和deviceId保持一致，若订购多个，会加后缀递增
 	DeviceName *string `json:"DeviceName,omitempty"`
 
+	InstanceDisk *int32 `json:"InstanceDisk,omitempty"` // 共享存储，MB，新增参数，针对云游戏做的特殊逻辑
+
 	// 订购设备的区域，cn-north,cn-middle,cn-south
 	Region *string `json:"Region,omitempty"`
 }
@@ -2203,8 +2205,10 @@ type ListDcCapacityBody struct {
 	DcID string `json:"DcId"`
 
 	// 多开的数量，默认为1，单开
-	InstanceAmount *int32                 `json:"InstanceAmount,omitempty"`
-	Isp            *ListDcCapacityBodyIsp `json:"Isp,omitempty"`
+	InstanceAmount *int32 `json:"InstanceAmount,omitempty"`
+	// 共享存储的大小，单位MB
+	InstanceDisk *int32                 `json:"InstanceDisk,omitempty"`
+	Isp          *ListDcCapacityBodyIsp `json:"Isp,omitempty"`
 
 	// 套餐code，比如CloudHostARMNode8c12g_daily
 	PackageCode *string `json:"PackageCode,omitempty"`
@@ -2680,7 +2684,7 @@ type ListInstanceQuery struct {
 	HostID *string `json:"host_id,omitempty" query:"host_id"`
 
 	// 机房
-	Idc *string `json:"idc,omitempty" query:"idc"`
+	Idc *string `json:"dc,omitempty" query:"dc"`
 
 	// 实例 ID
 	InstanceID *string `json:"instance_id,omitempty" query:"instance_id"`
@@ -4771,4 +4775,191 @@ type ExportInstanceReq struct {
 type ListPortMappingReq struct {
 	*ListPortMappingQuery
 	*ListPortMappingBody
+}
+
+type ReconfigureDevicesPackageBody struct {
+
+	// REQUIRED; 产品ID
+	ProductID string `json:"ProductId"`
+
+	// REQUIRED; 配置参数
+	ReconfigureParam []ReconfigureDevicesPackageBodyReconfigureParamItem `json:"ReconfigureParam"`
+}
+
+type ReconfigureDevicesPackageBodyReconfigureParamItem struct {
+
+	// REQUIRED; 云机 ID
+	DeviceID string `json:"DeviceId"`
+
+	// REQUIRED; 实例配置
+	InstancesSpec []ReconfigureDevicesPackageBodyReconfigureParamPropertiesItemsItem `json:"InstancesSpec"`
+
+	// REQUIRED; 要切换的目标套餐 ID
+	PackageID string `json:"PackageId"`
+
+	// 超时时间, 300-1200s, 默认600s
+	TimeoutSeconds *int32 `json:"TimeoutSeconds,omitempty"`
+}
+
+type ReconfigureDevicesPackageBodyReconfigureParamPropertiesItemsItem struct {
+
+	// REQUIRED
+	BandwidthMbps int32 `json:"BandwidthMbps"`
+
+	// REQUIRED
+	DisplayResolutionX int32 `json:"DisplayResolutionX"`
+
+	// REQUIRED
+	DisplayResolutionY int32 `json:"DisplayResolutionY"`
+
+	// REQUIRED; 镜像 ID
+	ImageID string `json:"ImageId"`
+
+	// REQUIRED; 云机 ID
+	InstanceID string `json:"InstanceId"`
+
+	// Dictionary of
+	Properties map[string]*string `json:"Properties,omitempty"`
+}
+
+type ReconfigureDevicesPackageRes struct {
+
+	// REQUIRED
+	ResponseMetadata ReconfigureDevicesPackageResResponseMetadata `json:"ResponseMetadata"`
+	Result           *ReconfigureDevicesPackageResResult          `json:"Result,omitempty"`
+}
+
+type ReconfigureDevicesPackageResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                             `json:"Version"`
+	Error   *ReconfigureDevicesPackageResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ReconfigureDevicesPackageResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type ReconfigureDevicesPackageResResult struct {
+
+	// 任务ID
+	JobID *string `json:"JobId,omitempty"`
+
+	// 配置记录
+	Records []*ReconfigureDevicesPackageResResultRecordsItem `json:"Records,omitempty"`
+}
+
+type ReconfigureDevicesPackageResResultRecordsItem struct {
+
+	// REQUIRED; 云机 ID
+	DeviceID string                                            `json:"DeviceId"`
+	Err      *ReconfigureDevicesPackageResResultRecordsItemErr `json:"Err,omitempty"`
+
+	// 任务 ID
+	TaskID *string `json:"TaskId,omitempty"`
+}
+
+type ReconfigureDevicesPackageResResultRecordsItemErr struct {
+
+	// 错误码, 0 表示成功
+	Code *int32 `json:"Code,omitempty"`
+
+	// 错误码字符串
+	CodeStr *string `json:"CodeStr,omitempty"`
+
+	// 错误信息
+	Msg *string `json:"Msg,omitempty"`
+}
+
+type ListTaskInfoResResultRowItemStatus int32
+
+type ListTaskInfoQuery struct {
+
+	// REQUIRED
+	ProductID    string  `json:"product_id" query:"product_id"`
+	Count        *int32  `json:"count,omitempty" query:"count"`
+	CreateAfter  *int32  `json:"create_after,omitempty" query:"create_after"`
+	CreateBefore *int32  `json:"create_before,omitempty" query:"create_before"`
+	DeviceID     *string `json:"device_id,omitempty" query:"device_id"`
+	InstanceID   *string `json:"instance_id,omitempty" query:"instance_id"`
+
+	// request id
+	JobID  *string `json:"job_id,omitempty" query:"job_id"`
+	Offset *int32  `json:"offset,omitempty" query:"offset"`
+
+	// 逗号分隔
+	StatusIn *string `json:"status_in,omitempty" query:"status_in"`
+
+	// task id
+	TaskID *string `json:"task_id,omitempty" query:"task_id"`
+
+	// 逗号分隔
+	TypeIn       *string `json:"type_in,omitempty" query:"type_in"`
+	UpdateAfter  *int32  `json:"update_after,omitempty" query:"update_after"`
+	UpdateBefore *int32  `json:"update_before,omitempty" query:"update_before"`
+}
+
+type ListTaskInfoRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListTaskInfoResResponseMetadata `json:"ResponseMetadata"`
+	Result           *ListTaskInfoResResult          `json:"Result,omitempty"`
+}
+
+type ListTaskInfoResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                `json:"Version"`
+	Error   *ListTaskInfoResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ListTaskInfoResResponseMetadataError struct {
+	Code    *string `json:"Code,omitempty"`
+	CodeN   *int32  `json:"CodeN,omitempty"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type ListTaskInfoResResult struct {
+	Row   []*ListTaskInfoResResultRowItem `json:"row,omitempty"`
+	Total *int32                          `json:"total,omitempty"`
+}
+
+type ListTaskInfoResResultRowItem struct {
+	CreateTime *int32                              `json:"create_time,omitempty"`
+	DeviceID   *string                             `json:"device_id,omitempty"`
+	ExpireTime *int32                              `json:"expire_time,omitempty"`
+	InstanceID *string                             `json:"instance_id,omitempty"`
+	JobID      *string                             `json:"job_id,omitempty"`
+	Msg        *string                             `json:"msg,omitempty"`
+	Status     *ListTaskInfoResResultRowItemStatus `json:"status,omitempty"`
+	StatusStr  *string                             `json:"status_str,omitempty"`
+	TaskID     *string                             `json:"task_id,omitempty"`
+	Type       *string                             `json:"type,omitempty"`
+	UpdateTime *int32                              `json:"update_time,omitempty"`
 }
