@@ -453,6 +453,8 @@ type StreamRequest struct {
 	Resolution           string `json:"Resolution,omitempty"`     // 国标分辨率参数(可选参数), 1-QCIF(176x144); 2-CIF(320x288); 3-4CIF(704x576); 4-D1(720x576); 5-720p; 6-1080p; 其他：WxH表示
 	EnableAudioTranscode bool   `json:"-"`
 	IgnoreAudio          bool   `json:"-"`
+	FreshExpiredPull     string `json:"-"`
+	FreshExpiredPush     string `json:"-"`
 }
 
 type ListStreamsRequest struct {
