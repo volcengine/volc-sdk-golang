@@ -832,9 +832,11 @@ func (p *AIoT) DeleteStream(request *StreamRequest) (*StreamResponse, int, error
 func (p *AIoT) GetStream(request *StreamRequest) (*GetStreamResponse, int, error) {
 	resp := new(GetStreamResponse)
 	query := url.Values{
-		"StreamID":       []string{request.StreamID},
-		"Resolution":     []string{request.Resolution},
-		"StreamingIndex": []string{fmt.Sprintf("%d", request.StreamingIndex)},
+		"StreamID":         []string{request.StreamID},
+		"Resolution":       []string{request.Resolution},
+		"StreamingIndex":   []string{fmt.Sprintf("%d", request.StreamingIndex)},
+		"FreshExpiredPull": []string{request.FreshExpiredPull},
+		"FreshExpiredPush": []string{request.FreshExpiredPush},
 	}
 	statusCode, err := p.commonHandler("GetStream", query, resp)
 	if err != nil {
