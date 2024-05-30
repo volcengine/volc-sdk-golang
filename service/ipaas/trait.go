@@ -771,6 +771,26 @@ func (c *IPaaS) GetJobDetails(ctx context.Context, arg *GetJobDetailsQuery) (*Ge
 	return result, nil
 }
 
+func (c *IPaaS) ListTaskInfo(ctx context.Context, arg *ListTaskInfoQuery) (*ListTaskInfoRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "ListTaskInfo", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListTaskInfoRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *IPaaS) ListAdbKey(ctx context.Context, arg *ListAdbKeyQuery) (*ListAdbKeyRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1273,6 +1293,26 @@ func (c *IPaaS) ListDcCapacity(ctx context.Context, arg *ListDcCapacityBody) (*L
 	}
 
 	result := new(ListDcCapacityRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *IPaaS) ReconfigureDevicesPackage(ctx context.Context, arg *ReconfigureDevicesPackageBody) (*ReconfigureDevicesPackageRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ReconfigureDevicesPackage", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ReconfigureDevicesPackageRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
