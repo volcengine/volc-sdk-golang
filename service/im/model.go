@@ -3938,10 +3938,10 @@ type BatchSendMessageBody struct {
 	MsgType int32 `json:"MsgType"`
 
 	// REQUIRED; 消息接收人 UserId 列表
-	Receiver []int32 `json:"Receiver"`
+	Receiver []int64 `json:"Receiver"`
 
 	// REQUIRED; 消息发送人 UserId
-	Sender int32 `json:"Sender"`
+	Sender int64 `json:"Sender"`
 
 	// 消息的扩展字段，key 的数据类型为 String，value 的数据类型为 String
 	Ext map[string]string `json:"Ext,omitempty"`
