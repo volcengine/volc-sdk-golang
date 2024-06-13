@@ -14,7 +14,10 @@ type ApplyImageUploadQuery struct {
 	// 文件扩展名(如：.java, .txt, .go 等)，最大长度限制为 8 个字节。 :::tip 仅当未指定StoreKeys时生效。 :::
 	FileExtension string `json:"FileExtension,omitempty" query:"FileExtension"`
 
-	// 覆盖上传
+	// 是否开启重名文件覆盖上传，取值如下所示：
+	// * true：开启
+	// * false：（默认）关闭
+	// :::warning 在指定Overwrite为true前，请确保您指定的ServiceId对应服务已开启了覆盖上传 [https://www.volcengine.com/docs/508/1119912]能力。 :::
 	Overwrite bool `json:"Overwrite,omitempty" query:"Overwrite"`
 
 	// 指定的上传文件路径。
@@ -84,12 +87,11 @@ type ApplyImageUploadResResult struct {
 // ApplyImageUploadResResultUploadAddress - 上传地址
 type ApplyImageUploadResResultUploadAddress struct {
 
-	// REQUIRED; 一次上传会话 Key。
-	// 上传完成上报时使用该值，该 Key 可以在解码后提取信息及参数校验。
+	// REQUIRED; 一次上传会话 Key。 上传完成上报时使用该值，该 Key 可以在解码后提取信息及参数校验。
 	SessionKey string `json:"SessionKey"`
 
 	// REQUIRED; 上传 Uri
-	// 数量由请求参数中的 UploadNum 决定。
+	// :::tip 数量由请求参数中的 UploadNum 决定。 :::
 	StoreInfos []*ApplyImageUploadResResultUploadAddressStoreInfosItem `json:"StoreInfos"`
 
 	// REQUIRED; 上传域名列表，可以用于客户端容灾，并行上传等。
@@ -98,10 +100,10 @@ type ApplyImageUploadResResultUploadAddress struct {
 
 type ApplyImageUploadResResultUploadAddressStoreInfosItem struct {
 
-	// REQUIRED; 上传凭证
+	// REQUIRED; 上传凭证。
 	Auth string `json:"Auth"`
 
-	// REQUIRED; 资源 URI
+	// REQUIRED; 资源 ID。
 	StoreURI string `json:"StoreUri"`
 }
 
@@ -685,7 +687,12 @@ type CreateImageCompressTaskResResult struct {
 
 type CreateImageContentTaskBody struct {
 
-	// REQUIRED; refreshurl 刷新URL;refreshdir 刷新目录;preloadurl 预热URL;blockurl 禁用URL;unblock_url 解禁URL
+	// REQUIRED; 操作类型。取值如下所示：
+	// * refresh_url：刷新 URL
+	// * refresh_dir：目录刷新（支持根目录刷新）
+	// * preload_url：预热 URL
+	// * block_url：禁用 URL
+	// * unblock_url：解禁 URL
 	TaskType string `json:"TaskType"`
 
 	// REQUIRED; 资源 URL 或者目录。
@@ -967,7 +974,7 @@ type CreateImageMigrateTaskBodyTaskCallbackCfg struct {
 	Method string `json:"Method"`
 
 	// 回调信息中是否包含具体迁移任务条目信息。取值如下所示：
-	// * true：包含。仅包含迁移成功的任务条目信息，迁移失败的任务列表请在迁移完成后调用 ExportFailedMigrateTask [https://www.volcengine.com/docs/508/1108675] 接口获取。
+	// * true：包含。仅包含迁移成功的任务条目信息，迁移失败的任务列表请在迁移完成后调用 ExportFailedMigrateTask [https://www.volcengine.com/docs/508/1261309] 接口获取。
 	// * false：（默认）不包含。 :::warning 若任务中包含的条目数量过多，会导致回调消息体过大，增加回调失败的风险。因此建议仅在任务中条目量级不超过十万时使用该参数。 :::
 	IncludeEntry bool `json:"IncludeEntry,omitempty"`
 }
@@ -1016,7 +1023,8 @@ type CreateImageMigrateTaskBodyTaskRunStrategy struct {
 type CreateImageMigrateTaskBodyTaskSource struct {
 
 	// REQUIRED; 源端 Bucket。
-	// * 仅当Vendor为URL时，需填写 URL 列表文件地址（公网 URL 地址）。
+	// * 仅当Vendor为URL时，需填写 URL 列表文件地址（公网 URL 地址）。 :::tip 支持指定迁移文件和转码后迁移文件进行重命名，详见URL 列表迁移文件说明 [https://www.volcengine.com/docs/508/1263268]。
+	// :::
 	// * 当Vendor为其他时，请填写对应云服务商所需迁移数据的 Bucket 名称。您可参考云数据迁移准备 [https://www.volcengine.com/docs/508/129213]获取对应阿里云OSS、腾讯云COS、七牛云KODO、百度云BOS、华为云OBS、
 	// 优刻得（Ucloud File)、AWS国际站的 Bucket 名称。
 	Bucket string `json:"Bucket"`
@@ -1099,6 +1107,11 @@ type CreateImageMigrateTaskBodyTaskTranscode struct {
 	// * true：保留
 	// * false：（默认）不保留
 	EnableExif bool `json:"EnableExif,omitempty"`
+
+	// 对带有 CMYK 色彩空间的图片，是否跳过转码处理直接存储原图。取值如下所示：
+	// * true：是
+	// * false：（默认）否
+	SkipCMYK bool `json:"SkipCMYK,omitempty"`
 }
 
 type CreateImageMigrateTaskRes struct {
@@ -1178,14 +1191,14 @@ type CreateImageRetryAuditTaskResResult struct {
 
 type CreateImageServiceBody struct {
 
+	// REQUIRED; 创建服务时绑定的域名列表
+	Domains []*CreateImageServiceBodyDomainsItem `json:"Domains"`
+
 	// REQUIRED; 服务名称，最多不超过32个字符
 	ServiceName string `json:"ServiceName"`
 
 	// REQUIRED; 服务所在区域，cn或va或sg
 	ServiceRegion string `json:"ServiceRegion"`
-
-	// 创建服务时绑定的域名列表
-	Domains []*CreateImageServiceBodyDomainsItem `json:"Domains,omitempty"`
 
 	// 服务绑定的项目。仅对ToB账号请求生效，默认default
 	ProjectName string `json:"ProjectName,omitempty"`
@@ -1195,9 +1208,6 @@ type CreateImageServiceBody struct {
 
 	// 取值为StaticRc时表示创建「静态资源托管服务」，取值为Image时表示创建「图片处理服务」。默认创建「图片处理服务」
 	ServiceType string `json:"ServiceType,omitempty"`
-
-	// 存储TTL，单位秒
-	StorageTTL int `json:"StorageTTL,omitempty"`
 }
 
 type CreateImageServiceBodyDomainsItem struct {
@@ -1633,20 +1643,25 @@ type CreateImageTranscodeQueueResResult struct {
 
 type CreateImageTranscodeTaskBody struct {
 
-	// REQUIRED; 待转码的图片 uri 或 url 列表。DataList和Filelist都不为空时，DataList优先生效。 :::warning 若DataType取值uri，则待转码图片 URI 必须为指定ServiceId下的存储
-	// URI。您可通过调用GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]
-	// 获取指定服务下全部的上传文件存储 URI。 :::
+	// REQUIRED; DataList和Filelist二选一必填，同时配置时，DataList优先生效。
+	// 待转码的图片 uri 或 url 列表，最多支持 10 万条。
+	// * 若DataType取值uri，此处请传入指定 ServiceId 下的存储 URI。
+	// * 若DataType取值url，此处请传入公网可访问的 URL。
 	DataList []string `json:"DataList"`
 
 	// REQUIRED; 数据类型，取值如下所示：
-	// * uri
-	// * url
+	// * uri：指定 ServiceId 下存储 URI。
+	// * url：公网可访问的 URL。
 	DataType string `json:"DataType"`
 
-	// REQUIRED; 待转码的图片 uri 或 url 文件列表。DataList和Filelist都不为空时，DataList优先生效。
+	// REQUIRED; DataList和Filelist二选一必填，同时配置时，DataList优先生效。
+	// 待转码的图片 uri 或 url 文件列表。具体使用方式如下：
+	// 1. 在 txt、csv 文件内填写指定数据类型的待转码图片地址，每行填写一个，最多不超过 10 万条。
+	// 2. 将该文件上传至指定服务后，获取其存储 URI。
+	// 3. 将该存储 URI，传入 FileList。
 	FileList []string `json:"FileList"`
 
-	// REQUIRED; 服务 ID。若DataType取值uri，则提交的图片 URI 列表需在该服务可访问范围内。
+	// REQUIRED; 服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId"`
@@ -1662,10 +1677,14 @@ type CreateImageTranscodeTaskBody struct {
 	// * false：（默认）不保留
 	EnableExif bool `json:"EnableExif,omitempty"`
 
-	// 任务队列名称 ID。缺省情况下提交至账号默认任务队列。您可通过调用GetImageTranscodeQueues [https://www.volcengine.com/docs/508/1107341]获取该账号下全部任务队列 ID。
+	// 任务队列名称 ID。缺省情况下提交至账号默认任务队列。您可通过调用GetImageTranscodeQueues [https://www.volcengine.com/docs/508/1160404]获取该账号下全部任务队列 ID。
 	QueueID string `json:"QueueId,omitempty"`
 
-	// 转码产物的 Storekey 列表，仅当DataList不为空时有效，长度需与DataList长度一致。不传时默认使用固定规则生成产物的 Storekey。
+	// 转码产物的 Storekey 列表，仅当DataList不为空时有效，长度需与DataList长度一致。不传时默认使用固定规则生成产物的 Storekey。填写规则如下：
+	// * 使用 UTF-8 编码。
+	// * 长度必须在 1～1024 个字符之间。
+	// * 不能以反斜线（\）开头。
+	// * 不支持\a、\b、\t、\n、\v、\f、\r字符。
 	ResKeyList []string `json:"ResKeyList,omitempty"`
 }
 
@@ -1779,13 +1798,15 @@ type CreateTemplatesFromBinResResultResultsItem struct {
 
 type DelDomainBody struct {
 
-	// REQUIRED; 域名，您可以通过 获取服务下全部域名 [https://www.volcengine.com/docs/508/9379] 获取服务下域名信息。
+	// REQUIRED; 待删除的域名，您可以通过 获取服务下全部域名 [https://www.volcengine.com/docs/508/9379] 获取服务下域名信息。
 	Domain string `json:"Domain"`
 }
 
 type DelDomainQuery struct {
 
-	// REQUIRED; imagex服务ID
+	// REQUIRED; 待删除域名的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
@@ -1928,7 +1949,6 @@ type DeleteImageMigrateTaskQuery struct {
 
 	// 任务地区（即任务目标服务的地区），默认空，返回国内任务。
 	// * cn：国内
-	// * va：美东
 	// * sg：新加坡
 	Region string `json:"Region,omitempty" query:"Region"`
 }
@@ -1962,10 +1982,10 @@ type DeleteImageMigrateTaskResResponseMetadata struct {
 
 type DeleteImageServiceQuery struct {
 
-	// 服务 ID。
+	// REQUIRED; 待删除的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
 type DeleteImageServiceRes struct {
@@ -2320,14 +2340,17 @@ type DescribeImageVolcCdnAccessLogResResultLogsItem struct {
 
 type DescribeImageXBaseOpUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
+	// 需要分组查询的参数，当前仅支持取值 ServiceId，表示按服务 ID 进行分组。
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -2337,9 +2360,9 @@ type DescribeImageXBaseOpUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -2380,6 +2403,9 @@ type DescribeImageXBaseOpUsageResResultBaseOpDataItem struct {
 
 	// REQUIRED; 计量数据
 	Data []*DescribeImageXBaseOpUsageResResultBaseOpDataPropertiesItemsItem `json:"Data"`
+
+	// 当GroupBy中包含ServiceId时出现
+	ServiceID string `json:"ServiceId,omitempty"`
 }
 
 type DescribeImageXBaseOpUsageResResultBaseOpDataPropertiesItemsItem struct {
@@ -2393,17 +2419,17 @@ type DescribeImageXBaseOpUsageResResultBaseOpDataPropertiesItemsItem struct {
 
 type DescribeImageXBillingRequestCntUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。 日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
 	// REQUIRED; 固定值，仅支持AdvFeat即附加组件。
 	GroupBy string `json:"GroupBy" query:"GroupBy"`
 
-	// REQUIRED; 获取数据起始时间点。 日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 组件名称。为空时表示不筛选，支持查询多个AdvFeat，不同的AdvFeat使用逗号分隔。 您可通过调用GetImageAddOnConf [https://www.volcengine.com/docs/508/66145]查看Key返回值。
+	// 组件名称。支持查询多个组件，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有组件。您可通过调用GetImageAddOnConf [https://www.volcengine.com/docs/508/66145]查看Key返回值。
 	AdvFeats string `json:"AdvFeats,omitempty" query:"AdvFeats"`
 
 	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
@@ -2416,9 +2442,9 @@ type DescribeImageXBillingRequestCntUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，不同的服务使用逗号分隔。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -2639,10 +2665,10 @@ type DescribeImageXBucketUsageResResultStorageDataPropertiesItemsItem struct {
 
 type DescribeImageXCDNTopRequestDataQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如 2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 排序指标。取值如下所示：
+	// REQUIRED; 排序依据，取值如下所示：
 	// * URL：生成的图片访问 URL
 	// * UserAgent：用户代理
 	// * Refer：请求 Refer
@@ -2652,13 +2678,13 @@ type DescribeImageXCDNTopRequestDataQuery struct {
 	// * Isp：运营商
 	KeyType string `json:"KeyType" query:"KeyType"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如 2019-06-02T00:00:00+08:00。
 	StartTime string `json:"StartTime" query:"StartTime"`
 
 	// REQUIRED; 排序依据，即获取按ValueType值排序的KeyType列表。取值如下所示：
 	// * Traffic：按流量排序
 	// * RequestCnt：按请求次数排序
-	// :::tip 当KeyType取值为Domain时，ValueType仅支持取值为Traffic，即按照流量排序获取域名列表。 :::
+	// :::tip 当KeyType取值为Domain时，仅支持将ValueType取值为Traffic，即按照流量排序获取域名列表。 :::
 	ValueType string `json:"ValueType" query:"ValueType"`
 
 	// 数据访问区域。仅在KeyType取值为Region或Isp时生效，取值如下所示：
@@ -2666,7 +2692,7 @@ type DescribeImageXCDNTopRequestDataQuery struct {
 	// * Other：中国境外的区域。
 	Country string `json:"Country,omitempty" query:"Country"`
 
-	// 域名。传入多个时用“,”作为分割符，缺省情况下表示不限制域名。您可以通过调用获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]获取所需的域名。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用 GetServiceDomains [https://www.volcengine.com/docs/508/9379] 获取所需的域名。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
 	// 网络协议。缺省情况下则表示不限制网络协议，取值如下所示：
@@ -2681,9 +2707,9 @@ type DescribeImageXCDNTopRequestDataQuery struct {
 	// 分页偏移量，默认取值为0。取值为10时，表示跳过前 10 条数据，从第 11 条数据开始取值。
 	Offset string `json:"Offset,omitempty" query:"Offset"`
 
-	// 服务 ID。传入多个时用“,”作为分割符，缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -5518,14 +5544,17 @@ type DescribeImageXClientTopQualityURLResResultTopURLDataItem struct {
 
 type DescribeImageXCompressUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
+	// 需要分组查询的参数，当前仅支持取值 ServiceId，表示按服务 ID 进行分组。
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -5535,9 +5564,9 @@ type DescribeImageXCompressUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用
+	// GetAllImageServices [https://www.volcengine.com/docs/508/9360] 接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -5581,6 +5610,9 @@ type DescribeImageXCompressUsageResResultCompressDataItem struct {
 
 	// REQUIRED; 压缩后大小，单位为 byte。
 	OutSize []*Components1Xh7Lz4SchemasDescribeimagexcompressusageresPropertiesResultPropertiesCompressdataItemsPropertiesOutsizeItems `json:"OutSize"`
+
+	// 当GroupBy中包含ServiceId时出现
+	ServiceID string `json:"ServiceId,omitempty"`
 }
 
 type DescribeImageXCompressUsageResResultCompressDataPropertiesItemsItem struct {
@@ -5594,14 +5626,14 @@ type DescribeImageXCompressUsageResResultCompressDataPropertiesItemsItem struct 
 
 type DescribeImageXDomainBandwidthDataQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 过滤计费区域。不传表示不过滤，传入多个用英文逗号分隔。支持取值如下：
+	// 计费区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * CHN：中国内地
 	// * AP1：亚太一区
 	// * AP2：亚太二区
@@ -5613,15 +5645,15 @@ type DescribeImageXDomainBandwidthDataQuery struct {
 	// * OTHER：其他
 	BillingRegion string `json:"BillingRegion,omitempty" query:"BillingRegion"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 需要分组查询的参数。不传表示不拆分维度，传入多个用英文逗号分隔。支持取值如下：
+	// 需要分组查询的参数。不传表示不拆分维度，传入多个用英文逗号分隔。取值如下所示：
 	// * ServiceId：服务 ID
 	// * DomainName：域名
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
-	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
+	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -5631,9 +5663,9 @@ type DescribeImageXDomainBandwidthDataQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval int `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -5693,14 +5725,14 @@ type DescribeImageXDomainBandwidthDataResResultBpsDataPropertiesItemsItem struct
 
 type DescribeImageXDomainBandwidthNinetyFiveDataQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 过滤计费区域。不传表示不过滤，传入多个用英文逗号分隔。支持取值如下：
+	// 计费区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * CHN：中国内地
 	// * AP1：亚太一区
 	// * AP2：亚太二区
@@ -5712,12 +5744,12 @@ type DescribeImageXDomainBandwidthNinetyFiveDataQuery struct {
 	// * OTHER：其他
 	BillingRegion string `json:"BillingRegion,omitempty" query:"BillingRegion"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -5752,18 +5784,21 @@ type DescribeImageXDomainBandwidthNinetyFiveDataResResult struct {
 
 	// REQUIRED; 带宽95值，单位bps
 	BpsData float64 `json:"BpsData"`
+
+	// REQUIRED; 统计时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeImageXDomainTrafficDataQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 过滤计费区域。不传表示不过滤。传入多个用英文逗号分隔。支持取值如下：
+	// 计费区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * CHN：中国内地
 	// * AP1：亚太一区
 	// * AP2：亚太二区
@@ -5775,15 +5810,15 @@ type DescribeImageXDomainTrafficDataQuery struct {
 	// * OTHER：其他
 	BillingRegion string `json:"BillingRegion,omitempty" query:"BillingRegion"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 需要分组查询的参数。不传表示不拆分维度，传入多个用英文逗号分隔。支持取值如下：
+	// 需要分组查询的参数。不传表示不拆分维度，传入多个用英文逗号分隔。取值如下所示：
 	// * ServiceId：服务 ID
 	// * DomainName：域名
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
-	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
+	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -5793,9 +5828,8 @@ type DescribeImageXDomainTrafficDataQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省时表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务 ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -5855,20 +5889,20 @@ type DescribeImageXDomainTrafficDataResResultTrafficDataPropertiesItemsItem stru
 
 type DescribeImageXEdgeRequestBandwidthQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 分组依据，仅支持取值DomainName。
+	// 分组依据，取值仅支持DomainName。
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
-	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 60：单次查询最大时间跨度为 6 小时
 	// * 120：单次查询最大时间跨度为 6 小时
 	// * 300：单次查询最大时间跨度为 31 天
@@ -5890,12 +5924,12 @@ type DescribeImageXEdgeRequestBandwidthQuery struct {
 	// * 其它
 	Isp string `json:"Isp,omitempty" query:"Isp"`
 
-	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// 过滤网络协议。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
 	// * HTTP
 	// * HTTPS
 	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
 
-	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// 计费区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * 中国大陆
 	// * 亚太一区
 	// * 亚太二区
@@ -5906,17 +5940,18 @@ type DescribeImageXEdgeRequestBandwidthQuery struct {
 	// * 中东区
 	Regions string `json:"Regions,omitempty" query:"Regions"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
-	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端国家。取值如下所示：
+	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574] 获取
+	// IP 解析后的客户端国家。取值如下所示：
 	// * 海外，除中国外全部国家。
 	// * 具体国家取值，如中国、美国。
 	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
 
-	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端省份。
+	// 客户端省份。传入多个用英文逗号分割，缺省情况下表示不过滤。可调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574] 获取 IP 解析后的客户端省份。
 	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
 }
 
@@ -5955,7 +5990,7 @@ type DescribeImageXEdgeRequestBandwidthResResult struct {
 
 type DescribeImageXEdgeRequestBandwidthResResultBpsDataItem struct {
 
-	// REQUIRED; 具体数据
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXEdgeRequestBandwidthResResultBpsDataPropertiesItemsItem `json:"Data"`
 
 	// 当GroupBy带有DomainName时出现
@@ -5967,13 +6002,13 @@ type DescribeImageXEdgeRequestBandwidthResResultBpsDataPropertiesItemsItem struc
 	// REQUIRED; 统计时间点，时间片开始时刻，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 带宽，单位为 bps。
+	// REQUIRED; 带宽用量，单位为 bps。
 	Value float64 `json:"Value"`
 }
 
 type DescribeImageXEdgeRequestQuery struct {
 
-	// REQUIRED; 状态码。传入多个时用英文逗号分隔。支持以下取值：
+	// REQUIRED; 状态码，传入多个时用英文逗号分隔。取值如下所示：
 	// * req_cnt：返回所有状态码数据
 	// * 2xx：返回 2xx 状态码汇总数据
 	// * 3xx：返回 3xx 状态码汇总数据
@@ -5981,22 +6016,22 @@ type DescribeImageXEdgeRequestQuery struct {
 	// * 5xx：返回 5xx 状态码汇总数据。
 	DataTypes string `json:"DataTypes" query:"DataTypes"`
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 是否拆分状态码。取值如下所示：
+	// 是否拆分状态码，取值如下所示：
 	// * true：拆分
 	// * false：（默认）不拆分
 	DetailedCode bool `json:"DetailedCode,omitempty" query:"DetailedCode"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 需要分组查询的参数。传入多个用英文逗号分割。支持以下取值：
+	// 需要分组查询的参数，传入多个用英文逗号分割。取值如下所示：
 	// * DomainName：域名
 	// * DataType：状态码
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
@@ -6023,12 +6058,12 @@ type DescribeImageXEdgeRequestQuery struct {
 	// * 其它
 	Isp string `json:"Isp,omitempty" query:"Isp"`
 
-	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// 过滤网络协议。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
 	// * HTTP
 	// * HTTPS
 	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
 
-	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// 计费区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * 中国大陆
 	// * 亚太一区
 	// * 亚太二区
@@ -6039,17 +6074,19 @@ type DescribeImageXEdgeRequestQuery struct {
 	// * 中东区
 	Regions string `json:"Regions,omitempty" query:"Regions"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
-	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端国家。取值如下所示：
+	// 客户端国家。支持查询多个国家，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有国家。您可通过调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]
+	// 获取 IP 解析后的客户端国家。取值如下所示：
 	// * 海外，除中国外全部国家。
 	// * 具体国家取值，如中国、美国。
 	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
 
-	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端省份。
+	// 客户端省份。支持查询多个省份，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有省份。可调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]
+	// 获取 IP 解析后的客户端省份。
 	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
 }
 
@@ -6129,15 +6166,13 @@ type DescribeImageXEdgeRequestResResponseMetadata struct {
 
 type DescribeImageXEdgeRequestResResult struct {
 
-	// REQUIRED; 数据列表 :::tip
-	// * 若未设置Interval，则上报一条StartTime与EndTime时间段内查询的全部请求次数据；
-	// * 若设置了Interval，则按Interval粒度分段上报查询的时间粒度内请求次数据； :::
+	// REQUIRED; 数据列表
 	RequestCnt []*DescribeImageXEdgeRequestResResultRequestCntItem `json:"RequestCnt"`
 }
 
 type DescribeImageXEdgeRequestResResultRequestCntItem struct {
 
-	// REQUIRED; 具体数据
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXEdgeRequestResResultRequestCntPropertiesItemsItem `json:"Data"`
 
 	// 当GroupBy带有DataType时出现
@@ -6158,20 +6193,20 @@ type DescribeImageXEdgeRequestResResultRequestCntPropertiesItemsItem struct {
 
 type DescribeImageXEdgeRequestTrafficQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 分组依据，仅支持取值DomainName。
+	// 分组依据，取值仅支持DomainName。
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
-	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 60：单次查询最大时间跨度为 6 小时
 	// * 120：单次查询最大时间跨度为 6 小时
 	// * 300：单次查询最大时间跨度为 31 天
@@ -6193,12 +6228,12 @@ type DescribeImageXEdgeRequestTrafficQuery struct {
 	// * 其它
 	Isp string `json:"Isp,omitempty" query:"Isp"`
 
-	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// 过滤网络协议。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
 	// * HTTP
 	// * HTTPS
 	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
 
-	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// 区域。支持查询多个区域，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有区域。取值如下所示：
 	// * 中国大陆
 	// * 亚太一区
 	// * 亚太二区
@@ -6209,17 +6244,18 @@ type DescribeImageXEdgeRequestTrafficQuery struct {
 	// * 中东区
 	Regions string `json:"Regions,omitempty" query:"Regions"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
-	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端国家。取值如下所示：
+	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。您可以通过调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]
+	// 获取 IP 解析后的客户端国家。取值如下所示：
 	// * 海外，除中国外全部国家。
 	// * 具体国家取值，如中国、美国。
 	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
 
-	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用获取边缘分发地区列表 [https://www.volcengine.com/docs/508/177111]获取 IP 解析后的客户端省份。
+	// 客户端省份。传入多个用英文逗号分割，缺省情况下表示不过滤。可调用 DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574] 获取 IP 解析后的客户端省份。
 	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
 }
 
@@ -6258,7 +6294,7 @@ type DescribeImageXEdgeRequestTrafficResResult struct {
 
 type DescribeImageXEdgeRequestTrafficResResultTrafficDataItem struct {
 
-	// REQUIRED; 具体数据
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXEdgeRequestTrafficResResultTrafficDataPropertiesItemsItem `json:"Data"`
 
 	// 当GroupBy带有DomainName时出现
@@ -6573,10 +6609,10 @@ type DescribeImageXHitRateRequestDataQuery struct {
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 限制查询的域名，传入多个时用英文逗号分割。缺省情况下表示不限制域名。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 需要分组查询的参数。仅支持取值DomainName。
+	// 需要分组查询的参数。取值仅支持DomainName。
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
 	// 查询数据的时间粒度，单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
@@ -6591,9 +6627,9 @@ type DescribeImageXHitRateRequestDataQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 限制查询的服务 ID，传入多个时用英文逗号分割。缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -6657,10 +6693,10 @@ type DescribeImageXHitRateTrafficDataQuery struct {
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 限制查询的域名，传入多个时用英文逗号分割。缺省情况下表示不限制域名。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	// 域名。支持查询多个域名，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有域名。您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
 	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
 
-	// 需要分组查询的参数。仅支持取值DomainName。
+	// 需要分组查询的参数。取值仅支持DomainName。
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
 	// 查询数据的时间粒度，单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
@@ -6675,9 +6711,9 @@ type DescribeImageXHitRateTrafficDataQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 限制查询的服务 ID，传入多个时用英文逗号分割。缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -6788,7 +6824,7 @@ type DescribeImageXMirrorRequestBandwidthResResponseMetadata struct {
 
 type DescribeImageXMirrorRequestBandwidthResResult struct {
 
-	// REQUIRED; 具体数据
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXMirrorRequestBandwidthResResultDataItem `json:"Data"`
 }
 
@@ -7025,14 +7061,14 @@ type DescribeImageXMirrorRequestTrafficResResultDataItem struct {
 
 type DescribeImageXMultiCompressUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -7042,9 +7078,9 @@ type DescribeImageXMultiCompressUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，不同的服务使用逗号分隔。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -7077,13 +7113,13 @@ type DescribeImageXMultiCompressUsageResResponseMetadata struct {
 
 type DescribeImageXMultiCompressUsageResResult struct {
 
-	// REQUIRED; 多文件压缩用量数据。
+	// REQUIRED; 多文件压缩用量数据
 	CompressData []*DescribeImageXMultiCompressUsageResResultCompressDataItem `json:"CompressData"`
 }
 
 type DescribeImageXMultiCompressUsageResResultCompressDataItem struct {
 
-	// REQUIRED
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXMultiCompressUsageResResultCompressDataPropertiesItemsItem `json:"Data"`
 }
 
@@ -7098,22 +7134,22 @@ type DescribeImageXMultiCompressUsageResResultCompressDataPropertiesItemsItem st
 
 type DescribeImageXRequestCntUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 组件名称。为空时表示不筛选，支持查询多个AdvFeat，不同的AdvFeat使用英文逗号分隔。 您可通过调用 GetImageAddOnConf [https://www.volcengine.com/docs/508/66145] 查看Key返回值。
+	// 组件名称。支持查询多个组件，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有组件。您可通过调用 GetImageAddOnConf [https://www.volcengine.com/docs/508/66145] 查看Key返回值。
 	AdvFeats string `json:"AdvFeats,omitempty" query:"AdvFeats"`
 
 	// 维度拆分的维度值。不传表示不拆分维度，只能传入单个参数。支持取值如下：
-	// * ServiceId
-	// * AdvFeat
+	// * ServiceId：服务
+	// * AdvFeat：组件
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
-	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。支持取值如下：
+	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 300：单次查询最大时间跨度为 31 天
 	// * 600：单次查询最大时间跨度为 31 天
 	// * 1200：单次查询最大时间跨度为 31 天
@@ -7123,12 +7159,12 @@ type DescribeImageXRequestCntUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用英文逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 
-	// 模版。为空时表示不筛选，支持查询多个模板，不同的模板使用英文逗号分隔。 您可通过调用 GetAllImageTemplates [https://www.volcengine.com/docs/508/9386] 获取服务下全部模版信息。
+	// 图片处理模板。支持查询多个模板，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有模板。您可通过调用 GetAllImageTemplates [https://www.volcengine.com/docs/508/9386] 获取服务下全部模版信息。
 	Templates string `json:"Templates,omitempty" query:"Templates"`
 }
 
@@ -7188,16 +7224,26 @@ type DescribeImageXRequestCntUsageResResultRequestCntDataPropertiesItemsItem str
 
 type DescribeImageXScreenshotUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位：秒。支持300,600,1200,1800,3600,86400,604800。缺省时查询StartTime和EndTime时间段全部数据。
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 为空时表示不筛选，支持查询多个 Service，不同的 Service 使用逗号（,）分隔。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -7230,13 +7276,13 @@ type DescribeImageXScreenshotUsageResResponseMetadata struct {
 
 type DescribeImageXScreenshotUsageResResult struct {
 
-	// REQUIRED
+	// REQUIRED; 截帧用量
 	ScreenshotData []*DescribeImageXScreenshotUsageResResultScreenshotDataItem `json:"ScreenshotData"`
 }
 
 type DescribeImageXScreenshotUsageResResultScreenshotDataItem struct {
 
-	// REQUIRED
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXScreenshotUsageResResultScreenshotDataPropertiesItemsItem `json:"Data"`
 }
 
@@ -7809,33 +7855,53 @@ type DescribeImageXSensibleTopUnknownURLResResponseMetadata struct {
 
 type DescribeImageXSensibleTopUnknownURLResResult struct {
 
-	// REQUIRED
+	// REQUIRED; Top URL 详情
 	TopURLData []*DescribeImageXSensibleTopUnknownURLResResultTopURLDataItem `json:"TopUrlData"`
 }
 
 type DescribeImageXSensibleTopUnknownURLResResultTopURLDataItem struct {
+
+	// Activity+View 树，控件信息
 	ActivityViewTree string `json:"ActivityViewTree,omitempty"`
-	BizTag           string `json:"BizTag,omitempty"`
-	Count            int    `json:"Count,omitempty"`
-	FileSize         int    `json:"FileSize,omitempty"`
-	ImageHeight      int    `json:"ImageHeight,omitempty"`
-	ImageWidth       int    `json:"ImageWidth,omitempty"`
-	RAMSize          int    `json:"RamSize,omitempty"`
-	URL              string `json:"URL,omitempty"`
-	ViewHeight       int    `json:"ViewHeight,omitempty"`
-	ViewWidth        int    `json:"ViewWidth,omitempty"`
+
+	// 业务标识
+	BizTag string `json:"BizTag,omitempty"`
+
+	// 上报次数
+	Count int `json:"Count,omitempty"`
+
+	// 文件大小
+	FileSize int `json:"FileSize,omitempty"`
+
+	// 图片高
+	ImageHeight int `json:"ImageHeight,omitempty"`
+
+	// 图片宽
+	ImageWidth int `json:"ImageWidth,omitempty"`
+
+	// 图片内存大小
+	RAMSize int `json:"RamSize,omitempty"`
+
+	// 图片 URL
+	URL string `json:"URL,omitempty"`
+
+	// 展示 view 高
+	ViewHeight int `json:"ViewHeight,omitempty"`
+
+	// 展示 view 宽
+	ViewWidth int `json:"ViewWidth,omitempty"`
 }
 
 type DescribeImageXServerQPSUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
 	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位为秒。支持以下取值：
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
 	// * 1: 单次查询最大时间跨度为 6 小时
 	// * 60：单次查询最大时间跨度为 6 小时
 	// * 120：单次查询最大时间跨度为 6 小时
@@ -7848,9 +7914,9 @@ type DescribeImageXServerQPSUsageQuery struct {
 	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -7884,7 +7950,7 @@ type DescribeImageXServerQPSUsageResResponseMetadata struct {
 // DescribeImageXServerQPSUsageResResult - 视请求的接口而定
 type DescribeImageXServerQPSUsageResResult struct {
 
-	// REQUIRED; 数据列表。
+	// REQUIRED; QPS 用量
 	QPSData []*DescribeImageXServerQPSUsageResResultQPSDataItem `json:"QPSData"`
 }
 
@@ -7893,7 +7959,7 @@ type DescribeImageXServerQPSUsageResResultQPSDataItem struct {
 	// REQUIRED; 时序数据。
 	Data []*DescribeImageXServerQPSUsageResResultQPSDataPropertiesItemsItem `json:"Data"`
 
-	// REQUIRED; QPS 类型，取值：
+	// REQUIRED; QPS 类型，取值如下所示：
 	// * Request：专有图像处理和高效压缩
 	// * Mirror：资源下载与镜像代理
 	QPSType string `json:"QPSType"`
@@ -7912,7 +7978,6 @@ type DescribeImageXServiceQualityQuery struct {
 
 	// 获取指定地区的数据。默认为空，表示获取国内数据。
 	// * cn：国内。
-	// * va：美东。
 	// * sg：新加坡。
 	Region string `json:"Region,omitempty" query:"Region"`
 }
@@ -8011,14 +8076,391 @@ type DescribeImageXServiceQualityResResultUploadData struct {
 	UploadCount int `json:"UploadCount"`
 }
 
+type DescribeImageXSourceRequestBandwidthQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
+
+	// 分组依据，仅支持取值DomainName。
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// * 60：单次查询最大时间跨度为 6 小时
+	// * 120：单次查询最大时间跨度为 6 小时
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 过滤运营商。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
+	// * 电信
+	// * 联通
+	// * 移动
+	// * 鹏博士
+	// * 教育网
+	// * 广电网
+	// * 其它
+	Isp string `json:"Isp,omitempty" query:"Isp"`
+
+	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// * HTTP
+	// * HTTPS
+	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
+
+	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// * 中国大陆
+	// * 亚太一区
+	// * 亚太二区
+	// * 亚太三区
+	// * 欧洲区
+	// * 北美区
+	// * 南美区
+	// * 中东区
+	Regions string `json:"Regions,omitempty" query:"Regions"`
+
+	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+
+	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP
+	// 解析后的客户端国家。取值如下所示：
+	// * 海外，除中国外全部国家。
+	// * 具体国家取值，如中国、美国。
+	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
+
+	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP 解析后的客户端省份。
+	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
+}
+
+type DescribeImageXSourceRequestBandwidthRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXSourceRequestBandwidthResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXSourceRequestBandwidthResResult `json:"Result"`
+}
+
+type DescribeImageXSourceRequestBandwidthResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXSourceRequestBandwidthResResult struct {
+
+	// REQUIRED; 带宽数据。
+	BpsData []*DescribeImageXSourceRequestBandwidthResResultBpsDataItem `json:"BpsData"`
+}
+
+type DescribeImageXSourceRequestBandwidthResResultBpsDataItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXSourceRequestBandwidthResResultBpsDataPropertiesItemsItem `json:"Data"`
+
+	// 当GroupBy带有DomainName时出现
+	DomainName string `json:"DomainName,omitempty"`
+}
+
+type DescribeImageXSourceRequestBandwidthResResultBpsDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片开始时刻，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 带宽，单位为 bps。
+	Value float64 `json:"Value"`
+}
+
+type DescribeImageXSourceRequestQuery struct {
+
+	// REQUIRED; 状态码。传入多个时用英文逗号分隔。支持以下取值：
+	// * req_cnt：返回所有状态码数据
+	// * 2xx：返回 2xx 状态码汇总数据
+	// * 3xx：返回 3xx 状态码汇总数据
+	// * 4xx：返回 4xx 状态码汇总数据
+	// * 5xx：返回 5xx 状态码汇总数据。
+	DataTypes string `json:"DataTypes" query:"DataTypes"`
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 是否拆分状态码。取值如下所示：
+	// * true：拆分
+	// * false：（默认）不拆分
+	DetailedCode bool `json:"DetailedCode,omitempty" query:"DetailedCode"`
+
+	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
+
+	// 需要分组查询的参数。传入多个用英文逗号分割。支持以下取值：
+	// * DomainName：域名
+	// * DataType：状态码
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// * 60：单次查询最大时间跨度为 6 小时
+	// * 120：单次查询最大时间跨度为 6 小时
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 过滤运营商。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
+	// * 电信
+	// * 联通
+	// * 移动
+	// * 鹏博士
+	// * 教育网
+	// * 广电网
+	// * 其它
+	Isp string `json:"Isp,omitempty" query:"Isp"`
+
+	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// * HTTP
+	// * HTTPS
+	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
+
+	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// * 中国大陆
+	// * 亚太一区
+	// * 亚太二区
+	// * 亚太三区
+	// * 欧洲区
+	// * 北美区
+	// * 南美区
+	// * 中东区
+	Regions string `json:"Regions,omitempty" query:"Regions"`
+
+	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+
+	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP
+	// 解析后的客户端国家。取值如下所示：
+	// * 海外，除中国外全部国家。
+	// * 具体国家取值，如中国、美国。
+	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
+
+	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP 解析后的客户端省份。
+	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
+}
+
+type DescribeImageXSourceRequestRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXSourceRequestResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXSourceRequestResResult `json:"Result"`
+}
+
+type DescribeImageXSourceRequestResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXSourceRequestResResult struct {
+
+	// REQUIRED; 数据列表 :::tip
+	// * 若未设置Interval，则上报一条StartTime与EndTime时间段内查询的全部请求次数据；
+	// * 若设置了Interval，则按Interval粒度分段上报查询的时间粒度内请求次数据； :::
+	RequestCnt []*DescribeImageXSourceRequestResResultRequestCntItem `json:"RequestCnt"`
+}
+
+type DescribeImageXSourceRequestResResultRequestCntItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXSourceRequestResResultRequestCntPropertiesItemsItem `json:"Data"`
+
+	// 当GroupBy带有DataType时出现
+	DataType string `json:"DataType,omitempty"`
+
+	// 当GroupBy带有DomainName时出现
+	DomainName string `json:"DomainName,omitempty"`
+}
+
+type DescribeImageXSourceRequestResResultRequestCntPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片开始时刻，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 请求次数，单位为次。
+	Value int `json:"Value"`
+}
+
+type DescribeImageXSourceRequestTrafficQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 域名。为空时表示不筛选，支持查询多个域名，不同的域名使用逗号分隔。 您可以通过调用GetServiceDomains [https://www.volcengine.com/docs/508/9379]获取服务下所有域名信息。
+	DomainNames string `json:"DomainNames,omitempty" query:"DomainNames"`
+
+	// 分组依据，仅支持取值DomainName。
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// * 60：单次查询最大时间跨度为 6 小时
+	// * 120：单次查询最大时间跨度为 6 小时
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 过滤运营商。传入多个用英文逗号分割，缺省情况下表示不过滤。取值如下所示：
+	// * 电信
+	// * 联通
+	// * 移动
+	// * 鹏博士
+	// * 教育网
+	// * 广电网
+	// * 其它
+	Isp string `json:"Isp,omitempty" query:"Isp"`
+
+	// 过滤网络协议。传入多个用英文逗号分割。缺省情况下表示不过滤。取值如下所示：
+	// * HTTP
+	// * HTTPS
+	Protocols string `json:"Protocols,omitempty" query:"Protocols"`
+
+	// 区域。传入多个时用英文逗号作为分割符，缺省情况下表示查询所有区域。取值如下所示：
+	// * 中国大陆
+	// * 亚太一区
+	// * 亚太二区
+	// * 亚太三区
+	// * 欧洲区
+	// * 北美区
+	// * 南美区
+	// * 中东区
+	Regions string `json:"Regions,omitempty" query:"Regions"`
+
+	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+
+	// 客户端国家。传入多个时用英文逗号作为分割符，缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP
+	// 解析后的客户端国家。取值如下所示：
+	// * 海外，除中国外全部国家。
+	// * 具体国家取值，如中国、美国。
+	UserCountry string `json:"UserCountry,omitempty" query:"UserCountry"`
+
+	// 客户端省份。传入多个用英文逗号分割。缺省情况下表示不过滤。可调用DescribeImageXEdgeRequestRegions [https://www.volcengine.com/docs/508/1209574]获取 IP 解析后的客户端省份。
+	UserProvince string `json:"UserProvince,omitempty" query:"UserProvince"`
+}
+
+type DescribeImageXSourceRequestTrafficRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXSourceRequestTrafficResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXSourceRequestTrafficResResult `json:"Result"`
+}
+
+type DescribeImageXSourceRequestTrafficResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXSourceRequestTrafficResResult struct {
+
+	// REQUIRED; 查询数据
+	TrafficData []*DescribeImageXSourceRequestTrafficResResultTrafficDataItem `json:"TrafficData"`
+}
+
+type DescribeImageXSourceRequestTrafficResResultTrafficDataItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXSourceRequestTrafficResResultTrafficDataPropertiesItemsItem `json:"Data"`
+
+	// 当GroupBy带有DomainName时出现
+	DomainName string `json:"DomainName,omitempty"`
+}
+
+type DescribeImageXSourceRequestTrafficResResultTrafficDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片开始时刻，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 流量，单位为 byte。
+	Value float64 `json:"Value"`
+}
+
 type DescribeImageXSummaryQuery struct {
 
 	// REQUIRED; 数据查询时间段，即Timestamp所在月份的 1 日 0 时起至传入时间Timestamp的时间范围。 格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	Timestamp string `json:"Timestamp" query:"Timestamp"`
 
-	// 限制查询的服务 ID，传入多个时用英文逗号分割。缺省情况下表示不限制服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -8980,16 +9422,26 @@ type DescribeImageXUploadSuccessRateByTimeResResultSuccessRateDataPropertiesItem
 
 type DescribeImageXVideoClipDurationUsageQuery struct {
 
-	// REQUIRED; 获取数据结束时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
 	EndTime string `json:"EndTime" query:"EndTime"`
 
-	// REQUIRED; 获取数据起始时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
 	StartTime string `json:"StartTime" query:"StartTime"`
 
-	// 查询数据的时间粒度。单位：秒。支持300,600,1200,1800,3600,86400,604800。缺省时查询StartTime和EndTime时间段全部数据。
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
 	Interval string `json:"Interval,omitempty" query:"Interval"`
 
-	// 为空时表示不筛选，支持查询多个 Service，不同的 Service 使用逗号（,）分隔。
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
 	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
@@ -9022,13 +9474,13 @@ type DescribeImageXVideoClipDurationUsageResResponseMetadata struct {
 
 type DescribeImageXVideoClipDurationUsageResResult struct {
 
-	// REQUIRED
+	// REQUIRED; 小视频转动图转换时长
 	VideoClipDurationData []*DescribeImageXVideoClipDurationUsageResResultVideoClipDurationDataItem `json:"VideoClipDurationData"`
 }
 
 type DescribeImageXVideoClipDurationUsageResResultVideoClipDurationDataItem struct {
 
-	// REQUIRED
+	// REQUIRED; 时序数据
 	Data []*DescribeImageXVideoClipDurationUsageResResultVideoClipDurationDataPropertiesItemsItem `json:"Data"`
 }
 
@@ -9045,7 +9497,6 @@ type ExportFailedMigrateTaskQuery struct {
 
 	// REQUIRED; 任务地区（即任务目标服务的地区），默认空，返回国内任务。
 	// * cn：国内
-	// * va：美东
 	// * sg：新加坡
 	Region string `json:"Region" query:"Region"`
 
@@ -9148,7 +9599,7 @@ type FetchImageURLBody struct {
 	// 请求 header
 	RequestHeader map[string][]string `json:"RequestHeader,omitempty"`
 
-	// 指定存储 key，不包含 bucket 部分。默认使用随机生成的 key。 :::tip 若指定 key 已存在，则会覆盖服务中 StoreKey 对应的已有文件，此时服务中保存文件的数量未发生变化。 :::
+	// 指定抓取成功后的文件存储 key，不包含 bucket 部分。默认使用随机生成的 key。 :::tip 若指定 key 已存在，则会覆盖服务中 StoreKey 对应的已有文件，此时服务中保存文件的数量未发生变化。 :::
 	StoreKey string `json:"StoreKey,omitempty"`
 
 	// 资源下载超时时间。
@@ -9696,9 +10147,7 @@ type GetAuditEntrysCountResResult struct {
 
 type GetComprehensiveEnhanceImageBody struct {
 
-	// REQUIRED; 图片存储 URI 或访问 URL。
-	// * 图片 URI 格式，例如：tos-example/7a7979974.jpeg
-	// * 图片 URL 格式，可公网访问。例如：https://example.org/tos-example/7a7979974.jpeg~tplv.png
+	// REQUIRED; 待增强图片的存储 URI 或访问 URL（公网可访问）。您可在控制台资源管理获取图片的存储 URI [https://www.volcengine.com/docs/508/1205057]以及访问 URL [https://www.volcengine.com/docs/508/1205054]。
 	ImageURI string `json:"ImageUri"`
 
 	// REQUIRED; 优化策略，取值如下所示：
@@ -9707,13 +10156,12 @@ type GetComprehensiveEnhanceImageBody struct {
 	Mode int `json:"Mode"`
 
 	// REQUIRED; 服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId"`
 
 	// 去压缩失真强度，取值范围为[0,1]。取值为0时表示不处理，取值越大去压缩失真强度越大。
 	ArStrength float64 `json:"ArStrength,omitempty"`
 
+	// EnableConfig 取值为 true 时，为必填。
 	// 亮度，取值范围为[90,100]。取值越小，亮度提升越明显。
 	Brightness int `json:"Brightness,omitempty"`
 
@@ -9735,7 +10183,7 @@ type GetComprehensiveEnhanceImageBody struct {
 	// 下采样输出图片宽度，图片将适配对应大小。单位为 px。
 	DownsampleOutWidth int `json:"DownsampleOutWidth,omitempty"`
 
-	// 内是否启用高级配置，取值如下所示：
+	// 是否启用高级配置，取值如下所示：
 	// * true：开启。开启后，下述高级配置才会生效。
 	// * false：（默认）关闭。 :::tip 适用于 8000 x 8000 以分辨率图像的画质增强。 :::
 	EnableConfig bool `json:"EnableConfig,omitempty"`
@@ -9749,6 +10197,9 @@ type GetComprehensiveEnhanceImageBody struct {
 	// * true：开启。仅当开启后，下述超分配置才会生效。
 	// * false：（默认）关闭。 :::tip 适用于 8000 x 8000 以内分辨率图像的画质增强。 :::
 	EnableSuperResolution bool `json:"EnableSuperResolution,omitempty"`
+
+	// 默认值为false
+	EnableTextEnhance bool `json:"EnableTextEnhance,omitempty"`
 
 	// 执行超分处理的长边范围最大值，仅当满足图像边界输入的图像执行超分处理。单位为 px。
 	LongMax int `json:"LongMax,omitempty"`
@@ -9767,6 +10218,9 @@ type GetComprehensiveEnhanceImageBody struct {
 
 	// 执行超分处理的短边范围最小值，仅当满足图像边界输入的图像执行超分处理。单位为 px。
 	ShortMin int `json:"ShortMin,omitempty"`
+
+	// 取值范围[0,1]
+	TextEnhanceStrength float64 `json:"TextEnhanceStrength,omitempty"`
 }
 
 type GetComprehensiveEnhanceImageRes struct {
@@ -9799,7 +10253,7 @@ type GetComprehensiveEnhanceImageResResponseMetadata struct {
 // GetComprehensiveEnhanceImageResResult - 视请求的接口而定
 type GetComprehensiveEnhanceImageResResult struct {
 
-	// REQUIRED; 结果图地址
+	// REQUIRED; 结果图 URI。您可使用结果图 URI（即ResUri）拼接完整访问 URL [https://www.volcengine.com/docs/508/105405#%E9%A2%84%E8%A7%88%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E5%9B%BE]后，在浏览器查看图像增强效果。
 	ResURI string `json:"ResUri"`
 }
 
@@ -11013,10 +11467,10 @@ type GetImageAuditTasksResResultTasksItemAuditTask struct {
 
 type GetImageAuthKeyQuery struct {
 
-	// 服务 ID。 \
+	// REQUIRED; 服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
 type GetImageAuthKeyRes struct {
@@ -11689,22 +12143,22 @@ type GetImageEraseResultResResult struct {
 
 type GetImageMigrateTasksQuery struct {
 
-	// 分页条数。默认值为 10，最大值为 1000。
+	// 分页查询时，显示的每页数据的最大条数。默认值为 10，最大值为 1000。
 	Limit int `json:"Limit,omitempty" query:"Limit"`
 
-	// 分页偏移量。默认值为 0，表示从最新一个开始获取。
+	// 分页偏移量，用于控制分页查询返回结果的起始位置，以便对数据进行分页展示和浏览。默认值为 0。 :::tip 例如，指定分页条数 Limit = 10，分页偏移量 Offset = 10，表示从查询结果的第 11 条记录开始返回数据，共展示
+	// 10 条数据。 :::
 	Offset int `json:"Offset,omitempty" query:"Offset"`
 
 	// 任务地区（即任务目标服务的地区），缺省时将返回国内列表。取值如下所示：
 	// * cn：国内
-	// * va：美东
 	// * sg：新加坡
 	Region string `json:"Region,omitempty" query:"Region"`
 
 	// 迁移的目标服务 ID。
 	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
 
-	// 任务状态，填入多个时使用半角逗号分隔。取值如下所示：
+	// 任务状态，填入多个时使用英文逗号分隔。取值如下所示：
 	// * Initial：创建中
 	// * Running：运行中
 	// * Done：全部迁移完成
@@ -11819,10 +12273,10 @@ type GetImageMigrateTasksResResultTasksItemDst struct {
 // GetImageMigrateTasksResResultTasksItemProgress - 迁移进度信息
 type GetImageMigrateTasksResResultTasksItemProgress struct {
 
-	// REQUIRED; 失败错误码。仅当 Status=Failed 时有值
+	// REQUIRED; 失败错误码。仅当 Status=Failed 时有值。
 	ErrCode int `json:"ErrCode"`
 
-	// REQUIRED; 失败原因。仅当 Status=Failed 时有值
+	// REQUIRED; 失败原因。仅当 Status=Failed 时有值。
 	ErrMsg string `json:"ErrMsg"`
 
 	// REQUIRED; 迁移失败文件数
@@ -11858,7 +12312,7 @@ type GetImageMigrateTasksResResultTasksItemRunStrategy struct {
 // GetImageMigrateTasksResResultTasksItemSource - 源信息
 type GetImageMigrateTasksResResultTasksItemSource struct {
 
-	// REQUIRED; ak
+	// REQUIRED; Access Key
 	AK string `json:"AK"`
 
 	// REQUIRED; 源 bucket
@@ -11879,7 +12333,7 @@ type GetImageMigrateTasksResResultTasksItemSource struct {
 	// REQUIRED; 源 bucket 地区
 	Region string `json:"Region"`
 
-	// REQUIRED; sk
+	// REQUIRED; Secret Key
 	SK string `json:"SK"`
 
 	// REQUIRED; 是否丢弃源 Header，取值如下所示：
@@ -12648,6 +13102,18 @@ type GetImageServiceResResultVodSpace struct {
 	SpaceName string `json:"SpaceName"`
 }
 
+type GetImageServiceSubscriptionQuery struct {
+
+	// 附加组件ID，获取指定附加组件的开通情况。默认返回ImageX服务开通情况
+	AddOnID string `json:"AddOnId,omitempty" query:"AddOnId"`
+
+	// 附加组件英文标识，获取指定附加组件的开通情况。默认返回ImageX服务开通情况。
+	AddOnKey string `json:"AddOnKey,omitempty" query:"AddOnKey"`
+
+	// 附加组件类型，取值AI获取服务端智能处理开通情况。默认返回ImageX服务开通情况
+	AddOnType string `json:"AddOnType,omitempty" query:"AddOnType"`
+}
+
 type GetImageServiceSubscriptionRes struct {
 
 	// REQUIRED
@@ -12714,8 +13180,14 @@ type GetImageServiceSubscriptionResResult struct {
 	// REQUIRED; 购买的商品
 	Product string `json:"Product"`
 
+	// REQUIRED; 计费周期：3 按小时 4 按日 5 按月
+	SettlementPeriod float64 `json:"SettlementPeriod"`
+
 	// REQUIRED; 实例状态：0 创建中；1 运行中；2 创建失败；3 已退订；4 到期关停；5 到期回收
 	Status int `json:"Status"`
+
+	// 实例事件时间。如更配中实例即为更配生效时间
+	EventTime string `json:"EventTime,omitempty"`
 }
 
 type GetImageSmartCropResultBody struct {
@@ -13606,7 +14078,7 @@ type GetImageUploadFilesResResultFileObjectsItem struct {
 
 type GetImageXQueryAppsQuery struct {
 
-	// 数据来源，账号下近 60 天内有数据上报的应用 ID，缺省情况下返回账号对应的全部应用 ID。
+	// 数据来源，账号下近 60 天内有数据上报的应用 ID，缺省情况下返回账号对应的全部应用 ID。取值如下所示：
 	// * upload：上传 1.0 数据。
 	// * cdn：下行网络数据。
 	// * client：客户端数据。
@@ -13669,16 +14141,17 @@ type GetImageXQueryAppsResResultAppsItem struct {
 
 type GetImageXQueryDimsQuery struct {
 
-	// REQUIRED; 数据来源。
+	// REQUIRED; 数据来源，取值如下所示：
 	// * upload：上传 1.0 数据。
 	// * cdn：下行网络数据。
 	// * client：客户端数据。
 	// * sensible：感知数据。
 	// * uploadv2：上传 2.0 数据。
-	// * exceed：大图监控数据。
+	// * exceed：大图监控数据，包含大图样本量和大图明细。
+	// * exceed_all：大图分布数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配账号下所有的 App ID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/19511]的方式获取所需的 AppID。 :::
+	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
@@ -13723,7 +14196,7 @@ type GetImageXQueryDimsResResult struct {
 
 type GetImageXQueryRegionsQuery struct {
 
-	// REQUIRED; 数据来源。
+	// REQUIRED; 数据来源，取值如下所示：
 	// * upload：上传 1.0 数据。
 	// * cdn：下行网络数据。
 	// * client：客户端数据。
@@ -13732,7 +14205,7 @@ type GetImageXQueryRegionsQuery struct {
 	// * exceed：大图监控数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配账号下所有的 App ID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/19511]的方式获取所需的 Appid。 :::
+	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的应用 ID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
@@ -13780,7 +14253,7 @@ type GetImageXQueryRegionsResResult struct {
 
 type GetImageXQueryValsQuery struct {
 
-	// REQUIRED; 自定义维度名称。 :::tip 您可以通过调用获取自定义维度列表 [https://www.volcengine.com/docs/508/34554]获取所需的维度名称。 :::
+	// REQUIRED; 自定义维度名称。 :::tip 您可以通过调用获取自定义维度列表 [https://www.volcengine.com/docs/508/1213048]获取所需的维度名称。 :::
 	Dim string `json:"Dim" query:"Dim"`
 
 	// REQUIRED; 数据来源。
@@ -13789,10 +14262,11 @@ type GetImageXQueryValsQuery struct {
 	// * client：客户端数据。
 	// * sensible：感知数据。
 	// * uploadv2：上传 2.0 数据。
-	// * exceed：大图监控数据。
+	// * exceed：大图监控数据，包含大图样本量和大图明细。
+	// * exceed_all：大图分布数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配中账号下所有的 App ID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/19511]的方式获取所需的 AppID。 :::
+	// 应用 ID。默认为空，匹配中账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
@@ -14557,7 +15031,6 @@ type RerunImageMigrateTaskQuery struct {
 
 	// 任务地区（即任务目标服务的地区），默认空，返回国内任务。
 	// * cn：国内
-	// * va：美东
 	// * sg：新加坡
 	Region string `json:"Region,omitempty" query:"Region"`
 }
@@ -14591,7 +15064,7 @@ type RerunImageMigrateTaskResResponseMetadata struct {
 
 type SetDefaultDomainBody struct {
 
-	// REQUIRED; 域名，您可以通过获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]获取服务下域名信息。
+	// REQUIRED; 指定新的默认域名，您可以通过获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]获取服务下域名信息。
 	Domain string `json:"Domain"`
 }
 
@@ -14627,9 +15100,8 @@ type TerminateImageMigrateTaskQuery struct {
 	// REQUIRED; 任务 ID，请参考GetImageMigrateTasks [https://www.volcengine.com/docs/508/1108670]获取返回的任务 ID。
 	TaskID string `json:"TaskId" query:"TaskId"`
 
-	// 任务地区(即任务目标服务的地区)，默认空，返回国内任务。
+	// 任务地区（即任务目标服务的地区），默认空，返回国内任务。
 	// * cn：国内
-	// * va：美东
 	// * sg：新加坡
 	Region string `json:"Region,omitempty" query:"Region"`
 }
@@ -15073,8 +15545,10 @@ type UpdateImageAuthKeyBody struct {
 
 type UpdateImageAuthKeyQuery struct {
 
-	// 服务 ID。
-	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
+	// REQUIRED; 待更新配置的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
 type UpdateImageAuthKeyRes struct {
@@ -15106,16 +15580,20 @@ type UpdateImageAuthKeyResResponseMetadata struct {
 
 type UpdateImageFileKeyBody struct {
 
-	// REQUIRED; 重命名后的文件名
+	// REQUIRED; 重命名后的文件名。输入限制如下所示：
+	// * 不支持空格，如果中间有空格将会导致重命名失败。
+	// * 不支持以/开头或结尾，不支持/连续出现，Key 值最大长度限制为 180 个字节。
 	DstKey string `json:"DstKey"`
 
-	// REQUIRED; 源文件名
+	// REQUIRED; 源文件名，即上传文件的 storekey。
 	OriKey string `json:"OriKey"`
 }
 
 type UpdateImageFileKeyQuery struct {
 
-	// REQUIRED; 服务ID
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
@@ -15179,7 +15657,7 @@ type UpdateImageMirrorConfBodyOrigin struct {
 
 type UpdateImageMirrorConfQuery struct {
 
-	// REQUIRED; 服务 ID。 \
+	// REQUIRED; 服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
@@ -15222,10 +15700,10 @@ type UpdateImageObjectAccessBody struct {
 
 type UpdateImageObjectAccessQuery struct {
 
-	// 服务 ID。
+	// REQUIRED; 待更新配置的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
 type UpdateImageObjectAccessRes struct {
@@ -15257,16 +15735,20 @@ type UpdateImageObjectAccessResResponseMetadata struct {
 
 type UpdateImageResourceStatusBody struct {
 
-	// REQUIRED
+	// REQUIRED; 待修改封禁状态的资源存储 Key（不携带 Bucket 信息），可在控制台资源管理页面查看。
 	ObjectName string `json:"ObjectName"`
 
-	// REQUIRED
+	// REQUIRED; 资源的封禁状态，取值如下所示：
+	// * disable：禁用。禁用状态，您无法访问该资源。
+	// * enable：启用。启用状态，您可正常访问该资源。
 	Status string `json:"Status"`
 }
 
 type UpdateImageResourceStatusQuery struct {
 
-	// REQUIRED
+	// REQUIRED; 指定配置资源封禁的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
@@ -15666,8 +16148,8 @@ type UpdateServiceNameBody struct {
 
 type UpdateServiceNameQuery struct {
 
-	// REQUIRED; 服务 ID。
-	// * 您可以在 veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// REQUIRED; 待修改名称的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
@@ -15864,6 +16346,12 @@ type DescribeImageXServerQPSUsage struct{}
 type DescribeImageXServerQPSUsageBody struct{}
 type DescribeImageXServiceQuality struct{}
 type DescribeImageXServiceQualityBody struct{}
+type DescribeImageXSourceRequest struct{}
+type DescribeImageXSourceRequestBandwidth struct{}
+type DescribeImageXSourceRequestBandwidthBody struct{}
+type DescribeImageXSourceRequestBody struct{}
+type DescribeImageXSourceRequestTraffic struct{}
+type DescribeImageXSourceRequestTrafficBody struct{}
 type DescribeImageXSummary struct{}
 type DescribeImageXSummaryBody struct{}
 type DescribeImageXUploadCountByTime struct{}
@@ -15936,7 +16424,6 @@ type GetImageService struct{}
 type GetImageServiceBody struct{}
 type GetImageServiceSubscription struct{}
 type GetImageServiceSubscriptionBody struct{}
-type GetImageServiceSubscriptionQuery struct{}
 type GetImageSmartCropResult struct{}
 type GetImageSmartCropResultQuery struct{}
 type GetImageStorageFiles struct{}
@@ -16370,6 +16857,18 @@ type DescribeImageXServerQPSUsageReq struct {
 type DescribeImageXServiceQualityReq struct {
 	*DescribeImageXServiceQualityQuery
 	*DescribeImageXServiceQualityBody
+}
+type DescribeImageXSourceRequestReq struct {
+	*DescribeImageXSourceRequestQuery
+	*DescribeImageXSourceRequestBody
+}
+type DescribeImageXSourceRequestBandwidthReq struct {
+	*DescribeImageXSourceRequestBandwidthQuery
+	*DescribeImageXSourceRequestBandwidthBody
+}
+type DescribeImageXSourceRequestTrafficReq struct {
+	*DescribeImageXSourceRequestTrafficQuery
+	*DescribeImageXSourceRequestTrafficBody
 }
 type DescribeImageXSummaryReq struct {
 	*DescribeImageXSummaryQuery

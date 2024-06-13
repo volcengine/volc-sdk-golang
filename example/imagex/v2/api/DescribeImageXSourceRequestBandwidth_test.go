@@ -10,7 +10,7 @@ import (
 	imagex "github.com/volcengine/volc-sdk-golang/service/imagex/v2"
 )
 
-func Test_GetImageServiceSubscription(t *testing.T) {
+func Test_DescribeImageXSourceRequestBandwidth(t *testing.T) {
 	instance := imagex.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_GetImageServiceSubscription(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.GetImageServiceSubscriptionQuery{}
+	param := &imagex.DescribeImageXSourceRequestBandwidthQuery{}
 
-	resp, err := instance.GetImageServiceSubscription(context.Background(), param)
+	resp, err := instance.DescribeImageXSourceRequestBandwidth(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)
