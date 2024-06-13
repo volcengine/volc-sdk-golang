@@ -366,6 +366,66 @@ func (c *Imagex) RerunImageMigrateTask(ctx context.Context, arg *RerunImageMigra
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXSourceRequestBandwidth(ctx context.Context, arg *DescribeImageXSourceRequestBandwidthQuery) (*DescribeImageXSourceRequestBandwidthRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXSourceRequestBandwidth", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXSourceRequestBandwidthRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DescribeImageXSourceRequestTraffic(ctx context.Context, arg *DescribeImageXSourceRequestTrafficQuery) (*DescribeImageXSourceRequestTrafficRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXSourceRequestTraffic", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXSourceRequestTrafficRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DescribeImageXSourceRequest(ctx context.Context, arg *DescribeImageXSourceRequestQuery) (*DescribeImageXSourceRequestRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXSourceRequest", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXSourceRequestRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *DescribeImageXBucketRetrievalUsageQuery) (*DescribeImageXBucketRetrievalUsageRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2046,9 +2106,13 @@ func (c *Imagex) PreviewImageUploadFile(ctx context.Context, arg *PreviewImageUp
 	return result, nil
 }
 
-func (c *Imagex) GetImageServiceSubscription(ctx context.Context) (*GetImageServiceSubscriptionRes, error) {
+func (c *Imagex) GetImageServiceSubscription(ctx context.Context, arg *GetImageServiceSubscriptionQuery) (*GetImageServiceSubscriptionRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
 
-	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", url.Values{})
+	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", query)
 	if err != nil {
 		return nil, err
 	}

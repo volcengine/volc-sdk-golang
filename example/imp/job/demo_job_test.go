@@ -28,6 +28,35 @@ func TestImp_SubmitJob(t *testing.T) {
 		TemplateId:        "your template id",
 		CallbackArgs:      "your callback args",
 		EnableLowPriority: "false", // true开启 false 不开启 闲时转码模式
+		Params: &business.Params{
+			OverrideParams: &business.OverrideParams{
+				SmartErase: []*business.SmartEraseOverrideParams{
+					{
+						ActivityId: []string{"*"},
+						Watermark: &business.Watermark{
+							DetectRect: []*business.DetectRect{
+								{
+									X1: 0,
+									X2: 1,
+									Y1: 0,
+									Y2: 1,
+								},
+							},
+						},
+						OCR: &business.OCR{
+							DetectRect: []*business.DetectRect{
+								{
+									X1: 0,
+									X2: 1,
+									Y1: 0,
+									Y2: 1,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 	}
 
 	resp, status, err := impService.SubmitJob(req)
