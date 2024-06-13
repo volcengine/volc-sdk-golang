@@ -131,7 +131,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateImageMigrateTask"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"DeleteImageMigrateTask": {
@@ -139,7 +139,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteImageMigrateTask"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"ExportFailedMigrateTask": {
@@ -147,7 +147,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ExportFailedMigrateTask"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"UpdateImageTaskStrategy": {
@@ -155,7 +155,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateImageTaskStrategy"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"TerminateImageMigrateTask": {
@@ -163,7 +163,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"TerminateImageMigrateTask"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"GetVendorBuckets": {
@@ -171,7 +171,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetVendorBuckets"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"GetImageMigrateTasks": {
@@ -179,7 +179,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageMigrateTasks"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"RerunImageMigrateTask": {
@@ -187,7 +187,31 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"RerunImageMigrateTask"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXSourceRequestBandwidth": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXSourceRequestBandwidth"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXSourceRequestTraffic": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXSourceRequestTraffic"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXSourceRequest": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXSourceRequest"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"DescribeImageXBucketRetrievalUsage": {
@@ -931,7 +955,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateImageFromUri"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"UpdateImageFileKey": {
