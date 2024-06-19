@@ -54,6 +54,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"TranscodingJobStatus": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"TranscodingJobStatus"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"ListVhostTransCodePreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -67,6 +75,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateTranscodePreset"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"RestartTranscodingJob": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RestartTranscodingJob"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -358,22 +374,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"CreateVerifyContent": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreateVerifyContent"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"VerifyDomainOwner": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"VerifyDomainOwner"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DeleteDomain": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -638,46 +638,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"ListVqosMetricsDimensions": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListVqosMetricsDimensions"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"StopPullCDNSnapshotTask": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"StopPullCDNSnapshotTask"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"CreatePullCDNSnapshotTask": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreatePullCDNSnapshotTask"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"GetPullCDNSnapshotTask": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetPullCDNSnapshotTask"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"ListPullCDNSnapshotTask": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListPullCDNSnapshotTask"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DeleteSnapshotAuditPreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -691,14 +651,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSnapshotAuditPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"DescribeSnapshotAuditPresetDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeSnapshotAuditPresetDetail"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -790,14 +742,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeLiveBatchStreamTranscodeData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeLiveBatchStreamTranscodeData"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DescribeLiveStreamCountData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -819,6 +763,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLivePushStreamInfoData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeLiveTranscodeInfoData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveTranscodeInfoData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -851,14 +803,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveMetricTrafficData"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"DescribeLiveBatchStreamTrafficData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeLiveBatchStreamTrafficData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -958,14 +902,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeLiveCustomizedLogData": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeLiveCustomizedLogData"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DescribeLiveLogData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1062,19 +998,59 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeLiveActivityBandwidthData": {
+		"UpdateEncryptDRM": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DescribeLiveActivityBandwidthData"},
+				"Action":  []string{"UpdateEncryptDRM"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeLiveStreamUsageData": {
+		"DescribeLicenseDRM": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DescribeLiveStreamUsageData"},
+				"Action":  []string{"DescribeLicenseDRM"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeCertDRM": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCertDRM"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeEncryptDRM": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeEncryptDRM"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"BindEncryptDRM": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindEncryptDRM"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UnBindEncryptDRM": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnBindEncryptDRM"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListBindEncryptDRM": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListBindEncryptDRM"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
