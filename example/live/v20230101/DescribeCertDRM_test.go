@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_ListPullCDNSnapshotTask(t *testing.T) {
+func Test_DescribeCertDRM(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_ListPullCDNSnapshotTask(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.ListPullCDNSnapshotTaskBody{}
+	param := &live_v20230101.DescribeCertDRMQuery{}
 
-	resp, err := instance.ListPullCDNSnapshotTask(context.Background(), param)
+	resp, err := instance.DescribeCertDRM(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)

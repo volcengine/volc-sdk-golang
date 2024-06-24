@@ -165,39 +165,6 @@ func (p *BusinessSecurity) AsyncVideoRisk(req *AsyncRiskDetectionRequest) (*Asyn
 	return result, nil
 }
 
-// Deprecated: use ElementVerifyV2 instead
-// 已废弃，请使用ElementVerifyV2
-// Deprecated
-func (p *BusinessSecurity) ElementVerify(req *ElementVerifyRequest) (*ElementVerifyResponse, error) {
-	reqData, err := json.Marshal(req)
-	if err != nil {
-		return nil, fmt.Errorf("ElementVerifyRequest: fail to marshal request, %v", err)
-	}
-
-	respBody, _, err := p.Client.Json("ElementVerify", nil, string(reqData))
-	if err != nil {
-		// Retry on error
-		// 支持错误重试
-		if p.Retry() {
-			respBody, _, err = p.Client.Json("ElementVerify", nil, string(reqData))
-			if err != nil {
-				return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
-			}
-			result := new(ElementVerifyResponse)
-			if err := UnmarshalResultInto(respBody, result); err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-		return nil, fmt.Errorf("ElementVerify: fail to do request, %v", err)
-	}
-	result := new(ElementVerifyResponse)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
 // Risk result
 // 风险识别结果获取接口
 func (p *BusinessSecurity) VideoResult(req *VideoResultRequest) (*VideoResultResponse, error) {
@@ -571,38 +538,6 @@ func (p *BusinessSecurity) TextSliceRiskWithCtx(ctx context.Context, req *RiskDe
 		return nil, fmt.Errorf("TextSliceRisk: fail to do request, %v", err)
 	}
 	result := new(TextSliceResultResponse)
-	if err := UnmarshalResultInto(respBody, result); err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
-// Deprecated: use MobileStatusV2 instead
-// 已废弃，请使用MobileStatusV2
-// Deprecated
-func (p *BusinessSecurity) MobileStatus(req *MobileStatusRequest) (*MobileStatusResponse, error) {
-	reqData, err := json.Marshal(req)
-	if err != nil {
-		return nil, fmt.Errorf("MobileSecondSaleRequest: fail to marshal request, %v", err)
-	}
-
-	respBody, _, err := p.Client.Json("MobileStatus", nil, string(reqData))
-	if err != nil {
-		// Retry on error
-		// 支持错误重试
-		if p.Retry() {
-			respBody, _, err = p.Client.Json("MobileStatus", nil, string(reqData))
-			if err != nil {
-				return nil, fmt.Errorf("MobileStatus: fail to do request, %v", err)
-			}
-			result := new(MobileStatusResponse)
-			if err := UnmarshalResultInto(respBody, result); err != nil {
-				return nil, err
-			}
-			return result, nil
-		}
-	}
-	result := new(MobileStatusResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

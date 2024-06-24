@@ -233,3 +233,32 @@ type CertConfigGetResult struct {
 	TimeElapsed      string                 `json:"time_elapsed"`
 	Data             *CertConfigGetData     `json:"data"`
 }
+
+type CertPubData struct {
+	AlgorithmBaseResp *struct {
+		StatusCode    int    `json:"status_code"`
+		StatusMessage string `json:"status_message"`
+	} `json:"algorithm_base_resp"`
+	BinaryDataBase64 []string `json:"binary_data_base64,omitempty"`
+	BytedToken       string   `json:"byted_token,omitempty"`
+	ClientConfig     string   `json:"client_config,omitempty"`
+	ConfigId         string   `json:"config_id,omitempty"`
+	//AuthResult       *struct {
+	//	BeautyIntensity string `json:"beauty_intensity,omitempty"`
+	//	//LivenessConfig  string `json:"liveness_config,omitempty"`
+	//	LivenessTimeout string `json:"liveness_timeout,omitempty"`
+	//	LivenessType    string `json:"liveness_type,omitempty"`
+	//	MotionTypes     string `json:"motion_types,omitempty"`
+	//	RemainingRetry  string `json:"remaining_retry,omitempty"`
+	//} `json:"auth_result,omitempty"`
+}
+
+type CertPubResult struct {
+	ResponseMetadata *base.ResponseMetadata `json:",omitempty"`
+	RequestId        string                 `json:"request_id"`
+	Code             int                    `json:"code"`
+	Message          string                 `json:"message"`
+	Status           int                    `json:"status"`
+	TimeElapsed      string                 `json:"time_elapsed"`
+	Data             *CertPubData           `json:"data,omitempty"`
+}

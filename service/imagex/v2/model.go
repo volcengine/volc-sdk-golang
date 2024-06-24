@@ -973,6 +973,9 @@ type CreateImageMigrateTaskBodyTaskCallbackCfg struct {
 	// REQUIRED; 回调方法。仅支持取值为 http。
 	Method string `json:"Method"`
 
+	// 任务维度自定义回调参数，最大长度为1024
+	CallbackArgs string `json:"CallbackArgs,omitempty"`
+
 	// 回调信息中是否包含具体迁移任务条目信息。取值如下所示：
 	// * true：包含。仅包含迁移成功的任务条目信息，迁移失败的任务列表请在迁移完成后调用 ExportFailedMigrateTask [https://www.volcengine.com/docs/508/1261309] 接口获取。
 	// * false：（默认）不包含。 :::warning 若任务中包含的条目数量过多，会导致回调消息体过大，增加回调失败的风险。因此建议仅在任务中条目量级不超过十万时使用该参数。 :::
@@ -1094,6 +1097,9 @@ type CreateImageMigrateTaskBodyTaskTranscode struct {
 
 	// REQUIRED; 转码质量参数，取值范围为 [1,100]。对于 PNG 为无损压缩，其他格式下其值越小，压缩率越高，画质越差。
 	Quality int `json:"Quality"`
+
+	// 是否开启自适应编码。仅编码/降级格式为heic/webp/jpeg时生效
+	Adapt bool `json:"Adapt,omitempty"`
 
 	// 包含透明通道的图片是否编码为降级格式。取值如下所示：
 	// * true：降级
@@ -10213,9 +10219,11 @@ type GetComprehensiveEnhanceImageBody struct {
 	// 饱和度，取值范围为[0,2]。取值大于 1 表示提升饱和度，取值小于 1 表示降低饱和度。
 	Saturation float64 `json:"Saturation,omitempty"`
 
+	// EnableSuperResolution 取值为 true 时，为必填。
 	// 执行超分处理的短边范围最大值，仅当满足图像边界输入的图像执行超分处理。单位为 px。
 	ShortMax int `json:"ShortMax,omitempty"`
 
+	// EnableSuperResolution 取值为 true 时，为必填。
 	// 执行超分处理的短边范围最小值，仅当满足图像边界输入的图像执行超分处理。单位为 px。
 	ShortMin int `json:"ShortMin,omitempty"`
 
@@ -11099,6 +11107,9 @@ type GetImageAnalyzeTasksResResult struct {
 }
 
 type GetImageAnalyzeTasksResResultTasksItem struct {
+
+	// REQUIRED
+	ID string `json:"Id"`
 
 	// REQUIRED; 评估任务更新时间
 	UpdateAt string `json:"UpdateAt"`
@@ -14269,6 +14280,9 @@ type GetImageXQueryValsQuery struct {
 	// 应用 ID。默认为空，匹配中账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
+	// 需要过滤的关键词（包含），不传则不过滤关键词。
+	Keyword string `json:"Keyword,omitempty" query:"Keyword"`
+
 	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
 	// * iOS
 	// * Android
@@ -14305,7 +14319,7 @@ type GetImageXQueryValsResResponseMetadata struct {
 
 type GetImageXQueryValsResResult struct {
 
-	// REQUIRED; 60 天内上报数据中出现的维度值信息，按出现次数降序排列。
+	// REQUIRED; 90 天内上报数据中出现的维度值列表，按上报次数降序排列，仅返回前1000条数据。
 	DimVal []string `json:"DimVal"`
 }
 

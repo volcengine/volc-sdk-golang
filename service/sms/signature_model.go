@@ -33,6 +33,12 @@ const (
 	SignPurposeForOther SignPurpose = 2
 )
 
+type CertificateType int32
+
+const (
+	IDCard CertificateType = 0 // 身份证
+)
+
 type GetSignatureAndOrderListRequest struct {
 	SubAccount string `url:"subAccount"`
 	Signature  string `url:"signature,omitempty"`
@@ -61,19 +67,21 @@ type SmsSignatureInfo struct {
 }
 
 type ApplySmsSignatureRequest struct {
-	SubAccount     string         `json:"subAccount"`
-	Content        string         `json:"content"`
-	Source         string         `json:"source"`
-	Domain         string         `json:"domain"`
-	Desc           string         `json:"desc,omitempty"`
-	UploadFileList []SignAuthFile `json:"uploadFileList"`
-	Purpose        int            `json:"purpose"`
+	SubAccount                string         `json:"subAccount"`
+	Content                   string         `json:"content"`
+	Source                    string         `json:"source"`
+	Domain                    string         `json:"domain"`
+	Desc                      string         `json:"desc,omitempty"`
+	UploadFileList            []SignAuthFile `json:"uploadFileList"` // Deprecated
+	Purpose                   int            `json:"purpose"`
+	SignatureIdentificationID int64          `json:"signatureIdentificationID"` // 绑定的资质id
 }
 
 type SignAuthFile struct {
 	FileType    DocType `json:"fileType"`
-	FileContent string  `json:"fileContent"`
+	FileContent string  `json:"fileContent"` // 文件base64
 	FileSuffix  string  `json:"fileSuffix"`
+	FileUrl     string  `json:"fileUrl"` // 文件下载url
 }
 
 type ApplySmsSignatureResponse struct {
@@ -90,4 +98,79 @@ type DeleteSignatureRequest struct {
 type DeleteSignatureResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           string
+}
+
+// 资质相关
+type ApplySignatureIdentRequest struct {
+	Id                    int64          `json:"id"`                    // 资质id，重新编辑需要提供之前的id
+	Purpose               int32          `json:"purpose"`               // 资质用途； 1.自用，2.他用
+	MaterialName          string         `json:"materialName"`          // 资质名称
+	BusinessInfo          BusinessInfo   `json:"businessInfo"`          // 企业信息
+	OperatorPersonInfo    PersonInfo     `json:"operatorPerson"`        // 经办人信息
+	ResponsiblePersonInfo PersonInfo     `json:"responsiblePersonInfo"` // 责任人信息
+	PowerOfAttorney       []SignAuthFile `json:"powerOfAttorney"`       // 授权书
+	OtherMaterials        []SignAuthFile `json:"otherMaterials"`        // 其他材料
+	EffectSignatures      []string       `json:"effectSignatures"`      // 生效签名范围
+}
+
+type BusinessInfo struct {
+	BusinessCertificateType                DocType      `json:"businessCertificateType"`                // 营业证件类型
+	BusinessCertificate                    SignAuthFile `json:"businessCertificate"`                    // 营业证件
+	BusinessCertificateName                string       `json:"businessCertificateName"`                // 营业证件名称
+	UnifiedSocialCreditIdentifier          string       `json:"unifiedSocialCreditIdentifier"`          // 统一社会信用代码
+	BusinessCertificateValidityPeriodStart string       `json:"businessCertificateValidityPeriodStart"` // 营业证件有效期开始
+	BusinessCertificateValidityPeriodEnd   string       `json:"businessCertificateValidityPeriodEnd"`   // 营业证件有效期结束
+	LegalPersonName                        string       `json:"legalPersonName"`                        // 法人名称
+}
+
+type PersonInfo struct {
+	CertificateType   CertificateType `json:"certificateType"`   // 证件类型 0.身份证
+	PersonCertificate []SignAuthFile  `json:"personCertificate"` // 证件信息
+	PersonName        string          `json:"personName"`        // 名字
+	PersonIDCard      string          `json:"personIDCard"`      // 证件号码
+	PersonMobile      string          `json:"personMobile"`      // 手机号
+}
+
+type ApplySignatureIdentResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           struct {
+		Id int64 `json:"id"`
+	}
+}
+
+type GetSignatureIdentListRequest struct {
+	Ids       []int64 `query:"ids" json:"ids"` // 资质id列表
+	PageIndex int32   `query:"pageIndex" json:"pageIndex"`
+	PageSize  int32   `query:"pageSize" json:"pageSize"`
+}
+
+type GetSignatureIdentListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           SignatureIdentList
+}
+
+type SignatureIdentList struct {
+	List []struct {
+		Id                      int64    `json:"id"`
+		Purpose                 int32    `json:"purpose"`                 // 资质用途； 1.自用，2.他用
+		MaterialName            string   `json:"materialName"`            // 资质名称
+		BusinessCertificateName string   `json:"businessCertificateName"` // 营业证件名称
+		OperatorPersonName      string   `json:"operatorPersonName"`      // 经办人名字
+		ResponsiblePersonName   string   `json:"responsiblePersonName"`   // 责任人名字
+		EffectSignatures        []string `json:"effectSignatures"`        // 生效签名范围
+	} `json:"list"`
+	Total int64 `json:"total"`
+}
+
+type BatchBindSignatureIdentRequest struct {
+	SubAccount string   `json:"subAccount"` // 子账号
+	Signatures []string `json:"signatures"` // 签名,可多个
+	Id         int64    `json:"id"`         // 资质id
+}
+
+type BatchBindSignatureIdentResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           struct {
+		Msg string `json:"msg"`
+	}
 }

@@ -191,6 +191,26 @@ func (c *Live) ListCommonTransPresetDetail(ctx context.Context, arg *ListCommonT
 	return result, nil
 }
 
+func (c *Live) TranscodingJobStatus(ctx context.Context, arg *TranscodingJobStatusQuery) (*TranscodingJobStatusRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "TranscodingJobStatus", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(TranscodingJobStatusRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) ListVhostTransCodePreset(ctx context.Context, arg *ListVhostTransCodePresetBody) (*ListVhostTransCodePresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -223,6 +243,26 @@ func (c *Live) CreateTranscodePreset(ctx context.Context, arg *CreateTranscodePr
 	}
 
 	result := new(CreateTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) RestartTranscodingJob(ctx context.Context, arg *RestartTranscodingJobQuery) (*RestartTranscodingJobRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "RestartTranscodingJob", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(RestartTranscodingJobRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -951,46 +991,6 @@ func (c *Live) UnbindCert(ctx context.Context, arg *UnbindCertBody) (*UnbindCert
 	return result, nil
 }
 
-func (c *Live) CreateVerifyContent(ctx context.Context, arg *CreateVerifyContentBody) (*CreateVerifyContentRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreateVerifyContent", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(CreateVerifyContentRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) VerifyDomainOwner(ctx context.Context, arg *VerifyDomainOwnerBody) (*VerifyDomainOwnerRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "VerifyDomainOwner", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(VerifyDomainOwnerRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DeleteDomain(ctx context.Context, arg *DeleteDomainBody) (*DeleteDomainRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1651,106 +1651,6 @@ func (c *Live) UpdateStreamQuotaConfig(ctx context.Context, arg *UpdateStreamQuo
 	return result, nil
 }
 
-func (c *Live) ListVqosMetricsDimensions(ctx context.Context, arg *ListVqosMetricsDimensionsQuery) (*ListVqosMetricsDimensionsRes, error) {
-	query, err := marshalToQuery(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.CtxQuery(ctx, "ListVqosMetricsDimensions", query)
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(ListVqosMetricsDimensionsRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) StopPullCDNSnapshotTask(ctx context.Context, arg *StopPullCDNSnapshotTaskBody) (*StopPullCDNSnapshotTaskRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "StopPullCDNSnapshotTask", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(StopPullCDNSnapshotTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) CreatePullCDNSnapshotTask(ctx context.Context, arg *CreatePullCDNSnapshotTaskBody) (*CreatePullCDNSnapshotTaskRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreatePullCDNSnapshotTask", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(CreatePullCDNSnapshotTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) GetPullCDNSnapshotTask(ctx context.Context, arg *GetPullCDNSnapshotTaskBody) (*GetPullCDNSnapshotTaskRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "GetPullCDNSnapshotTask", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(GetPullCDNSnapshotTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) ListPullCDNSnapshotTask(ctx context.Context, arg *ListPullCDNSnapshotTaskBody) (*ListPullCDNSnapshotTaskRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "ListPullCDNSnapshotTask", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(ListPullCDNSnapshotTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DeleteSnapshotAuditPreset(ctx context.Context, arg *DeleteSnapshotAuditPresetBody) (*DeleteSnapshotAuditPresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1783,26 +1683,6 @@ func (c *Live) UpdateSnapshotAuditPreset(ctx context.Context, arg *UpdateSnapsho
 	}
 
 	result := new(UpdateSnapshotAuditPresetRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) DescribeSnapshotAuditPresetDetail(ctx context.Context, arg *DescribeSnapshotAuditPresetDetailBody) (*DescribeSnapshotAuditPresetDetailRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeSnapshotAuditPresetDetail", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeSnapshotAuditPresetDetailRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2027,26 +1907,6 @@ func (c *Live) DescribeLiveBatchPushStreamAvgMetrics(ctx context.Context, arg *D
 	return result, nil
 }
 
-func (c *Live) DescribeLiveBatchStreamTranscodeData(ctx context.Context, arg *DescribeLiveBatchStreamTranscodeDataBody) (*DescribeLiveBatchStreamTranscodeDataRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTranscodeData", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeLiveBatchStreamTranscodeDataRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DescribeLiveStreamCountData(ctx context.Context, arg *DescribeLiveStreamCountDataBody) (*DescribeLiveStreamCountDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2099,6 +1959,26 @@ func (c *Live) DescribeLivePushStreamInfoData(ctx context.Context, arg *Describe
 	}
 
 	result := new(DescribeLivePushStreamInfoDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveTranscodeInfoData(ctx context.Context, arg *DescribeLiveTranscodeInfoDataBody) (*DescribeLiveTranscodeInfoDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveTranscodeInfoData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveTranscodeInfoDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2179,26 +2059,6 @@ func (c *Live) DescribeLiveMetricTrafficData(ctx context.Context, arg *DescribeL
 	}
 
 	result := new(DescribeLiveMetricTrafficDataRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) DescribeLiveBatchStreamTrafficData(ctx context.Context, arg *DescribeLiveBatchStreamTrafficDataBody) (*DescribeLiveBatchStreamTrafficDataRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTrafficData", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeLiveBatchStreamTrafficDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2435,26 +2295,6 @@ func (c *Live) DescribeLiveTimeShiftData(ctx context.Context, arg *DescribeLiveT
 	}
 
 	result := new(DescribeLiveTimeShiftDataRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) DescribeLiveCustomizedLogData(ctx context.Context, arg *DescribeLiveCustomizedLogDataBody) (*DescribeLiveCustomizedLogDataRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveCustomizedLogData", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeLiveCustomizedLogDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2703,18 +2543,18 @@ func (c *Live) UpdateHTTPHeaderConfig(ctx context.Context, arg *UpdateHTTPHeader
 	return result, nil
 }
 
-func (c *Live) DescribeLiveActivityBandwidthData(ctx context.Context, arg *DescribeLiveActivityBandwidthDataBody) (*DescribeLiveActivityBandwidthDataRes, error) {
+func (c *Live) UpdateEncryptDRM(ctx context.Context, arg *UpdateEncryptDRMBody) (*UpdateEncryptDRMRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveActivityBandwidthData", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "UpdateEncryptDRM", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DescribeLiveActivityBandwidthDataRes)
+	result := new(UpdateEncryptDRMRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2723,18 +2563,114 @@ func (c *Live) DescribeLiveActivityBandwidthData(ctx context.Context, arg *Descr
 	return result, nil
 }
 
-func (c *Live) DescribeLiveStreamUsageData(ctx context.Context, arg *DescribeLiveStreamUsageDataBody) (*DescribeLiveStreamUsageDataRes, error) {
+func (c *Live) DescribeLicenseDRM(ctx context.Context, arg *DescribeLicenseDRMQuery) (*DescribeLicenseDRMRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLicenseDRM", query, "")
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLicenseDRMRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeCertDRM(ctx context.Context, arg *DescribeCertDRMQuery) (*DescribeCertDRMRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeCertDRM", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeCertDRMRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeEncryptDRM(ctx context.Context) (*DescribeEncryptDRMRes, error) {
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeEncryptDRM", url.Values{}, "")
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeEncryptDRMRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) BindEncryptDRM(ctx context.Context, arg *BindEncryptDRMBody) (*BindEncryptDRMRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveStreamUsageData", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "BindEncryptDRM", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DescribeLiveStreamUsageDataRes)
+	result := new(BindEncryptDRMRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UnBindEncryptDRM(ctx context.Context, arg *UnBindEncryptDRMBody) (*UnBindEncryptDRMRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UnBindEncryptDRM", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UnBindEncryptDRMRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListBindEncryptDRM(ctx context.Context, arg *ListBindEncryptDRMBody) (*ListBindEncryptDRMRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListBindEncryptDRM", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListBindEncryptDRMRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

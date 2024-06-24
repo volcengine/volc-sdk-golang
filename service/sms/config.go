@@ -165,6 +165,30 @@ var (
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
+		"ApplySignatureIdent": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplySignatureIdent"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"GetSignatureIdentList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSignatureIdentList"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"BatchBindSignatureIdent": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchBindSignatureIdent"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
 	}
 )
 

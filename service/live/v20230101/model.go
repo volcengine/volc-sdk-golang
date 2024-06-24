@@ -5,7 +5,7 @@ type BindCertBody struct {
 	// REQUIRED; 需要绑定的 HTTPS 证书的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
 	ChainID string `json:"ChainID"`
 
-	// REQUIRED; 填写需要配置 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要绑定证书的域名。
+	// REQUIRED; 填写需要配置 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要绑定证书的域名。
 	Domain string `json:"Domain"`
 
 	// 是否启用 HTTPS 协议，默认值为 false，取值及含义如下所示。
@@ -57,8 +57,54 @@ type BindCertResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type BindEncryptDRMBody struct {
+
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App"`
+
+	// REQUIRED; 是否开启当前 DRM 加密配置，取值及含义如下所示。
+	// * true：开启；
+	// * false：关闭。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 待加密的转码流对应的转码流后缀配置。您可以调用查询转码配置列表 [https://www.volcengine.com/docs/6469/1126853]接口或在视频直播控制台的转码配置 [https://console.volcengine.com/live/main/application/transcode]页面，查看转码配置的转码流后缀。
+	EncryptTranscodeSuffix []string `json:"EncryptTranscodeSuffix"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost"`
+}
+
+type BindEncryptDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata BindEncryptDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; Anything
+	Result interface{} `json:"Result"`
+}
+
+type BindEncryptDRMResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 // Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesTosparam
-// - TOS 存储相关配置。
+// - TOS 存储相关配置
+// 说明
+// TOSParam和VODParam配置且配置其中一个。
 type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesTosparam struct {
 	Bucket string `json:"Bucket"`
 
@@ -69,34 +115,33 @@ type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertie
 	StorageDir string `json:"StorageDir"`
 }
 
-// Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam
-// - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
-type Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam struct {
-	Bucket string `json:"Bucket"`
+// Components1Hkcrc4SchemasListvhostsnapshotpresetresPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetPropertiesCallbackdetail
+// - 回调信息。
+type Components1Hkcrc4SchemasListvhostsnapshotpresetresPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetPropertiesCallbackdetail struct {
+	URL string `json:"URL"`
 
-	Enable bool `json:"Enable"`
-
-	ExactObject string `json:"ExactObject"`
-
-	OverwriteObject string `json:"OverwriteObject"`
-
-	StorageDir string `json:"StorageDir"`
+	CallbackType *string `json:"CallbackType,omitempty"`
 }
 
-// Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam
-// - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+type Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam struct {
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
+}
+
 type Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam struct {
-	Enable bool `json:"Enable"`
-
-	ExactObject string `json:"ExactObject"`
-
-	OverwriteObject string `json:"OverwriteObject"`
-
-	ServiceID string `json:"ServiceID"`
+	ServiceID       string  `json:"ServiceID"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
+	OverwriteObject *string `json:"OverwriteObject,omitempty"`
 }
 
 // Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesTosparam
-// - TOS 存储相关配置。
+// - TOS 存储相关配置
+// 说明
+// TOSParam和VODParam配置且配置其中一个。
 type Components1Via6UrSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesTosparam struct {
 	Bucket string `json:"Bucket"`
 
@@ -149,14 +194,6 @@ type ComponentsBbqv7RSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	ExactObject string `json:"ExactObject"`
 
 	StorageDir string `json:"StorageDir"`
-}
-
-type ComponentsFceumsSchemasListvqosmetricsdimensionsresPropertiesResultItemsPropertiesDimensionsItems struct {
-	Alias string `json:"Alias"`
-
-	Attribute string `json:"Attribute"`
-
-	Name string `json:"Name"`
 }
 
 // ComponentsFuamuzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfig
@@ -222,7 +259,9 @@ type ComponentsKqy98ZSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam
-// - VOD 存储相关配置。
+// - VOD 存储相关配置
+// 说明
+// TOSParam和VODParam配置且配置其中一个。
 type ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam struct {
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
@@ -238,7 +277,9 @@ type ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 }
 
 // ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesVodparam
-// - VOD 存储相关配置。
+// - VOD 存储相关配置
+// 说明
+// TOSParam和VODParam配置且配置其中一个。
 type ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesVodparam struct {
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
@@ -256,11 +297,9 @@ type ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultProperties
 // ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam
 // - 截图格式为 JPG 时的截图参数。
 type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparam struct {
-	Enable *bool `json:"Enable,omitempty"`
-
+	Enable      *bool                                                                                                                                                                                      `json:"Enable,omitempty"`
 	ImageXParam *Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
-
-	TOSParam *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam `json:"TOSParam,omitempty"`
+	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
 }
 
 type CreateCertBody struct {
@@ -278,6 +317,9 @@ type CreateCertBody struct {
 
 	// 证书链 ID，用于标识整个证书链，包括叶子证书（服务器证书）、中间证书（中间 CA 证书）以及根证书（根 CA 证书）。
 	ChainID *string `json:"ChainID,omitempty"`
+
+	// 项目名称，默认值为 default，您可以登录访问控制 [https://console.volcengine.com/iam/resourcemanage/project]获取项目名称。
+	ProjectName *string `json:"ProjectName,omitempty"`
 }
 
 // CreateCertBodyRsa - 证书信息。
@@ -333,7 +375,7 @@ type CreateCertResResult struct {
 	// 使用该证书的域名。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 证书用途，默认为 https，取值及含义如下所示。
+	// 证书用途，取值及含义如下所示。
 	// * https：用于 HTTPS 加密；
 	// * sign：用于签名加密。
 	UseWay *string `json:"UseWay,omitempty"`
@@ -349,9 +391,9 @@ type CreateDomainBody struct {
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// 域名加速区域，默认指为 cn，包含以下类型。
-	// * cn：中国大陆；
-	// * cn-global：全球；
+	// 域名加速区域，默认值为cn，包含以下类型。
+	// * cn：中国内地；
+	// * cn-global：全球加速；
 	// * cn-oversea：海外及港澳台。
 	Region *string `json:"Region,omitempty"`
 }
@@ -392,8 +434,8 @@ type CreateDomainV2Body struct {
 	Domains []CreateDomainV2BodyDomainsItem `json:"Domains"`
 
 	// REQUIRED; 域名加速区域，包含以下类型。
-	// * cn：中国大陆；
-	// * cn-global：全球；
+	// * cn：中国内地；
+	// * cn-global：全球加速；
 	// * cn-oversea：海外及港澳台。
 	Region string `json:"Region"`
 
@@ -583,63 +625,6 @@ type CreateLiveStreamRecordIndexFilesResResult struct {
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 }
 
-type CreatePullCDNSnapshotTaskBody struct {
-
-	// REQUIRED; app名字
-	App string `json:"App"`
-
-	// REQUIRED; 域名
-	Domain string `json:"Domain"`
-
-	// REQUIRED; stream名称
-	Stream string `json:"Stream"`
-
-	// 结束时间
-	EndTime *string `json:"EndTime,omitempty"`
-
-	// 开始时间
-	StartTime *string `json:"StartTime,omitempty"`
-
-	// 拉流地址
-	StreamURL *string `json:"StreamURL,omitempty"`
-
-	// 域名空间
-	Vhost *string `json:"Vhost,omitempty"`
-}
-
-type CreatePullCDNSnapshotTaskRes struct {
-
-	// REQUIRED
-	ResponseMetadata CreatePullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result CreatePullCDNSnapshotTaskResResult `json:"Result"`
-}
-
-type CreatePullCDNSnapshotTaskResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-type CreatePullCDNSnapshotTaskResResult struct {
-
-	// REQUIRED; 任务id
-	TaskID string `json:"TaskId"`
-}
-
 type CreatePullRecordTaskBody struct {
 
 	// REQUIRED; app名字
@@ -722,9 +707,11 @@ type CreatePullToPushTaskBody struct {
 	// * 1：从断流处+自然流逝时长处续播。
 	ContinueStrategy *int32 `json:"ContinueStrategy,omitempty"`
 
-	// 点播视频文件循环播放模式，当拉流来源类型为点播视频（Type 为 1）时为必选参数，参数取值及含义如下所示。
-	// * -1：无限循环，至任务结束；
-	// * 0：有限次循环，循环次数为 PlayTimes 取值为准。
+	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时为必选参数，参数取值及含义如下所示。
+	// * -1：无限次循环，至任务结束；
+	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
+	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
+	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流域名，推流地址（DstAddr）为空时必传；反之，则该参数不生效。
@@ -736,27 +723,27 @@ type CreatePullToPushTaskBody struct {
 	// 点播文件启播时间偏移值，单位为秒，仅当点播视频播放地址列表（SrcAddrS）只有一个地址，且未配置 Offsets 时生效，缺省情况下为空表示不进行偏移。
 	Offset *float32 `json:"Offset,omitempty"`
 
-	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
+	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环（CycleMode为0）时为必选参数。
+	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
-	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
+	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。拉流来源类型为点播视频时，参数生效。
 	// * 0：不开启；
 	// * 1：开启（默认值）。
 	PreDownload *int32 `json:"PreDownload,omitempty"`
 
-	// 直播源的拉流地址，拉流来源类型为直播源（Type 为 0）时，为必选参数，最大长度为 1000 个字符。
+	// 直播源的拉流地址，拉流来源类型为直播源时，为必传参数，最大长度为 1000 个字符。
 	SrcAddr *string `json:"SrcAddr,omitempty"`
 
-	// 点播视频播放地址列表，拉流来源类型为点播视频（Type 为 1）时，为必选参数，最多支持传入 30 个点播视频播放地址，每个地址最大长度为 1000 个字符。
+	// 点播视频播放地址列表，拉流来源类型为点播视频时，为必传参数，最多支持传入 30 个点播视频播放地址，每个地址最大长度为 1000 个字符。
 	SrcAddrS []*string `json:"SrcAddrS,omitempty"`
 
 	// 推流的流名称，推流地址（DstAddr）为空时必传；反之，则该参数不生效。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 拉流转推任务的名称，由 1 到 20 位中文、大小写字母和数字组成，默认为空，表示不配置任务名称。
+	// 拉流转推任务的名称，默认为空表示不配置任务名称。支持由中文、大小写字母（A - Z、a - z）和数字（0 - 9）组成，长度为 1 到 20 各字符。
 	Title *string `json:"Title,omitempty"`
 
 	// 为拉流转推视频添加的水印配置信息。
@@ -829,7 +816,7 @@ type CreateRecordPresetV2Body struct {
 	RecordPresetConfig CreateRecordPresetV2BodyRecordPresetConfig `json:"RecordPresetConfig"`
 
 	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 应用名称，取值与直播流地址的 AppName 字段取值相同，支持填写星号（*）或由 1 到 30 位数字（0 - 9）、大写小字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，默认为空。 :::tip
@@ -981,43 +968,37 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 // 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 
-	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
+	// 断流等待时长，取值范围[0,3600]
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
-	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流录制单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1，[300,86400]，-1 表示一直录制，目前只对 HLS生效.
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
+	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
-	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
-	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
-	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
+	// * -1：一直拼接；
+	// * 0：不拼接；
+	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	TOSParam *CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	VODParam *CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam `json:"VODParam,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 
-	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
-	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
+	// TOS 存储空间，一般使用 CDN 对应的 Bucket :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -1025,56 +1006,43 @@ type CreateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	// TOS 存储目录，默认为空
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
-	// 是否使用 VOD 存储，默认为 false，支持的取值及含义如下所示。
+	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
 	// * false：不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
+	// * 支持删除固定路径，如 {App}/{Stream}；
+	// * 不支持以正斜线（/）或者反斜线（\）开头；
+	// * 不支持 “//” 和 “/./” 等字符串；
+	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
+	// * 不支持 “..” 作为文件名；
+	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
-	// 为必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace 必填。
+	// :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
+	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -1082,43 +1050,37 @@ type CreateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 // 至少开启一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 
-	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
+	// 断流等待时长，取值范围[0,3600]
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
-	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对HLS生效
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
+	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
-	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
-	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
-	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
+	// * -1：一直拼接；
+	// * 0：不拼接；
+	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	TOSParam *CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	VODParam *CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam `json:"VODParam,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 
-	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
-	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
+	// TOS 存储空间，一般使用 CDN 对应的 Bucket :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -1126,56 +1088,43 @@ type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	// TOS 存储目录，默认为空
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type CreateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
-	// 是否使用 VOD 存储，默认为 false，支持的取值及含义如下所示。
+	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
 	// * false：不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
+	// * 支持删除固定路径，如 {App}/{Stream}；
+	// * 不支持以正斜线（/）或者反斜线（\）开头；
+	// * 不支持 “//” 和 “/./” 等字符串；
+	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
+	// * 不支持 “..” 作为文件名；
+	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
-	// 为必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace 必填。
+	// :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
+	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -1221,7 +1170,7 @@ type CreateRelaySourceV4Body struct {
 	// REQUIRED; 应用名称，即直播流地址的AppName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// REQUIRED; 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 回源地址列表，支持输入 RTMP、FLV、HLS 和 SRT 协议的直播推流地址。 :::tip
@@ -1286,7 +1235,7 @@ type CreateRelaySourceV4ResResult struct {
 
 type CreateSnapshotAuditPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
 	// REQUIRED; 截图间隔时间，单位为秒，取值范围为 [0.1,10]，支持保留两位小数。
@@ -1304,7 +1253,8 @@ type CreateSnapshotAuditPresetBody struct {
 	// 截图审核配置的描述。
 	Description *string `json:"Description,omitempty"`
 
-	// 推流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的推流域名。
+	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 审核标签，缺省情况下取值为 301、302、303、305 和 306，支持的取值及含义如下。
@@ -1330,7 +1280,9 @@ type CreateSnapshotAuditPresetBody struct {
 	// ToS 存储对应的 bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	// :::tip 参数 Domain
+	// 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -1459,17 +1411,17 @@ type CreateSnapshotPresetResResponseMetadataError struct {
 
 type CreateSnapshotPresetV2Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
 	// REQUIRED; 截图配置的详细参数配置。
 	SnapshotPresetConfig CreateSnapshotPresetV2BodySnapshotPresetConfig `json:"SnapshotPresetConfig"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 截图配置生效状态，默认为生效。
-	// * 1：生效；
+	// 截图配置的生效状态，取值及含义如下所示。
+	// * 1：（默认值）生效；
 	// * 0：不生效。
 	Status *int32 `json:"Status,omitempty"`
 }
@@ -1491,8 +1443,8 @@ type CreateSnapshotPresetV2BodySnapshotPresetConfig struct {
 // :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
 
-	// 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
-	// * false：不开启；
+	// 当前格式的截图是否开启，取值及含义如下所示。
+	// * false：（默认值）不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -1507,8 +1459,8 @@ type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
 // 配置且配置其中一个。 :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam struct {
 
-	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
+	// 截图是否使用 veImageX 存储，取值及含义如下所示。
+	// * false：（默认值）不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -1532,8 +1484,8 @@ type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 	// 为必填项。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
-	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
+	// 截图是否使用 TOS 存储，取值及含义如下所示。
+	// * false：（默认值）不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -1545,70 +1497,31 @@ type CreateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 	// 传且仅传一个。 :::
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
 
-	// ToS 存储对应的 bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	// ToS 存储对应的 Bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
 // CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
 // :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
-
-	// 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
-	// * false：不开启；
-	// * true：开启。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	Enable      *bool                                                              `json:"Enable,omitempty"`
 	ImageXParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
-
-	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
-	TOSParam *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam `json:"TOSParam,omitempty"`
+	TOSParam    *CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
 }
 
-// CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
-// 配置且配置其中一个。 :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
-
-	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
-	// * true：使用。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
-	// OverwriteObject 传且仅传一个。 :::
-	ExactObject *string `json:"ExactObject,omitempty"`
-
-	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
-	// 传且仅传一个。 :::
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-
-	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
-	ServiceID *string `json:"ServiceID,omitempty"`
+	ServiceID       *string `json:"ServiceID,omitempty"`
 }
 
-// CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
-// :::
 type CreateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
-
-	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
-	// 为必填项。 :::
-	Bucket *string `json:"Bucket,omitempty"`
-
-	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
-	// * true：使用。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 存储方式为实时截图时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
-	// OverwriteObject 传且仅传一个。 :::
-	ExactObject *string `json:"ExactObject,omitempty"`
-
-	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
-	// 传且仅传一个。 :::
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-
-	// ToS 存储对应的 bucket 下的存储目录，默认为空。 例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
-	StorageDir *string `json:"StorageDir,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
 }
 
 type CreateSnapshotPresetV2Res struct {
@@ -1640,7 +1553,7 @@ type CreateSnapshotPresetV2ResResponseMetadata struct {
 
 type CreateTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
 	// REQUIRED; 最大时移时长，即允许用户回看的最长时间，单位为秒，支持的取值如下所示。
@@ -1653,11 +1566,11 @@ type CreateTimeShiftPresetV3Body struct {
 	// REQUIRED; 时移拉流域名。 :::tip 录制到 TOS 时，需配置直播流对应的拉流域名。录制到 VOD 时，需配置 VOD 的空间对应的分发域名。 :::
 	PullDomain string `json:"PullDomain"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示当前应用下的所有流都进行时移。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip
-	// 流名称不为空时，表示只为此条流开启时移。通过流名称配置时移时，同一个 App 最多可指定 20 路流开启时移。 :::
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示当前应用下的所有流都进行时移。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100
+	// 个字符。 :::tip 流名称不为空时，表示只为此条流开启时移。通过流名称配置时移时，同一个 App 最多可指定 20 路流开启时移。 :::
 	Stream *string `json:"Stream,omitempty"`
 
 	// 时移类型。支持的取值如下所示。
@@ -1705,10 +1618,10 @@ type CreateTimeShiftPresetV3ResResponseMetadataError struct {
 
 type CreateTranscodePresetBody struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 转码后缀，支持由大小写字母（A - Z、a - z）、下划线（_）和短横线（-）组成，长度为 1 到 10 个字符。
+	// REQUIRED; 转码后缀，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）和短横线（-）组成，长度为 1 到 10 个字符。
 	// 转码后缀通常以流名称后缀的形式来使用，常见的标识有 _sd、_hd、_uhd，例如，当转码配置的标识为 _hd 时，拉取转码流时转码流的流名名称为 源流的流名称_hd。
 	SuffixName string `json:"SuffixName"`
 
@@ -1721,7 +1634,7 @@ type CreateTranscodePresetBody struct {
 	Vcodec string `json:"Vcodec"`
 
 	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要转码的直播流使用的域名所属的域名空间。
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要转码的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 音频编码格式，默认值为 aac，支持的取值及含义如下所示。
@@ -1758,8 +1671,7 @@ type CreateTranscodePresetBody struct {
 	// 转码输出视频中 2 个参考帧之间的最大 B 帧数量，默认值为 3，取值为 0 时表示去除 B 帧。
 	// 最大 B 帧数量的取值范围根据视频编码格式（Vcodec）的不同有所差异，取值范围如下所示。
 	// * 视频编码格式为 H.264 （Vcodec 取值为 h264）时取值范围为 [0,7]；
-	// * 视频编码格式为 H.265 （Vcodec 取值为 h265）时取值范围为 [0,3]、7、15；
-	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时取值范围为 [0,3]、7、15。
+	// * 视频编码格式为 H.265 或 H.266 （Vcodec 取值为 h265 或 h266）时取值范围为 [0,3]、7、15。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 视频帧率，单位为 fps，默认值为 25，取值为 0 时表示与源流视频帧率相同。
@@ -1872,52 +1784,9 @@ type CreateTranscodePresetResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
-type CreateVerifyContentBody struct {
-
-	// REQUIRED; 推拉流域名
-	Domain string `json:"Domain"`
-}
-
-type CreateVerifyContentRes struct {
-
-	// REQUIRED
-	ResponseMetadata CreateVerifyContentResResponseMetadata `json:"ResponseMetadata"`
-
-	// 视请求的接口而定
-	Result *CreateVerifyContentResResult `json:"Result,omitempty"`
-}
-
-type CreateVerifyContentResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-// CreateVerifyContentResResult - 视请求的接口而定
-type CreateVerifyContentResResult struct {
-
-	// 校验内容记录值
-	Content *string `json:"Content,omitempty"`
-
-	// 主机记录
-	SubDomain *string `json:"SubDomain,omitempty"`
-}
-
 type CreateWatermarkPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
 	// REQUIRED; 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
@@ -1926,7 +1795,7 @@ type CreateWatermarkPresetBody struct {
 	// REQUIRED; 垂直偏移，表示水印顶部边与转码流画面顶部边之间的距离，使用相对比率，取值范围为 [0,1]。
 	PosY float32 `json:"PosY"`
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 需要添加水印的直播画面方向，支持 2 种取值。
@@ -1934,12 +1803,12 @@ type CreateWatermarkPresetBody struct {
 	// * horizontal：横屏。 :::tip 该参数属于历史版本参数，预计将于未来移除。建议使用预览背景高度（PreviewHeight）、预览背景宽度（PreviewWidth）参数代替。 :::
 	Orientation *string `json:"Orientation,omitempty"`
 
-	// 水印图片字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:[<mediatype>];[base64],<data>。
+	// 水印图片编码字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:[<mediatype>];[base64],<data>。
 	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；
 	// * data：base64 编码的图片字符串。
 	Picture *string `json:"Picture,omitempty"`
 
-	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入，同时传入时，以水印图片字符串参数为准。
+	// 水印图片对应的 HTTP 地址。与水印图片编码字符串字段二选一传入，同时传入时，以水印图片编码字符串参数为准。
 	PictureURL *string `json:"PictureUrl,omitempty"`
 
 	// 水印图片预览背景高度，单位为 px。
@@ -2001,7 +1870,6 @@ type DeleteCallbackBody struct {
 	Domain *string `json:"Domain,omitempty"`
 
 	// 消息类型，与创建回调时传的值一致。您可以调用 DescribeCallback [https://www.volcengine.com/docs/6469/1126931] 接口查看待删除回调配置的 MessageType 取值。
-	// 缺省情况下为空，表示删除符合 Vhost、Domain、App 配置下的所有回调类型配置。包括以下类型。
 	// * push：推流开始回调；
 	// * push_end：推流结束回调；
 	// * snapshot：截图回调；
@@ -2095,7 +1963,7 @@ type DeleteCertResResponseMetadataError struct {
 
 type DeleteDomainBody struct {
 
-	// REQUIRED; 待删除域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
+	// REQUIRED; 待删除域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要待删除域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -2176,10 +2044,12 @@ type DeleteHTTPHeaderConfigResResponseMetadata struct {
 
 type DeleteIPAccessRuleBody struct {
 
-	// REQUIRED; 推/拉流域名。
+	// REQUIRED; 推流域名或拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要删除
+	// IP 访问限制的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要删除
+	// IP 访问限制的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2252,17 +2122,17 @@ type DeletePullToPushTaskResResponseMetadataError struct {
 
 type DeleteRecordPresetBody struct {
 
-	// REQUIRED; 录制配置的名称。可调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口，查询配置的名称。
+	// REQUIRED; 录制配置的名称。可调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待删除录制配置的名称。
 	Preset string `json:"Preset"`
 
 	// 应用名称，您可以调用ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]接口查看待删除的录制配置 App 取值。
 	App *string `json:"App,omitempty"`
 
 	// 流名称，取值与直播流地址的 StreamName 字段取值相应，用来指定待更新的录制配置，默认为空。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
-	// 接口查看待更新录制配置的 Stream 取值。
+	// 接口查看待删除录制配置的 Stream 取值。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 域名空间。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待更新录制配置的 Vhost 取值。
+	// 域名空间。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待删除录制配置的 Vhost 取值。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2305,17 +2175,19 @@ type DeleteRecordPresetResResponseMetadataError struct {
 
 type DeleteRefererBody struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要配置
+	// Referer 的拉流域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 应用名称
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。 :::tip
 	// * 如创建时传了 App，删除时需要传该参数；
-	// * 如创建时未传 App，删除时不传该参数。
+	// * 如创建时未传 App，删除时不传该参数。 :::
 	App *string `json:"App,omitempty"`
 
-	// 拉流域名。
+	// 拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要配置
+	// Referer 的拉流域名。 :::tip
 	// * 如创建时传了 Domain，删除时需要传该参数；
-	// * 如创建时未传 Domain，删除时不传该参数。
+	// * 如创建时未传 Domain，删除时不传该参数。 :::
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -2358,10 +2230,10 @@ type DeleteRefererResResponseMetadataError struct {
 
 type DeleteRelaySourceV3Body struct {
 
-	// REQUIRED; 直播流使用的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。所属的域名空间。
+	// REQUIRED; 直播流使用的域名所属的域名空间，您可以调用DescribeRelaySourceV3 [https://www.volcengine.com/docs/6469/1126874]接口获取待删除配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
-	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示删除当前域名空间的全局播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// 应用名称，您可以调用DescribeRelaySourceV3 [https://www.volcengine.com/docs/6469/1126874]接口获取待删除配置的 App 取值。
 	App *string `json:"App,omitempty"`
 
 	// 回源组名称。
@@ -2404,13 +2276,13 @@ type DeleteRelaySourceV3ResResponseMetadataError struct {
 
 type DeleteRelaySourceV4Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待删除固定回源配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 拉流域名，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待删除固定回源配置的 Domain 取值。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 流名称，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待删除固定回源配置的 Stream 取值。
 	Stream string `json:"Stream"`
 }
 
@@ -2453,13 +2325,14 @@ type DeleteRelaySourceV4ResResponseMetadataError struct {
 
 type DeleteSnapshotAuditPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 截图审核配置的名称。
+	// REQUIRED; 截图审核配置名称，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 PresetName
+	// 取值。
 	PresetName string `json:"PresetName"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2502,13 +2375,13 @@ type DeleteSnapshotAuditPresetResResponseMetadataError struct {
 
 type DeleteSnapshotPresetBody struct {
 
-	// REQUIRED; 截图配置名称。
+	// REQUIRED; 截图配置的名称，您可以调用 ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858] 接口获取，取值与 Name 字段取值相同。
 	Preset string `json:"Preset"`
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，您可以调用ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858]接口，获取待更新截图配置的 App 取值。
 	App *string `json:"App,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间，您可以调用 ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858] 接口，获取待删除截图配置的 Vhost 取值。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2551,7 +2424,7 @@ type DeleteSnapshotPresetResResponseMetadataError struct {
 
 type DeleteStreamQuotaConfigBody struct {
 
-	// REQUIRED; 待删除限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
+	// REQUIRED; 待删除限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 }
 
@@ -2594,10 +2467,10 @@ type DeleteStreamQuotaConfigResResponseMetadataError struct {
 
 type DeleteTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待删除时移配置的 App 取值。
+	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]接口，获取待删除时移配置的App取值。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待删除时移配置的 Vhost 取值。
+	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]接口，获取待删除时移配置的Vhost取值。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2640,13 +2513,13 @@ type DeleteTimeShiftPresetV3ResResponseMetadataError struct {
 
 type DeleteTranscodePresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查看待删除转码配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 转码配置名称。
+	// REQUIRED; 转码配置名称，您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查看待删除转码配置的 Preset 取值。
 	Preset string `json:"Preset"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查看待删除转码配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2687,10 +2560,10 @@ type DeleteTranscodePresetResResponseMetadataError struct {
 
 type DeleteWatermarkPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889]接口，查看待删除水印配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，您可以调用 ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889] 接口，查看待删除水印配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 }
 
@@ -2738,13 +2611,14 @@ type DescribeAuthBody struct {
 	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看待配置鉴权的推拉流域名。
-	// :::tip 参数 Domain 和
-	// Vhost 传且仅传一个。 :::
+	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看待配置鉴权的推拉流域名。
+	// :::tip 参数 Domain 和 Vhost 传且仅传一个。
+	// :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
-	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tip 参数
+	// Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -2794,7 +2668,7 @@ type DescribeAuthResResultAuthListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 是否开启 URL 地址鉴权。
+	// REQUIRED; 是否开启 URL 地址鉴权，取值及含义如下所示。
 	// * false：关闭；
 	// * true：开启。
 	AuthStatus bool `json:"AuthStatus"`
@@ -2807,7 +2681,7 @@ type DescribeAuthResResultAuthListItem struct {
 	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
-	// REQUIRED; 鉴权生成时长，单位为秒。
+	// REQUIRED; 鉴权生效时长，单位为秒。
 	ValidDuration int32 `json:"ValidDuration"`
 
 	// REQUIRED; 域名空间名称。
@@ -2835,21 +2709,21 @@ type DescribeAuthResResultAuthListPropertiesItemsItem struct {
 
 type DescribeCDNSnapshotHistoryBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。 :::tip
 	// * 当您查询指定截图任务详情时，DateFrom 应设置为推流开始时间之前的任意时间。
 	// * 查询的最大时间跨度为 7 天。 :::
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	DateTo string `json:"DateTo"`
 
-	// REQUIRED; 流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 查询数据的页码，默认为 1，表示查询第一页的数据。
@@ -2858,8 +2732,8 @@ type DescribeCDNSnapshotHistoryBody struct {
 	// 每页显示的数据条数，默认为 10，最大值为 1000。
 	PageSize *int32 `json:"PageSize,omitempty"`
 
-	// 截图文件保存位置，默认取值为 tos。
-	// * tos：TOS 对象存储服务；
+	// 截图文件保存位置，取值及含义如下所示。
+	// * tos：（默认值）TOS 对象存储服务；
 	// * imageX：veImageX 图片服务。
 	Type *string `json:"Type,omitempty"`
 }
@@ -2913,7 +2787,7 @@ type DescribeCDNSnapshotHistoryResResultDataItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 截图高度。
+	// REQUIRED; 截图高度，单位为 px。
 	Height int32 `json:"Height"`
 
 	// REQUIRED; 截图文件保存的路径。
@@ -2925,10 +2799,10 @@ type DescribeCDNSnapshotHistoryResResultDataItem struct {
 	// REQUIRED; 截图时间戳，精度为毫秒。
 	TimeStamp string `json:"TimeStamp"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 
-	// REQUIRED; 截图宽度。
+	// REQUIRED; 截图宽度，单位为 px。
 	Width int32 `json:"Width"`
 }
 
@@ -2964,8 +2838,9 @@ type DescribeCallbackBody struct {
 	// * audit_snapshot：截图审核回调。
 	MessageType *string `json:"MessageType,omitempty"`
 
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
-	// :::tipVhost和Domain传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tipVhost和
+	// Domain传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -3015,7 +2890,7 @@ type DescribeCallbackResResultCallbackListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 回调消息发送是否开启鉴权，默认为 false，取值及含义如下所示。
+	// REQUIRED; 回调消息发送是否开启鉴权，默认为false，取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	AuthEnable bool `json:"AuthEnable"`
@@ -3023,8 +2898,11 @@ type DescribeCallbackResResultCallbackListItem struct {
 	// REQUIRED; 回调消息发送鉴权密钥，开启回调消息鉴权时生效。
 	AuthKeyPrimary string `json:"AuthKeyPrimary"`
 
-	// REQUIRED; 创建时间。
+	// REQUIRED; 回调创建时间
 	CreateTime string `json:"CreateTime"`
+
+	// REQUIRED; 格式为rfc3339，时区为utc的回调创建时间，
+	CreateTimeUTC string `json:"CreateTimeUTC"`
 
 	// REQUIRED; 回调的消息类型，取值及含义如下所示。
 	// * push：推流开始回调；
@@ -3035,8 +2913,8 @@ type DescribeCallbackResResultCallbackListItem struct {
 	MessageType string `json:"MessageType"`
 
 	// REQUIRED; 是否开启转码流回调，默认为 0。取值及含义如下所示。
-	// * 0：false，不开启；
-	// * 1：true，开启。
+	// * 0：不开启；
+	// * 1：开启。
 	TranscodeCallback int32 `json:"TranscodeCallback"`
 
 	// REQUIRED; 域名空间。
@@ -3048,11 +2926,48 @@ type DescribeCallbackResResultCallbackListItem struct {
 
 type DescribeCallbackResResultCallbackListPropertiesItemsItem struct {
 
-	// REQUIRED; 回调类型，返回 HTTP，表示可以使用 HTTP 和 HTTPS 接收回调事件。
+	// REQUIRED; 回调类型，返回 HTTP，表示可以使用 HTTP 和 HTTPS 地址接收回调消息。
 	CallbackType string `json:"CallbackType"`
 
 	// REQUIRED; 回调消息接收地址。
 	URL string `json:"URL"`
+}
+
+type DescribeCertDRMQuery struct {
+
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App" query:"App"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost" query:"Vhost"`
+}
+
+type DescribeCertDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeCertDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DescribeCertDRMResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type DescribeCertDetailSecretV2Body struct {
@@ -3144,10 +3059,10 @@ type DescribeCertDetailSecretV2ResResultSSL struct {
 
 type DescribeClosedStreamInfoByPageQuery struct {
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
+	// REQUIRED; 查询的起始时间，RFC3339 格式的时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
 	EndTimeFrom string `json:"EndTimeFrom" query:"EndTimeFrom"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式表示的 UTC 时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
+	// REQUIRED; 查询的结束时间，RFC3339 格式表示的时间戳，精度为秒。筛选直播流结束时间符合查询条件的历史流。
 	EndTimeTo string `json:"EndTimeTo" query:"EndTimeTo"`
 
 	// REQUIRED; 查询数据的页码，取值范围为正整数。
@@ -3156,12 +3071,11 @@ type DescribeClosedStreamInfoByPageQuery struct {
 	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 直播流使用的域名，默认为空，表示查询所有当前域名空间（Vhost）下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看需要查询的历史直播流使用的域名。
+	// 直播流使用的域名，默认为空，表示查询所有当前域名空间下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的历史直播流使用的域名。
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
 	// 使用流名称进行查询的方式，默认值为 strict，支持的取值即含义如下所示。
@@ -3179,12 +3093,12 @@ type DescribeClosedStreamInfoByPageQuery struct {
 	// * relay：回源流。
 	SourceType *string `json:"SourceType,omitempty" query:"SourceType"`
 
-	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
-	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost），默认为空，表示查询所有域名空间（Vhost）下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
-	// 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的历史直播流使用的域名所属的域名空间。
+	// 域名空间，即直播流地址的域名所属的域名空间，默认为空，表示查询所有域名空间下的历史直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]
+	// 页面，查看需要查询的历史直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -3240,7 +3154,7 @@ type DescribeClosedStreamInfoByPageResResultStreamInfoListItem struct {
 	// REQUIRED; 历史直播流使用的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 直播流的结束时间。
+	// REQUIRED; 直播流的结束时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 历史直播流的来源类型，取值及含义如下所示。
@@ -3248,7 +3162,7 @@ type DescribeClosedStreamInfoByPageResResultStreamInfoListItem struct {
 	// * relay：回源流。
 	SourceType string `json:"SourceType"`
 
-	// REQUIRED; 直播流的开始时间。
+	// REQUIRED; 直播流的开始时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 历史直播流使用的流名称。
@@ -3413,8 +3327,8 @@ type DescribeDomainResResultDomainListItem struct {
 	PushDomain string `json:"PushDomain"`
 
 	// REQUIRED; 域名加速区域，包含以下类型。
-	// * cn：中国大陆；
-	// * cn-global：全球；
+	// * cn：中国内地；
+	// * cn-global：全球加速；
 	// * cn-oversea：海外及港澳台。
 	Region string `json:"Region"`
 
@@ -3436,6 +3350,61 @@ type DescribeDomainResResultDomainListItem struct {
 	Vhost string `json:"Vhost"`
 }
 
+type DescribeEncryptDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeEncryptDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeEncryptDRMResResult `json:"Result"`
+}
+
+type DescribeEncryptDRMResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeEncryptDRMResResult struct {
+
+	// REQUIRED; DRM 加密配置列表。
+	DRMItem DescribeEncryptDRMResResultDRMItem `json:"DRMItem"`
+}
+
+// DescribeEncryptDRMResResultDRMItem - DRM 加密配置列表。
+type DescribeEncryptDRMResResultDRMItem struct {
+
+	// REQUIRED; DRM 证书管理平台 API 访问密钥。
+	APIKey string `json:"APIKey"`
+
+	// REQUIRED; 申请 FairPlay 证书过程中 Apple 返回的 ASk（Application Secret Key）字符串。
+	ApplicationSecretKey string `json:"ApplicationSecretKey"`
+
+	// REQUIRED; FairPlay 证书文件的名称。
+	CertificateFileName string `json:"CertificateFileName"`
+
+	// REQUIRED; 自定义的 FairPlay 证书名称。
+	CertificateName string `json:"CertificateName"`
+
+	// REQUIRED; 申请 FairPlay 证书时创建的私钥文件密钥。
+	PrivateKey string `json:"PrivateKey"`
+
+	// REQUIRED; 申请 FairPlay 证书时创建的私钥文件名称。
+	PrivateKeyFileName string `json:"PrivateKeyFileName"`
+}
+
 type DescribeForbiddenStreamInfoByPageQuery struct {
 
 	// REQUIRED; 查询数据的页码，取值范围为正整数。
@@ -3444,12 +3413,12 @@ type DescribeForbiddenStreamInfoByPageQuery struct {
 	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询当前域名空间（Vhost）下所有的禁推流。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// 应用名称，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询当前域名空间下所有的禁推流。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 直播流使用的域名，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询所有当前域名空间（Vhost）下的禁推直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
-	// 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的禁推直播流使用的域名。
+	// 直播流使用的域名，取值与禁推直播流时设置的应用名称相同，默认为空，表示查询所有当前域名空间下的禁推直播流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
+	// 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]
+	// 页面，查看需要查询的禁推直播流使用的域名。
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
 	// 指定是否模糊匹配流名称。缺省情况为精准匹配，支持的取值及含义如下所示。
@@ -3462,11 +3431,12 @@ type DescribeForbiddenStreamInfoByPageQuery struct {
 	// * desc：从时间最近到最远排序。
 	Sort *string `json:"Sort,omitempty" query:"Sort"`
 
-	// 流名称，取值与禁推直播流时设置的流名称相同，默认查询所有流名称，由 1 到 100 位数字、字母、下划线及"-"和"."组成，如果指定 Stream，必须同时指定 App 的值。
+	// 流名称，取值与禁推直播流时设置的流名称相同，默认为空，表示查询所有流名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
-	// 域名空间，取值与禁推直播流时设置的域名空间相同，默认为空，表示查询所有域名空间（Vhost）下的禁推流。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的禁推流使用的域名所属的域名空间。
+	// 域名空间，取值与禁推直播流时设置的域名空间相同，默认为空，表示查询所有域名空间下的禁推流。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]
+	// 页面，查看需要查询的禁推流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -3519,13 +3489,13 @@ type DescribeForbiddenStreamInfoByPageResResultStreamInfoListItem struct {
 	// REQUIRED; 禁推流的应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 禁推流被禁推的开始时间。
+	// REQUIRED; 禁推流被禁推的开始时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	CreateTime string `json:"CreateTime"`
 
 	// REQUIRED; 禁推流的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 禁推流结束禁推的时间。
+	// REQUIRED; 禁推流结束禁推的时间，RFC3339 格式的 UTC 时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 当前流的禁推配置是否启用。
@@ -3547,12 +3517,11 @@ type DescribeHTTPHeaderConfigBody struct {
 	// * 1：回源请求头。
 	Phase int32 `json:"Phase"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 拉流域名。默认为空，表示查询 Vhost 下的全部拉流域名的 HTTP Header 配置。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看待查询的拉流域名。
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看待查询的拉流域名。
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -3628,10 +3597,12 @@ type DescribeHTTPHeaderConfigResResultHeaderConfigListPropertiesItemsItem struct
 
 type DescribeIPAccessRuleBody struct {
 
-	// REQUIRED; 推/拉流域名。
+	// REQUIRED; 推流域名或拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要查询
+	// IP 访问限制的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要配置
+	// IP 访问限制的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -3686,7 +3657,7 @@ type DescribeIPAccessRuleResResultAccessRuleListsItem struct {
 // DescribeIPAccessRuleResResultAccessRuleListsItemIPAccessRule - IP 访问限制规则。
 type DescribeIPAccessRuleResResultAccessRuleListsItemIPAccessRule struct {
 
-	// REQUIRED; 是否开启当前限制。
+	// REQUIRED; 是否开启当前限制，取值及含义如下所示。
 	// * true: 开启；
 	// * false: 关闭。
 	Enable bool `json:"Enable"`
@@ -3694,7 +3665,7 @@ type DescribeIPAccessRuleResResultAccessRuleListsItemIPAccessRule struct {
 	// REQUIRED; 名单中的 IP 信息。
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; IP 访问限制的类型，取值及含义如下。
+	// REQUIRED; IP 访问限制的类型，取值及含义如下所示。
 	// * allow: 白名单；
 	// * deny: 黑名单。
 	Type string `json:"Type"`
@@ -3749,235 +3720,92 @@ type DescribeIPInfoResResult struct {
 
 type DescribeIPInfoResResultListItem struct {
 
-	// REQUIRED; IP 所属地区。非归属火山引擎视频直播的 IP，返回“-”。
+	// REQUIRED; CDN 节点所属城市信息。非归属火山引擎的 CDN 节点 IP 时，返回“-”。
 	City string `json:"City"`
 
-	// REQUIRED; IP 地址
+	// REQUIRED; IP 地址。
 	IP string `json:"Ip"`
 
-	// REQUIRED; IP 所属运营商。非归属火山引擎视频直播的 IP，返回”-“。 您可以通过DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974]接口查看运营商标识符对应的运营商名称。
+	// REQUIRED; CDN 节点所属网络运营商。非归属火山引擎 CDN 节点的 IP 时，返回”-“。您可以通过DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974]接口查看运营商标识符对应的运营商名称。
 	Isp string `json:"Isp"`
 
-	// REQUIRED; 是否归属于火山引擎 CDN 节点。
+	// REQUIRED; 当前 IP 地址是否是归属于火山引擎的 CDN 节点 IP。
 	// * true：属于；
 	// * false：不属于。
 	LiveCdnIP bool `json:"LiveCdnIp"`
 
-	// REQUIRED; IP 所属国家或地区。非归属火山引擎视频直播的 IP，返回“-”。
+	// REQUIRED; CDN 节点所属国家或地区信息。非归属火山引擎的 CDN 节点 IP 时，返回“-”。
 	Location string `json:"Location"`
 
-	// REQUIRED; IP 所属省。非归属火山引擎视频直播的 IP，返回“-”。
+	// REQUIRED; CDN 节点所属省份信息。非归属火山引擎 CDN 节点的 IP 时，返回“-”。
 	Province string `json:"Province"`
 }
 
-type DescribeLiveActivityBandwidthDataBody struct {
+type DescribeLicenseDRMQuery struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
+	// REQUIRED; 应用名称，取值与直播流地址的 AppName 字段相同，由大写小字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App" query:"App"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
+	// REQUIRED; DRM 加密的类型，取值及含义如下所示。
+	// * fp：FairPlay 加密；
+	// * wv：Widevine 加密。
+	DRMType string `json:"DRMType" query:"DRMType"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
-	Aggregation *int32 `json:"Aggregation,omitempty"`
+	// REQUIRED; 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	Domain string `json:"Domain" query:"Domain"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
-	DomainList []*string `json:"DomainList,omitempty"`
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	StreamName string `json:"StreamName" query:"StreamName"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
-	ISPList []*string `json:"ISPList,omitempty"`
-
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
-	ProtocolList []*string `json:"ProtocolList,omitempty"`
-
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
-	RegionList []*DescribeLiveActivityBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
-
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
-	UserRegionList []*DescribeLiveActivityBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
+	// REQUIRED; 拉取加密流时使用的拉流域名所在的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名所属的域名空间。
+	Vhost string `json:"Vhost" query:"Vhost"`
 }
 
-type DescribeLiveActivityBandwidthDataBodyRegionListItem struct {
-
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
-	Area *string `json:"Area,omitempty"`
-
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
-	Country *string `json:"Country,omitempty"`
-
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
-	Province *string `json:"Province,omitempty"`
-}
-
-type DescribeLiveActivityBandwidthDataBodyUserRegionListItem struct {
-
-	// 大区，映射关系请参见区域映射
-	Area *string `json:"Area,omitempty"`
-
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
-	Country *string `json:"Country,omitempty"`
-
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
-	Province *string `json:"Province,omitempty"`
-}
-
-type DescribeLiveActivityBandwidthDataRes struct {
+type DescribeLicenseDRMRes struct {
 
 	// REQUIRED
-	ResponseMetadata DescribeLiveActivityBandwidthDataResResponseMetadata `json:"ResponseMetadata"`
+	ResponseMetadata DescribeLicenseDRMResResponseMetadata `json:"ResponseMetadata"`
 
-	// REQUIRED
-	Result DescribeLiveActivityBandwidthDataResResult `json:"Result"`
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
 }
 
-type DescribeLiveActivityBandwidthDataResResponseMetadata struct {
+type DescribeLicenseDRMResResponseMetadata struct {
 
-	// REQUIRED
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
+	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED
+	// REQUIRED; RequestID为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
-	// REQUIRED
+	// REQUIRED; 请求的服务，属于请求的公共参数。
 	Service string `json:"Service"`
 
-	// REQUIRED
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
-}
-
-type DescribeLiveActivityBandwidthDataResResult struct {
-
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
-	Aggregation int32 `json:"Aggregation"`
-
-	// REQUIRED; 所有时间粒度的数据。
-	BandwidthDataList []DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 当前查询条件下的峰值带宽，单位为 Mbps。
-	PeakBandwidth int32 `json:"PeakBandwidth"`
-
-	// REQUIRED; 峰值带宽的时间戳，RFC3339 格式的 UTC 时间，精度为秒。
-	PeakTimestamp string `json:"PeakTimestamp"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
-
-	// 域名列表。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	ISPList []*string `json:"ISPList,omitempty"`
-
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	ProtocolList []*string `json:"ProtocolList,omitempty"`
-
-	// CDN 节点 IP 所属区域列表。
-	RegionList []*DescribeLiveActivityBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
-
-	// 客户端 IP 所属区域列表。
-	UserRegionList []*DescribeLiveActivityBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
-}
-
-type DescribeLiveActivityBandwidthDataResResultBandwidthDataListItem struct {
-
-	// REQUIRED; 当前数据聚合时间粒度内的峰值带宽，单位为 Mbps。
-	Bandwidth int32 `json:"Bandwidth"`
-
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	TimeStamp string `json:"TimeStamp"`
-}
-
-type DescribeLiveActivityBandwidthDataResResultRegionListItem struct {
-
-	// 区域信息中的大区标识符。
-	Area *string `json:"Area,omitempty"`
-
-	// 区域信息中的国家标识符。
-	Country *string `json:"Country,omitempty"`
-
-	// 区域信息中的省份标识符。
-	Province *string `json:"Province,omitempty"`
-}
-
-type DescribeLiveActivityBandwidthDataResResultUserRegionListItem struct {
-
-	// 区域信息中的大区标识符。
-	Area *string `json:"Area,omitempty"`
-
-	// 区域信息中的国家标识符。
-	Country *string `json:"Country,omitempty"`
-
-	// 区域信息中的省份标识符。
-	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveAuditDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// 数据聚合的时间粒度，单位为秒，当前接口默认且仅支持按 86400 秒进行数据聚合。
+	// :::tip 时间粒度为 86400 秒时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前接口仅支持填写 Domain 表示按查询的域名为维度进行数据拆分。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain
+	// 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的截图审核张数用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 }
 
@@ -4019,7 +3847,6 @@ type DescribeLiveAuditDataResResponseMetadataError struct {
 type DescribeLiveAuditDataResResult struct {
 
 	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 所有时间粒度的数据。
@@ -4028,17 +3855,16 @@ type DescribeLiveAuditDataResResult struct {
 	// REQUIRED; 按维度拆分后的数据。
 	AuditDetailDataList []DescribeLiveAuditDataResResultAuditDetailDataListItem `json:"AuditDetailDataList"`
 
-	// REQUIRED; 数据拆分的维度，维度说明如下。
-	// * Domain：域名。
+	// REQUIRED; 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []string `json:"DetailField"`
 
 	// REQUIRED; 域名列表。
 	DomainList []string `json:"DomainList"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 当前查询条件下的截图审核总张数。
@@ -4050,7 +3876,7 @@ type DescribeLiveAuditDataResResultAuditDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的截图审核总张数。
 	Count int32 `json:"Count"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -4077,81 +3903,94 @@ type DescribeLiveAuditDataResResultAuditDetailDataListPropertiesItemsItem struct
 
 type DescribeLiveBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 300 (default): 5 minutes. When aggregated in 5-minute intervals, the maximum time span for a single query is 31 days,
+	// and for historical queries, the maximum time range is 366 days.
+	// * 3600: 1 hour. When aggregated in 1-hour intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
+	// * 86400: 1 day. When aggregated in 1-day intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * ISP：运营商；
-	// * Protocol：推拉流协议。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// * Protocol：推拉流协议。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain
+	// 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的带宽用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLiveBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLiveBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveBandwidthDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveBandwidthDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -4184,16 +4023,13 @@ type DescribeLiveBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveBandwidthDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询时间范围内的下行峰值带宽，单位为 Mbps。
@@ -4202,11 +4038,10 @@ type DescribeLiveBandwidthDataResResult struct {
 	// REQUIRED; 查询时间范围内的上行峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
-	// 按维度拆分的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。
-	// 优化：当配置了数据拆分的维度，且对应的维度参数传入多个值时会返回按维度拆分的数据。 :::
+	// 按维度拆分后的数据。 :::tip 当配置了数据拆分的维度时，对应的维度参数传入多个值才会返回按维度拆分的数据。 :::
 	BandwidthDetailDataList []*DescribeLiveBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
 
 	// 数据拆分的维度，维度说明如下所示。
@@ -4218,34 +4053,29 @@ type DescribeLiveBandwidthDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLiveBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
@@ -4254,7 +4084,8 @@ type DescribeLiveBandwidthDataResResultBandwidthDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的下行峰值带宽，单位为 Mbps。
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内的上行峰值带宽，单位为 Mbps。
@@ -4287,7 +4118,8 @@ type DescribeLiveBandwidthDataResResultBandwidthDetailDataListPropertiesItemsIte
 	// REQUIRED; 下行带宽，单位为 Mbps
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 上行带宽，单位为 Mbps
@@ -4296,37 +4128,37 @@ type DescribeLiveBandwidthDataResResultBandwidthDetailDataListPropertiesItemsIte
 
 type DescribeLiveBandwidthDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveBandwidthDataResResultUserRegionListItem struct {
 
-	// 大区
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 国家
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveBatchPushStreamAvgMetricsBody struct {
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。 :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
 	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
@@ -4335,10 +4167,12 @@ type DescribeLiveBatchPushStreamAvgMetricsBody struct {
 	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 应用名称，取值与直播流地址中的 AppName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30
+	// 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定直播流。 :::
 	App *string `json:"App,omitempty"`
 
-	// 流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
+	// 流名称，预置与直播流地址中的 StreamName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到
+	// 100 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定直播流。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -4380,10 +4214,10 @@ type DescribeLiveBatchPushStreamAvgMetricsResResult struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流的信息，包含域名、应用名称、流名称和监控数据。
@@ -4434,7 +4268,7 @@ type DescribeLiveBatchPushStreamAvgMetricsResResultStreamMetricListPropertiesIte
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的平均值，即所有 AudioPts 与 VideoPts 差值的平均值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间， RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间， RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的平均值，单位为毫秒。
@@ -4446,13 +4280,13 @@ type DescribeLiveBatchPushStreamAvgMetricsResResultStreamMetricListPropertiesIte
 
 type DescribeLiveBatchPushStreamMetricsBody struct {
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
@@ -4462,10 +4296,12 @@ type DescribeLiveBatchPushStreamMetricsBody struct {
 	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 应用名称，取值与直播流地址中的 AppName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30
+	// 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定直播流。 :::
 	App *string `json:"App,omitempty"`
 
-	// 流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
+	// 流名称，预置与直播流地址中的 StreamName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到
+	// 100 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定直播流。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -4507,13 +4343,13 @@ type DescribeLiveBatchPushStreamMetricsResResult struct {
 	// REQUIRED; 推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 按指定时间粒度聚合的监控数据。
+	// REQUIRED; 直推流的信息，包含域名、应用名称、流名称和监控数据。
 	StreamMetricList []DescribeLiveBatchPushStreamMetricsResResultStreamMetricListItem `json:"StreamMetricList"`
 
 	// 应用名称。
@@ -4561,7 +4397,7 @@ type DescribeLiveBatchPushStreamMetricsResResultStreamMetricListPropertiesItemsI
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
@@ -4573,13 +4409,13 @@ type DescribeLiveBatchPushStreamMetricsResResultStreamMetricListPropertiesItemsI
 
 type DescribeLiveBatchSourceStreamAvgMetricsBody struct {
 
-	// REQUIRED; 拉流域名。
+	// REQUIRED; 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看回源流使用的拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
@@ -4588,10 +4424,12 @@ type DescribeLiveBatchSourceStreamAvgMetricsBody struct {
 	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 应用名称，取值与直播流地址中的 AppName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30
+	// 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定回源流。 :::
 	App *string `json:"App,omitempty"`
 
-	// 流名称。
+	// 流名称，预置与直播流地址中的 StreamName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到
+	// 100 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定回源流。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -4632,10 +4470,10 @@ type DescribeLiveBatchSourceStreamAvgMetricsResResult struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流的信息，包含域名、应用名称、流名称和监控数据。
@@ -4686,7 +4524,7 @@ type DescribeLiveBatchSourceStreamAvgMetricsResResultStreamMetricListPropertiesI
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的平均值，即所有 AudioPts 与 VideoPts 差值的平均值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的平均值，单位为毫秒。
@@ -4698,13 +4536,13 @@ type DescribeLiveBatchSourceStreamAvgMetricsResResultStreamMetricListPropertiesI
 
 type DescribeLiveBatchSourceStreamMetricsBody struct {
 
-	// REQUIRED; 拉流域名。
+	// REQUIRED; 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看回源流使用的拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
@@ -4713,10 +4551,12 @@ type DescribeLiveBatchSourceStreamMetricsBody struct {
 	// * 60：（默认值）1 分钟。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// 应用名称，取值与直播流地址中的 AppName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30
+	// 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定回源流。 :::
 	App *string `json:"App,omitempty"`
 
-	// 流名称。
+	// 流名称，预置与直播流地址中的 StreamName 字段取值相同，查询流粒度数据时必传，且需同时传入 Stream。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到
+	// 100 个字符。 :::tip 查询流粒度的监控数据时，需同时指定 App 和 Stream 来指定回源流。 :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -4757,13 +4597,13 @@ type DescribeLiveBatchSourceStreamMetricsResResult struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流的监控数据。
+	// REQUIRED; 回源流信息，包含域名、应用名称、流名称和监控数据。
 	StreamMetricList []DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListItem `json:"StreamMetricList"`
 
 	// 应用名称。
@@ -4811,7 +4651,7 @@ type DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListPropertiesItem
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
@@ -4819,337 +4659,6 @@ type DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListPropertiesItem
 
 	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
-}
-
-type DescribeLiveBatchStreamTrafficDataBody struct {
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	// :::tip 查询历史数据的时间范围为 366 天。 :::
-	StartTime string `json:"StartTime"`
-
-	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
-	PageNum *int32 `json:"PageNum,omitempty"`
-
-	// 每页显示的数据条数，默认值为 1000，取值范围为 100～1000。
-	PageSize *int32 `json:"PageSize,omitempty"`
-
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip
-	// * 如果查询推拉流协议为 QUIC，不能同时查询其他协议。
-	// * 缺省情况下，查询的总流量数据为实际产生的上下行流量。
-	// * 如果传入单个协议进行查询，并对各协议的流量求和，结果将大于实际总流量。
-	ProtocolList []*string `json:"ProtocolList,omitempty"`
-}
-
-type DescribeLiveBatchStreamTrafficDataRes struct {
-
-	// REQUIRED
-	ResponseMetadata DescribeLiveBatchStreamTrafficDataResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result DescribeLiveBatchStreamTrafficDataResResult `json:"Result"`
-}
-
-type DescribeLiveBatchStreamTrafficDataResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-type DescribeLiveBatchStreamTrafficDataResResult struct {
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 数据分页的信息。
-	Pagination DescribeLiveBatchStreamTrafficDataResResultPagination `json:"Pagination"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 流维度的流量用量信息详情。
-	StreamInfoList []DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem `json:"StreamInfoList"`
-
-	// REQUIRED; 当前查询条件下，所有流的下行总流量，单位为 GB。
-	TotalDownTraffic float32 `json:"TotalDownTraffic"`
-
-	// REQUIRED; 当前查询条件下，所有流的上行总流量，单位为 GB。
-	TotalUpTraffic float32 `json:"TotalUpTraffic"`
-
-	// 域名列表。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	ProtocolList []*string `json:"ProtocolList,omitempty"`
-}
-
-// DescribeLiveBatchStreamTrafficDataResResultPagination - 数据分页的信息。
-type DescribeLiveBatchStreamTrafficDataResResultPagination struct {
-
-	// REQUIRED; 当前所在分页的页码。
-	PageNum int32 `json:"PageNum"`
-
-	// REQUIRED; 每页显示的数据条数。
-	PageSize int32 `json:"PageSize"`
-
-	// REQUIRED; 查询结果的数据总条数。
-	TotalCount int32 `json:"TotalCount"`
-}
-
-type DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem struct {
-
-	// REQUIRED; 应用名称。
-	App string `json:"App"`
-
-	// REQUIRED; 域名。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 当前流的下行流量，单位为 GB。
-	DownTraffic float32 `json:"DownTraffic"`
-
-	// REQUIRED; 流名称。
-	Stream string `json:"Stream"`
-
-	// REQUIRED; 当前流的上行流量，单位为 GB。
-	UpTraffic float32 `json:"UpTraffic"`
-}
-
-type DescribeLiveBatchStreamTranscodeDataBody struct {
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 查询历史数据的时间范围为 366 天。 :::
-	StartTime string `json:"StartTime"`
-
-	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
-	PageNum *int32 `json:"PageNum,omitempty"`
-
-	// 每页显示的数据条数，默认值为 1000，取值范围为 [100,1000]。
-	PageSize *int32 `json:"PageSize,omitempty"`
-}
-
-type DescribeLiveBatchStreamTranscodeDataRes struct {
-
-	// REQUIRED
-	ResponseMetadata DescribeLiveBatchStreamTranscodeDataResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result DescribeLiveBatchStreamTranscodeDataResResult `json:"Result"`
-}
-
-type DescribeLiveBatchStreamTranscodeDataResResponseMetadata struct {
-
-	// REQUIRED
-	Action string `json:"Action"`
-
-	// REQUIRED
-	Region string `json:"Region"`
-
-	// REQUIRED
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED
-	Service string `json:"Service"`
-
-	// REQUIRED
-	Version string `json:"Version"`
-}
-
-type DescribeLiveBatchStreamTranscodeDataResResult struct {
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 数据分页的信息。
-	Pagination DescribeLiveBatchStreamTranscodeDataResResultPagination `json:"Pagination"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 流维度的转码用量信息详情。
-	StreamInfoList []DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem `json:"StreamInfoList"`
-
-	// REQUIRED; 当前查询条件下，所有流的转码总时长，单位为分钟。
-	TotalDuration float32 `json:"TotalDuration"`
-
-	// 域名列表。
-	DomainList []*string `json:"DomainList,omitempty"`
-}
-
-// DescribeLiveBatchStreamTranscodeDataResResultPagination - 数据分页的信息。
-type DescribeLiveBatchStreamTranscodeDataResResultPagination struct {
-
-	// REQUIRED; 当前所在分页的页码。
-	PageNum int32 `json:"PageNum"`
-
-	// REQUIRED; 每页展示的数据条数。
-	PageSize int32 `json:"PageSize"`
-
-	// REQUIRED; 查询结果的数据总条数。
-	TotalCount int32 `json:"TotalCount"`
-}
-
-type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
-
-	// REQUIRED; 应用名称。
-	App string `json:"App"`
-
-	// REQUIRED; 当前流的转码码率。
-	Coderate int32 `json:"Coderate"`
-
-	// REQUIRED; 域名。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 当前流在查询时间内的转码总时长，单位为分钟。
-	Duration float32 `json:"Duration"`
-
-	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
-	// 0：纯音频流；
-	Resolution string `json:"Resolution"`
-
-	// REQUIRED; 流名称。
-	Stream string `json:"Stream"`
-
-	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
-	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
-	VCodec string `json:"VCodec"`
-}
-
-type DescribeLiveCustomizedLogDataBody struct {
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip
-	// * 当前仅支持查询最近 31 天的日志数据。
-	// * 日志文件按设置的拆分粒度进行拆分（以按 1 小时为拆分粒度为例），请确保查询的开始和结束时间包含所查询时段的所有粒度时间。例如，日志文件按 1 小时拆分时，如需查询某日 07:30:00-08:10:00 日志数据，日志查询开始时间应早于
-	// 07:00:00，结束时间应晚于 09:00:00。 :::
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 日志类型，请联系技术支持同学获取参数值。
-	Type string `json:"Type"`
-
-	// 域名列表，缺省情况下表示当前用户的所有推流域名和拉流域名。 :::tip 日志类型为拉流转推日志（Type=relay）时，该参数无效。 :::
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 查询数据的页码，默认为 1，表示查询第一页的数据。
-	PageNum *int32 `json:"PageNum,omitempty"`
-
-	// 每页显示的数据条数，默认为 20，最大值为 1000。
-	PageSize *int32 `json:"PageSize,omitempty"`
-}
-
-type DescribeLiveCustomizedLogDataRes struct {
-
-	// REQUIRED
-	ResponseMetadata DescribeLiveCustomizedLogDataResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result DescribeLiveCustomizedLogDataResResult `json:"Result"`
-}
-
-type DescribeLiveCustomizedLogDataResResponseMetadata struct {
-
-	// REQUIRED
-	Action string `json:"Action"`
-
-	// REQUIRED
-	Region string `json:"Region"`
-
-	// REQUIRED
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED
-	Service string `json:"Service"`
-
-	// REQUIRED
-	Version string `json:"Version"`
-}
-
-type DescribeLiveCustomizedLogDataResResult struct {
-
-	// REQUIRED; 域名列表。
-	DomainList []string `json:"DomainList"`
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 日志文件的信息列表。
-	LogInfoList []DescribeLiveCustomizedLogDataResResultLogInfoListItem `json:"LogInfoList"`
-
-	// REQUIRED; 数据分页信息。
-	Pagination DescribeLiveCustomizedLogDataResResultPagination `json:"Pagination"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 查询的日志类型。
-	Type string `json:"Type"`
-}
-
-type DescribeLiveCustomizedLogDataResResultLogInfoListItem struct {
-
-	// 日志文件的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	DateTime *string `json:"DateTime,omitempty"`
-
-	// 域名。 :::tip 查询拉流转推日志（Type=relay）时，该字段为空。 :::
-	Domain *string `json:"Domain,omitempty"`
-
-	// 日志文件下载链接。
-	DownloadURL *string `json:"DownloadUrl,omitempty"`
-
-	// 日志文件名称。
-	LogName *string `json:"LogName,omitempty"`
-
-	// 日志文件大小，单位为 byte。
-	LogSize *int32 `json:"LogSize,omitempty"`
-}
-
-// DescribeLiveCustomizedLogDataResResultPagination - 数据分页信息。
-type DescribeLiveCustomizedLogDataResResultPagination struct {
-
-	// REQUIRED; 当前所在分页的页码。
-	PageNum int32 `json:"PageNum"`
-
-	// REQUIRED; 每页显示的数据条数。
-	PageSize int32 `json:"PageSize"`
-
-	// REQUIRED; 查询结果的数据总条数。
-	TotalCount int32 `json:"TotalCount"`
 }
 
 type DescribeLiveISPDataRes struct {
@@ -5208,20 +4717,22 @@ type DescribeLiveISPDataResResultISPListItem struct {
 
 type DescribeLiveLogDataBody struct {
 
-	// REQUIRED; 仅支持查询最近31天的数据
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 仅支持查询最近31天的数据
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 日志类型，支持的类型如下所示。
-	// * pull：拉流日志
-	// * push：推流日志
-	// * source：回源日志
-	// * relay：拉流转推日志
+	// * pull：拉流日志；
+	// * push：推流日志；
+	// * source：回源日志；
+	// * relay：拉流转推日志。
 	Type string `json:"Type"`
 
-	// 域名列表，缺省情况下表示当前用户的所有推流域名和拉流域名。 :::tip 日志类型为拉流转推日志（Type=relay）时，该参数无效。 :::
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的日志文件信息。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。 :::tip
+	// 日志类型为拉流转推日志（Type 取值为 relay）时，该参数无效。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 查询数据的页码，默认为 1，表示查询第一页的数据。
@@ -5260,7 +4771,7 @@ type DescribeLiveLogDataResResponseMetadata struct {
 
 type DescribeLiveLogDataResResult struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 日志文件的信息列表。
@@ -5269,7 +4780,7 @@ type DescribeLiveLogDataResResult struct {
 	// REQUIRED; 数据分页信息。
 	Pagination DescribeLiveLogDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 日志类型，类型说明如下所示。
@@ -5285,22 +4796,22 @@ type DescribeLiveLogDataResResult struct {
 
 type DescribeLiveLogDataResResultLogInfoListItem struct {
 
-	// REQUIRED; 日志文件对应的小时区间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 日志文件对应的小时区间，RFC3339 格式的时间戳，精度为秒。
 	DateTime string `json:"DateTime"`
 
 	// REQUIRED; 日志文件下载链接。
 	DownloadURL string `json:"DownloadUrl"`
 
 	// REQUIRED; 日志文件名称，日志文件命名规则如下。
-	// * 与域名相关时：加速域名年月日时间开始时间结束文件拆分序号。例如，www.example.com_2023_08_11_000000_010000_0.gz；
-	// * 与域名无关时：年月日时间开始时间结束_文件拆分序号。例如，2023_08_11_000000_010000_0.gz；
-	// * 如果某个小时内，当前事件产生的日志大于 150 万条，则会生成为多个日志文件，用文件名最后的序号标注日志文件顺序，例如，2023_08_11_000000_010000_0.gz、2023_08_11_000000_010000_1.gz。
+	// * 与域名相关时：加速域名年月日时间开始时间结束文件拆分序号。例如，push.example.com_2023_08_11_000000_010000_0.gz；
+	// * 与域名无关时：年月日时间开始时间结束_文件拆分序号。例如，2023_08_11_000000_010000_0.gz； :::tip 如果某个小时内，当前事件产生的日志大于 150 万条，则会生成为多个日志文件，用文件名最后的序号标注日志文件顺序，例如，2023_08_11_000000_010000_0.gz、2023_08_11_000000_010000_1.gz。
+	// :::
 	LogName string `json:"LogName"`
 
 	// REQUIRED; 日志文件大小，单位为 byte。
 	LogSize int32 `json:"LogSize"`
 
-	// 域名。 :::tip 查询拉流转推日志（Type=relay）时，该字段为空。 :::
+	// 域名。 :::tip 查询拉流转推日志（Type 取值为 relay）时，该字段为空。 :::
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -5319,88 +4830,106 @@ type DescribeLiveLogDataResResultPagination struct {
 
 type DescribeLiveMetricBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用App构造请求时，需同时定义Stream参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * Protocol：推拉流协议；
 	// * ISP：运营商。
-	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的带宽监控数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLiveMetricBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称参数。 :::tip 使用Stream构造请求时，需同时定义App参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLiveMetricBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricBandwidthDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveMetricBandwidthDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5433,16 +4962,13 @@ type DescribeLiveMetricBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveMetricBandwidthDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询时间范围内的下行峰值，单位为 Mbps。
@@ -5451,10 +4977,10 @@ type DescribeLiveMetricBandwidthDataResResult struct {
 	// REQUIRED; 查询时间范围内的上行峰值，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
-	// 查询流粒度数据时的应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
 	// 按维度拆分后的数据。
@@ -5469,37 +4995,32 @@ type DescribeLiveMetricBandwidthDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveMetricBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称。
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLiveMetricBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
@@ -5508,7 +5029,8 @@ type DescribeLiveMetricBandwidthDataResResultBandwidthDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的下行峰值带宽，单位为 Mbps。
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内的上行峰值带宽，单位为 Mbps。
@@ -5541,7 +5063,8 @@ type DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListPropertiesIt
 	// REQUIRED; 下行带宽，单位为 Mbps
 	DownBandwidth float32 `json:"DownBandwidth"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 上行带宽，单位为 Mbps
@@ -5550,106 +5073,130 @@ type DescribeLiveMetricBandwidthDataResResultBandwidthDetailDataListPropertiesIt
 
 type DescribeLiveMetricBandwidthDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的身份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveMetricBandwidthDataResResultUserRegionListItem struct {
-	Area     *string `json:"Area,omitempty"`
-	Country  *string `json:"Country,omitempty"`
+
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
+
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
+
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 应用名称。
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * Protocol：推拉流协议；
 	// * ISP：运营商。
-	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的流量监控数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLiveMetricTrafficDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLiveMetricTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5682,16 +5229,13 @@ type DescribeLiveMetricTrafficDataResResponseMetadata struct {
 
 type DescribeLiveMetricTrafficDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 查询时间范围内的下行总流量，单位为 GB。
@@ -5703,7 +5247,7 @@ type DescribeLiveMetricTrafficDataResResult struct {
 	// REQUIRED; 所有时间粒度的数据。
 	TrafficDataList []DescribeLiveMetricTrafficDataResResultTrafficDataListItem `json:"TrafficDataList"`
 
-	// 应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
 	// 数据拆分的维度，维度说明如下所示。
@@ -5715,52 +5259,47 @@ type DescribeLiveMetricTrafficDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveMetricTrafficDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 流名称。
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
 
-	// 按维度拆分后的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分后的数据。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按此维度进行拆分的数据。 :::
 	TrafficDetailDataList []*DescribeLiveMetricTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLiveMetricTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveMetricTrafficDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5769,7 +5308,8 @@ type DescribeLiveMetricTrafficDataResResultTrafficDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内产生的总下行流量，单位 GB。
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内产生的总上行流量，单位 GB。
@@ -5802,7 +5342,8 @@ type DescribeLiveMetricTrafficDataResResultTrafficDetailDataListPropertiesItemsI
 	// REQUIRED; 下行流量，单位 GB
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 上行流量，单位 GB
@@ -5810,64 +5351,85 @@ type DescribeLiveMetricTrafficDataResResultTrafficDetailDataListPropertiesItemsI
 }
 
 type DescribeLiveMetricTrafficDataResResultUserRegionListItem struct {
-	Area     *string `json:"Area,omitempty"`
-	Country  *string `json:"Country,omitempty"`
+
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
+
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
+
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。
+	// 数据聚合的时间粒度，单位为秒，当前接口默认且仅支持按 300 秒进行数据拆分。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 域名列表，缺省情况下表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的 95 峰值带宽用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// Push-pull streaming protocol. By default, all protocol types are indicated. Supported protocols are as follows.
+	// * HTTP-FLV: A push-pull streaming protocol based on the HTTP protocol, using the FLV format for video transmission.
+	// * HTTP-HLS: A push-pull streaming protocol based on the HTTP protocol, using the TS format for video transmission.
+	// * RTMP: Real-Time Messaging Protocol for real-time message transmission.
+	// * RTM: Real-Time Media protocol for ultra-low latency live streaming.
+	// * SRT: Secure Reliable Transport protocol for secure and reliable streaming.
+	// * QUIC: Quick UDP Internet Connections, a new low-latency internet transmission protocol based on UDP.
+	// * CMAF: Common Media Application Format, a versatile streaming protocol.
+	// :::tip If querying the QUIC protocol, other protocols cannot be queried simultaneously. :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLiveP95PeakBandwidthDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLiveP95PeakBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -5900,126 +5462,155 @@ type DescribeLiveP95PeakBandwidthDataResResponseMetadata struct {
 
 type DescribeLiveP95PeakBandwidthDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 时间范围内的上下行 95 峰值带宽总和。 :::tip 如果请求时，Regionlist中传入多个 region，则返回这些 region 的上下行带宽 95 峰值总和。 :::
 	P95PeakBandwidth float32 `json:"P95PeakBandwidth"`
 
-	// REQUIRED; 95 峰值带宽的时间戳，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 95 峰值带宽的时间戳，RFC3339 格式的时间戳，精度为秒。
 	P95PeakTimestamp string `json:"P95PeakTimestamp"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// Push-pull streaming protocol. By default, all protocol types are indicated. Supported protocols are as follows.
+	// * HTTP-FLV: A push-pull streaming protocol based on the HTTP protocol, using the FLV format for video transmission.
+	// * HTTP-HLS: A push-pull streaming protocol based on the HTTP protocol, using the TS format for video transmission.
+	// * RTMP: Real-Time Messaging Protocol for real-time message transmission.
+	// * RTM: Real-Time Media protocol for ultra-low latency live streaming.
+	// * SRT: Secure Reliable Transport protocol for secure and reliable streaming.
+	// * QUIC: Quick UDP Internet Connections, a new low-latency internet transmission protocol based on UDP.
+	// * CMAF: Common Media Application Format, a versatile streaming protocol.
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveP95PeakBandwidthDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLiveP95PeakBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveP95PeakBandwidthDataResResultUserRegionListItem struct {
-	Area     *string `json:"Area,omitempty"`
-	Country  *string `json:"Country,omitempty"`
+
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
+
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
+
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：（默认值）1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * ISP：运营商。
-	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况下表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空时表示查询所有域名下产生的请求状态码占比数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询请求状态码占比数据的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLivePlayStatusCodeDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// 请求类型，取值及含义如下所示。
+	// * Access：（默认值）推流请求和拉流请求；
+	// * Source：回源请求。
+	Type *string `json:"Type,omitempty"`
+
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLivePlayStatusCodeDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6052,16 +5643,13 @@ type DescribeLivePlayStatusCodeDataResResponseMetadata struct {
 
 type DescribeLivePlayStatusCodeDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
@@ -6069,6 +5657,11 @@ type DescribeLivePlayStatusCodeDataResResult struct {
 
 	// REQUIRED; 当前查询条件下的状态码占比数据。
 	StatusSummaryDataList []DescribeLivePlayStatusCodeDataResResultStatusSummaryDataListItem `json:"StatusSummaryDataList"`
+
+	// REQUIRED; 请求类型，取值及含义如下所示。
+	// * Access：推流请求和拉流请求；
+	// * Source：回源请求。
+	Type string `json:"Type"`
 
 	// 数据拆分的维度，维度说明如下所示。
 	// * Domain：域名；
@@ -6078,28 +5671,41 @@ type DescribeLivePlayStatusCodeDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 运营商。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// CDN 节点 IP 所属区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLivePlayStatusCodeDataResResultRegionListItem `json:"RegionList,omitempty"`
 
 	// 按维度拆分后的数据。
 	StatusDetailDataList []*DescribeLivePlayStatusCodeDataResResultStatusDetailDataListItem `json:"StatusDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLivePlayStatusCodeDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLivePlayStatusCodeDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6108,7 +5714,8 @@ type DescribeLivePlayStatusCodeDataResResultStatusDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的状态码详细数据。
 	StatusSummaryDataList []DescribeLivePlayStatusCodeDataResResultStatusDataListPropertiesItemsItem `json:"StatusSummaryDataList"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -6126,7 +5733,7 @@ type DescribeLivePlayStatusCodeDataResResultStatusDataListPropertiesItemsItem st
 
 type DescribeLivePlayStatusCodeDataResResultStatusDetailDataListItem struct {
 
-	// 域名。
+	// 拉流域名。
 	Domain *string `json:"Domain,omitempty"`
 
 	// 运营商。
@@ -6141,7 +5748,8 @@ type DescribeLivePlayStatusCodeDataResResultStatusDetailDataListPropertiesItemsI
 	// REQUIRED; 按状态码区分的数据列表。
 	StatusSummaryDataList []DescribeLivePlayStatusCodeDataResResultStatusDetailDataListPropertiesItemsStatusSummaryDataListItem `json:"StatusSummaryDataList"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -6170,37 +5778,39 @@ type DescribeLivePlayStatusCodeDataResResultStatusSummaryDataListItem struct {
 }
 
 type DescribeLivePlayStatusCodeDataResResultUserRegionListItem struct {
-	Area     *string `json:"Area,omitempty"`
-	Country  *string `json:"Country,omitempty"`
+
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
+
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
+
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLivePullToPushBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 300 (default): 5 minutes. When aggregated in 5-minute intervals, the maximum time span for a single query is 31 days,
+	// and for historical queries, the maximum time range is 366 days.
+	// * 3600: 1 hour. When aggregated in 1-hour intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
+	// * 86400: 1 day. When aggregated in 1-day intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
-	// * DstAddrType：推流地址类型。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// * DstAddrType：推流地址类型。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按
+	// Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
-
-	// 推流域名列表，缺省情况表示当前用户的所有推拉流域名。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 推流地址类型，可选值如下所示。
-	// * Live：非第三方；
-	// * Third：（默认值）第三方。
-	DstAddrTypeList []*string `json:"DstAddrTypeList,omitempty"`
 }
 
 type DescribeLivePullToPushBandwidthDataRes struct {
@@ -6240,25 +5850,22 @@ type DescribeLivePullToPushBandwidthDataResResponseMetadataError struct {
 
 type DescribeLivePullToPushBandwidthDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLivePullToPushBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 当前查询条件下的拉流转推峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
-	// 按维度拆分的数据。
+	// 按维度拆分后的数据。 :::tip 当配置了数据拆分的维度时，对应的维度参数传入多个值才会返回按维度拆分的数据。 :::
 	BandwidthDetailDataList []*DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
 
 	// 数据拆分的维度，维度说明如下。
@@ -6268,16 +5875,12 @@ type DescribeLivePullToPushBandwidthDataResResult struct {
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 推流地址类型。
-	// * Live：非第三方；
-	// * Third：第三方。
-	DstAddrTypeList []*string `json:"DstAddrTypeList,omitempty"`
 }
 
 type DescribeLivePullToPushBandwidthDataResResultBandwidthDataListItem struct {
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内的拉流转推峰值带宽，单位为 Mbps。
@@ -6289,21 +5892,20 @@ type DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListItem str
 	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	BandwidthDataList []DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 按维度进行数据拆分后，当前维度下的拉流转推峰值带宽，单位为 Mbps。
+	// REQUIRED; 查询时间范围内的维度下的拉流转推峰值带宽，单位为 Mbps。
 	PeakUpBandwidth float32 `json:"PeakUpBandwidth"`
 
 	// 按域名维度进行数据拆分时的域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
 	// 按推流地址类型维度进行数据拆分时的地址类型信息。
-	// * Live：非第三方；
-	// * Third：第三方。
 	DstAddrType *string `json:"DstAddrType,omitempty"`
 }
 
 type DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 转推带宽，单位为 Mbps
@@ -6312,10 +5914,10 @@ type DescribeLivePullToPushBandwidthDataResResultBandwidthDetailDataListProperti
 
 type DescribeLivePullToPushDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
 	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
@@ -6324,17 +5926,20 @@ type DescribeLivePullToPushDataBody struct {
 	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需同时定义 Stream 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前接口仅支持填写 Domain 表示按查询的域名为维度进行数据拆分。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain
+	// 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
-	DomainList []*string `json:"DomainList,omitempty"`
-
-	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
+	// The Stream Name must correspond to the value of the StreamName field in the live stream URL. It can include uppercase and
+	// lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 100 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters must be provided. :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -6375,29 +5980,25 @@ type DescribeLivePullToPushDataResResponseMetadataError struct {
 
 type DescribeLivePullToPushDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	PullToPushDataList []DescribeLivePullToPushDataResResultPullToPushDataListItem `json:"PullToPushDataList"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 当前查询条件下的拉流转推总时长，单位为分钟。
 	TotalDuration float32 `json:"TotalDuration"`
 
-	// 应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，维度说明如下。
-	// * Domain：域名。
+	// 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
@@ -6406,13 +6007,14 @@ type DescribeLivePullToPushDataResResult struct {
 	// 按维度拆分后的数据。
 	PullToPushDetailDataList []*DescribeLivePullToPushDataResResultPullToPushDetailDataListItem `json:"PullToPushDetailDataList,omitempty"`
 
-	// 流名称。
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLivePullToPushDataResResultPullToPushDataListItem struct {
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内的拉流转推总时长，单位为分钟。
@@ -6433,7 +6035,8 @@ type DescribeLivePullToPushDataResResultPullToPushDetailDataListItem struct {
 
 type DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 该时间片内的拉流转推总时长，单位分钟，保留小数点后 2 位
@@ -6442,56 +6045,66 @@ type DescribeLivePullToPushDataResResultPullToPushDetailDataListPropertiesItemsI
 
 type DescribeLivePushStreamCountDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of aggregation, measured in seconds, supports the following time intervals:
+	// * 60: 1 minute. When aggregated at a 1-minute interval, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days.
+	// * 300: (default) 5 minutes. When aggregated at a 5-minute interval, the maximum time span for a single query is 31 days,
+	// and the historical query time range is 366 days.
+	// * 3600: 1 hour. When aggregated at a 1-hour interval, the maximum time span for a single query is 93 days, and the historical
+	// query time range is 366 days.
+	// * 86400: 1 day. When aggregated at a 1-day interval, the maximum time span for a single query is 93 days, and the historical
+	// query time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。
-	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前接口仅支持填写 Domain 表示按查询的域名为维度进行数据拆分。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain
+	// 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推流域名和拉流域名。
+	// 推流域名列表，默认为空，表示查询所有全部域名下的推流峰值流数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的推流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// List of regions to which client IPs belong, by default indicating all regions.
 	UserRegionList []*DescribeLivePushStreamCountDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLivePushStreamCountDataBodyUserRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6524,51 +6137,47 @@ type DescribeLivePushStreamCountDataResResponseMetadata struct {
 
 type DescribeLivePushStreamCountDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询时间范围内的推流数量最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	TotalStreamDataList []DescribeLivePushStreamCountDataResResultTotalStreamDataListItem `json:"TotalStreamDataList"`
 
-	// 数据拆分的维度，维度说明如下所示。
-	// * Domain：域名。
+	// 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表。
+	// 推流域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
 	// 按维度拆分后的数据。
 	StreamDetailDataList []*DescribeLivePushStreamCountDataResResultStreamDetailDataListItem `json:"StreamDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLivePushStreamCountDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
@@ -6586,7 +6195,8 @@ type DescribeLivePushStreamCountDataResResultStreamDetailDataListPropertiesItems
 	// REQUIRED
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -6595,19 +6205,20 @@ type DescribeLivePushStreamCountDataResResultTotalStreamDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的推流数量最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLivePushStreamCountDataResResultUserRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -6726,20 +6337,23 @@ type DescribeLivePushStreamInfoDataResResultPushStreamInfoDataListItem struct {
 
 type DescribeLivePushStreamMetricsBody struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; Application name, which corresponds to the value of theAppNamefield in the live stream address. It can consist
+	// of uppercase and lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens
+	// (-), and periods (.), with a length of 1 to 30 characters.
 	App string `json:"App"`
 
-	// REQUIRED; 推流域名。
+	// REQUIRED; 推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的推流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; Stream name, which corresponds to the value of the StreamName field in the live stream address. It can consist
+	// of uppercase and lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens
+	// (-), and periods (.), with a length of 1 to 100 characters.
 	Stream string `json:"Stream"`
 
 	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
@@ -6785,28 +6399,26 @@ type DescribeLivePushStreamMetricsResResponseMetadataError struct {
 
 type DescribeLivePushStreamMetricsResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 5：5 秒；
-	// * 30：30 秒。
-	Aggregation int32 `json:"Aggregation"`
+	// Data granularity, measured in seconds.
+	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// REQUIRED; 应用名称。
-	App string `json:"App"`
+	// 应用名称。
+	App *string `json:"App,omitempty"`
 
-	// REQUIRED; 推流域名。
-	Domain string `json:"Domain"`
+	// 推流域名。
+	Domain *string `json:"Domain,omitempty"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
+	// The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	EndTime *string `json:"EndTime,omitempty"`
 
-	// REQUIRED; 所有时间粒度的数据。
-	MetricList []DescribeLivePushStreamMetricsResResultMetricListItem `json:"MetricList"`
+	// 所有时间粒度的数据。
+	MetricList []*DescribeLivePushStreamMetricsResResultMetricListItem `json:"MetricList,omitempty"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
+	// The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	StartTime *string `json:"StartTime,omitempty"`
 
-	// REQUIRED; 流名称。
-	Stream string `json:"Stream"`
+	// 流名称。
+	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLivePushStreamMetricsResResultMetricListItem struct {
@@ -6832,7 +6444,8 @@ type DescribeLivePushStreamMetricsResResultMetricListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
@@ -6844,29 +6457,39 @@ type DescribeLivePushStreamMetricsResResultMetricListItem struct {
 
 type DescribeLiveRecordDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 300 (default): 5 minutes. When aggregated in 5-minute intervals, the maximum time span for a single query is 31 days,
+	// and for historical queries, the maximum time range is 366 days.
+	// * 3600: 1 hour. When aggregated in 1-hour intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
+	// * 86400: 1 day. When aggregated in 1-day intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需同时定义 Stream 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前接口仅支持填写 Domain 表示按查询的域名为维度进行数据拆分。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain
+	// 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的录制用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 查询流粒度数据时的流名称， :::tip 使用 Stream 构造请求时，需同时定义 App 参数，不可缺省。 :::
+	// The Stream Name must correspond to the value of the StreamName field in the live stream URL. It can include uppercase and
+	// lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 100 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters must be provided. :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -6907,13 +6530,10 @@ type DescribeLiveRecordDataResResponseMetadataError struct {
 
 type DescribeLiveRecordDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
@@ -6922,14 +6542,13 @@ type DescribeLiveRecordDataResResult struct {
 	// REQUIRED; 当前查询条件下的录制并发路数最大值。
 	RecordPeak int32 `json:"RecordPeak"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
-	// 查询流粒度数据时的应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，维度说明如下。
-	// * Domain：域名。
+	// 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
@@ -6938,13 +6557,14 @@ type DescribeLiveRecordDataResResult struct {
 	// 按维度拆分后的数据。
 	RecordDetailDataList []*DescribeLiveRecordDataResResultRecordDetailDataListItem `json:"RecordDetailDataList,omitempty"`
 
-	// 查询流粒度数据时的流名称。
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveRecordDataResResultRecordDataListItem struct {
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内录制并发路数最大值。
@@ -6965,7 +6585,8 @@ type DescribeLiveRecordDataResResultRecordDetailDataListItem struct {
 
 type DescribeLiveRecordDataResResultRecordDetailDataListPropertiesItemsItem struct {
 
-	// REQUIRED; 时间
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 录制峰值
@@ -7040,10 +6661,10 @@ type DescribeLiveRegionDataResResultAreasPropertiesItemsProvincesItem struct {
 
 type DescribeLiveSnapshotDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
 	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
@@ -7052,17 +6673,24 @@ type DescribeLiveSnapshotDataBody struct {
 	// * 86400：（默认值）1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Stream 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前接口仅支持填写 Domain 表示按查询的域名为维度进行数据拆分。
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的截图用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 App 参数，不可缺省。 :::
+	// The Stream Name must correspond to the value of the StreamName field in the live stream URL. It can include uppercase and
+	// lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 100 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters must be provided. :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -7103,29 +6731,25 @@ type DescribeLiveSnapshotDataResResponseMetadataError struct {
 
 type DescribeLiveSnapshotDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	SnapshotDataList []DescribeLiveSnapshotDataResResultSnapshotDataListItem `json:"SnapshotDataList"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 当前查询条件下的截图总张数。
 	Total int32 `json:"Total"`
 
-	// 查询流粒度数据时的应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，维度说明如下。
-	// * Domain：域名。
+	// 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
@@ -7134,13 +6758,14 @@ type DescribeLiveSnapshotDataResResult struct {
 	// 按维度拆分后的数据。
 	SnapshotDetailData []*DescribeLiveSnapshotDataResResultSnapshotDetailDataItem `json:"SnapshotDetailData,omitempty"`
 
-	// 查询流粒度数据时的流名称。
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveSnapshotDataResResultSnapshotDataListItem struct {
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内的截图总张数。
@@ -7161,7 +6786,8 @@ type DescribeLiveSnapshotDataResResultSnapshotDetailDataItem struct {
 
 type DescribeLiveSnapshotDataResResultSnapshotDetailDataPropertiesItemsItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s；例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 截图总张数
@@ -7170,65 +6796,86 @@ type DescribeLiveSnapshotDataResResultSnapshotDetailDataPropertiesItemsItem stru
 
 type DescribeLiveSourceBandwidthDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying data at the stream granularity, you must specify the Domain, App, and Stream parameters simultaneously.
+	// :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * ISP：运营商。
-	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名，支持填写拉流域名。 :::tip 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。 :::
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tip 查询流粒度的回源带宽监控数据时，需同时指定 Domain 、App
+	// 和 Stream 来指定回源流。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 拉流域名列表，缺省情况表示当前用户的所有推拉流域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
+	// 拉流域名列表，默认为空，表示查询所有域名的回源带宽监控数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tipDomainList
+	// 和 Domain 传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。 :::
+	// The Stream Name is required when querying stream granularity data. It supports uppercase and lowercase letters (A-Z, a-z),
+	// underscores (_), hyphens (-), and periods (.), with a length of 1 to 100
+	// characters.
+	// :::tip When querying stream granularity data, you must specify the Domain, App, and Stream parameters simultaneously. :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// List of regions to which client IPs belong, by default indicating all regions.
 	UserRegionList []*DescribeLiveSourceBandwidthDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceBandwidthDataBodyUserRegionListItem struct {
 
-	// 区域信息的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入 Area 和 Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入 Area、Country 和 Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -7269,61 +6916,59 @@ type DescribeLiveSourceBandwidthDataResResponseMetadataError struct {
 
 type DescribeLiveSourceBandwidthDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时。
-	Aggregation int32 `json:"Aggregation"`
-
-	// REQUIRED; 查询流粒度数据时的应用名称。
-	App string `json:"App"`
-
 	// REQUIRED; 所有时间粒度的数据。
 	BandwidthDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDataListItem `json:"BandwidthDataList"`
 
-	// REQUIRED; 按维度拆分后的数据。
-	BandwidthDetailDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList"`
+	// Data granularity, measured in seconds.
+	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// REQUIRED; 数据拆分的维度，维度说明如下所示。
+	// The application name when querying stream granularity data.
+	App *string `json:"App,omitempty"`
+
+	// 按维度拆分后的数据。
+	BandwidthDetailDataList []*DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListItem `json:"BandwidthDetailDataList,omitempty"`
+
+	// 数据拆分的维度，维度说明如下所示。
 	// * Domain：域名；
 	// * ISP：运营商。
-	DetailField []string `json:"DetailField"`
+	DetailField []*string `json:"DetailField,omitempty"`
 
-	// REQUIRED; 查询流粒度数据时的域名。
-	Domain string `json:"Domain"`
+	// 查询流粒度数据时的域名。
+	Domain *string `json:"Domain,omitempty"`
 
-	// REQUIRED; 域名列表。
-	DomainList []string `json:"DomainList"`
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
+	// The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	EndTime *string `json:"EndTime,omitempty"`
 
-	// REQUIRED; 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	ISPList []string `json:"ISPList"`
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	ISPList []*string `json:"ISPList,omitempty"`
 
-	// REQUIRED; 查询时间范围内的回源峰值带宽，单位为 Mbps。
-	PeakBandwidth float32 `json:"PeakBandwidth"`
+	// 查询时间范围内的回源峰值带宽，单位为 Mbps。
+	PeakBandwidth *float32 `json:"PeakBandwidth,omitempty"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
+	// The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	StartTime *string `json:"StartTime,omitempty"`
 
-	// REQUIRED; 查询流粒度数据时的流名称。
-	Stream string `json:"Stream"`
+	// The stream name when querying stream granularity data.
+	Stream *string `json:"Stream,omitempty"`
 
-	// REQUIRED; 客户端 IP 所属区域列表。
-	UserRegionList []DescribeLiveSourceBandwidthDataResResultUserRegionListItem `json:"UserRegionList"`
+	// List of regions to which client IPs belong.
+	UserRegionList []*DescribeLiveSourceBandwidthDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultBandwidthDataListItem struct {
@@ -7331,66 +6976,70 @@ type DescribeLiveSourceBandwidthDataResResultBandwidthDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的回源峰值带宽，单位为 Mbps。
 	Bandwidth float32 `json:"Bandwidth"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListItem struct {
 
-	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
-	BandwidthDataList []DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList"`
+	// 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
+	BandwidthDataList []*DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem `json:"BandwidthDataList,omitempty"`
 
-	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
-	Domain string `json:"Domain"`
+	// 按域名维度进行数据拆分时的域名信息。
+	Domain *string `json:"Domain,omitempty"`
 
-	// REQUIRED; 按运营商维度进行数据拆分时的运营商信息。
-	ISP string `json:"ISP"`
+	// 按运营商维度进行数据拆分时的运营商信息。
+	ISP *string `json:"ISP,omitempty"`
 
-	// REQUIRED; 按维度进行数据拆分后，当前维度的回源峰值带宽，单位为 Mbps。
-	PeakBandwidth float32 `json:"PeakBandwidth"`
+	// 按维度进行数据拆分后，当前维度的回源峰值带宽，单位为 Mbps。
+	PeakBandwidth *float32 `json:"PeakBandwidth,omitempty"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultBandwidthDetailDataListPropertiesItemsItem struct {
 
-	// REQUIRED; 时间片内回源带宽峰值，单位 Mbps
-	Bandwidth float32 `json:"Bandwidth"`
+	// 时间片内回源带宽峰值，单位 Mbps
+	Bandwidth *float32 `json:"Bandwidth,omitempty"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
-	TimeStamp string `json:"TimeStamp"`
+	// The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC time with
+	// second precision.
+	TimeStamp *string `json:"TimeStamp,omitempty"`
 }
 
 type DescribeLiveSourceBandwidthDataResResultUserRegionListItem struct {
 
-	// REQUIRED; 区域信息中的大区标识符。
-	Area string `json:"Area"`
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
 
-	// REQUIRED; 区域信息中的国际标识符。
-	Country string `json:"Country"`
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
 
-	// REQUIRED; 区域信息中的省份标识符。
-	Province string `json:"Province"`
+	// The province identifier in the regional information.
+	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveSourceStreamMetricsBody struct {
 
-	// REQUIRED; 应用名称。
+	// REQUIRED; Application name, which corresponds to the value of theAppNamefield in the live stream address. It can consist
+	// of uppercase and lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens
+	// (-), and periods (.), with a length of 1 to 30 characters.
 	App string `json:"App"`
 
-	// REQUIRED; 拉流域名。
+	// REQUIRED; 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看回源流使用的拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	// :::tip 单次查询最大时间跨度为 1 天，历史查询最大时间范围为 366 天。 :::
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// REQUIRED; 流名称。
+	// REQUIRED; Stream name, which corresponds to the value of the StreamName field in the live stream address. It can consist
+	// of uppercase and lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens
+	// (-), and periods (.), with a length of 1 to 100 characters.
 	Stream string `json:"Stream"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 30：（默认值）30 秒。
+	// 数据聚合的时间粒度，单位为秒，当前接口默认且仅支持按 30 秒进行数据聚合。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 }
 
@@ -7423,8 +7072,7 @@ type DescribeLiveSourceStreamMetricsResResponseMetadata struct {
 
 type DescribeLiveSourceStreamMetricsResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 30：30 秒。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 应用名称。
@@ -7433,13 +7081,13 @@ type DescribeLiveSourceStreamMetricsResResult struct {
 	// REQUIRED; 拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	MetricList []DescribeLiveSourceStreamMetricsResResultMetricListItem `json:"MetricList"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 流名称。
@@ -7469,7 +7117,8 @@ type DescribeLiveSourceStreamMetricsResResultMetricListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内，所有音视频帧显示时间戳差值的最大值，即所有 AudioPts 与 VideoPts 差值的最大值，单位为毫秒。
 	PtsDelta int32 `json:"PtsDelta"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内，相邻视频帧显示时间戳差值的最大值，单位为毫秒。
@@ -7481,65 +7130,85 @@ type DescribeLiveSourceStreamMetricsResResultMetricListItem struct {
 
 type DescribeLiveSourceTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用 App 构造请求时，需要同时定义 Domain 和 Stream 参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying data at the stream granularity, you must specify the Domain, App, and Stream parameters simultaneously.
+	// :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * ISP：运营商。
-	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名，支持拉流域名。 :::tip 使用 Domain 构造请求时，需要同时定义 App 和 Stream 参数，不可缺省。 :::
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tip 查询流粒度的回源流量监控数据时，需同时指定 Domain 、App
+	// 和 Stream 来指定回源流。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 拉流域名列表，缺省情况表示当前用户的所有推拉流域名。 :::tipDomainList 和 Domain 传且仅传一个。 :::
+	// 拉流域名列表，默认为空，表示查询所有域名的回源流量监控数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tipDomainList 和 Domain 传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 查询流粒度数据时的流名称。 :::tip 使用 Stream 构造请求时，需要同时定义 Domain 和 App 参数，不可缺省。 :::
+	// The Stream Name is required when querying stream granularity data. It supports uppercase and lowercase letters (A-Z, a-z),
+	// underscores (_), hyphens (-), and periods (.), with a length of 1 to 100
+	// characters.
+	// :::tip When querying stream granularity data, you must specify the Domain, App, and Stream parameters simultaneously. :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。
+	// List of regions to which client IPs belong, by default indicating all regions.
 	UserRegionList []*DescribeLiveSourceTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceTrafficDataBodyUserRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -7580,66 +7249,65 @@ type DescribeLiveSourceTrafficDataResResponseMetadataError struct {
 
 type DescribeLiveSourceTrafficDataResResult struct {
 
-	// REQUIRED; 聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时。
-	Aggregation int32 `json:"Aggregation"`
-
-	// REQUIRED; 查询流粒度数据时的应用名称。
-	App string `json:"App"`
-
-	// REQUIRED; 数据拆分的维度，维度说明如下所示。
-	// * Domain：域名；
-	// * ISP：运营商。
-	DetailField []string `json:"DetailField"`
-
-	// REQUIRED; 查询流粒度数据时的域名。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 域名列表。
-	DomainList []string `json:"DomainList"`
-
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	ISPList []string `json:"ISPList"`
-
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 查询流粒度数据时的流名称。
-	Stream string `json:"Stream"`
-
 	// REQUIRED; 查询时间范围内的回源总流量，单位为 GB。
 	TotalTraffic float32 `json:"TotalTraffic"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	TrafficDataList []DescribeLiveSourceTrafficDataResResultTrafficDataListItem `json:"TrafficDataList"`
 
-	// REQUIRED; 按维度拆分后的数据。
-	TrafficDetailDataList []DescribeLiveSourceTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList"`
+	// Data granularity, measured in seconds.
+	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// REQUIRED; 客户端 IP 所属区域列表。
-	UserRegionList []DescribeLiveSourceTrafficDataResResultUserRegionListItem `json:"UserRegionList"`
+	// The application name when querying stream granularity data.
+	App *string `json:"App,omitempty"`
+
+	// 数据拆分的维度，维度说明如下所示。
+	// * Domain：域名；
+	// * ISP：运营商。
+	DetailField []*string `json:"DetailField,omitempty"`
+
+	// 查询流粒度数据时的域名。
+	Domain *string `json:"Domain,omitempty"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	EndTime *string `json:"EndTime,omitempty"`
+
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
+	StartTime *string `json:"StartTime,omitempty"`
+
+	// The stream name when querying stream granularity data.
+	Stream *string `json:"Stream,omitempty"`
+
+	// 按维度拆分后的数据。
+	TrafficDetailDataList []*DescribeLiveSourceTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList,omitempty"`
+
+	// List of regions to which client IPs belong.
+	UserRegionList []*DescribeLiveSourceTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveSourceTrafficDataResResultTrafficDataListItem struct {
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内产生的回源流量，单位 GB。
@@ -7648,22 +7316,23 @@ type DescribeLiveSourceTrafficDataResResultTrafficDataListItem struct {
 
 type DescribeLiveSourceTrafficDataResResultTrafficDetailDataListItem struct {
 
-	// REQUIRED; 按域名维度进行数据拆分时的域名信息。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 按运营商维度进行数据拆分时的运营商信息。
-	ISP string `json:"ISP"`
-
-	// REQUIRED; 按维度进行数据拆分后，当前维度的回源中总流量，单位为 GB。
+	// REQUIRED; 按维度进行数据拆分后，当前维度的回源总流量，单位为 GB。
 	TotalTraffic float32 `json:"TotalTraffic"`
 
 	// REQUIRED; 按维度进行数据拆分后，当前维度下所有时间粒度的数据。
 	TrafficDataList []DescribeLiveSourceTrafficDataResResultTrafficDetailDataListPropertiesItemsItem `json:"TrafficDataList"`
+
+	// 按域名维度进行数据拆分时的域名信息。
+	Domain *string `json:"Domain,omitempty"`
+
+	// 按运营商维度进行数据拆分时的运营商信息。
+	ISP *string `json:"ISP,omitempty"`
 }
 
 type DescribeLiveSourceTrafficDataResResultTrafficDetailDataListPropertiesItemsItem struct {
 
-	// REQUIRED; 时间片起始时刻。RFC3339 格式的 UTC 时间，精度为 s，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 回源流量，单位 GB
@@ -7672,37 +7341,40 @@ type DescribeLiveSourceTrafficDataResResultTrafficDetailDataListPropertiesItemsI
 
 type DescribeLiveSourceTrafficDataResResultUserRegionListItem struct {
 
-	// REQUIRED; 区域信息中的大区标识符。
-	Area string `json:"Area"`
+	// The regional identifier in regional information.
+	Area *string `json:"Area,omitempty"`
 
-	// REQUIRED; 区域信息中的国家标识符。
-	Country string `json:"Country"`
+	// The country identifier in the regional information.
+	Country *string `json:"Country,omitempty"`
 
-	// REQUIRED; 区域信息中的省份标识符。
-	Province string `json:"Province"`
+	// The province identifier in the regional information.
+	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveStreamCountDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 小时。时间粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天；
-	// * 86400：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of aggregation, measured in seconds, supports the following time intervals:
+	// * 60: 1 minute. When aggregated at a 1-minute interval, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days.
+	// * 300: (default) 5 minutes. When aggregated at a 5-minute interval, the maximum time span for a single query is 31 days,
+	// and the historical query time range is 366 days.
+	// * 3600: 1 hour. When aggregated at a 1-hour interval, the maximum time span for a single query is 93 days, and the historical
+	// query time range is 366 days.
+	// * 86400: 1 day. When aggregated at a 1-day interval, the maximum time span for a single query is 93 days, and the historical
+	// query time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
-	// * Domain：域名。
-	// :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，当前支持填写 Domain 表示按查询的域名为维度进行数据拆分。
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 直播流使用的域名列表，默认为空，表示查询所有全部域名下的峰值流数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
 	// 流类型，缺省情况下表示全部类型，支持的流类型取值如下。
@@ -7741,27 +7413,22 @@ type DescribeLiveStreamCountDataResResponseMetadata struct {
 
 type DescribeLiveStreamCountDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 当前查询条件下流数最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	TotalStreamDataList []DescribeLiveStreamCountDataResResultTotalStreamDataListItem `json:"TotalStreamDataList"`
 
-	// 数据拆分的维度，维度说明如下所示。
-	// * Domain：域名。
+	// 数据拆分的维度，当前接口仅支持按 Domain 即域名维度进行数据拆分。
 	DetailField []*string `json:"DetailField,omitempty"`
 
 	// 域名列表。
@@ -7791,7 +7458,8 @@ type DescribeLiveStreamCountDataResResultStreamDetailDataListPropertiesItemsItem
 	// REQUIRED
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -7800,7 +7468,8 @@ type DescribeLiveStreamCountDataResResultTotalStreamDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的流数最大值。
 	PeakCount int32 `json:"PeakCount"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -7812,12 +7481,11 @@ type DescribeLiveStreamInfoByPageQuery struct {
 	// REQUIRED; 每页显示的数据条数，取值范围为 [1,1000]。
 	PageSize int32 `json:"PageSize" query:"PageSize"`
 
-	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty" query:"App"`
 
-	// 直播流使用的域名，默认为空，表示查询所有当前域名空间（Vhost）下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看直播流使用的域名。
+	// 直播流使用的域名，默认为空，表示查询所有当前域名空间下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
 	// 使用流名称进行查询的方式，默认值为 strict，支持的取值即含义如下所示。
@@ -7830,7 +7498,7 @@ type DescribeLiveStreamInfoByPageQuery struct {
 	// * relay：回源流。
 	SourceType *string `json:"SourceType,omitempty" query:"SourceType"`
 
-	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream *string `json:"Stream,omitempty" query:"Stream"`
 
 	// 在线流的流类型，默认为空，表示查询所有类型，支持的取值即含义如下所示。
@@ -7838,9 +7506,9 @@ type DescribeLiveStreamInfoByPageQuery struct {
 	// * trans：转码流。
 	StreamType *string `json:"StreamType,omitempty" query:"StreamType"`
 
-	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost），默认为空，表示查询所有域名空间（Vhost）下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]
-	// 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// 域名空间，即直播流地址的域名所属的域名空间，默认为空，表示查询所有域名空间下的在线流。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]
+	// 页面，查看需要查询的直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -7899,7 +7567,7 @@ type DescribeLiveStreamInfoByPageResResultStreamInfoListItem struct {
 	// REQUIRED; 在线流的 ID。
 	ID int64 `json:"ID"`
 
-	// REQUIRED; 在线流的开始时间。
+	// REQUIRED; 在线流的开始时间，RFC3339 格式的 UTC 时间戳，精度为毫秒。
 	SessionStartTime string `json:"SessionStartTime"`
 
 	// REQUIRED; 在线流的来源类型，取值及含义如下所示。
@@ -7916,80 +7584,101 @@ type DescribeLiveStreamInfoByPageResResultStreamInfoListItem struct {
 
 type DescribeLiveStreamSessionDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 60：1 分钟。时间粒度为 1 分钟时，单次查询最大时间跨度为 24 小时，历史查询时间范围为 366 天；
-	// * 300：（默认值）5 分钟。时间粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询时间范围为 366 天；
-	// * 3600：1 天。时间粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 60: 1 minute. When aggregated every 1 minute, the maximum time span for a single query is 24 hours, and the historical
+	// query time range is 366 days;
+	// * 300: (default) 5 minutes. When aggregated every 5 minutes, the maximum time span for a single query is 31 days, and the
+	// historical query time range is 366 days;
+	// * 3600: 1 hour. When aggregated every 1 hour, the maximum time span for a single query is 93 days, and the historical query
+	// time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名。 :::tip 使用App构造请求时，需要同时定义Domain和Stream参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying data at the stream granularity, you must specify the Domain, App, and Stream parameters simultaneously.
+	// :::
 	App *string `json:"App,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下所示。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下所示。
 	// * Domain：域名；
 	// * ISP：运营商；
 	// * Protocol：推拉流协议；
 	// * Referer：请求的 Referer 信息。
-	// :::tip 配置数据拆分维度时，对应的维度参数需传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 查询流粒度数据时的域名参数。 :::tip 使用Domain构造请求时，需要同时定义App和Stream参数，不可缺省。 :::
+	// 拉流域名，查询流粒度数据时必传，且需同时传入 App 和 Stream。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。 :::tip
+	// 查询流粒度的请求数和在线人数数据时，需同时指定 Domain 、App 和 Stream 来指定直播流。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名列表，缺省情况表示该用户的所有推拉流域名。 :::tipDomainList和Domain传且仅传一个。 :::
+	// 拉流域名列表，默认为空，表示查询所有域名的请求数和在线人数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tipDomainList 和 Domain 传且仅传一个。 :::
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// Push-pull streaming protocol. By default, all protocol types are indicated. Supported protocols are as follows.
+	// * HTTP-FLV: A push-pull streaming protocol based on the HTTP protocol, using the FLV format for video transmission.
+	// * HTTP-HLS: A push-pull streaming protocol based on the HTTP protocol, using the TS format for video transmission.
+	// * RTMP: Real-Time Messaging Protocol for real-time message transmission.
+	// * RTM: Real-Time Media protocol for ultra-low latency live streaming.
+	// * SRT: Secure Reliable Transport protocol for secure and reliable streaming.
+	// * QUIC: Quick UDP Internet Connections, a new low-latency internet transmission protocol based on UDP.
+	// * CMAF: Common Media Application Format, a versatile streaming protocol.
+	// :::tip If querying the QUIC protocol, other protocols cannot be queried simultaneously. :::
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// 请求的 Referer 信息。
+	// 指定拉流请求的 Referer 信息，默认为空，表示不对拉流请求的 Referer 字段进行校验。
 	RefererList []*string `json:"RefererList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。
+	// List of regions to which CDN node IPs belong, by default indicating all regions.
 	RegionList []*DescribeLiveStreamSessionDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 查询流粒度数据时的流名称。 :::tip 使用Stream构造请求时，需要同时定义Domain和App参数，不可缺省。 :::
+	// The Stream Name is required when querying stream granularity data. It supports uppercase and lowercase letters (A-Z, a-z),
+	// underscores (_), hyphens (-), and periods (.), with a length of 1 to 100
+	// characters.
+	// :::tip When querying stream granularity data, you must specify the Domain, App, and Stream parameters simultaneously. :::
 	Stream *string `json:"Stream,omitempty"`
 }
 
 type DescribeLiveStreamSessionDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -8022,13 +7711,10 @@ type DescribeLiveStreamSessionDataResResponseMetadata struct {
 
 type DescribeLiveStreamSessionDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 60：1 分钟；
-	// * 300：5 分钟；
-	// * 3600：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询时间范围内的在线人数峰值。
@@ -8037,7 +7723,7 @@ type DescribeLiveStreamSessionDataResResult struct {
 	// REQUIRED; 所有时间粒度的数据。
 	SessionDataList []DescribeLiveStreamSessionDataResResultSessionDataListItem `json:"SessionDataList"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 查询时间范围内的请求数。
@@ -8053,40 +7739,42 @@ type DescribeLiveStreamSessionDataResResult struct {
 	// * Referer：请求的 Referer 信息。
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名。
+	// 拉流域名。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 域名列表。
+	// List of domains.
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// Push-pull streaming protocol. By default, all protocol types are indicated. Supported protocols are as follows.
+	// * HTTP-FLV: A push-pull streaming protocol based on the HTTP protocol, using the FLV format for video transmission.
+	// * HTTP-HLS: A push-pull streaming protocol based on the HTTP protocol, using the TS format for video transmission.
+	// * RTMP: Real-Time Messaging Protocol for real-time message transmission.
+	// * RTM: Real-Time Media protocol for ultra-low latency live streaming.
+	// * SRT: Secure Reliable Transport protocol for secure and reliable streaming.
+	// * QUIC: Quick UDP Internet Connections, a new low-latency internet transmission protocol based on UDP.
+	// * CMAF: Common Media Application Format, a versatile streaming protocol.
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// 请求的 Referer 信息。
+	// 拉流请求的 Referer 信息。
 	RefererList []*string `json:"RefererList,omitempty"`
 
-	// 区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveStreamSessionDataResResultRegionListItem `json:"RegionList,omitempty"`
 
 	// 按维度拆分的数据。
@@ -8098,13 +7786,13 @@ type DescribeLiveStreamSessionDataResResult struct {
 
 type DescribeLiveStreamSessionDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -8116,7 +7804,8 @@ type DescribeLiveStreamSessionDataResResultSessionDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的请求数。
 	Request int32 `json:"Request"`
 
-	// REQUIRED; 数据按时间粒度聚合时，诶个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -8152,7 +7841,8 @@ type DescribeLiveStreamSessionDataResResultSessionDetailDataListPropertiesItemsI
 	// REQUIRED; 请求数
 	Request int32 `json:"Request"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 时间，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 }
 
@@ -8165,12 +7855,12 @@ type DescribeLiveStreamStateQuery struct {
 	Stream string `json:"Stream" query:"Stream"`
 
 	// 填写直播流使用的域名，默认为空，表示查询所有直推流和回源流的状态和类型。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看需要查询的直播流使用的域名。 :::tipVhost 和 Domain 传且仅传一个。 :::
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名。
+	// :::tipVhost 和 Domain 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty" query:"Domain"`
 
 	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// [https://console.volcengine.com/live/main/domain/list]
 	// 页面，查看需要查询的直播流使用的域名所属的域名空间。 :::tipVhost 和 Domain 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
@@ -8224,83 +7914,19 @@ type DescribeLiveStreamStateResResult struct {
 	Type string `json:"type"`
 }
 
-type DescribeLiveStreamUsageDataBody struct {
-
-	// 域名。
-	Domain *string `json:"Domain,omitempty"`
-
-	// 查询时间，格式为 yyyy-mm-dd HH:MM。 例如：查询时间 2023-01-01 10:00 时表示查询时间范围为 10:00 到 10:01。 :::tip
-	// * 未填写查询时间时，默认查询时间为当前时间减 5 分钟。
-	// * 最长支持查询的历史时间范围为 31 天。 :::
-	QueryTime *string `json:"QueryTime,omitempty"`
-
-	// 流名称。
-	StreamName *string `json:"StreamName,omitempty"`
-}
-
-type DescribeLiveStreamUsageDataRes struct {
-
-	// REQUIRED; 响应数据。
-	Response DescribeLiveStreamUsageDataResResponse `json:"Response"`
-
-	// REQUIRED; 请求失败原因：
-	// * 请求成功时 Result 为空
-	// * 请求失败时 Result 展示失败的原因
-	Result string `json:"Result"`
-
-	// REQUIRED; 请求状态：
-	// * 1：请求成功
-	// * 0：请求失败
-	Status int32 `json:"Status"`
-}
-
-// DescribeLiveStreamUsageDataResResponse - 响应数据。
-type DescribeLiveStreamUsageDataResResponse struct {
-
-	// REQUIRED; 详细数据信息。
-	DataInfoList []DescribeLiveStreamUsageDataResResponseDataInfoListItem `json:"DataInfoList"`
-
-	// REQUIRED; 查询时间。
-	QueryTime string `json:"QueryTime"`
-
-	// REQUIRED; 请求 ID。
-	RequestID string `json:"RequestId"`
-}
-
-type DescribeLiveStreamUsageDataResResponseDataInfoListItem struct {
-
-	// REQUIRED; 带宽，单位 kbps。
-	Bandwidth int32 `json:"Bandwidth"`
-
-	// REQUIRED; 域名
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 在线人数。
-	OnlineUser int32 `json:"OnlineUser"`
-
-	// REQUIRED; 协议。
-	Protocol string `json:"Protocol"`
-
-	// REQUIRED; 请求数。
-	Request int32 `json:"Request"`
-
-	// REQUIRED; 流名称。
-	StreamName string `json:"StreamName"`
-}
-
 type DescribeLiveTimeShiftDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 86400：（默认值）1 天。
+	// 数据聚合的时间粒度，单位为秒，当前接口默认且仅支持按 86400 秒进行数据聚合。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 域名空间列表，缺省情况表示查询当前用户的所有域名空间。
+	// 域名空间列表，默认为空，表示查询您视频直播产品下所有域名产生的时移存储用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取域名所在的域名空间信息。
 	Vhosts []*string `json:"Vhosts,omitempty"`
 }
 
@@ -8334,13 +7960,12 @@ type DescribeLiveTimeShiftDataResResponseMetadata struct {
 type DescribeLiveTimeShiftDataResResult struct {
 
 	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 86400：1 天。
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
@@ -8355,87 +7980,100 @@ type DescribeLiveTimeShiftDataResResultTimeShiftDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内的时移文件存储用量，单位为 GB。
 	Storage float32 `json:"Storage"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
 }
 
 type DescribeLiveTrafficDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 300：（默认值）5 分钟。聚合粒度为 5 分钟时，单次查询最大时间跨度为 31 天，历史查询最大时间范围为 366 天；
-	// * 3600：1 小时。聚合粒度为 1 小时时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天；
-	// * 86400：1 天。聚合粒度为 1 天时，单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。
+	// The granularity of data aggregation, measured in seconds, with the following supported options:
+	// * 300 (default): 5 minutes. When aggregated in 5-minute intervals, the maximum time span for a single query is 31 days,
+	// and for historical queries, the maximum time range is 366 days.
+	// * 3600: 1 hour. When aggregated in 1-hour intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
+	// * 86400: 1 day. When aggregated in 1-day intervals, the maximum time span for a single query is 93 days, and for historical
+	// queries, the maximum time range is 366 days.
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 数据拆分的维度，缺省情况下不进行数据拆分，支持的维度如下。
+	// 数据拆分的维度，默认为空表示不按维度进行数据拆分，支持的维度如下。
 	// * Domain：域名；
 	// * ISP：运营商；
-	// * Protocol：推拉流协议。 :::tip 配置数据拆分维度时，对应的维度参数传入多个值时会返回按维度进行拆分的数据；对应的维度只传入一个值时不返回按维度进行拆分的数据。 :::
+	// * Protocol：推拉流协议。 :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain
+	// 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的流量用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
-	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Education and Research Network (CERNET);
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: China Broadcasting Network;
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
+	// If you need to obtain the identifiers of various operators, you can call the DescribeLiveISPData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveispdata].
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
-	// :::tip 如果查询推拉流协议为 QUIC，不能同时查询其他协议。 :::
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which CDN node IPs belong, by default indicating all regions. :::tipRegionList and UserRegionList cannot
+	// be used together in the same request. :::
 	RegionList []*DescribeLiveTrafficDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	// List of regions to which client IPs belong, by default indicating all regions.
+	// :::tipRegionList and UserRegionList cannot be used together in a single request. :::
 	UserRegionList []*DescribeLiveTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveTrafficDataBodyRegionListItem struct {
 
-	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveTrafficDataBodyUserRegionListItem struct {
 
-	// 大区，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]
+	// The identifier for the major region in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
 	Area *string `json:"Area,omitempty"`
 
-	// 国家，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]
+	// The country identifier in the regional information can be obtained by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata].
+	// When filtering by
+	// country, both 'Area' and 'Country' need to be passed in simultaneously.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数，映射关系请参见区域映射 [https://www.volcengine.com/docs/6469/114196]
+	// The province identifier in the regional information is currently not supported for countries or regions outside mainland
+	// China, Hong Kong, Macao, and Taiwan. You can obtain the identifier information
+	// by calling DescribeLiveRegionData [https://docs.byteplus.com/en/docs/byteplus-media-live/describeliveregiondata]. When
+	// filtering by province, you need to simultaneously pass in Area, Country, and
+	// Province
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -8468,16 +8106,13 @@ type DescribeLiveTrafficDataResResponseMetadata struct {
 
 type DescribeLiveTrafficDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 300：5 分钟；
-	// * 3600：1 小时；
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 查询时间范围内的下行总流量，单位为 GB。
@@ -8498,49 +8133,44 @@ type DescribeLiveTrafficDataResResult struct {
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
-	// * unicom：联通；
-	// * railcom：铁通；
-	// * telecom：电信；
-	// * mobile：移动；
-	// * cernet：教育网；
-	// * tianwei：天威；
-	// * alibaba：阿里巴巴；
-	// * tencent：腾讯；
-	// * drpeng：鹏博士；
-	// * btvn：广电；
-	// * huashu：华数；
-	// * other：其他。
+	// Identifiers of operators providing network access services. By default, all operators are indicated. Supported operators
+	// are as follows.
+	// * unicom: China Unicom;
+	// * railcom: China Railway Telecom;
+	// * telecom: China Telecom;
+	// * mobile: China Mobile;
+	// * cernet: China Broadcasting Network;
+	// * tianwei: China Tianwei;
+	// * alibaba: Alibaba Group;
+	// * tencent: Tencent Holdings;
+	// * drpeng: Dr. Peng Telecom & Media Group;
+	// * btvn: Broadcasting Television Network (BTVN);
+	// * huashu: Huashu Media;
+	// * other: Denotes other/unspecified options.
 	ISPList []*string `json:"ISPList,omitempty"`
 
-	// 推拉流协议，协议说明如下。
-	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
-	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
-	// * RTMP：Real Time Message Protocol，实时信息传输协议。
-	// * RTM：Real Time Media，超低延时直播协议。
-	// * SRT：Secure Reliable Transport，安全可靠传输协议。
-	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// byteplus比火山多了CMAF协议
 	ProtocolList []*string `json:"ProtocolList,omitempty"`
 
-	// CDN 节点 IP 所属区域列表。
+	// List of regions to which CDN node IPs belong.
 	RegionList []*DescribeLiveTrafficDataResResultRegionListItem `json:"RegionList,omitempty"`
 
-	// 按维度拆分后的数据。 :::tip 请求时，DomainList、ProtocolList和ISPList至少有一个参数传入了多个值时，会返回该参数；否则不返回该参数。 :::
+	// 按维度拆分后的数据。 :::tip 当配置了数据拆分的维度时，对应的维度参数传入多个值才会返回按维度拆分的数据。 :::
 	TrafficDetailDataList []*DescribeLiveTrafficDataResResultTrafficDetailDataListItem `json:"TrafficDetailDataList,omitempty"`
 
-	// 客户端 IP 所属区域列表。
+	// List of regions to which client IPs belong.
 	UserRegionList []*DescribeLiveTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
 }
 
 type DescribeLiveTrafficDataResResultRegionListItem struct {
 
-	// 区域信息中的大区标识符。
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 区域信息中的国家标识符。
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 区域信息中的省份标识符。
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
@@ -8549,7 +8179,8 @@ type DescribeLiveTrafficDataResResultTrafficDataListItem struct {
 	// REQUIRED; 当前数据聚合时间粒度内产生的总下行流量，单位 GB。
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 当前数据聚合时间粒度内产生的总上行流量，单位 GB。
@@ -8582,7 +8213,8 @@ type DescribeLiveTrafficDataResResultTrafficDetailDataListPropertiesItemsItem st
 	// REQUIRED; 下行流量，单位 GB
 	DownTraffic float32 `json:"DownTraffic"`
 
-	// REQUIRED; 时间片起始时刻。RFC3339 时间，例如，2022-04-13T00:00:00+08:00
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 上行流量，单位 GB
@@ -8591,36 +8223,49 @@ type DescribeLiveTrafficDataResResultTrafficDetailDataListPropertiesItemsItem st
 
 type DescribeLiveTrafficDataResResultUserRegionListItem struct {
 
-	// 大区
+	// The regional identifier in regional information.
 	Area *string `json:"Area,omitempty"`
 
-	// 国家
+	// The country identifier in the regional information.
 	Country *string `json:"Country,omitempty"`
 
-	// 国内为省，国外暂不支持该参数
+	// The province identifier in the regional information.
 	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveTranscodeDataBody struct {
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of your query's range (UTC time in RFC 3339 format with second precision).
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。 :::tip 单次查询最大时间跨度为 93 天，历史查询最大时间范围为 366 天。 :::
+	// REQUIRED; The start time of your query's range (UTC time in RFC 3339 format with second precision).
 	StartTime string `json:"StartTime"`
 
-	// 数据聚合的时间粒度，单位为秒，支持的时间粒度如下所示。
-	// * 86400：（默认值）1 天。
+	// 数据聚合的时间粒度，单位为秒，当前接口默认且仅支持按 86400 秒进行数据聚合。
 	Aggregation *int32 `json:"Aggregation,omitempty"`
 
-	// 查询流粒度数据时的应用名称。 :::tip 使用App构造请求时，需要同时定义Stream参数，不可缺省。 :::
+	// The Application Name must match the value of the AppName field in the live stream URL. It can include uppercase letters
+	// (A-Z), lowercase letters (a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 30 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters are required. :::
 	App *string `json:"App,omitempty"`
 
-	// 域名列表，缺省情况表示当前用户的所有推拉流域名。
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的转码用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 查询流粒度数据时的流名称。 :::tip 使用Stream构造请求时，需要同时定义App参数，不可缺省。 :::
+	// 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； - 0P：纯音频流；
+	Resolution []*string `json:"Resolution,omitempty"`
+
+	// The Stream Name must correspond to the value of the StreamName field in the live stream URL. It can include uppercase and
+	// lowercase letters (A-Z, a-z), numbers (0-9), underscores (_), hyphens (-), and
+	// periods (.), with a length ranging from 1 to 100 characters.
+	// :::tip When querying stream granularity data, both the App and Stream parameters must be provided. :::
 	Stream *string `json:"Stream,omitempty"`
+
+	// 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264 极智超清；
+	// - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	TranscodeType []*string `json:"TranscodeType,omitempty"`
 }
 
 type DescribeLiveTranscodeDataRes struct {
@@ -8660,30 +8305,36 @@ type DescribeLiveTranscodeDataResResponseMetadataError struct {
 
 type DescribeLiveTranscodeDataResResult struct {
 
-	// REQUIRED; 数据聚合的时间粒度，单位为秒。
-	// * 86400：1 天。
+	// REQUIRED; Data granularity, measured in seconds.
 	Aggregation int32 `json:"Aggregation"`
 
 	// REQUIRED; 查询时间范围内的转码总时长，单位为分钟。
 	Duration float32 `json:"Duration"`
 
-	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The end time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的起始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of the query in UTC time, formatted according to RFC3339, with precision to the second.
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 所有时间粒度的数据。
 	TranscodeDataList []DescribeLiveTranscodeDataResResultTranscodeDataListItem `json:"TranscodeDataList"`
 
-	// 查询流粒度数据时的应用名称。
+	// The application name when querying stream granularity data.
 	App *string `json:"App,omitempty"`
 
 	// 域名列表。
 	DomainList []*string `json:"DomainList,omitempty"`
 
-	// 查询流粒度数据时的流名称。
+	// 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； - 0P：纯音频流；
+	Resolution []*string `json:"Resolution,omitempty"`
+
+	// The stream name when querying stream granularity data.
 	Stream *string `json:"Stream,omitempty"`
+
+	// 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264 极智超清；
+	// - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	TranscodeType []*string `json:"TranscodeType,omitempty"`
 }
 
 type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
@@ -8692,11 +8343,154 @@ type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 	Duration float32 `json:"Duration"`
 
 	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
-	// 0：纯音频流；
+	// 0P：纯音频流；
 	Resolution string `json:"Resolution"`
 
-	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	// REQUIRED; The start time of each time granularity when data is aggregated by time granularity, formatted in RFC3339 UTC
+	// time with second precision.
 	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
+	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	TranscodeType string `json:"TranscodeType"`
+}
+
+type DescribeLiveTranscodeInfoDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。 :::tip 历史查询最大时间范围为 366 天。 :::
+	StartTime string `json:"StartTime"`
+
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。 :::tip 查询流粒度数据时，需同时传入App和Stream。
+	// :::
+	App *string `json:"App,omitempty"`
+
+	// 域名列表，默认为空，表示查询您视频直播产品下所有域名的转码用量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 分页页数，默认1
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页大小， 默认20，取值范围[1,100000]
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； - 0P：纯音频流；
+	Resolution []*string `json:"Resolution,omitempty"`
+
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip 查询流粒度数据时，需同时传入App和Stream。
+	// :::
+	Stream *string `json:"Stream,omitempty"`
+
+	// 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264 极智超清；
+	// - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	TranscodeType []*string `json:"TranscodeType,omitempty"`
+}
+
+type DescribeLiveTranscodeInfoDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveTranscodeInfoDataResResponseMetadata `json:"ResponseMetadata"`
+	Result           *DescribeLiveTranscodeInfoDataResResult          `json:"Result,omitempty"`
+}
+
+type DescribeLiveTranscodeInfoDataResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                                 `json:"Version"`
+	Error   *DescribeLiveTranscodeInfoDataResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type DescribeLiveTranscodeInfoDataResResponseMetadataError struct {
+
+	// 错误码
+	Code *string `json:"Code,omitempty"`
+
+	// 错误信息
+	Message *string `json:"Message,omitempty"`
+}
+
+type DescribeLiveTranscodeInfoDataResResult struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 分页信息
+	Pagination DescribeLiveTranscodeInfoDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 查询的起始时间，RFC3339 格式的时间戳，精度为秒。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 所有时间粒度的数据。
+	TranscodeInfoDataList []DescribeLiveTranscodeInfoDataResResultTranscodeInfoDataListItem `json:"TranscodeInfoDataList"`
+
+	// 查询流粒度数据时的应用名称。
+	App *string `json:"App,omitempty"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； - 0P：纯音频流；
+	Resolution []*string `json:"Resolution,omitempty"`
+
+	// 查询流粒度数据时的流名称。
+	Stream *string `json:"Stream,omitempty"`
+
+	// 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264 极智超清；
+	// - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	TranscodeType []*string `json:"TranscodeType,omitempty"`
+}
+
+// DescribeLiveTranscodeInfoDataResResultPagination - 分页信息
+type DescribeLiveTranscodeInfoDataResResultPagination struct {
+
+	// REQUIRED; 当前页数
+	PageCur int32 `json:"PageCur"`
+
+	// REQUIRED; 每页大小
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 总个数
+	TotalCount int32 `json:"TotalCount"`
+}
+
+type DescribeLiveTranscodeInfoDataResResultTranscodeInfoDataListItem struct {
+
+	// REQUIRED; 转码时长，单位分钟
+	Duration float32 `json:"Duration"`
+
+	// REQUIRED; 结束转码时间
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
+	// 0P：纯音频流；
+	Resolution string `json:"Resolution"`
+
+	// REQUIRED; 开始转码时间
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 流名
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 转码任务ID
+	TaskID string `json:"TaskID"`
+
+	// REQUIRED; 转码后缀
+	TranscodeSuffix string `json:"TranscodeSuffix"`
 
 	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
 	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
@@ -8705,10 +8499,10 @@ type DescribeLiveTranscodeDataResResultTranscodeDataListItem struct {
 
 type DescribeRecordTaskFileHistoryBody struct {
 
-	// REQUIRED; 开始录制时间，RFC3339 格式的时间字符串，精度为秒。当您查询指定录制任务详情时，DateFrom 应设置为开始时间之前的任意时间。
+	// REQUIRED; 开始录制时间，RFC3339 格式的时间戳，精度为秒。当您查询指定录制任务详情时，DateFrom 应设置为开始时间之前的任意时间。
 	DateFrom string `json:"DateFrom"`
 
-	// REQUIRED; 结束录制时间，结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7天，RFC3339 格式的时间字符串，精度为秒。
+	// REQUIRED; 结束录制时间，RFC3339 格式的时间戳，精度为秒。结束时间需晚于 DateFrom，且与 DateFrom 间隔不超过 7 天。
 	DateTo string `json:"DateTo"`
 
 	// REQUIRED; 查询数据的页码，默认为 1，表示查询第一页的数据，取值范围为正整数。
@@ -8717,11 +8511,12 @@ type DescribeRecordTaskFileHistoryBody struct {
 	// REQUIRED; 每页显示的数据条数，取值范围为正整数。
 	PageSize int32 `json:"PageSize"`
 
-	// 应用名称，取值与直播流地址的 AppName 字段取值相同，默认为空表示查询 vhost 下的所有录制历史。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// 应用名称，取值与直播流地址的 AppName 字段取值相同，默认为空表示查询 vhost 下的所有录制历史。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30
+	// 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 流名称，取值与直播流地址的 StreamName 字段取值相同，默认为空表示查询 App 下的所有录制历史。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip
-	// 如果指定 Stream，必须同时指定 App 的值。 :::
+	// 流名称，取值与直播流地址的 StreamName 字段取值相同，默认为空表示查询 App 下的所有录制历史。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100
+	// 个字符。 :::tip 如果指定 Stream，必须同时指定 App 的值。 :::
 	Stream *string `json:"Stream,omitempty"`
 
 	// 录制文件保存位置，支持的取值及含义如下所示。
@@ -8730,8 +8525,7 @@ type DescribeRecordTaskFileHistoryBody struct {
 	Type *string `json:"Type,omitempty"`
 
 	// 域名空间，即直播流地址的域名所属的域名空间，默认为空表示查询所有录制历史。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看直播流使用的域名所属的域名空间。
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -8793,6 +8587,9 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 结束录制时间。
 	EndTime string `json:"EndTime"`
 
+	// REQUIRED; 结束录制时间，RFC3339 格式的 UTC 时间，精度为秒。
+	EndTimeUTC string `json:"EndTimeUTC"`
+
 	// REQUIRED; 录制文件的文件名。
 	FileName string `json:"FileName"`
 
@@ -8805,10 +8602,13 @@ type DescribeRecordTaskFileHistoryResResultDataItem struct {
 	// REQUIRED; 开始录制时间。
 	StartTime string `json:"StartTime"`
 
+	// REQUIRED; 开始录制时间，RFC3339 格式的 UTC 时间，精度为秒。
+	StartTimeUTC string `json:"StartTimeUTC"`
+
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 
 	// REQUIRED; 录制文件保存在 VOD 时，录制文件的 ID。
@@ -8837,15 +8637,15 @@ type DescribeRefererBody struct {
 	// 参数 Domain 和 App 至少传一个。 :::
 	App *string `json:"App,omitempty"`
 
-	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
 	// :::tip
 	// * 参数 Domain 和 Vhost 传且仅传一个。
 	// * 参数 Domain 和 App 至少传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
-	// 页面，查看拉流域名所属的域名空间。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看拉流域名所属的域名空间。 :::tip
+	// 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -8924,7 +8724,7 @@ type DescribeRefererResResultRefererListPropertiesItemsItem struct {
 
 type DescribeRelaySourceV3Body struct {
 
-	// REQUIRED; 直播流使用的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。所属的域名空间。
+	// REQUIRED; 直播流使用的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示查询当前域名空间下所有播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
@@ -8983,7 +8783,7 @@ type DescribeRelaySourceV3ResResultRelaySourceConfigListItem struct {
 	// REQUIRED; 回源组配置详情。
 	GroupDetails []DescribeRelaySourceV3ResResultRelaySourceConfigListPropertiesItemsItem `json:"GroupDetails"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -9008,115 +8808,9 @@ type DescribeRelaySourceV3ResResultRelaySourceConfigListPropertiesItemsServersIt
 	RelaySourceProtocol string `json:"RelaySourceProtocol"`
 }
 
-type DescribeSnapshotAuditPresetDetailBody struct {
-	PresetList []*string `json:"PresetList,omitempty"`
-}
-
-type DescribeSnapshotAuditPresetDetailRes struct {
-
-	// REQUIRED
-	ResponseMetadata DescribeSnapshotAuditPresetDetailResResponseMetadata `json:"ResponseMetadata"`
-
-	// 视请求的接口而定
-	Result *DescribeSnapshotAuditPresetDetailResResult `json:"Result,omitempty"`
-}
-
-type DescribeSnapshotAuditPresetDetailResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-// DescribeSnapshotAuditPresetDetailResResult - 视请求的接口而定
-type DescribeSnapshotAuditPresetDetailResResult struct {
-
-	// REQUIRED
-	PresetDetailList []DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem `json:"PresetDetailList"`
-}
-
-// DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem - 审核模版详细信息。
-type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItem struct {
-
-	// REQUIRED
-	AccountID string `json:"AccountID"`
-
-	// REQUIRED
-	AshePresetName string `json:"AshePresetName"`
-
-	// REQUIRED
-	AuditType string `json:"AuditType"`
-
-	// REQUIRED; ToS 存储空间 bucket。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
-	Bucket string `json:"Bucket"`
-
-	// REQUIRED
-	CreatedAt int32 `json:"CreatedAt"`
-
-	// REQUIRED; 审核模板描述。
-	Description string `json:"Description"`
-
-	// REQUIRED; 审核标签名称，若为空，则默认请求所有基础模型。支持以下取值。
-	// * 301：涉黄；
-	// * 302：涉敏1；
-	// * 303：涉敏2；
-	// * 304：广告；
-	// * 305：引人不适；
-	// * 306：违禁；
-	// * 307：二维码；
-	// * 308：诈骗；
-	// * 309：不良画面；
-	// * 310：未成年相关；
-	// * 320：文字违规。
-	Label []string `json:"Label"`
-
-	// REQUIRED; 审核模板名称。
-	PresetName string `json:"PresetName"`
-
-	// REQUIRED; veimageX 的服务 ID。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
-	ServiceID string `json:"ServiceID"`
-
-	// REQUIRED
-	SnapshotConfig DescribeSnapshotAuditPresetDetailResResultPresetDetailListItemSnapshotConfig `json:"SnapshotConfig"`
-
-	// REQUIRED; 存储策略。支持以下取值。
-	// * 0：触发存储，只存储有风险图片；
-	// * 1：全部存储，存储全部图片。
-	StorageStrategy int32 `json:"StorageStrategy"`
-
-	// REQUIRED
-	UpdatedAt int32 `json:"UpdatedAt"`
-}
-
-type DescribeSnapshotAuditPresetDetailResResultPresetDetailListItemSnapshotConfig struct {
-
-	// REQUIRED
-	Format string `json:"Format"`
-
-	// REQUIRED
-	Interval float32 `json:"Interval"`
-
-	// REQUIRED
-	SnapshotObject string `json:"SnapshotObject"`
-
-	// REQUIRED
-	StorageDir string `json:"StorageDir"`
-}
-
 type DescribeStreamQuotaConfigBody struct {
 
-	// REQUIRED; 待查询限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
+	// REQUIRED; 待查询限额配置的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 }
 
@@ -9215,7 +8909,7 @@ type DescribeStreamQuotaConfigResResultQuotaListPropertiesItemsItem struct {
 
 type DisableDomainBody struct {
 
-	// REQUIRED; 待禁用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
+	// REQUIRED; 待禁用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -9255,7 +8949,7 @@ type DisableDomainResResponseMetadataError struct {
 
 type EnableDomainBody struct {
 
-	// REQUIRED; 待启用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要待启用域名的信息。
+	// REQUIRED; 待启用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要待启用域名的信息。
 	Domain string `json:"Domain"`
 }
 
@@ -9347,16 +9041,16 @@ type ForbidStreamBody struct {
 	// REQUIRED; 流名称，取值与直播流地址的 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// 直播流使用的域名，您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看待禁推的直播流使用的域名。
-	// :::tip 参数 Domain 和
-	// Vhost 传且仅传一个。 :::
+	// 直播流使用的域名，您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看待禁推的直播流使用的域名。
+	// :::tip 参数 Domain 和 Vhost
+	// 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 禁推的结束时间，RFC3339 格式的 UTC 时间，精度为毫秒，禁推有效期最长为 90 天，默认为当前时间加 90 天。
 	EndTime *string `json:"EndTime,omitempty"`
 
 	// 域名空间，即直播流地址的域名（Domain）所属的域名空间（Vhost）。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]
+	// [https://console.volcengine.com/live/main/domain/list]
 	// 页面，查看待禁推的直播流使用的域名所属的域名空间。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
@@ -9400,13 +9094,13 @@ type ForbidStreamResResponseMetadataError struct {
 
 type GeneratePlayURLBody struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	// REQUIRED; 拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
 	// 拉流地址的过期时间，RFC3339 格式的 UTC 时间，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime
@@ -9489,22 +9183,20 @@ type GeneratePlayURLResResultURLListItem struct {
 
 type GeneratePushURLBody struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
-	// REQUIRED; 域名空间，即推流域名（Domain）所属的域名空间（Vhost）。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看推流域名所属的域名空间。
+	// REQUIRED; 域名空间，即推流域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看推流域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 推流域名名称，需要推流地址的域名，不填返回Vhost下所有推流域名生成的地址。 推流域名，默认为空，表示生成域名空间下所有推流域名的推流地址。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要的推流域名。
+	// 推流域名，默认为空，表示生成域名空间下所有推流域名的推流地址。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要的推流域名。
 	Domain *string `json:"Domain,omitempty"`
 
-	// 推流地址的过期时间，RFC3339 格式的 UTC 时间，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime
-	// 的时间为准。 :::
+	// 推流地址的过期时间，RFC3339 格式的时间字符串，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
+	// :::
 	ExpiredTime *string `json:"ExpiredTime,omitempty"`
 
 	// 推流地址的有效时长，单位为秒，超过有效时长后需要重新生成。缺省情况下表示 7 天，取值范围为正整数。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。 :::
@@ -9579,71 +9271,6 @@ type GeneratePushURLResResultPushURLListDetailItem struct {
 	URL string `json:"URL"`
 }
 
-type GetPullCDNSnapshotTaskBody struct {
-
-	// REQUIRED; 直播截图任务 ID，任务的唯一标识。
-	TaskID string `json:"TaskID"`
-}
-
-type GetPullCDNSnapshotTaskRes struct {
-
-	// REQUIRED
-	ResponseMetadata GetPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED; 视请求的接口而定
-	Result GetPullCDNSnapshotTaskResResult `json:"Result"`
-}
-
-type GetPullCDNSnapshotTaskResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-// GetPullCDNSnapshotTaskResResult - 视请求的接口而定
-type GetPullCDNSnapshotTaskResResult struct {
-
-	// REQUIRED; 应用名称。
-	App string `json:"App"`
-
-	// REQUIRED; 推流/拉流域名。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 截图任务的结束时间。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 截图任务的开始时间。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 任务状态：
-	// * 停用
-	// * 未开始
-	// * 生效中
-	// * 已结束
-	Status string `json:"Status"`
-
-	// REQUIRED; 流名称。
-	Stream string `json:"Stream"`
-
-	// REQUIRED; 直播截图任务 ID。
-	TaskID string `json:"TaskId"`
-
-	// REQUIRED; 域名空间名称。
-	Vhost string `json:"Vhost"`
-}
-
 type GetPullRecordTaskBody struct {
 
 	// REQUIRED; 任务 ID，录制任务的唯一标识。您可以调用 ListPullRecordTask [https://www.volcengine.com/docs/6469/1111480] 获取任务 ID。
@@ -9686,10 +9313,10 @@ type GetPullRecordTaskResResult struct {
 	// REQUIRED; 创建录制任务时传入的域名。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 任务结束时间。
+	// REQUIRED; 任务结束时间，RFC3339 格式的 UTC 时间，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 任务开始时间。
+	// REQUIRED; 任务开始时间，RFC3339 格式的 UTC 时间，精度为秒。
 	StartTime string `json:"StartTime"`
 
 	// REQUIRED; 录制任务的状态，取值及含义如下所示。
@@ -9755,6 +9382,67 @@ type KillStreamResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type ListBindEncryptDRMBody struct {
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost"`
+
+	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示查询符合域名空间取值的所有的 DRM 加密配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为
+	// 1 到 30 个字符。
+	App *string `json:"App,omitempty"`
+}
+
+type ListBindEncryptDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListBindEncryptDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result ListBindEncryptDRMResResult `json:"Result"`
+}
+
+type ListBindEncryptDRMResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// ListBindEncryptDRMResResult - 视请求的接口而定
+type ListBindEncryptDRMResResult struct {
+
+	// DRM 加密配置列表。
+	DRMBindingList []*ListBindEncryptDRMResResultDRMBindingListItem `json:"DRMBindingList,omitempty"`
+}
+
+type ListBindEncryptDRMResResultDRMBindingListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 当前 DRM 配置是否开启，取值及含义如下所示。
+	// * true：开启；
+	// * false：关闭。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 进行 DRM 加密的转码流对应的转码流后缀配置。
+	EncryptTranscodeSuffix []string `json:"EncryptTranscodeSuffix"`
+
+	// REQUIRED; 域名空间。
+	Vhost string `json:"Vhost"`
+}
+
 type ListCertV2Body struct {
 
 	// 证书是否启用，默认值为 true，支持的取值及含义如下所示。
@@ -9765,7 +9453,7 @@ type ListCertV2Body struct {
 	// 证书名称，支持输入证书名称中的关键字，进行模糊查询.
 	CertName *string `json:"CertName,omitempty"`
 
-	// 域名，查询该域名对应的证书，支持精确查询。默认为空，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
+	// 域名，查询该域名对应的证书，支持精确查询。默认为空，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain *string `json:"Domain,omitempty"`
 
 	// 只有填了Available，这个字段才生效。
@@ -9836,6 +9524,9 @@ type ListCertV2ResResultCertListItem struct {
 	// REQUIRED; 证书的生效日期，RFC3339 格式的 UTC 时间，精度为秒。
 	NotBefore string `json:"NotBefore"`
 
+	// REQUIRED; 项目名称。
+	ProjectName string `json:"ProjectName"`
+
 	// REQUIRED; 证书状态，由证书管理平台返回，支持的取值如下所示。
 	// * OK：正常；
 	// * Expire：过期；
@@ -9898,21 +9589,24 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 
 	// 音频编码格式，支持的取值及含义如下。
 	// * aac：使用 AAC 编码格式；
-	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 Opus 编码格式。
+	// * opus：使用 Opus 编码格式；
+	// * copy：不进行转码，所有音频编码参数不生效。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 宽高自适应模式开关，支持的取值及含义如下。
-	// * 0：关闭宽高自适应
-	// * 1：开启宽高自适应 :::tip
-	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
-	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
+	// 视频分辨率自适应模式开关。支持的取值及含义如下。
+	// * 0：关闭视频分辨率自适应；
+	// * 1：开启视频分辨率自适应。 :::tip
+	// * 关闭视频分辨率自适应模式（As 取值为 0）时，转码配置的视频分辨率取视频宽度（Width）和视频高度（Height）的值对转码视频进行拉伸；
+	// * 开启视频分辨率自适应模式（As 取值为 1）时，转码配置的视频分辨率按照短边长度（ShortSide）、长边长度（LongSide）、视频宽度（Width）、视频高度（Height）的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数。BFrames取 0 时，表示去 B 帧。
+	// 转码输出视频中 2 个参考帧之间的最大 B 帧数量，默认值为 3，取值为 0 时表示去除 B 帧。
+	// 最大 B 帧数量的取值范围根据视频编码格式（Vcodec）的不同有所差异，取值范围如下所示。
+	// * 视频编码格式为 H.264 （Vcodec 取值为 h264）时取值范围为 [0,7]；
+	// * 视频编码格式为 H.265 或 H.266 （Vcodec 取值为 h265 或 h266）时取值范围为 [0,3]、7、15。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 帧率，单位为 fps。帧率越大，画面越流畅。
@@ -9922,8 +9616,8 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	GOP *int32 `json:"GOP,omitempty"`
 
 	// 视频高度。 :::tip
-	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
-	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸；
 	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Height *int32 `json:"Height,omitempty"`
 
@@ -9932,9 +9626,10 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码，取值及含义如下。
+	// 转码类型是否为极智超清转码，默认值为 false，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。
+	// :::tip 视频编码格式为 H.266 （Vcodec取值为h266）时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
 	// 短边长度。 :::tip
@@ -9942,7 +9637,8 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码流后缀名。
+	// 转码后缀，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）和短横线（-）组成，长度为 1 到 10 个字符。
+	// 转码后缀通常以流名称后缀的形式来使用，常见的标识有 _sd、_hd、_uhd，例如，当转码配置的标识为 _hd 时，拉取转码流时转码流的流名名称为 源流的流名称_hd。
 	SuffixName *string `json:"SuffixName,omitempty"`
 
 	// 视频编码格式。
@@ -9951,12 +9647,12 @@ type ListCommonTransPresetDetailResResultNarrowBandHDPresetDetailItem struct {
 	// * copy：不进行转码，所有视频编码参数不生效。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 视频码率，单位为 kbps
+	// 视频码率，单位为 kbps。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
 	// 视频宽度。 :::tip
-	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
-	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸；
 	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
@@ -10024,12 +9720,12 @@ type ListDomainDetailBody struct {
 	// REQUIRED; 每页显示的数据条数，取值为 10 时表示每页展示 10 条域名信息，取值范围为 [1, 1000]。
 	PageSize int32 `json:"PageSize"`
 
-	// 域名名称列表，缺省情况下表示全部域名。
+	// 域名名称列表，缺省情况下表示全部。
 	DomainNameList []*string `json:"DomainNameList,omitempty"`
 
 	// 域名加速区域列表，缺省情况下表示查看全部。支持的取值如下所示。
-	// * cn：中国大陆；
-	// * cn-global：全球；
+	// * cn：中国内地；
+	// * cn-global：全球加速；
 	// * cn-oversea：海外及港澳台。
 	DomainRegionList []*string `json:"DomainRegionList,omitempty"`
 
@@ -10088,7 +9784,7 @@ type ListDomainDetailResResponseMetadataError struct {
 
 type ListDomainDetailResResult struct {
 
-	// REQUIRED; 按当前筛选条件查询的结果数量。
+	// REQUIRED; 总记录数。
 	Total int32 `json:"Total"`
 
 	// 域名详细信息列表。
@@ -10173,95 +9869,6 @@ type ListDomainDetailResResultDomainListPropertiesItemsItem struct {
 
 	// REQUIRED; 标签 Value 值。
 	Value string `json:"Value"`
-}
-
-type ListPullCDNSnapshotTaskBody struct {
-
-	// REQUIRED; 分页数
-	PageNum string `json:"PageNum"`
-
-	// REQUIRED; 分页的大小
-	PageSize string `json:"PageSize"`
-}
-
-type ListPullCDNSnapshotTaskRes struct {
-
-	// REQUIRED
-	ResponseMetadata ListPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
-
-	// 视请求的接口而定
-	Result *ListPullCDNSnapshotTaskResResult `json:"Result,omitempty"`
-}
-
-type ListPullCDNSnapshotTaskResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-// ListPullCDNSnapshotTaskResResult - 视请求的接口而定
-type ListPullCDNSnapshotTaskResResult struct {
-
-	// REQUIRED; 直播截图列表记录。
-	List []ListPullCDNSnapshotTaskResResultListItem `json:"List"`
-
-	// REQUIRED; 分页信息。
-	Pagination ListPullCDNSnapshotTaskResResultPagination `json:"Pagination"`
-}
-
-type ListPullCDNSnapshotTaskResResultListItem struct {
-
-	// REQUIRED; 应用名称。
-	App string `json:"App"`
-
-	// REQUIRED; 推流/拉流域名。
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 截图任务的结束时间。
-	EndTime string `json:"EndTime"`
-
-	// REQUIRED; 截图任务的开始时间。
-	StartTime string `json:"StartTime"`
-
-	// REQUIRED; 4种状态:停用，未开始，生效中，已结束
-	Status string `json:"Status"`
-
-	// REQUIRED; 流名称。
-	Stream string `json:"Stream"`
-
-	// REQUIRED; 任务ID，任务的唯一标识。
-	TaskID string `json:"TaskId"`
-
-	// REQUIRED; 域名空间名称。
-	Vhost string `json:"Vhost"`
-}
-
-// ListPullCDNSnapshotTaskResResultPagination - 分页信息。
-type ListPullCDNSnapshotTaskResResultPagination struct {
-
-	// REQUIRED; 当前页。
-	PageCur int32 `json:"PageCur"`
-
-	// REQUIRED; 当前页的数据量。
-	PageSize int32 `json:"PageSize"`
-
-	// REQUIRED; 总页数。
-	PageTotal int32 `json:"PageTotal"`
-
-	// REQUIRED; 总数据量。
-	TotalCount int32 `json:"TotalCount"`
 }
 
 type ListPullRecordTaskBody struct {
@@ -10402,13 +10009,16 @@ type ListPullToPushTaskResResultListItem struct {
 	// 接收拉流转推任务状态回调的地址。
 	CallbackURL *string `json:"CallbackURL,omitempty"`
 
-	// 续播策略，续播策略指转推点播视频进行直播时出现断流并恢复后，如何继续播放的策略，拉流来源类型为点播视频（Type 为 1）时参数生效，支持的取值及含义如下。
-	// 0：从断流处续播（默认值）； 1：从断流处+自然流逝时长处续播。
+	// 续播策略，续播策略指转推点播视频进行直播时出现断流并恢复后，如何继续播放的策略，拉流来源类型为点播视频时参数生效，支持的取值及含义如下。
+	// * 0：从断流处续播（默认值）；
+	// * 1：从断流处+自然流逝时长处续播。
 	ContinueStrategy *int32 `json:"ContinueStrategy,omitempty"`
 
-	// 点播视频文件循环播放模式，当拉流来源类型为点播视频（Type 为 1）时配置生效，参数取值及含义如下所示。
-	// * -1：无限循环，至任务结束；
-	// * 0：有限次循环，循环次数为 PlayTimes 取值为准。
+	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时配置生效，参数取值及含义如下所示。
+	// * -1：无限次循环，至任务结束；
+	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
+	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
+	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流地址，即直播源或点播视频转推的目标地址。
@@ -10422,21 +10032,21 @@ type ListPullToPushTaskResResultListItem struct {
 	// 任务的结束时间，RFC3339 格式的 UTC 时间，单位为秒。
 	EndTime *string `json:"EndTime,omitempty"`
 
-	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
+	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环（CycleMode为0）时配置生效。
+	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
-	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
+	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。拉流来源类型为点播视频时，参数生效。
 	// * 0：不开启；
 	// * 1：开启。
 	PreDownload *int32 `json:"PreDownload,omitempty"`
 
-	// 直播源的拉流地址，拉流来源类型为直播源（Type 为 0）时返回此值。
+	// 直播源的拉流地址，拉流来源类型为直播源时返回此值。
 	SrcAddr *string `json:"SrcAddr,omitempty"`
 
-	// 点播视频播放地址列表，拉流来源类型为点播视频（type 为 1）时返回此值。
+	// 点播视频播放地址列表，拉流来源类型为点播视频时返回此值。
 	SrcAddrS []*string `json:"SrcAddrS,omitempty"`
 
 	// 任务的开始时间，RFC3339 格式的 UTC 时间，单位为秒。
@@ -10501,7 +10111,7 @@ type ListPullToPushTaskResResultPagination struct {
 
 type ListRelaySourceV4Body struct {
 
-	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	Domain string `json:"Domain"`
 
 	// 查询数据的页码，默认为 1，表示查询第一页的数据。
@@ -10599,7 +10209,7 @@ type ListTimeShiftPresetV2Body struct {
 	// * tos：直播时移，表示查询时移录制存储在 TOS 以及 fcdn-tos 中的时移配置。
 	Type *string `json:"Type,omitempty"`
 
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -10685,7 +10295,7 @@ type ListTimeShiftPresetV2ResResultListItem struct {
 type ListVhostRecordPresetV2Body struct {
 
 	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
-	// [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 直播录制的存储类型，默认值为 tos，支持的取值及含义如下所示。
@@ -10765,7 +10375,7 @@ type ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 struct {
 
 type ListVhostSnapshotAuditPresetBody struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -10812,7 +10422,7 @@ type ListVhostSnapshotAuditPresetResResult struct {
 
 type ListVhostSnapshotAuditPresetResResultPresetListItem struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
 	// REQUIRED; 截图审核配置详细信息。
@@ -10834,7 +10444,7 @@ type ListVhostSnapshotAuditPresetResResultPresetListItemAuditPreset struct {
 	// REQUIRED; 截图审核配置的描述。
 	Description string `json:"Description"`
 
-	// REQUIRED; 截图间隔时间，单位秒，取值范围为[0.1,10]，支持保留两位小数。
+	// REQUIRED; 截图间隔时间，单位为秒。
 	Interval float32 `json:"Interval"`
 
 	// REQUIRED; 审核标签名称，取值及含义如下。
@@ -10952,7 +10562,7 @@ type ListVhostSnapshotPresetResResultPresetListItemSlicePreset struct {
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 回调信息。
-	CallbackDetail []*ListVhostSnapshotPresetResResultPresetListPropertiesItemsItem `json:"CallbackDetail,omitempty"`
+	CallbackDetail *Components1Hkcrc4SchemasListvhostsnapshotpresetresPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetPropertiesCallbackdetail `json:"CallbackDetail,omitempty"`
 
 	// 截图间隔时间。
 	Interval *int32 `json:"Interval,omitempty"`
@@ -10969,23 +10579,9 @@ type ListVhostSnapshotPresetResResultPresetListItemSlicePreset struct {
 	Status *int32 `json:"Status,omitempty"`
 }
 
-// ListVhostSnapshotPresetResResultPresetListPropertiesItemsItem - 回调信息
-type ListVhostSnapshotPresetResResultPresetListPropertiesItemsItem struct {
-
-	// REQUIRED; 回调地址。
-	URL string `json:"URL"`
-
-	// 回调类型。
-	// * http
-	// * nsq
-	// * kafka
-	// * rpc
-	CallbackType *string `json:"CallbackType,omitempty"`
-}
-
 type ListVhostSnapshotPresetV2Body struct {
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 截图配置中截图文件的存储位置，缺省情况下表示不对存储位置进行过滤，取值及含义如下所示。
@@ -11036,7 +10632,7 @@ type ListVhostSnapshotPresetV2ResResultPresetListItem struct {
 	// REQUIRED; 截图配置基础信息。
 	SlicePresetV2 ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 `json:"SlicePresetV2"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11049,7 +10645,7 @@ type ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 struct {
 	// REQUIRED; 截图配置详细信息。
 	SnapshotPresetConfig ListVhostSnapshotPresetV2ResResultPresetListProperties `json:"SnapshotPresetConfig"`
 
-	// REQUIRED; 截图配置生效状态。
+	// REQUIRED; 截图配置生效状态，取值及含义如下所示。
 	// * 1：生效；
 	// * 0：不生效。
 	Status int32 `json:"Status"`
@@ -11071,7 +10667,7 @@ type ListVhostSnapshotPresetV2ResResultPresetListProperties struct {
 // ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesProperties - 图片格式为 JPEG 时的截图参数。
 type ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesProperties struct {
 
-	// REQUIRED; 当前格式的截图是否开启，默认为 false，取值及含义如下所示。
+	// REQUIRED; 当前格式的截图是否开启，取值及含义如下所示。
 	// * false：不开启；
 	// * true：开启。
 	Enable bool `json:"Enable"`
@@ -11107,7 +10703,8 @@ type ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesPropertiesP
 
 type ListVhostTransCodePresetBody struct {
 
-	// REQUIRED; 域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理
+	// [https://console.volcengine.com/live/main/domain/list]页面，查看需要录制的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11270,7 +10867,7 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 
 type ListVhostTransCodePresetResResultCommonPresetListItem struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
 	// REQUIRED; 域名空间。
@@ -11283,38 +10880,38 @@ type ListVhostTransCodePresetResResultCommonPresetListItem struct {
 // ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset - 转码配置具体信息。
 type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct {
 
-	// 音频编码格式，取值含义如下。
-	// * aac：使用 AAC 编码格式；
-	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 Opus 编码格式。
+	// 音频编码格式，默认值为 aac，支持的取值及含义如下所示。
+	// * aac：使用 AAC 音频编码格式；
+	// * opus：使用 Opus 音频编码格式。
+	// * copy：不进行音频转码，所有音频编码参数不生效，音频编码参数包括音频码率（AudioBitrate）等。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 宽高自适应模式开关。
-	// * 0：关闭宽高自适应；
-	// * 1：开启宽高自适应。 :::tip
-	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
-	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。 :::
+	// 视频分辨率自适应模式开关，默认值为 0。支持的取值及含义如下。
+	// * 0：关闭视频分辨率自适应；
+	// * 1：开启视频分辨率自适应。 :::tip
+	// * 关闭视频分辨率自适应模式（As 取值为 0）时，转码配置的视频分辨率取视频宽度（Width）和视频高度（Height）的值对转码视频进行拉伸；
+	// * 开启视频分辨率自适应模式（As 取值为 1）时，转码配置的视频分辨率按照短边长度（ShortSide）、长边长度（LongSide）、视频宽度（Width）、视频高度（Height）的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
 	// 音频码率，单位为 kbps。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频分辨率不超过源流分辨率，默认值为 1 表示开启。开启后，当源流分辨率低于转码配置分辨率时（即源流宽低于转码配置宽且源流高低于转码配置高时），将按源流视频分辨率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
 
-	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频码率不超过源流码率，默认值为 1 表示开启。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
 
-	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频帧率不超过源流帧率，默认值为 1 表示开启。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数。取值为 0 时，表示去除 B 帧。
+	// 转码输出视频中 2 个参考帧之间的最大 B 帧数量，取值为 0 时表示去除 B 帧。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
 	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
@@ -11324,19 +10921,24 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	GOP *int32 `json:"GOP,omitempty"`
 
 	// 视频高度。
+	// :::tip
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度。 :::tip
-	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
+	// 长边长度。
+	// :::tip
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，参数生效，反之则不生效。
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
 	// 转码配置名称。
 	Preset *string `json:"Preset,omitempty"`
 
-	// 是否极智超清转码，取值及含义如下。
+	// 转码类型是否为极智超清转码，默认值为 false，取值及含义如下。
 	// * true：极智超清转码；
 	// * false：标准转码。
+	// :::tip 视频编码格式为 H.266 （Vcodec取值为h266）时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
 	// 短边长度。 :::tip
@@ -11344,28 +10946,31 @@ type ListVhostTransCodePresetResResultCommonPresetListItemTranscodePreset struct
 	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为 s，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	// 转码停止时长，支持触发方式为拉流转码（TransType 取值为 Pull）时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
 	StopInterval *int32 `json:"StopInterval,omitempty"`
 
 	// 转码流后缀名。
 	SuffixName *string `json:"SuffixName,omitempty"`
 
-	// 转码触发方式，取值及含义如下。
+	// 转码触发方式，支持的取值及含义如下。
 	// * Push：推流转码，直播推流后会自动启动转码任务，生成转码流；
 	// * Pull：拉流转码，直播推流后，需要主动播放转码流才会启动转码任务，生成转码流。
 	TransType *string `json:"TransType,omitempty"`
 
-	// 视频编码格式。
-	// * h264：使用 H.264 编码格式；
-	// * h265：使用 H.265 编码格式；
-	// * h266：使用 H.266 编码格式；
-	// * copy：不进行转码，所有视频编码参数不生效。
+	// 视频编码格式，支持的取值及含义如下所示。
+	// * h264：使用 H.264 视频编码格式；
+	// * h265：使用 H.265 视频编码格式；
+	// * h266：使用 H.266 视频编码格式；
+	// * copy：不进行视频转码，所有视频编码参数不生效，视频编码参数包括视频帧率（FPS）、视频码率（VideoBitrate）、分辨率设置（As、Width、Height、ShortSide、LongSide）、GOP 和 BFrames
+	// 等。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
 	// 视频码率，单位为 kbps。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度。
+	// 视频宽度。 :::tip
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -11483,7 +11088,7 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 
 type ListVhostWatermarkPresetBody struct {
 
-	// REQUIRED; 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11527,10 +11132,10 @@ type ListVhostWatermarkPresetResResult struct {
 	// 统计消息，提供查询成功和失败的数量。
 	StaticsMsg *string `json:"StaticsMsg,omitempty"`
 
-	// 获取模板失败的列表，返回获取失败的模版及获取失败的原因。
+	// 获取配置失败的列表，返回获取失败的配置信息及获取失败的原因。
 	WatermarkErrMsgList []*ListVhostWatermarkPresetResResultWatermarkErrMsgListItem `json:"WatermarkErrMsgList,omitempty"`
 
-	// 水印模版列表。
+	// 水印配置列表。
 	WatermarkPresetList []*ListVhostWatermarkPresetResResultWatermarkPresetListItem `json:"WatermarkPresetList,omitempty"`
 }
 
@@ -11560,12 +11165,12 @@ type ListVhostWatermarkPresetResResultWatermarkPresetListItem struct {
 	// 水印模版 ID。
 	ID *int32 `json:"ID,omitempty"`
 
-	// 直播画面方向。
+	// 需要添加水印的直播画面方向。
 	// * vertical：竖屏；
 	// * horizontal：横屏。
 	Orientation *string `json:"Orientation,omitempty"`
 
-	// 水印图片链接。
+	// 水印图片编码字符串。
 	Picture *string `json:"Picture,omitempty"`
 
 	// 水印图片文件名。
@@ -11595,64 +11200,16 @@ type ListVhostWatermarkPresetResResultWatermarkPresetListItem struct {
 	// 流名称。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
-}
-
-type ListVqosMetricsDimensionsQuery struct {
-
-	// REQUIRED
-	VqosService string `json:"VqosService" query:"VqosService"`
-}
-
-type ListVqosMetricsDimensionsRes struct {
-
-	// REQUIRED
-	ResponseMetadata ListVqosMetricsDimensionsResResponseMetadata `json:"ResponseMetadata"`
-
-	// REQUIRED
-	Result []ListVqosMetricsDimensionsResResultItem `json:"Result"`
-}
-
-type ListVqosMetricsDimensionsResResponseMetadata struct {
-
-	// REQUIRED
-	RequestID string `json:"RequestId"`
-}
-
-type ListVqosMetricsDimensionsResResultItem struct {
-	Dimensions []*ComponentsFceumsSchemasListvqosmetricsdimensionsresPropertiesResultItemsPropertiesDimensionsItems `json:"Dimensions,omitempty"`
-	Metrics    []*ListVqosMetricsDimensionsResResultPropertiesItemsItem                                             `json:"Metrics,omitempty"`
-	Service    *string                                                                                              `json:"Service,omitempty"`
-}
-
-type ListVqosMetricsDimensionsResResultPropertiesItemsItem struct {
-
-	// REQUIRED
-	Alias string `json:"Alias"`
-
-	// REQUIRED
-	Attached string `json:"Attached"`
-
-	// REQUIRED
-	Attribute string `json:"Attribute"`
-
-	// REQUIRED
-	Desc string `json:"Desc"`
-
-	// REQUIRED
-	Name string `json:"Name"`
-
-	// REQUIRED
-	Type string `json:"Type"`
 }
 
 type ListWatermarkPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间名称。由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -11704,21 +11261,21 @@ type ListWatermarkPresetResResultPreset struct {
 	// 应用名称。
 	App *string `json:"App,omitempty"`
 
-	// 水印模版 ID。
+	// 水印配置的 ID。
 	ID *int32 `json:"ID,omitempty"`
 
-	// 直播画面方向。
+	// 需要添加水印的直播画面方向。
 	// * vertical：竖屏；
 	// * horizontal：横屏。
 	Orientation *string `json:"Orientation,omitempty"`
 
-	// 水印图片链接。
+	// 水印图片编码字符串。
 	Picture *string `json:"Picture,omitempty"`
 
 	// 水印图片文件名。
 	PictureKey *string `json:"PictureKey,omitempty"`
 
-	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入，同时传入时，以水印图片字符串参数为准。
+	// 水印图片对应的 HTTP 地址。与水印图片编码字符串字段二选一传入，同时传入时，以水印图片编码字符串参数为准。
 	PictureURL *string `json:"PictureURL,omitempty"`
 
 	// 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
@@ -11742,13 +11299,13 @@ type ListWatermarkPresetResResultPreset struct {
 	// 流名称。
 	Stream *string `json:"Stream,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
 type RestartPullToPushTaskBody struct {
 
-	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取。
+	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取状态为停用的任务 ID。
 	TaskID string `json:"TaskId"`
 }
 
@@ -11784,6 +11341,48 @@ type RestartPullToPushTaskResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type RestartTranscodingJobQuery struct {
+
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App" query:"App"`
+
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	Stream string `json:"Stream" query:"Stream"`
+
+	// REQUIRED; 转码配置的后缀，需去除转码后缀前的下划线（_）。如您配置的转码后缀为_hd，此处应传入hd。
+	TranscodingTemplate string `json:"TranscodingTemplate" query:"TranscodingTemplate"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost" query:"Vhost"`
+}
+
+type RestartTranscodingJobRes struct {
+
+	// REQUIRED
+	ResponseMetadata RestartTranscodingJobResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type RestartTranscodingJobResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
 }
 
 type ResumeStreamBody struct {
@@ -11836,39 +11435,6 @@ type ResumeStreamResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
-type StopPullCDNSnapshotTaskBody struct {
-
-	// REQUIRED; 任务id
-	TaskID string `json:"TaskId"`
-}
-
-type StopPullCDNSnapshotTaskRes struct {
-
-	// REQUIRED
-	ResponseMetadata StopPullCDNSnapshotTaskResResponseMetadata `json:"ResponseMetadata"`
-
-	// 视请求的接口而定
-	Result interface{} `json:"Result,omitempty"`
-}
-
-type StopPullCDNSnapshotTaskResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
 type StopPullRecordTaskBody struct {
 
 	// REQUIRED; 停止任务的TaskId
@@ -11904,7 +11470,7 @@ type StopPullRecordTaskResResponseMetadata struct {
 
 type StopPullToPushTaskBody struct {
 
-	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取。
+	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取状态为未开始或生效中的任务 ID。
 	TaskID string `json:"TaskId"`
 }
 
@@ -11942,9 +11508,106 @@ type StopPullToPushTaskResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type TranscodingJobStatusQuery struct {
+
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App" query:"App"`
+
+	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同，默认为空表示查询所有流名称。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	Stream string `json:"Stream" query:"Stream"`
+
+	// REQUIRED; 转码配置的后缀，需去除转码后缀前的下划线（_）。如您配置的转码后缀为_hd，此处应传入hd。
+	TranscodingTemplate string `json:"TranscodingTemplate" query:"TranscodingTemplate"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost" query:"Vhost"`
+}
+
+type TranscodingJobStatusRes struct {
+
+	// REQUIRED
+	ResponseMetadata TranscodingJobStatusResResponseMetadata `json:"ResponseMetadata"`
+	Result           *TranscodingJobStatusResResult          `json:"Result,omitempty"`
+}
+
+type TranscodingJobStatusResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type TranscodingJobStatusResResult struct {
+
+	// REQUIRED; 转码任务记录信息。
+	Data []TranscodingJobStatusResResultDataItem `json:"Data"`
+}
+
+type TranscodingJobStatusResResultDataItem struct {
+
+	// 本次转码任务的开始时间，Unix 时间戳，单位为秒。
+	StartTime *int32 `json:"StartTime,omitempty"`
+
+	// 本次转码任务的状态，取值及含义如下所示。
+	// * init：转码任务初始化中；
+	// * fetched：转码任务调度中；
+	// * pending：转码任务即将开始；
+	// * doing：转码任务进行中；
+	// * prestop：转码任务即将结束；
+	// * done：转码任务已结束。
+	Status *string `json:"Status,omitempty"`
+}
+
+type UnBindEncryptDRMBody struct {
+
+	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	App string `json:"App"`
+
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	Vhost string `json:"Vhost"`
+}
+
+type UnBindEncryptDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata UnBindEncryptDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UnBindEncryptDRMResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type UnbindCertBody struct {
 
-	// REQUIRED; 填写需要解绑 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要解绑证书的域名。
+	// REQUIRED; 填写需要解绑 HTTPS 证书的域名。 您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要解绑证书的域名。
 	Domain string `json:"Domain"`
 }
 
@@ -11998,9 +11661,8 @@ type UpdateAuthKeyBody struct {
 	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
 	App *string `json:"App,omitempty"`
 
-	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
-	// :::tip 参数 Domain 和 Vhost
-	// 传且仅传一个。 :::
+	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 是否开启 URL 地址鉴权，取值及含义如下所示。
@@ -12011,8 +11673,9 @@ type UpdateAuthKeyBody struct {
 	// 鉴权生效时长，单位为秒，默认值为 604800，取值范围为 [60,2592000]，超出生效时长后 URL 无法使用。
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
-	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tip 参数
+	// Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -12092,7 +11755,7 @@ type UpdateCallbackBody struct {
 	// 回调消息发送鉴权密钥。 :::tip 如果 AuthEnable 为 true，则密钥必填。 :::
 	AuthKeyPrimary *string `json:"AuthKeyPrimary,omitempty"`
 
-	// 直播流使用的推流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// 直播流使用的推流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	// :::tipVhost和Domain传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
@@ -12108,7 +11771,7 @@ type UpdateCallbackBody struct {
 
 type UpdateCallbackBodyCallbackDetailListItem struct {
 
-	// REQUIRED; 回调类型，支持设置为 HTTP，表示可以使用 HTTP 和 HTTPS 地址接收回调事件。
+	// REQUIRED; 回调类型，返回 HTTP，表示可以使用 HTTP 和 HTTPS 地址接收回调消息。
 	CallbackType string `json:"CallbackType"`
 
 	// REQUIRED; 回调消息接收地址。
@@ -12209,10 +11872,10 @@ type UpdateDenyConfigResResponseMetadataError struct {
 
 type UpdateDomainVhostBody struct {
 
-	// REQUIRED; 待修改所属域名空间的的拉流/推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
+	// REQUIRED; 待修改所属域名空间的的拉流/推流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 
-	// REQUIRED; 目的域名空间，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名所属的域名空间信息。
+	// REQUIRED; 目的域名空间，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名所属的域名空间信息。
 	Vhost string `json:"Vhost"`
 }
 
@@ -12253,6 +11916,60 @@ type UpdateDomainVhostResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type UpdateEncryptDRMBody struct {
+
+	// DRM 证书管理平台 API 访问密钥，获取方法请参见最佳实践-直播 DRM 加密 [https://www.volcengine.com/docs/6469/1219836#在-intertrust-平台创建访问密钥]。
+	APIKey *string `json:"APIKey,omitempty"`
+
+	// 申请 FairPlay 证书过程中 Apple 返回的 ASk（Application Secret Key）字符串。
+	ApplicationSecretKey *string `json:"ApplicationSecretKey,omitempty"`
+
+	// FairPlay 证书文件内容。
+	CertificateFile *string `json:"CertificateFile,omitempty"`
+
+	// FairPlay 证书文件名称。
+	CertificateFileName *string `json:"CertificateFileName,omitempty"`
+
+	// 自定义 FairPlay 证书名称，支持由小写字母（a - z）、数字（0 - 9）和短横线（-）组成，最小长度为 2个字符，最大长度为 128 个字符。FairPlay 证书相关参数的获取方法请参见最佳实践-直播 DRM 加密 [https://www.volcengine.com/docs/6469/1219836#在-apple-官网获取-fairplay-证书]。
+	CertificateName *string `json:"CertificateName,omitempty"`
+
+	// 申请 FairPlay 证书时创建的私钥文件密钥。
+	PrivateKey *string `json:"PrivateKey,omitempty"`
+
+	// 申请 FairPlay 证书时创建的私钥文件内容。
+	PrivateKeyFile *string `json:"PrivateKeyFile,omitempty"`
+
+	// 申请 FairPlay 证书时创建的私钥文件名称。
+	PrivateKeyFileName *string `json:"PrivateKeyFileName,omitempty"`
+}
+
+type UpdateEncryptDRMRes struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateEncryptDRMResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result interface{} `json:"Result"`
+}
+
+type UpdateEncryptDRMResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type UpdateHTTPHeaderConfigBody struct {
 
 	// REQUIRED; 配置完成后是否启用，取值及含义如下所示。
@@ -12268,7 +11985,7 @@ type UpdateHTTPHeaderConfigBody struct {
 	// * 1：回源请求头。
 	Phase int32 `json:"Phase"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 是否保留原 Header 配置，取值及含义如下所示。
@@ -12276,7 +11993,7 @@ type UpdateHTTPHeaderConfigBody struct {
 	// * 1：不保留。
 	BlockOriginal *int32 `json:"BlockOriginal,omitempty"`
 
-	// 拉流域名。默认为空，表示 Vhost 下的全部拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看配置的拉流域名。
+	// 拉流域名。默认为空，表示 Vhost 下的全部拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看配置的拉流域名。
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -12334,20 +12051,22 @@ type UpdateHTTPHeaderConfigResResponseMetadata struct {
 
 type UpdateIPAccessRuleBody struct {
 
-	// REQUIRED; 推/拉流域名。
+	// REQUIRED; 推流域名或拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要配置
+	// IP 访问限制的域名。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; IP 访问限制规则。
 	IPAccessRule UpdateIPAccessRuleBodyIPAccessRule `json:"IPAccessRule"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要配置
+	// IP 访问限制的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 }
 
 // UpdateIPAccessRuleBodyIPAccessRule - IP 访问限制规则。
 type UpdateIPAccessRuleBodyIPAccessRule struct {
 
-	// REQUIRED; 是否开启当前限制，取值及含义如下。
+	// REQUIRED; 是否开启当前限制，取值及含义如下所示。
 	// * true: 开启；
 	// * false: 关闭。
 	Enable bool `json:"Enable"`
@@ -12355,7 +12074,7 @@ type UpdateIPAccessRuleBodyIPAccessRule struct {
 	// REQUIRED; 名单中的 IP 信息。
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; IP 访问限制的类型，取值及含义如下。
+	// REQUIRED; IP 访问限制的类型，取值及含义如下所示。
 	// * allow: 白名单；
 	// * deny: 黑名单。
 	Type string `json:"Type"`
@@ -12415,9 +12134,11 @@ type UpdatePullToPushTaskBody struct {
 	// * 1：从断流处+自然流逝时长处续播。
 	ContinueStrategy *int32 `json:"ContinueStrategy,omitempty"`
 
-	// 点播视频文件循环播放模式，当拉流来源类型为点播视频（Type 为 1）时为必选参数，参数取值及含义如下所示。
-	// * -1：无限循环，至任务结束；
-	// * 0：有限次循环，循环次数为 PlayTimes 取值为准。
+	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时为必选参数，参数取值及含义如下所示。
+	// * -1：无限次循环，至任务结束；
+	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
+	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
+	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流域名，推流地址（DstAddr）为空时必传；反之，则该参数不生效
@@ -12432,7 +12153,7 @@ type UpdatePullToPushTaskBody struct {
 	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下表示不进行偏移。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环（CycleMode为0）时为必选参数。
+	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
 	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
@@ -12449,7 +12170,7 @@ type UpdatePullToPushTaskBody struct {
 	// 推流的流名称，推流地址（DstAddr）为空时必传；反之，则该参数不生效
 	Stream *string `json:"Stream,omitempty"`
 
-	// 拉流转推任务的名称，由 1 到 20 位中文、大小写字母和数字组成，默认为空，表示不修改任务名称。
+	// 拉流转推任务的名称，默认为空表示不配置任务名称。支持由中文、大小写字母（A - Z、a - z）和数字（0 - 9）组成，长度为 1 到 20 各字符。
 	Title *string `json:"Title,omitempty"`
 
 	// 为拉流转推视频添加的水印配置信息。
@@ -12668,13 +12389,10 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamVODParam struct {
 // 至少开启一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 
-	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
+	// 断流等待时长，取值范围[0, 3600]。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
-	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对 HLS 生效。
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12682,29 +12400,26 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
-	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
-	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
-	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
+	// * -1：一直拼接；
+	// * 0：不拼接；
+	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	TOSParam *UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	VODParam *UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam `json:"VODParam,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam - TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 
-	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
-	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
+	// TOS 存储空间，一般使用 CDN 对应的 Bucket。 :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -12712,27 +12427,17 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	// TOS 存储目录，默认为空。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam - VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -12740,28 +12445,25 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
+	// * 支持删除固定路径，如 {App}/{Stream}；
+	// * 不支持以正斜线（/）或者反斜线（\）开头；
+	// * 不支持 “//” 和 “/./” 等字符串；
+	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
+	// * 不支持 “..” 作为文件名；
+	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
-	// 为必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace
+	// 必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
+	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -12769,13 +12471,10 @@ type UpdateRecordPresetV2BodyRecordPresetConfigHlsParamVODParam struct {
 // 至少开启一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 
-	// 实时录制场景下，断流等待时长，单位为秒，默认值为 180，取值范围为 [0,3600]。如果实际断流时间小于断流等待时长，录制任务不会停止；如果实际断流时间大于断流等待时长，录制任务会停止，断流恢复后重新开始一个新的录制任务。
+	// 断流等待时长，取值范围[0, 3600]。
 	ContinueDuration *int32 `json:"ContinueDuration,omitempty"`
 
-	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
-	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流录制单文件录制时长，单位为 s，默认值为 7200，取值范围为 -1，[300,86400]，-1表示一直录制，目前只对 HLS 生效。
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12783,29 +12482,26 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4Param struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制文件时长，单位为 s，取值范围为 [300,21600]。
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
-	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
-	// * -1：一直拼接，表示每次断流都不会影响录制任务，录制完成后生成一个完整的录制文件；
-	// * 0：不拼接，表示每次断流结束录制任务生成一个录制文件，断流恢复重新开始一个新的录制任务；
-	// * 大于 0：拼接容错时间，表示如果断流时间小于拼接容错时间时，则录制任务不会停止，不会生成新的录制文件；如果断流时间大于拼接容错时间，则录制任务停止，断流恢复后重新开始一个新的录制任务。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// 断流拼接间隔时长，对实时录制无效，单位为 s，默认值为 0。支持的取值如下所示。
+	// * -1：一直拼接；
+	// * 0：不拼接；
+	// * 大于 0：断流拼接时间间隔，对 HLS 录制生效。
 	Splice *int32 `json:"Splice,omitempty"`
 
-	// TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	TOSParam *UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam `json:"TOSParam,omitempty"`
 
-	// VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam 配置且配置其中一个。 :::
+	// VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 	VODParam *UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam `json:"VODParam,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam - TOS 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 
-	// TOS 存储对应的 Bucket。例如，存储位置为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 如果使用 TOS 存储，即 TOSParam
-	// 中 Enable 取值为 true 时，Bucket 为必填。 :::
+	// TOS 存储空间，一般使用 CDN 对应的 Bucket。 :::tip 如果 TOSParam 中的 Enable 取值为 true，则 Bucket 必填。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
 	// 是否使用 TOS 存储，默认为 false，取值及含义如下所示。
@@ -12813,27 +12509,17 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置。存储路径为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
+	// TOS 存储目录，默认为空。
 	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
-// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tip 录制文件只能选择一个位置进行存储，即 TOSParam 和 VODParam
-// 配置且配置其中一个。 :::
+// UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam - VOD 存储相关配置。 :::tipTOSParam和VODParam配置且配置其中一个。 :::
 type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 
-	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息，默认为空。
+	// 直播录制文件存储到点播时的视频分类 ID，您可以通过视频点播的ListVideoClassifications [https://www.volcengine.com/docs/4/101661]接口查询视频分类 ID 等信息。
 	ClassificationID *int32 `json:"ClassificationID,omitempty"`
 
 	// 是否使用 VOD 存储，默认为 false，取值及含义如下所示。
@@ -12841,28 +12527,25 @@ type UpdateRecordPresetV2BodyRecordPresetConfigMp4ParamVODParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件的存储位置，最大长度为 200 个字符。默认的存储位置为record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime}，参数格式要求如下所示。
+	// * 支持删除固定路径，如 {App}/{Stream}；
+	// * 不支持以正斜线（/）或者反斜线（\）开头；
+	// * 不支持 “//” 和 “/./” 等字符串；
+	// * 不支持 \b、\t、\n、\v、\f、\r 等字符；
+	// * 不支持 “..” 作为文件名；
+	// * 目录层级至少包含 2 级及以上，如live/{App}/{Stream}。
 	ExactObject *string `json:"ExactObject,omitempty"`
 
-	// 直播录制文件存储到点播时的存储类型，存储类型介绍请参考媒资存储管理 [https://www.volcengine.com/docs/4/73629#媒资存储]。默认值为 1，支持的取值及含义如下所示。
+	// 直播录制文件存储到点播时的存储类型。默认值为 1，支持的取值及含义如下所示。
 	// * 1：标准存储；
 	// * 2：归档存储。
 	StorageClass *int32 `json:"StorageClass,omitempty"`
 
-	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果使用 VOD 存储，即 VODParam 中 Enable 取值为 true 时，VodNamespace
-	// 为必填。 :::
+	// 视频点播（VOD）空间名称。可登录视频点播控制台 [https://console.volcengine.com/vod/]查询。 :::tip 如果 VODParam 中的 Enable 取值为 true，则 VodNamespace
+	// 必填。 :::
 	VodNamespace *string `json:"VodNamespace,omitempty"`
 
-	// 视频点播工作流模板 ID，对于存储在点播的录制文件，会使用该工作流模版对录制的视频进行处理，可登录视频点播控制台 [https://console.volcengine.com/vod/]获取工作流模板 ID，默认为空。
+	// 工作流模版 ID，对于存储在点播的录制文件，会使用该工作流模版对视频进行处理。可登录视频点播控制台 [https://console.volcengine.com/vod/]获取 ID。
 	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
@@ -12910,16 +12593,15 @@ type UpdateRefererBody struct {
 	// * 单次请求最多支持配置 100 个 Referer 规则。 :::
 	RefererInfoList []UpdateRefererBodyRefererInfoListItem `json:"RefererInfoList"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。 :::tip
 	// 参数 Domain 和 App 传且仅传一个。 :::
 	App *string `json:"App,omitempty"`
 
-	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
-	// :::tip 参数 Domain 和 App
-	// 传且仅传一个。 :::
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的拉流域名。
+	// :::tip 参数 Domain 和 App 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 }
 
@@ -12982,7 +12664,7 @@ type UpdateRelaySourceV3Body struct {
 	// REQUIRED; 回源组配置详情。
 	GroupDetails []UpdateRelaySourceV3BodyGroupDetailsItem `json:"GroupDetails"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
 
 	// 应用名称，即直播流地址的AppName字段取值，默认为空，表示为当前域名空间的全局播放触发回源配置。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
@@ -13050,10 +12732,10 @@ type UpdateRelaySourceV3ResResponseMetadataError struct {
 
 type UpdateRelaySourceV4Body struct {
 
-	// REQUIRED; 应用名称，即直播流地址的AppName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 应用名称，拉流域名，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待更新固定回源配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看直播流使用的域名。
+	// REQUIRED; 拉流域名，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待更新固定回源配置的 Domain 取值。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 回源地址列表，支持 RTMP、FLV、HLS 和 SRT 回源协议。
@@ -13062,7 +12744,7 @@ type UpdateRelaySourceV4Body struct {
 	// * 最多支持添加 10 个回源地址，回源失败时，将按照您添加的地址顺序轮循尝试。 :::
 	SrcAddrS []string `json:"SrcAddrS"`
 
-	// REQUIRED; 流名称，即直播流地址的StreamName字段取值，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、字母、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// REQUIRED; 流名称，您可以调用ListRelaySourceV4 [https://www.volcengine.com/docs/6469/1126878]接口，获取待更新固定回源配置的 Domain 取值。
 	Stream string `json:"Stream"`
 
 	// 结束时间，Unix 时间戳，单位为秒。 :::tip
@@ -13115,10 +12797,11 @@ type UpdateRelaySourceV4ResResponseMetadataError struct {
 
 type UpdateSnapshotAuditPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 截图审核配置的名称，您可以通过调用查询截图审核配置列表 [https://www.volcengine.com/docs/6469/1126870]接口获取。
+	// REQUIRED; 截图审核配置名称，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 PresetName
+	// 取值。
 	PresetName string `json:"PresetName"`
 
 	// ToS 存储对应的 Bucket。 :::tip 参数 Bucket 和 ServiceID 传且仅传一个。 :::
@@ -13127,10 +12810,11 @@ type UpdateSnapshotAuditPresetBody struct {
 	// 截图审核配置的描述。
 	Description *string `json:"Description,omitempty"`
 
-	// 推流域名。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 推流域名，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 Domain 取值。 :::tip 参数
+	// Domain 和 Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
 
-	// 截图间隔时间，单位秒，取值范围为[0.1,10]，支持保留两位小数。
+	// 截图间隔时间，单位为秒，取值范围为 [0.1,10]，支持保留两位小数。
 	Interval *float32 `json:"Interval,omitempty"`
 
 	// 审核标签，缺省情况下取值为 301、302、302、305 和 306，支持的取值及含义如下。
@@ -13161,7 +12845,8 @@ type UpdateSnapshotAuditPresetBody struct {
 	// * 1：全部存储，存储全部图片。
 	StorageStrategy *int32 `json:"StorageStrategy,omitempty"`
 
-	// 域名空间名称。 :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
+	// 域名空间，您可以调用ListVhostSnapshotAuditPreset [https://www.volcengine.com/docs/6469/1126870]接口，获取待删除截图配置的 Vhost 取值。 :::tip 参数
+	// Domain 和 Vhost 传且仅传一个。 :::
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -13291,19 +12976,19 @@ type UpdateSnapshotPresetResResponseMetadataError struct {
 
 type UpdateSnapshotPresetV2Body struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858]接口，获取待更新截图配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 截图配置的名称。
+	// REQUIRED; 截图配置的名称，您可以调用 ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858] 接口获取，取值与 Name 字段取值相同。
 	Preset string `json:"Preset"`
 
 	// REQUIRED; 截图配置的详细参数配置。
 	SnapshotPresetConfig UpdateSnapshotPresetV2BodySnapshotPresetConfig `json:"SnapshotPresetConfig"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，您可以调用 ListVhostSnapshotPresetV2 [https://www.volcengine.com/docs/6469/1208858] 接口，获取待更新截图配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
-	// 截图配置生效状态，默认为生效。
+	// 截图配置生效状态，默认及含义如下所示。
 	// * 1：生效；
 	// * 0：不生效。
 	Status *int32 `json:"Status,omitempty"`
@@ -13326,8 +13011,8 @@ type UpdateSnapshotPresetV2BodySnapshotPresetConfig struct {
 // :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
 
-	// 当前格式的截图配置是否开启，默认为 false，取值及含义如下所示。
-	// * false：不开启；
+	// 当前格式的截图配置是否开启，取值及含义如下所示。
+	// * false：（默认值）不开启；
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -13342,8 +13027,8 @@ type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParam struct {
 // 配置且配置其中一个。 :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamImageXParam struct {
 
-	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
+	// 截图是否使用 veImageX 存储，取值及含义如下所示。
+	// * false：（默认值）不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -13367,8 +13052,8 @@ type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 	// 为必填项。 :::
 	Bucket *string `json:"Bucket,omitempty"`
 
-	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
+	// 截图是否使用 TOS 存储，取值及含义如下所示。
+	// * false：（默认值）不使用；
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
@@ -13387,63 +13072,24 @@ type UpdateSnapshotPresetV2BodySnapshotPresetConfigJPEGParamTOSParam struct {
 // UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam - 截图格式为 JPG 时的截图参数，开启 JPG 截图时设置。 :::tip JPEG 截图和 JPG 截图必须开启且只能开启一个。
 // :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParam struct {
-
-	// 当前格式的截图配置是否开启，默认为 false，取值及含义如下所示。
-	// * false：不开启；
-	// * true：开启。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
+	Enable      *bool                                                              `json:"Enable,omitempty"`
 	ImageXParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam `json:"ImageXParam,omitempty"`
-
-	// 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
-	TOSParam *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam `json:"TOSParam,omitempty"`
+	TOSParam    *UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam    `json:"TOSParam,omitempty"`
 }
 
-// UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam
-// 配置且配置其中一个。 :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamImageXParam struct {
-
-	// 截图是否使用 veImageX 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
-	// * true：使用。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、*" 及占位符。 :::tip 参数 ExactObject 和
-	// OverwriteObject 传且仅传一个。 :::
-	ExactObject *string `json:"ExactObject,omitempty"`
-
-	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
-	// 传且仅传一个。 :::
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-
-	// 使用 veImageX 存储截图时，对应的 veImageX 的服务 ID。 :::tip 使用 veImageX 存储时 ServiceID 为必填项。 :::
-	ServiceID *string `json:"ServiceID,omitempty"`
+	ServiceID       *string `json:"ServiceID,omitempty"`
 }
 
-// UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam - 截图存储到 TOS 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。
-// :::
 type UpdateSnapshotPresetV2BodySnapshotPresetConfigJpgParamTOSParam struct {
-
-	// TOS 存储对应的 Bucket。 例如，存储路径为 live-test-tos-example/live/liveapp 时，Bucket 取值为 live-test-tos-example。 :::tip 使用 TOS 存储时 Bucket
-	// 为必填项。 :::
-	Bucket *string `json:"Bucket,omitempty"`
-
-	// 截图是否使用 TOS 存储，默认为 false，取值及含义如下所示。
-	// * false：不使用；
-	// * true：使用。
-	Enable *bool `json:"Enable,omitempty"`
-
-	// 存储方式为实时存储时的存储规则，支持以 {Domain}/{App}/{Stream}/{UnixTimestamp} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和
-	// OverwriteObject 传且仅传一个。 :::
-	ExactObject *string `json:"ExactObject,omitempty"`
-
-	// 存储方式为覆盖截图时的存储规则，支持以 {Domain}/{App}/{Stream} 样式设置存储规则，支持输入字母、数字、-、!、_、.、* 及占位符。 :::tip 参数 ExactObject 和 OverwriteObject
-	// 传且仅传一个。 :::
+	Bucket          *string `json:"Bucket,omitempty"`
+	Enable          *bool   `json:"Enable,omitempty"`
+	ExactObject     *string `json:"ExactObject,omitempty"`
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
-
-	// Bucket 目录，默认为空。 例如，存储路径为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
-	StorageDir *string `json:"StorageDir,omitempty"`
+	StorageDir      *string `json:"StorageDir,omitempty"`
 }
 
 type UpdateSnapshotPresetV2Res struct {
@@ -13475,7 +13121,7 @@ type UpdateSnapshotPresetV2ResResponseMetadata struct {
 
 type UpdateStreamQuotaConfigBody struct {
 
-	// REQUIRED; 需要配置限额的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console-stable.volcanicengine.com/live/main/domain/list]页面，查看域名信息。
+	// REQUIRED; 需要配置限额的推流域名或拉流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看域名信息。
 	Domain string `json:"Domain"`
 
 	// REQUIRED; 限额配置详情。
@@ -13568,7 +13214,7 @@ type UpdateStreamQuotaConfigResResponseMetadataError struct {
 
 type UpdateTimeShiftPresetV3Body struct {
 
-	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待更新时移配置的 App 取值。
+	// REQUIRED; 应用名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]接口，获取待更新时移配置的App取值。
 	App string `json:"App"`
 
 	// REQUIRED; 最大时移时长，即允许用户回看的最长时间，单位为秒，支持的取值如下所示。
@@ -13578,11 +13224,10 @@ type UpdateTimeShiftPresetV3Body struct {
 	// * 1296000：15 天。
 	MaxShiftTime int32 `json:"MaxShiftTime"`
 
-	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883] 接口，获取待更新时移配置的 Vhost 取值。
+	// REQUIRED; 域名空间名称，您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]接口，获取待更新时移配置的Vhost取值。
 	Vhost string `json:"Vhost"`
 
-	// 开启时移的流名称，默认为空表示更新 App 级别的时移配置，不为空时表示更新 Stream 级别的时移配置。您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]
-	// 接口，获取待更新时移配置的 Stream 取值并进行更新。
+	// 开启时移的流名称，默认为空表示更新 App 级别的时移配置，不为空时表示更新 Stream 级别的时移配置。您可以调用ListTimeShiftPresetV2 [https://www.volcengine.com/docs/6469/1126883]接口，获取待更新时移配置的Stream取值并进行更新。
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -13625,111 +13270,109 @@ type UpdateTimeShiftPresetV3ResResponseMetadataError struct {
 
 type UpdateTranscodePresetBody struct {
 
-	// REQUIRED; 转码配置的名称。
+	// REQUIRED; 转码配置的名称，您可以调用ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853]接口查看待更新转码配置的Preset取值。
 	Preset string `json:"Preset"`
 
-	// REQUIRED; 域名空间名称。
+	// REQUIRED; 域名空间，您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查看待更新转码配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
-	// 音频编码格式，支持以下 3 种类型。
-	// * aac：使用 AAC 编码格式；
-	// * copy：不进行转码，所有音频编码参数不生效；
-	// * opus：使用 Opus 编码格式。
+	// 音频编码格式，默认值为aac，支持的取值及含义如下所示。
+	// * aac：使用 AAC 音频编码格式；
+	// * opus：使用 Opus 音频编码格式。
+	// * copy：不进行音频转码，所有音频编码参数不生效，音频编码参数包括音频码率（AudioBitrate）等。
 	Acodec *string `json:"Acodec,omitempty"`
 
-	// 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// 应用名称，取值与直播流地址的 AppName 字段取值相同，您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853] 接口查看待更新转码配置的
+	// App 取值。
 	App *string `json:"App,omitempty"`
 
-	// 宽高自适应模式开关，默认值为 0。支持的取值及含义如下。
-	// * 0：关闭宽高自适应
-	// * 1：开启宽高自适应 :::tip
-	// * 关闭宽高自适应时，转码配置分辨率取 Width 和 Height 的值对转码视频进行拉伸；
-	// * 开启宽高自适应时，转码配置分辨率按照 ShortSide 、 LongSide 、Width 、Height 的优先级取值，另一边等比缩放。
-	// * 修改 As 为 0 时，请确认 Width 和 Height 的取值是否超出阈值；
-	// * 修改 As 为 1 时，请确认 ShortSide 和 LongSide 的取值是否超出阈值。 :::
+	// 视频分辨率自适应模式开关，默认值为 0。支持的取值及含义如下。
+	// * 0：关闭视频分辨率自适应；
+	// * 1：开启视频分辨率自适应。 :::tip
+	// * 关闭视频分辨率自适应模式（As 取值为 0）时，转码配置的视频分辨率取视频宽度（Width）和视频高度（Height）的值对转码视频进行拉伸；
+	// * 开启视频分辨率自适应模式（As 取值为 1）时，转码配置的视频分辨率按照短边长度（ShortSide）、长边长度（LongSide）、视频宽度（Width）、视频高度（Height）的优先级取值，另一边等比缩放。 :::
 	As *string `json:"As,omitempty"`
 
-	// 音频码率，单位为 kbps。
+	// 音频码率，单位为 kbps，默认值为128，取值范围为 [0,1000]；取值为0时，表示与源流的音频码率相同。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
-	// 是否开启转码不超过源流分辨率。开启后，当源流分辨率低于转码配置分辨率时(即源流宽低于转码配置宽且源流高低于转码配置高时)，将按源流视频分辨率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频分辨率不超过源流分辨率，默认值为 1 表示开启。开启后，当源流分辨率低于转码配置分辨率时（即源流宽低于转码配置宽且源流高低于转码配置高时），将按源流视频分辨率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransResolution *int32 `json:"AutoTransResolution,omitempty"`
 
-	// 是否开启不超过源流码率。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频码率不超过源流码率，默认值为 1 表示开启。开启后，当源流码率低于转码配置码率时，将按照源流视频码率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVb *int32 `json:"AutoTransVb,omitempty"`
 
-	// 是否开启不超过源流帧率。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码，默认开启。
-	// * 0：关闭
-	// * 1：开启
+	// 是否开启转码视频帧率不超过源流帧率，默认值为 1 表示开启。开启后，当源流帧率低于转码配置帧率时，将按照源流视频帧率进行转码。
+	// * 0：关闭；
+	// * 1：开启。
 	AutoTransVr *int32 `json:"AutoTransVr,omitempty"`
 
-	// 2 个参考帧之间的最大 B 帧数，默认值为 3。配置不同的视频编码格式时，最大 B 帧数的取值存在如下差异。
-	// * H.264：取值范围为 [0,7]；
-	// * H.265：取值范围为 [0,3]、7、15；
-	// * H.266：取值范围为 [0,3]、7、15。
-	// 取值为 0 时，表示去除 B 帧。
+	// 转码输出视频中 2 个参考帧之间的最大 B 帧数量，默认值为 3，取值为 0 时表示去除 B 帧。
+	// 最大 B 帧数量的取值范围根据视频编码格式（Vcodec）的不同有所差异，取值范围如下所示。
+	// * 视频编码格式为 H.264 （Vcodec 取值为 h264）时取值范围为 [0,7]；
+	// * 视频编码格式为 H.265 或 H.266 （Vcodec 取值为 h265 或 h266）时取值范围为 [0,3]、7、15。
 	BFrames *int32 `json:"BFrames,omitempty"`
 
-	// 视频帧率，单位为 fps，默认值为 25，帧率越大，画面越流畅。 配置不同视频编码格式时，视频帧率的取值存在如下差异。
-	// * H.264：取值范围为 [0,60]；
-	// * H.265：取值范围为 [0,60]；
-	// * H.266：取值范围为 [0,35]。
+	// 视频帧率，单位为 fps，默认值为 25，取值为 0 时表示与源流视频帧率相同。
+	// 视频帧率的取值范围根据视频编码格式（Vcodec）的不同有所差异，视频码率的取值范围如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，视频帧率取值范围为 [0,60]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，视频帧率取值范围为 [0,35]。
 	FPS *int32 `json:"FPS,omitempty"`
 
-	// IDR 帧之间的最大间隔，单位为秒，默认值为 4，取值范围为 [1,20]。
+	// IDR 帧之间的最大间隔时间，单位为秒，默认值为 4，取值范围为 [1,20]。
 	GOP *int32 `json:"GOP,omitempty"`
 
-	// 视频高度，默认值为 0。配置不同视频编码格式时，视频高度的取值存在如下差异。
-	// * H.264：取值范围为 [150,1920]；
-	// * H.265：取值范围为 [150,1920]。
+	// 视频高度，默认值为 0。
+	// 视频高度的取值范围根据视频编码格式（Vcodec）的不同所有差异，视频高度取值如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，取值范围为 [150,1920]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，不支持设置 Width 和 Height。
 	// :::tip
-	// * 当 As 的取值为 0 时，参数生效；反之则不生效；
-	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Height *int32 `json:"Height,omitempty"`
 
-	// 长边长度，配置不同的视频编码方式和转码类型时，长边长度的取值范围存在如下差异。
-	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,4096]；
-	// * H.265：取值范围为 0 和 [150,7680]；
-	// * H.266：取值范围为 0 和 [150,1280]。
+	// 长边长度，默认值为 0。配置不同的转码类型（Roi）和视频编码方式（Vcodec）时，短边长度的取值范围存在如下。
+	// * 转码类型为标准转码（Roi 取值为 false）时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）时取值范围为 0 和 [150,4096]；
+	// * 视频编码方式为 H.265 （Vcodec 取值为 h265）时取值范围为 0 和 [150,7680]；
+	// * 视频编码方式为 H.266 （Vcodec 取值为 h266）时取值范围为 0 和 [150,1280]。
 	//
 	//
-	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
-	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	// * 转码类型为极智超清转码（Roi 取值为 true）时： * 视频编码方式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时取值范围为 0 和 [150,1920]。
 	//
 	//
-	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
+	// :::tip
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，参数生效，反之则不生效。
+	// * 当开启视频分辨率自适应模式时（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	LongSide *int32 `json:"LongSide,omitempty"`
 
-	// 是否极智超清转码，取值及含义如下。
+	// 转码类型是否为极智超清转码，默认值为 false，取值及含义如下。
 	// * true：极智超清转码；
-	// * false：标准转码。 :::tip
-	// * 修改 Roi 为 true，且 As 为 1 时，请确认 ShortSide 和 LongSide 的取值是否超出阈值。
-	// * 视频编码格式为 H.266 时，转码类型不支持极智超清转码。 :::
+	// * false：标准转码。
+	// :::tip 视频编码格式为 H.266 （Vcodec取值为h266）时，转码类型不支持极智超清转码。 :::
 	Roi *bool `json:"Roi,omitempty"`
 
-	// 短边长度，配置不同的视频编码方式和转码类型时，短边长度的取值范围存在如下差异。
-	// * Roi 取 false 时： * H.264：取值范围为 0 和 [150,2160]；
-	// * H.265：取值范围为 0 和 [150,4096]；
-	// * H.266：取值范围为 0 和 [150,720]。
+	// 短边长度，默认值为 0。配置不同的转码类型（Roi）和视频编码方式（Vcodec）时，短边长度的取值范围存在如下。
+	// * 转码类型为标准转码（Roi 取值为 false）时： * 视频编码方式为 H.264 （Vcodec 取值为 h264）时取值范围为 0 和 [150,2160]；
+	// * 视频编码方式为 H.265 （Vcodec 取值为 h265）时取值范围为 0 和 [150,4096]；
+	// * 视频编码方式为 H.266 （Vcodec 取值为 h266）时取值范围为 0 和 [150,720]。
 	//
 	//
-	// * Roi 取 true 时： * H.264：取值范围为 0 和 [150,1920]；
-	// * H.265：取值范围为 0 和 [150,1920]。 :::tip
+	// * 转码类型为极智超清转码（Roi 取值为 true）时： * 视频编码方式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时取值范围为 0 和 [150,1920]。 :::tip
 	//
 	//
-	// * 当 As 的取值为 1 即开启宽高自适应时，参数生效，反之则不生效。
-	// * 当 As 的取值为 1 时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
+	// * 当开启视频分辨率自适应模式（As 取值为 1）时，参数生效，反之则不生效。
+	// * 当开启视频分辨率自适应模式（As 取值为 1）时，如果 LongSide 、 ShortSide 、Width 、Height 同时取 0，表示保持源流尺寸。 :::
 	ShortSide *int32 `json:"ShortSide,omitempty"`
 
-	// 转码停止时长，支持触发方式为拉流转码时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
+	// 转码停止时长，支持触发方式为拉流转码（TransType 取值为 Pull）时设置，表示断开拉流后转码停止的时长，单位为秒，取值范围为 -1 和 [0,300]，-1 表示不停止转码，默认值为 60。
 	StopInterval *int32 `json:"StopInterval,omitempty"`
 
-	// 转码流后缀名。支持 10 个字符以内的大小写字母、下划线与中划线，常见后缀包括：sd、hd、uhd。 例如，配置的转码流后缀名为hd，则拉转码流时转码的流名为 stream-123456789_hd。
+	// 转码后缀，支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）和短横线（-）组成，长度为 1 到 10 个字符。
+	// 转码后缀通常以流名称后缀的形式来使用，常见的标识有 _sd、_hd、_uhd，例如，当转码配置的标识为 _hd 时，拉取转码流时转码流的流名名称为 源流的流名称_hd。
 	SuffixName *string `json:"SuffixName,omitempty"`
 
 	// 转码触发方式，默认值为 Pull，支持的取值及含义如下。
@@ -13738,25 +13381,26 @@ type UpdateTranscodePresetBody struct {
 	TransType *string `json:"TransType,omitempty"`
 
 	// 视频编码格式，支持的取值及含义如下所示。
-	// * h264：使用 H.264 编码格式；
-	// * h265：使用 H.265 编码格式；
-	// * h266：使用 H.266 编码格式；
-	// * copy：不进行转码，所有视频编码参数不生效。
+	// * h264：使用 H.264 视频编码格式；
+	// * h265：使用 H.265 视频编码格式；
+	// * h266：使用 H.266 视频编码格式；
+	// * copy：不进行视频转码，所有视频编码参数不生效，视频编码参数包括视频帧率（FPS）、视频码率（VideoBitrate）、分辨率设置（As、Width、Height、ShortSide、LongSide）、GOP 和 BFrames
+	// 等。
 	Vcodec *string `json:"Vcodec,omitempty"`
 
-	// 视频码率，单位为 bps，默认值为 1000000；取 0 时，表示使用源流码率。 配置不同的视频编码格式时，视频码率的取值范围存在如下差异。
-	// * H.264：取值范围为 [0,30000000]；
-	// * H.265：取值范围为 [0,30000000]；
-	// * H.266：取值范围为 [0,6000000]。
+	// 视频码率，单位为 bps，默认值为 1000000；取值为 0 时，表示与源流的视频码率相同。
+	// 视频码率的取值范围根据视频编码格式（Vcodec）的不同有所差异，视频码率的取值范围如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，视频码率取值范围为 [0,30000000]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，视频码率取值范围为 [0,6000000]。
 	VideoBitrate *int32 `json:"VideoBitrate,omitempty"`
 
-	// 视频宽度，默认值为 0。配置不同视频编码格式时，视频宽度的取值存在如下差异。
-	// * H.264：取值范围为 [150,1920]；
-	// * H.265：取值范围为 [150,1920]。
+	// 视频宽度，单位为 px，默认值为 0。
+	// 视频宽度的取值范围根据视频编码格式（Vcodec）的不同所有差异，视频宽度取值如下所示。
+	// * 视频编码格式为 H.264 或 H.265 （Vcodec 取值为 h264 或 h265）时，取值范围为 [150,1920]；
+	// * 视频编码格式为 H.266 （Vcodec 取值为 h266）时，不支持设置 Width 和 Height。
 	// :::tip
-	// * 当 As 的取值为 0 即关闭宽高自适应时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
-	// * Width 和 Height 任一配置为 0 时，转码视频将保持源流尺寸；
-	// * 编码格式为 H.266 时，不支持设置 Width 和 Height，请使用自适应配置。 :::
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，转码分辨率将取 Width 和 Height 的值对转码视频进行拉伸；
+	// * 当关闭视频分辨率自适应（As 取值为 0）时，Width 和 Height 任一取值为 0 时，转码视频将保持源流尺寸。 :::
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -13797,10 +13441,10 @@ type UpdateTranscodePresetResResponseMetadataError struct {
 
 type UpdateWatermarkPresetBody struct {
 
-	// REQUIRED; 应用名称，由 1 到 30 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 应用名称，您可以调用ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889]接口，查看待更新水印配置的 App 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 域名空间名称，由 1 到 60 位数字、字母、下划线及"-"和"."组成。
+	// REQUIRED; 域名空间，您可以调用 ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889] 接口，查看待更新水印配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
 
 	// 直播画面方向，支持 2 种取值。
@@ -13808,13 +13452,13 @@ type UpdateWatermarkPresetBody struct {
 	// * horizontal：横屏。 :::tip 该参数属于历史版本参数，预计将于未来移除。建议使用预览背景高度（PreviewHeight）、预览背景宽度（PreviewWidth）参数代替。 :::
 	Orientation *string `json:"Orientation,omitempty"`
 
-	// 水印图片链接，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片使用 data URI 协议，格式为：data:[<mediatype>];[base64],<data>。
+	// 水印图片编码字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片使用 data URI 协议，格式为：data:[<mediatype>];[base64],<data>。
 	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；
 	// * data：base64 编码的图片字符串。
 	// :::warning 如果水印图片不更新，请勿在更新配置时传入该参数，否则会造成水印无法显示。 :::
 	Picture *string `json:"Picture,omitempty"`
 
-	// 水印图片对应的 HTTP 地址。与水印图片字符串字段二选一传入。同时传入时，以水印图片字符串参数为准。 :::warning 如果水印图片不更新，请勿在更新配置时传入该参数，否则会造成水印无法显示。 :::
+	// 水印图片对应的 HTTP 地址。与水印图片编码字符串字段二选一传入。同时传入时，以水印图片编码字符串参数为准。 :::warning 如果水印图片不更新，请勿在更新配置时传入该参数，否则会造成水印无法显示。 :::
 	PictureURL *string `json:"PictureUrl,omitempty"`
 
 	// 水平偏移，表示水印左侧边与转码流画面左侧边之间的距离，使用相对比率，取值范围为 [0,1]。
@@ -13869,53 +13513,10 @@ type UpdateWatermarkPresetResResponseMetadataError struct {
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
 }
-
-type VerifyDomainOwnerBody struct {
-
-	// REQUIRED; 推拉流域名
-	Domain string `json:"Domain"`
-
-	// REQUIRED; 校验方式，取值：
-	// * dnsCheck：DNS验证。
-	// * fileCheck：文件验证。
-	VerifyType string `json:"VerifyType"`
-}
-
-type VerifyDomainOwnerRes struct {
-
-	// REQUIRED
-	ResponseMetadata VerifyDomainOwnerResResponseMetadata `json:"ResponseMetadata"`
-
-	// 视请求的接口而定
-	Result *VerifyDomainOwnerResResult `json:"Result,omitempty"`
-}
-
-type VerifyDomainOwnerResResponseMetadata struct {
-
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
-	Action string `json:"Action"`
-
-	// REQUIRED; 请求的Region，例如：cn-north-1
-	Region string `json:"Region"`
-
-	// REQUIRED; RequestID为每次API请求的唯一标识。
-	RequestID string `json:"RequestId"`
-
-	// REQUIRED; 请求的服务，属于请求的公共参数。
-	Service string `json:"Service"`
-
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
-	Version string `json:"Version"`
-}
-
-// VerifyDomainOwnerResResult - 视请求的接口而定
-type VerifyDomainOwnerResResult struct {
-
-	// REQUIRED; 检查结果
-	CheckResult bool `json:"CheckResult"`
-}
 type BindCert struct{}
 type BindCertQuery struct{}
+type BindEncryptDRM struct{}
+type BindEncryptDRMQuery struct{}
 type CreateCert struct{}
 type CreateCertQuery struct{}
 type CreateDomain struct{}
@@ -13924,8 +13525,6 @@ type CreateDomainV2 struct{}
 type CreateDomainV2Query struct{}
 type CreateLiveStreamRecordIndexFiles struct{}
 type CreateLiveStreamRecordIndexFilesQuery struct{}
-type CreatePullCDNSnapshotTask struct{}
-type CreatePullCDNSnapshotTaskQuery struct{}
 type CreatePullRecordTask struct{}
 type CreatePullRecordTaskQuery struct{}
 type CreatePullToPushTask struct{}
@@ -13944,8 +13543,6 @@ type CreateTimeShiftPresetV3 struct{}
 type CreateTimeShiftPresetV3Query struct{}
 type CreateTranscodePreset struct{}
 type CreateTranscodePresetQuery struct{}
-type CreateVerifyContent struct{}
-type CreateVerifyContentQuery struct{}
 type CreateWatermarkPreset struct{}
 type CreateWatermarkPresetQuery struct{}
 type DeleteCallback struct{}
@@ -13986,6 +13583,8 @@ type DescribeCDNSnapshotHistory struct{}
 type DescribeCDNSnapshotHistoryQuery struct{}
 type DescribeCallback struct{}
 type DescribeCallbackQuery struct{}
+type DescribeCertDRM struct{}
+type DescribeCertDRMBody struct{}
 type DescribeCertDetailSecretV2 struct{}
 type DescribeCertDetailSecretV2Query struct{}
 type DescribeClosedStreamInfoByPage struct{}
@@ -13994,6 +13593,9 @@ type DescribeDenyConfig struct{}
 type DescribeDenyConfigQuery struct{}
 type DescribeDomain struct{}
 type DescribeDomainQuery struct{}
+type DescribeEncryptDRM struct{}
+type DescribeEncryptDRMBody struct{}
+type DescribeEncryptDRMQuery struct{}
 type DescribeForbiddenStreamInfoByPage struct{}
 type DescribeForbiddenStreamInfoByPageBody struct{}
 type DescribeHTTPHeaderConfig struct{}
@@ -14002,8 +13604,8 @@ type DescribeIPAccessRule struct{}
 type DescribeIPAccessRuleQuery struct{}
 type DescribeIPInfo struct{}
 type DescribeIPInfoQuery struct{}
-type DescribeLiveActivityBandwidthData struct{}
-type DescribeLiveActivityBandwidthDataQuery struct{}
+type DescribeLicenseDRM struct{}
+type DescribeLicenseDRMBody struct{}
 type DescribeLiveAuditData struct{}
 type DescribeLiveAuditDataQuery struct{}
 type DescribeLiveBandwidthData struct{}
@@ -14016,12 +13618,6 @@ type DescribeLiveBatchSourceStreamAvgMetrics struct{}
 type DescribeLiveBatchSourceStreamAvgMetricsQuery struct{}
 type DescribeLiveBatchSourceStreamMetrics struct{}
 type DescribeLiveBatchSourceStreamMetricsQuery struct{}
-type DescribeLiveBatchStreamTrafficData struct{}
-type DescribeLiveBatchStreamTrafficDataQuery struct{}
-type DescribeLiveBatchStreamTranscodeData struct{}
-type DescribeLiveBatchStreamTranscodeDataQuery struct{}
-type DescribeLiveCustomizedLogData struct{}
-type DescribeLiveCustomizedLogDataQuery struct{}
 type DescribeLiveISPData struct{}
 type DescribeLiveISPDataBody struct{}
 type DescribeLiveISPDataQuery struct{}
@@ -14066,22 +13662,20 @@ type DescribeLiveStreamSessionData struct{}
 type DescribeLiveStreamSessionDataQuery struct{}
 type DescribeLiveStreamState struct{}
 type DescribeLiveStreamStateBody struct{}
-type DescribeLiveStreamUsageData struct{}
-type DescribeLiveStreamUsageDataQuery struct{}
 type DescribeLiveTimeShiftData struct{}
 type DescribeLiveTimeShiftDataQuery struct{}
 type DescribeLiveTrafficData struct{}
 type DescribeLiveTrafficDataQuery struct{}
 type DescribeLiveTranscodeData struct{}
 type DescribeLiveTranscodeDataQuery struct{}
+type DescribeLiveTranscodeInfoData struct{}
+type DescribeLiveTranscodeInfoDataQuery struct{}
 type DescribeRecordTaskFileHistory struct{}
 type DescribeRecordTaskFileHistoryQuery struct{}
 type DescribeReferer struct{}
 type DescribeRefererQuery struct{}
 type DescribeRelaySourceV3 struct{}
 type DescribeRelaySourceV3Query struct{}
-type DescribeSnapshotAuditPresetDetail struct{}
-type DescribeSnapshotAuditPresetDetailQuery struct{}
 type DescribeStreamQuotaConfig struct{}
 type DescribeStreamQuotaConfigQuery struct{}
 type DisableDomain struct{}
@@ -14096,20 +13690,18 @@ type GeneratePlayURL struct{}
 type GeneratePlayURLQuery struct{}
 type GeneratePushURL struct{}
 type GeneratePushURLQuery struct{}
-type GetPullCDNSnapshotTask struct{}
-type GetPullCDNSnapshotTaskQuery struct{}
 type GetPullRecordTask struct{}
 type GetPullRecordTaskQuery struct{}
 type KillStream struct{}
 type KillStreamQuery struct{}
+type ListBindEncryptDRM struct{}
+type ListBindEncryptDRMQuery struct{}
 type ListCertV2 struct{}
 type ListCertV2Query struct{}
 type ListCommonTransPresetDetail struct{}
 type ListCommonTransPresetDetailQuery struct{}
 type ListDomainDetail struct{}
 type ListDomainDetailQuery struct{}
-type ListPullCDNSnapshotTask struct{}
-type ListPullCDNSnapshotTaskQuery struct{}
 type ListPullRecordTask struct{}
 type ListPullRecordTaskQuery struct{}
 type ListPullToPushTask struct{}
@@ -14130,20 +13722,22 @@ type ListVhostTransCodePreset struct{}
 type ListVhostTransCodePresetQuery struct{}
 type ListVhostWatermarkPreset struct{}
 type ListVhostWatermarkPresetQuery struct{}
-type ListVqosMetricsDimensions struct{}
-type ListVqosMetricsDimensionsBody struct{}
 type ListWatermarkPreset struct{}
 type ListWatermarkPresetQuery struct{}
 type RestartPullToPushTask struct{}
 type RestartPullToPushTaskQuery struct{}
+type RestartTranscodingJob struct{}
+type RestartTranscodingJobBody struct{}
 type ResumeStream struct{}
 type ResumeStreamQuery struct{}
-type StopPullCDNSnapshotTask struct{}
-type StopPullCDNSnapshotTaskQuery struct{}
 type StopPullRecordTask struct{}
 type StopPullRecordTaskQuery struct{}
 type StopPullToPushTask struct{}
 type StopPullToPushTaskQuery struct{}
+type TranscodingJobStatus struct{}
+type TranscodingJobStatusBody struct{}
+type UnBindEncryptDRM struct{}
+type UnBindEncryptDRMQuery struct{}
 type UnbindCert struct{}
 type UnbindCertQuery struct{}
 type UpdateAuthKey struct{}
@@ -14154,6 +13748,8 @@ type UpdateDenyConfig struct{}
 type UpdateDenyConfigQuery struct{}
 type UpdateDomainVhost struct{}
 type UpdateDomainVhostQuery struct{}
+type UpdateEncryptDRM struct{}
+type UpdateEncryptDRMQuery struct{}
 type UpdateHTTPHeaderConfig struct{}
 type UpdateHTTPHeaderConfigQuery struct{}
 type UpdateIPAccessRule struct{}
@@ -14182,11 +13778,13 @@ type UpdateTranscodePreset struct{}
 type UpdateTranscodePresetQuery struct{}
 type UpdateWatermarkPreset struct{}
 type UpdateWatermarkPresetQuery struct{}
-type VerifyDomainOwner struct{}
-type VerifyDomainOwnerQuery struct{}
 type BindCertReq struct {
 	*BindCertQuery
 	*BindCertBody
+}
+type BindEncryptDRMReq struct {
+	*BindEncryptDRMQuery
+	*BindEncryptDRMBody
 }
 type CreateCertReq struct {
 	*CreateCertQuery
@@ -14203,10 +13801,6 @@ type CreateDomainV2Req struct {
 type CreateLiveStreamRecordIndexFilesReq struct {
 	*CreateLiveStreamRecordIndexFilesQuery
 	*CreateLiveStreamRecordIndexFilesBody
-}
-type CreatePullCDNSnapshotTaskReq struct {
-	*CreatePullCDNSnapshotTaskQuery
-	*CreatePullCDNSnapshotTaskBody
 }
 type CreatePullRecordTaskReq struct {
 	*CreatePullRecordTaskQuery
@@ -14243,10 +13837,6 @@ type CreateTimeShiftPresetV3Req struct {
 type CreateTranscodePresetReq struct {
 	*CreateTranscodePresetQuery
 	*CreateTranscodePresetBody
-}
-type CreateVerifyContentReq struct {
-	*CreateVerifyContentQuery
-	*CreateVerifyContentBody
 }
 type CreateWatermarkPresetReq struct {
 	*CreateWatermarkPresetQuery
@@ -14328,6 +13918,10 @@ type DescribeCallbackReq struct {
 	*DescribeCallbackQuery
 	*DescribeCallbackBody
 }
+type DescribeCertDRMReq struct {
+	*DescribeCertDRMQuery
+	*DescribeCertDRMBody
+}
 type DescribeCertDetailSecretV2Req struct {
 	*DescribeCertDetailSecretV2Query
 	*DescribeCertDetailSecretV2Body
@@ -14343,6 +13937,10 @@ type DescribeDenyConfigReq struct {
 type DescribeDomainReq struct {
 	*DescribeDomainQuery
 	*DescribeDomainBody
+}
+type DescribeEncryptDRMReq struct {
+	*DescribeEncryptDRMQuery
+	*DescribeEncryptDRMBody
 }
 type DescribeForbiddenStreamInfoByPageReq struct {
 	*DescribeForbiddenStreamInfoByPageQuery
@@ -14360,9 +13958,9 @@ type DescribeIPInfoReq struct {
 	*DescribeIPInfoQuery
 	*DescribeIPInfoBody
 }
-type DescribeLiveActivityBandwidthDataReq struct {
-	*DescribeLiveActivityBandwidthDataQuery
-	*DescribeLiveActivityBandwidthDataBody
+type DescribeLicenseDRMReq struct {
+	*DescribeLicenseDRMQuery
+	*DescribeLicenseDRMBody
 }
 type DescribeLiveAuditDataReq struct {
 	*DescribeLiveAuditDataQuery
@@ -14387,18 +13985,6 @@ type DescribeLiveBatchSourceStreamAvgMetricsReq struct {
 type DescribeLiveBatchSourceStreamMetricsReq struct {
 	*DescribeLiveBatchSourceStreamMetricsQuery
 	*DescribeLiveBatchSourceStreamMetricsBody
-}
-type DescribeLiveBatchStreamTrafficDataReq struct {
-	*DescribeLiveBatchStreamTrafficDataQuery
-	*DescribeLiveBatchStreamTrafficDataBody
-}
-type DescribeLiveBatchStreamTranscodeDataReq struct {
-	*DescribeLiveBatchStreamTranscodeDataQuery
-	*DescribeLiveBatchStreamTranscodeDataBody
-}
-type DescribeLiveCustomizedLogDataReq struct {
-	*DescribeLiveCustomizedLogDataQuery
-	*DescribeLiveCustomizedLogDataBody
 }
 type DescribeLiveISPDataReq struct {
 	*DescribeLiveISPDataQuery
@@ -14484,10 +14070,6 @@ type DescribeLiveStreamStateReq struct {
 	*DescribeLiveStreamStateQuery
 	*DescribeLiveStreamStateBody
 }
-type DescribeLiveStreamUsageDataReq struct {
-	*DescribeLiveStreamUsageDataQuery
-	*DescribeLiveStreamUsageDataBody
-}
 type DescribeLiveTimeShiftDataReq struct {
 	*DescribeLiveTimeShiftDataQuery
 	*DescribeLiveTimeShiftDataBody
@@ -14500,6 +14082,10 @@ type DescribeLiveTranscodeDataReq struct {
 	*DescribeLiveTranscodeDataQuery
 	*DescribeLiveTranscodeDataBody
 }
+type DescribeLiveTranscodeInfoDataReq struct {
+	*DescribeLiveTranscodeInfoDataQuery
+	*DescribeLiveTranscodeInfoDataBody
+}
 type DescribeRecordTaskFileHistoryReq struct {
 	*DescribeRecordTaskFileHistoryQuery
 	*DescribeRecordTaskFileHistoryBody
@@ -14511,10 +14097,6 @@ type DescribeRefererReq struct {
 type DescribeRelaySourceV3Req struct {
 	*DescribeRelaySourceV3Query
 	*DescribeRelaySourceV3Body
-}
-type DescribeSnapshotAuditPresetDetailReq struct {
-	*DescribeSnapshotAuditPresetDetailQuery
-	*DescribeSnapshotAuditPresetDetailBody
 }
 type DescribeStreamQuotaConfigReq struct {
 	*DescribeStreamQuotaConfigQuery
@@ -14544,10 +14126,6 @@ type GeneratePushURLReq struct {
 	*GeneratePushURLQuery
 	*GeneratePushURLBody
 }
-type GetPullCDNSnapshotTaskReq struct {
-	*GetPullCDNSnapshotTaskQuery
-	*GetPullCDNSnapshotTaskBody
-}
 type GetPullRecordTaskReq struct {
 	*GetPullRecordTaskQuery
 	*GetPullRecordTaskBody
@@ -14555,6 +14133,10 @@ type GetPullRecordTaskReq struct {
 type KillStreamReq struct {
 	*KillStreamQuery
 	*KillStreamBody
+}
+type ListBindEncryptDRMReq struct {
+	*ListBindEncryptDRMQuery
+	*ListBindEncryptDRMBody
 }
 type ListCertV2Req struct {
 	*ListCertV2Query
@@ -14567,10 +14149,6 @@ type ListCommonTransPresetDetailReq struct {
 type ListDomainDetailReq struct {
 	*ListDomainDetailQuery
 	*ListDomainDetailBody
-}
-type ListPullCDNSnapshotTaskReq struct {
-	*ListPullCDNSnapshotTaskQuery
-	*ListPullCDNSnapshotTaskBody
 }
 type ListPullRecordTaskReq struct {
 	*ListPullRecordTaskQuery
@@ -14612,10 +14190,6 @@ type ListVhostWatermarkPresetReq struct {
 	*ListVhostWatermarkPresetQuery
 	*ListVhostWatermarkPresetBody
 }
-type ListVqosMetricsDimensionsReq struct {
-	*ListVqosMetricsDimensionsQuery
-	*ListVqosMetricsDimensionsBody
-}
 type ListWatermarkPresetReq struct {
 	*ListWatermarkPresetQuery
 	*ListWatermarkPresetBody
@@ -14624,13 +14198,13 @@ type RestartPullToPushTaskReq struct {
 	*RestartPullToPushTaskQuery
 	*RestartPullToPushTaskBody
 }
+type RestartTranscodingJobReq struct {
+	*RestartTranscodingJobQuery
+	*RestartTranscodingJobBody
+}
 type ResumeStreamReq struct {
 	*ResumeStreamQuery
 	*ResumeStreamBody
-}
-type StopPullCDNSnapshotTaskReq struct {
-	*StopPullCDNSnapshotTaskQuery
-	*StopPullCDNSnapshotTaskBody
 }
 type StopPullRecordTaskReq struct {
 	*StopPullRecordTaskQuery
@@ -14639,6 +14213,14 @@ type StopPullRecordTaskReq struct {
 type StopPullToPushTaskReq struct {
 	*StopPullToPushTaskQuery
 	*StopPullToPushTaskBody
+}
+type TranscodingJobStatusReq struct {
+	*TranscodingJobStatusQuery
+	*TranscodingJobStatusBody
+}
+type UnBindEncryptDRMReq struct {
+	*UnBindEncryptDRMQuery
+	*UnBindEncryptDRMBody
 }
 type UnbindCertReq struct {
 	*UnbindCertQuery
@@ -14659,6 +14241,10 @@ type UpdateDenyConfigReq struct {
 type UpdateDomainVhostReq struct {
 	*UpdateDomainVhostQuery
 	*UpdateDomainVhostBody
+}
+type UpdateEncryptDRMReq struct {
+	*UpdateEncryptDRMQuery
+	*UpdateEncryptDRMBody
 }
 type UpdateHTTPHeaderConfigReq struct {
 	*UpdateHTTPHeaderConfigQuery
@@ -14715,8 +14301,4 @@ type UpdateTranscodePresetReq struct {
 type UpdateWatermarkPresetReq struct {
 	*UpdateWatermarkPresetQuery
 	*UpdateWatermarkPresetBody
-}
-type VerifyDomainOwnerReq struct {
-	*VerifyDomainOwnerQuery
-	*VerifyDomainOwnerBody
 }
