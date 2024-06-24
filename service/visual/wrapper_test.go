@@ -3,6 +3,7 @@ package visual
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/sts"
 	"testing"
 	"time"
 
@@ -13,6 +14,98 @@ const (
 	testAk = "ak"
 	testSk = "sk"
 )
+
+func TestCert_GenH5ProUrl(t *testing.T) {
+	// 调用AssumeRole接口获取临时ak/sk及token
+	sts.DefaultInstance.Client.SetAccessKey(testAk)
+	sts.DefaultInstance.Client.SetSecretKey(testSk)
+
+	list, status, err := sts.DefaultInstance.AssumeRole(&sts.AssumeRoleRequest{
+		DurationSeconds: 43200,
+		RoleTrn:         "trn:iam::xxx:role/xxxx",
+		RoleSessionName: "xxx",
+	})
+	fmt.Println(status, err)
+	var tmpAk, tmpSk, tmpToken string
+	if list != nil && list.Result != nil && list.Result.Credentials != nil {
+		tmpAk = list.Result.Credentials.AccessKeyId
+		tmpSk = list.Result.Credentials.SecretAccessKey
+		tmpToken = list.Result.Credentials.SessionToken
+	} else {
+		fmt.Println("AssumeRole failed")
+		b, _ := json.Marshal(list)
+		fmt.Println(string(b))
+		return
+	}
+	// 获取config_id
+	configId := "xxx"
+	// 获取byted_token
+	bytedToken := "xxx"
+	// 生成H5ProUrl
+	h5ProUrl := fmt.Sprintf("https://h5-v2.kych5.com?accessKeyId=%v&secretAccessKey=%v&sessionToken=%v&configId=%v&bytedToken=%v&lng=%v", tmpAk, tmpSk, tmpToken, configId, bytedToken, "zh-CN")
+	fmt.Println("H5认证链接：", h5ProUrl)
+}
+
+func TestCert_CertH5Token(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用比例
+	reqBody := map[string]interface{}{
+		"req_key":      "cert_h5_token",
+		"h5_config_id": "xxx",
+		"sts_token":    "1",
+		"idcard_name":  "xxx",
+		"idcard_no":    "xxxx",
+	}
+
+	resp, status, err := DefaultInstance.CertH5Token(reqBody)
+	fmt.Println(status, err)
+	if resp != nil && resp.Data != nil && resp.Data.BytedToken != "" {
+		fmt.Println(resp.Data.BytedToken)
+	}
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestCert_CertH5ConfigInit(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用比例
+	reqBody := map[string]interface{}{
+		"req_key": "cert_h5_config_init",
+		"h5_config": map[string]interface{}{
+			"type":          "3",
+			"theme_color":   "rgba(56, 123, 255, 1)",
+			"show_guide":    "1",
+			"show_result":   "1",
+			"enable_record": "1",
+			"redirect_url":  "https://www.volcengine.com",
+		},
+		"liveness_config": map[string]interface{}{
+			"ref_source":       "1",
+			"liveness_type":    "motion",
+			"liveness_timeout": 10,
+			"motion_list": []string{
+				"0",
+				"1",
+				"2",
+				"3",
+			},
+			"fixed_motion_list": []string{
+				"0",
+			},
+			"motion_count":       2,
+			"max_liveness_trial": 10,
+		},
+	}
+
+	resp, status, err := DefaultInstance.CertH5ConfigInit(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
 
 func TestVisual_FaceFusionMovieV3Async(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
