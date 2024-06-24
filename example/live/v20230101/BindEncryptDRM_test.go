@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_DescribeSnapshotAuditPresetDetail(t *testing.T) {
+func Test_BindEncryptDRM(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_DescribeSnapshotAuditPresetDetail(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.DescribeSnapshotAuditPresetDetailBody{}
+	param := &live_v20230101.BindEncryptDRMBody{}
 
-	resp, err := instance.DescribeSnapshotAuditPresetDetail(context.Background(), param)
+	resp, err := instance.BindEncryptDRM(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)

@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_DescribeLiveActivityBandwidthData(t *testing.T) {
+func Test_TranscodingJobStatus(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_DescribeLiveActivityBandwidthData(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.DescribeLiveActivityBandwidthDataBody{}
+	param := &live_v20230101.TranscodingJobStatusQuery{}
 
-	resp, err := instance.DescribeLiveActivityBandwidthData(context.Background(), param)
+	resp, err := instance.TranscodingJobStatus(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)

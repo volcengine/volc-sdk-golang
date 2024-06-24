@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_DescribeLiveBatchStreamTranscodeData(t *testing.T) {
+func Test_UnBindEncryptDRM(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_DescribeLiveBatchStreamTranscodeData(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.DescribeLiveBatchStreamTranscodeDataBody{}
+	param := &live_v20230101.UnBindEncryptDRMBody{}
 
-	resp, err := instance.DescribeLiveBatchStreamTranscodeData(context.Background(), param)
+	resp, err := instance.UnBindEncryptDRM(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)

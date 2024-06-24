@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_DescribeLiveCustomizedLogData(t *testing.T) {
+func Test_DescribeEncryptDRM(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,7 @@ func Test_DescribeLiveCustomizedLogData(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.DescribeLiveCustomizedLogDataBody{}
-
-	resp, err := instance.DescribeLiveCustomizedLogData(context.Background(), param)
+	resp, err := instance.DescribeEncryptDRM(context.Background())
 
 	if err != nil {
 		fmt.Printf("error %v", err)
