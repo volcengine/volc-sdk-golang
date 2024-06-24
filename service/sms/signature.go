@@ -36,3 +36,30 @@ func (p *SMS) DeleteSignature(req *DeleteSignatureRequest) (*DeleteSignatureResp
 	}
 	return resp, statusCode, nil
 }
+
+func (p *SMS) ApplySignatureIdent(req *ApplySignatureIdentRequest) (*ApplySignatureIdentResponse, int, error) {
+	resp := new(ApplySignatureIdentResponse)
+	statusCode, err := p.smsHandler("ApplySignatureIdent", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *SMS) GetSignatureIdentList(req *GetSignatureIdentListRequest) (*GetSignatureIdentListResponse, int, error) {
+	resp := new(GetSignatureIdentListResponse)
+	statusCode, err := p.smsHandler("GetSignatureIdentList", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *SMS) BatchBindSignatureIdent(req *BatchBindSignatureIdentRequest) (*BatchBindSignatureIdentResponse, int, error) {
+	resp := new(BatchBindSignatureIdentResponse)
+	statusCode, err := p.smsHandler("BatchBindSignatureIdent", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
