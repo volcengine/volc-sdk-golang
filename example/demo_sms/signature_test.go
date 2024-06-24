@@ -60,3 +60,77 @@ func TestDeleteSignature(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestGetSignatureIdentList(t *testing.T) {
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	req := &sms.GetSignatureIdentListRequest{
+		Ids:       nil,
+		PageIndex: 5,
+		PageSize:  1,
+	}
+	result, statusCode, err := sms.DefaultInstance.GetSignatureIdentList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestApplySignatureIdent(t *testing.T) {
+	fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+	if err != nil {
+		t.Logf("err = %+v\n", err)
+		return
+	}
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	req := &sms.ApplySignatureIdentRequest{
+		Purpose:      1,
+		MaterialName: "名字",
+		BusinessInfo: sms.BusinessInfo{
+			BusinessCertificateType: 1,
+			BusinessCertificate: sms.SignAuthFile{
+				FileType:    1,
+				FileContent: fileBase64String,
+				FileSuffix:  "jpeg",
+				FileUrl:     "",
+			},
+			BusinessCertificateName:                "xxx有限公司",
+			UnifiedSocialCreditIdentifier:          "1234556",
+			BusinessCertificateValidityPeriodStart: "2024-04-18",
+			BusinessCertificateValidityPeriodEnd:   "2029-05-18",
+			LegalPersonName:                        "黄xx",
+		},
+		OperatorPersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 8, FileContent: fileBase64String, FileSuffix: "jpeg"}, {FileType: 9, FileContent: fileBase64String, FileSuffix: "jpeg"}},
+			PersonName:        "周xx",
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+		ResponsiblePersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: fileBase64String, FileSuffix: "jpeg"}, {FileType: 11, FileContent: fileBase64String, FileSuffix: "jpeg"}},
+			PersonName:        "周xx",
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+	}
+	result, statusCode, err := sms.DefaultInstance.ApplySignatureIdent(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestBatchBindSignatureIdent(t *testing.T) {
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	req := &sms.BatchBindSignatureIdentRequest{
+		SubAccount: "123456",
+		Signatures: []string{"签名"},
+		Id:         5,
+	}
+	result, statusCode, err := sms.DefaultInstance.BatchBindSignatureIdent(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
