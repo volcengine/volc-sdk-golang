@@ -1053,3 +1053,35 @@ func (p *Visual) FaceFusionMovieGetResultNew(bodyMap map[string]interface{}) (*m
 	}
 	return resp, statusCode, nil
 }
+
+// CertH5Token 身份认证H5增强版相关接口
+// 接口文档：https://www.volcengine.com/docs/6973/1209468
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CertH5Token(bodyMap interface{}) (*model.CertPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.CertPubResult)
+	statusCode, err := p.commonJsonHandler("CertH5Token", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// CertH5ConfigInit 身份认证H5增强版相关接口
+// 接口文档：https://www.volcengine.com/docs/6973/1209467
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CertH5ConfigInit(bodyMap interface{}) (*model.CertPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.CertPubResult)
+	statusCode, err := p.commonJsonHandler("CertH5ConfigInit", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
