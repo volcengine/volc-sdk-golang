@@ -2,7 +2,7 @@ package rtc_v20201201
 
 type AddBusinessIDBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 业务 ID，同一个 AppId 下不允许重复。长度不超过 64 个字符，取值范围为：数字、字母、_、-、@。
@@ -51,7 +51,7 @@ type AddBusinessIDResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -84,9 +84,6 @@ type BanRoomUserResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error BanRoomUserResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -98,15 +95,22 @@ type BanRoomUserResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *BanRoomUserResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// BanRoomUserResResponseMetadataError - 仅在请求失败时返回。
 type BanRoomUserResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type BanRoomUserResResult struct {
@@ -148,9 +152,6 @@ type BanUserStreamResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error BanUserStreamResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -162,15 +163,22 @@ type BanUserStreamResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *BanUserStreamResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// BanUserStreamResResponseMetadataError - 仅在请求失败时返回。
 type BanUserStreamResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type BanUserStreamResResult struct {
@@ -239,7 +247,7 @@ type BatchSendRoomUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -296,7 +304,7 @@ type CreateAppResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -370,7 +378,7 @@ type CreateByteplusAppResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -470,7 +478,7 @@ type CreateCallbackResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -528,7 +536,7 @@ type CreateFailRecoveryPolicyResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -621,7 +629,7 @@ type CreateVendorPolicyResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -705,7 +713,7 @@ type DeleteBusinessIDResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -755,7 +763,7 @@ type DeleteCallbackResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -804,13 +812,13 @@ type DeleteFailRecoveryPolicyResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type DismissRoomBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -829,9 +837,6 @@ type DismissRoomResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error DismissRoomResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -843,15 +848,22 @@ type DismissRoomResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *DismissRoomResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// DismissRoomResResponseMetadataError - 仅在请求失败时返回。
 type DismissRoomResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type DismissRoomResResult struct {
@@ -971,7 +983,7 @@ type GetAllBusinessIDResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1044,7 +1056,7 @@ type GetCallbackResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1150,7 +1162,7 @@ type GetFailRecoveryPoliciesResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1247,7 +1259,7 @@ type GetPushMixedStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1656,7 +1668,7 @@ type GetPushSingleStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1772,7 +1784,7 @@ type GetRecordTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1890,7 +1902,7 @@ type GetResourcePackNumResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1943,7 +1955,7 @@ type GetWebCastTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2173,7 +2185,7 @@ type IndicatorTagSubTagsItem struct {
 
 type KickUserBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -2197,9 +2209,6 @@ type KickUserResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error KickUserResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -2211,15 +2220,22 @@ type KickUserResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *KickUserResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// KickUserResResponseMetadataError - 仅在请求失败时返回。
 type KickUserResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 // KickUserResResult - 视请求的接口而定
@@ -2285,7 +2301,7 @@ type ListAppsResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2391,7 +2407,7 @@ type ListCallDetailResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2496,7 +2512,7 @@ type ListDetectionTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2530,7 +2546,7 @@ type ListDetectionTaskResResultEventDataItem struct {
 
 type ListHotMusicBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// 自定义热歌榜ID 列表
@@ -2580,7 +2596,7 @@ type ListHotMusicResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2673,14 +2689,15 @@ type ListHotMusicResResultHotListPropertiesItemsItem struct {
 
 type ListMusicsBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// 过滤选项：
+	// 过滤选项。支持取值及含义如下：
 	// * 1：过滤没有歌词的歌曲
 	// * 2：过滤不支持打分的歌曲
 	// * 3：过滤不支持伴唱切换的歌曲
-	// * 4：过滤没有高潮片段的歌曲
+	// * 4：过滤没有高潮片段的歌曲。
+	// 不填则不设置过滤条件。
 	Filters []*int32 `json:"Filters,omitempty"`
 
 	// 歌曲更新或新增时间戳，Unix 时间，单位为秒。表示筛选更新或新增时间大于等于 LastUpdateTime 的有效歌曲
@@ -2735,7 +2752,7 @@ type ListMusicsResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2750,7 +2767,7 @@ type ListMusicsResResult struct {
 
 type ListMusicsResResultListItem struct {
 
-	// 歌曲是否支持伴唱原唱切换。
+	// 歌曲是否支持伴唱原唱切换。支持取值及含义如下：
 	// * 0： 不支持。
 	// * 1： 声道切换
 	// * 2： 音轨切换
@@ -2759,14 +2776,14 @@ type ListMusicsResResultListItem struct {
 	// 歌曲时长，单位为秒
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 歌词类型
+	// 歌词类型。支持取值及含义如下：
 	// * 0： krc
 	// * 1： lrc
 	// * [0,1]： 两种歌词均有。 若为空，则表示为无歌词。
 	LyricType []*int32                             `json:"LyricType,omitempty"`
 	LyricURL  *ListMusicsResResultListItemLyricURL `json:"LyricUrl,omitempty"`
 
-	// 歌曲是否支持打分。
+	// 歌曲是否支持打分。支持取值及含义如下：
 	// * 0： 不支持
 	// * 1： 支持
 	PitchType *int32 `json:"PitchType,omitempty"`
@@ -2774,7 +2791,7 @@ type ListMusicsResResultListItem struct {
 	// 歌曲封面地址
 	PosterURL *string `json:"PosterUrl,omitempty"`
 
-	// 歌曲是否支持录制。
+	// 歌曲是否支持录制。支持取值及含义如下：
 	// * 0： 不支持
 	// * 1： 支持
 	RecordType *int32 `json:"RecordType,omitempty"`
@@ -2870,7 +2887,7 @@ type ListOperationDataResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2982,7 +2999,7 @@ type ListOperationDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3115,7 +3132,7 @@ type ListQualityDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3183,7 +3200,7 @@ type ListQualityResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3289,7 +3306,7 @@ type ListRealTimeOperationDataResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3429,7 +3446,7 @@ type ListRealTimeQualityDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3497,7 +3514,7 @@ type ListRealTimeQualityResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3609,7 +3626,7 @@ type ListRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3707,7 +3724,7 @@ type ListResourcePackagesResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3768,7 +3785,7 @@ type ListResourcePackagesV2ResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3861,7 +3878,7 @@ type ListRoomInfoResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3953,7 +3970,7 @@ type ListUsagesResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4045,7 +4062,7 @@ type ListUserInfoResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4164,13 +4181,13 @@ type ModifyAppStatusResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type ModifyBusinessRemarksBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 业务ID
@@ -4219,20 +4236,21 @@ type ModifyBusinessRemarksResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type SearchMusicsBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// 过滤选项：
+	// 过滤选项。支持取值及含义如下：
 	// * 1：过滤没有歌词的歌曲
 	// * 2：过滤不支持打分的歌曲
 	// * 3：过滤不支持伴唱切换的歌曲
-	// * 4：过滤没有高潮片段的歌曲
+	// * 4：过滤没有高潮片段的歌曲。
+	// 不填则不设置过滤条件。
 	Filters []*int32 `json:"Filters,omitempty"`
 
 	// 搜索关键字。匹配优先级为：精准歌曲名匹配 -> 精准歌手名匹配 -> 歌曲名模糊匹配
@@ -4282,7 +4300,7 @@ type SearchMusicsResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4297,7 +4315,7 @@ type SearchMusicsResResult struct {
 
 type SearchMusicsResResultListItem struct {
 
-	// 歌曲是否支持伴唱原唱切换。
+	// 歌曲是否支持伴唱原唱切换。支持取值及含义如下：
 	// * 0： 不支持。
 	// * 1： 声道切换
 	// * 2： 音轨切换
@@ -4306,14 +4324,14 @@ type SearchMusicsResResultListItem struct {
 	// 歌曲时长，单位为秒
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 歌词类型
+	// 歌词类型。支持取值及含义如下：
 	// * 0： krc
 	// * 1： lrc
 	// * [0,1]： 两种歌词均有。 若为空，则表示为无歌词。
 	LyricType []*int32                               `json:"LyricType,omitempty"`
 	LyricURL  *SearchMusicsResResultListItemLyricURL `json:"LyricUrl,omitempty"`
 
-	// 歌曲是否支持打分。
+	// 歌曲是否支持打分。支持取值及含义如下：
 	// * 0： 不支持
 	// * 1： 支持
 	PitchType *int32 `json:"PitchType,omitempty"`
@@ -4321,7 +4339,7 @@ type SearchMusicsResResultListItem struct {
 	// 歌曲封面地址
 	PosterURL *string `json:"PosterUrl,omitempty"`
 
-	// 歌曲是否支持录制。
+	// 歌曲是否支持录制。支持取值及含义如下：
 	// * 0： 不支持
 	// * 1： 支持
 	RecordType *int32 `json:"RecordType,omitempty"`
@@ -4418,7 +4436,7 @@ type SendBroadcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4489,7 +4507,7 @@ type SendRoomUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4558,7 +4576,7 @@ type SendUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4648,7 +4666,7 @@ type StartDetectionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5017,7 +5035,7 @@ type StartPushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5310,7 +5328,7 @@ type StartPushPublicStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5396,7 +5414,7 @@ type StartPushSingleStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5783,7 +5801,7 @@ type StartRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5889,7 +5907,7 @@ type StartRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6041,7 +6059,7 @@ type StartSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6166,7 +6184,7 @@ type StartSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6230,7 +6248,7 @@ type StartWBRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6361,7 +6379,7 @@ type StartWebcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6416,7 +6434,7 @@ type StopDetectionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6475,7 +6493,7 @@ type StopPushPublicStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6531,7 +6549,7 @@ type StopPushStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6590,7 +6608,7 @@ type StopRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6646,7 +6664,7 @@ type StopRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6702,7 +6720,7 @@ type StopSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6761,7 +6779,7 @@ type StopSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6819,7 +6837,7 @@ type StopWBRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6875,7 +6893,7 @@ type StopWebcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6912,9 +6930,6 @@ type UnbanUserStreamResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error UnbanUserStreamResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -6926,15 +6941,22 @@ type UnbanUserStreamResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *UnbanUserStreamResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// UnbanUserStreamResResponseMetadataError - 仅在请求失败时返回。
 type UnbanUserStreamResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UnbanUserStreamResResult struct {
@@ -6972,9 +6994,6 @@ type UpdateBanRoomUserRuleResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error UpdateBanRoomUserRuleResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -6986,15 +7005,22 @@ type UpdateBanRoomUserRuleResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *UpdateBanRoomUserRuleResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// UpdateBanRoomUserRuleResResponseMetadataError - 仅在请求失败时返回。
 type UpdateBanRoomUserRuleResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateBanRoomUserRuleResResult struct {
@@ -7060,7 +7086,7 @@ type UpdateCallbackResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7112,7 +7138,7 @@ type UpdateFailRecoveryPolicyResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7440,7 +7466,7 @@ type UpdatePublicStreamParamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7792,7 +7818,7 @@ type UpdatePushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8011,7 +8037,7 @@ type UpdateRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8105,7 +8131,7 @@ type UpdateRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8171,7 +8197,7 @@ type UpdateSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8248,7 +8274,7 @@ type UpdateSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8300,7 +8326,7 @@ type UpdateVendorPolicyResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8498,7 +8524,7 @@ type WbTranscodeCreateResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8557,7 +8583,7 @@ type WbTranscodeGetResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -8644,7 +8670,7 @@ type WbTranscodeQueryResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 

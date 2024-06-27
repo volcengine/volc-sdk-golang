@@ -117,7 +117,7 @@ type GetPushMixedStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -549,7 +549,7 @@ type GetPushSingleStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -669,7 +669,7 @@ type GetRecordTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1258,7 +1258,7 @@ type StartPushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1344,7 +1344,7 @@ type StartPushSingleStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1881,7 +1881,7 @@ type StartRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1937,7 +1937,7 @@ type StopPushStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1996,7 +1996,7 @@ type StopRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2367,7 +2367,7 @@ type UpdatePushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2582,7 +2582,7 @@ type UpdateRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 type GetPushMixedStreamToCDNTask struct{}

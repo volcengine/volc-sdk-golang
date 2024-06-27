@@ -702,6 +702,22 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveBatchStreamSessionData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveBatchStreamSessionData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeLiveStreamSessionData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveStreamSessionData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeLivePlayStatusCodeData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -806,11 +822,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeLiveStreamSessionData": {
+		"DescribeLiveBatchStreamTrafficData": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DescribeLiveStreamSessionData"},
+				"Action":  []string{"DescribeLiveBatchStreamTrafficData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
