@@ -391,10 +391,13 @@ type CreateDomainBody struct {
 	// * pull-flv：拉流域名，包含 RTMP、FLV、HLS 格式。
 	Type string `json:"Type"`
 
-	// 域名加速区域，默认值为cn，包含以下类型。
-	// * cn：中国内地；
-	// * cn-global：全球加速；
-	// * cn-oversea：海外及港澳台。
+	// 国内可传入：
+	// * cn 国内
+	// * cn-oversea 海外及港澳台
+	// * cn-global 全球 byteplus可传入：
+	// * cn 中国
+	// * oversea 非中国区
+	// * global 全球
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -433,19 +436,18 @@ type CreateDomainV2Body struct {
 	// REQUIRED; 待添加到视频直播服务进行加速的域名列表信息。 :::tip 一个域名空间下最多包含 10 个域名。 :::
 	Domains []CreateDomainV2BodyDomainsItem `json:"Domains"`
 
-	// REQUIRED; 域名加速区域，包含以下类型。
-	// * cn：中国内地；
-	// * cn-global：全球加速；
-	// * cn-oversea：海外及港澳台。
-	Region string `json:"Region"`
-
-	// REQUIRED; 域名空间，是一组关联域名的集合，由字母（A - Z、a -z）、数字（0 - 9）和连字符（-） 组成。您可以自定义新的域名空间或调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口查看已有域名使用的域名空间。
+	// REQUIRED; 域名空间，是一组关联域名的集合，由字母（A - Z、a -z）、数字（0 - 9）和连字符（-） 组成。您可以自定义新的域名空间或调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口获取已有域名使用的域名空间。
 	Vhost string `json:"Vhost"`
 
-	// 项目名称，vhost 将归类这个项目里，仅在新创建 vhost 时需要设置。
+	// 为域名空间设置所属项目，默认为空表示归属到 default 项目， 新建域名空间时需要为域名空间绑定项目，您可以在访问控制-项目列表 [https://console.volcengine.com/iam/resourcemanage/project]查看已有项目并对项目进行管理。
+	// 项目是火山引擎提供的一种资源管理方式，您可以对不同业务或项目使用的云资源进行分组管理，以实现基于项目的账单查看、子账号授权等功能。
+	// * 新建域名空间时，需为域名空间设置所属项目。每个域名空间只能属于一个项目，选择已有的域名空间时，项目不可配置；
+	// * 使用基于项目的账单查看需提前开通分账服务，请前往账单管理-分账账单 [https://console.volcengine.com/finance/bill/split-bill/]进行服务开通；
+	// * 使用基于项目的子账号授权请参见使用 IAM 用户进行项目权限划分 [https://www.volcengine.com/docs/6469/1166573]。
 	ProjectName *string `json:"ProjectName,omitempty"`
 
-	// 标签列表，vhost 将归类这个 tag 里。
+	// 为域名空间设置资源标签。您可以通过资源标签从不同维度对云资源进行分类和聚合管理，如资源分账等场景。 :::tip 如需使用标签进行资源分账，可以在可以在账单管理-费用标签 [https://console.volcengine.com/finance/bill/tag/]处管理启用标签，将对应标签运用到账单明细等数据中。
+	// :::
 	Tags []*CreateDomainV2BodyTagsItem `json:"Tags,omitempty"`
 }
 
@@ -454,12 +456,22 @@ type CreateDomainV2BodyDomainsItem struct {
 	// REQUIRED; 域名名称，域名由字母（A - Z、a -z）、数字（0 - 9）和连字符（-） 组成，长度为 1 到 60 个字符。
 	DomainName string `json:"DomainName"`
 
+	// REQUIRED; 国内可传入：
+	// * cn 国内
+	// * cn-oversea 海外及港澳台
+	// * cn-global 全球 byteplus可传入：
+	// * cn 中国
+	// * oversea 非中国区
+	// * global 全球
+	Region string `json:"Region"`
+
 	// REQUIRED; 域名类型，取值及含义如下所示。
 	// * push：推流域名；
 	// * pull-flv：拉流域名。
 	Type string `json:"Type"`
 
-	// 证书链 ID。
+	// HTTPS 证书链 ID，默认为空表示不为域名绑定 HTTPS 证书。您可以调用 ListCertV2 [https://www.volcengine.com/docs/6469/1126823] 接口或在视频直播控制台的证书管理 [https://console.volcengine.com/live/main/certificate]页面，获取待绑定的证书链
+	// ID。
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
@@ -4659,6 +4671,405 @@ type DescribeLiveBatchSourceStreamMetricsResResultStreamMetricListPropertiesItem
 
 	// REQUIRED; 当前数据聚合时间粒度内，最后一个视频帧的显示时间戳 PTS（Presentation Time Stamp），单位为毫秒。
 	VideoPts int32 `json:"VideoPts"`
+}
+
+type DescribeLiveBatchStreamSessionDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
+	// :::tip 单次查询最大时间跨度为 24 小时，查询历史数据的时间范围为 366 天。 :::
+	StartTime string `json:"StartTime"`
+
+	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
+	// 拉流域名列表，默认为空，表示查询所有域名的请求数和在线人数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页显示的数据条数，默认值为 1000，取值范围为 [100,1000]。
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip
+	// * 如果查询推拉流协议为 QUIC，不能同时查询其他协议。
+	// * 缺省情况下，查询的总流量数据为实际产生的上下行流量。
+	// * 如果传入单个协议进行查询，并对各协议的流量求和，结果将大于实际总流量。
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。
+	RegionList []*DescribeLiveBatchStreamSessionDataBodyRegionListItem `json:"RegionList,omitempty"`
+}
+
+type DescribeLiveBatchStreamSessionDataBodyRegionListItem struct {
+
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveBatchStreamSessionDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveBatchStreamSessionDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveBatchStreamSessionDataResResult `json:"Result"`
+}
+
+type DescribeLiveBatchStreamSessionDataResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeLiveBatchStreamSessionDataResResult struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 数据分页的信息。
+	Pagination DescribeLiveBatchStreamSessionDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 查询时间范围内的所有流在线人数峰值的最大值。
+	PeakOnlineUser int32 `json:"PeakOnlineUser"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 查询时间范围内所有流的请求数和在线人数峰值信息。
+	StreamInfoList []DescribeLiveBatchStreamSessionDataResResultStreamInfoListItem `json:"StreamInfoList"`
+
+	// REQUIRED; 查询时间范围内的请求数总数。
+	TotalRequest int32 `json:"TotalRequest"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域列表。
+	RegionList []*DescribeLiveBatchStreamSessionDataResResultRegionListItem `json:"RegionList,omitempty"`
+}
+
+// DescribeLiveBatchStreamSessionDataResResultPagination - 数据分页的信息。
+type DescribeLiveBatchStreamSessionDataResResultPagination struct {
+
+	// REQUIRED; 当前所在分页的页码。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页显示的数据条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果的数据总条数。
+	TotalCount int32 `json:"TotalCount"`
+}
+
+type DescribeLiveBatchStreamSessionDataResResultRegionListItem struct {
+
+	// 区域信息中的大区标识符。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveBatchStreamSessionDataResResultStreamInfoListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 拉流域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 当前流的在线人数峰值
+	PeakOnlineUser int32 `json:"PeakOnlineUser"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 当前流的请求数。
+	TotalRequest int32 `json:"TotalRequest"`
+}
+
+type DescribeLiveBatchStreamTrafficDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
+	// :::tip 单次查询最大时间跨度为 24 小时，查询历史数据的时间范围为 366 天。 :::
+	StartTime string `json:"StartTime"`
+
+	// 域名列表，默认为空，表示查询所有域名下的流量数据。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 提供网络接入服务的运营商标识符，缺省情况下表示所有运营商，支持的运营商如下所示。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
+	// 您也可以通过 DescribeLiveISPData [https://www.volcengine.com/docs/6469/1133974] 接口获取运营商对应的标识符。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页显示的数据条数，默认值为 1000，取值范围为 [100,1000]。
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 推拉流协议，缺省情况下表示所有协议类型，支持的协议如下所示。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	// :::tip
+	// * 如果查询推拉流协议为 QUIC，不能同时查询其他协议。
+	// * 缺省情况下，查询的总流量数据为实际产生的上下行流量。
+	// * 如果传入单个协议进行查询，并对各协议的流量求和，结果将大于实际总流量。
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	RegionList []*DescribeLiveBatchStreamTrafficDataBodyRegionListItem `json:"RegionList,omitempty"`
+
+	// 客户端 IP 所属区域的列表，缺省情况下表示所有区域。 :::tip 参数 RegionList和UserRegionList 不支持同时传入。 :::
+	UserRegionList []*DescribeLiveBatchStreamTrafficDataBodyUserRegionListItem `json:"UserRegionList,omitempty"`
+}
+
+type DescribeLiveBatchStreamTrafficDataBodyRegionListItem struct {
+
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveBatchStreamTrafficDataBodyUserRegionListItem struct {
+
+	// 区域信息中的大区标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按国家筛选，需要同时传入Area和Country。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符，国外暂不支持该参数，如何获取请参见查询区域标识符 [https://www.volcengine.com/docs/6469/1133973]。如果按省筛选，需要同时传入Area、Country和Province。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveBatchStreamTrafficDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveBatchStreamTrafficDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveBatchStreamTrafficDataResResult `json:"Result"`
+}
+
+type DescribeLiveBatchStreamTrafficDataResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeLiveBatchStreamTrafficDataResResult struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 数据分页的信息。
+	Pagination DescribeLiveBatchStreamTrafficDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 流维度的流量用量信息详情。
+	StreamInfoList []DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem `json:"StreamInfoList"`
+
+	// REQUIRED; 当前查询条件下，所有流的下行总流量，单位为 GB。
+	TotalDownTraffic float32 `json:"TotalDownTraffic"`
+
+	// REQUIRED; 当前查询条件下，所有流的上行总流量，单位为 GB。
+	TotalUpTraffic float32 `json:"TotalUpTraffic"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 提供网络接入服务的运营商标识符，标识符与运营商的对应关系如下。
+	// * unicom：联通；
+	// * railcom：铁通；
+	// * telecom：电信；
+	// * mobile：移动；
+	// * cernet：教育网；
+	// * tianwei：天威；
+	// * alibaba：阿里巴巴；
+	// * tencent：腾讯；
+	// * drpeng：鹏博士；
+	// * btvn：广电；
+	// * huashu：华数；
+	// * other：其他。
+	ISPList []*string `json:"ISPList,omitempty"`
+
+	// 推拉流协议，协议说明如下。
+	// * HTTP-FLV：基于 HTTP 协议的推拉流协议，使用 FLV 格式传输视频格式。
+	// * HTTP-HLS：基于 HTTP 协议的推拉流协议，使用 TS 格式传输视频格式。
+	// * RTMP：Real Time Message Protocol，实时信息传输协议。
+	// * RTM：Real Time Media，超低延时直播协议。
+	// * SRT：Secure Reliable Transport，安全可靠传输协议。
+	// * QUIC：Quick UDP Internet Connections，一种基于 UDP 的全新的低延时互联网传输协议。
+	ProtocolList []*string `json:"ProtocolList,omitempty"`
+
+	// CDN 节点 IP 所属区域列表。
+	RegionList []*DescribeLiveBatchStreamTrafficDataResResultRegionListItem `json:"RegionList,omitempty"`
+
+	// 客户端 IP 所属区域列表。
+	UserRegionList []*DescribeLiveBatchStreamTrafficDataResResultUserRegionListItem `json:"UserRegionList,omitempty"`
+}
+
+// DescribeLiveBatchStreamTrafficDataResResultPagination - 数据分页的信息。
+type DescribeLiveBatchStreamTrafficDataResResultPagination struct {
+
+	// REQUIRED; 当前所在分页的页码。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页显示的数据条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果的数据总条数。
+	TotalCount int32 `json:"TotalCount"`
+}
+
+type DescribeLiveBatchStreamTrafficDataResResultRegionListItem struct {
+
+	// 区域信息中的大区标识符。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符。
+	Province *string `json:"Province,omitempty"`
+}
+
+type DescribeLiveBatchStreamTrafficDataResResultStreamInfoListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 当前流的下行流量，单位为 GB。
+	DownTraffic float32 `json:"DownTraffic"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 当前流的上行流量，单位为 GB。
+	UpTraffic float32 `json:"UpTraffic"`
+}
+
+type DescribeLiveBatchStreamTrafficDataResResultUserRegionListItem struct {
+
+	// 区域信息中的大区标识符。
+	Area *string `json:"Area,omitempty"`
+
+	// 区域信息中的国家标识符。
+	Country *string `json:"Country,omitempty"`
+
+	// 区域信息中的省份标识符。
+	Province *string `json:"Province,omitempty"`
 }
 
 type DescribeLiveISPDataRes struct {
@@ -13618,6 +14029,10 @@ type DescribeLiveBatchSourceStreamAvgMetrics struct{}
 type DescribeLiveBatchSourceStreamAvgMetricsQuery struct{}
 type DescribeLiveBatchSourceStreamMetrics struct{}
 type DescribeLiveBatchSourceStreamMetricsQuery struct{}
+type DescribeLiveBatchStreamSessionData struct{}
+type DescribeLiveBatchStreamSessionDataQuery struct{}
+type DescribeLiveBatchStreamTrafficData struct{}
+type DescribeLiveBatchStreamTrafficDataQuery struct{}
 type DescribeLiveISPData struct{}
 type DescribeLiveISPDataBody struct{}
 type DescribeLiveISPDataQuery struct{}
@@ -13985,6 +14400,14 @@ type DescribeLiveBatchSourceStreamAvgMetricsReq struct {
 type DescribeLiveBatchSourceStreamMetricsReq struct {
 	*DescribeLiveBatchSourceStreamMetricsQuery
 	*DescribeLiveBatchSourceStreamMetricsBody
+}
+type DescribeLiveBatchStreamSessionDataReq struct {
+	*DescribeLiveBatchStreamSessionDataQuery
+	*DescribeLiveBatchStreamSessionDataBody
+}
+type DescribeLiveBatchStreamTrafficDataReq struct {
+	*DescribeLiveBatchStreamTrafficDataQuery
+	*DescribeLiveBatchStreamTrafficDataBody
 }
 type DescribeLiveISPDataReq struct {
 	*DescribeLiveISPDataQuery

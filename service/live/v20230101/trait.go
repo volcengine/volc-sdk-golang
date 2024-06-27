@@ -1807,6 +1807,46 @@ func (c *Live) DescribeLivePushStreamMetrics(ctx context.Context, arg *DescribeL
 	return result, nil
 }
 
+func (c *Live) DescribeLiveBatchStreamSessionData(ctx context.Context, arg *DescribeLiveBatchStreamSessionDataBody) (*DescribeLiveBatchStreamSessionDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamSessionData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveBatchStreamSessionDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveStreamSessionData(ctx context.Context, arg *DescribeLiveStreamSessionDataBody) (*DescribeLiveStreamSessionDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveStreamSessionData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveStreamSessionDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLivePlayStatusCodeData(ctx context.Context, arg *DescribeLivePlayStatusCodeDataBody) (*DescribeLivePlayStatusCodeDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2067,18 +2107,18 @@ func (c *Live) DescribeLiveMetricTrafficData(ctx context.Context, arg *DescribeL
 	return result, nil
 }
 
-func (c *Live) DescribeLiveStreamSessionData(ctx context.Context, arg *DescribeLiveStreamSessionDataBody) (*DescribeLiveStreamSessionDataRes, error) {
+func (c *Live) DescribeLiveBatchStreamTrafficData(ctx context.Context, arg *DescribeLiveBatchStreamTrafficDataBody) (*DescribeLiveBatchStreamTrafficDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveStreamSessionData", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTrafficData", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(DescribeLiveStreamSessionDataRes)
+	result := new(DescribeLiveBatchStreamTrafficDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
