@@ -6,27 +6,9 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-
-	common "github.com/volcengine/volc-sdk-golang/base"
 )
 
 type queryMarshalFilter func(key string, value []string) (accept bool)
-
-func skipEmptyValue() queryMarshalFilter {
-	return func(_ string, value []string) (accept bool) {
-		if len(value) == 0 {
-			return false
-		}
-
-		for _, item := range value {
-			if item == "" {
-				return false
-			}
-		}
-
-		return true
-	}
-}
 
 func marshalToQuery(model interface{}, filters ...queryMarshalFilter) (url.Values, error) {
 	ret := url.Values{}
@@ -115,22 +97,6 @@ func marshalToJson(model interface{}) ([]byte, error) {
 	return result, nil
 }
 
-func unmarshalResultInto(data []byte, result interface{}) error {
-	resp := new(common.CommonResponse)
-	if err := json.Unmarshal(data, resp); err != nil {
-		return fmt.Errorf("fail to unmarshal response, %v", err)
-	}
-	errObj := resp.ResponseMetadata.Error
-	if errObj != nil && errObj.CodeN != 0 {
-		return fmt.Errorf("request %s error %s", resp.ResponseMetadata.RequestId, errObj.Message)
-	}
-
-	if err := json.Unmarshal(data, result); err != nil {
-		return fmt.Errorf("fail to unmarshal result, %v", err)
-	}
-	return nil
-}
-
 func (c *Rtc) StopSnapshot(ctx context.Context, arg *StopSnapshotBody) (*StopSnapshotRes, int, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -138,17 +104,16 @@ func (c *Rtc) StopSnapshot(ctx context.Context, arg *StopSnapshotBody) (*StopSna
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StopSnapshot", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StopSnapshotRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StopSnapshotRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) StartSnapshot(ctx context.Context, arg *StartSnapshotBody) (*StartSnapshotRes, int, error) {
@@ -158,17 +123,16 @@ func (c *Rtc) StartSnapshot(ctx context.Context, arg *StartSnapshotBody) (*Start
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StartSnapshot", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StartSnapshotRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StartSnapshotRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) StartSegment(ctx context.Context, arg *StartSegmentBody) (*StartSegmentRes, int, error) {
@@ -178,17 +142,16 @@ func (c *Rtc) StartSegment(ctx context.Context, arg *StartSegmentBody) (*StartSe
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StartSegment", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StartSegmentRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StartSegmentRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) StartRecord(ctx context.Context, arg *StartRecordBody) (*StartRecordRes, int, error) {
@@ -198,17 +161,16 @@ func (c *Rtc) StartRecord(ctx context.Context, arg *StartRecordBody) (*StartReco
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StartRecord", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StartRecordRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StartRecordRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) UpdateRecord(ctx context.Context, arg *UpdateRecordBody) (*UpdateRecordRes, int, error) {
@@ -218,17 +180,16 @@ func (c *Rtc) UpdateRecord(ctx context.Context, arg *UpdateRecordBody) (*UpdateR
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "UpdateRecord", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(UpdateRecordRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(UpdateRecordRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) UpdateSnapshot(ctx context.Context, arg *UpdateSnapshotBody) (*UpdateSnapshotRes, int, error) {
@@ -238,17 +199,16 @@ func (c *Rtc) UpdateSnapshot(ctx context.Context, arg *UpdateSnapshotBody) (*Upd
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "UpdateSnapshot", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(UpdateSnapshotRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(UpdateSnapshotRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) UpdateSegment(ctx context.Context, arg *UpdateSegmentBody) (*UpdateSegmentRes, int, error) {
@@ -258,17 +218,16 @@ func (c *Rtc) UpdateSegment(ctx context.Context, arg *UpdateSegmentBody) (*Updat
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "UpdateSegment", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(UpdateSegmentRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(UpdateSegmentRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) GetRecordTask(ctx context.Context, arg *GetRecordTaskQuery) (*GetRecordTaskRes, int, error) {
@@ -278,17 +237,16 @@ func (c *Rtc) GetRecordTask(ctx context.Context, arg *GetRecordTaskQuery) (*GetR
 	}
 
 	data, statusCode, err := c.CtxQuery(ctx, "GetRecordTask", query)
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(GetRecordTaskRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(GetRecordTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) GetSnapshotTask(ctx context.Context, arg *GetSnapshotTaskQuery) (*GetSnapshotTaskRes, int, error) {
@@ -298,17 +256,16 @@ func (c *Rtc) GetSnapshotTask(ctx context.Context, arg *GetSnapshotTaskQuery) (*
 	}
 
 	data, statusCode, err := c.CtxQuery(ctx, "GetSnapshotTask", query)
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(GetSnapshotTaskRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(GetSnapshotTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) GetSegmentTask(ctx context.Context, arg *GetSegmentTaskQuery) (*GetSegmentTaskRes, int, error) {
@@ -318,17 +275,16 @@ func (c *Rtc) GetSegmentTask(ctx context.Context, arg *GetSegmentTaskQuery) (*Ge
 	}
 
 	data, statusCode, err := c.CtxQuery(ctx, "GetSegmentTask", query)
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(GetSegmentTaskRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(GetSegmentTaskRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) StopRecord(ctx context.Context, arg *StopRecordBody) (*StopRecordRes, int, error) {
@@ -338,17 +294,16 @@ func (c *Rtc) StopRecord(ctx context.Context, arg *StopRecordBody) (*StopRecordR
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StopRecord", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StopRecordRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StopRecordRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) StopSegment(ctx context.Context, arg *StopSegmentBody) (*StopSegmentRes, int, error) {
@@ -358,17 +313,16 @@ func (c *Rtc) StopSegment(ctx context.Context, arg *StopSegmentBody) (*StopSegme
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "StopSegment", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(StopSegmentRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(StopSegmentRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) GetRealtimePostProcessing(ctx context.Context, arg *GetRealtimePostProcessingQuery) (*GetRealtimePostProcessingRes, int, error) {
@@ -378,15 +332,14 @@ func (c *Rtc) GetRealtimePostProcessing(ctx context.Context, arg *GetRealtimePos
 	}
 
 	data, statusCode, err := c.CtxQuery(ctx, "GetRealtimePostProcessing", query)
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(GetRealtimePostProcessingRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(GetRealtimePostProcessingRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }

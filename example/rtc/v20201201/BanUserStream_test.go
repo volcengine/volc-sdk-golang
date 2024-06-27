@@ -3,7 +3,6 @@ package rtc_v20201201_test
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -23,9 +22,31 @@ func Test_BanUserStream(t *testing.T) {
 	resp, statusCode, err := instance.BanUserStream(context.Background(), param)
 
 	if err != nil {
-		fmt.Printf("error %v statusCode %d", err, statusCode)
+		if resp != nil && resp.ResponseMetadata.Error != nil {
+			errStr, _ := json.Marshal(resp.ResponseMetadata.Error)
+			t.Logf("statusCode: %d, error: %v", statusCode, string(errStr))
+			// 网关返回的错误
+			if resp.ResponseMetadata.Error.CodeN != nil && *resp.ResponseMetadata.Error.CodeN != 0 {
+				switch *resp.ResponseMetadata.Error.CodeN {
+				// InvalidAccessKey
+				case 100009:
+					t.Logf("请求的AK不合法")
+				// SignatureDoesNotMatch
+				case 100010:
+					t.Logf("签名结果不正确")
+				}
+			} else {
+				// 服务端返回的错误
+				switch resp.ResponseMetadata.Error.Code {
+				case "InvalidParameter":
+					t.Logf("请求的参数错误, 请根据具体Error中的Message提示调整参数")
+				}
+			}
+		} else {
+			t.Errorf("statusCode: %d, error: %v", statusCode, err)
+		}
 	} else {
-		t, _ := json.Marshal(resp)
-		fmt.Printf("success %v", string(t))
+		b, _ := json.Marshal(resp)
+		t.Logf("success %v", string(b))
 	}
 }

@@ -81,9 +81,6 @@ type GetRoomOnlineUsersResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error GetRoomOnlineUsersResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -95,15 +92,22 @@ type GetRoomOnlineUsersResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *GetRoomOnlineUsersResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// GetRoomOnlineUsersResResponseMetadataError - 仅在请求失败时返回。
 type GetRoomOnlineUsersResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type GetRoomOnlineUsersResResult struct {

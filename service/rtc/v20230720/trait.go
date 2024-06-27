@@ -6,27 +6,9 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-
-	common "github.com/volcengine/volc-sdk-golang/base"
 )
 
 type queryMarshalFilter func(key string, value []string) (accept bool)
-
-func skipEmptyValue() queryMarshalFilter {
-	return func(_ string, value []string) (accept bool) {
-		if len(value) == 0 {
-			return false
-		}
-
-		for _, item := range value {
-			if item == "" {
-				return false
-			}
-		}
-
-		return true
-	}
-}
 
 func marshalToQuery(model interface{}, filters ...queryMarshalFilter) (url.Values, error) {
 	ret := url.Values{}
@@ -115,22 +97,6 @@ func marshalToJson(model interface{}) ([]byte, error) {
 	return result, nil
 }
 
-func unmarshalResultInto(data []byte, result interface{}) error {
-	resp := new(common.CommonResponse)
-	if err := json.Unmarshal(data, resp); err != nil {
-		return fmt.Errorf("fail to unmarshal response, %v", err)
-	}
-	errObj := resp.ResponseMetadata.Error
-	if errObj != nil && errObj.CodeN != 0 {
-		return fmt.Errorf("request %s error %s", resp.ResponseMetadata.RequestId, errObj.Message)
-	}
-
-	if err := json.Unmarshal(data, result); err != nil {
-		return fmt.Errorf("fail to unmarshal result, %v", err)
-	}
-	return nil
-}
-
 func (c *Rtc) SendBroadcast(ctx context.Context, arg *SendBroadcastBody) (*SendBroadcastRes, int, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -138,17 +104,16 @@ func (c *Rtc) SendBroadcast(ctx context.Context, arg *SendBroadcastBody) (*SendB
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "SendBroadcast", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(SendBroadcastRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(SendBroadcastRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) SendRoomUnicast(ctx context.Context, arg *SendRoomUnicastBody) (*SendRoomUnicastRes, int, error) {
@@ -158,17 +123,16 @@ func (c *Rtc) SendRoomUnicast(ctx context.Context, arg *SendRoomUnicastBody) (*S
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "SendRoomUnicast", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(SendRoomUnicastRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(SendRoomUnicastRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) SendUnicast(ctx context.Context, arg *SendUnicastBody) (*SendUnicastRes, int, error) {
@@ -178,17 +142,16 @@ func (c *Rtc) SendUnicast(ctx context.Context, arg *SendUnicastBody) (*SendUnica
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "SendUnicast", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(SendUnicastRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(SendUnicastRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }
 
 func (c *Rtc) BatchSendRoomUnicast(ctx context.Context, arg *BatchSendRoomUnicastBody) (*BatchSendRoomUnicastRes, int, error) {
@@ -198,15 +161,14 @@ func (c *Rtc) BatchSendRoomUnicast(ctx context.Context, arg *BatchSendRoomUnicas
 	}
 
 	data, statusCode, err := c.Client.CtxJson(ctx, "BatchSendRoomUnicast", url.Values{}, string(body))
-	if err != nil {
-		return nil, statusCode, err
+
+	if len(data) > 0 {
+		result := new(BatchSendRoomUnicastRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
 	}
 
-	result := new(BatchSendRoomUnicastRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, statusCode, err
-	}
-
-	return result, statusCode, nil
+	return nil, statusCode, err
 }

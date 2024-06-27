@@ -2,13 +2,14 @@ package rtc_v20230720
 
 type BatchSendRoomUnicastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 是否为二进制消息。
+	// REQUIRED; 消息类型。
+	// * true：二进制消息。false：文本消息。
 	Binary bool `json:"Binary"`
 
-	// REQUIRED; 业务服务端的唯一标识。 命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}。 在一个 AppID 下，不能和真实用户用于实时消息通信的 user_ID 重复； 建议使用固定的 ID 的发送消息。
+	// REQUIRED; 业务服务端的唯一标识。 命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}。 在一个 AppID 下，不能和真实用户用于实时消息通信的 user_ID 重复。 建议使用固定的 ID 的发送消息。
 	From string `json:"From"`
 
 	// REQUIRED; 点对点消息 。如果是二进制消息，需进行 base64 编码
@@ -60,7 +61,7 @@ type BatchSendRoomUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -257,11 +258,11 @@ type IndicatorTagSubTagsItem struct {
 
 type SendBroadcastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; * 字段为 true，发送二进制消息；
-	// * 字段为 false，发送文本消息。
+	// REQUIRED; 消息类型。
+	// * true：二进制消息。false：文本消息。
 	Binary bool `json:"Binary"`
 
 	// REQUIRED; 业务服务端的唯一标识； 命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}。 在一个 AppID 下，不能和真实用户用于实时消息通信的 user_ID 重复； 建议使用固定的 ID 的发送消息。
@@ -313,7 +314,7 @@ type SendBroadcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -325,11 +326,11 @@ type SendBroadcastResResult struct {
 
 type SendRoomUnicastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; * 字段为 true，发送二进制消息；
-	// * 字段为 false，发送文本消息。
+	// REQUIRED; 消息类型。
+	// * true：二进制消息。false：文本消息。
 	Binary bool `json:"Binary"`
 
 	// REQUIRED; 业务服务端的唯一标识。 命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}。 在一个 AppID 下，不能和真实用户用于实时消息通信的 user_ID 重复； 建议使用固定的 ID 的发送消息。
@@ -384,7 +385,7 @@ type SendRoomUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -397,7 +398,7 @@ type SendRoomUnicastResResult struct {
 
 type SendUnicastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; * 字段为 true，发送二进制消息；
@@ -453,7 +454,7 @@ type SendUnicastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 

@@ -2,13 +2,13 @@ package rtc_v20231101
 
 type BanRoomUserBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 指定房间 ID
 	RoomID string `json:"RoomId"`
 
-	// 封禁时长，单位为秒，取值范围为[60,259200]。 若传入值为空或 0表示允许用户重新进房。 若传入值大于0，且小于60，自动修改为60。 若传入值大于259200，自动修改为259200。
+	// 封禁时长，取值范围为 [60,259200]，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259200，自动修改为 259200。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
 
 	// 希望封禁用户的 ID
@@ -29,9 +29,6 @@ type BanRoomUserResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error BanRoomUserResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -43,15 +40,22 @@ type BanRoomUserResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *BanRoomUserResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// BanRoomUserResResponseMetadataError - 仅在请求失败时返回。
 type BanRoomUserResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type BanRoomUserResResult struct {
@@ -62,7 +66,7 @@ type BanRoomUserResResult struct {
 
 type BanUserStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -74,10 +78,16 @@ type BanUserStreamBody struct {
 	// REQUIRED; 你希望封禁音/视频流的用户的 ID
 	UserID string `json:"UserId"`
 
-	// 是否封禁音频流，置为 true 时，表示封禁音频流
+	// 是否解封音频流。
+	// * true：解封音频流。
+	// * false：封禁音频流。
+	// 默认值为 true。
 	Audio *bool `json:"Audio,omitempty"`
 
-	// 是否封禁视频流，置为 true 时，表示封禁视频流
+	// 是否解封视频流。
+	// * true：解封视频流。
+	// * false：封禁视频流。
+	// 默认值为 true。
 	Video *bool `json:"Video,omitempty"`
 }
 
@@ -93,9 +103,6 @@ type BanUserStreamResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error BanUserStreamResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -107,15 +114,22 @@ type BanUserStreamResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *BanUserStreamResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// BanUserStreamResResponseMetadataError - 仅在请求失败时返回。
 type BanUserStreamResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type BanUserStreamResResult struct {
@@ -170,7 +184,7 @@ type CreateAppResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -185,10 +199,10 @@ type CreateAppResResult struct {
 	// REQUIRED; 创建时间
 	CreateDate string `json:"CreateDate"`
 
-	// REQUIRED; 计费实例 ID
+	// REQUIRED; 实例 ID
 	InstanceID string `json:"InstanceId"`
 
-	// REQUIRED; * 服务状态。取值：
+	// REQUIRED; * 服务状态。取值及含义如下：
 	// * 0: 创建中——指 AppID 在初始化
 	// * 1: 运行中——指当前 AppID 为正常服务状态
 	// * 6: 欠费关停
@@ -322,7 +336,7 @@ type GetPushMixedStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -342,7 +356,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTask struct {
 	ExcludeStreams *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskExcludeStreams `json:"ExcludeStreams,omitempty"`
 	Layout         *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayout         `json:"Layout,omitempty"`
 
-	// 推流状态
+	// 推流状态。
 	// * 0：运行中，未获取到任务状态，建议稍后重新查询
 	// * 1：未开始推流
 	// * 2：首次连接 CDN 服务
@@ -367,7 +381,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTask struct {
 	// * 4： 任务运行失败
 	Status *int64 `json:"Status,omitempty"`
 
-	// 任务停止的原因
+	// 任务停止的原因。
 	// * 返回为空：表示任务未结束
 	// * UnknownStopReason：未知停止原因
 	// * StopByAPI：用户主动调用 服务端 OpenAPI 停止
@@ -380,29 +394,30 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTask struct {
 
 type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControl struct {
 
-	// 选择补帧模式。默认值为0，可以取0和1。0为补最后一帧，1为补黑帧。
-	// 自动布局模式下，没有补帧的逻辑。
-	// 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
-	// 使用占位图、补帧和上一帧的关系:
-	// 你可以在 Region 中传入 Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
+	// 选择补帧模式。支持取值及含义如下：
+	// * 0：补最后一帧。
+	// * 1：补黑帧
+	// 默认值为0。 自动布局模式下，没有补帧的逻辑。 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
+	// 使用占位图、补帧和上一帧的关系: 你可以在 Region 中传入
+	// Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
 	// * 在 Region.StreamIndex 对应的视频流停止发布时, Region 对应的画布空间会根据设置填充占位图或补帧。但当视频流为屏幕流时，补帧模式不生效。
 	// * 当 Region.StreamIndex 对应的视频流发布后停止采集或推送时, Region 对应的画布空间会填充上一帧。
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
 	FrameInterpolationMode *int32 `json:"FrameInterpolationMode,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400],单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// （仅对录制有效）最大录制时长，单位为秒。默认值为 0。0 表示不限制录制时长。
-	MaxRecordTime *int32 `json:"MaxRecordTime,omitempty"`
-
-	// 流的类型，用于全局控制订阅的流的类型。默认值为0，可以取0和1。0表示音视频，1表示纯音频，暂不支持纯视频。
+	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
+	// * 0 ：音视频，
+	// * 1 ：纯音频（当前该值无效）。
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 转推直播推流模式，用于控制触发推流的时机。取值为0或1。默认值为0。
+	// 转推直播推流模式，用于控制触发推流的时机。支持取值及含义如下：
 	// * 0：房间内有用户推 RTC 流时即触发 CDN 推流。
 	// * 1：调用接口发起推流任务后，无论房间内是否有用户推 RTC 流,均可触发 CDN 推流。
-	// 任务超时逻辑不变，依然是无用户推流即判定为超时。
+	// 默认值为 0。 任务超时逻辑不变，依然是无用户推流即判定为超时。
 	PushStreamMode *int32                                                                            `json:"PushStreamMode,omitempty"`
 	SEIConfig      *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSEIConfig     `json:"SEIConfig,omitempty"`
 	SpatialConfig  *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSpatialConfig `json:"SpatialConfig,omitempty"`
@@ -422,13 +437,13 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSEIConfi
 	// 默认值为 true。
 	PassthroughRTCSEIMessage *bool `json:"PassthroughRTCSEIMessage,omitempty"`
 
-	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。
+	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。支持取值及含义如下：
 	// * 0：全量信息。
 	// * 1：只有音量信息和时间戳。
-	// 关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
+	// 默认值为 0。关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
 	SEIContentMode *int32 `json:"SEIContentMode,omitempty"`
 
-	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。取值为 5 或 100，默认为 100。
+	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。支持取值为 5 或 100，默认为 100。
 	SEIPayLoadType *int32 `json:"SEIPayLoadType,omitempty"`
 
 	// 该字段为长度为 32 位的 16 进制字符，每个字符的范围为 a-f，A-F，0-9，不可包含 -。如果校验失败，会返回错误码 InvalidParameter。
@@ -440,10 +455,10 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSEIConfi
 	// 设置SEI数据结构 [1163740#sei]中 app_data 参数的值，最大长度为 4096。此参数支持动态更新。
 	UserConfigExtraInfo *string `json:"UserConfigExtraInfo,omitempty"`
 
-	// 用户说话音量的回调间隔，单位为秒，取值范围为[0.3,∞]，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
+	// 用户说话音量的回调间隔。取值范围为 [0.3,∞]，单位为秒，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
 	VolumeIndicationInterval *float32 `json:"VolumeIndicationInterval,omitempty"`
 
-	// (仅对转推直播有效）是否开启音量指示模式。
+	// 是否开启音量指示模式。
 	// * true：是。此时非关键帧中也可能携带 SEI 信息。
 	// * false：否。此时只会在关键帧中携带 SEI 信息。
 	// 默认值为 false。
@@ -454,10 +469,13 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSEIConfi
 type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSpatialConfig struct {
 	AudienceSpatialOrientation *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSpatialConfigAudienceSpatialOrientation `json:"AudienceSpatialOrientation,omitempty"`
 
-	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	AudienceSpatialPosition []*int32 `json:"AudienceSpatialPosition,omitempty"`
 
-	// 是否开启空间音频处理功能。 false：关闭。true：开启
+	// 是否开启空间音频处理功能。
+	// * false：关闭。
+	// * true：开启
+	// 默认值为 false。
 	EnableSpatialRender *bool `json:"EnableSpatialRender,omitempty"`
 }
 
@@ -517,10 +535,10 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode struct {
 	// 视频帧率。取值范围为 [1,60]，单位为 FPS，默认值为 15。
 	VideoFps *int32 `json:"VideoFps,omitempty"`
 
-	// 输出视频 GOP。取值范围为 [1,5]，默认值为 4，单位为秒。
+	// 输出视频 GOP。取值范围为 [1,5]，单位为秒，默认值为 4。
 	VideoGop *int32 `json:"VideoGop,omitempty"`
 
-	// 画面高度，取值范围为[2, 1920]，必须是偶数，单位为像素，默认值为480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
+	// 画面高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
 	// 画面宽度。取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Width 设置画面宽度。
@@ -551,11 +569,12 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskExcludeStreamsS
 type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayout struct {
 	CustomLayout *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLayout `json:"CustomLayout,omitempty"`
 
-	// 布局模式。默认值为 0，值的范围为：
-	// * 0 ：自适应布局 [1167930#adapt]。
-	// * 1 ：垂直布局 [1167930#vertical]。
+	// 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]。
+	// * 1：垂直布局 [1167930#vertical]
 	// * 2 ：自定义布局。
 	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode      *int32                                                                             `json:"LayoutMode,omitempty"`
 	MainVideoStream *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutMainVideoStream `json:"MainVideoStream,omitempty"`
 }
@@ -578,7 +597,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLay
 	// 背景图片的 URL。长度最大为 1024 byte。可以传入的图片的格式包括：JPG, JPEG, PNG。 如果背景图片的宽高和整体屏幕的宽高不一致，背景图片会缩放到铺满屏幕。 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素。默认值为 480。
+	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 整体屏幕（画布）的宽度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。
@@ -596,7 +615,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLay
 	// REQUIRED; 视频流对应区域宽度的像素绝对值，取值的范围为 (0.0, Canvas.Width]。
 	Width int32 `json:"Width"`
 
-	// 画面的透明度，取值范围为 (0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 补位图片的 url。长度不超过 1024 个字符串。
@@ -631,7 +650,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLay
 	// * 0：音视频
 	// * 1：纯音频
 	// * 2：纯视频
-	// 默认值为 0。 假如该路流为音视频流，MediaType设为1，则只混入音频内容。
+	// 默认值为 0。 例如该路流为音视频流，MediaType设为1，则只混入音频内容。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
 	// 画面的渲染模式。支持取值及含义如下：
@@ -645,10 +664,10 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLay
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	SpatialPosition []*int32 `json:"SpatialPosition,omitempty"`
 
-	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -761,7 +780,7 @@ type GetPushSingleStreamToCDNTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -816,7 +835,7 @@ type GetPushSingleStreamToCDNTaskResResultPushSingleStreamToCDNTask struct {
 
 type GetPushSingleStreamToCDNTaskResResultPushSingleStreamToCDNTaskControl struct {
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400], 单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 流的类型，用于全局控制订阅的流的类型。默认值为 0，可以取0和1。0表示音视频，1表示纯音频，暂不支持纯视频。
@@ -828,7 +847,10 @@ type GetPushSingleStreamToCDNTaskResResultPushSingleStreamToCDNTaskStream struct
 	// REQUIRED; 用户Id，表示这个流所属的用户。
 	UserID string `json:"UserId"`
 
-	// 流的类型，值可以取0或1，默认值为0。0表示普通音视频流，1表示屏幕流。
+	// 流的类型。支持取值及含义如下：
+	// * 0：普通音视频流，
+	// * 1：屏幕流。
+	// 默认值为0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 }
 
@@ -881,7 +903,7 @@ type GetRecordTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -894,23 +916,24 @@ type GetRecordTaskResResult struct {
 // GetRecordTaskResResultRecordTask - -
 type GetRecordTaskResResultRecordTask struct {
 
-	// 任务结束的时间，为 Unix 时间戳，单位毫秒。0 表示任务未结束
+	// 任务结束的时间，为 Unix 时间戳，单位为毫秒。0 表示任务未结束
 	EndTime *int64 `json:"EndTime,omitempty"`
 
 	// 录制生成的文件列表。
 	RecordFileList []*GetRecordTaskResResultRecordTaskRecordFileListItem `json:"RecordFileList,omitempty"`
 
-	// 任务开始的时间，为 Unix 时间戳，单位毫秒
+	// 任务开始的时间，为 Unix 时间戳，单位为毫秒
 	StartTime *int64 `json:"StartTime,omitempty"`
 
-	// 任务状态:0: 未知异常状态
+	// 任务状态。取值及含义如下：
+	// * 0: 未知异常状态
 	// * 1: 未开始
 	// * 2: 运行中
 	// * 3: 已结束
 	// * 4: 任务运行失败
 	Status *int64 `json:"Status,omitempty"`
 
-	// 任务停止的原因：
+	// 任务停止的原因。取值及含义如下：
 	// * 空：表示任务未结束
 	// * UnknownStopReason：未知停止原因
 	// * StopByAPI：用户主动通过 API 停止
@@ -924,16 +947,16 @@ type GetRecordTaskResResultRecordTaskRecordFileListItem struct {
 	// 音频录制编码器
 	AudioCodec *string `json:"AudioCodec,omitempty"`
 
-	// 文件时长，单位毫秒。
+	// 文件时长，单位为毫秒。
 	Duration *int64 `json:"Duration,omitempty"`
 
 	// 文件在对象存储平台中的完整路径，如abc/efg/123.mp4。仅在你选择配置存储到对象存储平台时，此参数有效。
 	ObjectKey *string `json:"ObjectKey,omitempty"`
 
-	// 文件大小，单位字节。
+	// 文件大小，单位为字节。
 	Size *int64 `json:"Size,omitempty"`
 
-	// 当前录制文件创建的时间，为 Unix 时间戳，单位毫秒。
+	// 当前录制文件创建的时间，为 Unix 时间戳，单位为毫秒。
 	StartTime *int64 `json:"StartTime,omitempty"`
 
 	// 录制文件中包含流的列表。
@@ -945,10 +968,10 @@ type GetRecordTaskResResultRecordTaskRecordFileListItem struct {
 	// 视频录制编码协议
 	VideoCodec *string `json:"VideoCodec,omitempty"`
 
-	// 录制视频高度，单位像素。
+	// 录制视频高度，单位为像素。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
-	// 录制视频宽度，单位像素。
+	// 录制视频宽度，单位为像素。
 	VideoWidth *int32 `json:"VideoWidth,omitempty"`
 }
 
@@ -988,9 +1011,6 @@ type GetRoomOnlineUsersResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error GetRoomOnlineUsersResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -1002,15 +1022,22 @@ type GetRoomOnlineUsersResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *GetRoomOnlineUsersResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// GetRoomOnlineUsersResResponseMetadataError - 仅在请求失败时返回。
 type GetRoomOnlineUsersResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type GetRoomOnlineUsersResResult struct {
@@ -1083,7 +1110,7 @@ type GetSegmentTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1123,7 +1150,8 @@ type GetSegmentTaskResResultSegmentTask struct {
 	// * 4: 任务运行失败
 	Status *int64 `json:"Status,omitempty"`
 
-	// 任务停止的原因- 返回为空：表示任务未结束
+	// 任务停止的原因。
+	// * 返回为空：表示任务未结束
 	// * UnknownStopReason：未知停止原因
 	// * StopByAPI：用户主动调用 服务端 OpenAPI 停止
 	// * StartTaskFailed：任务启动失败
@@ -1146,18 +1174,22 @@ type GetSegmentTaskResResultSegmentTask struct {
 
 type GetSegmentTaskResResultSegmentTaskControl struct {
 
-	// 是否开启切片对齐功能。默认为 False。你可以使用音频切片对齐功能，对齐各个用户音频切片的开始和结束时刻。
-	// * 当 Align=False 时，关闭音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。如果用户在切片的周期中，有部分时间未发布音频，返回的音频切片时长会小于切片周期。各个用户音频切片开始时间不一定一致。
-	// * 当 Align=True 时，开启音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。切片长度和切片周期相等，且各个用户音频切片开始的时间一致。如果用户在切片的周期中，有部分时间未发布音频，切片长度不变，这段时间呈现静音帧。如果用户在某个切片周期中始终没有发布音频，则不生成音频切片。
+	// 是否开启切片对齐功能，你可以使用该功能，对齐各个用户音频切片的开始和结束时刻。
+	// * false：关闭音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。如果用户在切片的周期中，有部分时间未发布音频，返回的音频切片时长会小于切片周期。各个用户音频切片开始时间不一定一致。
+	// * true：开启音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。切片长度和切片周期相等，且各个用户音频切片开始的时间一致。如果用户在切片的周期中，有部分时间未发布音频，切片长度不变，这段时间呈现静音帧。如果用户在某个切片周期中始终没有发布音频，则不生成音频切片。
+	// 默认值为false。
 	Align *bool `json:"Align,omitempty"`
 
-	// 是否忽略静音切片。默认值为 false
+	// 是否忽略静音切片。
+	// * true：忽略。
+	// * false：不忽略。
+	// 默认值为 false
 	IgnoreSilence *bool `json:"IgnoreSilence,omitempty"`
 
-	// 是否开启合流切片功能。默认为 False。
-	// * 当 Mixed=False 时，只会对 TargetStreams 中指定的音频流分别切片。
-	// * 当 Mixed=True 时，除了会对 TargetStreams 中指定的音频流分别切片，还会对指定的音频流进行混音，生成合流切片，合流切片对应的用户名为 mixed。此时，任务创建后，不管是否有人上麦，会持续回调混音切片。
-	// 不同平台的回调参看：
+	// 是否开启合流切片功能。
+	// * False：只会对 TargetStreams 中指定的音频流分别切片。
+	// * True：除了会对 TargetStreams 中指定的音频流分别切片，还会对指定的音频流进行混音，生成合流切片，合流切片对应的用户名为 mixed。此时，任务创建后，不管是否有人上麦，会持续回调混音切片。
+	// 默认值为 false。 不同平台的回调参看：
 	// 操作 ANDROID API IOS API WINDOWS API
 	// 本地麦克风录制和远端所有用户混音后的音频数据回调 onMixedAudioFrame [70081#onmixedaudioframe] onMixedAudioFrame: [70087#onmixedaudioframe] onMixedAudioFrame
 	// [70096#onmixedaudioframe]
@@ -1210,8 +1242,8 @@ type GetSegmentTaskResResultSegmentTaskStorageConfigCustomConfig struct {
 	Region *int32 `json:"Region,omitempty"`
 
 	// 第三方云存储平台。支持取值及含义如下：
-	// * 0： Amazon S3
-	// * 1： 阿里云 OSS
+	// * 0：Amazon S3
+	// * 1：阿里云 OSS
 	// * 2：华为云 OBS
 	// * 3：腾讯云 COS
 	// * 4：七牛云 Kodo。
@@ -1252,7 +1284,7 @@ type GetSegmentTaskResResultSegmentTaskStorageConfigVeImageXConfig struct {
 	ServiceID string `json:"ServiceId"`
 
 	// 不同存储平台支持的 Region 不同，具体参看 Region对照表 [1167931#region]
-	// 默认值为0。
+	// 默认值为 0。
 	Region *int32 `json:"Region,omitempty"`
 }
 
@@ -1281,7 +1313,7 @@ type GetSegmentTaskResResultSegmentTaskStorageConfigVodConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
-	// 上传到视频点播平台时, 文件的存储类型。枚举值为：
+	// 上传到视频点播平台时, 文件的存储类型。支持取值及含义如下：：
 	// * 1：标准存储。
 	// * 2：归档存储。
 	// * 3：低频存储。
@@ -1359,7 +1391,7 @@ type GetSnapshotTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1414,16 +1446,19 @@ type GetSnapshotTaskResResultSnapshotTask struct {
 
 type GetSnapshotTaskResResultSnapshotTaskImageConfig struct {
 
-	// 图片的格式。值可取0或1，默认为0。选择0时，图片格式为 JEPG；选择1时，图片格式为 PNG。默认值为0。
+	// 图片的格式。支持取值及含义如下：
+	// * 0：JEPG
+	// * 1：PNG
+	// 默认值为0。
 	Format *int32 `json:"Format,omitempty"`
 
-	// 实际使用视频帧的高度，单位为像素，取值范围为[0, 1920]，默认值为0，此时，和视频流的实际高度相同。
+	// 实际使用视频帧的高度，取值范围为 [0, 1920]，单位为像素，默认值为 0，此时，和视频流的实际高度相同。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 相邻截图之间的间隔时间，单位为秒，取值范围为[1, 600]，默认值为2。
+	// 相邻截图之间的间隔时间，取值范围为[1, 600]，单位为秒，默认值为2。
 	Interval *int32 `json:"Interval,omitempty"`
 
-	// 实际使用视频帧的宽度，单位为像素，取值范围为[0, 1920]。默认值为0，此时，和视频流的实际宽度相同。
+	// 实际使用视频帧的宽度，取值范围为[0, 1920]，单位为像素。默认值为0，表示和视频流的实际宽度相同。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -1467,8 +1502,8 @@ type GetSnapshotTaskResResultSnapshotTaskStorageConfigCustomConfig struct {
 	Region *int32 `json:"Region,omitempty"`
 
 	// 第三方云存储平台。支持取值及含义如下：
-	// * 0： Amazon S3
-	// * 1： 阿里云 OSS
+	// * 0：Amazon S3
+	// * 1：阿里云 OSS
 	// * 2：华为云 OBS
 	// * 3：腾讯云 COS
 	// * 4：七牛云 Kodo。
@@ -1509,7 +1544,7 @@ type GetSnapshotTaskResResultSnapshotTaskStorageConfigVeImageXConfig struct {
 	ServiceID string `json:"ServiceId"`
 
 	// 不同存储平台支持的 Region 不同，具体参看 Region对照表 [1167931#region]
-	// 默认值为0。
+	// 默认值为 0。
 	Region *int32 `json:"Region,omitempty"`
 }
 
@@ -1538,7 +1573,7 @@ type GetSnapshotTaskResResultSnapshotTaskStorageConfigVodConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
-	// 上传到视频点播平台时, 文件的存储类型。枚举值为：
+	// 上传到视频点播平台时, 文件的存储类型。支持取值及含义如下：：
 	// * 1：标准存储。
 	// * 2：归档存储。
 	// * 3：低频存储。
@@ -1616,7 +1651,7 @@ type GetWebCastTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -1633,7 +1668,7 @@ type GetWebCastTaskResResultWebCastTask struct {
 	EndTime           *int64                                               `json:"EndTime,omitempty"`
 	EventNotifyConfig *GetWebCastTaskResResultWebCastTaskEventNotifyConfig `json:"EventNotifyConfig,omitempty"`
 
-	// 最大运行时间，超过此时间后，任务自动终止。单位为秒。取值范围为[10,86400]，默认值为 86400。不填时自动调整为默认值。
+	// 最大运行时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10,86400]，默认值为 86400。不填时自动调整为默认值。
 	MaxRunningTime *int32                                           `json:"MaxRunningTime,omitempty"`
 	MonitorConfig  *GetWebCastTaskResResultWebCastTaskMonitorConfig `json:"MonitorConfig,omitempty"`
 
@@ -1643,7 +1678,7 @@ type GetWebCastTaskResResultWebCastTask struct {
 	// 任务开始时间戳，Unix 时间，单位为毫秒
 	StartTime *int64 `json:"StartTime,omitempty"`
 
-	// 任务状态。
+	// 任务状态。支持取值及含义如下：
 	// * 0: 未知异常状态
 	// * 1: 未开始
 	// * 2: 运行中
@@ -1651,7 +1686,7 @@ type GetWebCastTaskResResultWebCastTask struct {
 	// * 4: 任务运行失败
 	Status *int64 `json:"Status,omitempty"`
 
-	// 任务停止的原因
+	// 任务停止的原因。支持取值及含义如下：
 	// * 返回为空：表示任务未结束
 	// * UnknownStopReason：未知停止原因
 	// * StopByAPI：用户主动调用 服务端 OpenAPI 停止
@@ -1662,15 +1697,15 @@ type GetWebCastTaskResResultWebCastTask struct {
 	// 推送网页音视频内容的用户对应的 UserId
 	UserID *string `json:"UserId,omitempty"`
 
-	// 输出的视频参数，最多支持2路，以大小流的方式支持接收端按需订阅，将以最大的视频流分辨率作为网页渲染分辨率，为空时按默认值填充一路
+	// 输出的视频参数，最多支持 2 路，以大小流的方式支持接收端按需订阅，将以最大的视频流分辨率作为网页渲染分辨率，为空时按默认值填充一路
 	VideoSolutions []*GetWebCastTaskResResultWebCastTaskVideoSolutionsItem `json:"VideoSolutions,omitempty"`
 }
 
 type GetWebCastTaskResResultWebCastTaskEventNotifyConfig struct {
 
-	// 是否启用页面主动事件通知, 默认值为false。
+	// 是否启用页面主动事件通知,。
 	// * false：页面在打开后就会开始采集，在收到 StopWebCast openAPI 请求后结束采集。
-	// * true：在页面中注入两个 JS 函数：onWebcastStart()和 onWebcastEnd()。
+	// * true：在页面中注入两个 JS 函数：onWebcastStart()和 onWebcastEnd()。 默认值为false。
 	// 当页面判断资源加载完成之后调用onWebcastStart()，控制程序才会开始进行页面内容的采集。当页面判断本次任务内容已完成时调用onWebcastEnd() 通知控制程序结束本次任务。StopWebCast openAPI 效果不变，业务可提前结束任务。其他页面内容、JS
 	// 线程的检测（若启用），将在收到 onWebcastStart()事件后才开始。
 	// 当启用页面主动事件通知后，你可以参考以下示例代码来通知采集开始。
@@ -1680,7 +1715,7 @@ type GetWebCastTaskResResultWebCastTaskEventNotifyConfig struct {
 	// </script>
 	EnableEventNotify *bool `json:"EnableEventNotify,omitempty"`
 
-	// 启用页面主动事件通知后，等待开始事件的超时时间。取值范围为[0,60]，单位为秒。默认值为0，表示不启用。仅当 EnableEventNotify 为 true 时，此参数有效。
+	// 启用页面主动事件通知后，等待开始事件的超时时间。取值范围为 [0,60]，单位为秒。默认值为 0，表示不启用。仅当 EnableEventNotify 为 true 时，此参数有效。
 	// * 当在超时时间内收到开始事件，采集功能正常运行，用户将收到 Status=1的回调。
 	// * 当超时时间内未收到开始事件，将进行刷新，等待时间被重置，再次发生超时后将进行任务重调度。刷新时将回调 Status=4，Reason=" StartEventTimeout"。重调度时将回调 Status=5，Reason="StartEventTimeout"。
 	StartTimeout *int32 `json:"StartTimeout,omitempty"`
@@ -1688,17 +1723,17 @@ type GetWebCastTaskResResultWebCastTaskEventNotifyConfig struct {
 
 type GetWebCastTaskResResultWebCastTaskMonitorConfig struct {
 
-	// 对页面是否白屏的检测间隔。取值范围为[2,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面是否白屏的检测间隔。取值范围为 [2,30]，单位为秒。默认值为0，表示不启用。
 	// * 当连续两次出现检测命中时，将对页面进行刷新，并回调Status=4，Reason="PageBlank" 。
 	// * 再次出现连续两次检测命中时将进行任务重调度，并回调Status=5，Reason="PageBlank"。
 	// 注意：页面全白可能是您业务的正常场景，请谨慎评估页面实际内容情况后再开启此功能，以免任务提前退出。
 	BlankCheckInterval *int32 `json:"BlankCheckInterval,omitempty"`
 
-	// 对页面 JS 线程是否崩溃/卡死的检测间隔。 取值范围为[0,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面 JS 线程是否崩溃/卡死的检测间隔。 取值范围为 [0,30]，单位为秒。默认值为 0，表示不启用。
 	// 当出现检测命中时将进行任务重调度，并回调 Status=5，Reason="PageCrash"。
 	CrashCheckInterval *int32 `json:"CrashCheckInterval,omitempty"`
 
-	// 对页面内容是否无变化的检测间隔。取值范围为[2,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面内容是否无变化的检测间隔。取值范围为 [2,30]，单位为秒。默认值为 0，表示不启用。
 	// * 当连续两次出现检测命中时，将对页面进行刷新，并回调Status=4，Reason="PageFreeze"。
 	// * 再次出现连续两次检测命中时，将进行任务重调度，并回调Status=5，Reason="PageFreeze"。
 	// 注意：页面无变化可能是您业务的正常场景，请谨慎评估页面实际内容情况后再开启此功能，以免任务提前退出。
@@ -1707,10 +1742,10 @@ type GetWebCastTaskResResultWebCastTaskMonitorConfig struct {
 
 type GetWebCastTaskResResultWebCastTaskVideoSolutionsItem struct {
 
-	// 最大发送码率，取值范围为[0,10000]，单位为 Kbps，默认值 0，为 0 时表示自适应码率。
+	// 最大发送码率，取值范围为 [0,10000]，单位为 Kbps，默认值 0，为 0 时表示自适应码率。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 发送帧率，单位为 帧/秒，范围为[1,60]，默认值为 15。帧率和码率设置建议参照视频发布参数对照表 [70122#param]以获取最佳体验。
+	// 发送帧率，单位为 fps，范围为[1,60]，默认值为 15。帧率和码率设置建议参照视频发布参数对照表 [70122#param]以获取最佳体验。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 视频高度，单位为像素，范围为 [50,1080]，默认值为 720。必须是偶数，值为奇数时自动调整为偶数。
@@ -1846,10 +1881,10 @@ type IndicatorTagSubTagsItem struct {
 
 type LimitTokenPrivilegeBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 限制 Token 发布权限时长，单位为秒。取值范围为[60,259200]若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259200，自动修改为 259200。
+	// REQUIRED; 限制 Token 发布权限时长，取值范围为 [60,259200]，单位为秒。 若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259200，自动修改为 259200。
 	ForbiddenInterval int32 `json:"ForbiddenInterval"`
 
 	// REQUIRED; 指定房间 ID
@@ -1876,9 +1911,6 @@ type LimitTokenPrivilegeResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error LimitTokenPrivilegeResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -1890,15 +1922,22 @@ type LimitTokenPrivilegeResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *LimitTokenPrivilegeResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// LimitTokenPrivilegeResResponseMetadataError - 仅在请求失败时返回。
 type LimitTokenPrivilegeResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type LimitTokenPrivilegeResResult struct {
@@ -1969,7 +2008,7 @@ type ListAppsResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2006,7 +2045,7 @@ type ListAppsResResultAppListItem struct {
 	// 副 AppKey，启用后可用于生成 Token
 	SecondaryAppKey *string `json:"SecondaryAppKey,omitempty"`
 
-	// 服务状态。枚举值为：0: 创建中——指 AppID 在初始化1: 运行中——指当前 AppID 为正常服务状态6: 欠费关停98: 已停用——指调用服务端停用接口，当前 AppID 被设置为不可用状态
+	// 服务状态。取值及含义如下：0: 创建中——指 AppID 在初始化1: 运行中——指当前 AppID 为正常服务状态6: 欠费关停98: 已停用——指调用服务端停用接口，当前 AppID 被设置为不可用状态
 	Status *int32 `json:"Status,omitempty"`
 }
 
@@ -2040,17 +2079,33 @@ type ListCallDetailRes struct {
 }
 
 type ListCallDetailResResponseMetadata struct {
-	Action    *string                                 `json:"Action,omitempty"`
-	Error     *ListCallDetailResResponseMetadataError `json:"Error,omitempty"`
-	Region    *string                                 `json:"Region,omitempty"`
-	RequestID *string                                 `json:"RequestId,omitempty"`
-	Service   *string                                 `json:"Service,omitempty"`
-	Version   *string                                 `json:"Version,omitempty"`
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                  `json:"Version"`
+	Error   *ListCallDetailResResponseMetadataError `json:"Error,omitempty"`
 }
 
 type ListCallDetailResResponseMetadataError struct {
-	Code    *string `json:"Code,omitempty"`
-	Message *string `json:"Message,omitempty"`
+
+	// REQUIRED
+	Code string `json:"Code"`
+
+	// REQUIRED
+	Message     string  `json:"Message"`
+	CodeN       *int32  `json:"CodeN,omitempty"`
+	Description *string `json:"Description,omitempty"`
 }
 
 type ListCallDetailResResult struct {
@@ -2152,7 +2207,7 @@ type ListDetectionTaskResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2172,13 +2227,13 @@ type ListDetectionTaskResResultEventDataItem struct {
 	// REQUIRED; 用户审核发起时间戳，unix 时间，单位为秒。
 	CreateTime int32 `json:"CreateTime"`
 
-	// REQUIRED; 进行审核的内容类型： 1：视频截图； 2：音频切片； 3：视频截图+音频切片（默认值）
+	// REQUIRED; 进行审核的内容类型，支持取值及含义如下：1：视频截图；2：音频切片；3：视频截图+音频切片（默认值）
 	MediaType int32 `json:"MediaType"`
 
 	// REQUIRED; 审核房间 ID
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 审核状态： 1：运行中： 2：已完成；
+	// REQUIRED; 审核状态，支持取值及含义如下：1：运行中：2：已完成；
 	Status int32 `json:"Status"`
 
 	// REQUIRED; 若开始审核接口填入 UserId，此处返回填入 UserId。 若开始审核接口未填入 UserId，此处返回房间内触发过审核任务的用户的 UserId。
@@ -2187,12 +2242,12 @@ type ListDetectionTaskResResultEventDataItem struct {
 
 type ListOperationDataBody struct {
 
-	// REQUIRED; 返回聚合时间的粒度，支持设为以下值：
+	// REQUIRED; 返回聚合时间的粒度，支持取值及含义如下：
 	// * 1d：粒度为 1 天
 	// * 1h：粒度为 1 小时
 	AggregateGranularity string `json:"AggregateGranularity"`
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
@@ -2242,7 +2297,7 @@ type ListOperationDataResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2263,7 +2318,9 @@ type ListOperationDataResResultIndicatorsItem struct {
 	// 指标名称
 	Name     *string                                           `json:"Name,omitempty"`
 	Overview *ListOperationDataResResultIndicatorsItemOverview `json:"overview,omitempty"`
-	Unit     *string                                           `json:"Unit,omitempty"`
+
+	// 指标单位
+	Unit *string `json:"Unit,omitempty"`
 }
 
 type ListOperationDataResResultIndicatorsItemOverview struct {
@@ -2298,19 +2355,19 @@ type ListOperationDataResResultIndicatorsPropertiesItemsItem struct {
 
 type ListOperationDistributionBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 查询维度。目前仅支持查询:
-	// * 一级行政区（包括港澳台地区）
-	// * 国家
+	// REQUIRED; 查询的维度，一次仅支持查询一个维度。支持取值及含义如下：
+	// * Province：一级行政区（包括港澳台地区）
+	// * Country：国家
 	Dimension string `json:"Dimension"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询的指标名称。
-	// 目前仅支持查询 user_num，即此 AppId 在所选日期的通话总人数。通话人数按用户 id 去重。
+	// 目前仅支持查询 user_count，即此 AppId 在所选日期的通话总人数。通话人数按用户 id 去重。
 	Indicator string `json:"Indicator"`
 
 	// REQUIRED; 查询起始时间戳，格式为 RFC3339，单位为秒。
@@ -2354,15 +2411,17 @@ type ListOperationDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type ListOperationDistributionResResult struct {
 
 	// 具体的指标值以及对应时间
-	Data      []*ListOperationDistributionResResultDataItem `json:"Data,omitempty"`
-	Dimension *string                                       `json:"Dimension,omitempty"`
+	Data []*ListOperationDistributionResResultDataItem `json:"Data,omitempty"`
+
+	// 查询维度
+	Dimension *string `json:"Dimension,omitempty"`
 
 	// 指标名称
 	Name *string `json:"Name,omitempty"`
@@ -2382,12 +2441,12 @@ type ListOperationDistributionResResultDataItem struct {
 
 type ListQualityBody struct {
 
-	// REQUIRED; 返回聚合时间的粒度，支持设为以下值：
+	// REQUIRED; 返回聚合时间的粒度，支持取值及含义如下：
 	// * 1d：粒度为 1 天
 	// * 5min：粒度为 5 分钟
 	AggregateGranularity string `json:"AggregateGranularity"`
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
@@ -2407,9 +2466,10 @@ type ListQualityBody struct {
 	// ProductType = web 时该参数不生效
 	OS []*string `json:"OS,omitempty"`
 
-	// 要查询的产品类型，枚举值为 native 和 web。
+	// 要查询的产品类型，支持取值及含义如下：
 	// * native：指 android、iOS、linux、mac或 windows 平台的 veRTC SDK。
-	// * web：指 Web 平台的veRTC SDK。 默认值为native
+	// * web：指 Web 平台的veRTC SDK。
+	// 默认值为native
 	ProductType *string `json:"ProductType,omitempty"`
 
 	// 房间 ID。如果不填，代表查询该 AppId 的整体离线指标。
@@ -2421,31 +2481,30 @@ type ListQualityBody struct {
 
 type ListQualityDistributionBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 查询维度，一次仅支持查询一个维度。
-	// 支持设为以下值：
+	// REQUIRED; 查询的维度，一次仅支持查询一个维度。支持取值及含义如下：
 	// * Province：一级行政区（包括港澳台地区）
 	// * Country：国家
-	// * OS：用户设备平台 包括：android、ios、linux、mac、windows
-	// * Access：用户网络类型 包括：2g、3g、4g、5g、wifi
+	// * OS：用户设备平台。支持取值：android、ios、linux、mac、windows
+	// * Access：用户网络类型。支持取值：2g、3g、4g、5g、wifi
 	Dimension string `json:"Dimension"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的指标名称，一次仅支持查询一个指标。Indicator 可选值，参看质量数据相关 indicator [1167931#listquality]。
+	// REQUIRED; 查询的指标名称，一次仅支持查询一个指标。Indicator 支持取值参看质量数据相关 indicator [1167931#listquality]。
 	Indicator string `json:"Indicator"`
 
 	// REQUIRED; 查询起始时间戳，格式为 RFC3339，单位为秒。
 	StartTime string `json:"StartTime"`
 
-	// 设备平台，目前支持 Android、iOS和 Web。
+	// 设备平台，目前支持 Android、iOS 和 Web。
 	Platform *string `json:"Platform,omitempty"`
 
-	// 要查询的数据所属设备端，支持设为以下值：
-	// * native：指 Android、iOS、Linux、Mac、Windows 端。
+	// 要查询的数据所属设备端，支持取值及含义如下：
+	// * native：指 Android、iOS、Linux、Mac 或 Windows 端。
 	// * web：指 Web 端。 默认值为 native。
 	ProductType *string `json:"ProductType,omitempty"`
 }
@@ -2487,7 +2546,7 @@ type ListQualityDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2555,7 +2614,7 @@ type ListQualityResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2576,7 +2635,9 @@ type ListQualityResResultIndicatorsItem struct {
 	// 指标名称
 	Name     *string                                     `json:"Name,omitempty"`
 	Overview *ListQualityResResultIndicatorsItemOverview `json:"overview,omitempty"`
-	Unit     *string                                     `json:"Unit,omitempty"`
+
+	// 指标单位
+	Unit *string `json:"Unit,omitempty"`
 }
 
 type ListQualityResResultIndicatorsItemOverview struct {
@@ -2611,13 +2672,13 @@ type ListQualityResResultIndicatorsPropertiesItemsItem struct {
 
 type ListRealTimeOperationDataBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的指标名称。可同时查询多个指标。 Indicator 可选值，参看实时运营数据相关 indicator [1167931#realtime]。
+	// REQUIRED; 查询的指标名称。可同时查询多个指标。 Indicator 支持取值参看实时运营数据相关 indicator [1167931#realtime]。
 	Indicator []string `json:"Indicator"`
 
 	// REQUIRED; 查询起始时间戳，格式为 RFC3339，单位为秒。
@@ -2661,7 +2722,7 @@ type ListRealTimeOperationDataResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2679,7 +2740,9 @@ type ListRealTimeOperationDataResResultIndicatorsItem struct {
 	// 指标名称
 	Name     *string                                                   `json:"Name,omitempty"`
 	Overview *ListRealTimeOperationDataResResultIndicatorsItemOverview `json:"overview,omitempty"`
-	Unit     *string                                                   `json:"Unit,omitempty"`
+
+	// 指标单位
+	Unit *string `json:"Unit,omitempty"`
 }
 
 type ListRealTimeOperationDataResResultIndicatorsItemOverview struct {
@@ -2714,7 +2777,7 @@ type ListRealTimeOperationDataResResultIndicatorsPropertiesItemsItem struct {
 
 type ListRealTimeQualityBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
@@ -2726,8 +2789,8 @@ type ListRealTimeQualityBody struct {
 	// REQUIRED; 查询起始时间戳，格式为 RFC3339，单位为秒。
 	StartTime string `json:"StartTime"`
 
-	// 要查询的数据所属设备端，支持设为以下值：
-	// * native：指 Android、iOS、Linux、Mac、Windows 端。
+	// 要查询的数据所属设备端，支持取值及含义如下：
+	// * native：Android、iOS、Linux、Mac 或 Windows 端。
 	// * web：指 Web 端。
 	// 默认值为native。
 	ProductType *string `json:"ProductType,omitempty"`
@@ -2735,38 +2798,38 @@ type ListRealTimeQualityBody struct {
 	// 房间 ID，是房间的唯一标志。如果不填，代表查询该 AppId 的整体实时指标。
 	RoomID *string `json:"RoomId,omitempty"`
 
-	// 查询的用户 ID 列表，最多可以指定 20 个。值不合法时默认剔除。此字段仅在 RoomID 不为空时生效。
+	// 查询的用户 ID 列表，最多可以指定 20 个。值不合法时默认剔除。此字段仅在 RoomId 不为空时生效。
 	UserID []*string `json:"UserId,omitempty"`
 }
 
 type ListRealTimeQualityDistributionBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志。
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 查询的维度，一次仅支持查询一个维度。
-	// 支持设为以下值：
-	// * Province： 一级行政区（包括港澳台地区）
+	// REQUIRED; 查询的维度，一次仅支持查询一个维度。支持取值及含义如下：
+	// * Province：一级行政区（包括港澳台地区）
 	// * Country：国家
-	// * OS：用户设备平台 包括：android、ios、linux、mac、windows
-	// * Access：用户网络类型 包括：2g、3g、4g、5g、wifi
+	// * OS：用户设备平台。支持取值：android、ios、linux、mac、windows
+	// * Access：用户网络类型。支持取值：2g、3g、4g、5g、wifi
 	Dimension string `json:"Dimension"`
 
 	// REQUIRED; 查询结束时间戳，格式为 RFC3339，单位为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 查询的指标名称。一次仅支持查询一个指标。Indicator 可选值，参看质量数据相关 indicator [1167931#listquality]。
+	// REQUIRED; 查询的指标名称。一次仅支持查询一个指标。Indicator 支持取值参看质量数据相关 indicator [1167931#listquality]。
 	Indicator string `json:"Indicator"`
 
 	// REQUIRED; 查询起始时间戳，格式为 RFC3339，单位为秒。
 	StartTime string `json:"StartTime"`
 
-	// 设备平台，目前支持 Android、iOS和 Web。
+	// 设备平台，目前支持 Android、iOS 和 Web。
 	Platform *string `json:"Platform,omitempty"`
 
-	// 要查询的产品类型，枚举值为 native 和 web。
-	// * native：指 android、iOS、linux、mac或 windows 平台的 veRTC SDK。
-	// * web：指 Web 平台的veRTC SDK。 默认值为native
+	// 要查询的产品类型，支持取值及含义如下：
+	// * native：Android、iOS、linux、Nac或 Windows 平台的 veRTC SDK。
+	// * web：Web 平台的veRTC SDK。
+	// 默认值为 native。
 	ProductType *string `json:"ProductType,omitempty"`
 }
 
@@ -2807,7 +2870,7 @@ type ListRealTimeQualityDistributionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2875,7 +2938,7 @@ type ListRealTimeQualityResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -2899,7 +2962,9 @@ type ListRealTimeQualityResResultIndicatorsItem struct {
 	// 指标名称
 	Name     *string                                             `json:"Name,omitempty"`
 	Overview *ListRealTimeQualityResResultIndicatorsItemOverview `json:"overview,omitempty"`
-	Unit     *string                                             `json:"Unit,omitempty"`
+
+	// 指标单位
+	Unit *string `json:"Unit,omitempty"`
 }
 
 type ListRealTimeQualityResResultIndicatorsItemOverview struct {
@@ -2940,13 +3005,16 @@ type ListRelayStreamQuery struct {
 	// REQUIRED; 要查询房间的 ID
 	RoomID string `json:"RoomId" query:"RoomId"`
 
-	// 页大小，取值范围为[1,100]，默认值为 10
+	// 页大小，取值范围为[1,100]，默认值为 10。
 	Limit *int32 `json:"Limit,omitempty" query:"Limit"`
 
 	// 起始位置，取值范围为[0,9999]，默认值为 0。
 	Offset *int32 `json:"Offset,omitempty" query:"Offset"`
 
-	// 接口调用时间顺序。 0：倒序。1：正序。默认值为0
+	// 接口调用时间顺序。
+	// * 0：倒序。
+	// * 1：正序。
+	// 默认值为0。
 	Order *int32 `json:"Order,omitempty" query:"Order"`
 }
 
@@ -2987,7 +3055,7 @@ type ListRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3009,13 +3077,13 @@ type ListRelayStreamResResult struct {
 // ListRelayStreamResResultTaskItem - 任务列表
 type ListRelayStreamResResultTaskItem struct {
 
-	// 应用的唯一标志
+	// 你的音视频应用的唯一标志。
 	AppID *string `json:"AppId,omitempty"`
 
 	// 任务开始时间，Unix 时间戳，单位为秒
 	CreateTime *int32 `json:"CreateTime,omitempty"`
 
-	// 发送帧率，值的范围为[1，60]，默认值为15，转码时生效。
+	// 发送帧率，取值范围为[1，60]，默认值为 15，转码时生效。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 媒体类型。0：音视频 1：音频2：视频
@@ -3024,7 +3092,7 @@ type ListRelayStreamResResultTaskItem struct {
 	// 房间 ID，是房间的唯一标志
 	RoomID *string `json:"RoomId,omitempty"`
 
-	// 任务当前状态。 1：任务启动中。2：任务运行中。3：任务已结束
+	// 任务当前状态。 1：任务启动中。2：任务运行中。3：任务已结束。
 	Status *int32 `json:"Status,omitempty"`
 
 	// 流处理模式。0：转码1：转封装
@@ -3039,10 +3107,10 @@ type ListRelayStreamResResultTaskItem struct {
 	// 在线媒体流对应的 UserId
 	UserID *string `json:"UserId,omitempty"`
 
-	// 视频高度，单位为 px，范围为 [16, 1920]。
+	// 视频高度，取值范围为 [16, 1920]，单位为像素。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
-	// 视频宽度。单位为 px，范围为 [16, 1920]。
+	// 视频宽度，取值范围为 [16, 1920]，单位为像素。
 	VideoWidth *int32 `json:"VideoWidth,omitempty"`
 }
 
@@ -3073,17 +3141,33 @@ type ListRoomInfoRes struct {
 }
 
 type ListRoomInfoResResponseMetadata struct {
-	Action    *string                               `json:"Action,omitempty"`
-	Error     *ListRoomInfoResResponseMetadataError `json:"Error,omitempty"`
-	Region    *string                               `json:"Region,omitempty"`
-	RequestID *string                               `json:"RequestId,omitempty"`
-	Service   *string                               `json:"Service,omitempty"`
-	Version   *string                               `json:"Version,omitempty"`
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                `json:"Version"`
+	Error   *ListRoomInfoResResponseMetadataError `json:"Error,omitempty"`
 }
 
 type ListRoomInfoResResponseMetadataError struct {
-	Code    *string `json:"Code,omitempty"`
-	Message *string `json:"Message,omitempty"`
+
+	// REQUIRED
+	Code string `json:"Code"`
+
+	// REQUIRED
+	Message     string  `json:"Message"`
+	CodeN       *int32  `json:"CodeN,omitempty"`
+	Description *string `json:"Description,omitempty"`
 }
 
 type ListRoomInfoResResult struct {
@@ -3127,10 +3211,10 @@ type ListRoomInfoResResultRoomListItem struct {
 
 type ListUsagesBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 查询数据的结束时间，格式要求符合 RFC3339 规范。起止时间的跨度最多为30天
+	// REQUIRED; 查询数据的结束时间，格式要求符合 RFC3339 规范。起止时间的跨度最多为 30 天
 	EndTime string `json:"EndTime"`
 
 	// REQUIRED; 查询数据的开始时间，格式要求符合 RFC3339 规范
@@ -3174,7 +3258,7 @@ type ListUsagesResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3186,19 +3270,19 @@ type ListUsagesResResult struct {
 
 type ListUsagesResResultUsagesItem struct {
 
-	// 计价档位为纯音频的通话时长，单位：分钟
+	// 计价档位为纯音频的通话时长，单位为分钟
 	Audio *int64 `json:"Audio,omitempty"`
 
-	// 指标聚合的时间，格式为 RFC3339 规范。这个参数的值，指通话时长对应时间段的开始时刻。以示例值为例，意味着对应的时间段为 北京时间2021年7月24日0点起的1天。
+	// 指标聚合的时间，格式为 RFC3339 规范。这个参数的值，指通话时长对应时间段的开始时刻。以示例值为例，意味着对应的时间段为 北京时间 2021 年 7 月 24 日 0 点起的 1 天。
 	TimeStamp *string `json:"TimeStamp,omitempty"`
 
-	// 计价档位为 1080P 视频的通话时长，单位：分钟
+	// 计价档位为 1080P 视频的通话时长，单位为分钟
 	VideoHD *int64 `json:"VideoHD,omitempty"`
 
-	// 计价档位为 720P 视频的通话时长，单位：分钟
+	// 计价档位为 720P 视频的通话时长，单位为分钟
 	VideoSD *int64 `json:"VideoSD,omitempty"`
 
-	// 计价档位为 360P 视频的通话时长，单位：分钟
+	// 计价档位为 360P 视频的通话时长，单位为分钟
 	VideoSDM *int64 `json:"VideoSDM,omitempty"`
 }
 
@@ -3222,7 +3306,7 @@ type ListUserInfoQuery struct {
 	// 每页用户数，最大不能超过 100。默认为 20。如果指定值超过 100，每页的用户数为 100。
 	PageSize *int64 `json:"PageSize,omitempty" query:"PageSize"`
 
-	// 查询起始时间戳，格式为 RFC3339，单位为秒
+	// 房间 ID，是房间的唯一标志
 	RoomID *string `json:"RoomId,omitempty" query:"RoomId"`
 
 	// 查询的用户 ID 列表，多个用户 ID 用逗号隔开，最多可以指定 10 个。值不合法时默认剔除。为空时，查询房间内全部用户信息。
@@ -3235,17 +3319,33 @@ type ListUserInfoRes struct {
 }
 
 type ListUserInfoResResponseMetadata struct {
-	Action    *string                               `json:"Action,omitempty"`
-	Error     *ListUserInfoResResponseMetadataError `json:"Error,omitempty"`
-	Region    *string                               `json:"Region,omitempty"`
-	RequestID *string                               `json:"RequestId,omitempty"`
-	Service   *string                               `json:"Service,omitempty"`
-	Version   *string                               `json:"Version,omitempty"`
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                `json:"Version"`
+	Error   *ListUserInfoResResponseMetadataError `json:"Error,omitempty"`
 }
 
 type ListUserInfoResResponseMetadataError struct {
-	Code    *string `json:"Code,omitempty"`
-	Message *string `json:"Message,omitempty"`
+
+	// REQUIRED
+	Code string `json:"Code"`
+
+	// REQUIRED
+	Message     string  `json:"Message"`
+	CodeN       *int32  `json:"CodeN,omitempty"`
+	Description *string `json:"Description,omitempty"`
 }
 
 type ListUserInfoResResult struct {
@@ -3363,43 +3463,45 @@ type ModifyAppStatusResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartDetectionBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// 回调地址 开启审核后，如果可能存在违规信息，此地址会收到违规信息回调。如果地址无效或为空，审核会继续，但不会收到违规信息的回调结果。
+	// 回调地址 开启审核后，如果可能存在违规信息，此地址会收到违规信息回调。如果地址无效或为空，审核会继续，但你不会收到违规信息的回调结果。
 	Callback *string `json:"Callback,omitempty"`
 
-	// 回调种类。
+	// 回调种类。支持取值及含义如下：
 	// * 0：违规回调
-	// * 1：全部回调。 默认值为 0。
+	// * 1：全部回调。
+	// 默认值为 0。
 	CallbackType *int32 `json:"CallbackType,omitempty"`
 
-	// 每段音频切片的时长，范围为[1000，600000]。单位 ms。默认值为20000。该参数不建议设置过大，如果设置过大, 会出现审核延迟的问题，且造成最后一段切片计费误差向上取整偏大。
+	// 每段音频切片的时长，取值范围为 [1000，600000]，单位为毫秒，默认值为 20000。该参数不建议设置过大，如果设置过大, 会出现审核延迟的问题，且造成最后一段切片计费误差向上取整偏大。
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 任务最大空闲超时时间。如果指定的用户停止推流或素材间隔过长，导致素材接收不到，那么审核任务会在空闲时间超过设定值后自动停止。值的范围为[1，10800]，单位为秒。默认值为180。
+	// 任务最大空闲超时时间。如果指定的用户停止推流或素材间隔过长，导致素材接收不到，那么审核任务会在空闲时间超过设定值后自动停止。取值范围为 [1，10800]，单位为秒，默认值为 180。
 	IdleSec *int32 `json:"IdleSec,omitempty"`
 
-	// 相邻截图之间的间隔时间，范围为[100，600000]。单位 ms。默认值为2000。
+	// 相邻截图之间的间隔时间，取值范围为 [100，600000]，单位为毫秒，默认值为 2000。
 	Interval *int32 `json:"Interval,omitempty"`
 
-	// 进行审核的内容类型：
+	// 进行审核的内容类型。支持取值及含义如下：
 	// * 1：视频截图；
 	// * 2：音频切片；
-	// * 3：视频截图+音频切片（默认值）
-	// > 视频截图：审核过程中，RTC 会按照设定的时间间隔，进行周期性截图，并对截图进行审核。若出现违规信息，会返回审核结果。 音频切片：审核过程中，RTC 会按设定的音频切片时长，保存每段音频切片，并对切片进行审核。若出现违规信息，会返回审核结果。
+	// * 3：视频截图+音频切片
+	// 默认值为 3。 视频截图：审核过程中，RTC 会按照设定的时间间隔，进行周期性截图，并对截图进行审核。若出现违规信息，会返回审核结果。
+	// > 音频切片：审核过程中，RTC 会按设定的音频切片时长，保存每段音频切片，并对切片进行审核。若出现违规信息，会返回审核结果。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 用户 ID，要审核的用户ID。若不填，则审核房间内所有推流用户。最多可以审核 17 路流。
+	// 要审核的用户ID。若不填，则审核房间内所有推流用户。最多可以审核 17 路流。
 	// * 如果先发起单流审核 再发起房间级审核，会发起房间级审核并停止单流审核；
 	// * 如果先发起房间级审核，再发起单流审核，会引发错误，提示：已有审核进行中；
 	// * 如果先发起单流音频审核和单流视频审核，再发起房间音频审核，会合并单流音频审核到房间音频审核，单流视频审核无变化；
@@ -3446,7 +3548,7 @@ type StartDetectionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -3458,7 +3560,7 @@ type StartDetectionResResult struct {
 
 type StartPushMixedStreamToCDNBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 推流 CDN 地址。仅支持 RTMP 协议。
@@ -3486,29 +3588,30 @@ type StartPushMixedStreamToCDNBody struct {
 
 type StartPushMixedStreamToCDNBodyControl struct {
 
-	// 选择补帧模式。默认值为0，可以取0和1。0为补最后一帧，1为补黑帧。
-	// 自动布局模式下，没有补帧的逻辑。
-	// 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
-	// 使用占位图、补帧和上一帧的关系:
-	// 你可以在 Region 中传入 Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
+	// 选择补帧模式。支持取值及含义如下：
+	// * 0：补最后一帧。
+	// * 1：补黑帧
+	// 默认值为0。 自动布局模式下，没有补帧的逻辑。 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
+	// 使用占位图、补帧和上一帧的关系: 你可以在 Region 中传入
+	// Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
 	// * 在 Region.StreamIndex 对应的视频流停止发布时, Region 对应的画布空间会根据设置填充占位图或补帧。但当视频流为屏幕流时，补帧模式不生效。
 	// * 当 Region.StreamIndex 对应的视频流发布后停止采集或推送时, Region 对应的画布空间会填充上一帧。
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
 	FrameInterpolationMode *int32 `json:"FrameInterpolationMode,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400],单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// （仅对录制有效）最大录制时长，单位为秒。默认值为 0。0 表示不限制录制时长。
-	MaxRecordTime *int32 `json:"MaxRecordTime,omitempty"`
-
-	// 流的类型，用于全局控制订阅的流的类型。默认值为0，可以取0和1。0表示音视频，1表示纯音频，暂不支持纯视频。
+	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
+	// * 0 ：音视频，
+	// * 1 ：纯音频（当前该值无效）。
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 转推直播推流模式，用于控制触发推流的时机。取值为0或1。默认值为0。
+	// 转推直播推流模式，用于控制触发推流的时机。支持取值及含义如下：
 	// * 0：房间内有用户推 RTC 流时即触发 CDN 推流。
 	// * 1：调用接口发起推流任务后，无论房间内是否有用户推 RTC 流,均可触发 CDN 推流。
-	// 任务超时逻辑不变，依然是无用户推流即判定为超时。
+	// 默认值为 0。 任务超时逻辑不变，依然是无用户推流即判定为超时。
 	PushStreamMode *int32                                             `json:"PushStreamMode,omitempty"`
 	SEIConfig      *StartPushMixedStreamToCDNBodyControlSEIConfig     `json:"SEIConfig,omitempty"`
 	SpatialConfig  *StartPushMixedStreamToCDNBodyControlSpatialConfig `json:"SpatialConfig,omitempty"`
@@ -3528,13 +3631,13 @@ type StartPushMixedStreamToCDNBodyControlSEIConfig struct {
 	// 默认值为 true。
 	PassthroughRTCSEIMessage *bool `json:"PassthroughRTCSEIMessage,omitempty"`
 
-	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。
+	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。支持取值及含义如下：
 	// * 0：全量信息。
 	// * 1：只有音量信息和时间戳。
-	// 关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
+	// 默认值为 0。关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
 	SEIContentMode *int32 `json:"SEIContentMode,omitempty"`
 
-	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。取值为 5 或 100，默认为 100。
+	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。支持取值为 5 或 100，默认为 100。
 	SEIPayLoadType *int32 `json:"SEIPayLoadType,omitempty"`
 
 	// 该字段为长度为 32 位的 16 进制字符，每个字符的范围为 a-f，A-F，0-9，不可包含 -。如果校验失败，会返回错误码 InvalidParameter。
@@ -3546,10 +3649,10 @@ type StartPushMixedStreamToCDNBodyControlSEIConfig struct {
 	// 设置SEI数据结构 [1163740#sei]中 app_data 参数的值，最大长度为 4096。此参数支持动态更新。
 	UserConfigExtraInfo *string `json:"UserConfigExtraInfo,omitempty"`
 
-	// 用户说话音量的回调间隔，单位为秒，取值范围为[0.3,∞]，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
+	// 用户说话音量的回调间隔。取值范围为 [0.3,∞]，单位为秒，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
 	VolumeIndicationInterval *float32 `json:"VolumeIndicationInterval,omitempty"`
 
-	// (仅对转推直播有效）是否开启音量指示模式。
+	// 是否开启音量指示模式。
 	// * true：是。此时非关键帧中也可能携带 SEI 信息。
 	// * false：否。此时只会在关键帧中携带 SEI 信息。
 	// 默认值为 false。
@@ -3560,10 +3663,13 @@ type StartPushMixedStreamToCDNBodyControlSEIConfig struct {
 type StartPushMixedStreamToCDNBodyControlSpatialConfig struct {
 	AudienceSpatialOrientation *StartPushMixedStreamToCDNBodyControlSpatialConfigAudienceSpatialOrientation `json:"AudienceSpatialOrientation,omitempty"`
 
-	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	AudienceSpatialPosition []*int32 `json:"AudienceSpatialPosition,omitempty"`
 
-	// 是否开启空间音频处理功能。 false：关闭。true：开启
+	// 是否开启空间音频处理功能。
+	// * false：关闭。
+	// * true：开启
+	// 默认值为 false。
 	EnableSpatialRender *bool `json:"EnableSpatialRender,omitempty"`
 }
 
@@ -3623,10 +3729,10 @@ type StartPushMixedStreamToCDNBodyEncode struct {
 	// 视频帧率。取值范围为 [1,60]，单位为 FPS，默认值为 15。
 	VideoFps *int32 `json:"VideoFps,omitempty"`
 
-	// 输出视频 GOP。取值范围为 [1,5]，默认值为 4，单位为秒。
+	// 输出视频 GOP。取值范围为 [1,5]，单位为秒，默认值为 4。
 	VideoGop *int32 `json:"VideoGop,omitempty"`
 
-	// 画面高度，取值范围为[2, 1920]，必须是偶数，单位为像素，默认值为480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
+	// 画面高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
 	// 画面宽度。取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Width 设置画面宽度。
@@ -3657,11 +3763,12 @@ type StartPushMixedStreamToCDNBodyExcludeStreamsStreamListItem struct {
 type StartPushMixedStreamToCDNBodyLayout struct {
 	CustomLayout *StartPushMixedStreamToCDNBodyLayoutCustomLayout `json:"CustomLayout,omitempty"`
 
-	// 布局模式。默认值为 0，值的范围为：
-	// * 0 ：自适应布局 [1167930#adapt]。
-	// * 1 ：垂直布局 [1167930#vertical]。
+	// 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]。
+	// * 1：垂直布局 [1167930#vertical]
 	// * 2 ：自定义布局。
 	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode      *int32                                              `json:"LayoutMode,omitempty"`
 	MainVideoStream *StartPushMixedStreamToCDNBodyLayoutMainVideoStream `json:"MainVideoStream,omitempty"`
 }
@@ -3684,7 +3791,7 @@ type StartPushMixedStreamToCDNBodyLayoutCustomLayoutCanvas struct {
 	// 背景图片的 URL。长度最大为 1024 byte。可以传入的图片的格式包括：JPG, JPEG, PNG。 如果背景图片的宽高和整体屏幕的宽高不一致，背景图片会缩放到铺满屏幕。 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素。默认值为 480。
+	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 整体屏幕（画布）的宽度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。
@@ -3702,7 +3809,7 @@ type StartPushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度的像素绝对值，取值的范围为 (0.0, Canvas.Width]。
 	Width int32 `json:"Width"`
 
-	// 画面的透明度，取值范围为 (0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 补位图片的 url。长度不超过 1024 个字符串。
@@ -3737,7 +3844,7 @@ type StartPushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// * 0：音视频
 	// * 1：纯音频
 	// * 2：纯视频
-	// 默认值为 0。 假如该路流为音视频流，MediaType设为1，则只混入音频内容。
+	// 默认值为 0。 例如该路流为音视频流，MediaType设为1，则只混入音频内容。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
 	// 画面的渲染模式。支持取值及含义如下：
@@ -3751,10 +3858,10 @@ type StartPushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *StartPushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	SpatialPosition []*int32 `json:"SpatialPosition,omitempty"`
 
-	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -3847,13 +3954,13 @@ type StartPushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartPushPublicStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 公共流 ID。你必须对每路公共流，设定 PublicStreamId 时命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}
@@ -3871,7 +3978,7 @@ type StartPushPublicStreamBody struct {
 	ExcludeStreams []*StartPushPublicStreamBodyExcludeStreamsItem `json:"ExcludeStreams,omitempty"`
 	Layout         *StartPushPublicStreamBodyLayout               `json:"Layout,omitempty"`
 
-	// 公共流处理模式。0：转码。1：转封装。
+	// 公共流处理模式。支持取值及含义如下：0：转码。1：转封装。
 	// 当 TranscodeMode=1 时，
 	// * TargetStreams 只能指定一路流，且该路流的 UserId不能为空，需为对应房间用户的 UserId。
 	// * ExcludeStreams 必须为空。
@@ -3885,32 +3992,35 @@ type StartPushPublicStreamBodyControl struct {
 	// 插入公共流的自定义信息，可用于随流信息同步，长度不超过 4 kB。 数据会添加到当前视频帧开始的连续 30 个视频帧中。 只在调用UpdatePublicStreamParam时有效。
 	DataMsg *string `json:"DataMsg,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为[10, 86400]，默认值为180。只在调用StartPushPublicStream时有效。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为[10, 86400]，单位为秒，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。
+	// 房间用户发布状态回调间隔，仅在纯音频时触发。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户发布状态回调。
-	// * false：不开启房间用户发布状态回调。 默认值为false。
+	// * false：不开启房间用户发布状态回调。
+	// 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。
+	// 房间用户采集状态回调间隔，仅在纯音频时触发。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
 	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
-	// * false：不开启房间用户采集状态回调。 默认值为false。
+	// * false：不开启房间用户采集状态回调。
+	// 默认值为false。
 	UserCaptureStatsMode *bool `json:"UserCaptureStatsMode,omitempty"`
 
-	// 音量指示的回调间隔。单位为毫秒，最小值为100，默认值为2000。
+	// 音量指示的回调间隔。最小值为100，单位为毫秒，默认值为2000。
 	// VideoConfig.FrameRate大于 10 fps 时，回调间隔才能达到 100ms。
 	VolumeIndicationInterval *int32 `json:"VolumeIndicationInterval,omitempty"`
 
 	// 是否开启音量指示模式。
 	// * true：开启音量提示。
-	// * false：不开启音量提示。 默认值为false。
+	// * false：不开启音量提示。
+	// 默认值为false。
 	VolumeIndicationMode *bool `json:"VolumeIndicationMode,omitempty"`
 }
 
@@ -3923,18 +4033,19 @@ type StartPushPublicStreamBodyEncode struct {
 // StartPushPublicStreamBodyEncodeVideoConfig - 视频编码配置
 type StartPushPublicStreamBodyEncodeVideoConfig struct {
 
-	// 最高输出视频码率。取值范围[0,10000]，单位为 Kbps，默认值0，为0时表示自适应码率。
+	// 最高输出视频码率。取值范围为[0,10000]，单位为 Kbps，默认值为0，0表示自适应码率。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 输出视频帧率。默认为15，取值范围为 [1,60]。单位 fps
+	// 输出视频帧率。取值范围为 [1,60]，单位为 fps，默认为15。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 输出画面的高度，默认值为 480。范围为 [16, 1920]，必须是偶数。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 视频编码协议。可取值为0或5，默认值为0。
+	// 视频编码协议。支持取值及含义如下：
 	// * 0：H.264。
 	// * 5：VP8。 如果选择 VP8 格式，请先联系火山技术支持配置。
+	// 默认值为0。
 	VideoCodec *int32 `json:"VideoCodec,omitempty"`
 
 	// 输出画面的宽度。默认值为 640，范围为 [16, 1920]，必须是偶数。
@@ -3949,28 +4060,39 @@ type StartPushPublicStreamBodyExcludeStreamsItem struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
 type StartPushPublicStreamBodyLayout struct {
 
-	// REQUIRED; 布局模式。默认值为0，值的范围为{0, 1, 2, 3}。
-	// * 0为自适应布局模式。参看自适应布局 [1167930#adapt]。
-	// * 1为垂直布局模式。参看垂直布局 [1167930#vertical]。
-	// * 2为自定义布局模式。
-	// * 3为并排布局模式。参看并排布局 [1167930#horizontal]
+	// REQUIRED; 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]
+	// * 1：：垂直布局 [1167930#vertical]
+	// * 2 ：自定义布局
+	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode     int32                                          `json:"LayoutMode"`
 	CustomLayout   *StartPushPublicStreamBodyLayoutCustomLayout   `json:"CustomLayout,omitempty"`
 	VerticalLayout *StartPushPublicStreamBodyLayoutVerticalLayout `json:"VerticalLayout,omitempty"`
@@ -3989,10 +4111,11 @@ type StartPushPublicStreamBodyLayoutCustomLayout struct {
 	// 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 选择补帧模式。默认值为0，可以取0和1。0为补最后一帧，1为补黑帧。
-	// 自动布局模式下，没有补帧的逻辑。
-	// 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
-	// 使用占位图、补帧和上一帧的关系: 你可以在 Region 中传入 Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
+	// 补帧模式。支持取值及含义如下：
+	// * 0：补最后一帧，
+	// * 1：补黑帧。
+	// 默认值为0。自动布局模式下，该参数不生效。 补帧是指在音视频录制时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
+	// 如果同时配置Alternateimage 和FrameInterpolationMode ，优先使用 Alternateimage参数。
 	// * 在 Region.StreamIndex 对应的视频流停止发布时, Region 对应的画布空间会根据设置填充占位图或补帧。但当视频流为屏幕流时，补帧模式不生效。
 	// * 当 Region.StreamIndex 对应的视频流发布后停止采集或推送时, Region 对应的画布空间会填充上一帧。
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
@@ -4011,7 +4134,7 @@ type StartPushPublicStreamBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度相对整体画面的比例，取值的范围为 (0.0, 1.0]。
 	WidthProportion float32 `json:"WidthProportion"`
 
-	// 画面的透明度，取值范围为(0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 占位图片的 url
@@ -4023,17 +4146,18 @@ type StartPushPublicStreamBodyLayoutCustomLayoutRegionsItem struct {
 	// 视频流对应区域左上角的纵坐标相对整体画面的比例，取值的范围为 [0.0, 1.0)，默认值为 0。
 	LocationY *float32 `json:"LocationY,omitempty"`
 
-	// 画面的渲染模式，值的范围为 {0, 1, 2，3}, 默认值为 0：- 0 表示按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
-	// * 1 表示按照显示区域的长宽比裁减视频，然后等比拉伸或缩小视频，占满显示区域。
-	// * 2 表示按照原始画面的宽高比缩放视频，在显示区域居中显示。如果原始画面宽高比与指定的宽高比不同，就会导致画面有空缺，空缺区域为填充的背景色值。
-	// * 3 表示按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
-	// 目前 0 和 3 均为按照指定的宽高直接缩放，但我们推荐你使用 3 以便与客户端实现相同逻辑。
+	// 画面的渲染模式。支持取值及含义如下：
+	// * 0 ：按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
+	// * 1 ：按照显示区域的长宽比裁减视频，然后等比拉伸或缩小视频，占满显示区域。
+	// * 2 ：按照原始画面的宽高比缩放视频，在显示区域居中显示。如果原始画面宽高比与指定的宽高比不同，就会导致画面有空缺，空缺区域为填充的背景色值。
+	// * 3 ：按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形。
+	// 默认值为 0。 目前 0 和 3 均为按照指定的宽高直接缩放，但我们推荐你使用 3 以便与客户端实现相同逻辑。
 	RenderMode *int32 `json:"RenderMode,omitempty"`
 
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *StartPushPublicStreamBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 当画面有重叠时，使用此参数设置指定画面的图层顺序，取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当画面有重叠时，使用此参数设置指定画面的图层顺序，取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -4065,18 +4189,28 @@ type StartPushPublicStreamBodyLayoutVerticalLayoutMainStream struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
@@ -4088,18 +4222,28 @@ type StartPushPublicStreamBodyTargetStreamsItem struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
@@ -4140,13 +4284,13 @@ type StartPushPublicStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartPushSingleStreamToCDNBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED
@@ -4175,7 +4319,7 @@ type StartPushSingleStreamToCDNBody struct {
 
 type StartPushSingleStreamToCDNBodyControl struct {
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400], 单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 流的类型，用于全局控制订阅的流的类型。默认值为 0，可以取0和1。0表示音视频，1表示纯音频，暂不支持纯视频。
@@ -4187,7 +4331,10 @@ type StartPushSingleStreamToCDNBodyStream struct {
 	// REQUIRED; 用户Id，表示这个流所属的用户。
 	UserID string `json:"UserId"`
 
-	// 流的类型，值可以取0或1，默认值为0。0表示普通音视频流，1表示屏幕流。
+	// 流的类型。支持取值及含义如下：
+	// * 0：普通音视频流，
+	// * 1：屏幕流。
+	// 默认值为0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 }
 
@@ -4228,7 +4375,7 @@ type StartPushSingleStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -4303,7 +4450,7 @@ type StartRecordBodyControl struct {
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
 	FrameInterpolationMode *int32 `json:"FrameInterpolationMode,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400],单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 最大录制时长，取值为正整数，单位为秒。默认值为 0。0 表示不限制录制时长。
@@ -4320,10 +4467,13 @@ type StartRecordBodyControl struct {
 type StartRecordBodyControlSpatialConfig struct {
 	AudienceSpatialOrientation *StartRecordBodyControlSpatialConfigAudienceSpatialOrientation `json:"AudienceSpatialOrientation,omitempty"`
 
-	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	AudienceSpatialPosition []*int32 `json:"AudienceSpatialPosition,omitempty"`
 
-	// 是否开启空间音频处理功能。 false：关闭。true：开启
+	// 是否开启空间音频处理功能。
+	// * false：关闭。
+	// * true：开启
+	// 默认值为 false。
 	EnableSpatialRender *bool `json:"EnableSpatialRender,omitempty"`
 }
 
@@ -4383,10 +4533,10 @@ type StartRecordBodyEncode struct {
 	// 视频帧率。取值范围为 [1,60]，单位为 FPS，默认值为 15。
 	VideoFps *int32 `json:"VideoFps,omitempty"`
 
-	// 输出视频 GOP。取值范围为 [1,5]，默认值为 4，单位为秒。
+	// 输出视频 GOP。取值范围为 [1,5]，单位为秒，默认值为 4。
 	VideoGop *int32 `json:"VideoGop,omitempty"`
 
-	// 画面高度，取值范围为[2, 1920]，必须是偶数，单位为像素，默认值为480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
+	// 画面高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
 	// 画面宽度。取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Width 设置画面宽度。
@@ -4445,11 +4595,12 @@ type StartRecordBodyFileNameConfig struct {
 type StartRecordBodyLayout struct {
 	CustomLayout *StartRecordBodyLayoutCustomLayout `json:"CustomLayout,omitempty"`
 
-	// 布局模式。默认值为 0，值的范围为：
-	// * 0 ：自适应布局 [1167930#adapt]。
-	// * 1 ：垂直布局 [1167930#vertical]。
+	// 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]。
+	// * 1：垂直布局 [1167930#vertical]
 	// * 2 ：自定义布局。
 	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode      *int32                                `json:"LayoutMode,omitempty"`
 	MainVideoStream *StartRecordBodyLayoutMainVideoStream `json:"MainVideoStream,omitempty"`
 }
@@ -4472,7 +4623,7 @@ type StartRecordBodyLayoutCustomLayoutCanvas struct {
 	// 背景图片的 URL。长度最大为 1024 byte。可以传入的图片的格式包括：JPG, JPEG, PNG。 如果背景图片的宽高和整体屏幕的宽高不一致，背景图片会缩放到铺满屏幕。 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素。默认值为 480。
+	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 整体屏幕（画布）的宽度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。
@@ -4490,7 +4641,7 @@ type StartRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度的像素绝对值，取值的范围为 (0.0, Canvas.Width]。
 	Width int32 `json:"Width"`
 
-	// 画面的透明度，取值范围为 (0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 补位图片的 url。长度不超过 1024 个字符串。
@@ -4525,7 +4676,7 @@ type StartRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// * 0：音视频
 	// * 1：纯音频
 	// * 2：纯视频
-	// 默认值为 0。 假如该路流为音视频流，MediaType设为1，则只混入音频内容。
+	// 默认值为 0。 例如该路流为音视频流，MediaType设为1，则只混入音频内容。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
 	// 画面的渲染模式。支持取值及含义如下：
@@ -4539,10 +4690,10 @@ type StartRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *StartRecordBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	SpatialPosition []*int32 `json:"SpatialPosition,omitempty"`
 
-	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -4617,8 +4768,8 @@ type StartRecordBodyStorageConfigCustomConfig struct {
 	Region *int32 `json:"Region,omitempty"`
 
 	// 第三方云存储平台。支持取值及含义如下：
-	// * 0： Amazon S3
-	// * 1： 阿里云 OSS
+	// * 0：Amazon S3
+	// * 1：阿里云 OSS
 	// * 2：华为云 OBS
 	// * 3：腾讯云 COS
 	// * 4：七牛云 Kodo。
@@ -4659,7 +4810,7 @@ type StartRecordBodyStorageConfigVeImageXConfig struct {
 	ServiceID string `json:"ServiceId"`
 
 	// 不同存储平台支持的 Region 不同，具体参看 Region对照表 [1167931#region]
-	// 默认值为0。
+	// 默认值为 0。
 	Region *int32 `json:"Region,omitempty"`
 }
 
@@ -4688,7 +4839,7 @@ type StartRecordBodyStorageConfigVodConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
-	// 上传到视频点播平台时, 文件的存储类型。枚举值为：
+	// 上传到视频点播平台时, 文件的存储类型。支持取值及含义如下：：
 	// * 1：标准存储。
 	// * 2：归档存储。
 	// * 3：低频存储。
@@ -4754,13 +4905,13 @@ type StartRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartRelayStreamBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED
@@ -4786,7 +4937,7 @@ type StartRelayStreamBody struct {
 	// 业务标识
 	BusinessID *string `json:"BusinessId,omitempty"`
 
-	// 任务的空闲超时时间。超过此时间后，任务自动终止。值的范围为 [5, 600] ，单位为秒。默认值为300。
+	// 任务的空闲超时时间。超过此时间后，任务自动终止。取值范围为 [5, 600] ，单位为秒，默认值为 300。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 }
 
@@ -4798,7 +4949,7 @@ type StartRelayStreamBodyControl struct {
 	// 最大发送码率，单位为 Kbps,不填则不限制，转码时生效。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 发送帧率，值的范围为[1，30]，默认值为15，转码时生效。
+	// 发送帧率，值的范围为 [1，30]，默认值为15，转码时生效。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 是否循环播放，仅对源流为点播流时生效。
@@ -4807,15 +4958,17 @@ type StartRelayStreamBodyControl struct {
 	// 媒体类型。
 	// * 0：音视频
 	// * 1：音频。采用此选项时，必须是 AAC 或 Opus 编码。
-	// * 2：视频 默认值为0。
+	// * 2：视频
+	// 默认值为0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 任务起始时间戳，用于定时播放，Unix时间，单位为秒。默认为 0，表示立即启动。此参数仅对 StartRelayStream接口生效。
+	// 任务起始时间戳，用于定时播放，Unix 时间，单位为秒。默认为 0，表示立即启动。此参数仅对 StartRelayStream接口生效。
 	StartTimeStamp *int32 `json:"StartTimeStamp,omitempty"`
 
 	// 流处理模式。
 	// * 0：转码。采用此选项时，原视频编码方式必须是 H.264 或 ByteVC1。
-	// * 1：转封装。采用此选项时，原视频编码方式必须是 H.264。转封装时，源流的视频关键帧间隔若过大，会影响 RTC 体验，建议 1s，但最大不超过 5s。 默认值为0。
+	// * 1：转封装。采用此选项时，原视频编码方式必须是 H.264。转封装时，源流的视频关键帧间隔若过大，会影响 RTC 体验，建议 1s，但最大不超过 5s。
+	// 默认值为0。
 	StreamMode *int32 `json:"StreamMode,omitempty"`
 
 	// 视频高度，转码时必填。单位为像素，范围为 [16, 1920]，必须是偶数，值为奇数时自动调整为偶数。
@@ -4862,13 +5015,13 @@ type StartRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartSegmentBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
@@ -4907,25 +5060,29 @@ type StartSegmentBody struct {
 	// 在自定义文件名时，你需确保 Identifier 命名全局唯一，否则在 TOS 平台会因文件名重复被覆盖。
 	Identifier *string `json:"Identifier,omitempty"`
 
-	// 任务最大的空闲超时时间。 如果切片任务订阅的所有流都已停止发布，那么任务会在空闲时间超过设定值后自动停止。值的范围为[1, 86400] ，单位为秒。默认值为 180秒。
+	// 任务最大的空闲超时时间。 如果切片任务订阅的所有流都已停止发布，那么任务会在空闲时间超过设定值后自动停止。取值范围为 [1, 86400]，单位为秒，默认值为 180。
 	MaxIdleTime   *int32                         `json:"MaxIdleTime,omitempty"`
 	TargetStreams *StartSegmentBodyTargetStreams `json:"TargetStreams,omitempty"`
 }
 
 type StartSegmentBodyControl struct {
 
-	// 是否开启切片对齐功能。默认为 False。你可以使用音频切片对齐功能，对齐各个用户音频切片的开始和结束时刻。
-	// * 当 Align=False 时，关闭音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。如果用户在切片的周期中，有部分时间未发布音频，返回的音频切片时长会小于切片周期。各个用户音频切片开始时间不一定一致。
-	// * 当 Align=True 时，开启音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。切片长度和切片周期相等，且各个用户音频切片开始的时间一致。如果用户在切片的周期中，有部分时间未发布音频，切片长度不变，这段时间呈现静音帧。如果用户在某个切片周期中始终没有发布音频，则不生成音频切片。
+	// 是否开启切片对齐功能，你可以使用该功能，对齐各个用户音频切片的开始和结束时刻。
+	// * false：关闭音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。如果用户在切片的周期中，有部分时间未发布音频，返回的音频切片时长会小于切片周期。各个用户音频切片开始时间不一定一致。
+	// * true：开启音频切片对齐。在某个切片周期中，如果用户有发送音频流的行为，即生成音频切片。切片长度和切片周期相等，且各个用户音频切片开始的时间一致。如果用户在切片的周期中，有部分时间未发布音频，切片长度不变，这段时间呈现静音帧。如果用户在某个切片周期中始终没有发布音频，则不生成音频切片。
+	// 默认值为false。
 	Align *bool `json:"Align,omitempty"`
 
-	// 是否忽略静音切片。默认值为 false
+	// 是否忽略静音切片。
+	// * true：忽略。
+	// * false：不忽略。
+	// 默认值为 false
 	IgnoreSilence *bool `json:"IgnoreSilence,omitempty"`
 
-	// 是否开启合流切片功能。默认为 False。
-	// * 当 Mixed=False 时，只会对 TargetStreams 中指定的音频流分别切片。
-	// * 当 Mixed=True 时，除了会对 TargetStreams 中指定的音频流分别切片，还会对指定的音频流进行混音，生成合流切片，合流切片对应的用户名为 mixed。此时，任务创建后，不管是否有人上麦，会持续回调混音切片。
-	// 不同平台的回调参看：
+	// 是否开启合流切片功能。
+	// * False：只会对 TargetStreams 中指定的音频流分别切片。
+	// * True：除了会对 TargetStreams 中指定的音频流分别切片，还会对指定的音频流进行混音，生成合流切片，合流切片对应的用户名为 mixed。此时，任务创建后，不管是否有人上麦，会持续回调混音切片。
+	// 默认值为 false。 不同平台的回调参看：
 	// 操作 ANDROID API IOS API WINDOWS API
 	// 本地麦克风录制和远端所有用户混音后的音频数据回调 onMixedAudioFrame [70081#onmixedaudioframe] onMixedAudioFrame: [70087#onmixedaudioframe] onMixedAudioFrame
 	// [70096#onmixedaudioframe]
@@ -4978,8 +5135,8 @@ type StartSegmentBodyStorageConfigCustomConfig struct {
 	Region *int32 `json:"Region,omitempty"`
 
 	// 第三方云存储平台。支持取值及含义如下：
-	// * 0： Amazon S3
-	// * 1： 阿里云 OSS
+	// * 0：Amazon S3
+	// * 1：阿里云 OSS
 	// * 2：华为云 OBS
 	// * 3：腾讯云 COS
 	// * 4：七牛云 Kodo。
@@ -5020,7 +5177,7 @@ type StartSegmentBodyStorageConfigVeImageXConfig struct {
 	ServiceID string `json:"ServiceId"`
 
 	// 不同存储平台支持的 Region 不同，具体参看 Region对照表 [1167931#region]
-	// 默认值为0。
+	// 默认值为 0。
 	Region *int32 `json:"Region,omitempty"`
 }
 
@@ -5049,7 +5206,7 @@ type StartSegmentBodyStorageConfigVodConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
-	// 上传到视频点播平台时, 文件的存储类型。枚举值为：
+	// 上传到视频点播平台时, 文件的存储类型。支持取值及含义如下：：
 	// * 1：标准存储。
 	// * 2：归档存储。
 	// * 3：低频存储。
@@ -5115,13 +5272,13 @@ type StartSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartSnapshotBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
@@ -5150,23 +5307,26 @@ type StartSnapshotBody struct {
 	BusinessID  *string                       `json:"BusinessId,omitempty"`
 	ImageConfig *StartSnapshotBodyImageConfig `json:"ImageConfig,omitempty"`
 
-	// 任务最大的空闲超时时间。如果抽帧截图任务订阅的所有流都已停止发布，那么任务会在空闲时间超过设定值后自动停止。值的范围为[1, 86400] ，单位为秒。默认值为 180秒。
+	// 任务最大的空闲超时时间。如果抽帧截图任务订阅的所有流都已停止发布，那么任务会在空闲时间超过设定值后自动停止。值的范围为 [1, 86400]，单位为秒，默认值为 180。
 	MaxIdleTime   *int32                          `json:"MaxIdleTime,omitempty"`
 	TargetStreams *StartSnapshotBodyTargetStreams `json:"TargetStreams,omitempty"`
 }
 
 type StartSnapshotBodyImageConfig struct {
 
-	// 图片的格式。值可取0或1，默认为0。选择0时，图片格式为 JEPG；选择1时，图片格式为 PNG。默认值为0。
+	// 图片的格式。支持取值及含义如下：
+	// * 0：JEPG
+	// * 1：PNG
+	// 默认值为0。
 	Format *int32 `json:"Format,omitempty"`
 
-	// 实际使用视频帧的高度，单位为像素，取值范围为[0, 1920]，默认值为0，此时，和视频流的实际高度相同。
+	// 实际使用视频帧的高度，取值范围为 [0, 1920]，单位为像素，默认值为 0，此时，和视频流的实际高度相同。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 相邻截图之间的间隔时间，单位为秒，取值范围为[1, 600]，默认值为2。
+	// 相邻截图之间的间隔时间，取值范围为[1, 600]，单位为秒，默认值为2。
 	Interval *int32 `json:"Interval,omitempty"`
 
-	// 实际使用视频帧的宽度，单位为像素，取值范围为[0, 1920]。默认值为0，此时，和视频流的实际宽度相同。
+	// 实际使用视频帧的宽度，取值范围为[0, 1920]，单位为像素。默认值为0，表示和视频流的实际宽度相同。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -5210,8 +5370,8 @@ type StartSnapshotBodyStorageConfigCustomConfig struct {
 	Region *int32 `json:"Region,omitempty"`
 
 	// 第三方云存储平台。支持取值及含义如下：
-	// * 0： Amazon S3
-	// * 1： 阿里云 OSS
+	// * 0：Amazon S3
+	// * 1：阿里云 OSS
 	// * 2：华为云 OBS
 	// * 3：腾讯云 COS
 	// * 4：七牛云 Kodo。
@@ -5252,7 +5412,7 @@ type StartSnapshotBodyStorageConfigVeImageXConfig struct {
 	ServiceID string `json:"ServiceId"`
 
 	// 不同存储平台支持的 Region 不同，具体参看 Region对照表 [1167931#region]
-	// 默认值为0。
+	// 默认值为 0。
 	Region *int32 `json:"Region,omitempty"`
 }
 
@@ -5281,7 +5441,7 @@ type StartSnapshotBodyStorageConfigVodConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
-	// 上传到视频点播平台时, 文件的存储类型。枚举值为：
+	// 上传到视频点播平台时, 文件的存储类型。支持取值及含义如下：：
 	// * 1：标准存储。
 	// * 2：归档存储。
 	// * 3：低频存储。
@@ -5347,7 +5507,7 @@ type StartSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5411,13 +5571,13 @@ type StartWBRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StartWebcastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 向指定 RTC 房间推送网页音视频内容，房间 ID 是房间的唯一标志
@@ -5441,7 +5601,7 @@ type StartWebcastBody struct {
 	BusinessID        *string                            `json:"BusinessId,omitempty"`
 	EventNotifyConfig *StartWebcastBodyEventNotifyConfig `json:"EventNotifyConfig,omitempty"`
 
-	// 最大运行时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10,86400]，默认值为 86400。不填时自动调整为默认值。
+	// 最大运行时间，超过此时间后，任务自动终止。取值范围为 [10,86400]，单位为秒，默认值为 86400。不填时自动调整为默认值。
 	MaxRunningTime *int32                         `json:"MaxRunningTime,omitempty"`
 	MonitorConfig  *StartWebcastBodyMonitorConfig `json:"MonitorConfig,omitempty"`
 
@@ -5453,9 +5613,9 @@ type StartWebcastBody struct {
 
 type StartWebcastBodyEventNotifyConfig struct {
 
-	// 是否启用页面主动事件通知, 默认值为false。
+	// 是否启用页面主动事件通知,。
 	// * false：页面在打开后就会开始采集，在收到 StopWebCast openAPI 请求后结束采集。
-	// * true：在页面中注入两个 JS 函数：onWebcastStart()和 onWebcastEnd()。
+	// * true：在页面中注入两个 JS 函数：onWebcastStart()和 onWebcastEnd()。 默认值为false。
 	// 当页面判断资源加载完成之后调用onWebcastStart()，控制程序才会开始进行页面内容的采集。当页面判断本次任务内容已完成时调用onWebcastEnd() 通知控制程序结束本次任务。StopWebCast openAPI 效果不变，业务可提前结束任务。其他页面内容、JS
 	// 线程的检测（若启用），将在收到 onWebcastStart()事件后才开始。
 	// 当启用页面主动事件通知后，你可以参考以下示例代码来通知采集开始。
@@ -5465,7 +5625,7 @@ type StartWebcastBodyEventNotifyConfig struct {
 	// </script>
 	EnableEventNotify *bool `json:"EnableEventNotify,omitempty"`
 
-	// 启用页面主动事件通知后，等待开始事件的超时时间。取值范围为[0,60]，单位为秒。默认值为0，表示不启用。仅当 EnableEventNotify 为 true 时，此参数有效。
+	// 启用页面主动事件通知后，等待开始事件的超时时间。取值范围为 [0,60]，单位为秒。默认值为 0，表示不启用。仅当 EnableEventNotify 为 true 时，此参数有效。
 	// * 当在超时时间内收到开始事件，采集功能正常运行，用户将收到 Status=1的回调。
 	// * 当超时时间内未收到开始事件，将进行刷新，等待时间被重置，再次发生超时后将进行任务重调度。刷新时将回调 Status=4，Reason=" StartEventTimeout"。重调度时将回调 Status=5，Reason="StartEventTimeout"。
 	StartTimeout *int32 `json:"StartTimeout,omitempty"`
@@ -5473,17 +5633,17 @@ type StartWebcastBodyEventNotifyConfig struct {
 
 type StartWebcastBodyMonitorConfig struct {
 
-	// 对页面是否白屏的检测间隔。取值范围为[2,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面是否白屏的检测间隔。取值范围为 [2,30]，单位为秒。默认值为0，表示不启用。
 	// * 当连续两次出现检测命中时，将对页面进行刷新，并回调Status=4，Reason="PageBlank" 。
 	// * 再次出现连续两次检测命中时将进行任务重调度，并回调Status=5，Reason="PageBlank"。
 	// 注意：页面全白可能是您业务的正常场景，请谨慎评估页面实际内容情况后再开启此功能，以免任务提前退出。
 	BlankCheckInterval *int32 `json:"BlankCheckInterval,omitempty"`
 
-	// 对页面 JS 线程是否崩溃/卡死的检测间隔。 取值范围为[0,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面 JS 线程是否崩溃/卡死的检测间隔。 取值范围为 [0,30]，单位为秒。默认值为 0，表示不启用。
 	// 当出现检测命中时将进行任务重调度，并回调 Status=5，Reason="PageCrash"。
 	CrashCheckInterval *int32 `json:"CrashCheckInterval,omitempty"`
 
-	// 对页面内容是否无变化的检测间隔。取值范围为[2,30]，单位为秒。默认值为0，表示不启用。
+	// 对页面内容是否无变化的检测间隔。取值范围为 [2,30]，单位为秒。默认值为 0，表示不启用。
 	// * 当连续两次出现检测命中时，将对页面进行刷新，并回调Status=4，Reason="PageFreeze"。
 	// * 再次出现连续两次检测命中时，将进行任务重调度，并回调Status=5，Reason="PageFreeze"。
 	// 注意：页面无变化可能是您业务的正常场景，请谨慎评估页面实际内容情况后再开启此功能，以免任务提前退出。
@@ -5492,10 +5652,10 @@ type StartWebcastBodyMonitorConfig struct {
 
 type StartWebcastBodyVideoSolutionsItem struct {
 
-	// 最大发送码率，取值范围为[0,10000]，单位为 Kbps，默认值 0，为 0 时表示自适应码率。
+	// 最大发送码率，取值范围为 [0,10000]，单位为 Kbps，默认值 0，为 0 时表示自适应码率。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 发送帧率，单位为 帧/秒，范围为[1,60]，默认值为 15。帧率和码率设置建议参照视频发布参数对照表 [70122#param]以获取最佳体验。
+	// 发送帧率，单位为 fps，范围为[1,60]，默认值为 15。帧率和码率设置建议参照视频发布参数对照表 [70122#param]以获取最佳体验。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 视频高度，单位为像素，范围为 [50,1080]，默认值为 720。必须是偶数，值为奇数时自动调整为偶数。
@@ -5544,13 +5704,13 @@ type StartWebcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopDetectionBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
@@ -5599,7 +5759,7 @@ type StopDetectionResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -5611,7 +5771,7 @@ type StopDetectionResResult struct {
 
 type StopPushPublicStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 公共流 ID。
@@ -5658,13 +5818,13 @@ type StopPushPublicStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopPushStreamToCDNBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -5714,13 +5874,13 @@ type StopPushStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopRecordBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -5773,13 +5933,13 @@ type StopRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopRelayStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -5829,13 +5989,13 @@ type StopRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopSegmentBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
@@ -5888,21 +6048,20 @@ type StopSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopSnapshotBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 你需要关闭的抽帧截图任务的 ID。
-	// TaskId 是任务的标识，在一个 AppId 的 RoomId 下 taskId 是唯一的，不同 AppId 或者不同 RoomId 下 TaskId 可以重复，因此 AppId + RoomId + TaskId 是任务的唯一标识，可以用来标识指定
-	// AppId 下某个房间内正在运行的任务，从而能在此任务运行中进行更新或者停止此任务。
+	// REQUIRED; 你需要关闭的抽帧截图任务的 ID。TaskId 是任务的标识，在一个 AppId 的 RoomId 下 taskId 是唯一的，不同 AppId 或者不同 RoomId 下 TaskId 可以重复，因此 AppId +
+	// RoomId + TaskId 是任务的唯一标识，可以用来标识指定 AppId 下某个房间内正在运行的任务，从而能在此任务运行中进行更新或者停止此任务。
 	// 关于 TaskId 及以上 Id 字段的命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}
 	TaskID string `json:"TaskId"`
 
@@ -5947,7 +6106,7 @@ type StopSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -6005,13 +6164,13 @@ type StopWBRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type StopWebcastBody struct {
 
-	// REQUIRED; 应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间 ID，是房间的唯一标志
@@ -6061,28 +6220,34 @@ type StopWebcastResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UnbanUserStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 用于校验当前账号是否具有解封权限的 Token，生成方式与加入房间时的Token生成方式一致
+	// REQUIRED; 用于校验当前账号是否具有解封权限的 Token，生成方式与加入房间时的 Token 生成方式一致
 	Token string `json:"Token"`
 
 	// REQUIRED; 需要被解封音/视频流的用户的 ID
 	UserID string `json:"UserId"`
 
-	// 是否解封音频流，置为 true 时，表示解封音频流
+	// 是否解封音频流。
+	// * true：解封音频流。
+	// * false：封禁音频流。
+	// 默认值为 true。
 	Audio *bool `json:"Audio,omitempty"`
 
-	// 是否解封视频流，置为 true 时，表示解封视频流
+	// 是否解封视频流。
+	// * true：解封视频流。
+	// * false：封禁视频流。
+	// 默认值为 true。
 	Video *bool `json:"Video,omitempty"`
 }
 
@@ -6098,9 +6263,6 @@ type UnbanUserStreamResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error UnbanUserStreamResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -6112,15 +6274,22 @@ type UnbanUserStreamResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *UnbanUserStreamResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// UnbanUserStreamResResponseMetadataError - 仅在请求失败时返回。
 type UnbanUserStreamResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UnbanUserStreamResResult struct {
@@ -6131,13 +6300,13 @@ type UnbanUserStreamResResult struct {
 
 type UpdateBanRoomUserRuleBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 指定房间 ID
 	RoomID string `json:"RoomId"`
 
-	// 封禁时长，单位为秒，取值范围为[60,259290]。 若传入值为空或 0表示允许用户重新进房。 若传入值大于0，且小于60，自动修改为60。 若传入值大于259290，自动修改为259290。
+	// 封禁时长，取值范围为 [60,259290]，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259290，自动修改为 259290。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
 
 	// 希望封禁用户的 ID
@@ -6158,9 +6327,6 @@ type UpdateBanRoomUserRuleResResponseMetadata struct {
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
-	// REQUIRED
-	Error UpdateBanRoomUserRuleResResponseMetadataError `json:"Error"`
-
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
@@ -6172,15 +6338,22 @@ type UpdateBanRoomUserRuleResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+
+	// 仅在请求失败时返回。
+	Error *UpdateBanRoomUserRuleResResponseMetadataError `json:"Error,omitempty"`
 }
 
+// UpdateBanRoomUserRuleResResponseMetadataError - 仅在请求失败时返回。
 type UpdateBanRoomUserRuleResResponseMetadataError struct {
 
-	// REQUIRED
+	// REQUIRED; API 的错误码
 	Code string `json:"Code"`
 
-	// REQUIRED
+	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
+
+	// 网关的错误码。（请求失败时返回）
+	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateBanRoomUserRuleResResult struct {
@@ -6191,7 +6364,7 @@ type UpdateBanRoomUserRuleResResult struct {
 
 type UpdatePublicStreamParamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 公共流 ID。
@@ -6209,7 +6382,7 @@ type UpdatePublicStreamParamBody struct {
 	ExcludeStreams []*UpdatePublicStreamParamBodyExcludeStreamsItem `json:"ExcludeStreams,omitempty"`
 	Layout         *UpdatePublicStreamParamBodyLayout               `json:"Layout,omitempty"`
 
-	// 公共流处理模式。0：转码。1：转封装。
+	// 公共流处理模式。支持取值及含义如下：0：转码。1：转封装。
 	// 当 TranscodeMode=1 时，
 	// * TargetStreams 只能指定一路流，且该路流的 UserId不能为空，需为对应房间用户的 UserId。
 	// * ExcludeStreams 必须为空。
@@ -6223,32 +6396,35 @@ type UpdatePublicStreamParamBodyControl struct {
 	// 插入公共流的自定义信息，可用于随流信息同步，长度不超过 4 kB。 数据会添加到当前视频帧开始的连续 30 个视频帧中。 只在调用UpdatePublicStreamParam时有效。
 	DataMsg *string `json:"DataMsg,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为[10, 86400]，默认值为180。只在调用StartPushPublicStream时有效。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为[10, 86400]，单位为秒，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。
+	// 房间用户发布状态回调间隔，仅在纯音频时触发。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户发布状态回调。
-	// * false：不开启房间用户发布状态回调。 默认值为false。
+	// * false：不开启房间用户发布状态回调。
+	// 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。
+	// 房间用户采集状态回调间隔，仅在纯音频时触发。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
 	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
-	// * false：不开启房间用户采集状态回调。 默认值为false。
+	// * false：不开启房间用户采集状态回调。
+	// 默认值为false。
 	UserCaptureStatsMode *bool `json:"UserCaptureStatsMode,omitempty"`
 
-	// 音量指示的回调间隔。单位为毫秒，最小值为100，默认值为2000。
+	// 音量指示的回调间隔。最小值为100，单位为毫秒，默认值为2000。
 	// VideoConfig.FrameRate大于 10 fps 时，回调间隔才能达到 100ms。
 	VolumeIndicationInterval *int32 `json:"VolumeIndicationInterval,omitempty"`
 
 	// 是否开启音量指示模式。
 	// * true：开启音量提示。
-	// * false：不开启音量提示。 默认值为false。
+	// * false：不开启音量提示。
+	// 默认值为false。
 	VolumeIndicationMode *bool `json:"VolumeIndicationMode,omitempty"`
 }
 
@@ -6261,18 +6437,19 @@ type UpdatePublicStreamParamBodyEncode struct {
 // UpdatePublicStreamParamBodyEncodeVideoConfig - 视频编码配置
 type UpdatePublicStreamParamBodyEncodeVideoConfig struct {
 
-	// 最高输出视频码率。取值范围[0,10000]，单位为 Kbps，默认值0，为0时表示自适应码率。
+	// 最高输出视频码率。取值范围为[0,10000]，单位为 Kbps，默认值为0，0表示自适应码率。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 输出视频帧率。默认为15，取值范围为 [1,60]。单位 fps
+	// 输出视频帧率。取值范围为 [1,60]，单位为 fps，默认为15。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 输出画面的高度，默认值为 480。范围为 [16, 1920]，必须是偶数。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 视频编码协议。可取值为0或5，默认值为0。
+	// 视频编码协议。支持取值及含义如下：
 	// * 0：H.264。
 	// * 5：VP8。 如果选择 VP8 格式，请先联系火山技术支持配置。
+	// 默认值为0。
 	VideoCodec *int32 `json:"VideoCodec,omitempty"`
 
 	// 输出画面的宽度。默认值为 640，范围为 [16, 1920]，必须是偶数。
@@ -6287,28 +6464,39 @@ type UpdatePublicStreamParamBodyExcludeStreamsItem struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
 type UpdatePublicStreamParamBodyLayout struct {
 
-	// REQUIRED; 布局模式。默认值为0，值的范围为{0, 1, 2, 3}。
-	// * 0为自适应布局模式。参看自适应布局 [1167930#adapt]。
-	// * 1为垂直布局模式。参看垂直布局 [1167930#vertical]。
-	// * 2为自定义布局模式。
-	// * 3为并排布局模式。参看并排布局 [1167930#horizontal]
+	// REQUIRED; 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]
+	// * 1：：垂直布局 [1167930#vertical]
+	// * 2 ：自定义布局
+	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode     int32                                            `json:"LayoutMode"`
 	CustomLayout   *UpdatePublicStreamParamBodyLayoutCustomLayout   `json:"CustomLayout,omitempty"`
 	VerticalLayout *UpdatePublicStreamParamBodyLayoutVerticalLayout `json:"VerticalLayout,omitempty"`
@@ -6327,10 +6515,11 @@ type UpdatePublicStreamParamBodyLayoutCustomLayout struct {
 	// 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 选择补帧模式。默认值为0，可以取0和1。0为补最后一帧，1为补黑帧。
-	// 自动布局模式下，没有补帧的逻辑。
-	// 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
-	// 使用占位图、补帧和上一帧的关系: 你可以在 Region 中传入 Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
+	// 补帧模式。支持取值及含义如下：
+	// * 0：补最后一帧，
+	// * 1：补黑帧。
+	// 默认值为0。自动布局模式下，该参数不生效。 补帧是指在音视频录制时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
+	// 如果同时配置Alternateimage 和FrameInterpolationMode ，优先使用 Alternateimage参数。
 	// * 在 Region.StreamIndex 对应的视频流停止发布时, Region 对应的画布空间会根据设置填充占位图或补帧。但当视频流为屏幕流时，补帧模式不生效。
 	// * 当 Region.StreamIndex 对应的视频流发布后停止采集或推送时, Region 对应的画布空间会填充上一帧。
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
@@ -6349,7 +6538,7 @@ type UpdatePublicStreamParamBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度相对整体画面的比例，取值的范围为 (0.0, 1.0]。
 	WidthProportion float32 `json:"WidthProportion"`
 
-	// 画面的透明度，取值范围为(0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 占位图片的 url
@@ -6361,17 +6550,18 @@ type UpdatePublicStreamParamBodyLayoutCustomLayoutRegionsItem struct {
 	// 视频流对应区域左上角的纵坐标相对整体画面的比例，取值的范围为 [0.0, 1.0)，默认值为 0。
 	LocationY *float32 `json:"LocationY,omitempty"`
 
-	// 画面的渲染模式，值的范围为 {0, 1, 2，3}, 默认值为 0：- 0 表示按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
-	// * 1 表示按照显示区域的长宽比裁减视频，然后等比拉伸或缩小视频，占满显示区域。
-	// * 2 表示按照原始画面的宽高比缩放视频，在显示区域居中显示。如果原始画面宽高比与指定的宽高比不同，就会导致画面有空缺，空缺区域为填充的背景色值。
-	// * 3 表示按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
-	// 目前 0 和 3 均为按照指定的宽高直接缩放，但我们推荐你使用 3 以便与客户端实现相同逻辑。
+	// 画面的渲染模式。支持取值及含义如下：
+	// * 0 ：按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形
+	// * 1 ：按照显示区域的长宽比裁减视频，然后等比拉伸或缩小视频，占满显示区域。
+	// * 2 ：按照原始画面的宽高比缩放视频，在显示区域居中显示。如果原始画面宽高比与指定的宽高比不同，就会导致画面有空缺，空缺区域为填充的背景色值。
+	// * 3 ：按照指定的宽高直接缩放。如果原始画面宽高比与指定的宽高比不同，就会导致画面变形。
+	// 默认值为 0。 目前 0 和 3 均为按照指定的宽高直接缩放，但我们推荐你使用 3 以便与客户端实现相同逻辑。
 	RenderMode *int32 `json:"RenderMode,omitempty"`
 
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *UpdatePublicStreamParamBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 当画面有重叠时，使用此参数设置指定画面的图层顺序，取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当画面有重叠时，使用此参数设置指定画面的图层顺序，取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -6403,18 +6593,28 @@ type UpdatePublicStreamParamBodyLayoutVerticalLayoutMainStream struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
@@ -6426,18 +6626,28 @@ type UpdatePublicStreamParamBodyTargetStreamsItem struct {
 	// 当选择自定义布局模式时，此字段必填。标记同一路公共流中不同的媒体流。 在同一个 TargetStreams 中，Stream.Index 是唯一的。
 	Index *int32 `json:"Index,omitempty"`
 
-	// 流的媒体类型。默认值为 0 。
+	// 流的媒体类型。支持取值及含义如下：
 	// * 0：音视频
+	//
+	//
 	// * 1：纯音频
+	//
+	//
 	// * 2：纯视频
+	//
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 流类型。默认值为 0。
-	// * 0：媒体设备采集到的音视频
+	// 流类型。支持取值及含义如下：
+	// * 0：音视频流
+	//
+	//
 	// * 1：屏幕流
+	//
+	// 默认值为 0。
 	StreamType *int32 `json:"StreamType,omitempty"`
 
-	// 媒体流的发布方的用户 ID。 UserId 为空时，表示订阅房间内所有流。 UserId 需全局唯一。不同房间内的 UserId 不能重复。
+	// 媒体流的发布方的用户 ID。UserId 为空时，表示订阅房间内所有流。UserId 需全局唯一。不同房间内的 UserId 不能重复。
 	UserID *string `json:"UserId,omitempty"`
 }
 
@@ -6478,13 +6688,13 @@ type UpdatePublicStreamParamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdatePushMixedStreamToCDNBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -6502,9 +6712,9 @@ type UpdatePushMixedStreamToCDNBody struct {
 	Encode     *UpdatePushMixedStreamToCDNBodyEncode  `json:"Encode,omitempty"`
 
 	// 是否更新部分参数。
-	// * False：否。
-	// * True：是。
-	// 默认值为 False。 开启部分更新后，必须按照参数层级传入，且数组类参数需要传入该数组中所有参数。
+	// * false：否。
+	// * true：是。
+	// 默认值为 false。 开启部分更新后，必须按照参数层级传入，且数组类参数需要传入该数组中所有参数。
 	IsUpdatePartialParam *bool                                 `json:"IsUpdatePartialParam,omitempty"`
 	Layout               *UpdatePushMixedStreamToCDNBodyLayout `json:"Layout,omitempty"`
 
@@ -6516,29 +6726,30 @@ type UpdatePushMixedStreamToCDNBody struct {
 
 type UpdatePushMixedStreamToCDNBodyControl struct {
 
-	// 选择补帧模式。默认值为0，可以取0和1。0为补最后一帧，1为补黑帧。
-	// 自动布局模式下，没有补帧的逻辑。
-	// 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
-	// 使用占位图、补帧和上一帧的关系:
-	// 你可以在 Region 中传入 Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
+	// 选择补帧模式。支持取值及含义如下：
+	// * 0：补最后一帧。
+	// * 1：补黑帧
+	// 默认值为0。 自动布局模式下，没有补帧的逻辑。 补帧是指在音视频录制或合流转推时，视频的帧率通常是固定的。但是，因为网络波动或其他原因，实际帧率可能无法达到预设的帧率。此时，需要补帧以保持视频流畅。补最后一帧意味着补充的视频帧和中断前的最后一帧相同，此时看到的画面可能会有短暂静止；补黑帧意味着补充的视频帧是全黑的。
+	// 使用占位图、补帧和上一帧的关系: 你可以在 Region 中传入
+	// Alternateimage 字段设置占位图,在 Control 中传入FrameInterpolationMode 字段设置补帧模式,但占位图优先级高于补帧模式。
 	// * 在 Region.StreamIndex 对应的视频流停止发布时, Region 对应的画布空间会根据设置填充占位图或补帧。但当视频流为屏幕流时，补帧模式不生效。
 	// * 当 Region.StreamIndex 对应的视频流发布后停止采集或推送时, Region 对应的画布空间会填充上一帧。
 	// * 当 Region.StreamIndex 对应的视频流发布时,设置的占位图或补顿模式不造成任何影响。
 	FrameInterpolationMode *int32 `json:"FrameInterpolationMode,omitempty"`
 
-	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为 [10, 86400], 默认值为 180。
+	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为 [10, 86400],单位为秒，默认值为 180。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// （仅对录制有效）最大录制时长，单位为秒。默认值为 0。0 表示不限制录制时长。
-	MaxRecordTime *int32 `json:"MaxRecordTime,omitempty"`
-
-	// 流的类型，用于全局控制订阅的流的类型。默认值为0，可以取0和1。0表示音视频，1表示纯音频，暂不支持纯视频。
+	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
+	// * 0 ：音视频，
+	// * 1 ：纯音频（当前该值无效）。
+	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 转推直播推流模式，用于控制触发推流的时机。取值为0或1。默认值为0。
+	// 转推直播推流模式，用于控制触发推流的时机。支持取值及含义如下：
 	// * 0：房间内有用户推 RTC 流时即触发 CDN 推流。
 	// * 1：调用接口发起推流任务后，无论房间内是否有用户推 RTC 流,均可触发 CDN 推流。
-	// 任务超时逻辑不变，依然是无用户推流即判定为超时。
+	// 默认值为 0。 任务超时逻辑不变，依然是无用户推流即判定为超时。
 	PushStreamMode *int32                                              `json:"PushStreamMode,omitempty"`
 	SEIConfig      *UpdatePushMixedStreamToCDNBodyControlSEIConfig     `json:"SEIConfig,omitempty"`
 	SpatialConfig  *UpdatePushMixedStreamToCDNBodyControlSpatialConfig `json:"SpatialConfig,omitempty"`
@@ -6558,13 +6769,13 @@ type UpdatePushMixedStreamToCDNBodyControlSEIConfig struct {
 	// 默认值为 true。
 	PassthroughRTCSEIMessage *bool `json:"PassthroughRTCSEIMessage,omitempty"`
 
-	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。
+	// 开启音量指示模式后，非关键帧携带 SEI 包含的信息类型。支持取值及含义如下：
 	// * 0：全量信息。
 	// * 1：只有音量信息和时间戳。
-	// 关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
+	// 默认值为 0。关于 SEI 结构，参看服务端合流转推 SEI 结构 [1163740#sei]
 	SEIContentMode *int32 `json:"SEIContentMode,omitempty"`
 
-	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。取值为 5 或 100，默认为 100。
+	// 设置 SEI 的 Payload Type，对 服务端合流转推 SEI 和 RTC 透传SEI 均生效。支持取值为 5 或 100，默认为 100。
 	SEIPayLoadType *int32 `json:"SEIPayLoadType,omitempty"`
 
 	// 该字段为长度为 32 位的 16 进制字符，每个字符的范围为 a-f，A-F，0-9，不可包含 -。如果校验失败，会返回错误码 InvalidParameter。
@@ -6576,10 +6787,10 @@ type UpdatePushMixedStreamToCDNBodyControlSEIConfig struct {
 	// 设置SEI数据结构 [1163740#sei]中 app_data 参数的值，最大长度为 4096。此参数支持动态更新。
 	UserConfigExtraInfo *string `json:"UserConfigExtraInfo,omitempty"`
 
-	// 用户说话音量的回调间隔，单位为秒，取值范围为[0.3,∞]，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
+	// 用户说话音量的回调间隔。取值范围为 [0.3,∞]，单位为秒，默认值为 2。仅当用户说话音量发生变化时此回调才会被触发。
 	VolumeIndicationInterval *float32 `json:"VolumeIndicationInterval,omitempty"`
 
-	// (仅对转推直播有效）是否开启音量指示模式。
+	// 是否开启音量指示模式。
 	// * true：是。此时非关键帧中也可能携带 SEI 信息。
 	// * false：否。此时只会在关键帧中携带 SEI 信息。
 	// 默认值为 false。
@@ -6590,10 +6801,13 @@ type UpdatePushMixedStreamToCDNBodyControlSEIConfig struct {
 type UpdatePushMixedStreamToCDNBodyControlSpatialConfig struct {
 	AudienceSpatialOrientation *UpdatePushMixedStreamToCDNBodyControlSpatialConfigAudienceSpatialOrientation `json:"AudienceSpatialOrientation,omitempty"`
 
-	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	AudienceSpatialPosition []*int32 `json:"AudienceSpatialPosition,omitempty"`
 
-	// 是否开启空间音频处理功能。 false：关闭。true：开启
+	// 是否开启空间音频处理功能。
+	// * false：关闭。
+	// * true：开启
+	// 默认值为 false。
 	EnableSpatialRender *bool `json:"EnableSpatialRender,omitempty"`
 }
 
@@ -6653,10 +6867,10 @@ type UpdatePushMixedStreamToCDNBodyEncode struct {
 	// 视频帧率。取值范围为 [1,60]，单位为 FPS，默认值为 15。
 	VideoFps *int32 `json:"VideoFps,omitempty"`
 
-	// 输出视频 GOP。取值范围为 [1,5]，默认值为 4，单位为秒。
+	// 输出视频 GOP。取值范围为 [1,5]，单位为秒，默认值为 4。
 	VideoGop *int32 `json:"VideoGop,omitempty"`
 
-	// 画面高度，取值范围为[2, 1920]，必须是偶数，单位为像素，默认值为480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
+	// 画面高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Height 设置画面宽度。
 	VideoHeight *int32 `json:"VideoHeight,omitempty"`
 
 	// 画面宽度。取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。该参数在垂直布局和并排布局下生效，自定义布局下请使用 canvas.Width 设置画面宽度。
@@ -6666,11 +6880,12 @@ type UpdatePushMixedStreamToCDNBodyEncode struct {
 type UpdatePushMixedStreamToCDNBodyLayout struct {
 	CustomLayout *UpdatePushMixedStreamToCDNBodyLayoutCustomLayout `json:"CustomLayout,omitempty"`
 
-	// 布局模式。默认值为 0，值的范围为：
-	// * 0 ：自适应布局 [1167930#adapt]。
-	// * 1 ：垂直布局 [1167930#vertical]。
+	// 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]。
+	// * 1：垂直布局 [1167930#vertical]
 	// * 2 ：自定义布局。
 	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode      *int32                                               `json:"LayoutMode,omitempty"`
 	MainVideoStream *UpdatePushMixedStreamToCDNBodyLayoutMainVideoStream `json:"MainVideoStream,omitempty"`
 }
@@ -6693,7 +6908,7 @@ type UpdatePushMixedStreamToCDNBodyLayoutCustomLayoutCanvas struct {
 	// 背景图片的 URL。长度最大为 1024 byte。可以传入的图片的格式包括：JPG, JPEG, PNG。 如果背景图片的宽高和整体屏幕的宽高不一致，背景图片会缩放到铺满屏幕。 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素。默认值为 480。
+	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 整体屏幕（画布）的宽度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。
@@ -6711,7 +6926,7 @@ type UpdatePushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度的像素绝对值，取值的范围为 (0.0, Canvas.Width]。
 	Width int32 `json:"Width"`
 
-	// 画面的透明度，取值范围为 (0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 补位图片的 url。长度不超过 1024 个字符串。
@@ -6746,7 +6961,7 @@ type UpdatePushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// * 0：音视频
 	// * 1：纯音频
 	// * 2：纯视频
-	// 默认值为 0。 假如该路流为音视频流，MediaType设为1，则只混入音频内容。
+	// 默认值为 0。 例如该路流为音视频流，MediaType设为1，则只混入音频内容。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
 	// 画面的渲染模式。支持取值及含义如下：
@@ -6760,10 +6975,10 @@ type UpdatePushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItem struct {
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *UpdatePushMixedStreamToCDNBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	SpatialPosition []*int32 `json:"SpatialPosition,omitempty"`
 
-	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -6856,13 +7071,13 @@ type UpdatePushMixedStreamToCDNResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateRecordBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -6883,11 +7098,12 @@ type UpdateRecordBody struct {
 type UpdateRecordBodyLayout struct {
 	CustomLayout *UpdateRecordBodyLayoutCustomLayout `json:"CustomLayout,omitempty"`
 
-	// 布局模式。默认值为 0，值的范围为：
-	// * 0 ：自适应布局 [1167930#adapt]。
-	// * 1 ：垂直布局 [1167930#vertical]。
+	// 布局模式。支持取值及含义如下：
+	// * 0：自适应布局 [1167930#adapt]。
+	// * 1：垂直布局 [1167930#vertical]
 	// * 2 ：自定义布局。
 	// * 3 ：并排布局 [1167930#horizontal]
+	// 默认值为0
 	LayoutMode      *int32                                 `json:"LayoutMode,omitempty"`
 	MainVideoStream *UpdateRecordBodyLayoutMainVideoStream `json:"MainVideoStream,omitempty"`
 }
@@ -6910,7 +7126,7 @@ type UpdateRecordBodyLayoutCustomLayoutCanvas struct {
 	// 背景图片的 URL。长度最大为 1024 byte。可以传入的图片的格式包括：JPG, JPEG, PNG。 如果背景图片的宽高和整体屏幕的宽高不一致，背景图片会缩放到铺满屏幕。 如果你设置了背景图片，背景图片会覆盖背景色。
 	BackgroundImage *string `json:"BackgroundImage,omitempty"`
 
-	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素。默认值为 480。
+	// 整体屏幕（画布）的高度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 480。
 	Height *int32 `json:"Height,omitempty"`
 
 	// 整体屏幕（画布）的宽度，取值范围为 [2, 1920]，必须是偶数，单位为像素，默认值为 640。
@@ -6928,7 +7144,7 @@ type UpdateRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// REQUIRED; 视频流对应区域宽度的像素绝对值，取值的范围为 (0.0, Canvas.Width]。
 	Width int32 `json:"Width"`
 
-	// 画面的透明度，取值范围为 (0.0, 1.0]。0.0 表示完全透明，1.0 表示完全不透明，默认值为 1.0。
+	// 画面的透明度，取值范围为 (0.0, 1.0]，默认值为 1.0。0.0 表示完全透明，1.0 表示完全不透明。
 	Alpha *float32 `json:"Alpha,omitempty"`
 
 	// 补位图片的 url。长度不超过 1024 个字符串。
@@ -6963,7 +7179,7 @@ type UpdateRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// * 0：音视频
 	// * 1：纯音频
 	// * 2：纯视频
-	// 默认值为 0。 假如该路流为音视频流，MediaType设为1，则只混入音频内容。
+	// 默认值为 0。 例如该路流为音视频流，MediaType设为1，则只混入音频内容。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
 	// 画面的渲染模式。支持取值及含义如下：
@@ -6977,10 +7193,10 @@ type UpdateRecordBodyLayoutCustomLayoutRegionsItem struct {
 	// 如果裁剪后计算得到的实际分辨率的宽或高不是偶数，会被自动调整为偶数
 	SourceCrop *UpdateRecordBodyLayoutCustomLayoutRegionsItemSourceCrop `json:"SourceCrop,omitempty"`
 
-	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为[-100,100]。
+	// 空间音频下，房间内指定用户所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
 	SpatialPosition []*int32 `json:"SpatialPosition,omitempty"`
 
-	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]：0 表示该区域图像位于最下层，100 表示该区域图像位于最上层, 默认值为 0。
+	// 当多个流的画面有重叠时，使用此参数设置指定画面的图层顺序。取值范围为 [0, 100]，默认值为 0。0 表示该区域图像位于最下层，100 表示该区域图像位于最上层。
 	ZOrder *int32 `json:"ZOrder,omitempty"`
 }
 
@@ -7073,13 +7289,13 @@ type UpdateRecordResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateRelayStreamBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED
@@ -7103,7 +7319,7 @@ type UpdateRelayStreamBodyControl struct {
 	// 最大发送码率，单位为 Kbps,不填则不限制，转码时生效。
 	Bitrate *int32 `json:"Bitrate,omitempty"`
 
-	// 发送帧率，值的范围为[1，30]，默认值为15，转码时生效。
+	// 发送帧率，值的范围为 [1，30]，默认值为15，转码时生效。
 	FrameRate *int32 `json:"FrameRate,omitempty"`
 
 	// 是否循环播放，仅对源流为点播流时生效。
@@ -7112,15 +7328,17 @@ type UpdateRelayStreamBodyControl struct {
 	// 媒体类型。
 	// * 0：音视频
 	// * 1：音频。采用此选项时，必须是 AAC 或 Opus 编码。
-	// * 2：视频 默认值为0。
+	// * 2：视频
+	// 默认值为0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
-	// 任务起始时间戳，用于定时播放，Unix时间，单位为秒。默认为 0，表示立即启动。此参数仅对 StartRelayStream接口生效。
+	// 任务起始时间戳，用于定时播放，Unix 时间，单位为秒。默认为 0，表示立即启动。此参数仅对 StartRelayStream接口生效。
 	StartTimeStamp *int32 `json:"StartTimeStamp,omitempty"`
 
 	// 流处理模式。
 	// * 0：转码。采用此选项时，原视频编码方式必须是 H.264 或 ByteVC1。
-	// * 1：转封装。采用此选项时，原视频编码方式必须是 H.264。转封装时，源流的视频关键帧间隔若过大，会影响 RTC 体验，建议 1s，但最大不超过 5s。 默认值为0。
+	// * 1：转封装。采用此选项时，原视频编码方式必须是 H.264。转封装时，源流的视频关键帧间隔若过大，会影响 RTC 体验，建议 1s，但最大不超过 5s。
+	// 默认值为0。
 	StreamMode *int32 `json:"StreamMode,omitempty"`
 
 	// 视频高度，转码时必填。单位为像素，范围为 [16, 1920]，必须是偶数，值为奇数时自动调整为偶数。
@@ -7167,13 +7385,13 @@ type UpdateRelayStreamResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateSegmentBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -7188,10 +7406,13 @@ type UpdateSegmentBody struct {
 	// 业务标识
 	BusinessID *string `json:"BusinessId,omitempty"`
 
-	// 音频切片的时长。单位为秒。范围为 [1, 600]，默认值为 20。 更新该字段后，计时器会重新启动，当前切片立即停止，生成一个新切片。
+	// 音频切片的时长。单位为秒。取值范围为 [1, 600]，默认值为 20。 更新该字段后，计时器会重新启动，当前切片立即停止，生成一个新切片。
 	Duration *int32 `json:"Duration,omitempty"`
 
-	// 是否在开启音视切片时，立刻开始切片。选择 True 时，开启切片；选择 False 时，不切片。默认值 true。
+	// 是否在开启音视切片时，立刻开始切片。
+	// * true：立刻开启切片。
+	// * false：不切片。
+	// 默认值 true。
 	Handle *bool `json:"Handle,omitempty"`
 
 	// 自定义文件前缀。 切片文件名由 Identifier + UserId + 时间戳 + 序号组成。默认情况下 Identifier 为 随机生成的 UUID。在自定义文件名时，Identifier 的命名规则符合正则表达式：[a-zA-Z0-9_@\-\.]{1,128}。
@@ -7236,13 +7457,13 @@ type UpdateSegmentResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
 type UpdateSnapshotBody struct {
 
-	// REQUIRED; 你的音视频应用的唯一标志
+	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
 	// REQUIRED; 房间的 ID，是房间的唯一标志
@@ -7261,16 +7482,19 @@ type UpdateSnapshotBody struct {
 
 type UpdateSnapshotBodyImageConfig struct {
 
-	// 图片的格式。值可取0或1，默认为0。选择0时，图片格式为 JEPG；选择1时，图片格式为 PNG。默认值为0。
+	// 图片的格式。支持取值及含义如下：
+	// * 0：JEPG
+	// * 1：PNG
+	// 默认值为0。
 	Format *int32 `json:"Format,omitempty"`
 
-	// 实际使用视频帧的高度，单位为像素，取值范围为[0, 1920]，默认值为0，此时，和视频流的实际高度相同。
+	// 实际使用视频帧的高度，取值范围为 [0, 1920]，单位为像素，默认值为 0，此时，和视频流的实际高度相同。
 	Height *int32 `json:"Height,omitempty"`
 
-	// 相邻截图之间的间隔时间，单位为秒，取值范围为[1, 600]，默认值为2。
+	// 相邻截图之间的间隔时间，取值范围为[1, 600]，单位为秒，默认值为2。
 	Interval *int32 `json:"Interval,omitempty"`
 
-	// 实际使用视频帧的宽度，单位为像素，取值范围为[0, 1920]。默认值为0，此时，和视频流的实际宽度相同。
+	// 实际使用视频帧的宽度，取值范围为[0, 1920]，单位为像素。默认值为0，表示和视频流的实际宽度相同。
 	Width *int32 `json:"Width,omitempty"`
 }
 
@@ -7311,7 +7535,7 @@ type UpdateSnapshotResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7467,7 +7691,7 @@ type WbTranscodeCreateResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7526,7 +7750,7 @@ type WbTranscodeGetResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
@@ -7617,7 +7841,7 @@ type WbTranscodeQueryResResponseMetadataError struct {
 	// REQUIRED; 具体的错误信息
 	Message string `json:"Message"`
 
-	// 网关的错误码。（仅后处理模块返回）
+	// 网关的错误码。（请求失败时返回）
 	CodeN *int32 `json:"CodeN,omitempty"`
 }
 
