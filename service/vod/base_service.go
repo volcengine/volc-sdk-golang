@@ -410,6 +410,7 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 		StorageClass:      vodUploadFuncRequest.StorageClass,
 		ClientNetWorkMode: vodUploadFuncRequest.ClientNetWorkMode,
 		ClientIDCMode:     vodUploadFuncRequest.ClientIDCMode,
+		NeedFallback:      true, // default set
 	}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
@@ -422,43 +423,112 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
 	}
 
-	uploadAddress := resp.GetResult().GetData().GetUploadAddress()
-	if uploadAddress != nil {
-		if len(uploadAddress.GetUploadHosts()) == 0 {
-			return logId, "", fmt.Errorf("no tos host found"), http.StatusBadRequest
-		}
-		if len(uploadAddress.GetStoreInfos()) == 0 && (uploadAddress.GetStoreInfos()[0] == nil) {
-			return logId, "", fmt.Errorf("no store info found"), http.StatusBadRequest
-		}
-
-		tosHost := uploadAddress.GetUploadHosts()[0]
-		oid := uploadAddress.StoreInfos[0].GetStoreUri()
-		sessionKey := uploadAddress.GetSessionKey()
-		auth := uploadAddress.GetStoreInfos()[0].GetAuth()
+	// using candidate address first
+	candidateUploadAddress := resp.GetResult().GetData().GetCandidateUploadAddresses()
+	var allUploadAddress []*business.UploadAddress
+	if candidateUploadAddress != nil {
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetMainUploadAddresses()...)
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetBackupUploadAddresses()...)
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetFallbackUploadAddresses()...)
+	}
+	if len(allUploadAddress) > 0 {
 		client := &http.Client{}
+		var bts []byte
+		for i, uploadAddress := range allUploadAddress {
+			if len(uploadAddress.GetUploadHosts()) == 0 || len(uploadAddress.GetStoreInfos()) == 0 || uploadAddress.GetStoreInfos()[0] == nil {
+				continue
+			}
+			tosHost := uploadAddress.GetUploadHosts()[0]
+			oid := uploadAddress.StoreInfos[0].GetStoreUri()
+			sessionKey := uploadAddress.GetSessionKey()
+			auth := uploadAddress.GetStoreInfos()[0].GetAuth()
 
-		if int(vodUploadFuncRequest.Size) < consts.MinChunckSize {
-			bts, err := ioutil.ReadAll(vodUploadFuncRequest.Rd)
-			if err != nil {
-				return logId, "", err, http.StatusBadRequest
+			var lazyUploadFn func() error
+			if int(vodUploadFuncRequest.Size) < consts.MinChunckSize {
+				if len(bts) == 0 {
+					bts, err = ioutil.ReadAll(vodUploadFuncRequest.Rd)
+					if err != nil {
+						return logId, "", err, http.StatusBadRequest
+					}
+				}
+				lazyUploadFn = func() error {
+					return p.directUpload(tosHost, oid, auth, bts, client, vodUploadFuncRequest.StorageClass)
+				}
+			} else {
+				uploadPart := model.UploadPartCommon{
+					TosHost: tosHost,
+					Oid:     oid,
+					Auth:    auth,
+				}
+				if vodUploadFuncRequest.ParallelNum == 0 {
+					vodUploadFuncRequest.ParallelNum = 1
+				}
+				lazyUploadFn = func() error {
+					return p.chunkUpload(vodUploadFuncRequest.FilePath, uploadPart, client, vodUploadFuncRequest.Size, vodUploadFuncRequest.ParallelNum, vodUploadFuncRequest.StorageClass)
+				}
 			}
-			if err := p.directUpload(tosHost, oid, auth, bts, client, vodUploadFuncRequest.StorageClass); err != nil {
-				return logId, "", err, http.StatusBadRequest
+
+			retryCount := 1
+			// retry 3 times when received specific error code from transporter
+			if err := retry.Do(func() error {
+				fmt.Printf("using %d host, try %d times\n", i+1, retryCount)
+				retryCount++
+				return lazyUploadFn()
+			}, retry.RetryIf(func(err error) bool {
+				if e, ok := err.(UploadError); ok {
+					return e.ErrorCode >= 5000 || e.ErrorCode == 0 && e.Code >= 500
+				}
+				return false
+			}), retry.Attempts(3), retry.LastErrorOnly(true)); err != nil {
+				if e, ok := err.(UploadError); ok {
+					// next domain
+					if !(e.ErrorCode >= 5000 || e.ErrorCode == 0 && e.Code >= 500) {
+						return logId, "", err, http.StatusBadRequest
+					}
+				}
+				continue
 			}
-		} else {
-			uploadPart := model.UploadPartCommon{
-				TosHost: tosHost,
-				Oid:     oid,
-				Auth:    auth,
-			}
-			if vodUploadFuncRequest.ParallelNum == 0 {
-				vodUploadFuncRequest.ParallelNum = 1
-			}
-			if err := p.chunkUpload(vodUploadFuncRequest.FilePath, uploadPart, client, vodUploadFuncRequest.Size, vodUploadFuncRequest.ParallelNum, vodUploadFuncRequest.StorageClass); err != nil {
-				return logId, "", err, http.StatusBadRequest
-			}
+			return oid, sessionKey, nil, http.StatusOK
 		}
-		return oid, sessionKey, nil, http.StatusOK
+		return logId, "", fmt.Errorf("upload failed"), http.StatusBadRequest
+	} else {
+		uploadAddress := resp.GetResult().GetData().GetUploadAddress()
+		if uploadAddress != nil {
+			if len(uploadAddress.GetUploadHosts()) == 0 {
+				return logId, "", fmt.Errorf("no tos host found"), http.StatusBadRequest
+			}
+			if len(uploadAddress.GetStoreInfos()) == 0 || (uploadAddress.GetStoreInfos()[0] == nil) {
+				return logId, "", fmt.Errorf("no store info found"), http.StatusBadRequest
+			}
+
+			tosHost := uploadAddress.GetUploadHosts()[0]
+			oid := uploadAddress.StoreInfos[0].GetStoreUri()
+			sessionKey := uploadAddress.GetSessionKey()
+			auth := uploadAddress.GetStoreInfos()[0].GetAuth()
+			client := &http.Client{}
+			if int(vodUploadFuncRequest.Size) < consts.MinChunckSize {
+				bts, err := ioutil.ReadAll(vodUploadFuncRequest.Rd)
+				if err != nil {
+					return logId, "", err, http.StatusBadRequest
+				}
+				if err := p.directUpload(tosHost, oid, auth, bts, client, vodUploadFuncRequest.StorageClass); err != nil {
+					return logId, "", err, http.StatusBadRequest
+				}
+			} else {
+				uploadPart := model.UploadPartCommon{
+					TosHost: tosHost,
+					Oid:     oid,
+					Auth:    auth,
+				}
+				if vodUploadFuncRequest.ParallelNum == 0 {
+					vodUploadFuncRequest.ParallelNum = 1
+				}
+				if err := p.chunkUpload(vodUploadFuncRequest.FilePath, uploadPart, client, vodUploadFuncRequest.Size, vodUploadFuncRequest.ParallelNum, vodUploadFuncRequest.StorageClass); err != nil {
+					return logId, "", err, http.StatusBadRequest
+				}
+			}
+			return oid, sessionKey, nil, http.StatusOK
+		}
 	}
 	return logId, "", errors.New("upload address not exist"), http.StatusBadRequest
 }
@@ -598,6 +668,11 @@ func worker(p *Vod, jobs <-chan *Jobs, results chan<- *model.UploadPartResponse,
 				},
 				PartNumber: job.uploadPartInfo.Number,
 			}
+			if e, ok := err.(UploadError); ok {
+				res.Error.Code = e.Code
+				res.Error.ErrorCode = e.ErrorCode
+				res.Error.Message = e.Message
+			}
 			errChan <- res
 			*quit = -1
 			return
@@ -655,7 +730,14 @@ func (p *Vod) chunkUpload(filePath string, uploadPartCommon model.UploadPartComm
 	case v := <-errChan:
 		close(chUploadPartRes)
 		close(errChan)
-		return fmt.Errorf("Error=%s,Message is %s", v.UploadPartCommonResponse.Error.Error, v.UploadPartCommonResponse.Error.Message)
+		if v.Error.Code == -1 {
+			return fmt.Errorf("Error=%s,Message is %s", v.UploadPartCommonResponse.Error.Error, v.UploadPartCommonResponse.Error.Message)
+		}
+		return UploadError{
+			Code:      v.Error.Code,
+			ErrorCode: v.Error.ErrorCode,
+			Message:   v.Error.Message,
+		}
 	default:
 		// all parts upload success
 		close(errChan)
@@ -710,7 +792,11 @@ func (p *Vod) UploadMergePart(uploadPart model.UploadPartCommon, uploadID string
 		return err
 	}
 	if res.Success != 0 {
-		return errors.New(res.Error.Message)
+		return UploadError{
+			Code:      res.Error.Code,
+			ErrorCode: res.Error.ErrorCode,
+			Message:   res.Error.Message,
+		}
 	}
 	return nil
 }
@@ -758,7 +844,11 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 		return nil, err
 	}
 	if res.Success != 0 {
-		return nil, errors.New(res.Error.Message)
+		return nil, UploadError{
+			Code:      res.Error.Code,
+			ErrorCode: res.Error.ErrorCode,
+			Message:   res.Error.Message,
+		}
 	}
 	res.PartNumber = partNumber
 	res.CheckSum = checkSum
@@ -796,7 +886,11 @@ func (p *Vod) InitUploadPart(tosHost string, oid string, auth string, client *ht
 		return "", err
 	}
 	if res.Success != 0 {
-		return "", errors.New(res.Error.Message)
+		return "", UploadError{
+			Code:      res.Error.Code,
+			ErrorCode: res.Error.ErrorCode,
+			Message:   res.Error.Message,
+		}
 	}
 	return res.PayLoad.UploadID, nil
 }

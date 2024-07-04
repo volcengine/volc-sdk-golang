@@ -43,9 +43,10 @@ type MergePartPayLoad struct {
 }
 
 type UploadPartError struct {
-	Code    int    `json:"code"`
-	Error   string `json:"error"`
-	Message string `json:"message"`
+	Code      int    `json:"code"`
+	Error     string `json:"error"`
+	ErrorCode int    `json:"error_code"`
+	Message   string `json:"message"`
 }
 
 type InitPartPayLoad struct {
