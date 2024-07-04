@@ -84,3 +84,13 @@ const (
 const (
 	busy PublicErrorCode = "Busy" // 服务器忙
 )
+
+type UploadError struct {
+	Code      int    `json:"code"`
+	ErrorCode int    `json:"error_code"`
+	Message   string `json:"message"`
+}
+
+func (u UploadError) Error() string {
+	return u.Message
+}
