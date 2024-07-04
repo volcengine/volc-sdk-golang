@@ -1085,3 +1085,35 @@ func (p *Visual) CertH5ConfigInit(bodyMap interface{}) (*model.CertPubResult, in
 	}
 	return resp, statusCode, nil
 }
+
+// EmotionPortrait 表情编辑V2
+// 接口文档：https://www.volcengine.com/docs/6791/1167998
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) EmotionPortrait(bodyMap interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("EmotionPortrait", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// HairStyleV2 发型编辑V2
+// 接口文档：https://www.volcengine.com/docs/6791/1125766
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) HairStyleV2(bodyMap interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("HairStyleV2", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
