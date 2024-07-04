@@ -885,6 +885,28 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"EmotionPortrait": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EmotionPortrait"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"HairStyleV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"HairStyle"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 )
 

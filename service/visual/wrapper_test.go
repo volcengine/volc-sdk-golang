@@ -15,6 +15,42 @@ const (
 	testSk = "sk"
 )
 
+func TestVisual_HairStyleV2(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用比例
+	reqBody := map[string]interface{}{
+		"req_key": "hair_style",
+		//"binary_data_base64": []string{""},
+		"image_urls": []string{"https://xxx"},
+		"hair_type":  101,
+	}
+
+	resp, status, err := DefaultInstance.HairStyleV2(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVisual_EmotionPortrait(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用比例
+	reqBody := map[string]interface{}{
+		"req_key": "emotion_portrait",
+		//"binary_data_base64": []string{""},
+		"image_urls":     []string{"https://xxx"},
+		"target_emotion": "jiuwo",
+	}
+
+	resp, status, err := DefaultInstance.EmotionPortrait(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
 func TestCert_GenH5ProUrl(t *testing.T) {
 	// 调用AssumeRole接口获取临时ak/sk及token
 	sts.DefaultInstance.Client.SetAccessKey(testAk)
