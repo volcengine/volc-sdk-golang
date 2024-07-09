@@ -519,5 +519,32 @@ var (
 				"Version": []string{"2022-12-23"},
 			},
 		},
+		"ActivateRiskSampleData": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ActivateRiskSampleData"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"ActivateRiskBasePackage": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ActivateRiskBasePackage"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"ActivateRiskResult": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"ActivateRiskResult"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
 	}
 )
