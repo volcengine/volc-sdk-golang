@@ -1723,3 +1723,93 @@ func (p *BusinessSecurity) UploadImageLibContent(req *UploadCustomImgRequest) (*
 	}
 	return result, nil
 }
+
+func (p *BusinessSecurity) ActivateRiskBasePackage(req *ActivateRiskBasePackageReq) (*ActivateRiskBasePackageResp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ActivateRiskBasePackage: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ActivateRiskBasePackage", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ActivateRiskBasePackage", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ActivateRiskBasePackage: fail to do request, %v", err)
+			}
+			result := new(ActivateRiskBasePackageResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ActivateRiskBasePackage: fail to do request, %v", err)
+	}
+	result := new(ActivateRiskBasePackageResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) ActivateRiskSampleData(req *ActivateRiskSampleDataReq) (*ActivateRiskSampleDataResp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ActivateRiskSampleData: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ActivateRiskSampleData", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ActivateRiskSampleData", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ActivateRiskSampleData: fail to do request, %v", err)
+			}
+			result := new(ActivateRiskSampleDataResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ActivateRiskSampleData: fail to do request, %v", err)
+	}
+	result := new(ActivateRiskSampleDataResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) ActivateRiskResult(req *ActivateRiskResultReq) (*ActivateRiskResultResp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UploadImageLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("ActivateRiskResult", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ActivateRiskResult", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ActivateRiskResult: fail to do request, %v", err)
+			}
+			result := new(ActivateRiskResultResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
+	}
+	result := new(ActivateRiskResultResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}

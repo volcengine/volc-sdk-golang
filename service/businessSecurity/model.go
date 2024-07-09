@@ -946,3 +946,60 @@ type UploadCustomImgResponse struct {
 type UploadCustomImgInfo struct {
 	Ids []int `json:"ids"`
 }
+type ActivateRiskBasePackageReq struct {
+	PackageId       string   `json:"PackageId"`
+	TotalPackageNum int      `json:"TotalPackageNum"`
+	PackageSeq      int      `json:"PackageSeq"`
+	DataType        string   `json:"DataType"`
+	Data            []string `json:"Data"`
+}
+
+type ActivateRiskSampleDataReq struct {
+	PackageId       string       `json:"PackageId"`
+	TotalPackageNum int          `json:"TotalPackageNum"`
+	PackageSeq      int          `json:"PackageSeq"`
+	BusinessType    string       `json:"BusinessType"`
+	DataType        string       `json:"DataType"`
+	Data            []SampleData `json:"Data"`
+}
+
+type SampleData struct {
+	Id           string `json:"Id"`
+	ReachType    string `json:"ReachType"`
+	LaunchStatus string `json:"LaunchStatus"`
+	Extra        string `json:"Extra"`
+}
+
+type ActivateRiskResultReq struct {
+	PlanId       int64  `json:"PlanId"`
+	ActivateCode string `json:"ActivateCode"`
+}
+type ActivateRiskBasePackageResp struct {
+	RequestId string                      `json:"RequestId"`
+	Code      int                         `json:"Code"`
+	Message   string                      `json:"Message"`
+	Data      ActivateRiskBasePackageInfo `json:"Data"`
+}
+
+type ActivateRiskBasePackageInfo struct {
+	ActivateCode string `json:"ActivateCode"`
+	Status       int    `json:"Status"`
+}
+type ActivateRiskSampleDataResp struct {
+	RequestId string                     `json:"RequestId"`
+	Code      int                        `json:"Code"`
+	Message   string                     `json:"Message"`
+	Data      ActivateRiskSampleDataInfo `json:"Data"`
+}
+type ActivateRiskSampleDataInfo struct {
+	Status int `json:"Status"`
+}
+type ActivateRiskResultResp struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      ActivateRiskResultInfo `json:"Data"`
+}
+type ActivateRiskResultInfo struct {
+	Success bool `json:"Success"`
+}
