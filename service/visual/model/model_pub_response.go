@@ -9,6 +9,7 @@ type VisualBaseRespDataV2 struct {
 		StatusMessage string `json:"status_message"`
 	} `json:"algorithm_base_resp,omitempty"`
 	BinaryDataBase64 []string `json:"binary_data_base64,omitempty"`
+	ImageUrls        []string `json:"image_urls,omitempty"`
 	TaskId           string   `json:"task_id,omitempty"`
 	Status           string   `json:"status,omitempty"`
 	RespData         string   `json:"resp_data,omitempty"`
