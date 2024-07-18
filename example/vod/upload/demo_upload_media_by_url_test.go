@@ -26,6 +26,16 @@ func TestVod_UploadMediaByUrl(t *testing.T) {
 		FileName:         "",                   // 设置文件名，无格式长度限制，用户可自定义,目前文件名不支持空格、+ 字符,如果要使用此字段，请联系技术支持配置白名单，非必须字段
 		FileExtension:    ".mp4",               // 设置文件后缀，以 . 开头，不超过8位，非必须字段
 		CustomURLHeaders: map[string]string{},  // 自定义Header，业务希望访问源视频URL携带的Header(例如User-Agent)可以通过该参数传入，非必须字段
+		Templates: []*business.VodUploadTemplate{ //工作流模板，上传完成后触发对应工作流，当前支持点播转码和智能处理两种类型
+			{
+				TemplateIds:  []string{"transcode template id"}, //点播转码工作流模板， 当前最多支持一个
+				TemplateType: "transcode",
+			},
+			{
+				TemplateIds:  []string{"imp template id"}, //智能处理工作流模板， 当前最多支持一个
+				TemplateType: "imp",
+			},
+		},
 	}
 	urlSets = append(urlSets, urlSet)
 

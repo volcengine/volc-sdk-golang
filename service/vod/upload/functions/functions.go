@@ -38,6 +38,6 @@ func AddOptionInfoFunc(info business.VodUploadFunctionInput) business.VodUploadF
 func StartWorkflowFunc(workflowInput business.VodUploadFunctionInput) business.VodUploadFunction {
 	return business.VodUploadFunction{
 		Name:  "StartWorkflow",
-		Input: &business.VodUploadFunctionInput{TemplateId: workflowInput.TemplateId},
+		Input: &business.VodUploadFunctionInput{TemplateId: workflowInput.TemplateId, Templates: workflowInput.Templates},
 	}
 }

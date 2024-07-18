@@ -359,4 +359,108 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DescribeDistrictData": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDistrictData"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeEdgeData": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeEdgeData"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeDistrictSummary": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDistrictSummary"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeEdgeSummary": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeEdgeSummary"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeOriginData": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeOriginData"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeOriginSummary": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeOriginSummary"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeUserData": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeUserData"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeDistrictRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDistrictRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeEdgeRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeEdgeRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeOriginRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeOriginRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeEdgeStatusCodeRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeEdgeStatusCodeRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeOriginStatusCodeRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeOriginStatusCodeRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeStatisticalRanking": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeStatisticalRanking"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 }
