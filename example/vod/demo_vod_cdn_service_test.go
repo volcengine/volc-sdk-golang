@@ -63,7 +63,7 @@ func Test_UpdateDomainPlayRule(t *testing.T) {
 	query := &request.VodUpdateDomainPlayRuleRequest{
 		SpaceName:     "your SpaceName",
 		DefaultDomain: "your DefaultDomain",
-		PlayRule:      "your PlayRule",
+		PlayRule:      0,
 	}
 
 	resp, status, err := instance.UpdateDomainPlayRule(query)
