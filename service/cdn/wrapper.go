@@ -483,3 +483,146 @@ func (s *CDN) DescribeAccountingSummary(dto *DescribeAccountingSummaryRequest) (
 	}
 	return
 }
+
+func (s *CDN) DescribeDistrictData(dto *DescribeDistrictDataRequest) (responseBody *DescribeDistrictDataResponse, err error) {
+	responseBody = new(DescribeDistrictDataResponse)
+	if err = s.post("DescribeDistrictData", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeEdgeData(dto *DescribeEdgeDataRequest) (responseBody *DescribeEdgeDataResponse, err error) {
+	responseBody = new(DescribeEdgeDataResponse)
+	if err = s.post("DescribeEdgeData", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeDistrictSummary(dto *DescribeDistrictSummaryRequest) (responseBody *DescribeDistrictSummaryResponse, err error) {
+	responseBody = new(DescribeDistrictSummaryResponse)
+	if err = s.post("DescribeDistrictSummary", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeEdgeSummary(dto *DescribeEdgeSummaryRequest) (responseBody *DescribeEdgeSummaryResponse, err error) {
+	responseBody = new(DescribeEdgeSummaryResponse)
+	if err = s.post("DescribeEdgeSummary", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeOriginData(dto *DescribeOriginDataRequest) (responseBody *DescribeOriginDataResponse, err error) {
+	responseBody = new(DescribeOriginDataResponse)
+	if err = s.post("DescribeOriginData", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeOriginSummary(dto *DescribeOriginSummaryRequest) (responseBody *DescribeOriginSummaryResponse, err error) {
+	responseBody = new(DescribeOriginSummaryResponse)
+	if err = s.post("DescribeOriginSummary", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeUserData(dto *DescribeUserDataRequest) (responseBody *DescribeUserDataResponse, err error) {
+	responseBody = new(DescribeUserDataResponse)
+	if err = s.post("DescribeUserData", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeDistrictRanking(dto *DescribeDistrictRankingRequest) (responseBody *DescribeDistrictRankingResponse, err error) {
+	responseBody = new(DescribeDistrictRankingResponse)
+	if err = s.post("DescribeDistrictRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeEdgeRanking(dto *DescribeEdgeRankingRequest) (responseBody *DescribeEdgeRankingResponse, err error) {
+	responseBody = new(DescribeEdgeRankingResponse)
+	if err = s.post("DescribeEdgeRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeOriginRanking(dto *DescribeOriginRankingRequest) (responseBody *DescribeOriginRankingResponse, err error) {
+	responseBody = new(DescribeOriginRankingResponse)
+	if err = s.post("DescribeOriginRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeEdgeStatusCodeRanking(dto *DescribeEdgeStatusCodeRankingRequest) (responseBody *DescribeEdgeStatusCodeRankingResponse, err error) {
+	responseBody = new(DescribeEdgeStatusCodeRankingResponse)
+	if err = s.post("DescribeEdgeStatusCodeRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeOriginStatusCodeRanking(dto *DescribeOriginStatusCodeRankingRequest) (responseBody *DescribeOriginStatusCodeRankingResponse, err error) {
+	responseBody = new(DescribeOriginStatusCodeRankingResponse)
+	if err = s.post("DescribeOriginStatusCodeRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeStatisticalRanking(dto *DescribeStatisticalRankingRequest) (responseBody *DescribeStatisticalRankingResponse, err error) {
+	responseBody = new(DescribeStatisticalRankingResponse)
+	if err = s.post("DescribeStatisticalRanking", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
