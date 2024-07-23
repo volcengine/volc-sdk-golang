@@ -1117,3 +1117,33 @@ func (p *Visual) HairStyleV2(bodyMap interface{}) (*model.VisualPubResult, int, 
 	}
 	return resp, statusCode, nil
 }
+
+// Img2ImgAnimeAcceleratedMaintainID 人像保持。接口文档：https://www.volcengine.com/docs/6791/1316308
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgAnimeAcceleratedMaintainID(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgAnimeAcceleratedMaintainID", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// EntitySegment 智能分割。接口文档：https://www.volcengine.com/docs/6793/1317296
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) EntitySegment(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("EntitySegment", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
