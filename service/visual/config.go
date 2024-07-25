@@ -907,6 +907,28 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"Img2ImgAnimeAcceleratedMaintainID": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Img2ImgAnimeAcceleratedMaintainID"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"EntitySegment": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"EntitySegment"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 )
 
