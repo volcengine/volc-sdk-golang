@@ -214,6 +214,14 @@ type ComponentsFuamuzSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
+type ComponentsGg7M1TSchemasListpulltopushtaskresPropertiesResultPropertiesListItemsPropertiesVodsrcaddrsItems struct {
+	SrcAddr string `json:"SrcAddr"`
+
+	EndOffset *float32 `json:"EndOffset,omitempty"`
+
+	StartOffset *float32 `json:"StartOffset,omitempty"`
+}
+
 // ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam
 // - 截图存储到 veImageX 时的配置。 :::tip TOSParam 和 ImageXParam 配置且配置其中一个。 :::
 type ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam struct {
@@ -722,8 +730,7 @@ type CreatePullToPushTaskBody struct {
 	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时为必选参数，参数取值及含义如下所示。
 	// * -1：无限次循环，至任务结束；
 	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
-	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
-	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
+	// * >0：有限次循环，循环次数以 CycleMode 取值为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流域名，推流地址（DstAddr）为空时必传；反之，则该参数不生效。
@@ -732,13 +739,15 @@ type CreatePullToPushTaskBody struct {
 	// 推流地址，即直播源或点播视频转推的目标地址。
 	DstAddr *string `json:"DstAddr,omitempty"`
 
-	// 点播文件启播时间偏移值，单位为秒，仅当点播视频播放地址列表（SrcAddrS）只有一个地址，且未配置 Offsets 时生效，缺省情况下为空表示不进行偏移。
+	// 点播文件启播时间偏移值，单位为秒，仅当点播视频播放地址列表（SrcAddrS）只有一个地址，且未配置 Offsets 时生效，缺省情况下为空表示不进行偏移。 :::tip 此字段为旧版本配置，请使用 VodSrcAddrs 配置点播视频地址和播放偏移时间。
+	// :::
 	Offset *float32 `json:"Offset,omitempty"`
 
-	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。
+	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。 :::tip 此字段为旧版本配置，请使用 VodSrcAddrs 配置点播视频地址和播放偏移时间。 :::
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
+	// 点播视频文件循环播放次数，当 CycleMode 取值为 0 时，PlayTimes 取值将作为循环播放次数。 :::tip PlayTimes 为冗余参数，您可以将 PlayTimes 置 0 后直接使用 CycleMode 指定点播视频文件循环播放次数。
+	// :::
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
 	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。拉流来源类型为点播视频时，参数生效。
@@ -750,6 +759,7 @@ type CreatePullToPushTaskBody struct {
 	SrcAddr *string `json:"SrcAddr,omitempty"`
 
 	// 点播视频播放地址列表，拉流来源类型为点播视频时，为必传参数，最多支持传入 30 个点播视频播放地址，每个地址最大长度为 1000 个字符。
+	// :::tip 此字段为旧版本配置，请使用 VodSrcAddrs 配置点播视频地址和播放偏移时间。 :::
 	SrcAddrS []*string `json:"SrcAddrS,omitempty"`
 
 	// 推流的流名称，推流地址（DstAddr）为空时必传；反之，则该参数不生效。
@@ -758,8 +768,25 @@ type CreatePullToPushTaskBody struct {
 	// 拉流转推任务的名称，默认为空表示不配置任务名称。支持由中文、大小写字母（A - Z、a - z）和数字（0 - 9）组成，长度为 1 到 20 各字符。
 	Title *string `json:"Title,omitempty"`
 
+	// 点播文件地址和开始播放、结束播放的时间设置。 :::tip
+	// * 当 Type 为点播类型时配置生效。
+	// * 与 SrcAddrS 和 OffsetS 字段不可同时填写。 :::
+	VodSrcAddrs []*CreatePullToPushTaskBodyVodSrcAddrsItem `json:"VodSrcAddrs,omitempty"`
+
 	// 为拉流转推视频添加的水印配置信息。
 	Watermark *CreatePullToPushTaskBodyWatermark `json:"Watermark,omitempty"`
+}
+
+type CreatePullToPushTaskBodyVodSrcAddrsItem struct {
+
+	// REQUIRED; 点播文件地址。
+	SrcAddr string `json:"SrcAddr"`
+
+	// 当前点播文件结束播放的时间偏移值，单位为秒，默认为空时表示结束播放时间不进行偏移。
+	EndOffset *float32 `json:"EndOffset,omitempty"`
+
+	// 当前点播文件开始播放的时间偏移值，单位为秒。默认为空时表示开始播放时间不进行偏移。
+	StartOffset *float32 `json:"StartOffset,omitempty"`
 }
 
 // CreatePullToPushTaskBodyWatermark - 为拉流转推视频添加的水印配置信息。
@@ -884,8 +911,11 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
 	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
 	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时分段长生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长，到达时长立即生成录制文件，完成录制后一起上传。
+	// :::tip
+	// * 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。
+	// * 如录制过程中出现断流，对应生成的录制文件时长也会相应缩短。
+	// :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认值为 false，支持的取值及含义如下所示。
@@ -893,7 +923,8 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。 :::tip 如录制过程中出现断流，对应生成的录制文件时长也会相应缩短。
+	// :::
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
 	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
@@ -1834,6 +1865,12 @@ type CreateWatermarkPresetBody struct {
 
 	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。与水印相对高度字段冲突，请选择其中一个传参。
 	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
+
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// :::tip
+	// * 默认为空，表示对指定的 AppName 下所有转码流均使用当前水印配置。
+	// * 指定流名称时，表示仅对 AppName 下指定流名称的转码流使用当前水印配置。 :::
+	Stream *string `json:"Stream,omitempty"`
 }
 
 type CreateWatermarkPresetRes struct {
@@ -2140,8 +2177,7 @@ type DeleteRecordPresetBody struct {
 	// 应用名称，您可以调用ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]接口查看待删除的录制配置 App 取值。
 	App *string `json:"App,omitempty"`
 
-	// 流名称，取值与直播流地址的 StreamName 字段取值相应，用来指定待更新的录制配置，默认为空。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858]
-	// 接口查看待删除录制配置的 Stream 取值。
+	// 流名称。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待删除录制配置的 Stream 取值。
 	Stream *string `json:"Stream,omitempty"`
 
 	// 域名空间。您可以调用 ListVhostRecordPresetV2 [https://www.volcengine.com/docs/6469/1126858] 接口查看待删除录制配置的 Vhost 取值。
@@ -2577,6 +2613,9 @@ type DeleteWatermarkPresetBody struct {
 
 	// REQUIRED; 域名空间，您可以调用 ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889] 接口，查看待删除水印配置的 Vhost 取值。
 	Vhost string `json:"Vhost"`
+
+	// 流名称，您可以调用ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889]接口，查看待删除水印配置的 Stream 取值。
+	Stream *string `json:"Stream,omitempty"`
 }
 
 type DeleteWatermarkPresetRes struct {
@@ -2984,10 +3023,10 @@ type DescribeCertDRMResResponseMetadata struct {
 
 type DescribeCertDetailSecretV2Body struct {
 
-	// 证书实例 ID，您可以通过ListCertV2 [https://www.volcengine.com/docs/6469/81242]接口获取证书示例 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
+	// 证书 ID，您可以通过ListCertV2 [https://www.volcengine.com/docs/6469/1126823]接口获取证书 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
 	CertID *string `json:"CertID,omitempty"`
 
-	// 证书链 ID，您可以通过ListcCertV2 [https://www.volcengine.com/docs/6469/81242]接口获取 证书链 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
+	// 证书链 ID，您可以通过ListcCertV2 [https://www.volcengine.com/docs/6469/1126823]接口获取 证书链 ID。 :::tip 参数ChainID与CertID传且仅传一个。 :::
 	ChainID *string `json:"ChainID,omitempty"`
 }
 
@@ -4682,7 +4721,6 @@ type DescribeLiveBatchStreamSessionDataBody struct {
 	// :::tip 单次查询最大时间跨度为 24 小时，查询历史数据的时间范围为 366 天。 :::
 	StartTime string `json:"StartTime"`
 
-	// 域名列表，缺省情况下表示当前账号下的所有推拉流域名。
 	// 拉流域名列表，默认为空，表示查询所有域名的请求数和在线人数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
 	DomainList []*string `json:"DomainList,omitempty"`
 
@@ -4772,7 +4810,7 @@ type DescribeLiveBatchStreamSessionDataResResult struct {
 	// REQUIRED; 数据分页的信息。
 	Pagination DescribeLiveBatchStreamSessionDataResResultPagination `json:"Pagination"`
 
-	// REQUIRED; 查询时间范围内的所有流在线人数峰值的最大值。
+	// REQUIRED; 查询时间范围内的在线人数峰值。
 	PeakOnlineUser int32 `json:"PeakOnlineUser"`
 
 	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
@@ -8025,9 +8063,9 @@ type DescribeLiveStreamSessionDataBody struct {
 	// :::tip 配置数据拆分的维度时，对应的维度参数传入多个值时才会返回按此维度拆分的数据。例如，配置按 Domain 进行数据拆分时， DomainList 传入多个 Domain 值时，才会返回按 Domain 拆分的数据。 :::
 	DetailField []*string `json:"DetailField,omitempty"`
 
-	// 拉流域名，查询流粒度数据时必传，且需同时传入 App 和 Stream。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理
-	// [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。 :::tip
-	// 查询流粒度的请求数和在线人数数据时，需同时指定 Domain 、App 和 Stream 来指定直播流。 :::
+	// 拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
+	// :::tip 查询流粒度的请求数和在线人数数据时，需同时指定 Domain 、
+	// App 和 Stream 来指定直播流。 :::
 	Domain *string `json:"Domain,omitempty"`
 
 	// 拉流域名列表，默认为空，表示查询所有域名的请求数和在线人数。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取待查询的拉流域名。
@@ -8674,8 +8712,15 @@ type DescribeLiveTranscodeDataBody struct {
 	// :::tip When querying stream granularity data, both the App and Stream parameters must be provided. :::
 	Stream *string `json:"Stream,omitempty"`
 
-	// 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264 极智超清；
-	// - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	// 视频编码格式，默认为空表示不指定编码格式，支持的取值和含义如下所示。
+	// * Normal_H264：H.264 标准转码；
+	// * Normal_H265：H.265 标准转码；
+	// * Normal_H266：H.266 标准转码；
+	// * ByteHD_H264：H.264 极智超清；
+	// * ByteHD_H265：H.265 极智超清；
+	// * ByteHD_H266：H.266 极智超清；
+	// * ByteQE：画质增强；
+	// * Audio：纯音频流。
 	TranscodeType []*string `json:"TranscodeType,omitempty"`
 }
 
@@ -9917,7 +9962,7 @@ type ListCertV2ResResultCertListItem struct {
 	// REQUIRED; 与证书绑定的域名列表。
 	CertDomainList []string `json:"CertDomainList"`
 
-	// REQUIRED; 证书实例 ID。
+	// REQUIRED; 证书 ID。
 	CertID string `json:"CertID"`
 
 	// REQUIRED; 证书名称。
@@ -10428,8 +10473,7 @@ type ListPullToPushTaskResResultListItem struct {
 	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时配置生效，参数取值及含义如下所示。
 	// * -1：无限次循环，至任务结束；
 	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
-	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
-	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
+	// * >0：有限次循环，循环次数以 CycleMode 取值为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流地址，即直播源或点播视频转推的目标地址。
@@ -10446,7 +10490,7 @@ type ListPullToPushTaskResResultListItem struct {
 	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
+	// 点播视频文件循环播放次数，当 CycleMode 取值为 0 时，PlayTimes 取值将作为循环播放次数。
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
 	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。拉流来源类型为点播视频时，参数生效。
@@ -10480,6 +10524,11 @@ type ListPullToPushTaskResResultListItem struct {
 	// * 0：直播源；
 	// * 1：点播视频。
 	Type *int32 `json:"Type,omitempty"`
+
+	// 点播文件地址和开始播放、结束播放的时间设置。 :::tip
+	// * 当 Type 为点播类型时配置生效。
+	// * 与 SrcAddrS 和 OffsetS 字段不可同时填写。 :::
+	VodSrcAddrs []*ComponentsGg7M1TSchemasListpulltopushtaskresPropertiesResultPropertiesListItemsPropertiesVodsrcaddrsItems `json:"VodSrcAddrs,omitempty"`
 
 	// 为拉流转推视频添加的水印配置信息。
 	Watermark *ListPullToPushTaskResResultListItemWatermark `json:"Watermark,omitempty"`
@@ -10615,10 +10664,10 @@ type ListRelaySourceV4ResResultPagination struct {
 
 type ListTimeShiftPresetV2Body struct {
 
-	// 时移类型，默认类型为 vod。
+	// REQUIRED; 时移类型，默认类型为 vod。
 	// * vod：点播时移，表示查询时移录制存储在 VOD 中的时移配置；
 	// * tos：直播时移，表示查询时移录制存储在 TOS 以及 fcdn-tos 中的时移配置。
-	Type *string `json:"Type,omitempty"`
+	Type string `json:"Type"`
 
 	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要时移的直播流使用的域名所属的域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
@@ -11219,7 +11268,7 @@ type ListVhostTransCodePresetResResultAllPresetListItemTranscodePreset struct {
 	// 是否开启智能插帧，只对画质增强类型生效
 	// * 0：不开启
 	// * 1：开启
-	FISwitch *string `json:"FISwitch,omitempty"`
+	FISwitch *int64 `json:"FISwitch,omitempty"`
 
 	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
@@ -11440,7 +11489,7 @@ type ListVhostTransCodePresetResResultCustomizePresetListItemTranscodePreset str
 	// 是否开启智能插帧，只对画质增强类型生效
 	// * 0：不开启
 	// * 1：开启
-	FISwitch *string `json:"FISwitch,omitempty"`
+	FISwitch *int64 `json:"FISwitch,omitempty"`
 
 	// 视频帧率，单位为 fps，帧率越大，画面越流畅。
 	FPS *int32 `json:"FPS,omitempty"`
@@ -11540,13 +11589,13 @@ type ListVhostWatermarkPresetResResponseMetadataError struct {
 
 type ListVhostWatermarkPresetResResult struct {
 
-	// 统计消息，提供查询成功和失败的数量。
+	// 统计消息，提供可用配置和不可用配置的数量。
 	StaticsMsg *string `json:"StaticsMsg,omitempty"`
 
-	// 获取配置失败的列表，返回获取失败的配置信息及获取失败的原因。
+	// 不可正常使用的水印配置列表，如水印图片获取失败等原因导致的配置不可用。返回不可正常使用的水印配置信息及配置不可用的原因。
 	WatermarkErrMsgList []*ListVhostWatermarkPresetResResultWatermarkErrMsgListItem `json:"WatermarkErrMsgList,omitempty"`
 
-	// 水印配置列表。
+	// 可正常使用的水印配置列表。
 	WatermarkPresetList []*ListVhostWatermarkPresetResResultWatermarkPresetListItem `json:"WatermarkPresetList,omitempty"`
 }
 
@@ -11561,7 +11610,7 @@ type ListVhostWatermarkPresetResResultWatermarkErrMsgListItem struct {
 	// 获取水印模板失败的具体错误信息。
 	ErrMsg *string `json:"ErrMsg,omitempty"`
 
-	// 域名空间名称。
+	// 域名空间。
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
@@ -11622,6 +11671,12 @@ type ListWatermarkPresetBody struct {
 
 	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
 	Vhost string `json:"Vhost"`
+
+	// 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
+	// :::tip
+	// * 默认为空，表示查询的 AppName 级别对所有转码流生效的配置。
+	// * 指定流名称时，表示查询仅对 AppName 下指定流名称的转码流生效的配置。 :::
+	Stream *string `json:"Stream,omitempty"`
 }
 
 type ListWatermarkPresetRes struct {
@@ -12548,8 +12603,7 @@ type UpdatePullToPushTaskBody struct {
 	// 点播视频文件循环播放模式，当拉流来源类型为点播视频时为必选参数，参数取值及含义如下所示。
 	// * -1：无限次循环，至任务结束；
 	// * 0：有限次循环，循环次数以 PlayTimes 取值为准；
-	// * >0：有限次循环，循环次数由 CycleMode 和 PlayTimes 共同决定: * PlayTimes 为 0 时，循环次数以 CycleMode 为准；
-	// * PlayTimes 为正整数时，循环次数以 PlayTimes为准。
+	// * >0：有限次循环，循环次数以 CycleMode 取值为准。
 	CycleMode *int32 `json:"CycleMode,omitempty"`
 
 	// 推流域名，推流地址（DstAddr）为空时必传；反之，则该参数不生效
@@ -12564,7 +12618,8 @@ type UpdatePullToPushTaskBody struct {
 	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下表示不进行偏移。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
 
-	// 点播视频文件循环播放次数，当循环播放模式为有限次循环时为必选参数，取值范围为 0 或正整数。
+	// 点播视频文件循环播放次数，当 CycleMode 取值为 0 时，PlayTimes 取值将作为循环播放次数。 :::tip PlayTimes 为冗余参数，您可以将 PlayTimes 置 0 后直接使用 CycleMode 指定点播视频文件循环播放次数。
+	// :::
 	PlayTimes *int32 `json:"PlayTimes,omitempty"`
 
 	// 是否开启点播预热，开启点播预热后，系统会自动将点播视频文件缓存到 CDN 节点上，当用户请求直播时，可以直播从 CDN 节点获取视频，从而提高直播流畅度。 拉流来源类型为点播视频（Type 为 1）时，参数生效。
@@ -12584,8 +12639,25 @@ type UpdatePullToPushTaskBody struct {
 	// 拉流转推任务的名称，默认为空表示不配置任务名称。支持由中文、大小写字母（A - Z、a - z）和数字（0 - 9）组成，长度为 1 到 20 各字符。
 	Title *string `json:"Title,omitempty"`
 
+	// 点播文件地址和开始播放、结束播放的时间设置。 :::tip
+	// * 当 Type 为点播类型时配置生效。
+	// * 与 SrcAddrS 和 OffsetS 字段不可同时填写。 :::
+	VodSrcAddrs []*UpdatePullToPushTaskBodyVodSrcAddrsItem `json:"VodSrcAddrs,omitempty"`
+
 	// 为拉流转推视频添加的水印配置信息。
 	Watermark *UpdatePullToPushTaskBodyWatermark `json:"Watermark,omitempty"`
+}
+
+type UpdatePullToPushTaskBodyVodSrcAddrsItem struct {
+
+	// REQUIRED; 点播文件地址。
+	SrcAddr string `json:"SrcAddr"`
+
+	// 当前点播文件结束播放的时间偏移值，单位为秒，默认为空时表示结束播放时间不进行偏移。
+	EndOffset *float32 `json:"EndOffset,omitempty"`
+
+	// 当前点播文件开始播放的时间偏移值，单位为秒。默认为空时表示开始播放时间不进行偏移。
+	StartOffset *float32 `json:"StartOffset,omitempty"`
 }
 
 // UpdatePullToPushTaskBodyWatermark - 为拉流转推视频添加的水印配置信息。
@@ -12704,8 +12776,10 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 
 	// 断流录制场景下，单文件录制时长，单位为秒，默认值为 7200，取值范围为 -1 和 [300,86400]。
 	// * 取值为 -1 时，表示不限制录制时长，录制结束后生成一个完整的录制文件。
-	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长分段生成录制文件，完成录制后一起上传。
-	// :::tip 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。 :::
+	// * 取值为 [300,86400] 之间的值时，表示根据设置的录制文件时长，到达时长立即生成录制文件，完成录制后一起上传。
+	// :::tip
+	// * 断流录制场景仅在录制格式为 HLS 时生效，且断流录制和实时录制为二选一配置。
+	// * 如录制过程中出现断流，对应生成的录制文件时长也会相应缩短。 :::
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 当前格式的录制是否开启，默认 false，取值及含义如下所示。
@@ -12713,7 +12787,8 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParam struct {
 	// * true：开启。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。
+	// 实时录制场景下，单文件录制时长，单位为秒，默认值为 1800，取值范围为 [300,21600]。录制时间到达设置的单文件录制时长时，会立即生成录制文件实时上传存储。 :::tip 如录制过程中出现断流，对应生成的录制文件时长也会相应缩短。
+	// :::
 	RealtimeRecordDuration *int32 `json:"RealtimeRecordDuration,omitempty"`
 
 	// 断流录制场景下，断流拼接时长，单位为秒，默认值为 0，支持的取值及含义如下所示。
@@ -13889,6 +13964,9 @@ type UpdateWatermarkPresetBody struct {
 
 	// 水印相对宽度，水印宽度占直播转码流画面宽度的比例，取值范围为 [0,1]，水印高度会随宽度等比缩放。与水印相对高度字段冲突，请选择其中一个传参。
 	RelativeWidth *float32 `json:"RelativeWidth,omitempty"`
+
+	// 流名称，您可以调用ListVhostWatermarkPreset [https://www.volcengine.com/docs/6469/1126889]接口，查看待更新水印配置的 Stream 取值。
+	Stream *string `json:"Stream,omitempty"`
 }
 
 type UpdateWatermarkPresetRes struct {
