@@ -153,6 +153,7 @@ func (producer *producer) SendLogs(shardHash, topic, source, filename string, lo
 				Source:      source,
 				ShardHash:   shardHash,
 				FileName:    filename,
+				ContextFlow: logs.ContextFlow,
 				CallBackFun: callBack,
 			},
 			Log: mlog,

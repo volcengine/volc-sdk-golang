@@ -20,6 +20,7 @@ type BatchKey struct {
 	Source      string
 	ShardHash   string
 	FileName    string
+	ContextFlow string
 	CallBackFun CallBack
 }
 
@@ -232,6 +233,8 @@ func (dispatcher *Dispatcher) getKeyString(batchKey BatchKey) string {
 	key.WriteString(batchKey.Source)
 	key.WriteString(delimiter)
 	key.WriteString(batchKey.FileName)
+	key.WriteString(delimiter)
+	key.WriteString(batchKey.ContextFlow)
 
 	return key.String()
 }
