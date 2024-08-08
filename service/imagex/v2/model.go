@@ -340,10 +340,18 @@ type ComponentsPqmsj3SchemasGetallimageservicesresPropertiesResultPropertiesServ
 
 type CreateHiddenWatermarkImageBody struct {
 
-	// REQUIRED; 获取盲水印图的算法模型，仅支持取值 tracev1。该模型可以生成带有水印的透明图像，但仅适用于纯色网页泄露溯源场景。该模型可有效抵抗常见的社交软件传播。然而，该算法对页面背景色的影响相对较大，因此不适合用于保护多彩页面或图片，例如商品页面。
+	// REQUIRED; 盲水印模型，取值如下所示：
+	// * tracev1：前景图层水印模型（纯色背景适用）。
+	//
+	// 该模型可以生成带有水印的透明图像，但仅适用于纯色网页泄露溯源场景。该模型可有效抵抗常见的社交软件传播。然而，该算法对页面背景色的影响相对较大，因此不适合用于保护多彩页面或图片，例如商品页面。
+	//
+	//
+	// * tracev2：前景图层水印模型（彩色背景通用）
+	//
+	// 该模型可以生成含水印的透明图像，主要应用在前端页面截图泄露溯源场景。该模型生成的水印纹理密集，在正常界面添加后肉眼基本不可见（截图放大后存在肉眼可见的水印纹理），可抵抗常见的社交软件传播。
 	Algorithm string `json:"Algorithm"`
 
-	// REQUIRED; 自定义盲水印文本信息。最大支持 128 个字符，若全部是中文则不超过 42 个字符。
+	// REQUIRED; 自定义盲水印文本信息，最多支持 128 个字符。
 	Info string `json:"Info"`
 
 	// REQUIRED; 盲水印强度，取值如下所示：
@@ -355,7 +363,7 @@ type CreateHiddenWatermarkImageBody struct {
 
 type CreateHiddenWatermarkImageQuery struct {
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 用于存储结果图和计量计费的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
@@ -391,7 +399,7 @@ type CreateHiddenWatermarkImageResResponseMetadata struct {
 // CreateHiddenWatermarkImageResResult - 视请求的接口而定
 type CreateHiddenWatermarkImageResResult struct {
 
-	// REQUIRED; 盲水印图片 Url，当前仅支持输出 png 格式。 :::warning 经裁剪后仍可提取水印的原图最小尺寸限制为 320 * 192。 :::
+	// REQUIRED; 盲水印图片 Uri，当前仅支持输出 png 格式。
 	StoreURI string `json:"StoreUri"`
 }
 
@@ -879,22 +887,24 @@ type CreateImageHmEmbedResResult struct {
 type CreateImageHmExtractQuery struct {
 
 	// REQUIRED; 算法模型，取值如下所示：
-	// * default：文本嵌入模型，默认文本嵌入模型；
+	// * default：文本嵌入基础模型
 	// * adapt_resize：画质自适应文本嵌入模型。
-	// * adapt: 画质自适应文本嵌入模型。
-	// * tracev1：获取暗水印前、背景图。
-	// * natural: 适用于自然色彩的图片
+	// * adapt: 文本嵌入自适应模型（AIGC 适用）
+	// * natural：文本嵌入基础模型（彩色图片通用）
+	// * tracev1：前景图层水印模型（纯色背景适用）
+	// * tracev2：前景图层水印模型（彩色背景通用）
+	// :::warning 指定tracev1 或 tracev2模型时，请传入已添加对应模型水印的背景网页的截图。若模型错误，则无法提取水印。 :::
 	Algorithm string `json:"Algorithm" query:"Algorithm"`
 
-	// REQUIRED; 待提取盲水印文件 URL，StoreUri 和 ImageUrl 都不为空时，以 StoreUri 为准。
+	// REQUIRED; 待提取盲水印图片的 URL。StoreUri和ImageUrl都不为空时，以StoreUri为准。
 	ImageURL string `json:"ImageUrl" query:"ImageUrl"`
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 待提取水印图对应的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// REQUIRED; 待提取盲水印的图片 Uri，StoreUri 和 ImageUrl 都不为空时，以 StoreUri 为准。
+	// REQUIRED; 待提取盲水印的图片的 URI。StoreUri和ImageUrl都不为空时，以StoreUri为准。
 	StoreURI string `json:"StoreUri" query:"StoreUri"`
 }
 
@@ -934,6 +944,34 @@ type CreateImageHmExtractResResult struct {
 	// * -1：盲水印为空；
 	// * 0：info不为空时表示盲水印提取成功。 :::tip 提取失败时显示接口错误。 :::
 	StatusCode int `json:"StatusCode"`
+
+	// 仅当 Algorithm 取值为 tracev2 时，有返回值。
+	// 编码附加信息。
+	AdditionInfo *CreateImageHmExtractResResultAdditionInfo `json:"AdditionInfo,omitempty"`
+}
+
+// CreateImageHmExtractResResultAdditionInfo - 仅当 Algorithm 取值为 tracev2 时，有返回值。
+// 编码附加信息。
+type CreateImageHmExtractResResultAdditionInfo struct {
+
+	// 所提取的水印背景图层的生成周期，从 0 开始，表示处于生成的第一周内。
+	HmCode int `json:"HmCode,omitempty"`
+
+	// 生成周期所对应的起始与结束时间段，固定为 7 天。
+	HmDateInfo *CreateImageHmExtractResResultAdditionInfoHmDateInfo `json:"HmDateInfo,omitempty"`
+
+	// 水印类型
+	HmType string `json:"HmType,omitempty"`
+}
+
+// CreateImageHmExtractResResultAdditionInfoHmDateInfo - 生成周期所对应的起始与结束时间段，固定为 7 天。
+type CreateImageHmExtractResResultAdditionInfoHmDateInfo struct {
+
+	// 结束时间戳
+	EndDate int `json:"EndDate,omitempty"`
+
+	// 开始时间戳
+	StartDate int `json:"StartDate,omitempty"`
 }
 
 type CreateImageMigrateTaskBody struct {
@@ -1431,16 +1469,21 @@ type CreateImageTemplateBodyFiltersItem struct {
 
 // CreateImageTemplateBodyOutputExtra - 用于图片服务输出时的图片编码
 type CreateImageTemplateBodyOutputExtra struct {
+	AvifDemfmt string `json:"avif.demfmt,omitempty"`
 
 	// 仅当OutputFormat取值为heic时配置有效 是否带透明通道编码，取值如下所示：
 	// * true：是
 	// * false：否
 	HeicAlphaReserve string `json:"heic.alpha.reserve,omitempty"`
+	HeicAqMode       string `json:"heic.aq.mode,omitempty"`
+	HeicDemfmt       string `json:"heic.demfmt,omitempty"`
 
 	// 仅当OutputFormat取值为heic时配置有效 色位深度，值越大则提供的图像色彩范围越多，使图像颜色变化的更细腻，但图像体积也会增大。取值如下所示：
 	// * 8：8bit
 	// * 10：10bit
-	HeicEncodeDepth string `json:"heic.encode.depth,omitempty"`
+	HeicEncodeDepth          string `json:"heic.encode.depth,omitempty"`
+	HeicQualityAdaptPixlimit string `json:"heic.quality.adapt.pixlimit,omitempty"`
+	HeicQualityAdaptVersion  string `json:"heic.quality.adapt.version,omitempty"`
 
 	// 仅当OutputFormat取值为heic时配置有效 是否开启 ROI 编码，取值如下所示：
 	// * true：是
@@ -1451,12 +1494,14 @@ type CreateImageTemplateBodyOutputExtra struct {
 	HeicThumbRatio string `json:"heic.thumb.ratio,omitempty"`
 
 	// jpeg 的 alpha 图片是否降级为 png，指定为 png 时表示降级为 png 格式。缺省情况下默认为空，表示不降级。
-	JPEGAlphaDemotionPNG string `json:"jpeg.alpha.demotion.png,omitempty"`
+	JPEGAlphaDemotion string `json:"jpeg.alpha.demotion,omitempty"`
 
 	// 是否采用 jpeg 渐进编码格式，取值如下所示：
 	// * true：是
 	// * false：否
-	JPEGProgressive string `json:"jpeg.progressive,omitempty"`
+	JPEGProgressive          string `json:"jpeg.progressive,omitempty"`
+	JPEGQualityAdaptPixlimit string `json:"jpeg.quality.adapt.pixlimit,omitempty"`
+	JPEGQualityAdaptVersion  string `json:"jpeg.quality.adapt.version,omitempty"`
 
 	// 指定 jpeg 体积的输出大小，需同时设置 jpeg.size.fixed.padding，二者缺一不可。 指定输出体积大小，单位为 Byte。
 	JPEGSizeFixed string `json:"jpeg.size.fixed,omitempty"`
@@ -1467,7 +1512,9 @@ type CreateImageTemplateBodyOutputExtra struct {
 	// 是否压缩颜色空间，取值如下所示：
 	// * true：是
 	// * false：否
-	PNGUseQuant string `json:"png.use_quant,omitempty"`
+	PNGUseQuant              string `json:"png.use_quant,omitempty"`
+	WebpQualityAdaptPixlimit string `json:"webp.quality.adapt.pixlimit,omitempty"`
+	WebpQualityAdaptVersion  string `json:"webp.quality.adapt.version,omitempty"`
 }
 
 // CreateImageTemplateBodySnapshot - 视频截帧配置
@@ -8579,7 +8626,13 @@ type DescribeImageXUploadCountByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -8687,7 +8740,13 @@ type DescribeImageXUploadDurationBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -8792,7 +8851,13 @@ type DescribeImageXUploadErrorCodeAllBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 是否升序排序。不传则默认降序排序。
@@ -8915,7 +8980,13 @@ type DescribeImageXUploadErrorCodeByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -9023,7 +9094,13 @@ type DescribeImageXUploadFileSizeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -9134,7 +9211,13 @@ type DescribeImageXUploadSegmentSpeedByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -9239,7 +9322,13 @@ type DescribeImageXUploadSpeedBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -9347,7 +9436,13 @@ type DescribeImageXUploadSuccessRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
-	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web。
+	// * Imp：小程序。
 	OS string `json:"OS,omitempty"`
 
 	// 需要匹配的省份名称，不传则匹配所有省份
@@ -11911,18 +12006,23 @@ type GetImageDetectResultResResultFacesItem struct {
 
 type GetImageDuplicateDetectionBody struct {
 
-	// REQUIRED; 需要去重的图片 URL，以英文逗号分割，输入图片格式 PNG，JPEG，支持格式混合输入。
+	// REQUIRED; 需要去重的图片 URL，多个地址以英文逗号分割。图片格式仅支持 JPEG（.jpeg 或 .jpg）和 PNG，支持格式混合输入。
 	Urls []string `json:"Urls"`
 
-	// 是否使用异步，支持取值如下所示：
+	// 是否使用异步，取值如下所示：
 	// * true：使用异步去重
-	// * false：不使用异步去重
+	// * false：（默认）不使用异步去重
 	Async bool `json:"Async,omitempty"`
 
-	// 当Async取值为true即启用异步时需要添加回调地址，地址使用 POST 请求方式。
+	// 当Async取值为true即启用异步时需要添加回调地址，地址使用 POST 请求方式。回调内容详见回调参数。
 	Callback string `json:"Callback,omitempty"`
 
-	// 当Async取值为true即启用异步时，该配置生效。 相似度阈值，系统将对原图中满足该阈值的图片进行分组。取值范围为 [0,1]，默认值为 0.84。最多支持两位小数。
+	// 图像特征提取类型，取值如下所示：
+	// * hash：（默认）基于图像的像素值、颜色分布、纹理等特征生成哈希码，并通过哈希码进行比较来判定图片的相似度。该方式处理速度快，但对图片的旋转和颜色的敏感度较高，适用于大规模且纹理相对简单的图片的快速去重。
+	// * cnn：通过深度学习技术来提取图像的高级语义特征，如对象、场景和纹理等，这些特征用于比较不同图像之间的相似性。该提取方式鲁棒性较好，对旋转、缩放和变形的敏感度较低，适用于纹理复杂、细节丰富的图片去重。
+	ExtractorType string `json:"ExtractorType,omitempty"`
+
+	// 相似度阈值。上传图片数量超过 2 张并执行去重分组时，系统将对原图中满足该阈值的图片进行分组。取值范围为 [0,1]，默认值为 0.84。最多支持两位小数。
 	Similarity float64 `json:"Similarity,omitempty"`
 }
 
@@ -11964,7 +12064,7 @@ type GetImageDuplicateDetectionResResponseMetadata struct {
 // GetImageDuplicateDetectionResResult - 视请求的接口而定
 type GetImageDuplicateDetectionResResult struct {
 
-	// 回调地址。
+	// 回调地址，与请求参数中的Callback相同。具体异步去重信息请参考GetDedupTaskStatus [https://www.volcengine.com/docs/508/138909]接口。具体回调内容请参考回调参数 [https://www.volcengine.com/docs/508/138658#%E5%9B%9E%E8%B0%83%E5%8F%82%E6%95%B0]。
 	Callback string `json:"Callback,omitempty"`
 
 	// 分组结果，若输入 2 个以上原图时，将按组返回内容相同的图片，每组的图片个数非固定值。
@@ -13185,20 +13285,11 @@ type GetImageServiceSubscriptionResResult struct {
 	// REQUIRED; 实例类型：1：正式，2：试用
 	InstanceType int `json:"InstanceType"`
 
-	// REQUIRED; 实例对应的价格版本
-	PriceVersion string `json:"PriceVersion"`
-
 	// REQUIRED; 购买的商品
 	Product string `json:"Product"`
 
-	// REQUIRED; 计费周期：3 按小时 4 按日 5 按月
-	SettlementPeriod float64 `json:"SettlementPeriod"`
-
 	// REQUIRED; 实例状态：0 创建中；1 运行中；2 创建失败；3 已退订；4 到期关停；5 到期回收
 	Status int `json:"Status"`
-
-	// 实例事件时间。如更配中实例即为更配生效时间
-	EventTime string `json:"EventTime,omitempty"`
 }
 
 type GetImageSmartCropResultBody struct {
@@ -14165,10 +14256,13 @@ type GetImageXQueryDimsQuery struct {
 	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
-	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
-	// * iOS
-	// * Android
-	// * WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web，仅当Source为upload或uploadv2时可传。
+	// * Imp：小程序，仅当Source为upload或uploadv2时可传。
 	OS string `json:"OS,omitempty" query:"OS"`
 }
 
@@ -14211,18 +14305,19 @@ type GetImageXQueryRegionsQuery struct {
 	// * upload：上传 1.0 数据。
 	// * cdn：下行网络数据。
 	// * client：客户端数据。
-	// * sensible：感知数据。
 	// * uploadv2：上传 2.0 数据。
-	// * exceed：大图监控数据。
 	Source string `json:"Source" query:"Source"`
 
 	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的应用 ID。 :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
-	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
-	// * iOS
-	// * Android
-	// * WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web，仅当Source为upload或uploadv2时可传。
+	// * Imp：小程序，仅当Source为upload或uploadv2时可传。
 	OS string `json:"OS,omitempty" query:"OS"`
 }
 
@@ -14283,10 +14378,13 @@ type GetImageXQueryValsQuery struct {
 	// 需要过滤的关键词（包含），不传则不过滤关键词。
 	Keyword string `json:"Keyword,omitempty" query:"Keyword"`
 
-	// 需要匹配的系统类型，不传则匹配非 WEB 端的所有系统。取值如下所示：
-	// * iOS
-	// * Android
-	// * WEB
+	// 需要匹配的系统类型。取值如下所示：
+	// * 不传或传空字符串：Android+iOS。
+	// * iOS：iOS。
+	// * Android：Android。
+	// * WEB：web+小程序。
+	// * Web：web，仅当Source为upload或uploadv2时可传。
+	// * Imp：小程序，仅当Source为upload或uploadv2时可传。
 	OS string `json:"OS,omitempty" query:"OS"`
 }
 
@@ -15439,7 +15537,7 @@ type UpdateImageAuditTaskBody struct {
 	// 仅当Type取值Upload时，配置生效。 审核范围，取值如下所示：
 	// * 0：（默认）不限范围
 	// * 1：指定范围
-	EnableAuditRange string `json:"EnableAuditRange,omitempty"`
+	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
 
 	// 是否开启回调，取值如下所示：
 	// * true：开启
