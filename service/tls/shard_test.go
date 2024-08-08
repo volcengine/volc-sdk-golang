@@ -20,12 +20,12 @@ type SDKShardTestSuite struct {
 func (suite *SDKShardTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
 	suite.project = projectId
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 4, 1, suite.cli)
 	suite.NoError(err)
 	suite.topic = topicId
