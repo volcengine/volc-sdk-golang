@@ -47,6 +47,7 @@ func Test_ApplyUploadInfo(t *testing.T) {
 		FileExtension:     "your FileExtension",
 		ClientNetWorkMode: "your ClientNetWorkMode",
 		ClientIDCMode:     "your ClientIDCMode",
+		NeedFallback:      false,
 	}
 
 	resp, status, err := instance.ApplyUploadInfo(query)

@@ -29,9 +29,10 @@ func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 	var logs = []*pb.Log{batchLog.Log}
 
 	logGroup := &pb.LogGroup{
-		Logs:     logs,
-		Source:   batchLog.Key.Source,
-		FileName: batchLog.Key.FileName,
+		Logs:        logs,
+		Source:      batchLog.Key.Source,
+		FileName:    batchLog.Key.FileName,
+		ContextFlow: batchLog.Key.ContextFlow,
 	}
 
 	currentTime := time.Now()

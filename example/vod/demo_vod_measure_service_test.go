@@ -354,3 +354,47 @@ func Test_DescribeVodMostPlayedStatisData(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_DescribeVodRealtimeMediaData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodRealtimeMediaDataRequest{
+		SpaceList:       "your SpaceList",
+		StartTime:       "your StartTime",
+		EndTime:         "your EndTime",
+		ProcessType:     "your ProcessType",
+		Aggregation:     0,
+		DetailFieldList: "your DetailFieldList",
+	}
+
+	resp, status, err := instance.DescribeVodRealtimeMediaData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeVodRealtimeMediaDetailData(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.DescribeVodRealtimeMediaDetailDataRequest{
+		Region:    "your Region",
+		Space:     "your Space",
+		StartTime: "your StartTime",
+		EndTime:   "your EndTime",
+		PageSize:  0,
+		PageNum:   0,
+	}
+
+	resp, status, err := instance.DescribeVodRealtimeMediaDetailData(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

@@ -395,6 +395,7 @@ type ElementVerifyDataDetail struct {
 	EnterpriseName string `json:"EnterpriseName,omitempty"`
 	IdCardNo       string `json:"IdCardNo,omitempty"`
 	IdCardName     string `json:"IdCardName,omitempty"`
+	Reason         int64  `json:"Reason,omitempty"`
 }
 
 type MobileStatusRequest struct {
