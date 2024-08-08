@@ -10,8 +10,10 @@ message LogContent
 message Log
 {
   int64 Time = 1;// UNIX Time Format
-
   repeated LogContent Contents = 2;
+  oneof OptionalTimeNs{
+    fixed32 TimeNs = 3;
+  }
 
 }
 message LogTag
