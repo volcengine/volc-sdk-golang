@@ -27,15 +27,15 @@ type SDKRuleTestSuite struct {
 func (suite *SDKRuleTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-topic-"+uuid.New().String(), "test",
+	projectID, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
 		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
 	suite.NoError(err)
-	suite.project = projectId
+	suite.project = projectID
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-index-"+uuid.New().String(),
+	topicID, err := CreateTopic(projectID, "golang-sdk-create-topic-"+uuid.New().String(),
 		"test", 1, 1, suite.cli)
 	suite.NoError(err)
-	suite.topic = topicId
+	suite.topic = topicID
 
 	keyValueList := make([]KeyValueInfo, 0)
 	keyValueList = append(keyValueList, KeyValueInfo{
@@ -58,10 +58,12 @@ func (suite *SDKRuleTestSuite) SetupTest() {
 			SQLFlag:        true,
 		},
 	})
-	suite.NoError(CreateIndex(topicId, nil, &keyValueList, suite.cli))
+	suite.NoError(CreateIndex(topicID, nil, &keyValueList, suite.cli))
 
 	suite.jsonFormatRulesMap = getJsonFormatRulesMap()
-	suite.createRuleRequestsMap = getCreateRuleRequestsMap(suite.jsonFormatRulesMap, suite.topic)
+	suite.createRuleRequestsMap, err = getCreateRuleRequestsMap(suite.jsonFormatRulesMap, suite.topic)
+	suite.NoError(err)
+
 	for key := range suite.jsonFormatRulesMap {
 		suite.ruleTypeList = append(suite.ruleTypeList, key)
 	}
@@ -100,6 +102,340 @@ func TestSDKRuleTestSuite(t *testing.T) {
 
 func getJsonFormatRulesMap() map[string]string {
 	jsonFormatRules := make(map[string]string)
+
+	jsonFormatRules["单行全文模式"] = `{
+	    "TopicId": "706f****-****-****-****-****46aa1f07",
+	    "RuleName": "testname",
+	    "Paths": [
+	        "/data/nginx/log/*/*/*.log"
+	    ],
+	    "ExcludePaths": [
+	        {
+	            "Type": "File",
+	            "Value": "/data/nginx/log/*/*/exclude.log"
+	        },
+	        {
+	            "Type": "Path",
+	            "Value": "/data/nginx/log/*/exclude/"
+	        }
+	    ],
+	    "LogType": "minimalist_log",
+	    "ExtractRule": {
+	        "FilterKeyRegex": [
+	            {
+	                "Key": "__content__",
+	                "Regex": ".*ERROR.*"
+	            }
+	        ]
+	    },
+	    "LogSample": "2018-05-22 15:35:53.850 INFO XXXX",
+	    "UserDefineRule": {
+	        "ParsePathRule": {
+	            "PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+	            "Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+	            "Keys": [
+	                "instance-id",
+	                "pod-name"
+	            ]
+	        },
+	        "ShardHashKey": {
+	            "HashKey": "3C"
+	        },
+	        "EnableRawLog": true,
+	        "RawLogKey": "raw",
+	        "Fields": {
+	            "ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+	        },
+	        "Advanced": {
+	            "CloseInactive": 10
+	        }
+	    }
+	}`
+
+	jsonFormatRules["多行全文模式"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "multiline_log",
+		"ExtractRule": {
+			"BeginRegex": "\\[([^]]+)].*",
+			"FilterKeyRegex": [
+				{
+					"Key": "__content__",
+					"Regex": ".*ERROR.*"
+				}
+			]
+		},
+		"LogSample": "[2018-10-01T10:30:01,000] [INFO] java.lang.Exception: exception happened\n    at TestPrintStackTrace.f(TestPrintStackTrace.java:3)\n    at TestPrintStackTrace.g(TestPrintStackTrace.java:7)\n    at TestPrintStackTrace.main(TestPrintStackTrace.java:16)",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
+
+	jsonFormatRules["分隔符模式"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "delimiter_log",
+		"ExtractRule": {
+			"Delimiter": "&&",
+			"Keys": [
+				"time",
+				"ip",
+				"status",
+				"",
+				"user-agent"
+			],
+			"TimeKey": "time",
+			"TimeFormat": "%d/%b/%Y %H:%M:%S",
+			"FilterKeyRegex": [
+				{
+					"Key": "status",
+					"Regex": "200"
+				}
+			],
+			"UnMatchUpLoadSwitch": true,
+			"UnMatchLogKey": "LogParseFailed"
+		},
+		"LogSample": "05/May/2016 13:30:28&&192.168.1.1&&200&&18204&&sdk-go",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
+
+	jsonFormatRules["JSON模式"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "json_log",
+		"ExtractRule": {
+			"TimeKey": "time",
+			"TimeFormat": "%d/%b/%Y %H:%M:%S",
+			"FilterKeyRegex": [
+				{
+					"Key": "status",
+					"Regex": "200"
+				}
+			],
+			"UnMatchUpLoadSwitch": true,
+			"UnMatchLogKey": "LogParseFailed"
+		},
+		"LogSample": "05/May/2016 13:30:28&&192.168.1.1&&200&&18204&&sdk-go",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
+
+	jsonFormatRules["单行完整正则模式"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "fullregex_log",
+		"ExtractRule": {
+			"LogRegex": "([\\s\\S]+),\\s(\\S+),\\s(\\d+),\\s(\\d+),\\s(\\S+).*",
+			"Keys": [
+				"time",
+				"ip",
+				"status",
+				"size",
+				"user-agent"
+			],
+			"TimeKey": "time",
+			"TimeFormat": "%d/%b/%Y %H:%M:%S",
+			"FilterKeyRegex": [
+				{
+					"Key": "status",
+					"Regex": "200"
+				}
+			],
+			"UnMatchUpLoadSwitch": true,
+			"UnMatchLogKey": "LogParseFailed"
+		},
+		"LogSample": "05/May/2016 13:30:28, 192.168.1.1, 200, 18204, sdk-go",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
+
+	jsonFormatRules["多行完整正则模式"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "fullregex_log",
+		"ExtractRule": {
+			"LogRegex": "\\[([^]]+)]\\s\\[(\\w+)]\\s([\\S\\s]+).*",
+			"BeginRegex": "\\[([^]]+)].*",
+			"Keys": [
+				"time",
+				"level",
+				"message"
+			],
+			"TimeKey": "time",
+			"TimeFormat": "%Y-%b-dT%H:%M:%S,%f",
+			"FilterKeyRegex": [
+				{
+					"Key": "level",
+					"Regex": ".*ERROR.*"
+				}
+			],
+			"UnMatchUpLoadSwitch": true,
+			"UnMatchLogKey": "LogParseFailed"
+		},
+		"LogSample": "[2018-10-01T10:30:01,000] [INFO] java.lang.Exception: exception happened\n    at TestPrintStackTrace.f(TestPrintStackTrace.java:3)\n    at TestPrintStackTrace.g(TestPrintStackTrace.java:7)\n    at TestPrintStackTrace.main(TestPrintStackTrace.java:16)",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
 
 	jsonFormatRules["Nginx模式"] = `{
     	"TopicId": "706f****-****-****-****-****46aa1f07",
@@ -167,6 +503,225 @@ func getJsonFormatRulesMap() map[string]string {
     	        "CloseInactive": 10
     	    }
     	}
+	}`
+
+	jsonFormatRules["采集物理机日志"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "minimalist_log",
+		"ExtractRule": {
+			"FilterKeyRegex": [
+				{
+					"Key": "__content__",
+					"Regex": ".*ERROR.*"
+				}
+			]
+		},
+		"LogSample": "2018-05-22 15:35:53.850 INFO XXXX",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		}
+	}`
+
+	jsonFormatRules["标准容器输出"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"LogType": "minimalist_log",
+		"ExtractRule": {
+			"FilterKeyRegex": [
+				{
+					"Key": "__content__",
+					"Regex": ".*ERROR.*"
+				}
+			]
+		},
+		"LogSample": "2018-05-22 15:35:53.850 INFO XXXX",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		},
+		"InputType": 1,
+		"ContainerRule": {
+			"Stream": "all",
+			"ContainerNameRegex": ".*test.*",
+			"IncludeContainerLabelRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"ExcludeContainerLabelRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"IncludeContainerEnvRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"ExcludeContainerEnvRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"EnvTag": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"KubernetesRule": {
+				"NamespaceNameRegex": ".*test.*",
+				"WorkloadType": "Deployment",
+				"WorkloadNameRegex": ".*test.*",
+				"IncludePodLabelRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"ExcludePodLabelRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"PodNameRegex": ".*test.*",
+				"LabelTag": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				}
+			}
+		}
+	}`
+
+	jsonFormatRules["容器文本日志"] = `{
+		"TopicId": "706f****-****-****-****-****46aa1f07",
+		"RuleName": "testname",
+		"Paths": [
+			"/data/nginx/log/*/*/*.log"
+		],
+		"ExcludePaths": [
+			{
+				"Type": "File",
+				"Value": "/data/nginx/log/*/*/exclude.log"
+			},
+			{
+				"Type": "Path",
+				"Value": "/data/nginx/log/*/exclude/"
+			}
+		],
+		"LogType": "minimalist_log",
+		"ExtractRule": {
+			"FilterKeyRegex": [
+				{
+					"Key": "__content__",
+					"Regex": ".*ERROR.*"
+				}
+			]
+		},
+		"LogSample": "2018-05-22 15:35:53.850 INFO XXXX",
+		"UserDefineRule": {
+			"ParsePathRule": {
+				"PathSample": "/data/nginx/log/dabaad5f-7a10/tls/app.log",
+				"Regex": "\\/data\\/nginx\\/log\\/(\\w+)-(\\w+)\\/tls\\/app\\.log",
+				"Keys": [
+					"instance-id",
+					"pod-name"
+				]
+			},
+			"ShardHashKey": {
+				"HashKey": "3C"
+			},
+			"EnableRawLog": true,
+			"RawLogKey": "raw",
+			"Fields": {
+				"ClusterID": "dabaad5f-7a10-4771-b3ea-d821f73e****"
+			},
+			"Advanced": {
+				"CloseInactive": 10
+			}
+		},
+		"InputType": 2,
+		"ContainerRule": {
+			"ContainerNameRegex": ".*test.*",
+			"IncludeContainerLabelRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"ExcludeContainerLabelRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"IncludeContainerEnvRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"ExcludeContainerEnvRegex": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"EnvTag": {
+				"Key1": "Value1",
+				"Key2": "Value2"
+			},
+			"KubernetesRule": {
+				"NamespaceNameRegex": ".*test.*",
+				"WorkloadType": "Deployment",
+				"WorkloadNameRegex": ".*test.*",
+				"IncludePodLabelRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"ExcludePodLabelRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"PodNameRegex": ".*test.*",
+				"LabelTag": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				}
+			}
+		}
 	}`
 
 	jsonFormatRules["启用插件采集"] = `{
@@ -240,22 +795,35 @@ func getJsonFormatRulesMap() map[string]string {
 	return jsonFormatRules
 }
 
-func getCreateRuleRequestsMap(jsonFormatRulesMap map[string]string, topicID string) map[string]*CreateRuleRequest {
+func getCreateRuleRequestsMap(jsonFormatRulesMap map[string]string, topicID string) (map[string]*CreateRuleRequest, error) {
 	createRuleRequestsMap := make(map[string]*CreateRuleRequest)
 
 	for key, value := range jsonFormatRulesMap {
 		req := &CreateRuleRequest{}
-		_ = json.Unmarshal([]byte(value), req)
+		if err := json.Unmarshal([]byte(value), req); err != nil {
+			return nil, err
+		}
 		req.TopicID = topicID
 		req.RuleName = uuid.New().String()
 		createRuleRequestsMap[key] = req
 	}
 
-	return createRuleRequestsMap
+	return createRuleRequestsMap, nil
 }
 
-func createRules(cli Client, createRuleRequestsMap map[string]*CreateRuleRequest) (map[string]string, error) {
+func createRules(cli Client, createRuleRequestsMap map[string]*CreateRuleRequest, specificRule string) (map[string]string, error) {
 	ruleMap := make(map[string]string)
+
+	if len(specificRule) > 0 {
+		resp, err := cli.CreateRule(createRuleRequestsMap[specificRule])
+		if err != nil {
+			return ruleMap, err
+		}
+		ruleMap[specificRule] = resp.RuleID
+
+		return ruleMap, nil
+	}
+
 	for key, req := range createRuleRequestsMap {
 		resp, err := cli.CreateRule(req)
 		if err != nil {
@@ -310,13 +878,14 @@ func (suite *SDKRuleTestSuite) TestDeleteRuleAbnormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestModifyRuleNormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
 	}
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	_, err = suite.cli.ModifyRule(&ModifyRuleRequest{
 		RuleID:   ruleID,
 		RuleName: StrPtr("modified-rule-name"),
@@ -327,13 +896,14 @@ func (suite *SDKRuleTestSuite) TestModifyRuleNormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestModifyRuleAbnormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
 	}
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	paths := make([]string, 20)
 	for i := 0; i < 20; i++ {
 		paths[i] = "/data/log" + strconv.Itoa(i+1) + "/*/*/*.log"
@@ -351,7 +921,7 @@ func (suite *SDKRuleTestSuite) TestModifyRuleAbnormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestDescribeRuleNormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, "")
 	suite.NoError(err)
 	for key, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
@@ -377,7 +947,7 @@ func (suite *SDKRuleTestSuite) TestDescribeRuleAbnormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestDescribeRulesNormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, "")
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
@@ -402,7 +972,8 @@ func (suite *SDKRuleTestSuite) TestDescribeRulesAbnormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestApplyRuleToHostGroupsNormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
@@ -415,7 +986,7 @@ func (suite *SDKRuleTestSuite) TestApplyRuleToHostGroupsNormally() {
 	})
 	suite.NoError(err)
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	hostGroupID := createHostGroupResp.HostGroupID
 	_, err = suite.cli.ApplyRuleToHostGroups(&ApplyRuleToHostGroupsRequest{
 		RuleID:       ruleID,
@@ -428,13 +999,14 @@ func (suite *SDKRuleTestSuite) TestApplyRuleToHostGroupsNormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestApplyRuleToHostGroupsAbnormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
 	}
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	hostGroupID := uuid.New().String()
 	_, err = suite.cli.ApplyRuleToHostGroups(&ApplyRuleToHostGroupsRequest{
 		RuleID:       ruleID,
@@ -449,7 +1021,8 @@ func (suite *SDKRuleTestSuite) TestApplyRuleToHostGroupsAbnormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestDeleteRuleFromHostGroupsNormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
@@ -462,7 +1035,7 @@ func (suite *SDKRuleTestSuite) TestDeleteRuleFromHostGroupsNormally() {
 	})
 	suite.NoError(err)
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	hostGroupID := createHostGroupResp.HostGroupID
 	_, err = suite.cli.ApplyRuleToHostGroups(&ApplyRuleToHostGroupsRequest{
 		RuleID:       ruleID,
@@ -481,7 +1054,8 @@ func (suite *SDKRuleTestSuite) TestDeleteRuleFromHostGroupsNormally() {
 }
 
 func (suite *SDKRuleTestSuite) TestDeleteRuleFromHostGroupsAbnormally() {
-	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap)
+	specificRule := suite.ruleTypeList[0]
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
 	suite.NoError(err)
 	for _, ruleID := range ruleMap {
 		suite.ruleList = append(suite.ruleList, ruleID)
@@ -494,7 +1068,7 @@ func (suite *SDKRuleTestSuite) TestDeleteRuleFromHostGroupsAbnormally() {
 	})
 	suite.NoError(err)
 
-	ruleID := ruleMap[suite.ruleTypeList[0]]
+	ruleID := ruleMap[specificRule]
 	hostGroupID := createHostGroupResp.HostGroupID
 
 	_, rErr := suite.cli.DeleteRuleFromHostGroups(&DeleteRuleFromHostGroupsRequest{
