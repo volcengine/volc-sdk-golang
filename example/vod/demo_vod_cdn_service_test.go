@@ -539,3 +539,42 @@ func Test_UpdateDomainUrlAuthConfig(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_UpdateDomainConfig(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodUpdateDomainConfigRequest{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+		Config:     nil,
+	}
+
+	resp, status, err := instance.UpdateDomainConfig(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_DescribeDomainConfig(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodDescribeDomainConfigRequest{
+		SpaceName:  "your SpaceName",
+		DomainType: "your DomainType",
+		Domain:     "your Domain",
+	}
+
+	resp, status, err := instance.DescribeDomainConfig(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
