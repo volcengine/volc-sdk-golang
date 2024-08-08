@@ -626,3 +626,58 @@ func (s *CDN) DescribeStatisticalRanking(dto *DescribeStatisticalRankingRequest)
 	}
 	return
 }
+
+func (s *CDN) BatchUpdateCdnConfig(dto *BatchUpdateCdnConfigRequest) (responseBody *BatchUpdateCdnConfigResponse, err error) {
+	responseBody = new(BatchUpdateCdnConfigResponse)
+	if err = s.post("BatchUpdateCdnConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) AddCertificate(dto *AddCertificateRequest) (responseBody *AddCertificateResponse, err error) {
+	responseBody = new(AddCertificateResponse)
+	if err = s.post("AddCertificate", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DeleteUsageReport(dto *DeleteUsageReportRequest) (responseBody *DeleteUsageReportResponse, err error) {
+	responseBody = new(DeleteUsageReportResponse)
+	if err = s.post("DeleteUsageReport", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) CreateUsageReport(dto *CreateUsageReportRequest) (responseBody *CreateUsageReportResponse, err error) {
+	responseBody = new(CreateUsageReportResponse)
+	if err = s.post("CreateUsageReport", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) ListUsageReports(dto *ListUsageReportsRequest) (responseBody *ListUsageReportsResponse, err error) {
+	responseBody = new(ListUsageReportsResponse)
+	if err = s.post("ListUsageReports", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
