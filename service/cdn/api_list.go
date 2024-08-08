@@ -463,4 +463,44 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"BatchUpdateCdnConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"BatchUpdateCdnConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"AddCertificate": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"AddCertificate"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DeleteUsageReport": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DeleteUsageReport"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"CreateUsageReport": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"CreateUsageReport"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"ListUsageReports": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"ListUsageReports"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 }
