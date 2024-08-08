@@ -892,6 +892,22 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"DescribeDomainConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDomainConfig"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateDomainConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDomainConfig"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************
@@ -1007,6 +1023,22 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeVodMostPlayedStatisData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeVodRealtimeMediaData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodRealtimeMediaData"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeVodRealtimeMediaDetailData": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodRealtimeMediaDetailData"},
 				"Version": []string{"2023-07-01"},
 			},
 		},
