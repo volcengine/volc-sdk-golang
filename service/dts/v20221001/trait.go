@@ -131,6 +131,46 @@ func unmarshalResultInto(data []byte, result interface{}) error {
 	return nil
 }
 
+func (c *Dts) CreateDataValidationTask(ctx context.Context, arg *CreateDataValidationTaskBody) (*CreateDataValidationTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateDataValidationTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateDataValidationTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) CreateSubscriptionGroup(ctx context.Context, arg *CreateSubscriptionGroupBody) (*CreateSubscriptionGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateSubscriptionGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateSubscriptionGroupRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Dts) CreateTransmissionTask(ctx context.Context, arg *CreateTransmissionTaskBody) (*CreateTransmissionTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -143,6 +183,46 @@ func (c *Dts) CreateTransmissionTask(ctx context.Context, arg *CreateTransmissio
 	}
 
 	result := new(CreateTransmissionTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DeleteDataValidationTask(ctx context.Context, arg *DeleteDataValidationTaskBody) (*DeleteDataValidationTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteDataValidationTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteDataValidationTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DeleteSubscriptionGroup(ctx context.Context, arg *DeleteSubscriptionGroupBody) (*DeleteSubscriptionGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteSubscriptionGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteSubscriptionGroupRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -183,6 +263,106 @@ func (c *Dts) DeleteTransmissionTasks(ctx context.Context, arg *DeleteTransmissi
 	}
 
 	result := new(DeleteTransmissionTasksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DescribeDataValidationResult(ctx context.Context, arg *DescribeDataValidationResultBody) (*DescribeDataValidationResultRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeDataValidationResult", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeDataValidationResultRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DescribeDataValidationTasks(ctx context.Context, arg *DescribeDataValidationTasksBody) (*DescribeDataValidationTasksRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeDataValidationTasks", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeDataValidationTasksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DescribeSubscriptionGroup(ctx context.Context, arg *DescribeSubscriptionGroupBody) (*DescribeSubscriptionGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeSubscriptionGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeSubscriptionGroupRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DescribeSubscriptionGroupProgress(ctx context.Context, arg *DescribeSubscriptionGroupProgressBody) (*DescribeSubscriptionGroupProgressRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeSubscriptionGroupProgress", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeSubscriptionGroupProgressRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) DescribeSubscriptionGroups(ctx context.Context, arg *DescribeSubscriptionGroupsBody) (*DescribeSubscriptionGroupsRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeSubscriptionGroups", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeSubscriptionGroupsRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -271,6 +451,26 @@ func (c *Dts) ModifyTransmissionTask(ctx context.Context, arg *ModifyTransmissio
 	return result, nil
 }
 
+func (c *Dts) ResumeDataValidationTask(ctx context.Context, arg *ResumeDataValidationTaskBody) (*ResumeDataValidationTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ResumeDataValidationTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ResumeDataValidationTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Dts) ResumeTransmissionTask(ctx context.Context, arg *ResumeTransmissionTaskBody) (*ResumeTransmissionTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -351,6 +551,26 @@ func (c *Dts) RetryTransmissionTasks(ctx context.Context, arg *RetryTransmission
 	return result, nil
 }
 
+func (c *Dts) SetBiSyncDDLSource(ctx context.Context, arg *SetBiSyncDDLSourceBody) (*SetBiSyncDDLSourceRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "SetBiSyncDDLSource", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(SetBiSyncDDLSourceRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Dts) StartTransmissionTask(ctx context.Context, arg *StartTransmissionTaskBody) (*StartTransmissionTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -383,6 +603,26 @@ func (c *Dts) StartTransmissionTasks(ctx context.Context, arg *StartTransmission
 	}
 
 	result := new(StartTransmissionTasksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) StopDataValidationTask(ctx context.Context, arg *StopDataValidationTaskBody) (*StopDataValidationTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "StopDataValidationTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(StopDataValidationTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -431,6 +671,26 @@ func (c *Dts) StopTransmissionTasks(ctx context.Context, arg *StopTransmissionTa
 	return result, nil
 }
 
+func (c *Dts) SuspendDataValidationTask(ctx context.Context, arg *SuspendDataValidationTaskBody) (*SuspendDataValidationTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "SuspendDataValidationTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(SuspendDataValidationTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Dts) SuspendTransmissionTask(ctx context.Context, arg *SuspendTransmissionTaskBody) (*SuspendTransmissionTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -463,6 +723,26 @@ func (c *Dts) SuspendTransmissionTasks(ctx context.Context, arg *SuspendTransmis
 	}
 
 	result := new(SuspendTransmissionTasksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Dts) UpdateSubscriptionGroup(ctx context.Context, arg *UpdateSubscriptionGroupBody) (*UpdateSubscriptionGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateSubscriptionGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateSubscriptionGroupRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
