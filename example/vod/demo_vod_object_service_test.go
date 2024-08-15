@@ -3,3 +3,51 @@
 // DO NOT EDIT!
 
 package vod
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/volcengine/volc-sdk-golang/base"
+	"github.com/volcengine/volc-sdk-golang/service/vod"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
+)
+
+func Test_SubmitBlockObjectTasks(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodSubmitBlockObjectTasksRequest{
+		SpaceName:           "your SpaceName",
+		Operation:           "your Operation",
+		FileNamesUrlEncoded: "your FileNamesUrlEncoded",
+		RefreshCdn:          "your RefreshCdn",
+	}
+
+	resp, status, err := instance.SubmitBlockObjectTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
+func Test_ListBlockObjectTasks(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	query := &request.VodListBlockObjectTasksRequest{
+		SpaceName:           "your SpaceName",
+		FileNamesUrlEncoded: "your FileNamesUrlEncoded",
+		TaskIds:             "your TaskIds",
+	}
+
+	resp, status, err := instance.ListBlockObjectTasks(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}

@@ -41,6 +41,7 @@ var (
 	ServiceInfoMap = map[string]*base.ServiceInfo{
 		base.RegionCnNorth1: {
 			Timeout: 60 * time.Second,
+			Scheme:  "https",
 			Host:    "vod.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
@@ -108,6 +109,26 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetAllPlayInfo"},
 				"Version": []string{"2022-01-01"},
+			},
+		},
+		// **********************************************************************
+		// 通用文件操作
+		// **********************************************************************
+
+		"SubmitBlockObjectTasks": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitBlockObjectTasks"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"ListBlockObjectTasks": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListBlockObjectTasks"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 
