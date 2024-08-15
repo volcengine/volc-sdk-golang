@@ -40,7 +40,7 @@ type GetAsyncPreCheckResultResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -67,8 +67,11 @@ type GetAsyncPreCheckResultResResultPreChecksItem struct {
 	Desc *string `json:"Desc,omitempty"`
 
 	// 详情
-	Details *string                                            `json:"Details,omitempty"`
-	Level   *GetAsyncPreCheckResultResResultPreChecksItemLevel `json:"Level,omitempty"`
+	Details *string `json:"Details,omitempty"`
+
+	// id
+	Key   *string                                            `json:"Key,omitempty"`
+	Level *GetAsyncPreCheckResultResResultPreChecksItemLevel `json:"Level,omitempty"`
 
 	// 名称
 	Name *string `json:"Name,omitempty"`
@@ -134,7 +137,7 @@ type PreCheckAsyncResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
