@@ -3,9 +3,10 @@ package visual
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/service/sts"
 	"testing"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/service/sts"
 
 	"github.com/volcengine/volc-sdk-golang/service/visual/model"
 )
@@ -14,6 +15,27 @@ const (
 	testAk = "ak"
 	testSk = "sk"
 )
+
+func TestVisual_CommonJsonAPI(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用比例
+	reqBody := map[string]interface{}{
+		"req_key": "entity_seg",
+		//"binary_data_base64": []string{""},
+		"image_urls":    []string{"https://xxx"},
+		"return_format": 4,
+		"refine_mask":   1,
+		// "crop_mask":     1,
+		"max_entity": 20,
+	}
+
+	resp, status, err := DefaultInstance.VisualCommonJSONAPI(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
 
 func TestVisual_HairStyleV2(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)

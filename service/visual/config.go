@@ -16,12 +16,31 @@ const (
 
 var (
 	ServiceInfo = &base.ServiceInfo{
-		Timeout: 10 * time.Second,
+		Timeout: 30 * time.Second,
 		Host:    "visual.volcengineapi.com",
 		Header:  http.Header{},
 	}
 
 	ApiInfoList = map[string]*base.ApiInfo{
+		"CommonFormAPI": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CommonFormAPI"},
+				"Version": []string{ServiceVersion20200826},
+			},
+		},
+		"CommonJsonAPI": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"HighAesSmartDrawing"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 		"DistortionFree": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -923,6 +942,50 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"EntitySegment"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"Img2ImgAnimeAcceleratedMaintainIDForSmartDrawingAnime": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Img2ImgAnimeAcceleratedMaintainIDForSmartDrawingAnime"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"Img2ImgXLSft": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Img2ImgXLSft"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"Text2ImgXLSft": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"Text2ImgXLSft"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"SaliencySeg": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SaliencySeg"},
 				"Version": []string{"2022-08-31"},
 			},
 			Header: http.Header{
