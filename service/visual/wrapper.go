@@ -56,6 +56,32 @@ func (p *Visual) commonQueryHandler(api string, query url.Values, resp interface
 	return statusCode, nil
 }
 
+// VisualCommonFormAPI 通用请求form类型
+// form: 按照接口文档填写入参
+func (p *Visual) VisualCommonFormAPI(form url.Values) (*model.VisualPubResult, int, error) {
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonHandler("CommonFormAPI", form, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// VisualCommonJSONAPI 通用请求Json类型
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) VisualCommonJSONAPI(bodyMap interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("CommonJsonAPI", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) DistortionFree(form url.Values) (*model.DistortionFreeResult, int, error) {
 	resp := new(model.DistortionFreeResult)
 	statusCode, err := p.commonHandler("DistortionFree", form, resp)
@@ -1142,6 +1168,66 @@ func (p *Visual) EntitySegment(bodyMap map[string]interface{}) (*model.VisualPub
 	}
 	resp := new(model.VisualPubResult)
 	statusCode, err := p.commonJsonHandler("EntitySegment", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Img2ImgAnimeAcceleratedMaintainIDForSmartDrawingAnime 人像保持。接口文档：https://www.volcengine.com/docs/6793/1324393
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgAnimeAcceleratedMaintainIDForSmartDrawingAnime(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgAnimeAcceleratedMaintainIDForSmartDrawingAnime", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Img2ImgXLSft 通用XL pro-图生图。接口文档：https://www.volcengine.com/docs/6791/1330203
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Img2ImgXLSft(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Img2ImgXLSft", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// Text2ImgXLSft 通用XL pro-文生图。接口文档：https://www.volcengine.com/docs/6791/1330195
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) Text2ImgXLSft(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("Text2ImgXLSft", string(reqByte), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// SaliencySeg
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) SaliencySeg(bodyMap map[string]interface{}) (*model.VisualPubResult, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.VisualPubResult)
+	statusCode, err := p.commonJsonHandler("SaliencySeg", string(reqByte), resp)
 	if err != nil {
 		return nil, statusCode, err
 	}

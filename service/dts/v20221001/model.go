@@ -1,5 +1,7 @@
 package dts_v20221001
 
+type CreateDataValidationTaskBodyValidationType string
+
 type CreateTransmissionTaskBodyChargeConfigChargeType string
 
 type CreateTransmissionTaskBodyChargeConfigDestType string
@@ -26,6 +28,10 @@ type CreateTransmissionTaskBodyDestConfigExpressMongoSettingsDeployType string
 
 type CreateTransmissionTaskBodyDestConfigExpressMongoSettingsPullMethod string
 
+type CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsDeployType string
+
+type CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsPullMethod string
+
 type CreateTransmissionTaskBodyDestConfigPublicMongoSettingsDeployType string
 
 type CreateTransmissionTaskBodyDestConfigPublicMongoSettingsPullMethod string
@@ -39,6 +45,12 @@ type CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsIncrTransmis
 type CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectType string
 
 type CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem string
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem string
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType string
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem string
 
 type CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsIncrTransmissionSettingsStatementsItem string
 
@@ -55,6 +67,8 @@ type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissi
 type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectType string
 
 type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem string
+
+type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict string
 
 type CreateTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsIncrTransmissionSettingsStatementsItem string
 
@@ -154,6 +168,10 @@ type CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSe
 
 type CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSettingsProtocol string
 
+type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType string
+
+type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType string
+
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsIncrTransmissionSettingsStatementsItem string
 
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectType string
@@ -188,6 +206,10 @@ type CreateTransmissionTaskBodySrcConfigExpressMongoSettingsDeployType string
 
 type CreateTransmissionTaskBodySrcConfigExpressMongoSettingsPullMethod string
 
+type CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsDeployType string
+
+type CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsPullMethod string
+
 type CreateTransmissionTaskBodySrcConfigPublicMongoSettingsDeployType string
 
 type CreateTransmissionTaskBodySrcConfigPublicMongoSettingsPullMethod string
@@ -203,6 +225,10 @@ type CreateTransmissionTaskBodyTrafficSpec string
 type CreateTransmissionTaskResResultChargeDetailChargeStatus string
 
 type CreateTransmissionTaskResResultChargeDetailChargeType string
+
+type DescribeDataValidationTasksResResultValidationTasksItemStatus string
+
+type DescribeDataValidationTasksResResultValidationTasksItemValidationType string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoChargeConfigChargeType string
 
@@ -230,6 +256,10 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMongoSettings
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMongoSettingsPullMethod string
 
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsDeployType string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsPullMethod string
+
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMongoSettingsDeployType string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMongoSettingsPullMethod string
@@ -248,6 +278,12 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSS
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem string
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem string
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsIncrTransmissionSettingsStatementsItem string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectType string
@@ -263,6 +299,8 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectType string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsIncrTransmissionSettingsStatementsItem string
 
@@ -362,6 +400,10 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSet
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSettingsSubscriptionSettingsProtocol string
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType string
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsIncrTransmissionSettingsStatementsItem string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectType string
@@ -396,6 +438,10 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMongoSettingsD
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMongoSettingsPullMethod string
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsDeployType string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsPullMethod string
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMongoSettingsDeployType string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMongoSettingsPullMethod string
@@ -403,6 +449,10 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMongoSettingsPu
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMongoSettingsDeployType string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMongoSettingsPullMethod string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoStatementsItem string
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSupportedDataValidationTypesItem string
 
 type DescribeTransmissionTaskInfoResResultTaskInfoTaskStatus string
 
@@ -454,6 +504,8 @@ type DescribeTransmissionTasksResResultTasksItemProgressSummaryInfosItemStatus s
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectType string
 
+type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType string
+
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectType string
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectType string
@@ -477,6 +529,10 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2KafkaSettings
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2PGSettingsObjectMappingsItemObjectType string
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectType string
+
+type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType string
+
+type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType string
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectType string
 
@@ -504,6 +560,8 @@ type Enum1002 string
 
 type Enum1003 string
 
+type Enum1004 string
+
 type Enum1005 string
 
 type Enum1006 string
@@ -514,112 +572,245 @@ type Enum1008 string
 
 type Enum1009 string
 
+type Enum1010 string
 type Enum1011 string
-
-type Enum1012 string
-
-type Enum1013 string
-
-type Enum1014 string
 
 type Enum1015 string
 
+type Enum1016 string
+
+type Enum1017 string
+
+type Enum1018 string
+
+type Enum1019 string
+
+type Enum1020 string
+
+type Enum1021 string
+
+type Enum1022 string
+
+type Enum1025 string
+
+type Enum1029 string
+
 type Enum103 string
+
+type Enum1030 string
+
+type Enum1031 string
+
+type Enum1033 string
+
+type Enum1034 string
+
+type Enum1035 string
+
+type Enum1036 string
 
 type Enum1038 string
 
+type Enum1039 string
+
+type Enum1040 string
+
+type Enum1041 string
+
+type Enum1042 string
+
 type Enum1044 string
+
+type Enum1045 string
+
+type Enum1046 string
+
+type Enum1048 string
 
 type Enum1049 string
 
+type Enum1050 string
+
+type Enum1052 string
+
+type Enum1053 string
+
+type Enum1054 string
+
 type Enum1055 string
+
+type Enum1057 string
+
+type Enum1058 string
 
 type Enum1059 string
 
+type Enum1060 string
+type Enum1061 string
+
 type Enum1063 string
+
+type Enum1064 string
+
+type Enum1065 string
+
+type Enum1066 string
+
+type Enum1067 string
 
 type Enum1069 string
 
-type Enum1075 string
+type Enum1070 string
+
+type Enum1071 string
+
+type Enum1072 string
+
+type Enum1073 string
+
+type Enum1077 string
+type Enum1078 string
+
+type Enum1079 string
 
 type Enum1081 string
+type Enum1082 string
+
+type Enum1083 string
 
 type Enum1085 string
+
+type Enum1086 string
+
+type Enum1087 string
+
+type Enum1088 string
 
 type Enum1089 string
 
 type Enum109 string
 
+type Enum1091 string
+
+type Enum1092 string
+
+type Enum1093 string
+
+type Enum1094 string
+
 type Enum1095 string
+
+type Enum1097 string
+type Enum1098 string
+
+type Enum1099 string
+
+type Enum1100 string
 
 type Enum1101 string
 
+type Enum1103 string
+
+type Enum1104 string
+
+type Enum1105 string
+
+type Enum1106 string
+
 type Enum1107 string
+
+type Enum1109 string
+
+type Enum1110 string
+
+type Enum1111 string
+
+type Enum1112 string
 
 type Enum1113 string
 
+type Enum1115 string
+
+type Enum1116 string
+
+type Enum1117 string
+
+type Enum1118 string
+
 type Enum1119 string
 
-type Enum1167 string
+type Enum1120 string
 
-type Enum1173 string
+type Enum1147 string
 
-type Enum1178 string
+type Enum115 string
 
-type Enum1184 string
+type Enum1153 string
 
-type Enum1188 string
+type Enum1158 string
 
-type Enum1192 string
+type Enum1164 string
 
-type Enum1198 string
+type Enum1168 string
 
-type Enum1204 string
+type Enum1172 string
 
-type Enum1210 string
+type Enum1177 string
 
-type Enum1214 string
+type Enum1183 string
 
-type Enum1218 string
+type Enum1189 string
 
-type Enum122 string
+type Enum1197 string
 
-type Enum1224 string
+type Enum1201 string
 
-type Enum123 string
+type Enum1205 string
+type Enum121 string
 
-type Enum1230 string
+type Enum1211 string
 
-type Enum1236 string
+type Enum1217 string
 
-type Enum124 string
+type Enum1223 string
 
-type Enum1242 string
+type Enum1229 string
+type Enum1235 string
 
-type Enum1248 string
+type Enum1288 string
 
-type Enum125 string
+type Enum1294 string
 
-type Enum126 string
-type Enum127 string
-type Enum128 string
+type Enum1299 string
 
-type Enum129 string
+type Enum1305 string
 
-type Enum130 string
+type Enum1309 string
 
-type Enum131 string
+type Enum1313 string
+type Enum1318 string
 
-type Enum132 string
+type Enum1324 string
 
-type Enum133 string
+type Enum1330 string
+type Enum1338 string
 
 type Enum134 string
+type Enum1342 string
+
+type Enum1346 string
 
 type Enum135 string
 
-type Enum136 string
-type Enum137 string
+type Enum1352 string
+
+type Enum1358 string
+
+type Enum1364 string
+
+type Enum1370 string
+
+type Enum1376 string
 
 type Enum138 string
 
@@ -630,33 +821,43 @@ type Enum140 string
 type Enum141 string
 
 type Enum142 string
-
 type Enum143 string
 
 type Enum144 string
-
 type Enum145 string
-
 type Enum146 string
-
 type Enum147 string
-
 type Enum148 string
 
 type Enum149 string
+
 type Enum150 string
 
 type Enum151 string
-type Enum152 string
 
+type Enum152 string
 type Enum153 string
 
+type Enum154 string
+
+type Enum155 string
+
 type Enum156 string
+
+type Enum157 string
+
+type Enum158 string
+
+type Enum159 string
 
 type Enum160 string
 
 type Enum161 string
+
 type Enum162 string
+
+type Enum163 string
+
 type Enum164 string
 
 type Enum165 string
@@ -665,26 +866,20 @@ type Enum166 string
 
 type Enum167 string
 
+type Enum168 string
+
 type Enum169 string
 
 type Enum170 string
-
 type Enum171 string
 
 type Enum172 string
 
-type Enum173 string
-
 type Enum175 string
-
-type Enum176 string
-
-type Enum177 string
 
 type Enum179 string
 
 type Enum180 string
-
 type Enum181 string
 
 type Enum183 string
@@ -695,35 +890,38 @@ type Enum185 string
 
 type Enum186 string
 
-type Enum187 string
-
+type Enum188 string
 type Enum189 string
+
 type Enum190 string
+
 type Enum191 string
 
 type Enum192 string
-type Enum193 string
+
+type Enum194 string
 
 type Enum195 string
-type Enum196 string
 
-type Enum197 string
+type Enum196 string
 
 type Enum198 string
 
 type Enum199 string
 
-type Enum201 string
+type Enum200 string
 
 type Enum202 string
 
 type Enum203 string
 
+type Enum204 string
+
 type Enum205 string
 
-type Enum206 string
-
 type Enum207 string
+
+type Enum208 string
 
 type Enum209 string
 
@@ -731,9 +929,9 @@ type Enum210 string
 
 type Enum211 string
 
-type Enum212 string
-
 type Enum213 string
+
+type Enum214 string
 
 type Enum215 string
 
@@ -741,9 +939,9 @@ type Enum216 string
 
 type Enum217 string
 
-type Enum218 string
-
 type Enum219 string
+
+type Enum220 string
 
 type Enum221 string
 
@@ -751,40 +949,42 @@ type Enum222 string
 
 type Enum223 string
 
-type Enum224 string
-
-type Enum225 string
-
 type Enum227 string
 
 type Enum228 string
-
 type Enum229 string
-
-type Enum230 string
 
 type Enum231 string
 
+type Enum232 string
+
 type Enum233 string
 
-type Enum234 string
-
 type Enum235 string
-
 type Enum236 string
 
 type Enum237 string
 
+type Enum238 string
+
 type Enum239 string
 
-type Enum24 string
-
-type Enum240 string
-
 type Enum241 string
-
 type Enum242 string
 type Enum243 string
+
+type Enum244 string
+
+type Enum245 string
+
+type Enum247 string
+type Enum248 string
+
+type Enum249 string
+
+type Enum250 string
+
+type Enum251 string
 
 type Enum253 string
 
@@ -796,7 +996,7 @@ type Enum256 string
 
 type Enum257 string
 
-type Enum258 string
+type Enum259 string
 
 type Enum260 string
 
@@ -806,125 +1006,80 @@ type Enum262 string
 
 type Enum263 string
 
-type Enum264 string
-
 type Enum265 string
 
 type Enum266 string
 
+type Enum267 string
+
+type Enum268 string
+
 type Enum269 string
 
-type Enum28 string
+type Enum270 string
 
-type Enum307 string
+type Enum280 string
 
-type Enum313 string
+type Enum281 string
+type Enum282 string
 
-type Enum318 string
+type Enum283 string
 
-type Enum324 string
+type Enum284 string
+type Enum285 string
+type Enum287 string
 
-type Enum328 string
+type Enum288 string
+type Enum289 string
 
-type Enum332 string
+type Enum29 string
 
-type Enum338 string
+type Enum290 string
 
-type Enum34 string
-type Enum344 string
+type Enum291 string
+type Enum292 string
+
+type Enum293 string
+
+type Enum296 string
+
+type Enum33 string
+
+type Enum339 string
+
+type Enum345 string
+
 type Enum350 string
 
-type Enum354 string
+type Enum356 string
 
-type Enum358 string
+type Enum360 string
 
 type Enum364 string
 
-type Enum370 string
+type Enum369 string
 
-type Enum376 string
-type Enum382 string
-type Enum388 string
+type Enum375 string
+
+type Enum381 string
+
+type Enum389 string
 
 type Enum39 string
 
-type Enum392 string
-
 type Enum393 string
-
-type Enum394 string
-
-type Enum395 string
-
-type Enum396 string
 
 type Enum397 string
 
-type Enum398 string
-
-type Enum399 string
-
-type Enum400 string
-
-type Enum401 string
-
-type Enum402 string
-
 type Enum403 string
-
-type Enum404 string
-
-type Enum405 string
-
-type Enum406 string
-
-type Enum407 string
-
-type Enum408 string
 
 type Enum409 string
 
-type Enum410 string
-
-type Enum411 string
-
-type Enum412 string
-
-type Enum413 string
-
-type Enum414 string
-
 type Enum415 string
-
-type Enum416 string
-
-type Enum417 string
-
-type Enum418 string
-
-type Enum419 string
-type Enum420 string
 
 type Enum421 string
 
-type Enum422 string
-type Enum423 string
-
-type Enum424 string
-
-type Enum425 string
-
-type Enum426 string
-
 type Enum427 string
-
-type Enum428 string
-
-type Enum429 string
-
-type Enum430 string
-
-type Enum431 string
 
 type Enum432 string
 
@@ -942,6 +1097,8 @@ type Enum438 string
 
 type Enum439 string
 
+type Enum44 string
+
 type Enum440 string
 
 type Enum441 string
@@ -949,7 +1106,6 @@ type Enum441 string
 type Enum442 string
 
 type Enum443 string
-
 type Enum444 string
 
 type Enum445 string
@@ -962,8 +1118,6 @@ type Enum448 string
 
 type Enum449 string
 
-type Enum45 string
-
 type Enum450 string
 
 type Enum451 string
@@ -973,10 +1127,10 @@ type Enum452 string
 type Enum453 string
 
 type Enum454 string
-
 type Enum455 string
 
 type Enum456 string
+
 type Enum457 string
 
 type Enum458 string
@@ -986,7 +1140,6 @@ type Enum459 string
 type Enum460 string
 
 type Enum461 string
-
 type Enum462 string
 
 type Enum463 string
@@ -1004,6 +1157,7 @@ type Enum468 string
 type Enum469 string
 
 type Enum470 string
+
 type Enum471 string
 
 type Enum472 string
@@ -1021,7 +1175,6 @@ type Enum477 string
 type Enum478 string
 
 type Enum479 string
-
 type Enum480 string
 
 type Enum481 string
@@ -1042,8 +1195,6 @@ type Enum488 string
 
 type Enum489 string
 
-type Enum49 string
-
 type Enum490 string
 
 type Enum491 string
@@ -1051,7 +1202,6 @@ type Enum491 string
 type Enum492 string
 
 type Enum493 string
-
 type Enum494 string
 
 type Enum495 string
@@ -1063,7 +1213,7 @@ type Enum497 string
 type Enum498 string
 
 type Enum499 string
-
+type Enum50 string
 type Enum500 string
 
 type Enum501 string
@@ -1087,7 +1237,6 @@ type Enum509 string
 type Enum510 string
 
 type Enum511 string
-
 type Enum512 string
 
 type Enum513 string
@@ -1095,9 +1244,7 @@ type Enum513 string
 type Enum514 string
 
 type Enum515 string
-
 type Enum516 string
-
 type Enum517 string
 
 type Enum518 string
@@ -1124,8 +1271,6 @@ type Enum528 string
 
 type Enum529 string
 
-type Enum53 string
-
 type Enum530 string
 
 type Enum531 string
@@ -1146,6 +1291,8 @@ type Enum538 string
 
 type Enum539 string
 
+type Enum54 string
+
 type Enum540 string
 
 type Enum541 string
@@ -1157,12 +1304,15 @@ type Enum543 string
 type Enum544 string
 
 type Enum545 string
+
 type Enum546 string
 
 type Enum547 string
 
 type Enum548 string
+
 type Enum549 string
+
 type Enum550 string
 
 type Enum551 string
@@ -1180,7 +1330,6 @@ type Enum556 string
 type Enum557 string
 
 type Enum558 string
-
 type Enum559 string
 
 type Enum560 string
@@ -1194,13 +1343,10 @@ type Enum563 string
 type Enum564 string
 
 type Enum565 string
-
 type Enum566 string
 
 type Enum567 string
-
 type Enum568 string
-
 type Enum569 string
 
 type Enum570 string
@@ -1210,7 +1356,6 @@ type Enum571 string
 type Enum572 string
 
 type Enum573 string
-
 type Enum574 string
 
 type Enum575 string
@@ -1222,6 +1367,9 @@ type Enum577 string
 type Enum578 string
 
 type Enum579 string
+
+type Enum58 string
+
 type Enum580 string
 
 type Enum581 string
@@ -1233,6 +1381,7 @@ type Enum583 string
 type Enum584 string
 
 type Enum585 string
+
 type Enum586 string
 
 type Enum587 string
@@ -1240,8 +1389,6 @@ type Enum587 string
 type Enum588 string
 
 type Enum589 string
-
-type Enum59 string
 
 type Enum590 string
 
@@ -1252,7 +1399,6 @@ type Enum592 string
 type Enum593 string
 
 type Enum594 string
-
 type Enum595 string
 
 type Enum596 string
@@ -1262,17 +1408,16 @@ type Enum597 string
 type Enum598 string
 
 type Enum599 string
+
 type Enum600 string
 
 type Enum601 string
-
 type Enum602 string
-
 type Enum603 string
 
 type Enum604 string
-
 type Enum605 string
+
 type Enum606 string
 
 type Enum607 string
@@ -1280,7 +1425,6 @@ type Enum607 string
 type Enum608 string
 
 type Enum609 string
-
 type Enum610 string
 
 type Enum611 string
@@ -1300,7 +1444,6 @@ type Enum617 string
 type Enum618 string
 
 type Enum619 string
-
 type Enum620 string
 
 type Enum621 string
@@ -1308,6 +1451,7 @@ type Enum621 string
 type Enum622 string
 
 type Enum623 string
+
 type Enum624 string
 
 type Enum625 string
@@ -1316,248 +1460,241 @@ type Enum626 string
 
 type Enum627 string
 
-type Enum65 string
+type Enum628 string
+
+type Enum629 string
+
+type Enum63 string
+
+type Enum630 string
+
+type Enum631 string
+
+type Enum632 string
+
+type Enum633 string
+
+type Enum634 string
+
+type Enum635 string
+
+type Enum636 string
+
+type Enum637 string
+
+type Enum638 string
+
+type Enum639 string
+
+type Enum640 string
+
+type Enum641 string
+
+type Enum642 string
+
+type Enum643 string
+
+type Enum644 string
+
+type Enum645 string
+type Enum646 string
+
+type Enum647 string
+
+type Enum648 string
+
+type Enum649 string
 
 type Enum650 string
 
+type Enum651 string
+
+type Enum652 string
+
+type Enum653 string
+
+type Enum654 string
+
+type Enum655 string
+
 type Enum656 string
+
+type Enum657 string
+
+type Enum658 string
+
+type Enum659 string
+
+type Enum660 string
 
 type Enum661 string
 
+type Enum662 string
+
+type Enum663 string
+
+type Enum664 string
+
+type Enum665 string
+
+type Enum666 string
+
 type Enum667 string
+
+type Enum668 string
+
+type Enum669 string
+
+type Enum670 string
 
 type Enum671 string
 
+type Enum672 string
+
+type Enum673 string
+
+type Enum674 string
+
 type Enum675 string
 
+type Enum676 string
+
+type Enum677 string
+
+type Enum678 string
+
+type Enum679 string
+
+type Enum680 string
 type Enum681 string
+
+type Enum682 string
+
+type Enum683 string
+
+type Enum684 string
+
+type Enum685 string
+
+type Enum686 string
 
 type Enum687 string
 
-type Enum693 string
+type Enum688 string
 
-type Enum697 string
+type Enum689 string
 
-type Enum701 string
+type Enum69 string
 
-type Enum707 string
+type Enum690 string
 
-type Enum71 string
+type Enum691 string
 
-type Enum713 string
+type Enum720 string
 
-type Enum719 string
-
-type Enum725 string
+type Enum726 string
 
 type Enum731 string
 
+type Enum737 string
+type Enum741 string
+
+type Enum745 string
+
 type Enum75 string
 
-type Enum781 string
+type Enum750 string
 
-type Enum787 string
+type Enum756 string
 
-type Enum79 string
+type Enum762 string
 
-type Enum792 string
+type Enum770 string
 
-type Enum798 string
+type Enum774 string
+
+type Enum778 string
+
+type Enum784 string
+
+type Enum790 string
+
+type Enum796 string
 
 type Enum802 string
 
-type Enum806 string
+type Enum808 string
 
-type Enum812 string
+type Enum83 string
 
-type Enum818 string
+type Enum865 string
 
-type Enum824 string
+type Enum87 string
 
-type Enum828 string
+type Enum871 string
 
-type Enum832 string
+type Enum876 string
 
-type Enum838 string
-
-type Enum844 string
-type Enum85 string
-
-type Enum850 string
-
-type Enum856 string
-
-type Enum862 string
-
-type Enum872 string
-
-type Enum873 string
-
-type Enum874 string
-
-type Enum875 string
-
-type Enum879 string
-
-type Enum880 string
-
-type Enum881 string
 type Enum882 string
 
 type Enum886 string
 
-type Enum887 string
+type Enum890 string
 
-type Enum888 string
-
-type Enum889 string
-
-type Enum897 string
-
-type Enum898 string
-type Enum899 string
-type Enum900 string
-
+type Enum895 string
 type Enum901 string
-type Enum902 string
-
-type Enum903 string
-type Enum904 string
-
-type Enum905 string
-type Enum906 string
 
 type Enum907 string
 
-type Enum908 string
-
-type Enum909 string
-
 type Enum91 string
 
-type Enum910 string
-
-type Enum911 string
-
-type Enum912 string
-
-type Enum913 string
-
-type Enum914 string
-
-type Enum918 string
+type Enum915 string
 
 type Enum919 string
 
-type Enum920 string
-
-type Enum921 string
-
-type Enum922 string
-
 type Enum923 string
 
-type Enum924 string
+type Enum929 string
 
-type Enum925 string
-
-type Enum928 string
-
-type Enum932 string
-
-type Enum933 string
-type Enum934 string
-
-type Enum936 string
-
-type Enum937 string
-
-type Enum938 string
-
-type Enum939 string
+type Enum935 string
 
 type Enum941 string
 
-type Enum942 string
-
-type Enum943 string
-
-type Enum944 string
-
-type Enum945 string
-
 type Enum947 string
 
-type Enum948 string
-
-type Enum949 string
-
-type Enum951 string
-type Enum952 string
-
 type Enum953 string
-
-type Enum955 string
-
-type Enum956 string
-
-type Enum957 string
-
-type Enum958 string
-
-type Enum959 string
-
-type Enum961 string
-
-type Enum962 string
-type Enum963 string
 
 type Enum964 string
 
 type Enum965 string
 
+type Enum966 string
+
 type Enum967 string
-
-type Enum968 string
-
-type Enum969 string
 
 type Enum97 string
 
-type Enum970 string
-
 type Enum971 string
+type Enum972 string
 
 type Enum973 string
 
 type Enum974 string
 
-type Enum975 string
-
-type Enum977 string
-
 type Enum978 string
-
 type Enum979 string
 
+type Enum980 string
+
 type Enum981 string
-
-type Enum982 string
-
-type Enum983 string
-
-type Enum984 string
-
-type Enum985 string
-
-type Enum987 string
-type Enum988 string
 
 type Enum989 string
 
 type Enum990 string
 
 type Enum991 string
+
+type Enum992 string
 
 type Enum993 string
 
@@ -1568,6 +1705,8 @@ type Enum995 string
 type Enum996 string
 
 type Enum997 string
+
+type Enum998 string
 
 type Enum999 string
 
@@ -1597,6 +1736,10 @@ type ModifyTransmissionTaskBodyDestConfigExpressMongoSettingsDeployType string
 
 type ModifyTransmissionTaskBodyDestConfigExpressMongoSettingsPullMethod string
 
+type ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsDeployType string
+
+type ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsPullMethod string
+
 type ModifyTransmissionTaskBodyDestConfigPublicMongoSettingsDeployType string
 
 type ModifyTransmissionTaskBodyDestConfigPublicMongoSettingsPullMethod string
@@ -1610,6 +1753,12 @@ type ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsIncrTransmis
 type ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectType string
 
 type ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem string
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem string
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType string
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem string
 
 type ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsIncrTransmissionSettingsStatementsItem string
 
@@ -1626,6 +1775,8 @@ type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissi
 type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectType string
 
 type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem string
+
+type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict string
 
 type ModifyTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsIncrTransmissionSettingsStatementsItem string
 
@@ -1725,6 +1876,10 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSe
 
 type ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSettingsProtocol string
 
+type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType string
+
+type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType string
+
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsIncrTransmissionSettingsStatementsItem string
 
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectType string
@@ -1758,6 +1913,10 @@ type ModifyTransmissionTaskBodySrcConfigEndpointType string
 type ModifyTransmissionTaskBodySrcConfigExpressMongoSettingsDeployType string
 
 type ModifyTransmissionTaskBodySrcConfigExpressMongoSettingsPullMethod string
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsDeployType string
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsPullMethod string
 
 type ModifyTransmissionTaskBodySrcConfigPublicMongoSettingsDeployType string
 
@@ -1796,24 +1955,55 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigEndpointType string
 type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMongoSettingsDeployType string
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMongoSettingsPullMethod string
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsDeployType string
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsPullMethod string
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMongoSettingsDeployType string
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMongoSettingsPullMethod string
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMongoSettingsDeployType string
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMongoSettingsPullMethod string
+
 type ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItemProgressType string
+
 type ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItemStatus string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsIncrTransmissionSettingsStatementsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectType string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem string
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem string
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType string
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsIncrTransmissionSettingsStatementsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectType string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsSubscriptionSettingsPartitionPolicy string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsSubscriptionSettingsProtocol string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsIncrTransmissionSettingsStatementsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectType string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem string
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsIncrTransmissionSettingsStatementsItem string
+
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectType string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsPropertiesItemsItem string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsSubscriptionSettingsPartitionPolicy string
@@ -1862,6 +2052,8 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsObjectMappingsPropertiesItemsItem string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsSubscriptionSettingsPartitionPolicy string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsSubscriptionSettingsProtocol string
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType string
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsIncrTransmissionSettingsStatementsItem string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectType string
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsPropertiesItemsItem string
@@ -1879,10 +2071,14 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMongoSettingsPullMethod 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigEndpointType string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMongoSettingsDeployType string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMongoSettingsPullMethod string
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsDeployType string
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsPullMethod string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMongoSettingsDeployType string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMongoSettingsPullMethod string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMongoSettingsDeployType string
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMongoSettingsPullMethod string
+type ModifyTransmissionTaskResResultTaskInfoStatementsItem string
+type ModifyTransmissionTaskResResultTaskInfoSupportedDataValidationTypesItem string
 type ModifyTransmissionTaskResResultTaskInfoTaskStatus string
 type ModifyTransmissionTaskResResultTaskInfoTaskSubType string
 type ModifyTransmissionTaskResResultTaskInfoTaskType string
@@ -1892,6 +2088,7 @@ type ObjectMapping20221001MappingListPropertiesItemsItem string
 type ObjectMapping20221001ObjectMappingSettingObjectTransTypesItem string
 type ObjectMapping20221001ObjectMappingSettingPolicyForKeyConflict string
 type ObjectMapping20221001ObjectType string
+type SetBiSyncDDLSourceBodyType string
 
 type Components100CxgcSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcvedbmysqlsettingsPropertiesCrossaccountsettings struct {
 	Role          *string `json:"Role,omitempty"`
@@ -1949,9 +2146,22 @@ type Components111850WSchemasDescribetransmissiontasksresPropertiesResultPropert
 	Username       *string                                                                                                                                                                 `json:"Username,omitempty"`
 }
 
+type Components11243WgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type Components11F8XhmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type Components11KeudbSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type Components11Mi9B8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesIncrtransmissionsettings struct {
 	EnableIncr *bool       `json:"EnableIncr,omitempty"`
-	Statements []*Enum1003 `json:"Statements,omitempty"`
+	Statements []*Enum1107 `json:"Statements,omitempty"`
 }
 
 type Components11Pukq0SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -1970,7 +2180,7 @@ type Components11S1N61SchemasDescribetransmissiontasksresPropertiesResultPropert
 
 type Components1233Zw5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesIncrtransmissionsettings struct {
 	EnableIncr *bool       `json:"EnableIncr,omitempty"`
-	Statements []*Enum1009 `json:"Statements,omitempty"`
+	Statements []*Enum1113 `json:"Statements,omitempty"`
 }
 
 type Components124WkddSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettingsPropertiesShardsItems struct {
@@ -2009,6 +2219,14 @@ type Components12IhoxlSchemasCreatetransmissiontaskbodyPropertiesSolutionsetting
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type Components12L4581SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItems struct {
+	DestObjName          *string                                                                                                               `json:"DestObjName,omitempty"`
+	MappingList          []*ObjectMapping20221001                                                                                              `json:"MappingList,omitempty"`
+	ObjectMappingSetting *DescribeTransmissionTasksResResultTasksItemSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting `json:"ObjectMappingSetting,omitempty"`
+	ObjectType           *DescribeTransmissionTasksResResultTasksItemSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType           `json:"ObjectType,omitempty"`
+	SrcObjName           *string                                                                                                               `json:"SrcObjName,omitempty"`
+}
+
 type Components12R5OnwSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -2025,6 +2243,28 @@ type Components130E0XtSchemasDescribetransmissiontasksresPropertiesResultPropert
 	Dir    *string                                                                                                                                                          `json:"Dir,omitempty"`
 	Files  []*Components1C98IhmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesMysqlbinlogsettingsPropertiesFilesItems `json:"Files,omitempty"`
 	Prefix *string                                                                                                                                                          `json:"Prefix,omitempty"`
+}
+
+type Components137VjhlSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettings struct {
+	CrossAccountSettings *Components1KnveutSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                                `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                                `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                                                                                                `json:"Password,omitempty"`
+	RegionSettings       *Components11KeudbSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettingsPropertiesRegionsettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                                `json:"Username,omitempty"`
+}
+
+type Components13B8Pi7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettings struct {
+	DeployType               *Enum998                                                                                                                                                          `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                                                                                                         `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                                                                                                           `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                                                                                                           `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                                                                                                           `json:"Password,omitempty"`
+	PullMethod               *Enum999                                                                                                                                                          `json:"PullMethod,omitempty"`
+	RegionSettings           *ComponentsR25XasSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Shards                   []*Components1Csv487SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettingsPropertiesShardsItems `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                                                                                                             `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                                                                                                           `json:"Username,omitempty"`
 }
 
 type Components13Bz0YrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmysqlsettingsPropertiesSslsettings struct {
@@ -2060,21 +2300,40 @@ type Components13VfaifSchemasModifytransmissiontaskbodyPropertiesSolutionsetting
 }
 
 type Components13Xx15ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettings struct {
-	DBInstanceID   *string                                                                                                                                                                  `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                                                                                                  `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                                                                                                  `json:"Password,omitempty"`
-	RegionSettings *Components1Jha8ZwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                                                                                                  `json:"Username,omitempty"`
+	CrossAccountSettings *Components11243WgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                                        `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                                        `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                                                                                                        `json:"Password,omitempty"`
+	RegionSettings       *Components1Jha8ZwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettingsPropertiesRegionsettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                                        `json:"Username,omitempty"`
 }
 
 type Components13YjvxpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceabase2SettingsPropertiesServerroomsetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
+type Components1418Di3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymysqlsettings struct {
+	GatewayID      *string                                                                                                                                                            `json:"GatewayId,omitempty"`
+	Host           *string                                                                                                                                                            `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                            `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                             `json:"Port,omitempty"`
+	RegionSettings *Components1SlvcmvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymysqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                            `json:"Username,omitempty"`
+}
+
+type Components143A2SrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
 type Components14Ast4VSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type Components14B6Hn7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettingsPropertiesEcssettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
 }
 
 type Components14Ddo2NSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesErrorbehaviorsettings struct {
@@ -2111,13 +2370,14 @@ type Components154S0K1SchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components158ZoneSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2Mongosettings struct {
-	ETLSettings              *ComponentsY2V9A3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesEtlsettings               `json:"ETLSettings,omitempty"`
-	ErrorBehaviorSettings    *Components1Mp503NSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesErrorbehaviorsettings    `json:"ErrorBehaviorSettings,omitempty"`
-	FullTransmissionSettings *Components16Pn6FvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesFulltransmissionsettings `json:"FullTransmissionSettings,omitempty"`
-	IncrTransmissionSettings *Components1TcwgipSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesIncrtransmissionsettings `json:"IncrTransmissionSettings,omitempty"`
-	MetaTransmissionSettings *Components1Yo5EtfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesMetatransmissionsettings `json:"MetaTransmissionSettings,omitempty"`
-	MongoPosition            *ComponentsT1Mei6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesMongoposition             `json:"MongoPosition,omitempty"`
-	ObjectMappings           []*Components1Axz3FfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItems    `json:"ObjectMappings,omitempty"`
+	ETLSettings                      *ComponentsY2V9A3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesEtlsettings               `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings            *Components1Mp503NSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesErrorbehaviorsettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings         *Components16Pn6FvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesFulltransmissionsettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings         *Components1TcwgipSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesIncrtransmissionsettings `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings         *Components1Yo5EtfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesMetatransmissionsettings `json:"MetaTransmissionSettings,omitempty"`
+	MongoPosition                    *ComponentsT1Mei6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesMongoposition             `json:"MongoPosition,omitempty"`
+	ObjectMappings                   []*Components1Axz3FfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItems    `json:"ObjectMappings,omitempty"`
+	PolicyForMongoPrimaryKeyConflict *Enum1055                                                                                                                                                                          `json:"PolicyForMongoPrimaryKeyConflict,omitempty"`
 
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
 }
@@ -2146,6 +2406,12 @@ type Components1683Fb8SchemasDescribetransmissiontasksresPropertiesResultPropert
 	Username          *string                                                                                                                                                                         `json:"Username,omitempty"`
 }
 
+type Components16Gnwa9SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
+	EnableRouting *bool     `json:"EnableRouting,omitempty"`
+	PidCol        []*string `json:"PidCol,omitempty"`
+	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
 type Components16Pn6FvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesFulltransmissionsettings struct {
 	BPSLimit        *int32                                                                                                                                                                                                            `json:"BPSLimit,omitempty"`
 	EnableFull      *bool                                                                                                                                                                                                             `json:"EnableFull,omitempty"`
@@ -2164,6 +2430,15 @@ type Components16QgxavSchemasDescribetransmissiontasksresPropertiesResultPropert
 	Username             *string                                                                                                                                                                    `json:"Username,omitempty"`
 }
 
+type Components16Vf9XqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymysqlsettings struct {
+	GatewayID      *string                                                                                                                                                            `json:"GatewayId,omitempty"`
+	Host           *string                                                                                                                                                            `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                            `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                             `json:"Port,omitempty"`
+	RegionSettings *ComponentsAafw4SSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymysqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                            `json:"Username,omitempty"`
+}
+
 type Components16Y3N8RSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesMetatransmissionsettings struct {
 	EnableMeta *bool `json:"EnableMeta,omitempty"`
 }
@@ -2174,15 +2449,26 @@ type Components17BwpxiSchemasDescribetransmissiontasksresPropertiesResultPropert
 	WhereSQL *string `json:"WhereSql,omitempty"`
 }
 
+type Components17Xwx5CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
 type Components1858Y0KSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type Components18A45BlSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems struct {
+	ID       *string                                                                                               `json:"ID,omitempty"`
+	Location *string                                                                                               `json:"Location,omitempty"`
+	Type     *ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType `json:"Type,omitempty"`
+}
+
 type Components18G99K3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum945 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1042 `json:"Statements,omitempty"`
 }
 
 type Components18Qnnq0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -2206,12 +2492,25 @@ type Components18U483SchemasDescribetransmissiontasksresPropertiesResultProperti
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type Components18Xex8LSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesFulltransmissionsettingsPropertiesExtraconditionsItems struct {
+	Db       *string `json:"Db,omitempty"`
+	Table    *string `json:"Table,omitempty"`
+	WhereSQL *string `json:"WhereSql,omitempty"`
+}
+
 type Components18Xwt2ISchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcelasticsearchsettings struct {
 	DBInstanceID   *string                                                                                                                                                                  `json:"DBInstanceId,omitempty"`
 	DBInstanceName *string                                                                                                                                                                  `json:"DBInstanceName,omitempty"`
 	Password       *string                                                                                                                                                                  `json:"Password,omitempty"`
 	RegionSettings *Components15Dzj7FSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcelasticsearchsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Username       *string                                                                                                                                                                  `json:"Username,omitempty"`
+}
+
+type Components1949FhjSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettings struct {
+	Consul            *string                                                                                                                                                                 `json:"Consul,omitempty"`
+	Location          *string                                                                                                                                                                 `json:"Location,omitempty"`
+	RegionSettings    *ComponentsS2Se6ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettingsPropertiesRegionsettings     `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *Components1Fnjlz2SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettingsPropertiesServerroomsetting `json:"ServerRoomSetting,omitempty"`
 }
 
 type Components19E4BdmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesErrorbehaviorsettings struct {
@@ -2274,10 +2573,22 @@ type Components1BcqqxmSchemasDescribetransmissiontasksresPropertiesResultPropert
 	SrcObjName           *string                                                                                                               `json:"SrcObjName,omitempty"`
 }
 
+type Components1Bcu1SpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmssqlsettings struct {
+	Host           *string                                                                                                                                                            `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                            `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                             `json:"Port,omitempty"`
+	RegionSettings *Components11F8XhmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmssqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                            `json:"Username,omitempty"`
+}
+
 type Components1BntfakSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type Components1Bnuq5PSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
 }
 
 type Components1C98IhmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesMysqlbinlogsettingsPropertiesFilesItems struct {
@@ -2296,6 +2607,19 @@ type Components1CizolvSchemasDescribetransmissiontasksresPropertiesResultPropert
 	SubscriptionSettings     *ComponentsKzdx4CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesSubscriptionsettings     `json:"SubscriptionSettings,omitempty"`
 }
 
+type Components1Cmy3H7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type Components1Csv487SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettingsPropertiesShardsItems struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
 type Components1CwzacrSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -2311,6 +2635,10 @@ type Components1D3Od5GSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1D8EclfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmysqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type Components1DixmwwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -2335,6 +2663,7 @@ type Components1DurrvjSchemasDescribetransmissiontasksresPropertiesResultPropert
 	CompletePercentage *int32                                                                           `json:"CompletePercentage,omitempty"`
 	Delay              *int32                                                                           `json:"Delay,omitempty"`
 	ErrorInfo          *string                                                                          `json:"ErrorInfo,omitempty"`
+	FetchDelay         *int32                                                                           `json:"FetchDelay,omitempty"`
 	NameCN             *string                                                                          `json:"NameCN,omitempty"`
 	ProgressType       *DescribeTransmissionTasksResResultTasksItemProgressSummaryInfosItemProgressType `json:"ProgressType,omitempty"`
 	Status             *DescribeTransmissionTasksResResultTasksItemProgressSummaryInfosItemStatus       `json:"Status,omitempty"`
@@ -2351,8 +2680,8 @@ type Components1EczvkgSchemasDescribetransmissiontasksresPropertiesResultPropert
 
 type Components1Ee1A9YSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesMetaprogressItemsPropertiesDatabasePropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *ComponentsNkaijhSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesMetaprogressItemsPropertiesDatabasePropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum888                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum889                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum980                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum981                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -2406,6 +2735,15 @@ type Components1Fi4DtdSchemasDescribetransmissiontasksresPropertiesResultPropert
 	VPCID *string `json:"VPCId,omitempty"`
 }
 
+type Components1Fk3Y5WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettingsPropertiesPrivatenetworksettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type Components1Fnjlz2SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettingsPropertiesServerroomsetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type Components1FnsvsxSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -2418,6 +2756,15 @@ type Components1Fs7DxgSchemasDescribetransmissiontasksresPropertiesResultPropert
 
 type Components1Fv6Cb3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicredissettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type Components1Fyrn20SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettings struct {
+	ECSSettings    *Components68K9DtSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettingsPropertiesEcssettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                                                                                                       `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                       `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                        `json:"Port,omitempty"`
+	RegionSettings *ComponentsDhay6ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                       `json:"Username,omitempty"`
 }
 
 type Components1G9WcwmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesFulltransmissionsettingsPropertiesExtraconditionsItems struct {
@@ -2436,6 +2783,14 @@ type Components1Gktzh7SchemasModifytransmissiontaskresPropertiesResultProperties
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type Components1Gpbtk7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesFulltransmissionsettings struct {
+	BPSLimit        *int32                                                                                                                                                                                                             `json:"BPSLimit,omitempty"`
+	EnableFull      *bool                                                                                                                                                                                                              `json:"EnableFull,omitempty"`
+	ExtraConditions []*Components18Xex8LSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesFulltransmissionsettingsPropertiesExtraconditionsItems `json:"ExtraConditions,omitempty"`
+	RPSLimit        *int32                                                                                                                                                                                                             `json:"RPSLimit,omitempty"`
+	Snapshot        *bool                                                                                                                                                                                                              `json:"Snapshot,omitempty"`
 }
 
 type Components1Gxqs07SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmysqlsettingsPropertiesRegionsettings struct {
@@ -2483,6 +2838,13 @@ type Components1Iz95YmSchemasDescribetransmissiontasksresPropertiesResultPropert
 	Region *string `json:"Region,omitempty"`
 }
 
+type Components1J21LmySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItems struct {
+	FilterType       *DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType `json:"FilterType,omitempty"`
+	Pass             *bool                                                                                                    `json:"Pass,omitempty"`
+	RegexFilterRule  []*string                                                                                                `json:"RegexFilterRule,omitempty"`
+	ServerFilterRule []*DescribeTransmissionTasksResResultTasksPropertiesItemsServerFilterRuleItem                            `json:"ServerFilterRule,omitempty"`
+}
+
 type Components1J8HcqkSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -2506,6 +2868,12 @@ type Components1Jlyxv7SchemasDescribetransmissiontasksresPropertiesResultPropert
 	EnableMeta *bool `json:"EnableMeta,omitempty"`
 }
 
+type Components1JukmteSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems struct {
+	ID       *string                                                                                                                  `json:"ID,omitempty"`
+	Location *string                                                                                                                  `json:"Location,omitempty"`
+	Type     *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType `json:"Type,omitempty"`
+}
+
 type Components1Jvwe67SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmongosettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
@@ -2516,6 +2884,10 @@ type Components1Jzftj8SchemasDescribetransmissiontasksresPropertiesResultPropert
 	RegionSettings    *ComponentsRwt5MhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceelasticsearchsettingsPropertiesRegionsettings     `json:"RegionSettings,omitempty"`
 	ServerRoomSetting *Components1HwkuwvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceelasticsearchsettingsPropertiesServerroomsetting `json:"ServerRoomSetting,omitempty"`
 	Username          *string                                                                                                                                                                         `json:"Username,omitempty"`
+}
+
+type Components1Jzo2XaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesEtlsettings struct {
+	Script *string `json:"Script,omitempty"`
 }
 
 type Components1K3P1ZbSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesFulltransmissionsettings struct {
@@ -2532,8 +2904,14 @@ type Components1K714CwSchemasDescribetransmissiontasksresPropertiesResultPropert
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type Components1KnveutSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
 type Components1Kzp61XSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Redissettings struct {
 	ErrorBehaviorSettings    *ComponentsX2G07ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesErrorbehaviorsettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FilterRules              []*Components1J21LmySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItems      `json:"FilterRules,omitempty"`
 	FullTransmissionSettings *ComponentsK3WafuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFulltransmissionsettings `json:"FullTransmissionSettings,omitempty"`
 	IncrTransmissionSettings *Components3F5XrqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesIncrtransmissionsettings `json:"IncrTransmissionSettings,omitempty"`
 	ObjectMappings           []*ComponentsGlevtrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItems    `json:"ObjectMappings,omitempty"`
@@ -2563,12 +2941,12 @@ type Components1Lep2MwSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1Ljk23SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmongosettings struct {
-	DeployType               *Enum913                                                                                                                                                                    `json:"DeployType,omitempty"`
+	DeployType               *Enum1007                                                                                                                                                                   `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                                                                                                   `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                                     `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                                     `json:"Password,omitempty"`
 	PrivateNetworkSettings   *Components1AaxsqtSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmongosettingsPropertiesPrivatenetworksettings `json:"PrivateNetworkSettings,omitempty"`
-	PullMethod               *Enum914                                                                                                                                                                    `json:"PullMethod,omitempty"`
+	PullMethod               *Enum1008                                                                                                                                                                   `json:"PullMethod,omitempty"`
 	RegionSettings           *ComponentsOb12SvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmongosettingsPropertiesRegionsettings          `json:"RegionSettings,omitempty"`
 	Shards                   []*ComponentsPuwgvjSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmongosettingsPropertiesShardsItems           `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                                       `json:"UseNewShardingDatasource,omitempty"`
@@ -2578,7 +2956,7 @@ type Components1Ljk23SchemasDescribetransmissiontasksresPropertiesResultProperti
 type Components1M1BmgqSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesObjectPropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *Components1Tnv52QSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesObjectPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressPropertiesItemsItem                                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum879                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum971                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -2603,11 +2981,12 @@ type Components1Mm1DzuSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1Mmmvc4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettings struct {
-	DBInstanceID   *string                                                                                                                                                                 `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                                                                                                 `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                                                                                                 `json:"Password,omitempty"`
-	RegionSettings *Components13Tfh5OSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                                                                                                 `json:"Username,omitempty"`
+	CrossAccountSettings *ComponentsOp4X90SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                                      `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                                      `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                                                                                                      `json:"Password,omitempty"`
+	RegionSettings       *Components13Tfh5OSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettingsPropertiesRegionsettings      `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                                      `json:"Username,omitempty"`
 }
 
 type Components1Mnzgc1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesMysqlbinlogsettings struct {
@@ -2635,10 +3014,10 @@ type Components1Mq61ESchemasCreatetransmissiontaskbodyPropertiesSolutionsettings
 }
 
 type Components1Mu4K8ZSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum970 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1072 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum969           `json:"Protocol,omitempty"`
+	Protocol   *Enum1071          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -2654,6 +3033,12 @@ type Components1Mw9Q06SchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1Mzvp2ESchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
+	EnableRouting *bool     `json:"EnableRouting,omitempty"`
+	PidCol        []*string `json:"PidCol,omitempty"`
+	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type Components1N1BqovSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
@@ -2736,7 +3121,17 @@ type Components1P3D5DsSchemasDescribetransmissiontasksresPropertiesResultPropert
 	Username             *string                                                                                                                                                              `json:"Username,omitempty"`
 }
 
+type Components1P5VpimSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
+	EnableRouting *bool     `json:"EnableRouting,omitempty"`
+	PidCol        []*string `json:"PidCol,omitempty"`
+	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
 type Components1Ph2Rx6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressredissettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type Components1Pki7MdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -2784,6 +3179,12 @@ type Components1Qamo51SchemasDescribetransmissiontasksresPropertiesResultPropert
 	Region *string `json:"Region,omitempty"`
 }
 
+type Components1Qg65DgSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
+	EnableRouting *bool     `json:"EnableRouting,omitempty"`
+	PidCol        []*string `json:"PidCol,omitempty"`
+	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
 type Components1QmotzySchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -2822,7 +3223,7 @@ type Components1Rd17RSchemasDescribetransmissiontasksresPropertiesResultProperti
 	MetaTransmissionSettings    *Components16Y3N8RSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesMetatransmissionsettings `json:"MetaTransmissionSettings,omitempty"`
 	MySQLPosition               *ComponentsGhvt0VSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesMysqlposition             `json:"MySQLPosition,omitempty"`
 	ObjectMappings              []*ComponentsWc76IoSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItems     `json:"ObjectMappings,omitempty"`
-	PolicyForPrimaryKeyConflict *Enum939                                                                                                                                                                        `json:"PolicyForPrimaryKeyConflict,omitempty"`
+	PolicyForPrimaryKeyConflict *Enum1036                                                                                                                                                                       `json:"PolicyForPrimaryKeyConflict,omitempty"`
 
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
 }
@@ -2848,6 +3249,10 @@ type Components1SheffvSchemasDescribetransmissiontasksresPropertiesResultPropert
 type Components1Sk3Gh4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesMysqlbinlogsettingsPropertiesFilesItems struct {
 	FileBytes *int64  `json:"FileBytes,omitempty"`
 	Path      *string `json:"Path,omitempty"`
+}
+
+type Components1SlvcmvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymysqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
 }
 
 type Components1SotbkzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBuiltinkafkasettings struct {
@@ -2884,8 +3289,8 @@ type Components1Tb0AiwSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1TcwgipSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum953 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1054 `json:"Statements,omitempty"`
 }
 
 type Components1Tnv52QSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesObjectPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -2933,11 +3338,11 @@ type Components1Udc07HSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1Ugcre8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettings struct {
-	DeployType               *Enum911                                                                                                                                                          `json:"DeployType,omitempty"`
+	DeployType               *Enum1005                                                                                                                                                         `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                                                                                         `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                           `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                           `json:"Password,omitempty"`
-	PullMethod               *Enum912                                                                                                                                                          `json:"PullMethod,omitempty"`
+	PullMethod               *Enum1006                                                                                                                                                         `json:"PullMethod,omitempty"`
 	RegionSettings           *ComponentsLrg59ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Shards                   []*Components1W236S9SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettingsPropertiesShardsItems `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                             `json:"UseNewShardingDatasource,omitempty"`
@@ -2960,18 +3365,22 @@ type Components1Vempv7SchemasDescribetransmissiontasksresPropertiesResultPropert
 	VPCID *string `json:"VPCId,omitempty"`
 }
 
+type Components1Vm21OfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type Components1Vq8JefSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesMongoposition struct {
 	ResumeToken *string `json:"ResumeToken,omitempty"`
 	Timestamp   *int64  `json:"Timestamp,omitempty"`
 }
 
 type Components1Vxef24SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettings struct {
-	DeployType               *Enum898                                                                                                                                                      `json:"DeployType,omitempty"`
+	DeployType               *Enum990                                                                                                                                                      `json:"DeployType,omitempty"`
 	ECSSettings              *Components1Lep2MwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettingsPropertiesEcssettings   `json:"ECSSettings,omitempty"`
 	Endpoints                []*string                                                                                                                                                     `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                       `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                       `json:"Password,omitempty"`
-	PullMethod               *Enum899                                                                                                                                                      `json:"PullMethod,omitempty"`
+	PullMethod               *Enum991                                                                                                                                                      `json:"PullMethod,omitempty"`
 	RegionSettings           *ComponentsMg0Or3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Shards                   []*Components124WkddSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettingsPropertiesShardsItems `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                         `json:"UseNewShardingDatasource,omitempty"`
@@ -3019,10 +3428,10 @@ type Components1Wf2Ra6SchemasModifytransmissiontaskresPropertiesResultProperties
 }
 
 type Components1Wvu9VeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum944 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1041 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum943           `json:"Protocol,omitempty"`
+	Protocol   *Enum1040          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3045,6 +3454,19 @@ type Components1X615U8SchemasDescribetransmissiontasksresPropertiesResultPropert
 	Snapshot        *bool                                                                                                                                                                                                              `json:"Snapshot,omitempty"`
 }
 
+type Components1X74PxkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettings struct {
+	Host                   *string                                                                                                                                                                    `json:"Host,omitempty"`
+	Password               *string                                                                                                                                                                    `json:"Password,omitempty"`
+	Port                   *int32                                                                                                                                                                     `json:"Port,omitempty"`
+	PrivateNetworkSettings *Components1Fk3Y5WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettingsPropertiesPrivatenetworksettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *Components1XfieuzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettingsPropertiesRegionsettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                                                                                                    `json:"Username,omitempty"`
+}
+
+type Components1XfieuzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type Components1Xycy0RSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -3062,12 +3484,12 @@ type Components1Y4E0BpSchemasDescribetransmissiontasksresPropertiesResultPropert
 }
 
 type Components1Yl7Lu7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettings struct {
-	DeployType               *Enum904                                                                                                                                                                  `json:"DeployType,omitempty"`
+	DeployType               *Enum996                                                                                                                                                                  `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                                                                                                 `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                                   `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                                   `json:"Password,omitempty"`
 	PrivateNetworkSettings   *ComponentsB3XnnpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettingsPropertiesPrivatenetworksettings `json:"PrivateNetworkSettings,omitempty"`
-	PullMethod               *Enum905                                                                                                                                                                  `json:"PullMethod,omitempty"`
+	PullMethod               *Enum997                                                                                                                                                                  `json:"PullMethod,omitempty"`
 	RegionSettings           *Components1Fs7DxgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettingsPropertiesRegionsettings        `json:"RegionSettings,omitempty"`
 	Shards                   []*ComponentsEyck20SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettingsPropertiesShardsItems          `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                                     `json:"UseNewShardingDatasource,omitempty"`
@@ -3103,6 +3525,10 @@ type Components22Q6BmSchemasModifytransmissiontaskresPropertiesResultPropertiesT
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type Components2342EkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaypostgresqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type Components28UskdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -3110,15 +3536,15 @@ type Components28UskdSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type Components2Jsoi5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum963 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1065 `json:"Statements,omitempty"`
 }
 
 type Components36Rv24SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum1002 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1106 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum1001          `json:"Protocol,omitempty"`
+	Protocol   *Enum1105          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3136,8 +3562,8 @@ type Components3Dz6OwSchemasModifytransmissiontaskbodyPropertiesSolutionsettings
 }
 
 type Components3F5XrqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum975 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1079 `json:"Statements,omitempty"`
 }
 
 type Components3Fbe5FSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesErrorbehaviorsettings struct {
@@ -3174,6 +3600,17 @@ type Components48B9XqSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Password             *string                                                                                                                                                                   `json:"Password,omitempty"`
 	RegionSettings       *ComponentsXtp5X5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcvedbmysqlsettingsPropertiesRegionsettings        `json:"RegionSettings,omitempty"`
 	Username             *string                                                                                                                                                                   `json:"Username,omitempty"`
+}
+
+type Components48J8E8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2Mssqlsettings struct {
+	ETLSettings              *Components1Jzo2XaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesEtlsettings              `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings    *ComponentsQn1KfdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesErrorbehaviorsettings     `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings *Components1Gpbtk7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesFulltransmissionsettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings *Components8FojvySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesIncrtransmissionsettings  `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings *ComponentsXe1Bn1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesMetatransmissionsettings  `json:"MetaTransmissionSettings,omitempty"`
+	ObjectMappings           []*Components12L4581SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItems    `json:"ObjectMappings,omitempty"`
+
+	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
 }
 
 type Components4AumjhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -3219,10 +3656,10 @@ type Components4Q133SchemasDescribetransmissiontasksresPropertiesResultPropertie
 }
 
 type Components4Yf8VaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum1014 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1118 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum1013          `json:"Protocol,omitempty"`
+	Protocol   *Enum1117          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3242,8 +3679,8 @@ type Components50Si10SchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type Components5Jg8YbSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum997 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1101 `json:"Statements,omitempty"`
 }
 
 type Components5Jhx40SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesMetatransmissionsettings struct {
@@ -3254,6 +3691,10 @@ type Components5Xoyb8SchemasModifytransmissiontaskbodyPropertiesSolutionsettings
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type Components68K9DtSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettingsPropertiesEcssettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
 }
 
 type Components69Eq7LSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesFulltransmissionsettings struct {
@@ -3283,6 +3724,10 @@ type Components6Joii6SchemasDescribetransmissiontasksresPropertiesResultProperti
 	Port           *int32                                                                                                                                                                 `json:"Port,omitempty"`
 	RegionSettings *Components1Iz95YmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicpostgresqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Username       *string                                                                                                                                                                `json:"Username,omitempty"`
+}
+
+type Components72Kp64SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
 }
 
 type Components77KqujSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceshardingmysqlsettings struct {
@@ -3317,6 +3762,10 @@ type Components7GdaosSchemasDescribetransmissiontasksresPropertiesResultProperti
 
 type Components7GqqkaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsredissettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type Components7Haea4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettingsPropertiesServerroomsetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
 type Components7IhggzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItems struct {
@@ -3363,6 +3812,10 @@ type Components87DzljSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Region *string `json:"Region,omitempty"`
 }
 
+type Components89Tr0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type Components8CwogkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcspostgresqlsettings struct {
 	DBName         *string                                                                                                                                                            `json:"DBName,omitempty"`
 	ECSSettings    *ComponentsCtuvtpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcspostgresqlsettingsPropertiesEcssettings    `json:"ECSSettings,omitempty"`
@@ -3371,6 +3824,11 @@ type Components8CwogkSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Port           *int32                                                                                                                                                             `json:"Port,omitempty"`
 	RegionSettings *ComponentsKpgt6TSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcspostgresqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Username       *string                                                                                                                                                            `json:"Username,omitempty"`
+}
+
+type Components8FojvySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesIncrtransmissionsettings struct {
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1050 `json:"Statements,omitempty"`
 }
 
 type Components8K6CbSchemasObjectmapping20221001PropertiesMappinglistItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -3384,12 +3842,28 @@ type Components8KwcytSchemasDescribetransmissiontasksresPropertiesResultProperti
 	VPCID    *string `json:"VPCId,omitempty"`
 }
 
+type Components8Leo1TSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
+	EnableRouting *bool     `json:"EnableRouting,omitempty"`
+	PidCol        []*string `json:"PidCol,omitempty"`
+	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
 type Components8Sdjf6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesFulltransmissionsettings struct {
 	BPSLimit        *int32                                                                                                                                                                                                                   `json:"BPSLimit,omitempty"`
 	EnableFull      *bool                                                                                                                                                                                                                    `json:"EnableFull,omitempty"`
 	ExtraConditions []*Components1OxydqpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesFulltransmissionsettingsPropertiesExtraconditionsItems `json:"ExtraConditions,omitempty"`
 	RPSLimit        *int32                                                                                                                                                                                                                   `json:"RPSLimit,omitempty"`
 	Snapshot        *bool                                                                                                                                                                                                                    `json:"Snapshot,omitempty"`
+}
+
+type Components8U9V4TSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaypostgresqlsettings struct {
+	DBName         *string                                                                                                                                                                 `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                                                                                                 `json:"GatewayId,omitempty"`
+	Host           *string                                                                                                                                                                 `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                                 `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                                  `json:"Port,omitempty"`
+	RegionSettings *Components2342EkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaypostgresqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                                 `json:"Username,omitempty"`
 }
 
 type Components8X7DxySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Rocketmqsettings struct {
@@ -3400,8 +3874,8 @@ type Components8X7DxySchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type Components923D72SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum985 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1089 `json:"Statements,omitempty"`
 }
 
 type Components9402HSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -3419,6 +3893,12 @@ type Components95Fa9GSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Username       *string                                                                                                                                                           `json:"Username,omitempty"`
 }
 
+type Components9Cezq2SchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems struct {
+	ID       *string                                                                                               `json:"ID,omitempty"`
+	Location *string                                                                                               `json:"Location,omitempty"`
+	Type     *CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType `json:"Type,omitempty"`
+}
+
 type Components9El6M3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesErrorbehaviorsettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
 }
@@ -3431,7 +3911,7 @@ type Components9H3SthSchemasDescribetransmissiontaskinforesPropertiesResultPrope
 
 type Components9Jw4DmSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesIncrtransmissionsettings struct {
 	EnableIncr *bool       `json:"EnableIncr,omitempty"`
-	Statements []*Enum1015 `json:"Statements,omitempty"`
+	Statements []*Enum1119 `json:"Statements,omitempty"`
 }
 
 type Components9Oiwj0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesFulltransmissionsettings struct {
@@ -3456,8 +3936,35 @@ type ComponentsA0LlkhSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Timestamp *int64  `json:"Timestamp,omitempty"`
 }
 
+type ComponentsAafw4SSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymysqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsAebmwqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsAety28SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsAflfcoSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems struct {
+	ID       *string                                                                                                            `json:"ID,omitempty"`
+	Location *string                                                                                                            `json:"Location,omitempty"`
+	Type     *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType `json:"Type,omitempty"`
+}
+
 type ComponentsAxg607SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceabase2SettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsB1C8J4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettings struct {
+	ECSSettings    *Components14B6Hn7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettingsPropertiesEcssettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                                                                                                         `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                         `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                          `json:"Port,omitempty"`
+	RegionSettings *Components1DixmwwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                         `json:"Username,omitempty"`
 }
 
 type ComponentsB3XnnpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettingsPropertiesPrivatenetworksettings struct {
@@ -3543,8 +4050,8 @@ type ComponentsCtuvtpSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsCvu48PSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum949 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1046 `json:"Statements,omitempty"`
 }
 
 type ComponentsCw6GhzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcvedbmysqlsettings struct {
@@ -3580,15 +4087,19 @@ type ComponentsDcqqdxSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Table             *string                                                                                                                                                                  `json:"Table,omitempty"`
 }
 
+type ComponentsDhay6ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ComponentsDtebrpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesErrorbehaviorsettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
 }
 
 type ComponentsDw4YtdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum1008 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1112 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum1007          `json:"Protocol,omitempty"`
+	Protocol   *Enum1111          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3615,18 +4126,26 @@ type ComponentsEhu5PrSchemasDescribetransmissiontasksresPropertiesResultProperti
 	CrossAccountSettings     *ComponentsW1Ti0HSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmongosettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
 	DBInstanceID             *string                                                                                                                                                               `json:"DBInstanceId,omitempty"`
 	DBInstanceName           *string                                                                                                                                                               `json:"DBInstanceName,omitempty"`
-	DeployType               *Enum909                                                                                                                                                              `json:"DeployType,omitempty"`
+	DeployType               *Enum1003                                                                                                                                                             `json:"DeployType,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                               `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                               `json:"Password,omitempty"`
-	PullMethod               *Enum910                                                                                                                                                              `json:"PullMethod,omitempty"`
+	PullMethod               *Enum1004                                                                                                                                                             `json:"PullMethod,omitempty"`
 	RegionSettings           *Components1Jvwe67SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmongosettingsPropertiesRegionsettings      `json:"RegionSettings,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                                 `json:"UseNewShardingDatasource,omitempty"`
 	Username                 *string                                                                                                                                                               `json:"Username,omitempty"`
 }
 
+type ComponentsEs4KvzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmssqlsettings struct {
+	Host           *string                                                                                                                                                           `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                           `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                            `json:"Port,omitempty"`
+	RegionSettings *Components1Vm21OfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmssqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                           `json:"Username,omitempty"`
+}
+
 type ComponentsEsrg1MSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum971 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1073 `json:"Statements,omitempty"`
 }
 
 type ComponentsEyck20SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettingsPropertiesShardsItems struct {
@@ -3652,6 +4171,15 @@ type ComponentsFe53A7SchemasDescribetransmissiontasksresPropertiesResultProperti
 
 type ComponentsFjy6RvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcspostgresqlsettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsFvf8JeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettings struct {
+	CrossAccountSettings *Components17Xwx5CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                               `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                               `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                                                                                               `json:"Password,omitempty"`
+	RegionSettings       *ComponentsAebmwqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettingsPropertiesRegionsettings        `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                               `json:"Username,omitempty"`
 }
 
 type ComponentsG6Bq7CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceelasticsearchsettingsPropertiesServerroomsetting struct {
@@ -3699,6 +4227,13 @@ type ComponentsGypocSchemasDescribetransmissiontasksresPropertiesResultPropertie
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
 }
 
+type ComponentsHc4WlgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettings struct {
+	Consul            *string                                                                                                                                                                 `json:"Consul,omitempty"`
+	Location          *string                                                                                                                                                                 `json:"Location,omitempty"`
+	RegionSettings    *Components89Tr0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettingsPropertiesRegionsettings     `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ComponentsPdqbdeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettingsPropertiesServerroomsetting `json:"ServerRoomSetting,omitempty"`
+}
+
 type ComponentsHejxqnSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesFulltransmissionsettingsPropertiesExtraconditionsItems struct {
 	Db       *string `json:"Db,omitempty"`
 	Table    *string `json:"Table,omitempty"`
@@ -3710,10 +4245,10 @@ type ComponentsHs508YSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsHzi6LySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum958 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1060 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum957           `json:"Protocol,omitempty"`
+	Protocol   *Enum1059          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3739,11 +4274,11 @@ type ComponentsIqqivzSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsIu3HleSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmongosettings struct {
-	DeployType               *Enum902                                                                                                                                                          `json:"DeployType,omitempty"`
+	DeployType               *Enum994                                                                                                                                                          `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                                                                                         `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                           `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                           `json:"Password,omitempty"`
-	PullMethod               *Enum903                                                                                                                                                          `json:"PullMethod,omitempty"`
+	PullMethod               *Enum995                                                                                                                                                          `json:"PullMethod,omitempty"`
 	RegionSettings           *Components1X4V7M7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Shards                   []*Components1AqibpvSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmongosettingsPropertiesShardsItems  `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                             `json:"UseNewShardingDatasource,omitempty"`
@@ -3766,6 +4301,15 @@ type ComponentsJ9Fwp8SchemasDescribetransmissiontasksresPropertiesResultProperti
 	WhereSQL *string `json:"WhereSql,omitempty"`
 }
 
+type ComponentsJg12X6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettingsPropertiesShardsItems struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
 type ComponentsJqxdyiSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItems struct {
 	DestObjName          *string                                                                                                            `json:"DestObjName,omitempty"`
 	MappingList          []*ObjectMapping20221001                                                                                           `json:"MappingList,omitempty"`
@@ -3775,8 +4319,8 @@ type ComponentsJqxdyiSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsK2Qt5RSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum959 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1061 `json:"Statements,omitempty"`
 }
 
 type ComponentsK3999WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmongosettingsPropertiesRegionsettings struct {
@@ -3805,7 +4349,7 @@ type ComponentsK7Yjr4SchemasDescribetransmissiontasksresPropertiesResultProperti
 	MetaTransmissionSettings       *Components7G4HntSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesMetatransmissionsettings       `json:"MetaTransmissionSettings,omitempty"`
 	MySQLPosition                  *Components1NiwcsaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesMysqlposition                 `json:"MySQLPosition,omitempty"`
 	ObjectMappings                 []*ComponentsVhs7YqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItems          `json:"ObjectMappings,omitempty"`
-	PolicyForPrimaryKeyConflict    *Enum964                                                                                                                                                                                `json:"PolicyForPrimaryKeyConflict,omitempty"`
+	PolicyForPrimaryKeyConflict    *Enum1066                                                                                                                                                                               `json:"PolicyForPrimaryKeyConflict,omitempty"`
 	ShardingSettings               *ComponentsJ6IxhsSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesShardingsettings               `json:"ShardingSettings,omitempty"`
 
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
@@ -3835,10 +4379,10 @@ type ComponentsKzb7G3SchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsKzdx4CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum990 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1094 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum989           `json:"Protocol,omitempty"`
+	Protocol   *Enum1093          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -3865,14 +4409,22 @@ type ComponentsL513MaSchemasDescribetransmissiontasksresPropertiesResultProperti
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type ComponentsL7Lz0TSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettings struct {
+	DBInstanceID      *string                                                                                                                                                                `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                                                                                                `json:"Password,omitempty"`
+	RegionSettings    *ComponentsAety28SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettingsPropertiesRegionsettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *Components7Haea4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettingsPropertiesServerroomsetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                                                                                                `json:"Username,omitempty"`
+}
+
 type ComponentsLcu9Y1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcredissettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
 type ComponentsLdhr2SSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesFullprogressItemsPropertiesDatabasePropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *ComponentsUn5EyuSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesFullprogressItemsPropertiesDatabasePropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum874                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum875                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum966                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum967                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -3890,12 +4442,20 @@ type ComponentsLq7EjeSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Username       *string                                                                                                                                                               `json:"Username,omitempty"`
 }
 
+type ComponentsLr46CcSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaypostgresqlsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ComponentsLrg59ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
 type ComponentsLt8C5NSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcrocketmqsettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsM284JeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettingsPropertiesServerroomsetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
 type ComponentsMfa2D3SchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -3928,6 +4488,11 @@ type ComponentsMwvbyaSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Username       *string                                                                                                                                                         `json:"Username,omitempty"`
 }
 
+type ComponentsN5As2OSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
 type ComponentsN5JwbjSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
@@ -3935,10 +4500,10 @@ type ComponentsN5JwbjSchemasCreatetransmissiontaskbodyPropertiesSolutionsettings
 }
 
 type ComponentsN70Nd5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesEsextraargs struct {
-	Analyzer        *string  `json:"Analyzer,omitempty"`
-	CustomIndexType *string  `json:"CustomIndexType,omitempty"`
-	IdxNameRule     *Enum934 `json:"IdxNameRule,omitempty"`
-	InsertMode      *Enum933 `json:"InsertMode,omitempty"`
+	Analyzer        *string   `json:"Analyzer,omitempty"`
+	CustomIndexType *string   `json:"CustomIndexType,omitempty"`
+	IdxNameRule     *Enum1031 `json:"IdxNameRule,omitempty"`
+	InsertMode      *Enum1030 `json:"InsertMode,omitempty"`
 
 	ReplaceTargetIndex map[string]*string `json:"ReplaceTargetIndex,omitempty"`
 
@@ -4015,7 +4580,21 @@ type ComponentsOg7Q21SchemasDescribetransmissiontasksresPropertiesResultProperti
 	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
+type ComponentsOh6BfwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettings struct {
+	Host                   *string                                                                                                                                                                    `json:"Host,omitempty"`
+	Password               *string                                                                                                                                                                    `json:"Password,omitempty"`
+	Port                   *int32                                                                                                                                                                     `json:"Port,omitempty"`
+	PrivateNetworkSettings *ComponentsP7D2HfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettingsPropertiesPrivatenetworksettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *Components72Kp64SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettingsPropertiesRegionsettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                                                                                                    `json:"Username,omitempty"`
+}
+
 type ComponentsOj9FfySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcpostgresqlsettingsPropertiesCrossaccountsettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ComponentsOp4X90SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettingsPropertiesCrossaccountsettings struct {
 	Role          *string `json:"Role,omitempty"`
 	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
@@ -4030,11 +4609,16 @@ type ComponentsP3Vv10SchemasDescribetransmissiontasksresPropertiesResultProperti
 	Username        *string                                                                                                                                                        `json:"Username,omitempty"`
 }
 
+type ComponentsP7D2HfSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettingsPropertiesPrivatenetworksettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
 type ComponentsP9H2CnSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum984 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1088 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum983           `json:"Protocol,omitempty"`
+	Protocol   *Enum1087          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -4043,6 +4627,10 @@ type ComponentsP9H2CnSchemasDescribetransmissiontasksresPropertiesResultProperti
 
 type ComponentsPalny5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcskafkasettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsPdqbdeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettingsPropertiesServerroomsetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
 type ComponentsPgv072SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesMetatransmissionsettings struct {
@@ -4075,8 +4663,8 @@ type ComponentsPp5J7SSchemasDescribetransmissiontasksresPropertiesResultProperti
 
 type ComponentsPqw161SchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesDatabasePropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *Components1F78M24SchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesDatabasePropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum881                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum882                                                                                                                                                                                                    `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum973                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum974                                                                                                                                                                                                    `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -4100,10 +4688,28 @@ type ComponentsQ4Rjd0SchemasModifytransmissiontaskbodyPropertiesSolutionsettings
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type ComponentsQcdobpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettings struct {
+	CrossAccountSettings *ComponentsN5As2OSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                                        `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                                        `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                                                                                                        `json:"DBName,omitempty"`
+	Password             *string                                                                                                                                                                        `json:"Password,omitempty"`
+	RegionSettings       *Components1Bnuq5PSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettingsPropertiesRegionsettings      `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                                        `json:"Username,omitempty"`
+}
+
 type ComponentsQiedf7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type ComponentsQn1KfdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesErrorbehaviorsettings struct {
+	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ComponentsQy1K19SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
 }
 
 type ComponentsR1V0KzSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -4112,9 +4718,13 @@ type ComponentsR1V0KzSchemasCreatetransmissiontaskbodyPropertiesSolutionsettings
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type ComponentsR25XasSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ComponentsR2Se7ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum938 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1035 `json:"Statements,omitempty"`
 }
 
 type ComponentsR9DckpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpresspostgresqlsettings struct {
@@ -4142,7 +4752,7 @@ type ComponentsRkvoc5SchemasModifytransmissiontaskbodyPropertiesSolutionsettings
 type ComponentsRlm5TzSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesFullprogressItemsPropertiesObjectPropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *ComponentsRfg995SchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesFullprogressItemsPropertiesObjectPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskProgressResResultTaskProgressFullProgressPropertiesItemsItem                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum872                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum964                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -4155,11 +4765,25 @@ type ComponentsRms2XsSchemasDescribetransmissiontasksresPropertiesResultProperti
 	SrcObjName           *string                                                                                                                 `json:"SrcObjName,omitempty"`
 }
 
+type ComponentsRqbrdkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaypostgresqlsettings struct {
+	DBName         *string                                                                                                                                                                `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                                                                                                `json:"GatewayId,omitempty"`
+	Host           *string                                                                                                                                                                `json:"Host,omitempty"`
+	Password       *string                                                                                                                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                                                                                                                 `json:"Port,omitempty"`
+	RegionSettings *ComponentsLr46CcSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaypostgresqlsettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                                                                                                `json:"Username,omitempty"`
+}
+
 type ComponentsRvabk6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceshardingmysqlsettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
 type ComponentsRwt5MhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceelasticsearchsettingsPropertiesRegionsettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ComponentsS2Se6ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -4201,8 +4825,8 @@ type ComponentsT1Mei6SchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsTbpvzuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum991 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1095 `json:"Statements,omitempty"`
 }
 
 type ComponentsTcgzmuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcrocketmqsettings struct {
@@ -4238,8 +4862,8 @@ type ComponentsTmhxlgSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsToub9ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum932 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1029 `json:"Statements,omitempty"`
 }
 
 type ComponentsTpesubSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceshardingmysqlsettingsPropertiesServerroomsetting struct {
@@ -4256,15 +4880,25 @@ type ComponentsUcxhndSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Region *string `json:"Region,omitempty"`
 }
 
+type ComponentsUezmx8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettings struct {
+	CrossAccountSettings *Components143A2SrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                                                                                          `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                                                                                          `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                                                                                                          `json:"DBName,omitempty"`
+	Password             *string                                                                                                                                                                          `json:"Password,omitempty"`
+	RegionSettings       *Components1Pki7MdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettingsPropertiesRegionsettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                                                                                          `json:"Username,omitempty"`
+}
+
 type ComponentsUi7C8VSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolctossettingsPropertiesRegionsettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
 type ComponentsUl4QfdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesSubscriptionsettings struct {
-	PartitionPolicy *Enum996 `json:"PartitionPolicy,omitempty"`
+	PartitionPolicy *Enum1100 `json:"PartitionPolicy,omitempty"`
 
 	Properties map[string]*string `json:"Properties,omitempty"`
-	Protocol   *Enum995           `json:"Protocol,omitempty"`
+	Protocol   *Enum1099          `json:"Protocol,omitempty"`
 
 	TableCustomKey map[string][]*string `json:"TableCustomKey,omitempty"`
 	VPCID          *string              `json:"VPCId,omitempty"`
@@ -4307,8 +4941,8 @@ type ComponentsVk70H1SchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsVr7Dp0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesIncrtransmissionsettings struct {
-	EnableIncr *bool      `json:"EnableIncr,omitempty"`
-	Statements []*Enum979 `json:"Statements,omitempty"`
+	EnableIncr *bool       `json:"EnableIncr,omitempty"`
+	Statements []*Enum1083 `json:"Statements,omitempty"`
 }
 
 type ComponentsVts7EpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItems struct {
@@ -4348,10 +4982,10 @@ type ComponentsWhr196SchemasDescribetransmissiontasksresPropertiesResultProperti
 	CrossAccountSettings     *Components1Dqvh9MSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmongosettingsPropertiesCrossaccountsettings `json:"CrossAccountSettings,omitempty"`
 	DBInstanceID             *string                                                                                                                                                               `json:"DBInstanceId,omitempty"`
 	DBInstanceName           *string                                                                                                                                                               `json:"DBInstanceName,omitempty"`
-	DeployType               *Enum900                                                                                                                                                              `json:"DeployType,omitempty"`
+	DeployType               *Enum992                                                                                                                                                              `json:"DeployType,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                               `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                               `json:"Password,omitempty"`
-	PullMethod               *Enum901                                                                                                                                                              `json:"PullMethod,omitempty"`
+	PullMethod               *Enum993                                                                                                                                                              `json:"PullMethod,omitempty"`
 	RegionSettings           *ComponentsK3999WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmongosettingsPropertiesRegionsettings        `json:"RegionSettings,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                                 `json:"UseNewShardingDatasource,omitempty"`
 	Username                 *string                                                                                                                                                               `json:"Username,omitempty"`
@@ -4366,7 +5000,7 @@ type ComponentsWmde9RSchemasModifytransmissiontaskresPropertiesResultPropertiesT
 type ComponentsWygoxnSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesBinlogfulltransmissionsettings struct {
 	EnableBinlogFull *bool                                                                                                                                                                                                                  `json:"EnableBinlogFull,omitempty"`
 	PositionRanges   []*ComponentsZo5VmjSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesBinlogfulltransmissionsettingsPropertiesPositionrangesItems `json:"PositionRanges,omitempty"`
-	TypeFilter       []*Enum965                                                                                                                                                                                                             `json:"TypeFilter,omitempty"`
+	TypeFilter       []*Enum1067                                                                                                                                                                                                            `json:"TypeFilter,omitempty"`
 }
 
 type ComponentsWz57VeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesErrorbehaviorsettings struct {
@@ -4379,6 +5013,10 @@ type ComponentsWzjgl1SchemasDescribetransmissiontasksresPropertiesResultProperti
 
 type ComponentsX2G07ASchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesErrorbehaviorsettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ComponentsXe1Bn1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesMetatransmissionsettings struct {
+	EnableMeta *bool `json:"EnableMeta,omitempty"`
 }
 
 type ComponentsXjfl8LSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting struct {
@@ -4394,6 +5032,19 @@ type ComponentsXtp5X5SchemasDescribetransmissiontasksresPropertiesResultProperti
 type ComponentsXvvzzeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmysqlsettingsPropertiesSslsettings struct {
 	Cert      *string `json:"Cert,omitempty"`
 	EnableSSL *bool   `json:"EnableSSL,omitempty"`
+}
+
+type ComponentsXzkgeaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettings struct {
+	DeployType               *Enum1009                                                                                                                                                          `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                                                                                                          `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                                                                                                            `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                                                                                                            `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                                                                                                            `json:"Password,omitempty"`
+	PullMethod               *Enum1010                                                                                                                                                          `json:"PullMethod,omitempty"`
+	RegionSettings           *ComponentsQy1K19SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
+	Shards                   []*ComponentsJg12X6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettingsPropertiesShardsItems  `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                                                                                                              `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                                                                                                            `json:"Username,omitempty"`
 }
 
 type ComponentsY0SjbxSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Tossettings struct {
@@ -4419,12 +5070,12 @@ type ComponentsY4BjvnSchemasDescribetransmissiontasksresPropertiesResultProperti
 }
 
 type ComponentsY5Ol3QSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmongosettings struct {
-	DeployType               *Enum907                                                                                                                                                       `json:"DeployType,omitempty"`
+	DeployType               *Enum1001                                                                                                                                                      `json:"DeployType,omitempty"`
 	ECSSettings              *Components7Brtr2SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmongosettingsPropertiesEcssettings    `json:"ECSSettings,omitempty"`
 	Endpoints                []*string                                                                                                                                                      `json:"Endpoints,omitempty"`
 	MongoAuthSourceDB        *string                                                                                                                                                        `json:"MongoAuthSourceDB,omitempty"`
 	Password                 *string                                                                                                                                                        `json:"Password,omitempty"`
-	PullMethod               *Enum908                                                                                                                                                       `json:"PullMethod,omitempty"`
+	PullMethod               *Enum1002                                                                                                                                                      `json:"PullMethod,omitempty"`
 	RegionSettings           *ComponentsYi33SoSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmongosettingsPropertiesRegionsettings `json:"RegionSettings,omitempty"`
 	Shards                   []*Components14Qps9ZSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmongosettingsPropertiesShardsItems `json:"Shards,omitempty"`
 	UseNewShardingDatasource *bool                                                                                                                                                          `json:"UseNewShardingDatasource,omitempty"`
@@ -4434,7 +5085,7 @@ type ComponentsY5Ol3QSchemasDescribetransmissiontasksresPropertiesResultProperti
 type ComponentsY64QuiSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesMetaprogressItemsPropertiesObjectPropertiesObjectmappingsetting struct {
 	ESMetaMappingSetting *Components1UakifvSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesMetaprogressItemsPropertiesObjectPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskProgressResResultTaskProgressMetaProgressPropertiesItemsItem                                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum886                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum978                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
 
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
 }
@@ -4478,6 +5129,14 @@ type ComponentsZkzlyuSchemasDescribetransmissiontasksresPropertiesResultProperti
 	Region *string `json:"Region,omitempty"`
 }
 
+type ComponentsZmon40SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettings struct {
+	DBInstanceID      *string                                                                                                                                                                 `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                                                                                                 `json:"Password,omitempty"`
+	RegionSettings    *Components1Cmy3H7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettingsPropertiesRegionsettings   `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ComponentsM284JeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettingsPropertiesServerroomsetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                                                                                                 `json:"Username,omitempty"`
+}
+
 type ComponentsZo5VmjSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesBinlogfulltransmissionsettingsPropertiesPositionrangesItems struct {
 	End   *DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2MySQLSettingsBinlogFullTransmissionSettingsPositionRangesItemEnd   `json:"End,omitempty"`
 	Start *DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2MySQLSettingsBinlogFullTransmissionSettingsPositionRangesItemStart `json:"Start,omitempty"`
@@ -4501,11 +5160,80 @@ type ComponentsZtjbxmSchemasDescribetransmissiontasksresPropertiesResultProperti
 	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
+type CreateDataValidationTaskBody struct {
+	DebounceTime          *int64                                      `json:"DebounceTime,omitempty"`
+	RowCompareBatchSize   *int32                                      `json:"RowCompareBatchSize,omitempty"`
+	RowCompareParallelNum *int32                                      `json:"RowCompareParallelNum,omitempty"`
+	RunForever            *bool                                       `json:"RunForever,omitempty"`
+	TaskID                *string                                     `json:"TaskId,omitempty"`
+	TaskName              *string                                     `json:"TaskName,omitempty"`
+	ValidationType        *CreateDataValidationTaskBodyValidationType `json:"ValidationType,omitempty"`
+}
+
+type CreateDataValidationTaskRes struct {
+	ResponseMetadata *CreateDataValidationTaskResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *CreateDataValidationTaskResResult           `json:"Result,omitempty"`
+}
+
+type CreateDataValidationTaskResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type CreateDataValidationTaskResResult struct {
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type CreateSubscriptionGroupBody struct {
+	Description *string `json:"Description,omitempty"`
+	GroupName   *string `json:"GroupName,omitempty"`
+	Password    *string `json:"Password,omitempty"`
+	TaskID      *string `json:"TaskId,omitempty"`
+	Username    *string `json:"Username,omitempty"`
+}
+
+type CreateSubscriptionGroupRes struct {
+	ResponseMetadata *CreateSubscriptionGroupResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type CreateSubscriptionGroupResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type CreateTransmissionTaskBody struct {
 	ChargeConfig           *CreateTransmissionTaskBodyChargeConfig     `json:"ChargeConfig,omitempty"`
 	ChargeDetail           *CreateTransmissionTaskBodyChargeDetail     `json:"ChargeDetail,omitempty"`
 	CreateBackwardSyncTask *bool                                       `json:"CreateBackwardSyncTask,omitempty"`
 	DestConfig             *CreateTransmissionTaskBodyDestConfig       `json:"DestConfig,omitempty"`
+	IdempotencyKey         *string                                     `json:"IdempotencyKey,omitempty"`
 	ProjectName            *string                                     `json:"ProjectName,omitempty"`
 	SolutionSettings       *CreateTransmissionTaskBodySolutionSettings `json:"SolutionSettings,omitempty"`
 	SrcConfig              *CreateTransmissionTaskBodySrcConfig        `json:"SrcConfig,omitempty"`
@@ -4559,39 +5287,53 @@ type CreateTransmissionTaskBodyDestConfig struct {
 	ByteDanceAbase2Settings        *CreateTransmissionTaskBodyDestConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *CreateTransmissionTaskBodyDestConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *CreateTransmissionTaskBodyDestConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *CreateTransmissionTaskBodyDestConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *CreateTransmissionTaskBodyDestConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *CreateTransmissionTaskBodyDestConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *CreateTransmissionTaskBodyDestConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                             `json:"Category,omitempty"`
+	CreateTime                     *int64                                                              `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                             `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *CreateTransmissionTaskBodyDestConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *CreateTransmissionTaskBodyDestConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *CreateTransmissionTaskBodyDestConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *CreateTransmissionTaskBodyDestConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *CreateTransmissionTaskBodyDestConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *CreateTransmissionTaskBodyDestConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *CreateTransmissionTaskBodyDestConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *CreateTransmissionTaskBodyDestConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *CreateTransmissionTaskBodyDestConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *CreateTransmissionTaskBodyDestConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *CreateTransmissionTaskBodyDestConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *CreateTransmissionTaskBodyDestConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *CreateTransmissionTaskBodyDestConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *CreateTransmissionTaskBodyDestConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *CreateTransmissionTaskBodyDestConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *CreateTransmissionTaskBodyDestConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                              `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *CreateTransmissionTaskBodyDestConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                             `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *CreateTransmissionTaskBodyDestConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                    `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *CreateTransmissionTaskBodyDestConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *CreateTransmissionTaskBodyDestConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *CreateTransmissionTaskBodyDestConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *CreateTransmissionTaskBodyDestConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *CreateTransmissionTaskBodyDestConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *CreateTransmissionTaskBodyDestConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *CreateTransmissionTaskBodyDestConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *CreateTransmissionTaskBodyDestConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *CreateTransmissionTaskBodyDestConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *CreateTransmissionTaskBodyDestConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *CreateTransmissionTaskBodyDestConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *CreateTransmissionTaskBodyDestConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *CreateTransmissionTaskBodyDestConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                      `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *CreateTransmissionTaskBodyDestConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *CreateTransmissionTaskBodyDestConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *CreateTransmissionTaskBodyDestConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *CreateTransmissionTaskBodyDestConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *CreateTransmissionTaskBodyDestConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *CreateTransmissionTaskBodyDestConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *CreateTransmissionTaskBodyDestConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *CreateTransmissionTaskBodyDestConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *CreateTransmissionTaskBodyDestConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *CreateTransmissionTaskBodyDestConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *CreateTransmissionTaskBodyDestConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *CreateTransmissionTaskBodyDestConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *CreateTransmissionTaskBodyDestConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *CreateTransmissionTaskBodyDestConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *CreateTransmissionTaskBodyDestConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type CreateTransmissionTaskBodyDestConfigBuiltinKafkaSettings struct {
@@ -4647,6 +5389,22 @@ type CreateTransmissionTaskBodyDestConfigByteDanceMQSettingsRegionSettings struc
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodyDestConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                      `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                      `json:"Password,omitempty"`
+	RegionSettings    *CreateTransmissionTaskBodyDestConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *CreateTransmissionTaskBodyDestConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                      `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type CreateTransmissionTaskBodyDestConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                      `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                      `json:"Password,omitempty"`
@@ -4660,6 +5418,21 @@ type CreateTransmissionTaskBodyDestConfigByteDanceMySQLSettingsRegionSettings st
 }
 
 type CreateTransmissionTaskBodyDestConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                      `json:"Consul,omitempty"`
+	Location          *string                                                                      `json:"Location,omitempty"`
+	RegionSettings    *CreateTransmissionTaskBodyDestConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *CreateTransmissionTaskBodyDestConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -4710,6 +5483,23 @@ type CreateTransmissionTaskBodyDestConfigECSKafkaSettingsECSSettings struct {
 }
 
 type CreateTransmissionTaskBodyDestConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigECSMSSQLSettings struct {
+	ECSSettings    *CreateTransmissionTaskBodyDestConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                             `json:"Host,omitempty"`
+	Password       *string                                                             `json:"Password,omitempty"`
+	Port           *int32                                                              `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodyDestConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                             `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -4803,6 +5593,24 @@ type CreateTransmissionTaskBodyDestConfigECSRedisSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodyDestConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                         `json:"Host,omitempty"`
+	Password               *string                                                                         `json:"Password,omitempty"`
+	Port                   *int32                                                                          `json:"Port,omitempty"`
+	PrivateNetworkSettings *CreateTransmissionTaskBodyDestConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *CreateTransmissionTaskBodyDestConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                         `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodyDestConfigExpressMongoSettings struct {
 	DeployType               *CreateTransmissionTaskBodyDestConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                       `json:"Endpoints,omitempty"`
@@ -4891,6 +5699,60 @@ type CreateTransmissionTaskBodyDestConfigExpressRedisSettingsRegionSettings stru
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodyDestConfigGatewayMongoSettings struct {
+	DeployType               *CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                               `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                 `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                 `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                 `json:"Password,omitempty"`
+	PullMethod               *CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                   `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                 `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                 `json:"GatewayId,omitempty"`
+	Host           *string                                                                 `json:"Host,omitempty"`
+	Password       *string                                                                 `json:"Password,omitempty"`
+	Port           *int32                                                                  `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodyDestConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                 `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                      `json:"DBName,omitempty"`
+	GatewayID      *string                                                                      `json:"GatewayId,omitempty"`
+	Host           *string                                                                      `json:"Host,omitempty"`
+	Password       *string                                                                      `json:"Password,omitempty"`
+	Port           *int32                                                                       `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodyDestConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                      `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodyDestConfigMySQLBinlogSettings struct {
 	Dir    *string                                                             `json:"Dir,omitempty"`
 	Files  []*CreateTransmissionTaskBodyDestConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -4910,6 +5772,18 @@ type CreateTransmissionTaskBodyDestConfigPublicElasticSearchSettings struct {
 }
 
 type CreateTransmissionTaskBodyDestConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigPublicMSSQLSettings struct {
+	Host           *string                                                                `json:"Host,omitempty"`
+	Password       *string                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                 `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodyDestConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -4995,6 +5869,25 @@ type CreateTransmissionTaskBodyDestConfigVolcElasticSearchSettingsRegionSettings
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                              `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                              `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                              `json:"DBName,omitempty"`
+	Password             *string                                                                              `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                              `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodyDestConfigVolcKafkaSettings struct {
 	AuthType       *string                                                              `json:"AuthType,omitempty"`
 	InstanceID     *string                                                              `json:"InstanceId,omitempty"`
@@ -5006,6 +5899,24 @@ type CreateTransmissionTaskBodyDestConfigVolcKafkaSettings struct {
 }
 
 type CreateTransmissionTaskBodyDestConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *CreateTransmissionTaskBodyDestConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                    `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                    `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                    `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodyDestConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                    `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -5104,11 +6015,17 @@ type CreateTransmissionTaskBodyDestConfigVolcRocketMQSettingsRegionSettings stru
 }
 
 type CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                      `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                      `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                      `json:"Password,omitempty"`
-	RegionSettings *CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                      `json:"Username,omitempty"`
+	CrossAccountSettings *CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                            `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                            `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                            `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                            `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type CreateTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -5148,6 +6065,7 @@ type CreateTransmissionTaskBodyDestConfigVolcveDBMySQLSettingsRegionSettings str
 type CreateTransmissionTaskBodySolutionSettings struct {
 	Abase2DumpTOSSettings     *CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettings     `json:"Abase2DumpTOSSettings,omitempty"`
 	AutoStart                 *bool                                                                `json:"AutoStart,omitempty"`
+	MSSQL2MSSQLSettings       *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettings       `json:"MSSQL2MSSQLSettings,omitempty"`
 	Mongo2ByteDanceMQSettings *CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettings `json:"Mongo2ByteDanceMQSettings,omitempty"`
 	Mongo2MongoSettings       *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettings       `json:"Mongo2MongoSettings,omitempty"`
 	Mongo2RocketMQSettings    *CreateTransmissionTaskBodySolutionSettingsMongo2RocketMQSettings    `json:"Mongo2RocketMQSettings,omitempty"`
@@ -5207,7 +6125,67 @@ type CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappin
 type CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Mq61ESchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum697                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum774                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+
+	// 向前兼容，默认false，表示所有操作类型
+	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettings struct {
+	ETLSettings              *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsETLSettings              `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings    *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
+	ObjectMappings           []*CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+
+	// Dictionary of
+	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsETLSettings struct {
+	Script *string `json:"Script,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings struct {
+	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings struct {
+	BPSLimit        *int32                                                                                                      `json:"BPSLimit,omitempty"`
+	EnableFull      *bool                                                                                                       `json:"EnableFull,omitempty"`
+	ExtraConditions []*CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem `json:"ExtraConditions,omitempty"`
+	RPSLimit        *int32                                                                                                      `json:"RPSLimit,omitempty"`
+	Snapshot        *bool                                                                                                       `json:"Snapshot,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem struct {
+	Db       *string `json:"Db,omitempty"`
+	Table    *string `json:"Table,omitempty"`
+	WhereSQL *string `json:"WhereSql,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings struct {
+	EnableIncr *bool                                                                                                  `json:"EnableIncr,omitempty"`
+	Statements []*CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem `json:"Statements,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings struct {
+	EnableMeta *bool `json:"EnableMeta,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem struct {
+	DestObjName          *string                                                                                              `json:"DestObjName,omitempty"`
+	MappingList          []*ObjectMapping20221001                                                                             `json:"MappingList,omitempty"`
+	ObjectMappingSetting *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting `json:"ObjectMappingSetting,omitempty"`
+	ObjectType           *CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType           `json:"ObjectType,omitempty"`
+	SrcObjName           *string                                                                                              `json:"SrcObjName,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting struct {
+	ESMetaMappingSetting *Components1N1BqovSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
+	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum741                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5261,7 +6239,7 @@ type CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMa
 type CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Dk044PSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum725                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum802                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5281,13 +6259,14 @@ type CreateTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsSubscrip
 }
 
 type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettings struct {
-	ETLSettings              *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsETLSettings              `json:"ETLSettings,omitempty"`
-	ErrorBehaviorSettings    *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
-	FullTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
-	IncrTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
-	MetaTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
-	MongoPosition            *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMongoPosition            `json:"MongoPosition,omitempty"`
-	ObjectMappings           []*CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+	ETLSettings                      *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsETLSettings                      `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings            *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsErrorBehaviorSettings            `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings         *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsFullTransmissionSettings         `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings         *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissionSettings         `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings         *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMetaTransmissionSettings         `json:"MetaTransmissionSettings,omitempty"`
+	MongoPosition                    *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMongoPosition                    `json:"MongoPosition,omitempty"`
+	ObjectMappings                   []*CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItem             `json:"ObjectMappings,omitempty"`
+	PolicyForMongoPrimaryKeyConflict *CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict `json:"PolicyForMongoPrimaryKeyConflict,omitempty"`
 
 	// Dictionary of
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
@@ -5340,7 +6319,7 @@ type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappings
 type CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsR1V0KzSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum671                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum745                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5394,7 +6373,7 @@ type CreateTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappi
 type CreateTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Inex0NSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum701                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum778                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5472,7 +6451,7 @@ type CreateTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMa
 type CreateTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsOa0NtmSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum731                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum808                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5594,7 +6573,7 @@ type CreateTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsIte
 type CreateTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Tp5WjjSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum656                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum726                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5660,7 +6639,7 @@ type CreateTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappings
 type CreateTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsC4071PSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum675                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum750                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5802,7 +6781,7 @@ type CreateTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappings
 type CreateTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1V5KbznSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum681                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum756                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5872,7 +6851,7 @@ type CreateTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappi
 type CreateTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components12IhoxlSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum707                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum784                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -5943,7 +6922,7 @@ type CreateTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappi
 type CreateTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1S5D6ScSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum713                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum790                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6014,7 +6993,7 @@ type CreateTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsIte
 type CreateTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsZc8J08SchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum661                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum731                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6087,7 +7066,7 @@ type CreateTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsItem s
 type CreateTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsO2I9MaSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum650                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum720                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6145,7 +7124,7 @@ type CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappings
 type CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsDxy246SchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum687                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum762                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6166,6 +7145,7 @@ type CreateTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSe
 
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettings struct {
 	ErrorBehaviorSettings    *CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FilterRules              []*CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItem        `json:"FilterRules,omitempty"`
 	FullTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
 	IncrTransmissionSettings *CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
 	ObjectMappings           []*CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
@@ -6173,6 +7153,13 @@ type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettings struct {
 
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsErrorBehaviorSettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItem struct {
+	FilterType       *CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType                                                                              `json:"FilterType,omitempty"`
+	Pass             *bool                                                                                                                                                                `json:"Pass,omitempty"`
+	RegexFilterRule  []*string                                                                                                                                                            `json:"RegexFilterRule,omitempty"`
+	ServerFilterRule []*Components9Cezq2SchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems `json:"ServerFilterRule,omitempty"`
 }
 
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFullTransmissionSettings struct {
@@ -6205,7 +7192,7 @@ type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappings
 type CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Mzvp2ESchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum693                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum770                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6238,7 +7225,7 @@ type CreateTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappi
 type CreateTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components15Uwby7SchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum719                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum796                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6298,7 +7285,7 @@ type CreateTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsIt
 type CreateTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsN5JwbjSchemasCreatetransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*CreateTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum667                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum737                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -6309,39 +7296,53 @@ type CreateTransmissionTaskBodySrcConfig struct {
 	ByteDanceAbase2Settings        *CreateTransmissionTaskBodySrcConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *CreateTransmissionTaskBodySrcConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *CreateTransmissionTaskBodySrcConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *CreateTransmissionTaskBodySrcConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *CreateTransmissionTaskBodySrcConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *CreateTransmissionTaskBodySrcConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *CreateTransmissionTaskBodySrcConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                            `json:"Category,omitempty"`
+	CreateTime                     *int64                                                             `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                            `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *CreateTransmissionTaskBodySrcConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *CreateTransmissionTaskBodySrcConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *CreateTransmissionTaskBodySrcConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *CreateTransmissionTaskBodySrcConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *CreateTransmissionTaskBodySrcConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *CreateTransmissionTaskBodySrcConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *CreateTransmissionTaskBodySrcConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *CreateTransmissionTaskBodySrcConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *CreateTransmissionTaskBodySrcConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *CreateTransmissionTaskBodySrcConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *CreateTransmissionTaskBodySrcConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *CreateTransmissionTaskBodySrcConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *CreateTransmissionTaskBodySrcConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *CreateTransmissionTaskBodySrcConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *CreateTransmissionTaskBodySrcConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *CreateTransmissionTaskBodySrcConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                             `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *CreateTransmissionTaskBodySrcConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                            `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *CreateTransmissionTaskBodySrcConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                   `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *CreateTransmissionTaskBodySrcConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *CreateTransmissionTaskBodySrcConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *CreateTransmissionTaskBodySrcConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *CreateTransmissionTaskBodySrcConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *CreateTransmissionTaskBodySrcConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *CreateTransmissionTaskBodySrcConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *CreateTransmissionTaskBodySrcConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *CreateTransmissionTaskBodySrcConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *CreateTransmissionTaskBodySrcConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *CreateTransmissionTaskBodySrcConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *CreateTransmissionTaskBodySrcConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *CreateTransmissionTaskBodySrcConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *CreateTransmissionTaskBodySrcConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                     `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *CreateTransmissionTaskBodySrcConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *CreateTransmissionTaskBodySrcConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *CreateTransmissionTaskBodySrcConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *CreateTransmissionTaskBodySrcConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *CreateTransmissionTaskBodySrcConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *CreateTransmissionTaskBodySrcConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *CreateTransmissionTaskBodySrcConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *CreateTransmissionTaskBodySrcConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *CreateTransmissionTaskBodySrcConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *CreateTransmissionTaskBodySrcConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *CreateTransmissionTaskBodySrcConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *CreateTransmissionTaskBodySrcConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *CreateTransmissionTaskBodySrcConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *CreateTransmissionTaskBodySrcConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *CreateTransmissionTaskBodySrcConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type CreateTransmissionTaskBodySrcConfigBuiltinKafkaSettings struct {
@@ -6397,6 +7398,22 @@ type CreateTransmissionTaskBodySrcConfigByteDanceMQSettingsRegionSettings struct
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodySrcConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                     `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                     `json:"Password,omitempty"`
+	RegionSettings    *CreateTransmissionTaskBodySrcConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *CreateTransmissionTaskBodySrcConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                     `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type CreateTransmissionTaskBodySrcConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                     `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                     `json:"Password,omitempty"`
@@ -6410,6 +7427,21 @@ type CreateTransmissionTaskBodySrcConfigByteDanceMySQLSettingsRegionSettings str
 }
 
 type CreateTransmissionTaskBodySrcConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                     `json:"Consul,omitempty"`
+	Location          *string                                                                     `json:"Location,omitempty"`
+	RegionSettings    *CreateTransmissionTaskBodySrcConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *CreateTransmissionTaskBodySrcConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -6460,6 +7492,23 @@ type CreateTransmissionTaskBodySrcConfigECSKafkaSettingsECSSettings struct {
 }
 
 type CreateTransmissionTaskBodySrcConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigECSMSSQLSettings struct {
+	ECSSettings    *CreateTransmissionTaskBodySrcConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                            `json:"Host,omitempty"`
+	Password       *string                                                            `json:"Password,omitempty"`
+	Port           *int32                                                             `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodySrcConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                            `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -6553,6 +7602,24 @@ type CreateTransmissionTaskBodySrcConfigECSRedisSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodySrcConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                        `json:"Host,omitempty"`
+	Password               *string                                                                        `json:"Password,omitempty"`
+	Port                   *int32                                                                         `json:"Port,omitempty"`
+	PrivateNetworkSettings *CreateTransmissionTaskBodySrcConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *CreateTransmissionTaskBodySrcConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                        `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodySrcConfigExpressMongoSettings struct {
 	DeployType               *CreateTransmissionTaskBodySrcConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                      `json:"Endpoints,omitempty"`
@@ -6641,6 +7708,60 @@ type CreateTransmissionTaskBodySrcConfigExpressRedisSettingsRegionSettings struc
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodySrcConfigGatewayMongoSettings struct {
+	DeployType               *CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                              `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                `json:"Password,omitempty"`
+	PullMethod               *CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                  `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                `json:"GatewayId,omitempty"`
+	Host           *string                                                                `json:"Host,omitempty"`
+	Password       *string                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                 `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodySrcConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                     `json:"DBName,omitempty"`
+	GatewayID      *string                                                                     `json:"GatewayId,omitempty"`
+	Host           *string                                                                     `json:"Host,omitempty"`
+	Password       *string                                                                     `json:"Password,omitempty"`
+	Port           *int32                                                                      `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodySrcConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                     `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodySrcConfigMySQLBinlogSettings struct {
 	Dir    *string                                                            `json:"Dir,omitempty"`
 	Files  []*CreateTransmissionTaskBodySrcConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -6660,6 +7781,18 @@ type CreateTransmissionTaskBodySrcConfigPublicElasticSearchSettings struct {
 }
 
 type CreateTransmissionTaskBodySrcConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigPublicMSSQLSettings struct {
+	Host           *string                                                               `json:"Host,omitempty"`
+	Password       *string                                                               `json:"Password,omitempty"`
+	Port           *int32                                                                `json:"Port,omitempty"`
+	RegionSettings *CreateTransmissionTaskBodySrcConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                               `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -6745,6 +7878,25 @@ type CreateTransmissionTaskBodySrcConfigVolcElasticSearchSettingsRegionSettings 
 	Region *string `json:"Region,omitempty"`
 }
 
+type CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                             `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                             `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                             `json:"DBName,omitempty"`
+	Password             *string                                                                             `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                             `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type CreateTransmissionTaskBodySrcConfigVolcKafkaSettings struct {
 	AuthType       *string                                                             `json:"AuthType,omitempty"`
 	InstanceID     *string                                                             `json:"InstanceId,omitempty"`
@@ -6756,6 +7908,24 @@ type CreateTransmissionTaskBodySrcConfigVolcKafkaSettings struct {
 }
 
 type CreateTransmissionTaskBodySrcConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *CreateTransmissionTaskBodySrcConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                   `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                   `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                   `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodySrcConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                   `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -6854,11 +8024,17 @@ type CreateTransmissionTaskBodySrcConfigVolcRocketMQSettingsRegionSettings struc
 }
 
 type CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                     `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                     `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                     `json:"Password,omitempty"`
-	RegionSettings *CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                     `json:"Username,omitempty"`
+	CrossAccountSettings *CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                           `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                           `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                           `json:"Password,omitempty"`
+	RegionSettings       *CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                           `json:"Username,omitempty"`
+}
+
+type CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type CreateTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -6912,7 +8088,7 @@ type CreateTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -6950,6 +8126,63 @@ type CreateTransmissionTaskResResultChargeDetail struct {
 	OverdueTime *int64 `json:"OverdueTime,omitempty"`
 }
 
+type DeleteDataValidationTaskBody struct {
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type DeleteDataValidationTaskRes struct {
+	ResponseMetadata *DeleteDataValidationTaskResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DeleteDataValidationTaskResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DeleteSubscriptionGroupBody struct {
+	GroupName *string `json:"GroupName,omitempty"`
+	TaskID    *string `json:"TaskId,omitempty"`
+}
+
+type DeleteSubscriptionGroupRes struct {
+	ResponseMetadata *DeleteSubscriptionGroupResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DeleteSubscriptionGroupResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type DeleteTransmissionTaskBody struct {
 	TaskID *string `json:"TaskId,omitempty"`
 }
@@ -6968,7 +8201,7 @@ type DeleteTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -6996,7 +8229,7 @@ type DeleteTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -7004,6 +8237,208 @@ type DeleteTransmissionTasksResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+}
+
+type DescribeDataValidationResultBody struct {
+	// 校验任务ID
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type DescribeDataValidationResultRes struct {
+	ResponseMetadata *DescribeDataValidationResultResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *DescribeDataValidationResultResResult           `json:"Result,omitempty"`
+}
+
+type DescribeDataValidationResultResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeDataValidationResultResResult struct {
+	// 下载链接
+	Link *string `json:"Link,omitempty"`
+}
+
+type DescribeDataValidationTasksBody struct {
+	BackGround *bool   `json:"BackGround,omitempty"`
+	PageNumber *int32  `json:"PageNumber,omitempty"`
+	PageSize   *int32  `json:"PageSize,omitempty"`
+	TaskID     *string `json:"TaskID,omitempty"`
+}
+
+type DescribeDataValidationTasksRes struct {
+	ResponseMetadata *DescribeDataValidationTasksResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *DescribeDataValidationTasksResResult           `json:"Result,omitempty"`
+}
+
+type DescribeDataValidationTasksResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeDataValidationTasksResResult struct {
+	Total           *int32                                                     `json:"Total,omitempty"`
+	ValidationTasks []*DescribeDataValidationTasksResResultValidationTasksItem `json:"ValidationTasks,omitempty"`
+}
+
+type DescribeDataValidationTasksResResultValidationTasksItem struct {
+	CreateTime     *int64                                                                 `json:"CreateTime,omitempty"`
+	DiffCount      *int64                                                                 `json:"DiffCount,omitempty"`
+	DiffRate       *int64                                                                 `json:"DiffRate,omitempty"`
+	EndTime        *int64                                                                 `json:"EndTime,omitempty"`
+	EstimateCount  *int64                                                                 `json:"EstimateCount,omitempty"`
+	ID             *string                                                                `json:"ID,omitempty"`
+	Name           *string                                                                `json:"Name,omitempty"`
+	Progress       *int64                                                                 `json:"Progress,omitempty"`
+	Status         *DescribeDataValidationTasksResResultValidationTasksItemStatus         `json:"Status,omitempty"`
+	ValidationType *DescribeDataValidationTasksResResultValidationTasksItemValidationType `json:"ValidationType,omitempty"`
+}
+
+type DescribeSubscriptionGroupBody struct {
+	GroupName *string `json:"GroupName,omitempty"`
+	TaskID    *string `json:"TaskId,omitempty"`
+}
+
+type DescribeSubscriptionGroupProgressBody struct {
+	GroupName *string `json:"GroupName,omitempty"`
+	TaskID    *string `json:"TaskId,omitempty"`
+}
+
+type DescribeSubscriptionGroupProgressRes struct {
+	ResponseMetadata *DescribeSubscriptionGroupProgressResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *DescribeSubscriptionGroupProgressResResult           `json:"Result,omitempty"`
+}
+
+type DescribeSubscriptionGroupProgressResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeSubscriptionGroupProgressResResult struct {
+	DelayTime  *int64                                                      `json:"DelayTime,omitempty"`
+	Partitions []*DescribeSubscriptionGroupProgressResResultPartitionsItem `json:"Partitions,omitempty"`
+}
+
+type DescribeSubscriptionGroupProgressResResultPartitionsItem struct {
+	ID           *int32 `json:"Id,omitempty"`
+	LogEndOffset *int64 `json:"LogEndOffset,omitempty"`
+	Offset       *int64 `json:"Offset,omitempty"`
+}
+
+type DescribeSubscriptionGroupRes struct {
+	ResponseMetadata *DescribeSubscriptionGroupResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *DescribeSubscriptionGroupResResult           `json:"Result,omitempty"`
+}
+
+type DescribeSubscriptionGroupResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeSubscriptionGroupResResult struct {
+	Group *DescribeSubscriptionGroupResResultGroup `json:"Group,omitempty"`
+}
+
+type DescribeSubscriptionGroupResResultGroup struct {
+	CreateTime   *int64  `json:"CreateTime,omitempty"`
+	DelaySeconds *int64  `json:"DelaySeconds,omitempty"`
+	Description  *string `json:"Description,omitempty"`
+	GroupName    *string `json:"GroupName,omitempty"`
+	LogEndOffset *int64  `json:"LogEndOffset,omitempty"`
+	Offset       *int64  `json:"Offset,omitempty"`
+	PartitionID  *int32  `json:"PartitionId,omitempty"`
+	UpdateTime   *int64  `json:"UpdateTime,omitempty"`
+	Username     *string `json:"Username,omitempty"`
+}
+
+type DescribeSubscriptionGroupsBody struct {
+	TaskID *string `json:"TaskId,omitempty"`
+}
+
+type DescribeSubscriptionGroupsRes struct {
+	ResponseMetadata *DescribeSubscriptionGroupsResResponseMetadata `json:"ResponseMetadata,omitempty"`
+	Result           *DescribeSubscriptionGroupsResResult           `json:"Result,omitempty"`
+}
+
+type DescribeSubscriptionGroupsResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeSubscriptionGroupsResResult struct {
+	Groups []*DescribeSubscriptionGroupsResResultGroupsItem `json:"Groups,omitempty"`
+}
+
+type DescribeSubscriptionGroupsResResultGroupsItem struct {
+	CreateTime   *int64  `json:"CreateTime,omitempty"`
+	DelaySeconds *int64  `json:"DelaySeconds,omitempty"`
+	Description  *string `json:"Description,omitempty"`
+	GroupName    *string `json:"GroupName,omitempty"`
+	LogEndOffset *int64  `json:"LogEndOffset,omitempty"`
+	Offset       *int64  `json:"Offset,omitempty"`
+	PartitionID  *int32  `json:"PartitionId,omitempty"`
+	UpdateTime   *int64  `json:"UpdateTime,omitempty"`
+	Username     *string `json:"Username,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoBody struct {
@@ -7022,7 +8457,7 @@ type DescribeTransmissionTaskInfoResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -7037,31 +8472,33 @@ type DescribeTransmissionTaskInfoResResult struct {
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfo struct {
-	AddSyncObjectAllowed *bool                                                          `json:"AddSyncObjectAllowed,omitempty"`
-	ChargeConfig         *DescribeTransmissionTaskInfoResResultTaskInfoChargeConfig     `json:"ChargeConfig,omitempty"`
-	ChargeDetail         *DescribeTransmissionTaskInfoResResultTaskInfoChargeDetail     `json:"ChargeDetail,omitempty"`
-	CreateTime           *int64                                                         `json:"CreateTime,omitempty"`
-	DestConfig           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfig       `json:"DestConfig,omitempty"`
-	EnableCloudMonitor   *bool                                                          `json:"EnableCloudMonitor,omitempty"`
-	EnableDataValidation *bool                                                          `json:"EnableDataValidation,omitempty"`
-	EndTime              *int64                                                         `json:"EndTime,omitempty"`
-	ErrorInfo            *string                                                        `json:"ErrorInfo,omitempty"`
-	ParentTaskID         *string                                                        `json:"ParentTaskID,omitempty"`
-	ProgressSummary      *DescribeTransmissionTaskInfoResResultTaskInfoProgressSummary  `json:"ProgressSummary,omitempty"`
-	ProjectName          *string                                                        `json:"ProjectName,omitempty"`
-	SnapshotGtid         *string                                                        `json:"SnapshotGtid,omitempty"`
-	SolutionSettings     *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettings `json:"SolutionSettings,omitempty"`
-	SrcConfig            *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfig        `json:"SrcConfig,omitempty"`
-	StartTime            *int64                                                         `json:"StartTime,omitempty"`
-	Tags                 []*DescribeTransmissionTaskInfoResResultTaskInfoTagsItem       `json:"Tags,omitempty"`
-	TaskID               *string                                                        `json:"TaskId,omitempty"`
-	TaskName             *string                                                        `json:"TaskName,omitempty"`
-	TaskStatus           *DescribeTransmissionTaskInfoResResultTaskInfoTaskStatus       `json:"TaskStatus,omitempty"`
-	TaskSubType          *DescribeTransmissionTaskInfoResResultTaskInfoTaskSubType      `json:"TaskSubType,omitempty"`
-	TaskType             *DescribeTransmissionTaskInfoResResultTaskInfoTaskType         `json:"TaskType,omitempty"`
-	TenantID             *string                                                        `json:"TenantId,omitempty"`
-	TrafficSpec          *DescribeTransmissionTaskInfoResResultTaskInfoTrafficSpec      `json:"TrafficSpec,omitempty"`
-	UpdateTime           *int64                                                         `json:"UpdateTime,omitempty"`
+	AddSyncObjectAllowed         *bool                                                                            `json:"AddSyncObjectAllowed,omitempty"`
+	ChargeConfig                 *DescribeTransmissionTaskInfoResResultTaskInfoChargeConfig                       `json:"ChargeConfig,omitempty"`
+	ChargeDetail                 *DescribeTransmissionTaskInfoResResultTaskInfoChargeDetail                       `json:"ChargeDetail,omitempty"`
+	CreateTime                   *int64                                                                           `json:"CreateTime,omitempty"`
+	DestConfig                   *DescribeTransmissionTaskInfoResResultTaskInfoDestConfig                         `json:"DestConfig,omitempty"`
+	EnableCloudMonitor           *bool                                                                            `json:"EnableCloudMonitor,omitempty"`
+	EnableDataValidation         *bool                                                                            `json:"EnableDataValidation,omitempty"`
+	EndTime                      *int64                                                                           `json:"EndTime,omitempty"`
+	ErrorInfo                    *string                                                                          `json:"ErrorInfo,omitempty"`
+	ParentTaskID                 *string                                                                          `json:"ParentTaskID,omitempty"`
+	ProgressSummary              *DescribeTransmissionTaskInfoResResultTaskInfoProgressSummary                    `json:"ProgressSummary,omitempty"`
+	ProjectName                  *string                                                                          `json:"ProjectName,omitempty"`
+	SnapshotGtid                 *string                                                                          `json:"SnapshotGtid,omitempty"`
+	SolutionSettings             *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettings                   `json:"SolutionSettings,omitempty"`
+	SrcConfig                    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfig                          `json:"SrcConfig,omitempty"`
+	StartTime                    *int64                                                                           `json:"StartTime,omitempty"`
+	Statements                   []*DescribeTransmissionTaskInfoResResultTaskInfoStatementsItem                   `json:"Statements,omitempty"`
+	SupportedDataValidationTypes []*DescribeTransmissionTaskInfoResResultTaskInfoSupportedDataValidationTypesItem `json:"SupportedDataValidationTypes,omitempty"`
+	Tags                         []*DescribeTransmissionTaskInfoResResultTaskInfoTagsItem                         `json:"Tags,omitempty"`
+	TaskID                       *string                                                                          `json:"TaskId,omitempty"`
+	TaskName                     *string                                                                          `json:"TaskName,omitempty"`
+	TaskStatus                   *DescribeTransmissionTaskInfoResResultTaskInfoTaskStatus                         `json:"TaskStatus,omitempty"`
+	TaskSubType                  *DescribeTransmissionTaskInfoResResultTaskInfoTaskSubType                        `json:"TaskSubType,omitempty"`
+	TaskType                     *DescribeTransmissionTaskInfoResResultTaskInfoTaskType                           `json:"TaskType,omitempty"`
+	TenantID                     *string                                                                          `json:"TenantId,omitempty"`
+	TrafficSpec                  *DescribeTransmissionTaskInfoResResultTaskInfoTrafficSpec                        `json:"TrafficSpec,omitempty"`
+	UpdateTime                   *int64                                                                           `json:"UpdateTime,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoChargeConfig struct {
@@ -7108,39 +8545,53 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfig struct {
 	ByteDanceAbase2Settings        *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                                `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                                 `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                                `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                                 `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                                `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                       `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                         `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigBuiltinKafkaSettings struct {
@@ -7196,6 +8647,22 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMQSettingsR
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                                         `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                         `json:"Password,omitempty"`
+	RegionSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                         `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                                         `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                                         `json:"Password,omitempty"`
@@ -7209,6 +8676,21 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMySQLSettin
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                                         `json:"Consul,omitempty"`
+	Location          *string                                                                                         `json:"Location,omitempty"`
+	RegionSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -7259,6 +8741,23 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSKafkaSettingsECSS
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettings struct {
+	ECSSettings    *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                                `json:"Host,omitempty"`
+	Password       *string                                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                                 `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -7352,6 +8851,24 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigECSRedisSettingsRegi
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                                            `json:"Host,omitempty"`
+	Password               *string                                                                                            `json:"Password,omitempty"`
+	Port                   *int32                                                                                             `json:"Port,omitempty"`
+	PrivateNetworkSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                            `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMongoSettings struct {
 	DeployType               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                          `json:"Endpoints,omitempty"`
@@ -7440,6 +8957,60 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigExpressRedisSettings
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettings struct {
+	DeployType               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                                  `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                                    `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                                    `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                                    `json:"Password,omitempty"`
+	PullMethod               *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                                      `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                                    `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                                    `json:"GatewayId,omitempty"`
+	Host           *string                                                                                    `json:"Host,omitempty"`
+	Password       *string                                                                                    `json:"Password,omitempty"`
+	Port           *int32                                                                                     `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                    `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                                         `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                         `json:"GatewayId,omitempty"`
+	Host           *string                                                                                         `json:"Host,omitempty"`
+	Password       *string                                                                                         `json:"Password,omitempty"`
+	Port           *int32                                                                                          `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                         `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigMySQLBinlogSettings struct {
 	Dir    *string                                                                                `json:"Dir,omitempty"`
 	Files  []*DescribeTransmissionTaskInfoResResultTaskInfoDestConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -7459,6 +9030,18 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicElasticSearchS
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMSSQLSettings struct {
+	Host           *string                                                                                   `json:"Host,omitempty"`
+	Password       *string                                                                                   `json:"Password,omitempty"`
+	Port           *int32                                                                                    `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                   `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -7544,6 +9127,25 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcElasticSearchSet
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                 `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                 `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                                 `json:"DBName,omitempty"`
+	Password             *string                                                                                                 `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                 `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcKafkaSettings struct {
 	AuthType       *string                                                                                 `json:"AuthType,omitempty"`
 	InstanceID     *string                                                                                 `json:"InstanceId,omitempty"`
@@ -7555,6 +9157,24 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcKafkaSettings st
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                       `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                       `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                       `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                       `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -7653,11 +9273,17 @@ type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcRocketMQSettings
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                                         `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                         `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                         `json:"Password,omitempty"`
-	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                         `json:"Username,omitempty"`
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                               `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                               `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                               `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                               `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -7702,6 +9328,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoProgressSummaryInfosItem struc
 	CompletePercentage *int32                                                                             `json:"CompletePercentage,omitempty"`
 	Delay              *int32                                                                             `json:"Delay,omitempty"`
 	ErrorInfo          *string                                                                            `json:"ErrorInfo,omitempty"`
+	FetchDelay         *int32                                                                             `json:"FetchDelay,omitempty"`
 	NameCN             *string                                                                            `json:"NameCN,omitempty"`
 	ProgressType       *DescribeTransmissionTaskInfoResResultTaskInfoProgressSummaryInfosItemProgressType `json:"ProgressType,omitempty"`
 	Status             *DescribeTransmissionTaskInfoResResultTaskInfoProgressSummaryInfosItemStatus       `json:"Status,omitempty"`
@@ -7710,6 +9337,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoProgressSummaryInfosItem struc
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettings struct {
 	Abase2DumpTOSSettings     *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSSettings     `json:"Abase2DumpTOSSettings,omitempty"`
 	AutoStart                 *bool                                                                                   `json:"AutoStart,omitempty"`
+	MSSQL2MSSQLSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettings       `json:"MSSQL2MSSQLSettings,omitempty"`
 	Mongo2ByteDanceMQSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettings `json:"Mongo2ByteDanceMQSettings,omitempty"`
 	Mongo2MongoSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettings       `json:"Mongo2MongoSettings,omitempty"`
 	Mongo2RocketMQSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2RocketMQSettings    `json:"Mongo2RocketMQSettings,omitempty"`
@@ -7769,7 +9397,67 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSS
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1FnsvsxSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum828                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum919                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+
+	// 向前兼容，默认false，表示所有操作类型
+	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettings struct {
+	ETLSettings              *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsETLSettings              `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
+	ObjectMappings           []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+
+	// Dictionary of
+	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsETLSettings struct {
+	Script *string `json:"Script,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings struct {
+	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings struct {
+	BPSLimit        *int32                                                                                                                         `json:"BPSLimit,omitempty"`
+	EnableFull      *bool                                                                                                                          `json:"EnableFull,omitempty"`
+	ExtraConditions []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem `json:"ExtraConditions,omitempty"`
+	RPSLimit        *int32                                                                                                                         `json:"RPSLimit,omitempty"`
+	Snapshot        *bool                                                                                                                          `json:"Snapshot,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem struct {
+	Db       *string `json:"Db,omitempty"`
+	Table    *string `json:"Table,omitempty"`
+	WhereSQL *string `json:"WhereSql,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings struct {
+	EnableIncr *bool                                                                                                                     `json:"EnableIncr,omitempty"`
+	Statements []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem `json:"Statements,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings struct {
+	EnableMeta *bool `json:"EnableMeta,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem struct {
+	DestObjName          *string                                                                                                                 `json:"DestObjName,omitempty"`
+	MappingList          []*ObjectMapping20221001                                                                                                `json:"MappingList,omitempty"`
+	ObjectMappingSetting *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting `json:"ObjectMappingSetting,omitempty"`
+	ObjectType           *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType           `json:"ObjectType,omitempty"`
+	SrcObjName           *string                                                                                                                 `json:"SrcObjName,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting struct {
+	ESMetaMappingSetting *Components1Qg65DgSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
+	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum886                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -7823,7 +9511,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanc
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsBel8Q0SchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum856                                                                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum947                                                                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -7843,13 +9531,14 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2ByteDanc
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettings struct {
-	ETLSettings              *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsETLSettings              `json:"ETLSettings,omitempty"`
-	ErrorBehaviorSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
-	FullTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
-	IncrTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
-	MetaTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
-	MongoPosition            *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsMongoPosition            `json:"MongoPosition,omitempty"`
-	ObjectMappings           []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+	ETLSettings                      *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsETLSettings                      `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings            *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsErrorBehaviorSettings            `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsFullTransmissionSettings         `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsIncrTransmissionSettings         `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsMetaTransmissionSettings         `json:"MetaTransmissionSettings,omitempty"`
+	MongoPosition                    *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsMongoPosition                    `json:"MongoPosition,omitempty"`
+	ObjectMappings                   []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItem             `json:"ObjectMappings,omitempty"`
+	PolicyForMongoPrimaryKeyConflict *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict `json:"PolicyForMongoPrimaryKeyConflict,omitempty"`
 
 	// Dictionary of
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
@@ -7902,7 +9591,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components12R5OnwSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum802                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum890                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -7956,7 +9645,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2RocketMQ
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components12Ih4IySchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum832                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum923                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8034,7 +9723,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ByteDanc
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components15RahvgSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum862                                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum953                                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8156,7 +9845,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ESSettin
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ESSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsMfa2D3SchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2ESSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum787                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum871                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8222,7 +9911,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2KafkaSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Ovyzr3SchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum806                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum895                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8364,7 +10053,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2MySQLSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2MySQLSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components78A72JSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2MySQLSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum812                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum901                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8434,7 +10123,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2RocketMQ
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components9H3SthSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsMySQL2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum838                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum929                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8505,7 +10194,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2ByteDanceMQ
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsOcqx3BSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum844                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum935                                                                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8576,7 +10265,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2KafkaSettin
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Xycy0RSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum792                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum876                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8649,7 +10338,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2PGSettingsO
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2PGSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsXjfl8LSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2PGSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum781                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum865                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8707,7 +10396,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Nissq8SchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum818                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum907                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8728,6 +10417,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsPG2RocketMQSet
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettings struct {
 	ErrorBehaviorSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FilterRules              []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItem        `json:"FilterRules,omitempty"`
 	FullTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
 	IncrTransmissionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
 	ObjectMappings           []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
@@ -8735,6 +10425,13 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSet
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsErrorBehaviorSettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItem struct {
+	FilterType       *DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType                                                                                                   `json:"FilterType,omitempty"`
+	Pass             *bool                                                                                                                                                                                                        `json:"Pass,omitempty"`
+	RegexFilterRule  []*string                                                                                                                                                                                                    `json:"RegexFilterRule,omitempty"`
+	ServerFilterRule []*Components1JukmteSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems `json:"ServerFilterRule,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsFullTransmissionSettings struct {
@@ -8767,7 +10464,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSet
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components14Ast4VSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum824                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum915                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8800,7 +10497,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RocketMQ
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1J8HcqkSchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum850                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum941                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8860,7 +10557,7 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2TOSSetti
 type DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2TOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1QmotzySchemasDescribetransmissiontaskinforesPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*DescribeTransmissionTaskInfoResResultTaskInfoSolutionSettingsRedis2TOSSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum798                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum882                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -8871,39 +10568,53 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfig struct {
 	ByteDanceAbase2Settings        *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                               `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                                `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                               `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                                `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                               `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                      `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                        `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigBuiltinKafkaSettings struct {
@@ -8959,6 +10670,22 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMQSettingsRe
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                                        `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                        `json:"Password,omitempty"`
+	RegionSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                        `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                                        `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                                        `json:"Password,omitempty"`
@@ -8972,6 +10699,21 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMySQLSetting
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                                        `json:"Consul,omitempty"`
+	Location          *string                                                                                        `json:"Location,omitempty"`
+	RegionSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -9022,6 +10764,23 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSKafkaSettingsECSSe
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettings struct {
+	ECSSettings    *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                               `json:"Host,omitempty"`
+	Password       *string                                                                               `json:"Password,omitempty"`
+	Port           *int32                                                                                `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                               `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -9115,6 +10874,24 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigECSRedisSettingsRegio
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                                           `json:"Host,omitempty"`
+	Password               *string                                                                                           `json:"Password,omitempty"`
+	Port                   *int32                                                                                            `json:"Port,omitempty"`
+	PrivateNetworkSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                           `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMongoSettings struct {
 	DeployType               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                         `json:"Endpoints,omitempty"`
@@ -9203,6 +10980,60 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigExpressRedisSettingsR
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettings struct {
+	DeployType               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                                 `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                                   `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                                   `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                                   `json:"Password,omitempty"`
+	PullMethod               *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                                     `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                                   `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                                   `json:"GatewayId,omitempty"`
+	Host           *string                                                                                   `json:"Host,omitempty"`
+	Password       *string                                                                                   `json:"Password,omitempty"`
+	Port           *int32                                                                                    `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                   `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                                        `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                        `json:"GatewayId,omitempty"`
+	Host           *string                                                                                        `json:"Host,omitempty"`
+	Password       *string                                                                                        `json:"Password,omitempty"`
+	Port           *int32                                                                                         `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                        `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigMySQLBinlogSettings struct {
 	Dir    *string                                                                               `json:"Dir,omitempty"`
 	Files  []*DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -9222,6 +11053,18 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicElasticSearchSe
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMSSQLSettings struct {
+	Host           *string                                                                                  `json:"Host,omitempty"`
+	Password       *string                                                                                  `json:"Password,omitempty"`
+	Port           *int32                                                                                   `json:"Port,omitempty"`
+	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                  `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -9307,6 +11150,25 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcElasticSearchSett
 	Region *string `json:"Region,omitempty"`
 }
 
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                                `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                                `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                                `json:"DBName,omitempty"`
+	Password             *string                                                                                                `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                                `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcKafkaSettings struct {
 	AuthType       *string                                                                                `json:"AuthType,omitempty"`
 	InstanceID     *string                                                                                `json:"InstanceId,omitempty"`
@@ -9318,6 +11180,24 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcKafkaSettings str
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                      `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                      `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                      `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                      `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -9416,11 +11296,17 @@ type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcRocketMQSettingsR
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                                        `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                        `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                        `json:"Password,omitempty"`
-	RegionSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                        `json:"Username,omitempty"`
+	CrossAccountSettings *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                              `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                              `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                              `json:"Password,omitempty"`
+	RegionSettings       *DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                              `json:"Username,omitempty"`
+}
+
+type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type DescribeTransmissionTaskInfoResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -9487,7 +11373,7 @@ type DescribeTransmissionTaskProgressResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -9540,7 +11426,7 @@ type DescribeTransmissionTaskProgressResResultTaskProgressFullProgressItemDataba
 	DestObjName          *string                                                                                                                                                                      `json:"DestObjName,omitempty"`
 	MappingList          []*ObjectMapping20221001                                                                                                                                                     `json:"MappingList,omitempty"`
 	ObjectMappingSetting *ComponentsLdhr2SSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesFullprogressItemsPropertiesDatabasePropertiesObjectmappingsetting `json:"ObjectMappingSetting,omitempty"`
-	ObjectType           *Enum873                                                                                                                                                                     `json:"ObjectType,omitempty"`
+	ObjectType           *Enum965                                                                                                                                                                     `json:"ObjectType,omitempty"`
 	SrcObjName           *string                                                                                                                                                                      `json:"SrcObjName,omitempty"`
 }
 
@@ -9556,6 +11442,8 @@ type DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressItem struc
 	Database       *DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressItemDatabase `json:"Database,omitempty"`
 	LatencySeconds *int64                                                                         `json:"LatencySeconds,omitempty"`
 	Object         *DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressItemObject   `json:"Object,omitempty"`
+	OpID           *int64                                                                         `json:"OpID,omitempty"`
+	ServerID       *int64                                                                         `json:"ServerID,omitempty"`
 	ShardID        *string                                                                        `json:"ShardID,omitempty"`
 	State          *DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressItemState    `json:"State,omitempty"`
 	SwimmingLane   *string                                                                        `json:"SwimmingLane,omitempty"`
@@ -9568,7 +11456,7 @@ type DescribeTransmissionTaskProgressResResultTaskProgressIncrProgressItemDataba
 	DestObjName          *string                                                                                                                                                                      `json:"DestObjName,omitempty"`
 	MappingList          []*ObjectMapping20221001                                                                                                                                                     `json:"MappingList,omitempty"`
 	ObjectMappingSetting *ComponentsPqw161SchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesIncrprogressItemsPropertiesDatabasePropertiesObjectmappingsetting `json:"ObjectMappingSetting,omitempty"`
-	ObjectType           *Enum880                                                                                                                                                                     `json:"ObjectType,omitempty"`
+	ObjectType           *Enum972                                                                                                                                                                     `json:"ObjectType,omitempty"`
 	SrcObjName           *string                                                                                                                                                                      `json:"SrcObjName,omitempty"`
 }
 
@@ -9593,7 +11481,7 @@ type DescribeTransmissionTaskProgressResResultTaskProgressMetaProgressItemDataba
 	DestObjName          *string                                                                                                                                                                       `json:"DestObjName,omitempty"`
 	MappingList          []*ObjectMapping20221001                                                                                                                                                      `json:"MappingList,omitempty"`
 	ObjectMappingSetting *Components1Ee1A9YSchemasDescribetransmissiontaskprogressresPropertiesResultPropertiesTaskprogressPropertiesMetaprogressItemsPropertiesDatabasePropertiesObjectmappingsetting `json:"ObjectMappingSetting,omitempty"`
-	ObjectType           *Enum887                                                                                                                                                                      `json:"ObjectType,omitempty"`
+	ObjectType           *Enum979                                                                                                                                                                      `json:"ObjectType,omitempty"`
 	SrcObjName           *string                                                                                                                                                                       `json:"SrcObjName,omitempty"`
 }
 
@@ -9637,7 +11525,7 @@ type DescribeTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -9653,47 +11541,49 @@ type DescribeTransmissionTasksResResult struct {
 }
 
 type DescribeTransmissionTasksResResultTasksItem struct {
-	AddSyncObjectAllowed *bool                                                         `json:"AddSyncObjectAllowed,omitempty"`
-	ChargeConfig         *DescribeTransmissionTasksResResultTasksItemChargeConfig      `json:"ChargeConfig,omitempty"`
-	ChargeDetail         *DescribeTransmissionTasksResResultTasksItemChargeDetail      `json:"ChargeDetail,omitempty"`
-	CreateTime           *int64                                                        `json:"CreateTime,omitempty"`
-	DestConfig           *DescribeTransmissionTasksResResultTasksItemDestConfig        `json:"DestConfig,omitempty"`
-	EnableCloudMonitor   *bool                                                         `json:"EnableCloudMonitor,omitempty"`
-	EnableDataValidation *bool                                                         `json:"EnableDataValidation,omitempty"`
-	EndTime              *int64                                                        `json:"EndTime,omitempty"`
-	ErrorInfo            *string                                                       `json:"ErrorInfo,omitempty"`
-	ParentTaskID         *string                                                       `json:"ParentTaskID,omitempty"`
-	ProgressSummary      *DescribeTransmissionTasksResResultTasksItemProgressSummary   `json:"ProgressSummary,omitempty"`
-	ProjectName          *string                                                       `json:"ProjectName,omitempty"`
-	SnapshotGtid         *string                                                       `json:"SnapshotGtid,omitempty"`
-	SolutionSettings     *DescribeTransmissionTasksResResultTasksItemSolutionSettings  `json:"SolutionSettings,omitempty"`
-	SrcConfig            *DescribeTransmissionTasksResResultTasksItemSrcConfig         `json:"SrcConfig,omitempty"`
-	StartTime            *int64                                                        `json:"StartTime,omitempty"`
-	Tags                 []*DescribeTransmissionTasksResResultTasksPropertiesItemsItem `json:"Tags,omitempty"`
-	TaskID               *string                                                       `json:"TaskId,omitempty"`
-	TaskName             *string                                                       `json:"TaskName,omitempty"`
-	TaskStatus           *DescribeTransmissionTasksResResultTasksItemTaskStatus        `json:"TaskStatus,omitempty"`
-	TaskSubType          *DescribeTransmissionTasksResResultTasksItemTaskSubType       `json:"TaskSubType,omitempty"`
-	TaskType             *DescribeTransmissionTasksResResultTasksItemTaskType          `json:"TaskType,omitempty"`
-	TenantID             *string                                                       `json:"TenantId,omitempty"`
-	TrafficSpec          *DescribeTransmissionTasksResResultTasksItemTrafficSpec       `json:"TrafficSpec,omitempty"`
-	UpdateTime           *int64                                                        `json:"UpdateTime,omitempty"`
+	AddSyncObjectAllowed         *bool                                                         `json:"AddSyncObjectAllowed,omitempty"`
+	ChargeConfig                 *DescribeTransmissionTasksResResultTasksItemChargeConfig      `json:"ChargeConfig,omitempty"`
+	ChargeDetail                 *DescribeTransmissionTasksResResultTasksItemChargeDetail      `json:"ChargeDetail,omitempty"`
+	CreateTime                   *int64                                                        `json:"CreateTime,omitempty"`
+	DestConfig                   *DescribeTransmissionTasksResResultTasksItemDestConfig        `json:"DestConfig,omitempty"`
+	EnableCloudMonitor           *bool                                                         `json:"EnableCloudMonitor,omitempty"`
+	EnableDataValidation         *bool                                                         `json:"EnableDataValidation,omitempty"`
+	EndTime                      *int64                                                        `json:"EndTime,omitempty"`
+	ErrorInfo                    *string                                                       `json:"ErrorInfo,omitempty"`
+	ParentTaskID                 *string                                                       `json:"ParentTaskID,omitempty"`
+	ProgressSummary              *DescribeTransmissionTasksResResultTasksItemProgressSummary   `json:"ProgressSummary,omitempty"`
+	ProjectName                  *string                                                       `json:"ProjectName,omitempty"`
+	SnapshotGtid                 *string                                                       `json:"SnapshotGtid,omitempty"`
+	SolutionSettings             *DescribeTransmissionTasksResResultTasksItemSolutionSettings  `json:"SolutionSettings,omitempty"`
+	SrcConfig                    *DescribeTransmissionTasksResResultTasksItemSrcConfig         `json:"SrcConfig,omitempty"`
+	StartTime                    *int64                                                        `json:"StartTime,omitempty"`
+	Statements                   []*Enum1011                                                   `json:"Statements,omitempty"`
+	SupportedDataValidationTypes []*Enum1120                                                   `json:"SupportedDataValidationTypes,omitempty"`
+	Tags                         []*DescribeTransmissionTasksResResultTasksPropertiesItemsItem `json:"Tags,omitempty"`
+	TaskID                       *string                                                       `json:"TaskId,omitempty"`
+	TaskName                     *string                                                       `json:"TaskName,omitempty"`
+	TaskStatus                   *DescribeTransmissionTasksResResultTasksItemTaskStatus        `json:"TaskStatus,omitempty"`
+	TaskSubType                  *DescribeTransmissionTasksResResultTasksItemTaskSubType       `json:"TaskSubType,omitempty"`
+	TaskType                     *DescribeTransmissionTasksResResultTasksItemTaskType          `json:"TaskType,omitempty"`
+	TenantID                     *string                                                       `json:"TenantId,omitempty"`
+	TrafficSpec                  *DescribeTransmissionTasksResResultTasksItemTrafficSpec       `json:"TrafficSpec,omitempty"`
+	UpdateTime                   *int64                                                        `json:"UpdateTime,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksItemChargeConfig struct {
-	AutoRenew       *bool    `json:"AutoRenew,omitempty"`
-	ChargeType      *Enum921 `json:"ChargeType,omitempty"`
-	DestRegion      *string  `json:"DestRegion,omitempty"`
-	DestType        *Enum919 `json:"DestType,omitempty"`
-	EnableV2        *bool    `json:"EnableV2,omitempty"`
-	IsBidirectional *bool    `json:"IsBidirectional,omitempty"`
-	OneStep         *bool    `json:"OneStep,omitempty"`
-	PreOrderType    *Enum923 `json:"PreOrderType,omitempty"`
-	SrcRegion       *string  `json:"SrcRegion,omitempty"`
-	SrcType         *Enum918 `json:"SrcType,omitempty"`
-	TaskType        *Enum920 `json:"TaskType,omitempty"`
-	Times           *int32   `json:"Times,omitempty"`
-	TrafficSpec     *Enum922 `json:"TrafficSpec,omitempty"`
+	AutoRenew       *bool     `json:"AutoRenew,omitempty"`
+	ChargeType      *Enum1018 `json:"ChargeType,omitempty"`
+	DestRegion      *string   `json:"DestRegion,omitempty"`
+	DestType        *Enum1016 `json:"DestType,omitempty"`
+	EnableV2        *bool     `json:"EnableV2,omitempty"`
+	IsBidirectional *bool     `json:"IsBidirectional,omitempty"`
+	OneStep         *bool     `json:"OneStep,omitempty"`
+	PreOrderType    *Enum1020 `json:"PreOrderType,omitempty"`
+	SrcRegion       *string   `json:"SrcRegion,omitempty"`
+	SrcType         *Enum1015 `json:"SrcType,omitempty"`
+	TaskType        *Enum1017 `json:"TaskType,omitempty"`
+	Times           *int32    `json:"Times,omitempty"`
+	TrafficSpec     *Enum1019 `json:"TrafficSpec,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksItemChargeDetail struct {
@@ -9701,9 +11591,9 @@ type DescribeTransmissionTasksResResultTasksItemChargeDetail struct {
 	ChargeEndTime *int64 `json:"ChargeEndTime,omitempty"`
 
 	// 计费开始时间
-	ChargeStartTime *int64   `json:"ChargeStartTime,omitempty"`
-	ChargeStatus    *Enum925 `json:"ChargeStatus,omitempty"`
-	ChargeType      *Enum924 `json:"ChargeType,omitempty"`
+	ChargeStartTime *int64    `json:"ChargeStartTime,omitempty"`
+	ChargeStatus    *Enum1022 `json:"ChargeStatus,omitempty"`
+	ChargeType      *Enum1021 `json:"ChargeType,omitempty"`
 
 	// 正在创建的预付费订单
 	InProgressPreOrder []*string `json:"InProgressPreOrder,omitempty"`
@@ -9724,39 +11614,53 @@ type DescribeTransmissionTasksResResultTasksItemDestConfig struct {
 	ByteDanceAbase2Settings        *ComponentsDcqqdxSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceabase2Settings         `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *Components1Ezo8T2SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceelasticsearchsettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *Components1Tvkl40SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemqsettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ComponentsZmon40SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemongosettings          `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *Components154S0K1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedancemysqlsettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *ComponentsHc4WlgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceredissettings          `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *Components1683Fb8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesBytedanceshardingmysqlsettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                                                                                               `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                                                                                                `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                                                                                               `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *Components4MccejSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcselasticsearchsettings        `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *ComponentsP3Vv10SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcskafkasettings                `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *ComponentsB1C8J4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmssqlsettings                `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *ComponentsY5Ol3QSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmongosettings                `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *Components1Y4E0BpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsmysqlsettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *ComponentsPp5J7SSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcspostgresqlsettings           `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *ComponentsO8Pbp3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesEcsredissettings                `json:"ECSRedisSettings,omitempty"`
-	EndpointType                   *Enum906                                                                                                                                              `json:"EndpointType,omitempty"`
+	EndpointType                   *Enum1000                                                                                                                                             `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *ComponentsOh6BfwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmssqlsettings            `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *Components1Ljk23SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmongosettings            `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *Components1Qrgv5PSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressmysqlsettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *ComponentsR9DckpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpresspostgresqlsettings       `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *Components1Purul4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesExpressredissettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *ComponentsXzkgeaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymongosettings            `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *Components16Vf9XqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaymysqlsettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *Components8U9V4TSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesGatewaypostgresqlsettings       `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                                                                                                `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *Components130E0XtSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesMysqlbinlogsettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                                                                                               `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *Components13Iten0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicelasticsearchsettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                                                                                      `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *Components1Ugcre8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *Components1EczvkgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmysqlsettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *ComponentsGd6P6ISchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicpostgresqlsettings   `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *Components1NyzmdrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicredissettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *Components18Xwt2ISchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcelasticsearchsettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ComponentsIqqivzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolckafkasettings          `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ComponentsEhu5PrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmongosettings          `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *ComponentsNfscpuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmysqlsettings          `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *Components16QgxavSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcpostgresqlsettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *Components12Eqh43SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcredissettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ComponentsL4Qxy3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcrocketmqsettings       `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *Components13Xx15ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *Components1Ptat1CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolctossettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *ComponentsCw6GhzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcvedbmysqlsettings      `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                                                                                       `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *Components1Bcu1SpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmssqlsettings        `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *Components1Ugcre8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmongosettings        `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *Components1EczvkgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicmysqlsettings        `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *ComponentsGd6P6ISchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicpostgresqlsettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *Components1NyzmdrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesPublicredissettings        `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *Components18Xwt2ISchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcelasticsearchsettings  `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ComponentsUezmx8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcenterpriseredissettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ComponentsIqqivzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolckafkasettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *Components137VjhlSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmssqlsettings          `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ComponentsEhu5PrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmongosettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *ComponentsNfscpuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcmysqlsettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *Components16QgxavSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcpostgresqlsettings     `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *Components12Eqh43SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcredissettings          `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ComponentsL4Qxy3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcrocketmqsettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *Components13Xx15ESchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcshardingmysqlsettings  `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *Components1Ptat1CSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolctossettings            `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *ComponentsCw6GhzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesDestconfigPropertiesVolcvedbmysqlsettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksItemProgressSummary struct {
@@ -9766,6 +11670,7 @@ type DescribeTransmissionTasksResResultTasksItemProgressSummary struct {
 type DescribeTransmissionTasksResResultTasksItemSolutionSettings struct {
 	Abase2DumpTOSSettings     *Components3N6NknSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesAbase2Dumptossettings      `json:"Abase2DumpTOSSettings,omitempty"`
 	AutoStart                 *bool                                                                                                                                                  `json:"AutoStart,omitempty"`
+	MSSQL2MSSQLSettings       *Components48J8E8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2Mssqlsettings        `json:"MSSQL2MSSQLSettings,omitempty"`
 	Mongo2ByteDanceMQSettings *Components1L4M0CrSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2Bytedancemqsettings `json:"Mongo2ByteDanceMQSettings,omitempty"`
 	Mongo2MongoSettings       *Components158ZoneSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2Mongosettings       `json:"Mongo2MongoSettings,omitempty"`
 	Mongo2RocketMQSettings    *ComponentsZrb8WySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2Rocketmqsettings     `json:"Mongo2RocketMQSettings,omitempty"`
@@ -9781,13 +11686,22 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettings struct {
 	Redis2RedisSettings       *Components1Kzp61XSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Redissettings       `json:"Redis2RedisSettings,omitempty"`
 	Redis2RocketMQSettings    *Components8X7DxySchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Rocketmqsettings     `json:"Redis2RocketMQSettings,omitempty"`
 	Redis2TOSSettings         *ComponentsY0SjbxSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2Tossettings          `json:"Redis2TOSSettings,omitempty"`
-	SolutionType              *Enum928                                                                                                                                               `json:"SolutionType,omitempty"`
+	SolutionType              *Enum1025                                                                                                                                              `json:"SolutionType,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsD0Kk4PSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum977                                                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum978                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1081                                                                                                                                                                                                                                `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1082                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+
+	// 向前兼容，默认false，表示所有操作类型
+	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
+}
+
+type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting struct {
+	ESMetaMappingSetting *Components1P5VpimSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
+	ObjectTransTypes     []*Enum1048                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1049                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9795,8 +11709,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsAbase2DumpTOSSet
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Q3G0IhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum1005                                                                                                                                                                                                                                     `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1006                                                                                                                                                                                                                                       `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1109                                                                                                                                                                                                                                     `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1110                                                                                                                                                                                                                                       `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9804,8 +11718,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2ByteDanceM
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsCle740SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum951                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum952                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1052                                                                                                                                                                                                                              `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1053                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9813,8 +11727,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2MongoSetti
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components18U483SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum981                                                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum982                                                                                                                                                                                                                                    `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1085                                                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1086                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9822,8 +11736,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMongo2RocketMQSe
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsEfhobhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum1011                                                                                                                                                                                                                                    `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1012                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1115                                                                                                                                                                                                                                    `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1116                                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9831,8 +11745,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2ByteDanceM
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2ESSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsO66InkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum936                                                                                                                                                                                                                            `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum937                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1033                                                                                                                                                                                                                           `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1034                                                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9840,8 +11754,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2ESSettings
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components4Fea1HSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum955                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum956                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1057                                                                                                                                                                                                                              `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1058                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9861,8 +11775,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2MySQLSetti
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2MySQLSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsL513MaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum961                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum962                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1063                                                                                                                                                                                                                              `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1064                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9870,8 +11784,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2MySQLSetti
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components4AumjhSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum987                                                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum988                                                                                                                                                                                                                                    `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1091                                                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1092                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9879,8 +11793,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsMySQL2RocketMQSe
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsZ0EtyoSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum993                                                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum994                                                                                                                                                                                                                                    `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1097                                                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1098                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9888,8 +11802,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2ByteDanceMQSe
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components18Qnnq0SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum941                                                                                                                                                                                                                             `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum942                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1038                                                                                                                                                                                                                            `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1039                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9906,8 +11820,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2PGSettingsObj
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1K714CwSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum967                                                                                                                                                                                                                                `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum968                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1069                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1070                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9915,8 +11829,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsPG2RocketMQSetti
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsSxdj5USchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum973                                                                                                                                                                                                                               `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum974                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1077                                                                                                                                                                                                                              `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1078                                                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9924,8 +11838,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSetti
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components28UskdSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum999                                                                                                                                                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1000                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1103                                                                                                                                                                                                                                 `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1104                                                                                                                                                                                                                                   `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9933,8 +11847,8 @@ type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RocketMQSe
 
 type DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2TOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsQiedf7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
-	ObjectTransTypes     []*Enum947                                                                                                                                                                                                                             `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum948                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	ObjectTransTypes     []*Enum1044                                                                                                                                                                                                                            `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1045                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -9945,39 +11859,53 @@ type DescribeTransmissionTasksResResultTasksItemSrcConfig struct {
 	ByteDanceAbase2Settings        *ComponentsPmx91JSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceabase2Settings         `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *Components1Jzftj8SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceelasticsearchsettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *Components1M7Asy7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemqsettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ComponentsL7Lz0TSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemongosettings          `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *Components6C8Sk5SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedancemysqlsettings          `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *Components1949FhjSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceredissettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *Components77KqujSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesBytedanceshardingmysqlsettings  `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                                                                                              `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                                                                                               `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                                                                                              `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *ComponentsLq7EjeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcselasticsearchsettings        `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *Components100Q1XgSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcskafkasettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *Components1Fyrn20SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmssqlsettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *Components1Vxef24SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmongosettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *ComponentsYvtj63SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsmysqlsettings                `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *Components8CwogkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcspostgresqlsettings           `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *Components1OvrawzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesEcsredissettings               `json:"ECSRedisSettings,omitempty"`
-	EndpointType                   *Enum897                                                                                                                                             `json:"EndpointType,omitempty"`
+	EndpointType                   *Enum989                                                                                                                                             `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *Components1X74PxkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmssqlsettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *Components1Yl7Lu7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmongosettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *Components1Ompi71SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressmysqlsettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *Components1T9Gau9SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpresspostgresqlsettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *Components7Jr5TsSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesExpressredissettings            `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *Components13B8Pi7SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymongosettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *Components1418Di3SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaymysqlsettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *ComponentsRqbrdkSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesGatewaypostgresqlsettings       `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                                                                                               `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *Components1Mnzgc1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesMysqlbinlogsettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                                                                                              `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *ComponentsC49AhbSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicelasticsearchsettings     `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                                                                                     `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *ComponentsIu3HleSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmongosettings        `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *Components1Wbic98SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmysqlsettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *Components6Joii6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicpostgresqlsettings   `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *Components95Fa9GSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicredissettings        `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *Components111850WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcelasticsearchsettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ComponentsMwvbyaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolckafkasettings          `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ComponentsWhr196SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmongosettings          `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *Components1P3D5DsSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmysqlsettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *Components1W3BzelSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcpostgresqlsettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *ComponentsVk70H1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcredissettings          `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ComponentsTcgzmuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcrocketmqsettings       `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *Components1Mmmvc4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *Components1R9PariSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolctossettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *Components48B9XqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcvedbmysqlsettings      `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                                                                                      `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *ComponentsEs4KvzSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmssqlsettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *ComponentsIu3HleSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmongosettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *Components1Wbic98SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicmysqlsettings        `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *Components6Joii6SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicpostgresqlsettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *Components95Fa9GSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesPublicredissettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *Components111850WSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcelasticsearchsettings  `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ComponentsQcdobpSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcenterpriseredissettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ComponentsMwvbyaSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolckafkasettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *ComponentsFvf8JeSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmssqlsettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ComponentsWhr196SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmongosettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *Components1P3D5DsSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcmysqlsettings          `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *Components1W3BzelSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcpostgresqlsettings     `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *ComponentsVk70H1SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcredissettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ComponentsTcgzmuSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcrocketmqsettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *Components1Mmmvc4SchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcshardingmysqlsettings  `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *Components1R9PariSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolctossettings            `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *Components48B9XqSchemasDescribetransmissiontasksresPropertiesResultPropertiesTasksItemsPropertiesSrcconfigPropertiesVolcvedbmysqlsettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksPropertiesItemsItem struct {
@@ -9989,6 +11917,12 @@ type DescribeTransmissionTasksResResultTasksPropertiesItemsObjectMappingSettingE
 	EnableRouting *bool     `json:"EnableRouting,omitempty"`
 	PidCol        []*string `json:"PidCol,omitempty"`
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
+}
+
+type DescribeTransmissionTasksResResultTasksPropertiesItemsServerFilterRuleItem struct {
+	ID       *string                                                                                                                `json:"ID,omitempty"`
+	Location *string                                                                                                                `json:"Location,omitempty"`
+	Type     *DescribeTransmissionTasksResResultTasksItemSolutionSettingsRedis2RedisSettingsFilterRulesItemServerFilterRuleItemType `json:"Type,omitempty"`
 }
 
 type DescribeTransmissionTasksResResultTasksPropertiesPropertiesPropertiesPropertiesItemsItem struct {
@@ -10053,39 +11987,53 @@ type ModifyTransmissionTaskBodyDestConfig struct {
 	ByteDanceAbase2Settings        *ModifyTransmissionTaskBodyDestConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *ModifyTransmissionTaskBodyDestConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *ModifyTransmissionTaskBodyDestConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *ModifyTransmissionTaskBodyDestConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *ModifyTransmissionTaskBodyDestConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                             `json:"Category,omitempty"`
+	CreateTime                     *int64                                                              `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                             `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *ModifyTransmissionTaskBodyDestConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *ModifyTransmissionTaskBodyDestConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *ModifyTransmissionTaskBodyDestConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *ModifyTransmissionTaskBodyDestConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *ModifyTransmissionTaskBodyDestConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *ModifyTransmissionTaskBodyDestConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *ModifyTransmissionTaskBodyDestConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *ModifyTransmissionTaskBodyDestConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *ModifyTransmissionTaskBodyDestConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *ModifyTransmissionTaskBodyDestConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *ModifyTransmissionTaskBodyDestConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *ModifyTransmissionTaskBodyDestConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *ModifyTransmissionTaskBodyDestConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *ModifyTransmissionTaskBodyDestConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *ModifyTransmissionTaskBodyDestConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                              `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *ModifyTransmissionTaskBodyDestConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                             `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *ModifyTransmissionTaskBodyDestConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                    `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *ModifyTransmissionTaskBodyDestConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *ModifyTransmissionTaskBodyDestConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *ModifyTransmissionTaskBodyDestConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *ModifyTransmissionTaskBodyDestConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *ModifyTransmissionTaskBodyDestConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ModifyTransmissionTaskBodyDestConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ModifyTransmissionTaskBodyDestConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *ModifyTransmissionTaskBodyDestConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *ModifyTransmissionTaskBodyDestConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *ModifyTransmissionTaskBodyDestConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ModifyTransmissionTaskBodyDestConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *ModifyTransmissionTaskBodyDestConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *ModifyTransmissionTaskBodyDestConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                      `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *ModifyTransmissionTaskBodyDestConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *ModifyTransmissionTaskBodyDestConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *ModifyTransmissionTaskBodyDestConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *ModifyTransmissionTaskBodyDestConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *ModifyTransmissionTaskBodyDestConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *ModifyTransmissionTaskBodyDestConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ModifyTransmissionTaskBodyDestConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ModifyTransmissionTaskBodyDestConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *ModifyTransmissionTaskBodyDestConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *ModifyTransmissionTaskBodyDestConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *ModifyTransmissionTaskBodyDestConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ModifyTransmissionTaskBodyDestConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *ModifyTransmissionTaskBodyDestConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *ModifyTransmissionTaskBodyDestConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type ModifyTransmissionTaskBodyDestConfigBuiltinKafkaSettings struct {
@@ -10141,6 +12089,22 @@ type ModifyTransmissionTaskBodyDestConfigByteDanceMQSettingsRegionSettings struc
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                      `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                      `json:"Password,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                      `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type ModifyTransmissionTaskBodyDestConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                      `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                      `json:"Password,omitempty"`
@@ -10154,6 +12118,21 @@ type ModifyTransmissionTaskBodyDestConfigByteDanceMySQLSettingsRegionSettings st
 }
 
 type ModifyTransmissionTaskBodyDestConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                      `json:"Consul,omitempty"`
+	Location          *string                                                                      `json:"Location,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -10204,6 +12183,23 @@ type ModifyTransmissionTaskBodyDestConfigECSKafkaSettingsECSSettings struct {
 }
 
 type ModifyTransmissionTaskBodyDestConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigECSMSSQLSettings struct {
+	ECSSettings    *ModifyTransmissionTaskBodyDestConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                             `json:"Host,omitempty"`
+	Password       *string                                                             `json:"Password,omitempty"`
+	Port           *int32                                                              `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodyDestConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                             `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -10297,6 +12293,24 @@ type ModifyTransmissionTaskBodyDestConfigECSRedisSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                         `json:"Host,omitempty"`
+	Password               *string                                                                         `json:"Password,omitempty"`
+	Port                   *int32                                                                          `json:"Port,omitempty"`
+	PrivateNetworkSettings *ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                         `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodyDestConfigExpressMongoSettings struct {
 	DeployType               *ModifyTransmissionTaskBodyDestConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                       `json:"Endpoints,omitempty"`
@@ -10385,6 +12399,60 @@ type ModifyTransmissionTaskBodyDestConfigExpressRedisSettingsRegionSettings stru
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodyDestConfigGatewayMongoSettings struct {
+	DeployType               *ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                               `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                 `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                 `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                 `json:"Password,omitempty"`
+	PullMethod               *ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                   `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                 `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                 `json:"GatewayId,omitempty"`
+	Host           *string                                                                 `json:"Host,omitempty"`
+	Password       *string                                                                 `json:"Password,omitempty"`
+	Port           *int32                                                                  `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodyDestConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                 `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                      `json:"DBName,omitempty"`
+	GatewayID      *string                                                                      `json:"GatewayId,omitempty"`
+	Host           *string                                                                      `json:"Host,omitempty"`
+	Password       *string                                                                      `json:"Password,omitempty"`
+	Port           *int32                                                                       `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodyDestConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                      `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodyDestConfigMySQLBinlogSettings struct {
 	Dir    *string                                                             `json:"Dir,omitempty"`
 	Files  []*ModifyTransmissionTaskBodyDestConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -10404,6 +12472,18 @@ type ModifyTransmissionTaskBodyDestConfigPublicElasticSearchSettings struct {
 }
 
 type ModifyTransmissionTaskBodyDestConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigPublicMSSQLSettings struct {
+	Host           *string                                                                `json:"Host,omitempty"`
+	Password       *string                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                 `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodyDestConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -10489,6 +12569,25 @@ type ModifyTransmissionTaskBodyDestConfigVolcElasticSearchSettingsRegionSettings
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                              `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                              `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                              `json:"DBName,omitempty"`
+	Password             *string                                                                              `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                              `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodyDestConfigVolcKafkaSettings struct {
 	AuthType       *string                                                              `json:"AuthType,omitempty"`
 	InstanceID     *string                                                              `json:"InstanceId,omitempty"`
@@ -10500,6 +12599,24 @@ type ModifyTransmissionTaskBodyDestConfigVolcKafkaSettings struct {
 }
 
 type ModifyTransmissionTaskBodyDestConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                    `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                    `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                    `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                    `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -10598,11 +12715,17 @@ type ModifyTransmissionTaskBodyDestConfigVolcRocketMQSettingsRegionSettings stru
 }
 
 type ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                      `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                      `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                      `json:"Password,omitempty"`
-	RegionSettings *ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                      `json:"Username,omitempty"`
+	CrossAccountSettings *ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                            `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                            `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                            `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type ModifyTransmissionTaskBodyDestConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -10642,6 +12765,7 @@ type ModifyTransmissionTaskBodyDestConfigVolcveDBMySQLSettingsRegionSettings str
 type ModifyTransmissionTaskBodySolutionSettings struct {
 	Abase2DumpTOSSettings     *ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettings     `json:"Abase2DumpTOSSettings,omitempty"`
 	AutoStart                 *bool                                                                `json:"AutoStart,omitempty"`
+	MSSQL2MSSQLSettings       *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettings       `json:"MSSQL2MSSQLSettings,omitempty"`
 	Mongo2ByteDanceMQSettings *ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettings `json:"Mongo2ByteDanceMQSettings,omitempty"`
 	Mongo2MongoSettings       *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettings       `json:"Mongo2MongoSettings,omitempty"`
 	Mongo2RocketMQSettings    *ModifyTransmissionTaskBodySolutionSettingsMongo2RocketMQSettings    `json:"Mongo2RocketMQSettings,omitempty"`
@@ -10701,7 +12825,67 @@ type ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappin
 type ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsW7Yn0BSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1085                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1201                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+
+	// 向前兼容，默认false，表示所有操作类型
+	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettings struct {
+	ETLSettings              *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsETLSettings              `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings    *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
+	ObjectMappings           []*ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+
+	// Dictionary of
+	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsETLSettings struct {
+	Script *string `json:"Script,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings struct {
+	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings struct {
+	BPSLimit        *int32                                                                                                      `json:"BPSLimit,omitempty"`
+	EnableFull      *bool                                                                                                       `json:"EnableFull,omitempty"`
+	ExtraConditions []*ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem `json:"ExtraConditions,omitempty"`
+	RPSLimit        *int32                                                                                                      `json:"RPSLimit,omitempty"`
+	Snapshot        *bool                                                                                                       `json:"Snapshot,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem struct {
+	Db       *string `json:"Db,omitempty"`
+	Table    *string `json:"Table,omitempty"`
+	WhereSQL *string `json:"WhereSql,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings struct {
+	EnableIncr *bool                                                                                                  `json:"EnableIncr,omitempty"`
+	Statements []*ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem `json:"Statements,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings struct {
+	EnableMeta *bool `json:"EnableMeta,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem struct {
+	DestObjName          *string                                                                                              `json:"DestObjName,omitempty"`
+	MappingList          []*ObjectMapping20221001                                                                             `json:"MappingList,omitempty"`
+	ObjectMappingSetting *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting `json:"ObjectMappingSetting,omitempty"`
+	ObjectType           *ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType           `json:"ObjectType,omitempty"`
+	SrcObjName           *string                                                                                              `json:"SrcObjName,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting struct {
+	ESMetaMappingSetting *Components8Leo1TSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
+	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1168                                                                                                                                                                                          `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -10755,7 +12939,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMa
 type ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components13VfaifSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1113                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1229                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -10775,13 +12959,14 @@ type ModifyTransmissionTaskBodySolutionSettingsMongo2ByteDanceMQSettingsSubscrip
 }
 
 type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettings struct {
-	ETLSettings              *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsETLSettings              `json:"ETLSettings,omitempty"`
-	ErrorBehaviorSettings    *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
-	FullTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
-	IncrTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
-	MetaTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
-	MongoPosition            *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMongoPosition            `json:"MongoPosition,omitempty"`
-	ObjectMappings           []*ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+	ETLSettings                      *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsETLSettings                      `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings            *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsErrorBehaviorSettings            `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings         *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsFullTransmissionSettings         `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings         *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsIncrTransmissionSettings         `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings         *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMetaTransmissionSettings         `json:"MetaTransmissionSettings,omitempty"`
+	MongoPosition                    *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsMongoPosition                    `json:"MongoPosition,omitempty"`
+	ObjectMappings                   []*ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItem             `json:"ObjectMappings,omitempty"`
+	PolicyForMongoPrimaryKeyConflict *ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict `json:"PolicyForMongoPrimaryKeyConflict,omitempty"`
 
 	// Dictionary of
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
@@ -10834,7 +13019,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappings
 type ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1CwzacrSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1059                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1172                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -10888,7 +13073,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappi
 type ModifyTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Pz6XewSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMongo2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1089                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1205                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -10966,7 +13151,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMa
 type ModifyTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsQ4Rjd0SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1119                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1235                                                                                                                                                                                                `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11088,7 +13273,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsIte
 type ModifyTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components12Upb52SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMySQL2ESSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1044                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1153                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11154,7 +13339,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappings
 type ModifyTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Pmv7BrSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMySQL2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1063                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1177                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11296,7 +13481,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappings
 type ModifyTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1858Y0KSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMySQL2MySQLSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1069                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1183                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11366,7 +13551,7 @@ type ModifyTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappi
 type ModifyTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components43Iia8SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsMySQL2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1095                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1211                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11437,7 +13622,7 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappi
 type ModifyTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Olebf3SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsPG2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1101                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1217                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11508,7 +13693,7 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsIte
 type ModifyTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components5Xoyb8SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsPG2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1049                                                                                                                                                                                       `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1158                                                                                                                                                                                       `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11581,7 +13766,7 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsItem s
 type ModifyTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1BntfakSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsPG2PGSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1038                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1147                                                                                                                                                                                     `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11639,7 +13824,7 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappings
 type ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsY1QvftSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1075                                                                                                                                                                                          `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1189                                                                                                                                                                                          `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11660,6 +13845,7 @@ type ModifyTransmissionTaskBodySolutionSettingsPG2RocketMQSettingsSubscriptionSe
 
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettings struct {
 	ErrorBehaviorSettings    *ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FilterRules              []*ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItem        `json:"FilterRules,omitempty"`
 	FullTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
 	IncrTransmissionSettings *ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
 	ObjectMappings           []*ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
@@ -11667,6 +13853,13 @@ type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettings struct {
 
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsErrorBehaviorSettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItem struct {
+	FilterType       *ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType                                                                               `json:"FilterType,omitempty"`
+	Pass             *bool                                                                                                                                                                 `json:"Pass,omitempty"`
+	RegexFilterRule  []*string                                                                                                                                                             `json:"RegexFilterRule,omitempty"`
+	ServerFilterRule []*Components18A45BlSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems `json:"ServerFilterRule,omitempty"`
 }
 
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsFullTransmissionSettings struct {
@@ -11699,7 +13892,7 @@ type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappings
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsRkvoc5SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsRedis2RedisSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1081                                                                                                                                                                                          `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1197                                                                                                                                                                                          `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11732,7 +13925,7 @@ type ModifyTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappi
 type ModifyTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components3Dz6OwSchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsRedis2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                  `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1107                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1223                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11792,7 +13985,7 @@ type ModifyTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsIt
 type ModifyTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1W7Td15SchemasModifytransmissiontaskbodyPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskBodySolutionSettingsRedis2TOSSettingsObjectMappingsPropertiesItemsItem                                                                                                   `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1055                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1164                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -11803,39 +13996,53 @@ type ModifyTransmissionTaskBodySrcConfig struct {
 	ByteDanceAbase2Settings        *ModifyTransmissionTaskBodySrcConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *ModifyTransmissionTaskBodySrcConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *ModifyTransmissionTaskBodySrcConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *ModifyTransmissionTaskBodySrcConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *ModifyTransmissionTaskBodySrcConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                            `json:"Category,omitempty"`
+	CreateTime                     *int64                                                             `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                            `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *ModifyTransmissionTaskBodySrcConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *ModifyTransmissionTaskBodySrcConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *ModifyTransmissionTaskBodySrcConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *ModifyTransmissionTaskBodySrcConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *ModifyTransmissionTaskBodySrcConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *ModifyTransmissionTaskBodySrcConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *ModifyTransmissionTaskBodySrcConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *ModifyTransmissionTaskBodySrcConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *ModifyTransmissionTaskBodySrcConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *ModifyTransmissionTaskBodySrcConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *ModifyTransmissionTaskBodySrcConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *ModifyTransmissionTaskBodySrcConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *ModifyTransmissionTaskBodySrcConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *ModifyTransmissionTaskBodySrcConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *ModifyTransmissionTaskBodySrcConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                             `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *ModifyTransmissionTaskBodySrcConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                            `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *ModifyTransmissionTaskBodySrcConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                   `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *ModifyTransmissionTaskBodySrcConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *ModifyTransmissionTaskBodySrcConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *ModifyTransmissionTaskBodySrcConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *ModifyTransmissionTaskBodySrcConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *ModifyTransmissionTaskBodySrcConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ModifyTransmissionTaskBodySrcConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ModifyTransmissionTaskBodySrcConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *ModifyTransmissionTaskBodySrcConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *ModifyTransmissionTaskBodySrcConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *ModifyTransmissionTaskBodySrcConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ModifyTransmissionTaskBodySrcConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *ModifyTransmissionTaskBodySrcConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *ModifyTransmissionTaskBodySrcConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                     `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *ModifyTransmissionTaskBodySrcConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *ModifyTransmissionTaskBodySrcConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *ModifyTransmissionTaskBodySrcConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *ModifyTransmissionTaskBodySrcConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *ModifyTransmissionTaskBodySrcConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *ModifyTransmissionTaskBodySrcConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ModifyTransmissionTaskBodySrcConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ModifyTransmissionTaskBodySrcConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *ModifyTransmissionTaskBodySrcConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *ModifyTransmissionTaskBodySrcConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *ModifyTransmissionTaskBodySrcConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ModifyTransmissionTaskBodySrcConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *ModifyTransmissionTaskBodySrcConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *ModifyTransmissionTaskBodySrcConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type ModifyTransmissionTaskBodySrcConfigBuiltinKafkaSettings struct {
@@ -11891,6 +14098,22 @@ type ModifyTransmissionTaskBodySrcConfigByteDanceMQSettingsRegionSettings struct
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                     `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                     `json:"Password,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                     `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type ModifyTransmissionTaskBodySrcConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                     `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                     `json:"Password,omitempty"`
@@ -11904,6 +14127,21 @@ type ModifyTransmissionTaskBodySrcConfigByteDanceMySQLSettingsRegionSettings str
 }
 
 type ModifyTransmissionTaskBodySrcConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                     `json:"Consul,omitempty"`
+	Location          *string                                                                     `json:"Location,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -11954,6 +14192,23 @@ type ModifyTransmissionTaskBodySrcConfigECSKafkaSettingsECSSettings struct {
 }
 
 type ModifyTransmissionTaskBodySrcConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigECSMSSQLSettings struct {
+	ECSSettings    *ModifyTransmissionTaskBodySrcConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                            `json:"Host,omitempty"`
+	Password       *string                                                            `json:"Password,omitempty"`
+	Port           *int32                                                             `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodySrcConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -12047,6 +14302,24 @@ type ModifyTransmissionTaskBodySrcConfigECSRedisSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                        `json:"Host,omitempty"`
+	Password               *string                                                                        `json:"Password,omitempty"`
+	Port                   *int32                                                                         `json:"Port,omitempty"`
+	PrivateNetworkSettings *ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                        `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodySrcConfigExpressMongoSettings struct {
 	DeployType               *ModifyTransmissionTaskBodySrcConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                      `json:"Endpoints,omitempty"`
@@ -12135,6 +14408,60 @@ type ModifyTransmissionTaskBodySrcConfigExpressRedisSettingsRegionSettings struc
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodySrcConfigGatewayMongoSettings struct {
+	DeployType               *ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                              `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                `json:"Password,omitempty"`
+	PullMethod               *ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                  `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                `json:"GatewayId,omitempty"`
+	Host           *string                                                                `json:"Host,omitempty"`
+	Password       *string                                                                `json:"Password,omitempty"`
+	Port           *int32                                                                 `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodySrcConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                     `json:"DBName,omitempty"`
+	GatewayID      *string                                                                     `json:"GatewayId,omitempty"`
+	Host           *string                                                                     `json:"Host,omitempty"`
+	Password       *string                                                                     `json:"Password,omitempty"`
+	Port           *int32                                                                      `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodySrcConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                     `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodySrcConfigMySQLBinlogSettings struct {
 	Dir    *string                                                            `json:"Dir,omitempty"`
 	Files  []*ModifyTransmissionTaskBodySrcConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -12154,6 +14481,18 @@ type ModifyTransmissionTaskBodySrcConfigPublicElasticSearchSettings struct {
 }
 
 type ModifyTransmissionTaskBodySrcConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigPublicMSSQLSettings struct {
+	Host           *string                                                               `json:"Host,omitempty"`
+	Password       *string                                                               `json:"Password,omitempty"`
+	Port           *int32                                                                `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskBodySrcConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                               `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -12239,6 +14578,25 @@ type ModifyTransmissionTaskBodySrcConfigVolcElasticSearchSettingsRegionSettings 
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                             `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                             `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                             `json:"DBName,omitempty"`
+	Password             *string                                                                             `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                             `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskBodySrcConfigVolcKafkaSettings struct {
 	AuthType       *string                                                             `json:"AuthType,omitempty"`
 	InstanceID     *string                                                             `json:"InstanceId,omitempty"`
@@ -12250,6 +14608,24 @@ type ModifyTransmissionTaskBodySrcConfigVolcKafkaSettings struct {
 }
 
 type ModifyTransmissionTaskBodySrcConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                   `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                   `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                   `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                   `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -12348,11 +14724,17 @@ type ModifyTransmissionTaskBodySrcConfigVolcRocketMQSettingsRegionSettings struc
 }
 
 type ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                     `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                     `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                     `json:"Password,omitempty"`
-	RegionSettings *ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                     `json:"Username,omitempty"`
+	CrossAccountSettings *ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                           `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                           `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                           `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                           `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type ModifyTransmissionTaskBodySrcConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -12401,7 +14783,7 @@ type ModifyTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -12416,31 +14798,33 @@ type ModifyTransmissionTaskResResult struct {
 }
 
 type ModifyTransmissionTaskResResultTaskInfo struct {
-	AddSyncObjectAllowed *bool                                                    `json:"AddSyncObjectAllowed,omitempty"`
-	ChargeConfig         *ModifyTransmissionTaskResResultTaskInfoChargeConfig     `json:"ChargeConfig,omitempty"`
-	ChargeDetail         *ModifyTransmissionTaskResResultTaskInfoChargeDetail     `json:"ChargeDetail,omitempty"`
-	CreateTime           *int64                                                   `json:"CreateTime,omitempty"`
-	DestConfig           *ModifyTransmissionTaskResResultTaskInfoDestConfig       `json:"DestConfig,omitempty"`
-	EnableCloudMonitor   *bool                                                    `json:"EnableCloudMonitor,omitempty"`
-	EnableDataValidation *bool                                                    `json:"EnableDataValidation,omitempty"`
-	EndTime              *int64                                                   `json:"EndTime,omitempty"`
-	ErrorInfo            *string                                                  `json:"ErrorInfo,omitempty"`
-	ParentTaskID         *string                                                  `json:"ParentTaskID,omitempty"`
-	ProgressSummary      *ModifyTransmissionTaskResResultTaskInfoProgressSummary  `json:"ProgressSummary,omitempty"`
-	ProjectName          *string                                                  `json:"ProjectName,omitempty"`
-	SnapshotGtid         *string                                                  `json:"SnapshotGtid,omitempty"`
-	SolutionSettings     *ModifyTransmissionTaskResResultTaskInfoSolutionSettings `json:"SolutionSettings,omitempty"`
-	SrcConfig            *ModifyTransmissionTaskResResultTaskInfoSrcConfig        `json:"SrcConfig,omitempty"`
-	StartTime            *int64                                                   `json:"StartTime,omitempty"`
-	Tags                 []*ModifyTransmissionTaskResResultTaskInfoTagsItem       `json:"Tags,omitempty"`
-	TaskID               *string                                                  `json:"TaskId,omitempty"`
-	TaskName             *string                                                  `json:"TaskName,omitempty"`
-	TaskStatus           *ModifyTransmissionTaskResResultTaskInfoTaskStatus       `json:"TaskStatus,omitempty"`
-	TaskSubType          *ModifyTransmissionTaskResResultTaskInfoTaskSubType      `json:"TaskSubType,omitempty"`
-	TaskType             *ModifyTransmissionTaskResResultTaskInfoTaskType         `json:"TaskType,omitempty"`
-	TenantID             *string                                                  `json:"TenantId,omitempty"`
-	TrafficSpec          *ModifyTransmissionTaskResResultTaskInfoTrafficSpec      `json:"TrafficSpec,omitempty"`
-	UpdateTime           *int64                                                   `json:"UpdateTime,omitempty"`
+	AddSyncObjectAllowed         *bool                                                                      `json:"AddSyncObjectAllowed,omitempty"`
+	ChargeConfig                 *ModifyTransmissionTaskResResultTaskInfoChargeConfig                       `json:"ChargeConfig,omitempty"`
+	ChargeDetail                 *ModifyTransmissionTaskResResultTaskInfoChargeDetail                       `json:"ChargeDetail,omitempty"`
+	CreateTime                   *int64                                                                     `json:"CreateTime,omitempty"`
+	DestConfig                   *ModifyTransmissionTaskResResultTaskInfoDestConfig                         `json:"DestConfig,omitempty"`
+	EnableCloudMonitor           *bool                                                                      `json:"EnableCloudMonitor,omitempty"`
+	EnableDataValidation         *bool                                                                      `json:"EnableDataValidation,omitempty"`
+	EndTime                      *int64                                                                     `json:"EndTime,omitempty"`
+	ErrorInfo                    *string                                                                    `json:"ErrorInfo,omitempty"`
+	ParentTaskID                 *string                                                                    `json:"ParentTaskID,omitempty"`
+	ProgressSummary              *ModifyTransmissionTaskResResultTaskInfoProgressSummary                    `json:"ProgressSummary,omitempty"`
+	ProjectName                  *string                                                                    `json:"ProjectName,omitempty"`
+	SnapshotGtid                 *string                                                                    `json:"SnapshotGtid,omitempty"`
+	SolutionSettings             *ModifyTransmissionTaskResResultTaskInfoSolutionSettings                   `json:"SolutionSettings,omitempty"`
+	SrcConfig                    *ModifyTransmissionTaskResResultTaskInfoSrcConfig                          `json:"SrcConfig,omitempty"`
+	StartTime                    *int64                                                                     `json:"StartTime,omitempty"`
+	Statements                   []*ModifyTransmissionTaskResResultTaskInfoStatementsItem                   `json:"Statements,omitempty"`
+	SupportedDataValidationTypes []*ModifyTransmissionTaskResResultTaskInfoSupportedDataValidationTypesItem `json:"SupportedDataValidationTypes,omitempty"`
+	Tags                         []*ModifyTransmissionTaskResResultTaskInfoTagsItem                         `json:"Tags,omitempty"`
+	TaskID                       *string                                                                    `json:"TaskId,omitempty"`
+	TaskName                     *string                                                                    `json:"TaskName,omitempty"`
+	TaskStatus                   *ModifyTransmissionTaskResResultTaskInfoTaskStatus                         `json:"TaskStatus,omitempty"`
+	TaskSubType                  *ModifyTransmissionTaskResResultTaskInfoTaskSubType                        `json:"TaskSubType,omitempty"`
+	TaskType                     *ModifyTransmissionTaskResResultTaskInfoTaskType                           `json:"TaskType,omitempty"`
+	TenantID                     *string                                                                    `json:"TenantId,omitempty"`
+	TrafficSpec                  *ModifyTransmissionTaskResResultTaskInfoTrafficSpec                        `json:"TrafficSpec,omitempty"`
+	UpdateTime                   *int64                                                                     `json:"UpdateTime,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoChargeConfig struct {
@@ -12487,39 +14871,53 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfig struct {
 	ByteDanceAbase2Settings        *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                          `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                           `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                          `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *ModifyTransmissionTaskResResultTaskInfoDestConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *ModifyTransmissionTaskResResultTaskInfoDestConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *ModifyTransmissionTaskResResultTaskInfoDestConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *ModifyTransmissionTaskResResultTaskInfoDestConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *ModifyTransmissionTaskResResultTaskInfoDestConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *ModifyTransmissionTaskResResultTaskInfoDestConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                           `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *ModifyTransmissionTaskResResultTaskInfoDestConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                          `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                 `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                   `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigBuiltinKafkaSettings struct {
@@ -12575,6 +14973,22 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMQSettingsRegionS
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                                   `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                   `json:"Password,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                   `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                                   `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                                   `json:"Password,omitempty"`
@@ -12588,6 +15002,21 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMySQLSettingsRegi
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                                   `json:"Consul,omitempty"`
+	Location          *string                                                                                   `json:"Location,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -12638,6 +15067,23 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigECSKafkaSettingsECSSetting
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettings struct {
+	ECSSettings    *ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                          `json:"Host,omitempty"`
+	Password       *string                                                                          `json:"Password,omitempty"`
+	Port           *int32                                                                           `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                          `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -12731,6 +15177,24 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigECSRedisSettingsRegionSett
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                                      `json:"Host,omitempty"`
+	Password               *string                                                                                      `json:"Password,omitempty"`
+	Port                   *int32                                                                                       `json:"Port,omitempty"`
+	PrivateNetworkSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                      `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMongoSettings struct {
 	DeployType               *ModifyTransmissionTaskResResultTaskInfoDestConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                    `json:"Endpoints,omitempty"`
@@ -12819,6 +15283,60 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigExpressRedisSettingsRegion
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettings struct {
+	DeployType               *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                            `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                              `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                              `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                              `json:"Password,omitempty"`
+	PullMethod               *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                                `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                              `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                              `json:"GatewayId,omitempty"`
+	Host           *string                                                                              `json:"Host,omitempty"`
+	Password       *string                                                                              `json:"Password,omitempty"`
+	Port           *int32                                                                               `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                              `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                                   `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                   `json:"GatewayId,omitempty"`
+	Host           *string                                                                                   `json:"Host,omitempty"`
+	Password       *string                                                                                   `json:"Password,omitempty"`
+	Port           *int32                                                                                    `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                   `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigMySQLBinlogSettings struct {
 	Dir    *string                                                                          `json:"Dir,omitempty"`
 	Files  []*ModifyTransmissionTaskResResultTaskInfoDestConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -12838,6 +15356,18 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicElasticSearchSetting
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMSSQLSettings struct {
+	Host           *string                                                                             `json:"Host,omitempty"`
+	Password       *string                                                                             `json:"Password,omitempty"`
+	Port           *int32                                                                              `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                             `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -12923,6 +15453,25 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcElasticSearchSettingsR
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                           `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                           `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                           `json:"DBName,omitempty"`
+	Password             *string                                                                                           `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                           `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcKafkaSettings struct {
 	AuthType       *string                                                                           `json:"AuthType,omitempty"`
 	InstanceID     *string                                                                           `json:"InstanceId,omitempty"`
@@ -12934,6 +15483,24 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcKafkaSettings struct {
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                 `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                 `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                 `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                 `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -13032,11 +15599,17 @@ type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcRocketMQSettingsRegion
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                                   `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                   `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                   `json:"Password,omitempty"`
-	RegionSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                   `json:"Username,omitempty"`
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                         `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                         `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                         `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                         `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoDestConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -13081,6 +15654,7 @@ type ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItem struct {
 	CompletePercentage *int32                                                                       `json:"CompletePercentage,omitempty"`
 	Delay              *int32                                                                       `json:"Delay,omitempty"`
 	ErrorInfo          *string                                                                      `json:"ErrorInfo,omitempty"`
+	FetchDelay         *int32                                                                       `json:"FetchDelay,omitempty"`
 	NameCN             *string                                                                      `json:"NameCN,omitempty"`
 	ProgressType       *ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItemProgressType `json:"ProgressType,omitempty"`
 	Status             *ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItemStatus       `json:"Status,omitempty"`
@@ -13089,6 +15663,7 @@ type ModifyTransmissionTaskResResultTaskInfoProgressSummaryInfosItem struct {
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettings struct {
 	Abase2DumpTOSSettings     *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettings     `json:"Abase2DumpTOSSettings,omitempty"`
 	AutoStart                 *bool                                                                             `json:"AutoStart,omitempty"`
+	MSSQL2MSSQLSettings       *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettings       `json:"MSSQL2MSSQLSettings,omitempty"`
 	Mongo2ByteDanceMQSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettings `json:"Mongo2ByteDanceMQSettings,omitempty"`
 	Mongo2MongoSettings       *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettings       `json:"Mongo2MongoSettings,omitempty"`
 	Mongo2RocketMQSettings    *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettings    `json:"Mongo2RocketMQSettings,omitempty"`
@@ -13148,7 +15723,67 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSetting
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsW4HtmbSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesAbase2DumptossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsAbase2DumpTOSSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1214                                                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1342                                                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+
+	// 向前兼容，默认false，表示所有操作类型
+	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettings struct {
+	ETLSettings              *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsETLSettings              `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings    *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
+	ObjectMappings           []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+
+	// Dictionary of
+	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsETLSettings struct {
+	Script *string `json:"Script,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsErrorBehaviorSettings struct {
+	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettings struct {
+	BPSLimit        *int32                                                                                                                   `json:"BPSLimit,omitempty"`
+	EnableFull      *bool                                                                                                                    `json:"EnableFull,omitempty"`
+	ExtraConditions []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem `json:"ExtraConditions,omitempty"`
+	RPSLimit        *int32                                                                                                                   `json:"RPSLimit,omitempty"`
+	Snapshot        *bool                                                                                                                    `json:"Snapshot,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsFullTransmissionSettingsExtraConditionsItem struct {
+	Db       *string `json:"Db,omitempty"`
+	Table    *string `json:"Table,omitempty"`
+	WhereSQL *string `json:"WhereSql,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettings struct {
+	EnableIncr *bool                                                                                                               `json:"EnableIncr,omitempty"`
+	Statements []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsIncrTransmissionSettingsStatementsItem `json:"Statements,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsMetaTransmissionSettings struct {
+	EnableMeta *bool `json:"EnableMeta,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItem struct {
+	DestObjName          *string                                                                                                           `json:"DestObjName,omitempty"`
+	MappingList          []*ObjectMapping20221001                                                                                          `json:"MappingList,omitempty"`
+	ObjectMappingSetting *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting `json:"ObjectMappingSetting,omitempty"`
+	ObjectType           *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectType           `json:"ObjectType,omitempty"`
+	SrcObjName           *string                                                                                                           `json:"SrcObjName,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsItemObjectMappingSetting struct {
+	ESMetaMappingSetting *Components16Gnwa9SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMssql2MssqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
+	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMSSQL2MSSQLSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
+	PolicyForKeyConflict *Enum1309                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13202,7 +15837,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSet
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components4OicuaSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1242                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1370                                                                                                                                                                                                                                 `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13222,13 +15857,14 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2ByteDanceMQSet
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettings struct {
-	ETLSettings              *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsETLSettings              `json:"ETLSettings,omitempty"`
-	ErrorBehaviorSettings    *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
-	FullTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
-	IncrTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
-	MetaTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsMetaTransmissionSettings `json:"MetaTransmissionSettings,omitempty"`
-	MongoPosition            *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsMongoPosition            `json:"MongoPosition,omitempty"`
-	ObjectMappings           []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
+	ETLSettings                      *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsETLSettings                      `json:"ETLSettings,omitempty"`
+	ErrorBehaviorSettings            *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsErrorBehaviorSettings            `json:"ErrorBehaviorSettings,omitempty"`
+	FullTransmissionSettings         *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsFullTransmissionSettings         `json:"FullTransmissionSettings,omitempty"`
+	IncrTransmissionSettings         *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsIncrTransmissionSettings         `json:"IncrTransmissionSettings,omitempty"`
+	MetaTransmissionSettings         *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsMetaTransmissionSettings         `json:"MetaTransmissionSettings,omitempty"`
+	MongoPosition                    *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsMongoPosition                    `json:"MongoPosition,omitempty"`
+	ObjectMappings                   []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItem             `json:"ObjectMappings,omitempty"`
+	PolicyForMongoPrimaryKeyConflict *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsPolicyForMongoPrimaryKeyConflict `json:"PolicyForMongoPrimaryKeyConflict,omitempty"`
 
 	// Dictionary of
 	StatisticSettings map[string]*string `json:"StatisticSettings,omitempty"`
@@ -13281,7 +15917,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1T85KfnSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2MongosettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2MongoSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1188                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1313                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13335,7 +15971,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettin
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsTet22LSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMongo2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMongo2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1218                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1346                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13413,7 +16049,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ByteDanceMQSet
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components11Pukq0SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1248                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1376                                                                                                                                                                                                                                  `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13535,7 +16171,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ESSettingsObje
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ESSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsCg89FfSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2EssettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2ESSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1173                                                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1294                                                                                                                                                                                                                        `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13601,7 +16237,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2KafkaSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsU38Xr4SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1192                                                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1318                                                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13743,7 +16379,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2MySQLSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2MySQLSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Do50JcSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2MysqlsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2MySQLSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1198                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1324                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13813,7 +16449,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2RocketMQSettin
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components9402HSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesMysql2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsMySQL2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                     `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1224                                                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1352                                                                                                                                                                                                                             `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13884,7 +16520,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2ByteDanceMQSettin
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2ByteDanceMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Wf2Ra6SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2BytedancemqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2ByteDanceMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1230                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1358                                                                                                                                                                                                                               `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -13955,7 +16591,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2KafkaSettingsObje
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2KafkaSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1L16J8KSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2KafkasettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2KafkaSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1178                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1299                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14028,7 +16664,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2PGSettingsObjectM
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2PGSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Ga0Is0SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2PgsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2PGSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1167                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1288                                                                                                                                                                                                                      `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14086,7 +16722,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components1Gktzh7SchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesPg2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                       `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1204                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1330                                                                                                                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14107,6 +16743,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsPG2RocketMQSettingsS
 
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettings struct {
 	ErrorBehaviorSettings    *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsErrorBehaviorSettings    `json:"ErrorBehaviorSettings,omitempty"`
+	FilterRules              []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItem        `json:"FilterRules,omitempty"`
 	FullTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFullTransmissionSettings `json:"FullTransmissionSettings,omitempty"`
 	IncrTransmissionSettings *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsIncrTransmissionSettings `json:"IncrTransmissionSettings,omitempty"`
 	ObjectMappings           []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItem     `json:"ObjectMappings,omitempty"`
@@ -14114,6 +16751,13 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettings 
 
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsErrorBehaviorSettings struct {
 	MaxRetrySeconds *int32 `json:"MaxRetrySeconds,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItem struct {
+	FilterType       *ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFilterRulesItemFilterType                                                                                                  `json:"FilterType,omitempty"`
+	Pass             *bool                                                                                                                                                                                                 `json:"Pass,omitempty"`
+	RegexFilterRule  []*string                                                                                                                                                                                             `json:"RegexFilterRule,omitempty"`
+	ServerFilterRule []*ComponentsAflfcoSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesFilterrulesItemsPropertiesServerfilterruleItems `json:"ServerFilterRule,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsFullTransmissionSettings struct {
@@ -14146,7 +16790,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsO
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsV7EeeqSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RedissettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RedisSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1210                                                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1338                                                                                                                                                                                                                           `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14179,7 +16823,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RocketMQSettin
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RocketMQSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components22Q6BmSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2RocketmqsettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2RocketMQSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1236                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1364                                                                                                                                                                                                                              `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14239,7 +16883,7 @@ type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2TOSSettingsObj
 type ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2TOSSettingsObjectMappingsItemObjectMappingSetting struct {
 	ESMetaMappingSetting *ComponentsWmde9RSchemasModifytransmissiontaskresPropertiesResultPropertiesTaskinfoPropertiesSolutionsettingsPropertiesRedis2TossettingsPropertiesObjectmappingsItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ModifyTransmissionTaskResResultTaskInfoSolutionSettingsRedis2TOSSettingsObjectMappingsPropertiesItemsItem                                                                                                                      `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum1184                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum1305                                                                                                                                                                                                                         `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14250,39 +16894,53 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfig struct {
 	ByteDanceAbase2Settings        *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceAbase2Settings        `json:"ByteDanceAbase2Settings,omitempty"`
 	ByteDanceElasticSearchSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceElasticSearchSettings `json:"ByteDanceElasticSearchSettings,omitempty"`
 	ByteDanceMQSettings            *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMQSettings            `json:"ByteDanceMQSettings,omitempty"`
+	ByteDanceMongoSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettings         `json:"ByteDanceMongoSettings,omitempty"`
 	ByteDanceMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMySQLSettings         `json:"ByteDanceMySQLSettings,omitempty"`
+	ByteDanceRedisSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettings         `json:"ByteDanceRedisSettings,omitempty"`
 	ByteDanceShardingMySQLSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceShardingMySQLSettings `json:"ByteDanceShardingMySQLSettings,omitempty"`
+	Category                       *string                                                                         `json:"Category,omitempty"`
+	CreateTime                     *int64                                                                          `json:"CreateTime,omitempty"`
 	DataSourceID                   *string                                                                         `json:"DataSourceId,omitempty"`
 	ECSElasticSearchSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSElasticSearchSettings       `json:"ECSElasticSearchSettings,omitempty"`
 	ECSKafkaSettings               *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSKafkaSettings               `json:"ECSKafkaSettings,omitempty"`
+	ECSMSSQLSettings               *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettings               `json:"ECSMSSQLSettings,omitempty"`
 	ECSMongoSettings               *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMongoSettings               `json:"ECSMongoSettings,omitempty"`
 	ECSMySQLSettings               *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMySQLSettings               `json:"ECSMySQLSettings,omitempty"`
 	ECSPostgreSQLSettings          *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSPostgreSQLSettings          `json:"ECSPostgreSQLSettings,omitempty"`
 	ECSRedisSettings               *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSRedisSettings               `json:"ECSRedisSettings,omitempty"`
 	EndpointType                   *ModifyTransmissionTaskResResultTaskInfoSrcConfigEndpointType                   `json:"EndpointType,omitempty"`
+	ExpressMSSQLSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettings           `json:"ExpressMSSQLSettings,omitempty"`
 	ExpressMongoSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMongoSettings           `json:"ExpressMongoSettings,omitempty"`
 	ExpressMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMySQLSettings           `json:"ExpressMySQLSettings,omitempty"`
 	ExpressPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressPostgreSQLSettings      `json:"ExpressPostgreSQLSettings,omitempty"`
 	ExpressRedisSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressRedisSettings           `json:"ExpressRedisSettings,omitempty"`
+	GatewayMongoSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettings           `json:"GatewayMongoSettings,omitempty"`
+	GatewayMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMySQLSettings           `json:"GatewayMySQLSettings,omitempty"`
+	GatewayPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayPostgreSQLSettings      `json:"GatewayPostgreSQLSettings,omitempty"`
+	ModifyTime                     *int64                                                                          `json:"ModifyTime,omitempty"`
 	MySQLBinlogSettings            *ModifyTransmissionTaskResResultTaskInfoSrcConfigMySQLBinlogSettings            `json:"MySQLBinlogSettings,omitempty"`
+	Name                           *string                                                                         `json:"Name,omitempty"`
 	PublicElasticSearchSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicElasticSearchSettings    `json:"PublicElasticSearchSettings,omitempty"`
 
 	// Anything
-	PublicKafkaSettings       interface{}                                                                `json:"PublicKafkaSettings,omitempty"`
-	PublicMongoSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMongoSettings       `json:"PublicMongoSettings,omitempty"`
-	PublicMySQLSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMySQLSettings       `json:"PublicMySQLSettings,omitempty"`
-	PublicPostgreSQLSettings  *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicPostgreSQLSettings  `json:"PublicPostgreSQLSettings,omitempty"`
-	PublicRedisSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicRedisSettings       `json:"PublicRedisSettings,omitempty"`
-	VolcElasticSearchSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcElasticSearchSettings `json:"VolcElasticSearchSettings,omitempty"`
-	VolcKafkaSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcKafkaSettings         `json:"VolcKafkaSettings,omitempty"`
-	VolcMongoSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMongoSettings         `json:"VolcMongoSettings,omitempty"`
-	VolcMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMySQLSettings         `json:"VolcMySQLSettings,omitempty"`
-	VolcPostgreSQLSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcPostgreSQLSettings    `json:"VolcPostgreSQLSettings,omitempty"`
-	VolcRedisSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcRedisSettings         `json:"VolcRedisSettings,omitempty"`
-	VolcRocketMQSettings      *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcRocketMQSettings      `json:"VolcRocketMQSettings,omitempty"`
-	VolcShardingMySQLSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettings `json:"VolcShardingMySQLSettings,omitempty"`
-	VolcTOSSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcTOSSettings           `json:"VolcTOSSettings,omitempty"`
-	VolcveDBMySQLSettings     *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcveDBMySQLSettings     `json:"VolcveDBMySQLSettings,omitempty"`
+	PublicKafkaSettings         interface{}                                                                  `json:"PublicKafkaSettings,omitempty"`
+	PublicMSSQLSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMSSQLSettings         `json:"PublicMSSQLSettings,omitempty"`
+	PublicMongoSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMongoSettings         `json:"PublicMongoSettings,omitempty"`
+	PublicMySQLSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMySQLSettings         `json:"PublicMySQLSettings,omitempty"`
+	PublicPostgreSQLSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicPostgreSQLSettings    `json:"PublicPostgreSQLSettings,omitempty"`
+	PublicRedisSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicRedisSettings         `json:"PublicRedisSettings,omitempty"`
+	VolcElasticSearchSettings   *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcElasticSearchSettings   `json:"VolcElasticSearchSettings,omitempty"`
+	VolcEnterpriseRedisSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettings `json:"VolcEnterpriseRedisSettings,omitempty"`
+	VolcKafkaSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcKafkaSettings           `json:"VolcKafkaSettings,omitempty"`
+	VolcMSSQLSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettings           `json:"VolcMSSQLSettings,omitempty"`
+	VolcMongoSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMongoSettings           `json:"VolcMongoSettings,omitempty"`
+	VolcMySQLSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMySQLSettings           `json:"VolcMySQLSettings,omitempty"`
+	VolcPostgreSQLSettings      *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcPostgreSQLSettings      `json:"VolcPostgreSQLSettings,omitempty"`
+	VolcRedisSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcRedisSettings           `json:"VolcRedisSettings,omitempty"`
+	VolcRocketMQSettings        *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcRocketMQSettings        `json:"VolcRocketMQSettings,omitempty"`
+	VolcShardingMySQLSettings   *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettings   `json:"VolcShardingMySQLSettings,omitempty"`
+	VolcTOSSettings             *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcTOSSettings             `json:"VolcTOSSettings,omitempty"`
+	VolcveDBMySQLSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcveDBMySQLSettings       `json:"VolcveDBMySQLSettings,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigBuiltinKafkaSettings struct {
@@ -14338,6 +16996,22 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMQSettingsRegionSe
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettings struct {
+	DBInstanceID      *string                                                                                  `json:"DBInstanceId,omitempty"`
+	Password          *string                                                                                  `json:"Password,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+	Username          *string                                                                                  `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMongoSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMySQLSettings struct {
 	DBInstanceID      *string                                                                                  `json:"DBInstanceId,omitempty"`
 	Password          *string                                                                                  `json:"Password,omitempty"`
@@ -14351,6 +17025,21 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMySQLSettingsRegio
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceMySQLSettingsServerRoomSetting struct {
+	ServerRoom *string `json:"ServerRoom,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettings struct {
+	Consul            *string                                                                                  `json:"Consul,omitempty"`
+	Location          *string                                                                                  `json:"Location,omitempty"`
+	RegionSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettingsRegionSettings    `json:"RegionSettings,omitempty"`
+	ServerRoomSetting *ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettingsServerRoomSetting `json:"ServerRoomSetting,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigByteDanceRedisSettingsServerRoomSetting struct {
 	ServerRoom *string `json:"ServerRoom,omitempty"`
 }
 
@@ -14401,6 +17090,23 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSKafkaSettingsECSSettings
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettings struct {
+	ECSSettings    *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettingsECSSettings    `json:"ECSSettings,omitempty"`
+	Host           *string                                                                         `json:"Host,omitempty"`
+	Password       *string                                                                         `json:"Password,omitempty"`
+	Port           *int32                                                                          `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                         `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettingsECSSettings struct {
+	VPCID *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -14494,6 +17200,24 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigECSRedisSettingsRegionSetti
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettings struct {
+	Host                   *string                                                                                     `json:"Host,omitempty"`
+	Password               *string                                                                                     `json:"Password,omitempty"`
+	Port                   *int32                                                                                      `json:"Port,omitempty"`
+	PrivateNetworkSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettingsPrivateNetworkSettings `json:"PrivateNetworkSettings,omitempty"`
+	RegionSettings         *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettingsRegionSettings         `json:"RegionSettings,omitempty"`
+	Username               *string                                                                                     `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettingsPrivateNetworkSettings struct {
+	SubnetID *string `json:"SubnetId,omitempty"`
+	VPCID    *string `json:"VPCId,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMSSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMongoSettings struct {
 	DeployType               *ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressMongoSettingsDeployType             `json:"DeployType,omitempty"`
 	Endpoints                []*string                                                                                   `json:"Endpoints,omitempty"`
@@ -14582,6 +17306,60 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigExpressRedisSettingsRegionS
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettings struct {
+	DeployType               *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsDeployType     `json:"DeployType,omitempty"`
+	Endpoints                []*string                                                                           `json:"Endpoints,omitempty"`
+	GatewayID                *string                                                                             `json:"GatewayId,omitempty"`
+	MongoAuthSourceDB        *string                                                                             `json:"MongoAuthSourceDB,omitempty"`
+	Password                 *string                                                                             `json:"Password,omitempty"`
+	PullMethod               *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsPullMethod     `json:"PullMethod,omitempty"`
+	RegionSettings           *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Shards                   []*ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsShardsItem   `json:"Shards,omitempty"`
+	UseNewShardingDatasource *bool                                                                               `json:"UseNewShardingDatasource,omitempty"`
+	Username                 *string                                                                             `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMongoSettingsShardsItem struct {
+	Address *string `json:"Address,omitempty"`
+	AuthDb  *string `json:"AuthDb,omitempty"`
+
+	// Dictionary of
+	ExtraDsn map[string]*string `json:"ExtraDsn,omitempty"`
+	Password *string            `json:"Password,omitempty"`
+	Username *string            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMySQLSettings struct {
+	GatewayID      *string                                                                             `json:"GatewayId,omitempty"`
+	Host           *string                                                                             `json:"Host,omitempty"`
+	Password       *string                                                                             `json:"Password,omitempty"`
+	Port           *int32                                                                              `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                             `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayMySQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayPostgreSQLSettings struct {
+	DBName         *string                                                                                  `json:"DBName,omitempty"`
+	GatewayID      *string                                                                                  `json:"GatewayId,omitempty"`
+	Host           *string                                                                                  `json:"Host,omitempty"`
+	Password       *string                                                                                  `json:"Password,omitempty"`
+	Port           *int32                                                                                   `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayPostgreSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                                  `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigGatewayPostgreSQLSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigMySQLBinlogSettings struct {
 	Dir    *string                                                                         `json:"Dir,omitempty"`
 	Files  []*ModifyTransmissionTaskResResultTaskInfoSrcConfigMySQLBinlogSettingsFilesItem `json:"Files,omitempty"`
@@ -14601,6 +17379,18 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicElasticSearchSettings
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicElasticSearchSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMSSQLSettings struct {
+	Host           *string                                                                            `json:"Host,omitempty"`
+	Password       *string                                                                            `json:"Password,omitempty"`
+	Port           *int32                                                                             `json:"Port,omitempty"`
+	RegionSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMSSQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
+	Username       *string                                                                            `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigPublicMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -14686,6 +17476,25 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcElasticSearchSettingsRe
 	Region *string `json:"Region,omitempty"`
 }
 
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                          `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                          `json:"DBInstanceName,omitempty"`
+	DBName               *string                                                                                          `json:"DBName,omitempty"`
+	Password             *string                                                                                          `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                          `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcEnterpriseRedisSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcKafkaSettings struct {
 	AuthType       *string                                                                          `json:"AuthType,omitempty"`
 	InstanceID     *string                                                                          `json:"InstanceId,omitempty"`
@@ -14697,6 +17506,24 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcKafkaSettings struct {
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcKafkaSettingsRegionSettings struct {
+	Region *string `json:"Region,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettings struct {
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcMSSQLSettingsRegionSettings struct {
 	Region *string `json:"Region,omitempty"`
 }
 
@@ -14795,11 +17622,17 @@ type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcRocketMQSettingsRegionS
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettings struct {
-	DBInstanceID   *string                                                                                  `json:"DBInstanceId,omitempty"`
-	DBInstanceName *string                                                                                  `json:"DBInstanceName,omitempty"`
-	Password       *string                                                                                  `json:"Password,omitempty"`
-	RegionSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings `json:"RegionSettings,omitempty"`
-	Username       *string                                                                                  `json:"Username,omitempty"`
+	CrossAccountSettings *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettingsCrossAccountSettings `json:"CrossAccountSettings,omitempty"`
+	DBInstanceID         *string                                                                                        `json:"DBInstanceId,omitempty"`
+	DBInstanceName       *string                                                                                        `json:"DBInstanceName,omitempty"`
+	Password             *string                                                                                        `json:"Password,omitempty"`
+	RegionSettings       *ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings       `json:"RegionSettings,omitempty"`
+	Username             *string                                                                                        `json:"Username,omitempty"`
+}
+
+type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettingsCrossAccountSettings struct {
+	Role          *string `json:"Role,omitempty"`
+	SourceAccount *string `json:"SourceAccount,omitempty"`
 }
 
 type ModifyTransmissionTaskResResultTaskInfoSrcConfigVolcShardingMySQLSettingsRegionSettings struct {
@@ -14860,7 +17693,7 @@ type ObjectMapping20221001MappingListItem struct {
 type ObjectMapping20221001MappingListItemObjectMappingSetting struct {
 	ESMetaMappingSetting *Components8K6CbSchemasObjectmapping20221001PropertiesMappinglistItemsPropertiesObjectmappingsettingPropertiesEsmetamappingsetting `json:"ESMetaMappingSetting,omitempty"`
 	ObjectTransTypes     []*ObjectMapping20221001MappingListPropertiesItemsItem                                                                             `json:"ObjectTransTypes,omitempty"`
-	PolicyForKeyConflict *Enum24                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
+	PolicyForKeyConflict *Enum29                                                                                                                            `json:"PolicyForKeyConflict,omitempty"`
 
 	// 向前兼容，默认false，表示所有操作类型
 	SetObjectTransType *bool `json:"SetObjectTransType,omitempty"`
@@ -14881,6 +17714,34 @@ type ObjectMapping20221001ObjectMappingSettingESMetaMappingSetting struct {
 	RoutingCol    []*string `json:"RoutingCol,omitempty"`
 }
 
+type ResumeDataValidationTaskBody struct {
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type ResumeDataValidationTaskRes struct {
+	ResponseMetadata *ResumeDataValidationTaskResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type ResumeDataValidationTaskResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type ResumeTransmissionTaskBody struct {
 	TaskID *string `json:"TaskId,omitempty"`
 }
@@ -14899,7 +17760,7 @@ type ResumeTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -14927,7 +17788,7 @@ type ResumeTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -14955,7 +17816,7 @@ type RetryTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -14983,7 +17844,36 @@ type RetryTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type SetBiSyncDDLSourceBody struct {
+	TaskID *string                     `json:"TaskId,omitempty"`
+	Type   *SetBiSyncDDLSourceBodyType `json:"Type,omitempty"`
+}
+
+type SetBiSyncDDLSourceRes struct {
+	ResponseMetadata *SetBiSyncDDLSourceResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type SetBiSyncDDLSourceResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15011,7 +17901,7 @@ type StartTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15039,7 +17929,35 @@ type StartTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type StopDataValidationTaskBody struct {
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type StopDataValidationTaskRes struct {
+	ResponseMetadata *StopDataValidationTaskResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type StopDataValidationTaskResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15067,7 +17985,7 @@ type StopTransmissionTaskResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15095,7 +18013,36 @@ type StopTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type SuspendDataValidationTaskBody struct {
+	ValidationTaskID *string `json:"ValidationTaskID,omitempty"`
+}
+
+type SuspendDataValidationTaskRes struct {
+	ResponseMetadata *SuspendDataValidationTaskResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type SuspendDataValidationTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15117,13 +18064,14 @@ type SuspendTransmissionTaskRes struct {
 }
 
 type SuspendTransmissionTaskResResponseMetadata struct {
+
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15152,7 +18100,7 @@ type SuspendTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的Region，例如：cn-north-1
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED; RequestId为每次API请求的唯一标识。
 	RequestID string `json:"RequestId"`
 
 	// REQUIRED; 请求的服务，属于请求的公共参数。
@@ -15161,43 +18109,182 @@ type SuspendTransmissionTasksResResponseMetadata struct {
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
 }
-type CreateTransmissionTask struct{}
-type CreateTransmissionTaskQuery struct{}
-type DeleteTransmissionTask struct{}
-type DeleteTransmissionTaskQuery struct{}
-type DeleteTransmissionTasks struct{}
-type DeleteTransmissionTasksQuery struct{}
-type DescribeTransmissionTaskInfo struct{}
-type DescribeTransmissionTaskInfoQuery struct{}
-type DescribeTransmissionTaskProgress struct{}
-type DescribeTransmissionTaskProgressQuery struct{}
-type DescribeTransmissionTasks struct{}
-type DescribeTransmissionTasksQuery struct{}
-type ModifyTransmissionTask struct{}
-type ModifyTransmissionTaskQuery struct{}
-type ResumeTransmissionTask struct{}
-type ResumeTransmissionTaskQuery struct{}
-type ResumeTransmissionTasks struct{}
-type ResumeTransmissionTasksQuery struct{}
-type RetryTransmissionTask struct{}
-type RetryTransmissionTaskQuery struct{}
-type RetryTransmissionTasks struct{}
-type RetryTransmissionTasksQuery struct{}
-type StartTransmissionTask struct{}
-type StartTransmissionTaskQuery struct{}
-type StartTransmissionTasks struct{}
-type StartTransmissionTasksQuery struct{}
-type StopTransmissionTask struct{}
-type StopTransmissionTaskQuery struct{}
-type StopTransmissionTasks struct{}
-type StopTransmissionTasksQuery struct{}
-type SuspendTransmissionTask struct{}
-type SuspendTransmissionTaskQuery struct{}
-type SuspendTransmissionTasks struct{}
-type SuspendTransmissionTasksQuery struct{}
+
+type UpdateSubscriptionGroupBody struct {
+	Description *string `json:"Description,omitempty"`
+	GroupName   *string `json:"GroupName,omitempty"`
+	Password    *string `json:"Password,omitempty"`
+	TaskID      *string `json:"TaskId,omitempty"`
+	Username    *string `json:"Username,omitempty"`
+}
+
+type UpdateSubscriptionGroupRes struct {
+	ResponseMetadata *UpdateSubscriptionGroupResResponseMetadata `json:"ResponseMetadata,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateSubscriptionGroupResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+type CreateDataValidationTask struct {
+}
+type CreateDataValidationTaskQuery struct {
+}
+type CreateSubscriptionGroup struct {
+}
+type CreateSubscriptionGroupQuery struct {
+}
+type CreateTransmissionTask struct {
+}
+type CreateTransmissionTaskQuery struct {
+}
+type DeleteDataValidationTask struct {
+}
+type DeleteDataValidationTaskQuery struct {
+}
+type DeleteSubscriptionGroup struct {
+}
+type DeleteSubscriptionGroupQuery struct {
+}
+type DeleteTransmissionTask struct {
+}
+type DeleteTransmissionTaskQuery struct {
+}
+type DeleteTransmissionTasks struct {
+}
+type DeleteTransmissionTasksQuery struct {
+}
+type DescribeDataValidationResult struct {
+}
+type DescribeDataValidationResultQuery struct {
+}
+type DescribeDataValidationTasks struct {
+}
+type DescribeDataValidationTasksQuery struct {
+}
+type DescribeSubscriptionGroup struct {
+}
+type DescribeSubscriptionGroupProgress struct {
+}
+type DescribeSubscriptionGroupProgressQuery struct {
+}
+type DescribeSubscriptionGroupQuery struct {
+}
+type DescribeSubscriptionGroups struct {
+}
+type DescribeSubscriptionGroupsQuery struct {
+}
+type DescribeTransmissionTaskInfo struct {
+}
+type DescribeTransmissionTaskInfoQuery struct {
+}
+type DescribeTransmissionTaskProgress struct {
+}
+type DescribeTransmissionTaskProgressQuery struct {
+}
+type DescribeTransmissionTasks struct {
+}
+type DescribeTransmissionTasksQuery struct {
+}
+type ModifyTransmissionTask struct {
+}
+type ModifyTransmissionTaskQuery struct {
+}
+type ResumeDataValidationTask struct {
+}
+type ResumeDataValidationTaskQuery struct {
+}
+type ResumeTransmissionTask struct {
+}
+type ResumeTransmissionTaskQuery struct {
+}
+type ResumeTransmissionTasks struct {
+}
+type ResumeTransmissionTasksQuery struct {
+}
+type RetryTransmissionTask struct {
+}
+type RetryTransmissionTaskQuery struct {
+}
+type RetryTransmissionTasks struct {
+}
+type RetryTransmissionTasksQuery struct {
+}
+type SetBiSyncDDLSource struct {
+}
+type SetBiSyncDDLSourceQuery struct {
+}
+type StartTransmissionTask struct {
+}
+type StartTransmissionTaskQuery struct {
+}
+type StartTransmissionTasks struct {
+}
+type StartTransmissionTasksQuery struct {
+}
+type StopDataValidationTask struct {
+}
+type StopDataValidationTaskQuery struct {
+}
+type StopTransmissionTask struct {
+}
+type StopTransmissionTaskQuery struct {
+}
+type StopTransmissionTasks struct {
+}
+type StopTransmissionTasksQuery struct {
+}
+type SuspendDataValidationTask struct {
+}
+type SuspendDataValidationTaskQuery struct {
+}
+type SuspendTransmissionTask struct {
+}
+type SuspendTransmissionTaskQuery struct {
+}
+type SuspendTransmissionTasks struct {
+}
+type SuspendTransmissionTasksQuery struct {
+}
+type UpdateSubscriptionGroup struct {
+}
+type UpdateSubscriptionGroupQuery struct {
+}
+type CreateDataValidationTaskReq struct {
+	*CreateDataValidationTaskQuery
+	*CreateDataValidationTaskBody
+}
+type CreateSubscriptionGroupReq struct {
+	*CreateSubscriptionGroupQuery
+	*CreateSubscriptionGroupBody
+}
 type CreateTransmissionTaskReq struct {
 	*CreateTransmissionTaskQuery
 	*CreateTransmissionTaskBody
+}
+type DeleteDataValidationTaskReq struct {
+	*DeleteDataValidationTaskQuery
+	*DeleteDataValidationTaskBody
+}
+type DeleteSubscriptionGroupReq struct {
+	*DeleteSubscriptionGroupQuery
+	*DeleteSubscriptionGroupBody
 }
 type DeleteTransmissionTaskReq struct {
 	*DeleteTransmissionTaskQuery
@@ -15206,6 +18293,26 @@ type DeleteTransmissionTaskReq struct {
 type DeleteTransmissionTasksReq struct {
 	*DeleteTransmissionTasksQuery
 	*DeleteTransmissionTasksBody
+}
+type DescribeDataValidationResultReq struct {
+	*DescribeDataValidationResultQuery
+	*DescribeDataValidationResultBody
+}
+type DescribeDataValidationTasksReq struct {
+	*DescribeDataValidationTasksQuery
+	*DescribeDataValidationTasksBody
+}
+type DescribeSubscriptionGroupReq struct {
+	*DescribeSubscriptionGroupQuery
+	*DescribeSubscriptionGroupBody
+}
+type DescribeSubscriptionGroupProgressReq struct {
+	*DescribeSubscriptionGroupProgressQuery
+	*DescribeSubscriptionGroupProgressBody
+}
+type DescribeSubscriptionGroupsReq struct {
+	*DescribeSubscriptionGroupsQuery
+	*DescribeSubscriptionGroupsBody
 }
 type DescribeTransmissionTaskInfoReq struct {
 	*DescribeTransmissionTaskInfoQuery
@@ -15223,6 +18330,10 @@ type ModifyTransmissionTaskReq struct {
 	*ModifyTransmissionTaskQuery
 	*ModifyTransmissionTaskBody
 }
+type ResumeDataValidationTaskReq struct {
+	*ResumeDataValidationTaskQuery
+	*ResumeDataValidationTaskBody
+}
 type ResumeTransmissionTaskReq struct {
 	*ResumeTransmissionTaskQuery
 	*ResumeTransmissionTaskBody
@@ -15239,6 +18350,10 @@ type RetryTransmissionTasksReq struct {
 	*RetryTransmissionTasksQuery
 	*RetryTransmissionTasksBody
 }
+type SetBiSyncDDLSourceReq struct {
+	*SetBiSyncDDLSourceQuery
+	*SetBiSyncDDLSourceBody
+}
 type StartTransmissionTaskReq struct {
 	*StartTransmissionTaskQuery
 	*StartTransmissionTaskBody
@@ -15246,6 +18361,10 @@ type StartTransmissionTaskReq struct {
 type StartTransmissionTasksReq struct {
 	*StartTransmissionTasksQuery
 	*StartTransmissionTasksBody
+}
+type StopDataValidationTaskReq struct {
+	*StopDataValidationTaskQuery
+	*StopDataValidationTaskBody
 }
 type StopTransmissionTaskReq struct {
 	*StopTransmissionTaskQuery
@@ -15255,6 +18374,10 @@ type StopTransmissionTasksReq struct {
 	*StopTransmissionTasksQuery
 	*StopTransmissionTasksBody
 }
+type SuspendDataValidationTaskReq struct {
+	*SuspendDataValidationTaskQuery
+	*SuspendDataValidationTaskBody
+}
 type SuspendTransmissionTaskReq struct {
 	*SuspendTransmissionTaskQuery
 	*SuspendTransmissionTaskBody
@@ -15262,4 +18385,8 @@ type SuspendTransmissionTaskReq struct {
 type SuspendTransmissionTasksReq struct {
 	*SuspendTransmissionTasksQuery
 	*SuspendTransmissionTasksBody
+}
+type UpdateSubscriptionGroupReq struct {
+	*UpdateSubscriptionGroupQuery
+	*UpdateSubscriptionGroupBody
 }
