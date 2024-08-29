@@ -220,6 +220,7 @@ type ImageContentRiskResp struct {
 	Results        []*ImageContentRiskTag     `json:"Results"`
 	Scores         map[string]float64         `json:"Scores"`
 	OcrDetails     []*ImageContentFrameDetail `json:"OcrDetails"`
+	QrcodeDetails  []*QrcodeData              `json:"QrcodeDetails"`
 }
 
 type ImageContentRiskTag struct {
@@ -239,6 +240,10 @@ type ImageContentFrameDetail struct {
 	Id           float64      `json:"Id"`
 	OcrFrameText string       `json:"OcrFrameText"`
 	Positions    []*Positions `json:"Positions"`
+}
+type QrcodeData struct {
+	Id           float64  `json:"Id"`
+	QrcodeResult []string `json:"QrcodeResult"`
 }
 type Positions struct {
 	DetPointsRelative []*DetPointsRelative `json:"DetPointsRelative"`
