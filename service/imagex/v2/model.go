@@ -9829,7 +9829,7 @@ type GetAllImageServicesResResultServicesItem struct {
 	// REQUIRED; 是否开启精简 URL，取值如下所示：
 	// * true：是
 	// * false：否
-	CompactURL string `json:"CompactURL"`
+	CompactURL bool `json:"CompactURL"`
 
 	// REQUIRED; 服务创建时间，即创建时当地服务器时间。
 	CreateAt string `json:"CreateAt"`
