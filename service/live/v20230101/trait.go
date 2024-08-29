@@ -271,6 +271,86 @@ func (c *Live) RestartTranscodingJob(ctx context.Context, arg *RestartTranscodin
 	return result, nil
 }
 
+func (c *Live) DeleteWatermarkPresetV2(ctx context.Context, arg *DeleteWatermarkPresetV2Body) (*DeleteWatermarkPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteWatermarkPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteWatermarkPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateWatermarkPresetV2(ctx context.Context, arg *UpdateWatermarkPresetV2Body) (*UpdateWatermarkPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateWatermarkPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateWatermarkPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListWatermarkPresetDetail(ctx context.Context, arg *ListWatermarkPresetDetailBody) (*ListWatermarkPresetDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListWatermarkPresetDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListWatermarkPresetDetailRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreateWatermarkPresetV2(ctx context.Context, arg *CreateWatermarkPresetV2Body) (*CreateWatermarkPresetV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateWatermarkPresetV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateWatermarkPresetV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) CreateWatermarkPreset(ctx context.Context, arg *CreateWatermarkPresetBody) (*CreateWatermarkPresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1151,6 +1231,86 @@ func (c *Live) DisableDomain(ctx context.Context, arg *DisableDomainBody) (*Disa
 	return result, nil
 }
 
+func (c *Live) CreateLiveVideoQualityAnalysisTask(ctx context.Context, arg *CreateLiveVideoQualityAnalysisTaskBody) (*CreateLiveVideoQualityAnalysisTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateLiveVideoQualityAnalysisTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateLiveVideoQualityAnalysisTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteLiveVideoQualityAnalysisTask(ctx context.Context, arg *DeleteLiveVideoQualityAnalysisTaskBody) (*DeleteLiveVideoQualityAnalysisTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteLiveVideoQualityAnalysisTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteLiveVideoQualityAnalysisTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetLiveVideoQualityAnalysisTaskDetail(ctx context.Context, arg *GetLiveVideoQualityAnalysisTaskDetailBody) (*GetLiveVideoQualityAnalysisTaskDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetLiveVideoQualityAnalysisTaskDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetLiveVideoQualityAnalysisTaskDetailRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListLiveVideoQualityAnalysisTasks(ctx context.Context, arg *ListLiveVideoQualityAnalysisTasksBody) (*ListLiveVideoQualityAnalysisTasksRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListLiveVideoQualityAnalysisTasks", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListLiveVideoQualityAnalysisTasksRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) StopPullToPushTask(ctx context.Context, arg *StopPullToPushTaskBody) (*StopPullToPushTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1191,6 +1351,26 @@ func (c *Live) CreatePullToPushTask(ctx context.Context, arg *CreatePullToPushTa
 	return result, nil
 }
 
+func (c *Live) CreatePullToPushGroup(ctx context.Context, arg *CreatePullToPushGroupBody) (*CreatePullToPushGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreatePullToPushGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreatePullToPushGroupRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DeletePullToPushTask(ctx context.Context, arg *DeletePullToPushTaskBody) (*DeletePullToPushTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -1203,6 +1383,26 @@ func (c *Live) DeletePullToPushTask(ctx context.Context, arg *DeletePullToPushTa
 	}
 
 	result := new(DeletePullToPushTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeletePullToPushGroup(ctx context.Context, arg *DeletePullToPushGroupBody) (*DeletePullToPushGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeletePullToPushGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeletePullToPushGroupRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1251,6 +1451,46 @@ func (c *Live) UpdatePullToPushTask(ctx context.Context, arg *UpdatePullToPushTa
 	return result, nil
 }
 
+func (c *Live) UpdatePullToPushGroup(ctx context.Context, arg *UpdatePullToPushGroupBody) (*UpdatePullToPushGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdatePullToPushGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdatePullToPushGroupRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListPullToPushGroup(ctx context.Context, arg *ListPullToPushGroupBody) (*ListPullToPushGroupRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListPullToPushGroup", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListPullToPushGroupRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) ListPullToPushTask(ctx context.Context, arg *ListPullToPushTaskQuery) (*ListPullToPushTaskRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1263,6 +1503,26 @@ func (c *Live) ListPullToPushTask(ctx context.Context, arg *ListPullToPushTaskQu
 	}
 
 	result := new(ListPullToPushTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListPullToPushTaskV2(ctx context.Context, arg *ListPullToPushTaskV2Body) (*ListPullToPushTaskV2Res, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListPullToPushTaskV2", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListPullToPushTaskV2Res)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2603,6 +2863,62 @@ func (c *Live) UpdateEncryptDRM(ctx context.Context, arg *UpdateEncryptDRMBody) 
 	return result, nil
 }
 
+func (c *Live) UpdateEncryptHLS(ctx context.Context, arg *UpdateEncryptHLSBody) (*UpdateEncryptHLSRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateEncryptHLS", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateEncryptHLSRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetHLSEncryptDataKey(ctx context.Context, arg *GetHLSEncryptDataKeyQuery) (*GetHLSEncryptDataKeyRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetHLSEncryptDataKey", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetHLSEncryptDataKeyRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeEncryptHLS(ctx context.Context) (*DescribeEncryptHLSRes, error) {
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeEncryptHLS", url.Values{}, "")
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeEncryptHLSRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLicenseDRM(ctx context.Context, arg *DescribeLicenseDRMQuery) (*DescribeLicenseDRMRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2771,6 +3087,86 @@ func (c *Live) DescribeIPAccessRule(ctx context.Context, arg *DescribeIPAccessRu
 	}
 
 	result := new(DescribeIPAccessRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteSubtitleTranscodePreset(ctx context.Context, arg *DeleteSubtitleTranscodePresetBody) (*DeleteSubtitleTranscodePresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteSubtitleTranscodePreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteSubtitleTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateSubtitleTranscodePreset(ctx context.Context, arg *UpdateSubtitleTranscodePresetBody) (*UpdateSubtitleTranscodePresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateSubtitleTranscodePreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateSubtitleTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListVhostSubtitleTranscodePreset(ctx context.Context, arg *ListVhostSubtitleTranscodePresetBody) (*ListVhostSubtitleTranscodePresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListVhostSubtitleTranscodePreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListVhostSubtitleTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreateSubtitleTranscodePreset(ctx context.Context, arg *CreateSubtitleTranscodePresetBody) (*CreateSubtitleTranscodePresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateSubtitleTranscodePreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateSubtitleTranscodePresetRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
