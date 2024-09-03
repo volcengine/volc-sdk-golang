@@ -5082,7 +5082,7 @@ type DescribeLiveBatchPushStreamMetricsResResultStreamMetricListPropertiesItemsI
 	ServerIP string `json:"ServerIp"`
 
 	// REQUIRED; 推流开始时间，单位毫秒
-	StreamBeginTime int32 `json:"StreamBeginTime"`
+	StreamBeginTime int64 `json:"StreamBeginTime"`
 
 	// REQUIRED; 数据按时间粒度聚合时，每个时间粒度的开始时间，RFC3339 格式的时间戳，精度为秒。
 	TimeStamp string `json:"TimeStamp"`
