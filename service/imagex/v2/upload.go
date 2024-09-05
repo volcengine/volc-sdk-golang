@@ -21,6 +21,7 @@ type uploadTaskSet struct {
 	info    []StoreInfo
 	content []io.Reader
 	size    []int64
+	cts     []string
 
 	lock        sync.Mutex
 	taskChan    chan *uploadTaskElement
@@ -90,6 +91,7 @@ type uploadTaskElement struct {
 	info    StoreInfo
 	content io.Reader
 	size    int64
+	ct      string
 }
 
 func (r *uploadTaskSet) init() {
@@ -98,7 +100,7 @@ func (r *uploadTaskSet) init() {
 	r.result = make([]uploadTaskResult, len(r.info))
 	r.taskChan = make(chan *uploadTaskElement, len(r.size))
 	for idx := range r.size {
-		r.taskChan <- &uploadTaskElement{
+		ele := &uploadTaskElement{
 			ctx:     r.ctx,
 			host:    r.host,
 			idx:     idx,
@@ -106,6 +108,10 @@ func (r *uploadTaskSet) init() {
 			content: r.content[idx],
 			size:    r.size[idx],
 		}
+		if idx < len(r.cts) {
+			ele.ct = r.cts[idx]
+		}
+		r.taskChan <- ele
 	}
 	close(r.taskChan)
 }
@@ -158,7 +164,7 @@ type UploadPayload struct {
 	Hash string `json:"hash"`
 }
 
-func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *uploadTaskSet, storeInfo StoreInfo, imageBytes []byte) error {
+func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *uploadTaskSet, storeInfo StoreInfo, imageBytes []byte, ct string) error {
 	if len(imageBytes) == 0 {
 		return fmt.Errorf("file size is zero")
 	}
@@ -171,6 +177,9 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", storeInfo.Auth)
+	if ct != "" {
+		req.Header.Set("Specified-Content-Type", ct)
+	}
 	req = req.WithContext(ctx)
 
 	rsp, err := http.DefaultClient.Do(req)
@@ -214,6 +223,7 @@ type segmentedUploadParam struct {
 	isLargeFile bool
 	idx         int
 	set         *uploadTaskSet
+	ct          string
 }
 
 func (c *segmentedUploadParam) chunkUpload() error {
@@ -284,6 +294,9 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 	if c.isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
 	}
+	if c.ct != "" {
+		req.Header.Set("Specified-Content-Type", c.ct)
+	}
 
 	client := http.DefaultClient
 	rsp, err := client.Do(req)
@@ -324,6 +337,9 @@ func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data 
 	req.Header.Set("Authorization", c.Auth)
 	if c.isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
+	}
+	if c.ct != "" {
+		req.Header.Set("Specified-Content-Type", c.ct)
 	}
 
 	client := http.DefaultClient
@@ -368,6 +384,9 @@ func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []strin
 	req.Header.Set("Authorization", c.Auth)
 	if c.isLargeFile {
 		req.Header.Set("X-Storage-Mode", "gateway")
+	}
+	if c.ct != "" {
+		req.Header.Set("Specified-Content-Type", c.ct)
 	}
 
 	client := http.DefaultClient
