@@ -269,7 +269,7 @@ func (p *Vod) SubmitBlockObjectTasks(req *request.VodSubmitBlockObjectTasksReque
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("SubmitBlockObjectTasks", query)
+	respBody, status, err := p.Post("SubmitBlockObjectTasks", url.Values{}, form)
 
 	output := &response.VodSubmitBlockObjectTasksResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
@@ -362,7 +362,7 @@ func (p *Vod) ListBlockObjectTasks(req *request.VodListBlockObjectTasksRequest) 
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("ListBlockObjectTasks", query)
+	respBody, status, err := p.Post("ListBlockObjectTasks", url.Values{}, form)
 
 	output := &response.VodListBlockObjectTasksResponse{}
 	unmarshaler := protojson.UnmarshalOptions{

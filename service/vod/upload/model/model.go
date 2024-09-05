@@ -72,6 +72,7 @@ type VodUploadFuncRequest struct {
 	StorageClass      int32
 	ClientNetWorkMode string
 	ClientIDCMode     string
+	ExpireTime        string
 }
 
 type VodUploadMediaInnerFuncRequest struct {
@@ -89,6 +90,7 @@ type VodUploadMediaInnerFuncRequest struct {
 	VodUploadSource   string
 	ClientNetWorkMode string
 	ClientIDCMode     string
+	ExpireTime        string
 }
 
 type UploadAuthOpt func(option *UploadAuthOption)

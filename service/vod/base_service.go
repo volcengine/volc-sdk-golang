@@ -268,6 +268,7 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 		StorageClass:      mediaRequset.StorageClass,
 		ClientNetWorkMode: mediaRequset.ClientNetWorkMode,
 		ClientIDCMode:     mediaRequset.ClientIDCMode,
+		ExpireTime:        mediaRequset.ExpireTime,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -323,6 +324,7 @@ func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInne
 		CallbackArgs:    uploadMediaInnerRequest.CallbackArgs,
 		Functions:       uploadMediaInnerRequest.Funcs,
 		VodUploadSource: uploadMediaInnerRequest.VodUploadSource,
+		ExpireTime:      uploadMediaInnerRequest.ExpireTime,
 	}
 
 	commitResp, code, err := p.CommitUploadInfo(commitRequest)

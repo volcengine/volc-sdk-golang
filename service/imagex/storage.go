@@ -116,6 +116,8 @@ func (c *ImageX) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 	for _, key := range params.StoreKeys {
 		query.Add("StoreKeys", key)
 	}
+	query.Add("Prefix", params.Prefix)
+	query.Add("FileExtension", params.FileExtension)
 	query.Add("Overwrite", strconv.FormatBool(params.Overwrite))
 
 	respBody, _, err := c.Client.Query("ApplyImageUpload", query)
@@ -160,7 +162,7 @@ func (c *ImageX) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 		if err != nil {
 			return err
 		}
-		err = c.directUpload(item.ctx, item.host, item.idx, set, item.info, bts)
+		err = c.directUpload(item.ctx, item.host, item.idx, set, item.info, bts, item.ct)
 		if err != nil {
 			return err
 		}
@@ -173,6 +175,7 @@ func (c *ImageX) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 			isLargeFile: item.size > LargeFileSize,
 			idx:         item.idx,
 			set:         set,
+			ct:          item.ct,
 		}
 		err := arg.chunkUpload()
 		if err != nil {
@@ -223,6 +226,7 @@ func (c *ImageX) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 		info:    uploadAddr.StoreInfos,
 		content: content,
 		size:    size,
+		cts:     params.ContentTypes,
 	}
 	uploadTaskSet.init()
 
@@ -307,10 +311,14 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		uploadTaskSet.result[idx] = uploadTaskResult{
 			uri: info.StoreUri,
 		}
+		ct := ""
+		if idx < len(params.ContentTypes) {
+			ct = params.ContentTypes[idx]
+		}
 		err = retry.Do(func() error {
 			ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
 			defer cancel()
-			return c.directUpload(ctx, host, idx, uploadTaskSet, info, imageCopy)
+			return c.directUpload(ctx, host, idx, uploadTaskSet, info, imageCopy, ct)
 		}, retry.Attempts(2))
 		if err != nil {
 			uploadTaskSet.result[idx].errMsg = err.Error()
