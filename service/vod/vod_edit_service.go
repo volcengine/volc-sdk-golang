@@ -67,6 +67,53 @@ func (p *Vod) SubmitDirectEditTaskAsync(req *request.VodSubmitDirectEditTaskAsyn
 	return output, status, nil
 }
 
+// SubmitDirectEditTaskSync
+/*
+ * @param *request.VodSubmitDirectEditTaskSyncRequest
+ * @return *response.VodSubmitDirectEditTaskSyncResponse, int, error
+ */
+func (p *Vod) SubmitDirectEditTaskSync(req *request.VodSubmitDirectEditTaskSyncRequest) (*response.VodSubmitDirectEditTaskSyncResponse, int, error) {
+	reqMap := make(map[string]interface{})
+	req.ProtoReflect().Range(func(descriptor protoreflect.FieldDescriptor, value protoreflect.Value) bool {
+		if !value.IsValid() {
+			return true
+		}
+		if descriptor.Name() != "EditParam" {
+			reqMap[string(descriptor.Name())] = value.Interface()
+		} else {
+			reqMap[string(descriptor.Name())] = json.RawMessage(value.Bytes())
+		}
+		return true
+	})
+	jsonData, _ := json.Marshal(reqMap)
+	respBody, status, err := p.Json("SubmitDirectEditTaskSync", url.Values{}, string(jsonData))
+
+	output := &response.VodSubmitDirectEditTaskSyncResponse{}
+	unmarshaler := protojson.UnmarshalOptions{
+		DiscardUnknown: true,
+	}
+	errUnmarshal := unmarshaler.Unmarshal(respBody, output)
+	if err != nil || status != http.StatusOK {
+		// if exist http err,check whether the respBody's type is defined struct,
+		// if it is ,
+		// return struct,
+		// otherwise return nil body
+		// if httpCode is not 200,check whether the respBody's type is defined struct,
+		// if it is ,
+		// use errorCode as err and return struct,
+		// otherwise use respBody string as error and return
+		if errUnmarshal != nil || len(output.GetResponseMetadata().GetError().GetCode()) == 0 {
+			if err == nil {
+				err = errors.New(string(respBody))
+			}
+			return nil, status, err
+		} else {
+			return output, status, errors.New(output.GetResponseMetadata().GetError().GetCode())
+		}
+	}
+	return output, status, nil
+}
+
 // GetDirectEditResult
 /*
  * @param *request.VodGetDirectEditResultRequest
