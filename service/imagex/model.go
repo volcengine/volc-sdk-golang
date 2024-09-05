@@ -112,14 +112,17 @@ type DeleteImageResult struct {
 
 // ApplyImageUpload
 type ApplyUploadImageParam struct {
-	ServiceId   string
-	SessionKey  string
-	UploadNum   int
-	StoreKeys   []string
-	CommitParam *CommitUploadImageParam
-	SkipMeta    bool
-	SkipCommit  bool
-	Overwrite   bool
+	ServiceId     string
+	SessionKey    string
+	UploadNum     int
+	StoreKeys     []string
+	ContentTypes  []string
+	Prefix        string
+	FileExtension string
+	CommitParam   *CommitUploadImageParam
+	SkipMeta      bool
+	SkipCommit    bool
+	Overwrite     bool
 }
 
 type ApplyUploadImageResult struct {
