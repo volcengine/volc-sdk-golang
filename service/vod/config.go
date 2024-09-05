@@ -609,6 +609,14 @@ var (
 				"Version": []string{"2018-01-01"},
 			},
 		},
+		"SubmitDirectEditTaskSync": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitDirectEditTaskSync"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
 		"GetDirectEditResult": {
 			Method: http.MethodPost,
 			Path:   "/",

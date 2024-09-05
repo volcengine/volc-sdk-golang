@@ -36,6 +36,25 @@ func Test_SubmitDirectEditTaskAsync(t *testing.T) {
 	fmt.Println(resp.String())
 }
 
+func Test_SubmitDirectEditTaskSync(t *testing.T) {
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	params, _ := json.Marshal(map[string]interface{}{})
+	query := &request.VodSubmitDirectEditTaskSyncRequest{
+		Uploader:    "your target store vod space",
+		Application: "your application",
+		EditParam:   params,
+	}
+	resp, status, err := instance.SubmitDirectEditTaskSync(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
+
 func Test_GetDirectEditResult(t *testing.T) {
 	instance := vod.NewInstance()
 	instance.SetCredential(base.Credentials{
