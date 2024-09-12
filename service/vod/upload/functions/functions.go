@@ -41,3 +41,21 @@ func StartWorkflowFunc(workflowInput business.VodUploadFunctionInput) business.V
 		Input: &business.VodUploadFunctionInput{TemplateId: workflowInput.TemplateId, Templates: workflowInput.Templates},
 	}
 }
+
+func CaptionUploadFunc(captionUploadInput business.VodUploadFunctionInput) business.VodUploadFunction {
+	return business.VodUploadFunction{
+		Name: "CaptionUpload",
+		Input: &business.VodUploadFunctionInput{
+			Title:       captionUploadInput.Title,
+			Format:      captionUploadInput.Format,
+			Vid:         captionUploadInput.Fid,
+			Fid:         captionUploadInput.Fid,
+			Language:    captionUploadInput.Language,
+			StoreUri:    captionUploadInput.StoreUri,
+			Source:      captionUploadInput.Source,
+			Tag:         captionUploadInput.Tag,
+			AutoPublish: captionUploadInput.AutoPublish,
+			ActionType:  captionUploadInput.ActionType,
+		},
+	}
+}
