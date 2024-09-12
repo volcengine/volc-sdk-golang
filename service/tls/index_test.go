@@ -211,6 +211,17 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						SQLFlag:        false,
 					},
 				},
+				{
+					Key: "test-key-3",
+					Value: Value{
+						ValueType:      "json",
+						Delimiter:      "",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        true,
+						IndexAll:       true,
+					},
+				},
 			},
 		}: {
 			TopicID: suite.topic,
@@ -238,6 +249,17 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						CasSensitive:   false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+					},
+				},
+				{
+					Key: "test-key-3",
+					Value: Value{
+						ValueType:      "json",
+						Delimiter:      "",
+						CasSensitive:   false,
+						IncludeChinese: false,
+						SQLFlag:        true,
+						IndexAll:       true,
 					},
 				},
 			},

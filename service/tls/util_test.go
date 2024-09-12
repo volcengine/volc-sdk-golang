@@ -17,6 +17,10 @@ func IntPtr(in int) *int {
 	return &in
 }
 
+func Int32Ptr(in int32) *int32 {
+	return &in
+}
+
 func Uint16Ptr(in uint16) *uint16 {
 	return &in
 }
