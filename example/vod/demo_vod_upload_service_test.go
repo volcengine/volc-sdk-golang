@@ -69,6 +69,7 @@ func Test_CommitUploadInfo(t *testing.T) {
 		CallbackArgs:    "your CallbackArgs",
 		Functions:       "your Functions",
 		VodUploadSource: "your VodUploadSource",
+		ExpireTime:      "your ExpireTime",
 	}
 
 	resp, status, err := instance.CommitUploadInfo(query)

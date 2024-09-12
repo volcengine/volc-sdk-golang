@@ -26,6 +26,9 @@ const (
 
 	Asc  = "asc"
 	Desc = "desc"
+
+	Custom = "custom"
+	Auto   = "auto"
 )
 
 type Field struct {
@@ -114,6 +117,7 @@ type IndexOptions struct {
 	partitionBy string
 	scalarIndex []string
 	shardCount  *int64
+	shardPolicy string
 }
 
 func NewIndexOptions() *IndexOptions {
@@ -124,6 +128,7 @@ func NewIndexOptions() *IndexOptions {
 		partitionBy: "",
 		scalarIndex: nil,
 		shardCount:  nil,
+		shardPolicy: "",
 	}
 	return indexOptions
 }
@@ -149,6 +154,10 @@ func (indexOptions *IndexOptions) SetScalarIndex(scalarIndex []string) *IndexOpt
 }
 func (indexOptions *IndexOptions) SetShardCount(shardCount int64) *IndexOptions {
 	indexOptions.shardCount = &shardCount
+	return indexOptions
+}
+func (indexOptions *IndexOptions) SetShardPolicy(shardPolicy string) *IndexOptions {
+	indexOptions.shardPolicy = shardPolicy
 	return indexOptions
 }
 

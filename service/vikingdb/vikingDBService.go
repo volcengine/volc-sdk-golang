@@ -5,10 +5,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 type VikingDBService struct {
@@ -389,7 +390,8 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 	var scalarIndex interface{}
 	var vectorIndex *VectorIndexParams
 	var indexCost interface{}
-	var shard_count int64
+	var shardCount int64
+	var shardPolicy string
 	if value, exist := res["description"]; exist {
 		if v, ok := value.(string); !ok {
 			return nil, fmt.Errorf("invalid response, description is not string: %v", res)
@@ -450,7 +452,14 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 		if v, ok := value.(float64); !ok {
 			return nil, fmt.Errorf("invalid response, shard_count is not a number: %v", res)
 		} else {
-			shard_count = int64(v)
+			shardCount = int64(v)
+		}
+	}
+	if value, exist := res["shard_policy"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, shard_policy is not string: %v", res)
+		} else {
+			shardPolicy = v
 		}
 	}
 	if value, exist := res["vector_index"]; exist {
@@ -563,7 +572,14 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 		UpdateTime:      updateTime,
 		UpdatePerson:    updatePerson,
 		IndexCost:       indexCost,
-		ShardCount:      shard_count,
+		ShardCount:      shardCount,
+		ShardPolicy:     shardPolicy,
+	}
+	if index.primaryKey == "" {
+		_, err := index.getPrimaryKey()
+		if err != nil {
+			return nil, err
+		}
 	}
 	return index, nil
 }
@@ -691,7 +707,10 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 	if indexOptions.shardCount != nil {
 		params["shard_count"] = *indexOptions.shardCount
 	}
-	//fmt.Println(vikingDBService.convertMapToJson(params))
+	if indexOptions.shardPolicy != "" {
+		params["shard_policy"] = indexOptions.shardPolicy
+	}
+	// fmt.Println(vikingDBService.convertMapToJson(params))
 	res, err := vikingDBService.DoRequest(context.Background(), "CreateIndex", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
 		return nil, err
@@ -707,6 +726,12 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 		Description:     indexOptions.description,
 		CpuQuota:        indexOptions.cpuQuota,
 		PartitionBy:     indexOptions.partitionBy,
+		ShardPolicy:     indexOptions.shardPolicy,
+		ShardCount:      *indexOptions.shardCount,
+	}
+	_, err = index.getPrimaryKey()
+	if err != nil {
+		return nil, err
 	}
 	return index, err
 }

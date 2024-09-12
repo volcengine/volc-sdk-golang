@@ -16,22 +16,87 @@ const (
 	testSk = "sk"
 )
 
-func TestVisual_CommonJsonAPI(t *testing.T) {
+func TestVisual_CVProcess(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
-		"req_key": "entity_seg",
-		//"binary_data_base64": []string{""},
-		"image_urls":    []string{"https://xxx"},
-		"return_format": 4,
-		"refine_mask":   1,
-		// "crop_mask":     1,
-		"max_entity": 20,
+		"req_key":     "",
+		"image_url":   []string{""},
+		"video_url":   "",
+		"ref_img_url": []string{""},
 	}
 
-	resp, status, err := DefaultInstance.VisualCommonJSONAPI(reqBody)
+	resp, status, err := DefaultInstance.CVProcess(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVisual_CVSubmitTask(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用示例
+	reqBody := map[string]interface{}{
+		"req_key":     "",
+		"image_url":   []string{""},
+		"video_url":   "",
+		"ref_img_url": []string{""},
+	}
+
+	resp, status, err := DefaultInstance.CVSubmitTask(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVisual_CVGetResult(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用示例
+	reqBody := map[string]interface{}{
+		"req_key": "",
+		"task_id": "",
+	}
+
+	resp, status, err := DefaultInstance.CVGetResult(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVisual_CVSync2AsyncSubmitTask(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用示例
+	reqBody := map[string]interface{}{
+		"req_key": "",
+		// "binary_data_base64": []string{""},
+		"image_urls":      []string{""},
+		"positive_prompt": "beautiful",
+	}
+
+	resp, status, err := DefaultInstance.CVSync2AsyncSubmitTask(reqBody)
+	fmt.Println(status, err)
+	b, _ := json.Marshal(resp)
+	fmt.Println(string(b))
+}
+
+func TestVisual_CVSync2AsyncGetResult(t *testing.T) {
+	DefaultInstance.Client.SetAccessKey(testAk)
+	DefaultInstance.Client.SetSecretKey(testSk)
+
+	// 使用示例
+	reqBody := map[string]interface{}{
+		"req_key": "",
+		"task_id": "",
+	}
+
+	resp, status, err := DefaultInstance.CVSync2AsyncGetResult(reqBody)
 	fmt.Println(status, err)
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
@@ -41,7 +106,7 @@ func TestVisual_HairStyleV2(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
 		"req_key": "hair_style",
 		//"binary_data_base64": []string{""},
@@ -59,7 +124,7 @@ func TestVisual_EmotionPortrait(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
 		"req_key": "emotion_portrait",
 		//"binary_data_base64": []string{""},
@@ -108,7 +173,7 @@ func TestCert_CertH5Token(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
 		"req_key":      "cert_h5_token",
 		"h5_config_id": "xxx",
@@ -130,7 +195,7 @@ func TestCert_CertH5ConfigInit(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
 		"req_key": "cert_h5_config_init",
 		"h5_config": map[string]interface{}{
@@ -236,7 +301,7 @@ func TestVisual_Img2ImgOutpainting(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 
-	// 使用比例
+	// 使用示例
 	reqBody := map[string]interface{}{
 		"req_key":            "i2i_outpainting",
 		"prompt":             "蓝色的海洋",

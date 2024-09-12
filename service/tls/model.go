@@ -135,6 +135,8 @@ type CreateTopicRequest struct {
 	TimeFormat     *string   `json:",omitempty"`
 	Tags           []TagInfo `json:",omitempty"`
 	LogPublicIP    *bool     `json:",omitempty"`
+	EnableHotTtl   *bool     `json:",omitempty"`
+	HotTtl         *int32    `json:",omitempty"`
 }
 
 func (v *CreateTopicRequest) CheckValidation() error {
@@ -182,6 +184,8 @@ type ModifyTopicRequest struct {
 	TimeKey        *string `json:",omitempty"`
 	TimeFormat     *string `json:",omitempty"`
 	LogPublicIP    *bool   `json:",omitempty"`
+	EnableHotTtl   *bool   `json:",omitempty"`
+	HotTtl         *int32  `json:",omitempty"`
 }
 
 func (v *ModifyTopicRequest) CheckValidation() error {
@@ -220,6 +224,8 @@ type DescribeTopicResponse struct {
 	TimeFormat      string    `json:"TimeFormat"`
 	Tags            []TagInfo `json:"Tags"`
 	LogPublicIP     bool      `json:"LogPublicIP"`
+	EnableHotTtl    bool      `json:"EnableHotTtl"`
+	HotTtl          int32     `json:"HotTtl"`
 }
 
 type DescribeTopicsRequest struct {
@@ -268,6 +274,7 @@ type Value struct {
 	IncludeChinese bool           `json:"IncludeChinese"`
 	SQLFlag        bool           `json:"SqlFlag"`
 	JsonKeys       []KeyValueInfo `json:"JsonKeys"`
+	IndexAll       bool           `json:"IndexAll"`
 }
 
 type KeyValueParam struct {

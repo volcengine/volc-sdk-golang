@@ -878,14 +878,6 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
-		"GetImageServiceSubscription": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageServiceSubscription"},
-				"Version": []string{"2023-05-01"},
-			},
-		},
 		"GetImageService": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -1166,6 +1158,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"UpdateImageExifData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageExifData"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"GetImageDetectResult": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1260,6 +1260,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"UpdateImageMirrorConf"},
 				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageServiceSubscription": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageServiceSubscription"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"GetImageAuthKey": {

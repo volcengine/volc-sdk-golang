@@ -18,10 +18,7 @@ func Test_GetImageContentBlockList(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.GetImageContentBlockListReq{
-		GetImageContentBlockListQuery: &imagex.GetImageContentBlockListQuery{},
-		GetImageContentBlockListBody:  &imagex.GetImageContentBlockListBody{},
-	}
+	param := &imagex.GetImageContentBlockListBody{}
 
 	resp, err := instance.GetImageContentBlockList(context.Background(), param)
 
