@@ -46,6 +46,7 @@ func Test_UpdateMediaInfo(t *testing.T) {
 		Description:      nil,
 		Tags:             nil,
 		ClassificationId: nil,
+		ExpireTime:       nil,
 	}
 
 	resp, status, err := instance.UpdateMediaInfo(query)
@@ -188,9 +189,12 @@ func Test_GetFileInfos(t *testing.T) {
 	})
 
 	query := &request.VodGetFileInfosRequest{
-		SpaceName:        "your SpaceName",
-		EncodedFileNames: "your EncodedFileNames",
-		BucketName:       "your BucketName",
+		SpaceName:              "your SpaceName",
+		EncodedFileNames:       "your EncodedFileNames",
+		BucketName:             "your BucketName",
+		NeedDownloadUrl:        false,
+		DownloadUrlNetworkType: "your DownloadUrlNetworkType",
+		DownloadUrlExpire:      0,
 	}
 
 	resp, status, err := instance.GetFileInfos(query)

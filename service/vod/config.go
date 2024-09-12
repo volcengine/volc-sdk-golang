@@ -1071,5 +1071,32 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		// **********************************************************************
+		// 迁移平台
+		// **********************************************************************
+		"SetCloudMigrateJob": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetCloudMigrateJob"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"GetCloudMigrateJob": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCloudMigrateJob"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"SubmitCloudMigrateJob": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SubmitCloudMigrateJob"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 	}
 )
