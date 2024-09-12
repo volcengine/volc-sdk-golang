@@ -10,7 +10,7 @@ import (
 	imagex "github.com/volcengine/volc-sdk-golang/service/imagex/v2"
 )
 
-func Test_CreateImageContentTask(t *testing.T) {
+func Test_UpdateImageExifData(t *testing.T) {
 	instance := imagex.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,12 @@ func Test_CreateImageContentTask(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.CreateImageContentTaskBody{}
+	param := &imagex.UpdateImageExifDataReq{
+		UpdateImageExifDataQuery: &imagex.UpdateImageExifDataQuery{},
+		UpdateImageExifDataBody:  &imagex.UpdateImageExifDataBody{},
+	}
 
-	resp, err := instance.CreateImageContentTask(context.Background(), param)
+	resp, err := instance.UpdateImageExifData(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)
