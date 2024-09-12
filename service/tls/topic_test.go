@@ -136,11 +136,13 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 func (suite *SDKTopicTestSuite) TestCreateTopicAbnormally() {
 	topicName := "existing-topic"
 	resp, err := suite.cli.CreateTopic(&CreateTopicRequest{
-		ProjectID:   suite.project,
-		TopicName:   topicName,
-		Ttl:         3,
-		Description: "test topic",
-		ShardCount:  3,
+		ProjectID:    suite.project,
+		TopicName:    topicName,
+		Ttl:          9,
+		Description:  "test topic",
+		ShardCount:   3,
+		EnableHotTtl: BoolPtr(true),
+		HotTtl:       Int32Ptr(8),
 	})
 	suite.NoError(err)
 	suite.topicList = append(suite.topicList, resp.TopicID)
@@ -148,7 +150,7 @@ func (suite *SDKTopicTestSuite) TestCreateTopicAbnormally() {
 	resp, err = suite.cli.CreateTopic(&CreateTopicRequest{
 		ProjectID:   suite.project,
 		TopicName:   topicName,
-		Ttl:         3,
+		Ttl:         9,
 		Description: "test topic",
 		ShardCount:  3,
 	})
@@ -179,11 +181,13 @@ func (suite *SDKTopicTestSuite) TestDeleteTopicAbnormally() {
 
 func (suite *SDKTopicTestSuite) TestModifyTopicNormally() {
 	createTopicReq := &CreateTopicRequest{
-		ProjectID:   suite.project,
-		TopicName:   "golang-sdk-update-topic-" + uuid.New().String(),
-		Ttl:         3,
-		Description: "test topic",
-		ShardCount:  2,
+		ProjectID:    suite.project,
+		TopicName:    "golang-sdk-update-topic-" + uuid.New().String(),
+		Ttl:          9,
+		Description:  "test topic",
+		ShardCount:   2,
+		EnableHotTtl: BoolPtr(true),
+		HotTtl:       Int32Ptr(8),
 	}
 
 	createTopicResp, err := suite.cli.CreateTopic(createTopicReq)
@@ -193,12 +197,15 @@ func (suite *SDKTopicTestSuite) TestModifyTopicNormally() {
 	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{
 		TopicID:   createTopicResp.TopicID,
 		TopicName: StrPtr("new-topic-name"),
+		HotTtl:    Int32Ptr(7),
 	})
 	suite.NoError(err)
 	describeTopicResp, err := suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
 	suite.NoError(err)
 	suite.Equal("new-topic-name", describeTopicResp.TopicName)
-	suite.Equal(3, int(describeTopicResp.Ttl))
+	suite.Equal(9, int(describeTopicResp.Ttl))
+	suite.Equal(7, int(describeTopicResp.HotTtl))
+	suite.Equal(true, describeTopicResp.EnableHotTtl)
 	suite.Equal("test topic", describeTopicResp.Description)
 
 	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{

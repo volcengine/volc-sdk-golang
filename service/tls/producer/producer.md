@@ -21,6 +21,7 @@ package tls
 import (
 	"fmt"
 	"os"
+	"sync/atomic"
 	"time"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
@@ -45,8 +46,10 @@ func main() {
 	source := "your-log-source"
 	filename := "your-log-filename"
 
+	callback := &ProducerCallback{}
+
 	// 调用Producer SendLog接口，一次提交一条日志
-	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLog接口
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLog接口，CallBack不能阻塞返回
 	err := tlsProducer.SendLog("", topicID, source, filename, &pb.Log{
 		Contents: []*pb.LogContent{
 			{
@@ -59,14 +62,14 @@ func main() {
 			},
 		},
 		Time: time.Now().Unix(),
-	}, nil)
+	}, callback)
 	if err != nil {
 		// 处理错误
 		fmt.Println(err.Error())
 	}
 
 	// 调用Producer SendLogs接口，一次提交多条日志
-	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLogs接口
+	// 您可根据实际需要，自行定义实现用于业务处理的CallBack，传入SendLogs接口，CallBack不能阻塞返回
 	err = tlsProducer.SendLogs("", topicID, source, filename, &pb.LogGroup{
 		Source:   source,
 		FileName: filename,
@@ -98,7 +101,7 @@ func main() {
 				Time: time.Now().Unix(),
 			},
 		},
-	}, nil)
+	}, callback)
 	if err != nil {
 		// 处理错误
 		fmt.Println(err.Error())
@@ -106,6 +109,23 @@ func main() {
 
 	// 关闭Producer
 	tlsProducer.Close()
+}
+
+type ProducerCallback struct {
+	successCount int64
+	failureCount int64
+}
+
+func (sendLog *ProducerCallback) Success(result *producer.Result) {
+	atomic.AddInt64(&sendLog.successCount, 1)
+}
+
+func (sendLog *ProducerCallback) Fail(result *producer.Result) {
+	atomic.AddInt64(&sendLog.failureCount, 1)
+	lastAttempt := result.Attempts[len(result.Attempts)-1]
+	fmt.Println(lastAttempt.ErrorMessage)
+	fmt.Println(lastAttempt.ErrorCode)
+	fmt.Println(lastAttempt.RequestId)
 }
 ```
 
