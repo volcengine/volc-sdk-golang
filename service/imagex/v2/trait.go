@@ -2106,26 +2106,6 @@ func (c *Imagex) PreviewImageUploadFile(ctx context.Context, arg *PreviewImageUp
 	return result, nil
 }
 
-func (c *Imagex) GetImageServiceSubscription(ctx context.Context, arg *GetImageServiceSubscriptionQuery) (*GetImageServiceSubscriptionRes, error) {
-	query, err := marshalToQuery(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", query)
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(GetImageServiceSubscriptionRes)
-	err = unmarshalInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Imagex) GetImageService(ctx context.Context, arg *GetImageServiceQuery) (*GetImageServiceRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2341,18 +2321,13 @@ func (c *Imagex) UpdateImageFileKey(ctx context.Context, arg *UpdateImageFileKey
 	return result, nil
 }
 
-func (c *Imagex) CreateImageContentTask(ctx context.Context, arg *CreateImageContentTaskReq) (*CreateImageContentTaskRes, error) {
-	query, err := marshalToQuery(arg.CreateImageContentTaskQuery)
+func (c *Imagex) CreateImageContentTask(ctx context.Context, arg *CreateImageContentTaskBody) (*CreateImageContentTaskRes, error) {
+	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := marshalToJson(arg.CreateImageContentTaskBody)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreateImageContentTask", query, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "CreateImageContentTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
@@ -2386,18 +2361,13 @@ func (c *Imagex) GetImageContentTaskDetail(ctx context.Context, arg *GetImageCon
 	return result, nil
 }
 
-func (c *Imagex) GetImageContentBlockList(ctx context.Context, arg *GetImageContentBlockListReq) (*GetImageContentBlockListRes, error) {
-	query, err := marshalToQuery(arg.GetImageContentBlockListQuery)
+func (c *Imagex) GetImageContentBlockList(ctx context.Context, arg *GetImageContentBlockListBody) (*GetImageContentBlockListRes, error) {
+	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	body, err := marshalToJson(arg.GetImageContentBlockListBody)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "GetImageContentBlockList", query, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "GetImageContentBlockList", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
@@ -2886,6 +2856,31 @@ func (c *Imagex) CreateHiddenWatermarkImage(ctx context.Context, arg *CreateHidd
 	return result, nil
 }
 
+func (c *Imagex) UpdateImageExifData(ctx context.Context, arg *UpdateImageExifDataReq) (*UpdateImageExifDataRes, error) {
+	query, err := marshalToQuery(arg.UpdateImageExifDataQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateImageExifDataBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateImageExifData", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateImageExifDataRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) GetImageDetectResult(ctx context.Context, arg *GetImageDetectResultReq) (*GetImageDetectResultRes, error) {
 	query, err := marshalToQuery(arg.GetImageDetectResultQuery)
 	if err != nil {
@@ -3143,6 +3138,26 @@ func (c *Imagex) UpdateImageMirrorConf(ctx context.Context, arg *UpdateImageMirr
 	}
 
 	result := new(UpdateImageMirrorConfRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageServiceSubscription(ctx context.Context, arg *GetImageServiceSubscriptionQuery) (*GetImageServiceSubscriptionRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetImageServiceSubscription", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageServiceSubscriptionRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err

@@ -617,21 +617,21 @@ type CreateImageAuditTaskResResult struct {
 
 type CreateImageCompressTaskBody struct {
 
-	// REQUIRED; 压缩方法，取值如下所示：
-	// * 0：ZIP DEFLATE 压缩打包方法
-	//
-	//
-	// * 1：仅保存文件，不执行压缩打包
+	// REQUIRED; 文件的处理方式，取值如下所示：
+	// * 0：使用 ZIP DEFLATE 压缩方法，将文件进行压缩并打包为 ZIP 包。该方式适用于需要长期存储大量未经压缩的文件的场景，以节省存储空间。但需注意的是，若文件本身已经过压缩处理，将会因为文件的可压缩空间有限，导致该方式的压缩效果不明显。
+	// * 1：仅将文件打包为 ZIP 包，但不执行压缩操作。该方式适用于快速整理文件而无需节省存储空间的场景。例如已经过压缩的文件的打包存储，以便于传输或归档。
 	ZipMode int `json:"ZipMode"`
 
-	// POST 类型的回调 URL，用于接收相关回调 JSON 类型数据。
+	// POST 类型的回调 URL，用于接收相关回调 JSON 类型数据。回调参数请参考回调内容。
 	Callback string `json:"Callback,omitempty"`
 
-	// 与IndexFile，二选一。 压缩文件列表配置，压缩文件 URL 最多为 500 个，总文件大小不超过 45000 MB。若超出限制，则取消压缩打包操作，直接返回错误。
+	// 与IndexFile为二选一，必填。
+	// 压缩文件列表配置，最多可支持 3000 个文件，压缩前文件的总大小不得超过 45000 MB。若超出限制，则取消压缩打包操作，致使打包任务失败。
 	FileList []*CreateImageCompressTaskBodyFileListItem `json:"FileList,omitempty"`
 
-	// 与 FileList，二选一。 索引文件 StoreUri，为 .txt 文件，该索引文件需上传至指定服务对应存储中。 该索引文件内需填写待压缩文件的 StoreUri，每行填写一个，最多可填写 3000 行。总文件大小不超过 45000
-	// MB。若超出限制，则取消压缩打包操作，直接返回错误。
+	// 与FileList为二选一，必填。
+	// 索引文件的 StoreUri，为 .txt 文件，该索引文件需上传至指定服务对应存储中。
+	// 该索引文件内需填写待压缩文件的地址，每行填写一个，最多可填写 3000 行。压缩前文件的总大小不超过 45000 MB。若超出限制，则取消压缩打包操作，致使打包任务失败。
 	IndexFile string `json:"IndexFile,omitempty"`
 
 	// 压缩后文件压缩包的指定名称，默认为随机 Key。
@@ -643,18 +643,28 @@ type CreateImageCompressTaskBodyFileListItem struct {
 	// REQUIRED; 公网可访问的待压缩文件 URL
 	URL string `json:"Url"`
 
-	// * 指定时，为 URL 文件所在压缩包中的别名。
+	// * 指定时，为 URL 文件所在压缩包中的别名。输入规则如下所示： * 支持汉字、字母、数字及符号-、_和.；
+	// * 不能以-、_和.开头；
+	// * 长度不得超过 100 个字符。
+	//
+	//
 	// * 不指定时，若能提取原文件名称时，则以 URL 原文件名称；否则，使用随机名称。
 	Alias string `json:"Alias,omitempty"`
 
-	// URL 对应资源在压缩包中的文件夹，不传时则将该资源存储至一级目录下。不能以/结尾。
+	// 指定源文件在压缩包中的文件夹，不传时则将该资源存储至一级目录下。输入规则如下所示：
+	// * 支持汉字、字母、数字及符号-、_和.；
+	// * 不能以-、_和.开头；
+	// * 不能以/结尾。
+	// :::warning
+	// * 建议命名长度不超过 256 个字节。
+	// * 建议您在命名中仅使用-、_和.这三种符号。如果您使用了其他符号，可能因操作系统不支持导致处理异常。 :::
 	Folder string `json:"Folder,omitempty"`
 }
 
 type CreateImageCompressTaskQuery struct {
 
-	// REQUIRED; 服务 ID。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// REQUIRED; 压缩文件存储的目标服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
@@ -710,13 +720,9 @@ type CreateImageContentTaskBody struct {
 	// * 当TaskType取值block_url，一次可提交的最大限额为 2000 个；
 	// * 当TaskType取值unblock_url，一次可提交的最大限额为 2000 个。
 	Urls []string `json:"Urls"`
-}
 
-type CreateImageContentTaskQuery struct {
-
-	// REQUIRED; 服务 ID。您可以在veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。您也可以通过
-	// OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId" query:"ServiceId"`
+	// 仅当 TaskType 为 refresh_dir 使用目录刷新时，可通过此配置开启前缀刷新。取值如下所示： true：开启前缀刷新 false：（默认）关闭前缀刷新，进行标准的目录匹配刷新。
+	PrefixRefreshDir bool `json:"PrefixRefreshDir,omitempty"`
 }
 
 type CreateImageContentTaskRes struct {
@@ -749,6 +755,9 @@ type CreateImageContentTaskResResponseMetadata struct {
 // CreateImageContentTaskResResult - 视请求的接口而定
 type CreateImageContentTaskResResult struct {
 
+	// REQUIRED; 完成结果提示信息
+	Msg string `json:"Msg"`
+
 	// REQUIRED; 对应的任务 ID
 	TaskID string `json:"TaskId"`
 }
@@ -774,7 +783,7 @@ type CreateImageFromURIBody struct {
 type CreateImageFromURIQuery struct {
 
 	// REQUIRED; 复制目标对应的服务 ID。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
@@ -1024,7 +1033,7 @@ type CreateImageMigrateTaskBodyTaskCallbackCfg struct {
 type CreateImageMigrateTaskBodyTaskDst struct {
 
 	// REQUIRED; 迁移目标服务 ID，请提前新建服务 [https://www.volcengine.com/docs/508/357114#%E6%96%B0%E5%BB%BA%E6%9C%8D%E5%8A%A1]。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId"`
 
@@ -1151,6 +1160,11 @@ type CreateImageMigrateTaskBodyTaskTranscode struct {
 	// * true：保留
 	// * false：（默认）不保留
 	EnableExif bool `json:"EnableExif,omitempty"`
+
+	// 当 jpeg 原图在迁移中指定转码为 heic 图时， heic 图是否需要存储原图大小的数据。
+	// * true：是
+	// * false：（默认）否
+	ReserveJPEGSize bool `json:"ReserveJpegSize,omitempty"`
 
 	// 对带有 CMYK 色彩空间的图片，是否跳过转码处理直接存储原图。取值如下所示：
 	// * true：是
@@ -1482,6 +1496,7 @@ type CreateImageTemplateBodyOutputExtra struct {
 	// * 8：8bit
 	// * 10：10bit
 	HeicEncodeDepth          string `json:"heic.encode.depth,omitempty"`
+	HeicJPEGSizeReserve      string `json:"heic.jpeg.size.reserve,omitempty"`
 	HeicQualityAdaptPixlimit string `json:"heic.quality.adapt.pixlimit,omitempty"`
 	HeicQualityAdaptVersion  string `json:"heic.quality.adapt.version,omitempty"`
 
@@ -1508,11 +1523,16 @@ type CreateImageTemplateBodyOutputExtra struct {
 
 	// 指定 jpeg 体积的输出大小，需同时指定 jpeg.size.fixed，二者缺一不可。 体积填充方式，取值固定为 append。
 	JPEGSizeFixedPadding string `json:"jpeg.size.fixed.padding,omitempty"`
+	JPEGSizeRecover      string `json:"jpeg.size.recover,omitempty"`
 
 	// 是否压缩颜色空间，取值如下所示：
 	// * true：是
 	// * false：否
 	PNGUseQuant              string `json:"png.use_quant,omitempty"`
+	VvicAqMode               string `json:"vvic.aq.mode,omitempty"`
+	VvicQualityAdaptPixlimit string `json:"vvic.quality.adapt.pixlimit,omitempty"`
+	VvicQualityAdaptVersion  string `json:"vvic.quality.adapt.version,omitempty"`
+	VvicRoi                  string `json:"vvic.roi,omitempty"`
 	WebpQualityAdaptPixlimit string `json:"webp.quality.adapt.pixlimit,omitempty"`
 	WebpQualityAdaptVersion  string `json:"webp.quality.adapt.version,omitempty"`
 }
@@ -1794,13 +1814,13 @@ type CreateImageTranscodeTaskResResult struct {
 
 type CreateTemplatesFromBinBody struct {
 
-	// REQUIRED; 待恢复模板名称。 :::tip 您可以通过调用获取回收站中所有模板 [https://www.volcengine.com/docs/508/132241]获取所需的模板名称。 :::
+	// REQUIRED; 待恢复模板的名称。您可以通过调用获取回收站中所有模板 [https://www.volcengine.com/docs/508/132241]获取所需的模板名称。
 	TemplateNames []string `json:"TemplateNames"`
 }
 
 type CreateTemplatesFromBinQuery struct {
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 待恢复模板对应的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
@@ -1833,19 +1853,21 @@ type CreateTemplatesFromBinResResponseMetadata struct {
 
 type CreateTemplatesFromBinResResult struct {
 
-	// REQUIRED; 返回各模版恢复的结果。
+	// REQUIRED; 返回各模板恢复的结果。
 	Results []*CreateTemplatesFromBinResResultResultsItem `json:"Results"`
 }
 
 type CreateTemplatesFromBinResResultResultsItem struct {
 
-	// REQUIRED; 回收站中的模版名。
+	// REQUIRED; 回收站中的模板名。
 	BinName string `json:"BinName"`
 
-	// REQUIRED; 恢复后的模版名。
+	// REQUIRED; 恢复后的模板名。
 	NewName string `json:"NewName"`
 
-	// REQUIRED; 是否恢复成功。
+	// REQUIRED; 是否恢复成功，取值如下所示：
+	// * true：恢复成功
+	// * false：恢复不成功
 	Success bool `json:"Success"`
 }
 
@@ -2076,7 +2098,9 @@ type DeleteImageTemplateBody struct {
 
 type DeleteImageTemplateQuery struct {
 
-	// REQUIRED; imagex服务ID
+	// REQUIRED; 待删除模板对应的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
@@ -2236,13 +2260,13 @@ type DeleteImageUploadFilesResResult struct {
 
 type DeleteTemplatesFromBinBody struct {
 
-	// REQUIRED; 待删除模板名称。 :::tip 您可以通过调用获取回收站中所有模板 [https://www.volcengine.com/docs/508/132241]获取所需的模板名称。 :::
+	// REQUIRED; 待删除模板名称。您可以通过调用获取回收站中所有模板 [https://www.volcengine.com/docs/508/132241]获取所需的模板名称。
 	TemplateNames []string `json:"TemplateNames"`
 }
 
 type DeleteTemplatesFromBinQuery struct {
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 待删除模板对应的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
@@ -11728,22 +11752,25 @@ type GetImageComicResultResResult struct {
 
 type GetImageContentBlockListBody struct {
 
-	// 结束查询时间，unix 时间戳，单位为秒。
-	EndTime int `json:"EndTime,omitempty"`
+	// REQUIRED; 结束查询时间，unix 时间戳，单位为秒。
+	EndTime int `json:"EndTime"`
+
+	// REQUIRED; 开始查询时间，unix 时间戳，单位为秒。
+	StartTime int `json:"StartTime"`
+
+	// 域名，指定后将返回包含该域名的 URL 禁用任务。
+	Domain string `json:"Domain,omitempty"`
 
 	// 按时间排序，取值如下所示：
 	// * asc：正序
 	// * desc：逆序
 	Order string `json:"Order,omitempty"`
 
-	// 页码，系统将仅返回该页面上的任务。默认值为 1。
+	// 页码，仅返回该页码上的任务。默认值为 1。
 	PageNum int `json:"PageNum,omitempty"`
 
-	// 每页最大记录数，取值范围是[10,1000]。默认值为 100。
+	// 每页条数，取值范围是[10,1000]。默认值为 100。
 	PageSize int `json:"PageSize,omitempty"`
-
-	// 开始查询时间，unix 时间戳，单位为秒。
-	StartTime int `json:"StartTime,omitempty"`
 
 	// 资源更新状态，取值如下所示：
 	// * submitting：提交中
@@ -11752,16 +11779,8 @@ type GetImageContentBlockListBody struct {
 	// * failed：失败
 	State string `json:"State,omitempty"`
 
-	// 指定 URL，缺省情况下查询当前服务所有禁用任务列表。
+	// 指定要查询的 URL，缺省情况下查询当前服务所有禁用任务列表。
 	URL string `json:"Url,omitempty"`
-}
-
-type GetImageContentBlockListQuery struct {
-
-	// REQUIRED; 服务 ID。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId" query:"ServiceId"`
 }
 
 type GetImageContentBlockListRes struct {
@@ -11812,32 +11831,37 @@ type GetImageContentBlockListResResultDataItem struct {
 	// REQUIRED; 任务的创建时间
 	CreateTime int `json:"CreateTime"`
 
+	// REQUIRED; 完成结果提示信息
+	Msg string `json:"Msg"`
+
 	// REQUIRED; 任务进度
 	Process string `json:"Process"`
 
 	// REQUIRED; URL 状态
 	State string `json:"State"`
 
+	// REQUIRED; 任务类型，取值如下所示：
+	// * block_url：禁用任务。
+	// * unblock_url：解禁任务，表示此时解禁未完成。
+	TaskType string `json:"TaskType"`
+
 	// REQUIRED; 指定的 URL
 	URL string `json:"Url"`
+
+	// REQUIRED; 任务的更新时间
+	UpdateTime int `json:"UpdateTime"`
 }
 
 type GetImageContentTaskDetailBody struct {
 
-	// REQUIRED; 待查询任务 ID
-	TaskID string `json:"TaskId"`
+	// REQUIRED; 查询结束时间，unix 时间戳，单位为秒。
+	EndTime int `json:"EndTime"`
 
-	// REQUIRED; 内容管理任务类型，取值如下所示：
-	// * refresh：刷新任务，包含刷新 URL 和刷新目录。
-	// * refresh_url：刷新 URL
-	// * block_url：禁用 URL
-	// * unblock_url：解禁 URL
-	// * preload_url：预热 URL
-	// * refresh_dir：目录刷新（支持根目录刷新）
-	TaskType string `json:"TaskType"`
+	// REQUIRED; 查询开始时间，unix 时间戳，单位为秒。
+	StartTime int `json:"StartTime"`
 
-	// 查询结束时间，unix 时间戳，单位为秒。
-	EndTime int `json:"EndTime,omitempty"`
+	// 域名，指定后返回包含该域名的 URL 任务。
+	Domain string `json:"Domain,omitempty"`
 
 	// 按时间排序，取值如下所示：
 	// * asc：正序
@@ -11847,11 +11871,8 @@ type GetImageContentTaskDetailBody struct {
 	// 页码，系统将仅返回该页面上的任务。默认值为 1。
 	PageNum int `json:"PageNum,omitempty"`
 
-	// 每页最大记录数，取值范围是[10,1000]。默认值为 100。
+	// 每页条数，取值范围为 [10,1000]。默认值为 100。
 	PageSize int `json:"PageSize,omitempty"`
-
-	// 查询开始时间，unix 时间戳，单位为秒。
-	StartTime int `json:"StartTime,omitempty"`
 
 	// 内容管理资源状态，取值如下所示：
 	// * submitting：提交中
@@ -11859,6 +11880,18 @@ type GetImageContentTaskDetailBody struct {
 	// * succeed：成功
 	// * failed：失败
 	State string `json:"State,omitempty"`
+
+	// 待查询任务 ID
+	TaskID string `json:"TaskId,omitempty"`
+
+	// 内容管理任务类型，缺省情况下表示查询全部任务。取值如下所示：
+	// * refresh：刷新任务，包含刷新 URL 和刷新目录。
+	// * refresh_url：刷新 URL
+	// * block_url：禁用 URL
+	// * unblock_url：解禁 URL
+	// * preload_url：预热 URL
+	// * refresh_dir：目录刷新（支持根目录刷新）
+	TaskType string `json:"TaskType,omitempty"`
 
 	// 资源 URL 或者目录，可精确匹配，取值为空时表示查询全部任务。
 	URL string `json:"Url,omitempty"`
@@ -11911,6 +11944,9 @@ type GetImageContentTaskDetailResResultDataItem struct {
 
 	// REQUIRED; 任务的创建时间
 	CreateTime int `json:"CreateTime"`
+
+	// REQUIRED; 完成结果提示信息
+	Msg string `json:"Msg"`
 
 	// REQUIRED; 任务进度
 	Process string `json:"Process"`
@@ -12871,6 +12907,9 @@ type GetImageQualityResResultNrScoreResult struct {
 
 	// REQUIRED
 	Saturation float64 `json:"Saturation"`
+
+	// REQUIRED; 文字质量分数
+	TextQualityScore float64 `json:"TextQualityScore"`
 
 	// REQUIRED
 	Texture float64 `json:"Texture"`
@@ -13964,23 +14003,24 @@ type GetImageTranscodeQueuesResResultQueuesItemCallbackConf struct {
 
 type GetImageUpdateFilesQuery struct {
 
-	// REQUIRED; 服务 ID。
-	// * 您可以在veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// REQUIRED; 需要查询的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// 获取 URL 个数，最大值为 100。
+	// 分页查询时，显示的每页数据的最大条数。最大值为 100。
 	Limit int `json:"Limit,omitempty" query:"Limit"`
 
-	// 分页偏移，默认 0。 当取值为 1 时，表示跳过一条 URL，从第二条 URL 开始取值。
+	// 分页偏移量，用于控制分页查询返回结果的起始位置，以便对数据进行分页展示和浏览。默认值为 0。 :::tip 例如，指定分页条数 Limit = 10，分页偏移量 Offset = 10，表示从查询结果的第 11 条记录开始返回数据，共展示
+	// 10 条数据。 :::
 	Offset int `json:"Offset,omitempty" query:"Offset"`
 
 	// 获取类型，取值如下所示：
-	// * 0：获取刷新 URL 列表；
-	// * 1：获取禁用 URL 列表。
+	// * 0：获取刷新 URL 列表
+	// * 1：获取禁用 URL 列表
 	Type int `json:"Type,omitempty" query:"Type"`
 
-	// URL 格式，若指定 URL 格式则仅返回 URL 中包含该字符串的 URL 列表。 默认为空，缺省情况下返回所有 URL 列表。
+	// URL 格式，若指定 URL 格式则仅返回 URL 中包含该字符串的 URL 列表。默认为空，缺省情况下返回所有 URL 列表。
 	URLPattern string `json:"UrlPattern,omitempty" query:"UrlPattern"`
 }
 
@@ -14490,18 +14530,18 @@ type GetPrivateImageTypeResResult struct {
 
 type GetResourceURLQuery struct {
 
-	// REQUIRED; 域名。 您可以通过调用 OpenAPI 获取服务下所有域名 [https://www.volcengine.com/docs/508/9379]查看 domain 返回值。
+	// REQUIRED; 域名。您可以通过调用 OpenAPI 获取服务下所有域名 [https://www.volcengine.com/docs/508/9379]获取。
 	Domain string `json:"Domain" query:"Domain"`
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 资源所在的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// REQUIRED; 图片资源 Uri。 您可以通过调用 OpenAPI 获取文件上传成功信息 [https://www.volcengine.com/docs/508/9398]查看 ImageUri 返回值。
+	// REQUIRED; 文件存储 Uri。您可以通过调用 OpenAPI 获取服务下的上传文件 [https://www.volcengine.com/docs/508/9392]获取。
 	URI string `json:"URI" query:"URI"`
 
-	// 创建模板时设置的图片输出格式，默认为 iamge，支持取值有：
+	// 创建模板时设置的图片输出格式，默认为 image，支持取值有：
 	// * image：表示输出原格式；
 	// * 静图格式：png、jpeg、heic、avif、webp;
 	// * 动图格式：awebp、heif、avis。
@@ -14510,10 +14550,10 @@ type GetResourceURLQuery struct {
 	// 协议，默认为 http，隐私图片使用 https，公开图片支持取值 http 以及 https。
 	Proto string `json:"Proto,omitempty" query:"Proto"`
 
-	// 过期时长，最大限制为 1 年，默认1800s。
+	// 过期时长，最大限制为 1 年，默认为 1800s。 :::tip 仅当开启URL 鉴权 [https://www.volcengine.com/docs/508/128828]配置后，Timestamp配置生效。 :::
 	Timestamp int `json:"Timestamp,omitempty" query:"Timestamp"`
 
-	// 模板名称。缺省情况下表示无模板处理图片。 您可以通过调用 OpenAPI 获取服务下所有图片模板 [https://www.volcengine.com/docs/508/9386]里查看 TemplateName 返回值。
+	// 模板名称，缺省情况下表示无模板处理图片。您可以通过调用 OpenAPI 获取服务下所有图片模板 [https://www.volcengine.com/docs/508/9386]获取。
 	Tpl string `json:"Tpl,omitempty" query:"Tpl"`
 }
 
@@ -14547,10 +14587,10 @@ type GetResourceURLResResult struct {
 	// REQUIRED; 结果图访问精简地址，与默认地址相比缺少 Bucket 部分。
 	CompactURL string `json:"CompactURL"`
 
-	// REQUIRED; 精简源图片地址，与默认地址相比缺少 Bucket 部分。
+	// REQUIRED; 精简源文件地址，与默认地址相比缺少 Bucket 部分。
 	ObjCompactURL string `json:"ObjCompactURL"`
 
-	// REQUIRED; 默认源图片地址。
+	// REQUIRED; 默认源文件访问地址。
 	ObjURL string `json:"ObjURL"`
 
 	// REQUIRED; 结果图访问默认地址。
@@ -15072,9 +15112,9 @@ type PreviewImageUploadFileQuery struct {
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// REQUIRED; 文件 Uri。
-	// * 您可以在 veImageX 控制台资源管理 [https://console.volcengine.com/imagex/resource_manage/]页面，在已上传文件的名称列获取资源 Uri。
-	// * 您也可以通过 OpenAPI 的方式获取Uri，具体请参考文件上传完成上报 [https://www.volcengine.com/docs/508/9398]。
+	// REQUIRED; 文件存储 URI。
+	// * 您可以在 veImageX 控制台资源管理 [https://console.volcengine.com/imagex/resource_manage/]页面，在已上传文件的名称列获取。
+	// * 您也可以通过 OpenAPI 的方式获取，具体请参考获取服务下的上传文件 [https://www.volcengine.com/docs/508/9392]。
 	StoreURI string `json:"StoreUri" query:"StoreUri"`
 }
 
@@ -15117,7 +15157,7 @@ type PreviewImageUploadFileResResult struct {
 	// REQUIRED; 图片高度。
 	ImageHeight int `json:"ImageHeight"`
 
-	// REQUIRED; 图片字节数。
+	// REQUIRED; 图片大小，单位为字节。
 	ImageSize int `json:"ImageSize"`
 
 	// REQUIRED; 图片宽度。
@@ -15126,10 +15166,10 @@ type PreviewImageUploadFileResResult struct {
 	// REQUIRED; 服务 ID。
 	ServiceID string `json:"ServiceId"`
 
-	// REQUIRED; 底层存储的content-type值
+	// REQUIRED; 图片的 Content-Type 值。
 	StorageContentType string `json:"StorageContentType"`
 
-	// REQUIRED; 文件 Uri。
+	// REQUIRED; 文件存储 URI。
 	StoreURI string `json:"StoreUri"`
 
 	// 图片播放时间，单位为毫秒，仅当图片为动态图时返回。
@@ -15688,6 +15728,72 @@ type UpdateImageAuthKeyResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+}
+
+type UpdateImageExifDataBody struct {
+
+	// REQUIRED; 修改操作
+	Actions []*UpdateImageExifDataBodyActionsItem `json:"Actions"`
+
+	// REQUIRED; 原图URI
+	StoreURI string `json:"StoreUri"`
+
+	// 目标Key
+	DstKey string `json:"DstKey,omitempty"`
+}
+
+type UpdateImageExifDataBodyActionsItem struct {
+
+	// REQUIRED; 修改类型
+	Type string `json:"Type"`
+
+	// Tag名
+	TagName string `json:"TagName,omitempty"`
+
+	// Tag值
+	TagValue string `json:"TagValue,omitempty"`
+}
+
+type UpdateImageExifDataQuery struct {
+
+	// REQUIRED; 待修改图片所在的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type UpdateImageExifDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateImageExifDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result *UpdateImageExifDataResResult `json:"Result"`
+}
+
+type UpdateImageExifDataResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// UpdateImageExifDataResResult - 视请求的接口而定
+type UpdateImageExifDataResResult struct {
+
+	// REQUIRED; 存储URI
+	DstURI string `json:"DstUri"`
 }
 
 type UpdateImageFileKeyBody struct {
@@ -16302,6 +16408,7 @@ type CreateImageAuditTask struct{}
 type CreateImageAuditTaskQuery struct{}
 type CreateImageCompressTask struct{}
 type CreateImageContentTask struct{}
+type CreateImageContentTaskQuery struct{}
 type CreateImageFromURI struct{}
 type CreateImageHmEmbed struct{}
 type CreateImageHmEmbedQuery struct{}
@@ -16517,6 +16624,7 @@ type GetImageBgFillResultQuery struct{}
 type GetImageComicResult struct{}
 type GetImageComicResultQuery struct{}
 type GetImageContentBlockList struct{}
+type GetImageContentBlockListQuery struct{}
 type GetImageContentTaskDetail struct{}
 type GetImageContentTaskDetailQuery struct{}
 type GetImageDetectResult struct{}
@@ -16598,6 +16706,7 @@ type UpdateImageAuditTaskQuery struct{}
 type UpdateImageAuditTaskStatus struct{}
 type UpdateImageAuditTaskStatusQuery struct{}
 type UpdateImageAuthKey struct{}
+type UpdateImageExifData struct{}
 type UpdateImageFileKey struct{}
 type UpdateImageMirrorConf struct{}
 type UpdateImageObjectAccess struct{}
@@ -17269,6 +17378,10 @@ type UpdateImageAuditTaskStatusReq struct {
 type UpdateImageAuthKeyReq struct {
 	*UpdateImageAuthKeyQuery
 	*UpdateImageAuthKeyBody
+}
+type UpdateImageExifDataReq struct {
+	*UpdateImageExifDataQuery
+	*UpdateImageExifDataBody
 }
 type UpdateImageFileKeyReq struct {
 	*UpdateImageFileKeyQuery
