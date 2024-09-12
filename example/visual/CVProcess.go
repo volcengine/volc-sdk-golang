@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/volcengine/volc-sdk-golang/service/visual"
+	// "github.com/volcengine/volc-sdk-golang/service/visual/model"
 )
 
 func main() {
@@ -16,7 +17,6 @@ func main() {
 	//visual.DefaultInstance.SetRegion("region")
 	//visual.DefaultInstance.SetHost("host")
 
-	//Version>=2022-08-31, Content-Type是application/json类型的通用调用方式
 	//请求入参(按照对应接口文档进行调用)
 	reqBody := map[string]interface{}{
 		"req_key": "",
@@ -24,20 +24,21 @@ func main() {
 		"image_urls": []string{""},
 		"return_url": true,
 	}
-	//action、version按照接口文档填写即可
-	resp, status, err := visual.DefaultInstance.VisualCommonJSONAPI(reqBody)
+
+	resp, status, err := visual.DefaultInstance.CVProcess(reqBody)
 	fmt.Println(status, err)
 	b, _ := json.Marshal(resp)
 	fmt.Println(string(b))
 
-	////Version=2020-08-26，Content-Type是application/x-www-form-urlencoded类型的通用调用方式
-	//form := url.Values{}
-	//form.Add("", "")
-	////form.Add("image_base64", "")
-	//
-	//resp, status, err := visual.DefaultInstance.VisualCommonFormAPI("", "2020-08-26", form)
-	//fmt.Println(status, err)
-	//b, _ := json.Marshal(resp)
-	//fmt.Println(string(b))
-
+	// 示例：将resp转化为对应response结构体后使用
+	// if status != 200 {
+	// 	fmt.Println("request err, response is:", string(b))
+	// 	return
+	// }
+	// respData := new(model.ResponseStructxxx)
+	// if err = json.Unmarshal(b, respData); err != nil {
+	// 	fmt.Println("unmarshal err:", err)
+	// 	return
+	// }
+	// fmt.Println(respData.Data.Status)
 }

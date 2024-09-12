@@ -67,15 +67,75 @@ func (p *Visual) VisualCommonFormAPI(form url.Values) (*model.VisualPubResult, i
 	return resp, statusCode, nil
 }
 
-// VisualCommonJSONAPI 通用请求Json类型
+// CVProcess 通用同步接口
 // bodyMap: 按照接口文档填写入参
-func (p *Visual) VisualCommonJSONAPI(bodyMap interface{}) (*model.VisualPubResult, int, error) {
+func (p *Visual) CVProcess(bodyMap interface{}) (map[string]interface{}, int, error) {
 	reqByte, err := json.Marshal(bodyMap)
 	if err != nil {
 		return nil, 500, errors.New("request json marshal error" + err.Error())
 	}
-	resp := new(model.VisualPubResult)
-	statusCode, err := p.commonJsonHandler("CommonJsonAPI", string(reqByte), resp)
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVProcess", string(reqByte), &resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// CVSubmitTask 通用提交任务接口
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CVSubmitTask(bodyMap interface{}) (map[string]interface{}, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVSubmitTask", string(reqByte), &resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// CVGetResult 通用查询任务接口
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CVGetResult(bodyMap interface{}) (map[string]interface{}, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVGetResult", string(reqByte), &resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// CVSync2AsyncSubmitTask 同步转异步提交接口通用
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CVSync2AsyncSubmitTask(bodyMap interface{}) (map[string]interface{}, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVSync2AsyncSubmitTask", string(reqByte), &resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+// CVSync2AsyncGetResult 同步转异步查询接口通用
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CVSync2AsyncGetResult(bodyMap interface{}) (map[string]interface{}, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVSync2AsyncGetResult", string(reqByte), &resp)
 	if err != nil {
 		return nil, statusCode, err
 	}
