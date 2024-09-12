@@ -20,6 +20,7 @@ type Index struct {
 	UpdatePerson    string
 	IndexCost       interface{}
 	ShardCount      int64
+	ShardPolicy     string
 	primaryKey      string
 }
 
@@ -398,11 +399,31 @@ func (index *Index) getData(resData map[string]interface{}, outputField interfac
 }
 func (index *Index) getPrimaryKey() (string, error) {
 	if index.primaryKey == "" {
-		collection, err := index.VikingDBService.GetCollection(index.CollectionName)
+		// collection, err := index.VikingDBService.GetCollection(index.CollectionName)
+		// if err != nil {
+		// 	return "", err
+		// }
+		// index.primaryKey = collection.PrimaryKey
+		params := map[string]interface{}{
+			"collection_name": index.CollectionName,
+		}
+		resData, err := index.VikingDBService.DoRequest(context.Background(), "GetCollection", nil, index.VikingDBService.convertMapToJson(params))
 		if err != nil {
 			return "", err
 		}
-		index.primaryKey = collection.PrimaryKey
+		var resDataItem map[string]interface{}
+		if d, ok := resData["data"]; !ok {
+			return "", fmt.Errorf("invalid response, data does not exist: %v", resData)
+		} else if resDataItem, ok = d.(map[string]interface{}); !ok {
+			return "", fmt.Errorf("invalid response, data is not a map: %v", resData)
+		}
+		if value, exist := resDataItem["primary_key"]; exist {
+			if v, ok := value.(string); !ok {
+				return "", fmt.Errorf("invalid response, primary_key is invalid:%v", resDataItem)
+			} else {
+				index.primaryKey = v
+			}
+		}
 		return index.primaryKey, err
 	} else {
 		return index.primaryKey, nil
