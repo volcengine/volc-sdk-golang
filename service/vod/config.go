@@ -1,6 +1,7 @@
 package vod
 
 import (
+	"fmt"
 	"net/http"
 	"net/url"
 	"sync"
@@ -27,7 +28,15 @@ func NewInstanceWithRegion(region string) *Vod {
 	var serviceInfo *base.ServiceInfo
 	var ok bool
 	if serviceInfo, ok = ServiceInfoMap[region]; !ok {
-		panic("Cant find the region, please check it carefully")
+		serviceInfo = &base.ServiceInfo{
+			Timeout: 60 * time.Second,
+			Scheme:  "https",
+			Host:    fmt.Sprintf("vod-%s.volcengineapi.com", region),
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: base.Credentials{Region: region, Service: "vod"},
+		}
 	}
 
 	instance := &Vod{

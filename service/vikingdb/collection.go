@@ -69,6 +69,56 @@ func (collection *Collection) UpsertData(data interface{}) error {
 	}
 
 }
+func (collection *Collection) AsyncUpsertData(data interface{}) error {
+	if _, ok := data.(Data); ok {
+		data := data.(Data)
+		fieldsArr := []interface{}{data.Fields}
+		params := map[string]interface{}{
+			"collection_name": collection.CollectionName,
+			"fields":          fieldsArr,
+		}
+		if data.TTL != 0 {
+			params["ttl"] = data.TTL
+		}
+		//fmt.Println(params)
+		res, err := collection.VikingDBService.DoRequest(context.Background(), "AsyncUpsertData", nil, collection.VikingDBService.convertMapToJson(params))
+		_ = res
+		return err
+		//fmt.Println(res)
+	} else if _, ok := data.([]Data); ok {
+		datas := data.([]Data)
+		record := map[int64][]interface{}{}
+		for _, item := range datas {
+			if value, exist := record[item.TTL]; exist {
+				fields := value
+				fields = append(fields, item.Fields)
+				record[item.TTL] = fields
+			} else {
+				record[item.TTL] = []interface{}{item.Fields}
+			}
+		}
+		for index, item := range record {
+			params := map[string]interface{}{
+				"collection_name": collection.CollectionName,
+				"fields":          item,
+			}
+			if index != 0 {
+				params["ttl"] = index
+			}
+			//fmt.Println(params)
+			res, err := collection.VikingDBService.DoRequest(context.Background(), "AsyncUpsertData", nil, collection.VikingDBService.convertMapToJson(params))
+			_ = res
+			if err != nil {
+				return err
+			}
+			//fmt.Println(res)
+		}
+		return nil
+	} else {
+		return errors.New("invalid data")
+	}
+
+}
 func (collection *Collection) DeleteData(id interface{}) error {
 	_, isString := id.(string)
 	_, isInt := id.(int)
