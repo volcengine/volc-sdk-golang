@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -286,61 +287,81 @@ func main() {
 	//	fmt.Println(index)
 	//}
 
-	//collection, _ := service.GetCollection("tt")
-	//field1 := map[string]interface{}{
-	//	"doc_id":      "111",
-	//	"text_vector": genRandomVector(12),
-	//	"like":        1,
-	//	"price":       1.11,
-	//	"author":      []string{"gy"},
-	//	"aim":         true,
-	//}
-	//field2 := map[string]interface{}{
-	//	"doc_id":      "222",
-	//	"text_vector": genRandomVector(12),
-	//	"like":        2,
-	//	"price":       2.22,
-	//	"author":      []string{"gy", "xjq"},
-	//	"aim":         false,
-	//}
-	//field3 := map[string]interface{}{
-	//	"doc_id":      "333",
-	//	"text_vector": genRandomVector(12),
-	//	"like":        3,
-	//	"price":       3.33,
-	//	"author":      []string{"gy"},
-	//	"aim":         true,
-	//}
-	//field4 := map[string]interface{}{
-	//	"doc_id":      "444",
-	//	"text_vector": genRandomVector(12),
-	//	"like":        4,
-	//	"price":       4.44,
-	//	"author":      []string{"gy"},
-	//	"aim":         true,
-	//}
-	//data1 := vikingdb.Data{
-	//	Fields: field1,
-	//}
-	//data2 := vikingdb.Data{
-	//	Fields: field2,
-	//}
-	//data3 := vikingdb.Data{
-	//	Fields: field3,
-	//}
-	//data4 := vikingdb.Data{
-	//	Fields: field4,
-	//}
-	//datas := []vikingdb.Data{
-	//	data1,
-	//	data2,
-	//	data3,
-	//	data4,
-	//}
-	//err := collection.UpsertData(datas)
-	//if err != nil {
-	//	print(err.Error())
-	//}
+	// collection, _ := service.GetCollection("tt")
+	// field1 := map[string]interface{}{
+	// 	"doc_id":      "111",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        1,
+	// 	"price":       1.11,
+	// 	"author":      []string{"gy"},
+	// 	"aim":         true,
+	// }
+	// field2 := map[string]interface{}{
+	// 	"doc_id":      "222",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        2,
+	// 	"price":       2.22,
+	// 	"author":      []string{"gy", "xjq"},
+	// 	"aim":         false,
+	// }
+	// field3 := map[string]interface{}{
+	// 	"doc_id":      "333",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        3,
+	// 	"price":       3.33,
+	// 	"author":      []string{"gy"},
+	// 	"aim":         true,
+	// }
+	// field4 := map[string]interface{}{
+	// 	"doc_id":      "444",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        4,
+	// 	"price":       4.44,
+	// 	"author":      []string{"gy"},
+	// 	"aim":         true,
+	// }
+	// data1 := vikingdb.Data{
+	// 	Fields: field1,
+	// }
+	// data2 := vikingdb.Data{
+	// 	Fields: field2,
+	// }
+	// data3 := vikingdb.Data{
+	// 	Fields: field3,
+	// }
+	// data4 := vikingdb.Data{
+	// 	Fields: field4,
+	// }
+	// datas := []vikingdb.Data{
+	// 	data1,
+	// 	data2,
+	// 	data3,
+	// 	data4,
+	// }
+	// err := collection.UpsertData(datas)
+	// if err != nil {
+	// 	print(err.Error())
+	// }
+
+	// collection, _ := service.GetCollection("tt")
+	// field1 := map[string]interface{}{
+	// 	"doc_id":      "2222",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        1,
+	// 	"price":       1.11,
+	// 	"author":      []string{"gy"},
+	// 	"aim":         true,
+	// }
+	// data1 := vikingdb.Data{
+	// 	Fields: field1,
+	// }
+	// datas := []vikingdb.Data{
+	// 	data1,
+	// }
+	// err := collection.AsyncUpsertData(datas)
+	// if err != nil {
+	// 	print(err.Error())
+	// }
 
 	//collection, _ := service.GetCollection("go")
 	//err := collection.DeleteData([]string{"111", "222"})
@@ -352,14 +373,23 @@ func main() {
 	//	fmt.Println(err.Error())
 	//}
 
-	//collection, _ := service.GetCollection("tt")
-	//res, err := collection.FetchData([]string{"111", "222", "333", "444"})
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//for _, item := range res {
-	//	fmt.Println(item)
-	//}
+	collection, _ := service.GetCollection("tt")
+	res, err := collection.FetchData([]string{"2222"})
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, item := range res {
+		fmt.Println(item)
+	}
+
+	// collection, _ := service.GetCollection("tt")
+	// res, err := collection.FetchData([]string{"111", "222", "333", "444"})
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, item := range res {
+	// 	fmt.Println(item)
+	// }
 
 	//index, _ := service.GetIndex("tt", "tt")
 	//searchOption := vikingdb.NewSearchOptions().SetFilter(map[string]interface{}{"op": "range", "field": "price", "lt": 3.5}).SetLimit(5).SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
