@@ -8,17 +8,22 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/vod"
 	"github.com/volcengine/volc-sdk-golang/service/vod/models/request"
 )
 
 func Test_AddDomainToScheduler(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodAddDomainToSchedulerRequest{
 		SpaceName:         "your SpaceName",
@@ -34,11 +39,17 @@ func Test_AddDomainToScheduler(t *testing.T) {
 }
 
 func Test_RemoveDomainFromScheduler(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodRemoveDomainFromSchedulerRequest{
 		SpaceName:         "your SpaceName",
@@ -54,11 +65,17 @@ func Test_RemoveDomainFromScheduler(t *testing.T) {
 }
 
 func Test_UpdateDomainPlayRule(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodUpdateDomainPlayRuleRequest{
 		SpaceName:     "your SpaceName",
@@ -73,11 +90,17 @@ func Test_UpdateDomainPlayRule(t *testing.T) {
 }
 
 func Test_StartDomain(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodStartDomainRequest{
 		SpaceName:         "your SpaceName",
@@ -93,11 +116,17 @@ func Test_StartDomain(t *testing.T) {
 }
 
 func Test_StopDomain(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodStopDomainRequest{
 		SpaceName:         "your SpaceName",
@@ -113,11 +142,17 @@ func Test_StopDomain(t *testing.T) {
 }
 
 func Test_DeleteDomain(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodDeleteDomainRequest{
 		SpaceName:  "your SpaceName",
@@ -132,11 +167,17 @@ func Test_DeleteDomain(t *testing.T) {
 }
 
 func Test_ListDomain(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListDomainRequest{
 		SpaceName:         "your SpaceName",
@@ -153,11 +194,17 @@ func Test_ListDomain(t *testing.T) {
 }
 
 func Test_CreateCdnRefreshTask(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodCreateCdnRefreshTaskRequest{
 		SpaceName: "your SpaceName",
@@ -172,11 +219,17 @@ func Test_CreateCdnRefreshTask(t *testing.T) {
 }
 
 func Test_CreateCdnPreloadTask(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodCreateCdnPreloadTaskRequest{
 		SpaceName: "your SpaceName",
@@ -190,11 +243,17 @@ func Test_CreateCdnPreloadTask(t *testing.T) {
 }
 
 func Test_ListCdnTasks(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnTasksRequest{
 		SpaceName:      "your SpaceName",
@@ -215,11 +274,17 @@ func Test_ListCdnTasks(t *testing.T) {
 }
 
 func Test_ListCdnAccessLog(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnAccessLogRequest{
 		Domains:        "your Domains",
@@ -235,11 +300,17 @@ func Test_ListCdnAccessLog(t *testing.T) {
 }
 
 func Test_ListCdnTopAccessUrl(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnTopAccessUrlRequest{
 		Domains:        "your Domains",
@@ -255,11 +326,17 @@ func Test_ListCdnTopAccessUrl(t *testing.T) {
 }
 
 func Test_ListCdnTopAccess(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnTopAccessRequest{
 		Domains:        "your Domains",
@@ -276,11 +353,17 @@ func Test_ListCdnTopAccess(t *testing.T) {
 }
 
 func Test_ListCdnUsageData(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnUsageDataRequest{
 		Domains:        "your Domains",
@@ -305,11 +388,17 @@ func Test_ListCdnUsageData(t *testing.T) {
 }
 
 func Test_ListCdnStatusData(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnStatusDataRequest{
 		Domains:        "your Domains",
@@ -328,11 +417,17 @@ func Test_ListCdnStatusData(t *testing.T) {
 }
 
 func Test_ListCdnHitrateData(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnHitrateDataRequest{
 		Domains:        "your Domains",
@@ -350,11 +445,17 @@ func Test_ListCdnHitrateData(t *testing.T) {
 }
 
 func Test_DescribeIpInfo(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodDescribeIPInfoRequest{
 		Ips: "your Ips",
@@ -367,11 +468,17 @@ func Test_DescribeIpInfo(t *testing.T) {
 }
 
 func Test_ListCdnPvData(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodListCdnPvDataRequest{
 		Domains:        "your Domains",
@@ -389,11 +496,17 @@ func Test_ListCdnPvData(t *testing.T) {
 }
 
 func Test_SubmitBlockTasks(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodSubmitBlockTasksRequest{
 		FileUrls:  "your FileUrls",
@@ -407,11 +520,17 @@ func Test_SubmitBlockTasks(t *testing.T) {
 }
 
 func Test_GetContentBlockTasks(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodGetContentBlockTasksRequest{
 		Url:       "your Url",
@@ -432,11 +551,17 @@ func Test_GetContentBlockTasks(t *testing.T) {
 }
 
 func Test_CreateDomain(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodCreateDomainV2Request{
 		SpaceName:                "your SpaceName",
@@ -456,11 +581,17 @@ func Test_CreateDomain(t *testing.T) {
 }
 
 func Test_UpdateDomainExpire(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodUpdateDomainExpireV2Request{
 		SpaceName:  "your SpaceName",
@@ -476,11 +607,17 @@ func Test_UpdateDomainExpire(t *testing.T) {
 }
 
 func Test_UpdateDomainAuthConfig(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodUpdateDomainAuthConfigV2Request{
 		SpaceName:  "your SpaceName",
@@ -498,11 +635,17 @@ func Test_UpdateDomainAuthConfig(t *testing.T) {
 }
 
 func Test_AddOrUpdateCertificate(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.AddOrUpdateCertificateV2Request{
 		SpaceName:     "your SpaceName",
@@ -519,11 +662,17 @@ func Test_AddOrUpdateCertificate(t *testing.T) {
 }
 
 func Test_UpdateDomainUrlAuthConfig(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodUpdateDomainUrlAuthConfigV2Request{
 		SpaceName:  "your SpaceName",
@@ -541,11 +690,17 @@ func Test_UpdateDomainUrlAuthConfig(t *testing.T) {
 }
 
 func Test_UpdateDomainConfig(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodUpdateDomainConfigRequest{
 		SpaceName:  "your SpaceName",
@@ -561,11 +716,17 @@ func Test_UpdateDomainConfig(t *testing.T) {
 }
 
 func Test_DescribeDomainConfig(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
 	instance := vod.NewInstance()
-	instance.SetCredential(base.Credentials{
-		AccessKeyID:     "your ak",
-		SecretAccessKey: "your sk",
-	})
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
 
 	query := &request.VodDescribeDomainConfigRequest{
 		SpaceName:  "your SpaceName",
