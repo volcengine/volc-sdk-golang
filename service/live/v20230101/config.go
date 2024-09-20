@@ -1222,6 +1222,46 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"CreateCloudMixTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCloudMixTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateCloudMixTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCloudMixTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"GetCloudMixTaskDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCloudMixTaskDetail"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListCloudMixTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCloudMixTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteCloudMixTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCloudMixTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DeleteSubtitleTranscodePreset": {
 			Method: http.MethodPost,
 			Path:   "/",

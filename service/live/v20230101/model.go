@@ -458,6 +458,227 @@ type CreateCertResResult struct {
 	UseWay *string `json:"UseWay,omitempty"`
 }
 
+type CreateCloudMixTaskBody struct {
+
+	// REQUIRED; 混流任务详细配置。
+	MixedRules CreateCloudMixTaskBodyMixedRules `json:"MixedRules"`
+
+	// REQUIRED; 混流任务名称，与正在进行中的任务名称不能重复。
+	Name string `json:"Name"`
+}
+
+// CreateCloudMixTaskBodyMixedRules - 混流任务详细配置。
+type CreateCloudMixTaskBodyMixedRules struct {
+
+	// REQUIRED; 混流输出布局配置。
+	InputLayout CreateCloudMixTaskBodyMixedRulesInputLayout `json:"InputLayout"`
+
+	// REQUIRED; 混流素材列表，最多支持配置 8 路素材。
+	InputSource []CreateCloudMixTaskBodyMixedRulesInputSourceItem `json:"InputSource"`
+
+	// REQUIRED; 混流输出视频质量参数配置。
+	Output CreateCloudMixTaskBodyMixedRulesOutput `json:"Output"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesInputLayout - 混流输出布局配置。
+type CreateCloudMixTaskBodyMixedRulesInputLayout struct {
+
+	// REQUIRED; 混流输出画布配置及素材布局配置。
+	Scene CreateCloudMixTaskBodyMixedRulesInputLayoutScene `json:"Scene"`
+
+	// 混流输出视频中 Logo 布局配置。
+	// :::tip 支持最多配置 4 个 Logo，展示层级以添加顺序为准。 :::
+	Logo []*CreateCloudMixTaskBodyMixedRulesInputLayoutLogoItem `json:"Logo,omitempty"`
+}
+
+type CreateCloudMixTaskBodyMixedRulesInputLayoutLogoItem struct {
+
+	// REQUIRED; Logo 图片在混流输出整体画面中的布局配置。
+	Layout CreateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout `json:"Layout"`
+
+	// REQUIRED; Logo 图片访问地址。
+	URL string `json:"Url"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout - Logo 图片在混流输出整体画面中的布局配置。
+type CreateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout struct {
+
+	// REQUIRED
+	H int32 `json:"H"`
+
+	// REQUIRED
+	W int32 `json:"W"`
+
+	// REQUIRED
+	X int32 `json:"X"`
+
+	// REQUIRED
+	Y int32 `json:"Y"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesInputLayoutScene - 混流输出画布配置及素材布局配置。
+type CreateCloudMixTaskBodyMixedRulesInputLayoutScene struct {
+
+	// REQUIRED; 混流输出整体画布高度，单位为 px，取值范围为 [10,2160]。
+	Height int32 `json:"Height"`
+
+	// REQUIRED; 混流素材在混流输出整体画面中的布局配置。 :::tip 混流素材布局中需包含所有素材的配置，且需与通过 Layer 参数与混流素材一一匹配。 :::
+	Layout []CreateCloudMixTaskBodyMixedRulesInputLayoutSceneLayoutItem `json:"Layout"`
+
+	// REQUIRED; 混流输出画布整体宽度，单位为 px，取值范围为 [10,2160]。
+	Width int32 `json:"Width"`
+}
+
+type CreateCloudMixTaskBodyMixedRulesInputLayoutSceneLayoutItem struct {
+
+	// REQUIRED; 当前素材或 Logo 图片在混流输出画面中的限制高度，单位为 px，取值范围为 [10,2160]。
+	// :::tip 限制宽度和限制高度指定了素材展示的限制范围，当素材尺寸和限制值不一致时，素材将在限制范围内根据长边进行等比缩放，其余区域透明展示。 :::
+	H int32 `json:"H"`
+
+	// REQUIRED; 当配置素材布局时需要通过 Layer 参数与素材进行一一对应。 :::tip 配置 Logo 图片的布局时此参数不生效。 :::
+	Layer int32 `json:"Layer"`
+
+	// REQUIRED; 当前素材或 Logo 图片在混流输出画面中的限制宽度，单位为 px，取值范围为 [10,2160]。
+	W int32 `json:"W"`
+
+	// REQUIRED; 当前素材或 Logo 图片在输出画面中相对画面左上角的 X 偏移位置，单位为 px，取值范围为 0 到设置的画面宽度。
+	X int32 `json:"X"`
+
+	// REQUIRED; 当前素材或 Logo 图片在输出画面中相对画面左上角的 Y 偏移位置，单位为 px，取值范围为 0 到设置的画面高度。
+	Y int32 `json:"Y"`
+}
+
+type CreateCloudMixTaskBodyMixedRulesInputSourceItem struct {
+
+	// REQUIRED; 混流素材 ID，一个任务中素材 ID 不能重复，此 ID 用于任务状态回调消息中标识素材。
+	ID string `json:"ID"`
+
+	// REQUIRED; 混流素材的叠放顺序，1 为最底层，2 层在 1 层之上，以此类推，取值范围为[1,9999]。 :::tip 当前准备使用某个素材作为布局背景时，其叠放顺序应设置为所有素材中的最小值。 :::
+	Layer int32 `json:"Layer"`
+
+	// REQUIRED; 混流素材类型，支持的取值及含义如下所示。
+	// * vod：视频点播中的素材，支持 MP4、FLV 格式素材；
+	// * live：直播源素材，支持 RTMP、FLV 协议拉流地址；
+	// * pic：图片素材，支持 png、jpg 格式图片。
+	Type string `json:"Type"`
+
+	// REQUIRED; 混流素材的访问地址。 :::tip 混流素材的访问地址需与混流素材的类型保持对应关系。 :::
+	URL string `json:"Url"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesOutput - 混流输出视频质量参数配置。
+type CreateCloudMixTaskBodyMixedRulesOutput struct {
+
+	// REQUIRED; 混流音频参数设置。
+	Audio CreateCloudMixTaskBodyMixedRulesOutputAudio `json:"Audio"`
+
+	// REQUIRED; 混流视频的推流地址，支持最多配置 8 个推流地址。
+	URL []string `json:"Url"`
+
+	// REQUIRED; 混流视频参数设置。
+	Video CreateCloudMixTaskBodyMixedRulesOutputVideo `json:"Video"`
+
+	// 任务状态回调地址配置。
+	Callback *CreateCloudMixTaskBodyMixedRulesOutputCallback `json:"Callback,omitempty"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesOutputAudio - 混流音频参数设置。
+type CreateCloudMixTaskBodyMixedRulesOutputAudio struct {
+
+	// REQUIRED; 混流输出流的音频码率，单位为 bps，取值范围为 [128000,320000]，常见取值及含义如下所示。
+	// * 128000：128 kbps；
+	// * 144000：144 kbps；
+	// * 256000：256 kbps；
+	// * 320000：320 kbps。
+	BitRate int32 `json:"BitRate"`
+
+	// REQUIRED; 混流输出流的音频声道设置，取值及含义如下所示。
+	// * mono：单声道；
+	// * stereo：立体声。
+	ChannelLayout string `json:"ChannelLayout"`
+
+	// REQUIRED; 混流输出流的音频采样率，单位为 HZ，常见取值及含义如下所示。
+	// * 32000：32 kHZ；
+	// * 44100：44.1 kHZ；
+	// * 48000：48 kHZ。
+	SampleRate int32 `json:"SampleRate"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesOutputCallback - 任务状态回调地址配置。
+type CreateCloudMixTaskBodyMixedRulesOutputCallback struct {
+
+	// REQUIRED; 接收云端混流任务状态回调的 HTTP 地址。
+	URL string `json:"Url"`
+}
+
+// CreateCloudMixTaskBodyMixedRulesOutputVideo - 混流视频参数设置。
+type CreateCloudMixTaskBodyMixedRulesOutputVideo struct {
+
+	// REQUIRED; 混流输出视频码率，单位为 bps，取值范围为 [1000000,20000000]，输入值小于或大于取值范围时会进行自动修正至最小值和最大值。
+	BitRate int32 `json:"BitRate"`
+
+	// REQUIRED; 混流输出视频编码格式，支持的取值及含义如下所示。
+	// * h264：使用 H.264 编码格式；
+	// * h265：使用 H.265 编码格式。
+	Codec string `json:"Codec"`
+
+	// REQUIRED; 混流输出视频帧率，单位为 fps，取值范围为 [10,60]，输入值小于或大于取值范围时会进行自动修正至最小值和最大值。
+	FrameRate int32 `json:"FrameRate"`
+
+	// REQUIRED; IDR 帧之间的最大间隔时间，单位为秒，取值范围为 [1,10]。
+	GOP int32 `json:"GOP"`
+}
+
+type CreateCloudMixTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata CreateCloudMixTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateCloudMixTaskResResult `json:"Result,omitempty"`
+}
+
+type CreateCloudMixTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// CreateCloudMixTaskResResult - 视请求的接口而定
+type CreateCloudMixTaskResResult struct {
+
+	// REQUIRED; 请求响应码，取值及含义如下。
+	// * 0：请求成功；
+	// * 500：内部处理错误；
+	// * 400：请求异常。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 返回的数据。
+	Data CreateCloudMixTaskResResultData `json:"Data"`
+
+	// REQUIRED; 请求响应码对应的信息。
+	Message string `json:"Message"`
+}
+
+// CreateCloudMixTaskResResultData - 返回的数据。
+type CreateCloudMixTaskResResultData struct {
+
+	// REQUIRED; 混流任务 ID。
+	TaskID string `json:"TaskID"`
+}
+
 type CreateDomainBody struct {
 
 	// REQUIRED; 待添加到视频直播服务进行加速的域名，域名只能由数字（0 - 9）、字母（A - Z、a -z）和连字符（-） 组成。
@@ -894,7 +1115,7 @@ type CreatePullToPushTaskBody struct {
 	// 推流应用名称，推流地址（DstAddr）为空时必传；反之，则该参数不生效。
 	App *string `json:"App,omitempty"`
 
-	// 接收拉流转推任务状态回调的地址，最大长度为 2000 个字符，默认为空。
+	// 接收拉流转推任务状态回调的地址，最大长度为 512 个字符，默认为空。
 	CallbackURL *string `json:"CallbackURL,omitempty"`
 
 	// 续播策略，续播策略指转推点播视频进行直播时出现断流并恢复后，如何继续播放的策略，拉流来源类型为点播视频（Type 为 1）时参数生效，支持的取值及含义如下。
@@ -2427,6 +2648,42 @@ type DeleteCertResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type DeleteCloudMixTaskBody struct {
+
+	// REQUIRED; 混流任务 ID，您可以通过 ListCloudMixTask [https://www.volcengine.com/docs/6469/1271157] 接口获取待结束的混流任务 ID。
+	TaskID string `json:"TaskID"`
+}
+
+type DeleteCloudMixTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata DeleteCloudMixTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DeleteCloudMixTaskResResult `json:"Result"`
+}
+
+type DeleteCloudMixTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type DeleteCloudMixTaskResResult struct {
+
+	// REQUIRED; 请求响应码，取值及含义如下。
+	// * 0：请求成功；
+	// * 500：内部处理错误；
+	// * 400：请求异常。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 返回的数据。
+	Data string `json:"Data"`
+
+	// REQUIRED; 请求响应码对应的信息。
+	Message string `json:"Message"`
 }
 
 type DeleteDomainBody struct {
@@ -10365,6 +10622,66 @@ type GeneratePushURLResResultPushURLListDetailItem struct {
 	URL string `json:"URL"`
 }
 
+type GetCloudMixTaskDetailBody struct {
+
+	// REQUIRED; 混流任务 ID，您可以通过 ListCloudMixTask [https://www.volcengine.com/docs/6469/1271157] 接口获取混流任务 ID。
+	TaskID string `json:"TaskID"`
+}
+
+type GetCloudMixTaskDetailRes struct {
+
+	// REQUIRED
+	ResponseMetadata GetCloudMixTaskDetailResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result GetCloudMixTaskDetailResResult `json:"Result"`
+}
+
+type GetCloudMixTaskDetailResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type GetCloudMixTaskDetailResResult struct {
+
+	// REQUIRED; 请求响应码，取值及含义如下。
+	// * 0：请求成功；
+	// * 500：内部处理错误；
+	// * 400：请求异常。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 返回的数据。
+	Data GetCloudMixTaskDetailResResultData `json:"Data"`
+
+	// REQUIRED; 请求响应码对应的信息。
+	Message string `json:"Message"`
+}
+
+// GetCloudMixTaskDetailResResultData - 返回的数据。
+type GetCloudMixTaskDetailResResultData struct {
+
+	// REQUIRED; 任务最近一次更新的版本标识。
+	LastOperationIndex int32 `json:"LastOperationIndex"`
+
+	// REQUIRED; 任务最近一次成功更新的版本标识。
+	LastSuccessOperationIndex int32 `json:"LastSuccessOperationIndex"`
+
+	// REQUIRED; 混流任务详细配置的 Json 字符串。
+	Rule string `json:"Rule"`
+
+	// REQUIRED; 混流任务状态，取值及含义如下所示。
+	// * pending：任务调度被阻塞。
+	// * prepare：正在准备任务资源。
+	// * runing：任务进行中。
+	// * prestop：正在清理任务资源。
+	// * done：任务已结束。
+	Status string `json:"Status"`
+
+	// REQUIRED; 混流任务 ID。
+	TaskID string `json:"TaskID"`
+}
+
 type GetHLSEncryptDataKeyQuery struct {
 
 	// REQUIRED; 视频直播服务端生成的 M3U8 文件中写入的每个 TS 分片的密钥 ID。
@@ -10768,6 +11085,102 @@ type ListCertV2ResResultCertListItem struct {
 	// * 7days：有效期剩余 7 天；
 	// * 1days：有效期剩余 1 天。
 	Status string `json:"Status"`
+}
+
+type ListCloudMixTaskBody struct {
+
+	// REQUIRED; 查询数据的页码。
+	Page int32 `json:"Page"`
+
+	// REQUIRED; 每页显示的数据条数，最大值为 100。
+	PageSize int32 `json:"PageSize"`
+}
+
+type ListCloudMixTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListCloudMixTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result ListCloudMixTaskResResult `json:"Result"`
+}
+
+type ListCloudMixTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type ListCloudMixTaskResResult struct {
+
+	// REQUIRED; 请求响应码，取值及含义如下。
+	// * 0：请求成功；
+	// * 500：内部处理错误；
+	// * 400：请求异常。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 返回的数据。
+	Data ListCloudMixTaskResResultData `json:"Data"`
+
+	// REQUIRED; 请求响应码对应的信息。
+	Message string `json:"Message"`
+}
+
+// ListCloudMixTaskResResultData - 返回的数据。
+type ListCloudMixTaskResResultData struct {
+
+	// REQUIRED; 查询结果的数据总条数。
+	Count int32 `json:"Count"`
+
+	// REQUIRED; 查询结果数据详细信息。
+	Result []ListCloudMixTaskResResultDataResultItem `json:"Result"`
+}
+
+type ListCloudMixTaskResResultDataResultItem struct {
+
+	// REQUIRED; 混流任务创建时间。
+	CreatedAt ListCloudMixTaskResResultDataResultItemCreatedAt `json:"CreatedAt"`
+
+	// REQUIRED; 混流任务名称。
+	Name string `json:"Name"`
+
+	// REQUIRED; 混流任务状态，取值及含义如下所示。
+	// * pending：任务调度被阻塞。
+	// * prepare：正在准备任务资源。
+	// * runing：任务进行中。
+	// * prestop：正在清理任务资源。
+	// * done：任务已结束。
+	Status string `json:"Status"`
+
+	// REQUIRED; 混流任务结束时间。
+	StoppedAt ListCloudMixTaskResResultDataResultItemStoppedAt `json:"StoppedAt"`
+
+	// REQUIRED; 混流任务 ID。
+	TaskID string `json:"TaskID"`
+
+	// REQUIRED; 混流任务更新时间。
+	UpdatedAt ListCloudMixTaskResResultDataResultItemUpdatedAt `json:"UpdatedAt"`
+}
+
+// ListCloudMixTaskResResultDataResultItemCreatedAt - 混流任务创建时间。
+type ListCloudMixTaskResResultDataResultItemCreatedAt struct {
+
+	// REQUIRED; 时间。
+	Time string `json:"Time"`
+}
+
+// ListCloudMixTaskResResultDataResultItemStoppedAt - 混流任务结束时间。
+type ListCloudMixTaskResResultDataResultItemStoppedAt struct {
+
+	// REQUIRED
+	Time string `json:"Time"`
+}
+
+// ListCloudMixTaskResResultDataResultItemUpdatedAt - 混流任务更新时间。
+type ListCloudMixTaskResResultDataResultItemUpdatedAt struct {
+
+	// REQUIRED
+	Time string `json:"Time"`
 }
 
 type ListCommonTransPresetDetailBody struct {
@@ -13613,6 +14026,203 @@ type UpdateCallbackResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type UpdateCloudMixTaskBody struct {
+
+	// REQUIRED; 混流任务详细配置。
+	MixedRules UpdateCloudMixTaskBodyMixedRules `json:"MixedRules"`
+
+	// REQUIRED; 混流任务 ID，您可以通过 ListCloudMixTask [https://www.volcengine.com/docs/6469/1271157] 接口获取运行中的混流任务 ID。
+	TaskID string `json:"TaskID"`
+}
+
+// UpdateCloudMixTaskBodyMixedRules - 混流任务详细配置。
+type UpdateCloudMixTaskBodyMixedRules struct {
+
+	// REQUIRED; 混流输出布局配置。
+	InputLayout UpdateCloudMixTaskBodyMixedRulesInputLayout `json:"InputLayout"`
+
+	// REQUIRED; 混流素材列表，最多支持配置 8 路输入源。
+	InputSource []UpdateCloudMixTaskBodyMixedRulesInputSourceItem `json:"InputSource"`
+
+	// REQUIRED; 混流输出流参数配置。 :::warning 更新云端混流任务时，Output 参数不支持变更，且必须传入与原混流任务一致的配置。 :::
+	Output UpdateCloudMixTaskBodyMixedRulesOutput `json:"Output"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesInputLayout - 混流输出布局配置。
+type UpdateCloudMixTaskBodyMixedRulesInputLayout struct {
+
+	// REQUIRED; 混流输出画布配置和素材布局配置。
+	Scene UpdateCloudMixTaskBodyMixedRulesInputLayoutScene `json:"Scene"`
+
+	// 混流输出视频中 Logo 布局配置。 :::tip 支持最多配置 4 个 Logo，展示层级以添加顺序为准。 :::
+	Logo []*UpdateCloudMixTaskBodyMixedRulesInputLayoutLogoItem `json:"Logo,omitempty"`
+}
+
+type UpdateCloudMixTaskBodyMixedRulesInputLayoutLogoItem struct {
+
+	// Logo 图片在混流输出整体画面中的布局配置。
+	Layout *UpdateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout `json:"Layout,omitempty"`
+
+	// Logo 图片访问地址。
+	URL *string `json:"Url,omitempty"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout - Logo 图片在混流输出整体画面中的布局配置。
+type UpdateCloudMixTaskBodyMixedRulesInputLayoutLogoItemLayout struct {
+
+	// REQUIRED
+	H int32 `json:"H"`
+
+	// REQUIRED
+	W int32 `json:"W"`
+
+	// REQUIRED
+	X int32 `json:"X"`
+
+	// REQUIRED
+	Y int32 `json:"Y"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesInputLayoutScene - 混流输出画布配置和素材布局配置。
+type UpdateCloudMixTaskBodyMixedRulesInputLayoutScene struct {
+
+	// REQUIRED; 混流输出整体画布高度，单位为 px，取值范围为 [10,2160]。
+	Height int32 `json:"Height"`
+
+	// REQUIRED; 混流素材在混流输出整体画面中的布局配置。 :::tip 混流素材布局中需包含所有素材的配置，且需与通过 Layer 参数与混流素材一一匹配。 :::
+	Layout []UpdateCloudMixTaskBodyMixedRulesInputLayoutSceneLayoutItem `json:"Layout"`
+
+	// REQUIRED; 混流输出画布整体宽度，单位为 px，取值范围为 [10,2160]。
+	Width int32 `json:"Width"`
+}
+
+type UpdateCloudMixTaskBodyMixedRulesInputLayoutSceneLayoutItem struct {
+
+	// REQUIRED; 当前素材或 Logo 图片在混流输出画面中的限制高度，单位为 px，取值范围为 [10,2160]。
+	// :::tip 限制宽度和限制高度指定了素材展示的限制范围，当素材尺寸和限制值不一致时，素材将在限制范围内根据长边进行等比缩放，其余区域透明展示。 :::
+	H int32 `json:"H"`
+
+	// REQUIRED; 当配置素材布局时需要通过 Layer 参数与素材进行一一对应。 :::tip 配置 Logo 图片的布局时此参数不生效。 :::
+	Layer int32 `json:"Layer"`
+
+	// REQUIRED; 当前素材或 Logo 图片在混流输出画面中的限制宽度，单位为 px，取值范围为 [10,2160]。
+	W int32 `json:"W"`
+
+	// REQUIRED; 当前素材或 Logo 图片在输出画面中相对画面左上角的 X 偏移位置，单位为 px，取值范围为 0 到设置的画面宽度。
+	X int32 `json:"X"`
+
+	// REQUIRED; 当前素材或 Logo 图片在输出画面中相对画面左上角的 Y 偏移位置，单位为 px，取值范围为 0 到设置的画面高度。
+	Y int32 `json:"Y"`
+}
+
+type UpdateCloudMixTaskBodyMixedRulesInputSourceItem struct {
+
+	// REQUIRED; 混流素材 ID，一个任务中素材 ID 不能重复，此 ID 用于任务状态回调消息中标识素材。
+	ID string `json:"ID"`
+
+	// REQUIRED; 混流素材的叠放顺序，1 为最底层，2 层在 1 层之上，以此类推，取值范围为[1,9999]。 :::tip 当前准备使用某个素材作为布局背景时，其叠放顺序应设置为所有素材中的最小值。 :::
+	Layer int32 `json:"Layer"`
+
+	// REQUIRED; 混流素材类型，支持的取值及含义如下所示。
+	// * vod：视频点播中的素材，支持 MP4、FLV 格式素材；
+	// * live：直播源素材，支持 RTMP、FLV 协议拉流地址；
+	// * pic：图片素材，支持 png、jpg 格式图片。
+	Type string `json:"Type"`
+
+	// REQUIRED; 混流素材访问地址。
+	URL string `json:"Url"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesOutput - 混流输出流参数配置。 :::warning 更新云端混流任务时，Output 参数不支持变更，且必须传入与原混流任务一致的配置。 :::
+type UpdateCloudMixTaskBodyMixedRulesOutput struct {
+
+	// REQUIRED; 混流声音参数设置。
+	Audio UpdateCloudMixTaskBodyMixedRulesOutputAudio `json:"Audio"`
+
+	// REQUIRED; 混流视频的推流地址。
+	URL []string `json:"Url"`
+
+	// REQUIRED; 混流画面参数设置。
+	Video UpdateCloudMixTaskBodyMixedRulesOutputVideo `json:"Video"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesOutputAudio - 混流声音参数设置。
+type UpdateCloudMixTaskBodyMixedRulesOutputAudio struct {
+
+	// REQUIRED; 混流输出流的音频码率，单位为 bps，取值范围为 [128000,320000]，常见取值及含义如下所示。
+	// * 128000：128 kbps；
+	// * 144000：144 kbps；
+	// * 256000：256 kbps；
+	// * 320000：320 kbps。
+	BitRate int32 `json:"BitRate"`
+
+	// REQUIRED; 混流输出流的音频声道设置，取值及含义如下所示。
+	// * mono：单声道；
+	// * stereo：立体声。
+	ChannelLayout string `json:"ChannelLayout"`
+
+	// REQUIRED; 混流输出流的音频采样率，单位为 HZ，常见取值及含义如下所示。
+	// * 32000：32 kHZ；
+	// * 44100：44.1 kHZ；
+	// * 48000：48 kHZ。
+	SampleRate int32 `json:"SampleRate"`
+}
+
+// UpdateCloudMixTaskBodyMixedRulesOutputVideo - 混流画面参数设置。
+type UpdateCloudMixTaskBodyMixedRulesOutputVideo struct {
+
+	// REQUIRED; 混流输出视频码率，单位为 bps，取值范围为 [1000000,20000000]，输入值小于或大于取值范围时会进行自动修正至最小值和最大值。
+	BitRate int32 `json:"BitRate"`
+
+	// REQUIRED; 混流输出视频编码格式，支持的取值及含义如下所示。
+	// * h264：使用 H.264 编码格式；
+	// * h265：使用 H.265 编码格式。
+	Codec string `json:"Codec"`
+
+	// REQUIRED; 混流输出视频帧率，单位为 fps，取值范围为 [10,60]，输入值小于或大于取值范围时会进行自动修正至最小值和最大值。
+	FrameRate int32 `json:"FrameRate"`
+
+	// REQUIRED; IDR 帧之间的最大间隔时间，单位为秒，取值范围为 [1,10]。
+	GOP int32 `json:"GOP"`
+}
+
+type UpdateCloudMixTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateCloudMixTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result UpdateCloudMixTaskResResult `json:"Result"`
+}
+
+type UpdateCloudMixTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type UpdateCloudMixTaskResResult struct {
+
+	// REQUIRED; 请求响应码，取值及含义如下。
+	// * 0：请求成功；
+	// * 500：内部处理错误；
+	// * 400：请求异常。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 返回的数据。
+	Data UpdateCloudMixTaskResResultData `json:"Data"`
+
+	// REQUIRED; 请求响应码对应的信息。
+	Message string `json:"Message"`
+}
+
+// UpdateCloudMixTaskResResultData - 返回的数据。
+type UpdateCloudMixTaskResResultData struct {
+
+	// REQUIRED; 任务版本标识符，用来标识更新后的任务版本。
+	OptID int32 `json:"OptID"`
+}
+
 type UpdateDenyConfigBody struct {
 
 	// REQUIRED; 黑白名单配置列表。
@@ -14008,7 +14618,7 @@ type UpdatePullToPushTaskBody struct {
 	// 推流应用名称，推流地址（DstAddr）为空时必传；反之，则该参数不生效
 	App *string `json:"App,omitempty"`
 
-	// 接收拉流转推任务状态回调的地址，最大长度为 2000 个字符。
+	// 接收拉流转推任务状态回调的地址，最大长度为 512 个字符。
 	CallbackURL *string `json:"CallbackURL,omitempty"`
 
 	// 续播策略，续播策略指转推点播视频进行直播时出现断流并恢复后，如何继续播放的策略，拉流来源类型为点播视频（Type 为 1）时参数生效，支持的取值及含义如下。
@@ -14184,7 +14794,7 @@ type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
-	// 转码流后缀列表，转码流录制配置为根据转码流列表匹配（TranscodeRecord 取值为 2）时生效，TranscodeSuffixList 默认配置为空，效果等同于录制全部转码流。
+	// 转码流后缀列表，是否录制转码设置为根据转码流列表匹配（TranscodeRecord 取值为 2）时生效，TranscodeSuffixList 默认配置为空，效果等同于录制全部转码流。
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
@@ -15712,6 +16322,8 @@ type BindEncryptDRM struct{}
 type BindEncryptDRMQuery struct{}
 type CreateCert struct{}
 type CreateCertQuery struct{}
+type CreateCloudMixTask struct{}
+type CreateCloudMixTaskQuery struct{}
 type CreateDomain struct{}
 type CreateDomainQuery struct{}
 type CreateDomainV2 struct{}
@@ -15750,6 +16362,8 @@ type DeleteCallback struct{}
 type DeleteCallbackQuery struct{}
 type DeleteCert struct{}
 type DeleteCertQuery struct{}
+type DeleteCloudMixTask struct{}
+type DeleteCloudMixTaskQuery struct{}
 type DeleteDomain struct{}
 type DeleteDomainQuery struct{}
 type DeleteHTTPHeaderConfig struct{}
@@ -15906,6 +16520,8 @@ type GeneratePlayURL struct{}
 type GeneratePlayURLQuery struct{}
 type GeneratePushURL struct{}
 type GeneratePushURLQuery struct{}
+type GetCloudMixTaskDetail struct{}
+type GetCloudMixTaskDetailQuery struct{}
 type GetHLSEncryptDataKey struct{}
 type GetHLSEncryptDataKeyBody struct{}
 type GetLiveVideoQualityAnalysisTaskDetail struct{}
@@ -15918,6 +16534,8 @@ type ListBindEncryptDRM struct{}
 type ListBindEncryptDRMQuery struct{}
 type ListCertV2 struct{}
 type ListCertV2Query struct{}
+type ListCloudMixTask struct{}
+type ListCloudMixTaskQuery struct{}
 type ListCommonTransPresetDetail struct{}
 type ListCommonTransPresetDetailQuery struct{}
 type ListDomainDetail struct{}
@@ -15974,6 +16592,8 @@ type UpdateAuthKey struct{}
 type UpdateAuthKeyQuery struct{}
 type UpdateCallback struct{}
 type UpdateCallbackQuery struct{}
+type UpdateCloudMixTask struct{}
+type UpdateCloudMixTaskQuery struct{}
 type UpdateDenyConfig struct{}
 type UpdateDenyConfigQuery struct{}
 type UpdateDomainVhost struct{}
@@ -16027,6 +16647,10 @@ type BindEncryptDRMReq struct {
 type CreateCertReq struct {
 	*CreateCertQuery
 	*CreateCertBody
+}
+type CreateCloudMixTaskReq struct {
+	*CreateCloudMixTaskQuery
+	*CreateCloudMixTaskBody
 }
 type CreateDomainReq struct {
 	*CreateDomainQuery
@@ -16103,6 +16727,10 @@ type DeleteCallbackReq struct {
 type DeleteCertReq struct {
 	*DeleteCertQuery
 	*DeleteCertBody
+}
+type DeleteCloudMixTaskReq struct {
+	*DeleteCloudMixTaskQuery
+	*DeleteCloudMixTaskBody
 }
 type DeleteDomainReq struct {
 	*DeleteDomainQuery
@@ -16408,6 +17036,10 @@ type GeneratePushURLReq struct {
 	*GeneratePushURLQuery
 	*GeneratePushURLBody
 }
+type GetCloudMixTaskDetailReq struct {
+	*GetCloudMixTaskDetailQuery
+	*GetCloudMixTaskDetailBody
+}
 type GetHLSEncryptDataKeyReq struct {
 	*GetHLSEncryptDataKeyQuery
 	*GetHLSEncryptDataKeyBody
@@ -16431,6 +17063,10 @@ type ListBindEncryptDRMReq struct {
 type ListCertV2Req struct {
 	*ListCertV2Query
 	*ListCertV2Body
+}
+type ListCloudMixTaskReq struct {
+	*ListCloudMixTaskQuery
+	*ListCloudMixTaskBody
 }
 type ListCommonTransPresetDetailReq struct {
 	*ListCommonTransPresetDetailQuery
@@ -16543,6 +17179,10 @@ type UpdateAuthKeyReq struct {
 type UpdateCallbackReq struct {
 	*UpdateCallbackQuery
 	*UpdateCallbackBody
+}
+type UpdateCloudMixTaskReq struct {
+	*UpdateCloudMixTaskQuery
+	*UpdateCloudMixTaskBody
 }
 type UpdateDenyConfigReq struct {
 	*UpdateDenyConfigQuery

@@ -3095,6 +3095,106 @@ func (c *Live) DescribeIPAccessRule(ctx context.Context, arg *DescribeIPAccessRu
 	return result, nil
 }
 
+func (c *Live) CreateCloudMixTask(ctx context.Context, arg *CreateCloudMixTaskBody) (*CreateCloudMixTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateCloudMixTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateCloudMixTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateCloudMixTask(ctx context.Context, arg *UpdateCloudMixTaskBody) (*UpdateCloudMixTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateCloudMixTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateCloudMixTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetCloudMixTaskDetail(ctx context.Context, arg *GetCloudMixTaskDetailBody) (*GetCloudMixTaskDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetCloudMixTaskDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetCloudMixTaskDetailRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListCloudMixTask(ctx context.Context, arg *ListCloudMixTaskBody) (*ListCloudMixTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListCloudMixTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListCloudMixTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteCloudMixTask(ctx context.Context, arg *DeleteCloudMixTaskBody) (*DeleteCloudMixTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteCloudMixTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteCloudMixTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DeleteSubtitleTranscodePreset(ctx context.Context, arg *DeleteSubtitleTranscodePresetBody) (*DeleteSubtitleTranscodePresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
