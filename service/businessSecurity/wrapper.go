@@ -1813,3 +1813,33 @@ func (p *BusinessSecurity) ActivateRiskResult(req *ActivateRiskResultReq) (*Acti
 	}
 	return result, nil
 }
+
+func (p *BusinessSecurity) CancelActivateRiskResult(req *CancelActivateRiskResultReq) (*CancelActivateRiskResultResp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("UploadImageLibContent: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CancelActivateRiskResult", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("ActivateRiskResult", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ActivateRiskResult: fail to do request, %v", err)
+			}
+			result := new(CancelActivateRiskResultResp)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
+	}
+	result := new(CancelActivateRiskResultResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
