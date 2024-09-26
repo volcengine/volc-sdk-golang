@@ -1,5 +1,9 @@
 ### Change log
 
+2024-09-26 Bumped to version v1.0.178
+- Updated service businessSecurity/imp/live
+- Added service acep
+
 2024-09-19 Bumped to version v1.0.177
 - Updated service vikingdb/vod
 
