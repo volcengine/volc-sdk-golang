@@ -55,6 +55,17 @@ func TestImp_SubmitJob(t *testing.T) {
 						},
 					},
 				},
+				Output: []*business.OutputOverrideParams{
+					{
+						ActivityId: []string{"*"},
+						OutputPath: &business.OutputPath{
+							Type:         "our storage type",
+							VodSpaceName: "your vod spaceName",
+							TosBucket:    "your tos bucketName",
+							FileName:     "output FileName",
+						},
+					},
+				},
 			},
 		},
 	}
