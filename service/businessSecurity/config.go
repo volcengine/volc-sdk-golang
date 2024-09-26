@@ -539,10 +539,19 @@ var (
 		},
 		"ActivateRiskResult": {
 			Method:  http.MethodPost,
-			Timeout: 10 * time.Second,
+			Timeout: 3 * time.Second,
 			Path:    "/",
 			Query: url.Values{
 				"Action":  []string{"ActivateRiskResult"},
+				"Version": []string{"2023-10-01"},
+			},
+		},
+		"CancelActivateRiskResult": {
+			Method:  http.MethodPost,
+			Timeout: 3 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CancelActivateRiskResult"},
 				"Version": []string{"2023-10-01"},
 			},
 		},

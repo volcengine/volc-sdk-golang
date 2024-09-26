@@ -979,6 +979,7 @@ type SampleData struct {
 type ActivateRiskResultReq struct {
 	PlanId       int64  `json:"PlanId"`
 	ActivateCode string `json:"ActivateCode"`
+	AppId        int64  `json:"AppId"`
 }
 type ActivateRiskBasePackageResp struct {
 	RequestId string                      `json:"RequestId"`
@@ -1007,5 +1008,21 @@ type ActivateRiskResultResp struct {
 	Data      ActivateRiskResultInfo `json:"Data"`
 }
 type ActivateRiskResultInfo struct {
+	Success  bool `json:"Success"`
+	ResultId int  `json:"ResultId"`
+}
+
+type CancelActivateRiskResultReq struct {
+	ResultId int `json:"ResultId"`
+}
+
+type CancelActivateRiskResultResp struct {
+	RequestId string                       `json:"RequestId"`
+	Code      int                          `json:"Code"`
+	Message   string                       `json:"Message"`
+	Data      CancelActivateRiskResultInfo `json:"Data"`
+}
+
+type CancelActivateRiskResultInfo struct {
 	Success bool `json:"Success"`
 }
