@@ -10,6 +10,7 @@ import (
 )
 
 func Test_StartWBRecord(t *testing.T) {
+	// 如果您想使用其他区域的实例,请使用 `NewInstanceWithRegion(区域名)` 显式指定区域
 	instance := rtc_v20231101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
