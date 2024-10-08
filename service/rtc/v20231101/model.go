@@ -5,11 +5,11 @@ type BanRoomUserBody struct {
 	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 指定房间 ID
-	RoomID string `json:"RoomId"`
-
-	// 封禁时长，取值范围为 [60,259200]，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259200，自动修改为 259200。
+	// 封禁时长，取值范围为 {0,[10,604800]}，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值小于 10，自动修改为 10。 若传入值大于 604800，自动修改为 604800。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
+
+	// 指定房间 ID
+	RoomID *string `json:"RoomId,omitempty"`
 
 	// 希望封禁用户的 ID
 	UserID *string `json:"UserId,omitempty"`
@@ -72,10 +72,7 @@ type BanUserStreamBody struct {
 	// REQUIRED; 房间的 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 用于校验当前账号是否具有封禁权限的 Token，生成方式与加入房间时的 Token 生成方式一致
-	Token string `json:"Token"`
-
-	// REQUIRED; 你希望封禁音/视频流的用户的 ID
+	// REQUIRED; 你需要封禁音/视频流的用户的 ID
 	UserID string `json:"UserId"`
 
 	// 是否解封音频流。
@@ -83,6 +80,9 @@ type BanUserStreamBody struct {
 	// * false：封禁音频流。
 	// 默认值为 true。
 	Audio *bool `json:"Audio,omitempty"`
+
+	// 封禁时长，取值范围为{0,[60,259200]}，单位为秒。 若传入值为空或 0 表示封禁音视频流至主动调用unbanroomuser 接口解封。 若传入值大于 0，且小于10，自动修改为10。 若传入值大于259200，自动修改为259200。
+	ForbiddenInterval *int64 `json:"ForbiddenInterval,omitempty"`
 
 	// 是否解封视频流。
 	// * true：解封视频流。
@@ -349,7 +349,11 @@ type GetPushMixedStreamToCDNTaskResResult struct {
 // GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTask - 合流转推任务信息
 type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTask struct {
 	Control *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControl `json:"Control,omitempty"`
-	Encode  *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode  `json:"Encode,omitempty"`
+
+	// 音视频编码参数。
+	// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+	// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
+	Encode *GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode `json:"Encode,omitempty"`
 
 	// 任务结束时间戳，Unix 时间，单位为毫秒。0 表示任务未结束
 	EndTime        *int64                                                                      `json:"EndTime,omitempty"`
@@ -409,8 +413,8 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControl struct 
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
-	// * 0 ：音视频，
-	// * 1 ：纯音频（当前该值无效）。
+	// * 0 ：音视频；
+	// * 1 ：纯音频。
 	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
@@ -491,16 +495,14 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskControlSpatialC
 	Up []*float32 `json:"Up,omitempty"`
 }
 
+// GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode - 音视频编码参数。
+// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
 type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode struct {
 
-	// 音频码率。取值范围为 [32,192],单位为 Kbps，默认值为 64。
-	// 当AudioProfile=0时： 若输入参数取值范围为 [32,192]，编码码率等于输入码率。
-	// 当AudioProfile=1时：
-	// * 若输入参数取值范围为 [32,128]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [128,192]，编码码率固定为128。
-	// 当AudioProfile=2时：
-	// * 若输入参数取值范围为 [32,64]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [64,192]，编码码率固定为64。
+	// 音频码率。取值范围为 [32,192],单位为 Kbps。
+	// * 该参数若不填，RTC 会根据音频配置文件类型、采样率、声道数的配置生成音频码率取值。
+	// * 该参数若填写，实际生效的码率也会随着音频配置文件类型、采样率、声道数的配置而变化。若你发现生效的码率值没有达到你设定的值，可能是该值已经超过该场景下的极限码率。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
 	// 音频声道数。支持取值及含义如下：
@@ -519,7 +521,7 @@ type GetPushMixedStreamToCDNTaskResResultPushMixedStreamToCDNTaskEncode struct {
 	// 默认值为 0。
 	AudioProfile *int32 `json:"AudioProfile,omitempty"`
 
-	// 音频采样率。可取值为：32000,44100，48000，单位为 Hz，默认值为 48000。
+	// 音频采样率。可取值为：{32000,44100，48000}，单位为 Hz，默认值为 48000。
 	AudioSampleRate *int32 `json:"AudioSampleRate,omitempty"`
 
 	// 视频码率。取值范围为 [0,10000]，单位为 Kbps，默认值为 0。0 表示自适应码率，会自动根据 VideoFps , VideoWidth 以及VideoHeight 计算出合理的码率。 自适应码率模式下，RTC 默认不会设置超高码率。如果订阅屏幕流，建议自行设置高码率。不同场景下设置码率等视频发布参数,请参考设置视频发布参数
@@ -3578,8 +3580,12 @@ type StartPushMixedStreamToCDNBody struct {
 	TaskID string `json:"TaskId"`
 
 	// 业务标识
-	BusinessID     *string                                      `json:"BusinessId,omitempty"`
-	Control        *StartPushMixedStreamToCDNBodyControl        `json:"Control,omitempty"`
+	BusinessID *string                               `json:"BusinessId,omitempty"`
+	Control    *StartPushMixedStreamToCDNBodyControl `json:"Control,omitempty"`
+
+	// 音视频编码参数。
+	// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+	// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
 	Encode         *StartPushMixedStreamToCDNBodyEncode         `json:"Encode,omitempty"`
 	ExcludeStreams *StartPushMixedStreamToCDNBodyExcludeStreams `json:"ExcludeStreams,omitempty"`
 	Layout         *StartPushMixedStreamToCDNBodyLayout         `json:"Layout,omitempty"`
@@ -3603,8 +3609,8 @@ type StartPushMixedStreamToCDNBodyControl struct {
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
-	// * 0 ：音视频，
-	// * 1 ：纯音频（当前该值无效）。
+	// * 0 ：音视频；
+	// * 1 ：纯音频。
 	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
@@ -3685,16 +3691,14 @@ type StartPushMixedStreamToCDNBodyControlSpatialConfigAudienceSpatialOrientation
 	Up []*float32 `json:"Up,omitempty"`
 }
 
+// StartPushMixedStreamToCDNBodyEncode - 音视频编码参数。
+// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
 type StartPushMixedStreamToCDNBodyEncode struct {
 
-	// 音频码率。取值范围为 [32,192],单位为 Kbps，默认值为 64。
-	// 当AudioProfile=0时： 若输入参数取值范围为 [32,192]，编码码率等于输入码率。
-	// 当AudioProfile=1时：
-	// * 若输入参数取值范围为 [32,128]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [128,192]，编码码率固定为128。
-	// 当AudioProfile=2时：
-	// * 若输入参数取值范围为 [32,64]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [64,192]，编码码率固定为64。
+	// 音频码率。取值范围为 [32,192],单位为 Kbps。
+	// * 该参数若不填，RTC 会根据音频配置文件类型、采样率、声道数的配置生成音频码率取值。
+	// * 该参数若填写，实际生效的码率也会随着音频配置文件类型、采样率、声道数的配置而变化。若你发现生效的码率值没有达到你设定的值，可能是该值已经超过该场景下的极限码率。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
 	// 音频声道数。支持取值及含义如下：
@@ -3713,7 +3717,7 @@ type StartPushMixedStreamToCDNBodyEncode struct {
 	// 默认值为 0。
 	AudioProfile *int32 `json:"AudioProfile,omitempty"`
 
-	// 音频采样率。可取值为：32000,44100，48000，单位为 Hz，默认值为 48000。
+	// 音频采样率。可取值为：{32000,44100，48000}，单位为 Hz，默认值为 48000。
 	AudioSampleRate *int32 `json:"AudioSampleRate,omitempty"`
 
 	// 视频码率。取值范围为 [0,10000]，单位为 Kbps，默认值为 0。0 表示自适应码率，会自动根据 VideoFps , VideoWidth 以及VideoHeight 计算出合理的码率。 自适应码率模式下，RTC 默认不会设置超高码率。如果订阅屏幕流，建议自行设置高码率。不同场景下设置码率等视频发布参数,请参考设置视频发布参数
@@ -3995,7 +3999,7 @@ type StartPushPublicStreamBodyControl struct {
 	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为[10, 86400]，单位为秒，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
+	// 房间用户发布状态回调间隔，仅在纯音频时生效。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
@@ -4004,10 +4008,10 @@ type StartPushPublicStreamBodyControl struct {
 	// 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
+	// 房间用户采集状态回调间隔，仅在纯音频时生效。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
-	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
+	// 是否开启房间用户采集状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
 	// * false：不开启房间用户采集状态回调。
 	// 默认值为false。
@@ -4440,6 +4444,13 @@ type StartRecordBody struct {
 // StartRecordBodyControl - 高级配置选项
 type StartRecordBodyControl struct {
 
+	// 是否开启边录制边上传功能。
+	// * false：关闭
+	// * true：开启
+	// 默认值为 false。 :::warning 该功能仅对HLS格式存储文件生效，即：FileFormatConfig.FileFormat取值必须包含 HLS。 若 HLS 格式文件名中包含Duration填充变量，开通该功能Duration的值始终为
+	// 0。 :::
+	EnableSyncUpload *bool `json:"EnableSyncUpload,omitempty"`
+
 	// 补帧模式。支持取值及含义如下：
 	// * 0：补最后一帧，
 	// * 1：补黑帧。
@@ -4456,37 +4467,16 @@ type StartRecordBodyControl struct {
 	// 最大录制时长，取值为正整数，单位为秒。默认值为 0。0 表示不限制录制时长。
 	MaxRecordTime *int32 `json:"MaxRecordTime,omitempty"`
 
+	// 任务最大中断时间，仅对单流录制生效。取值范围为 [60, 3600],单位为秒，默认值为 3600。
+	// * 若任务中断时间小于该参数值，则根据设置的补帧模式进行补帧。
+	// * 若任务中断时间大于该参数值但小于空闲超时时间，任务恢复时会生成一个新文件。 建议该参数取值小于 MaxIdleTime 取值。
+	MaxSilenceSeconds *int32 `json:"MaxSilenceSeconds,omitempty"`
+
 	// 订阅流类型。支持取值及含义如下：
-	// * 0：音视频，
-	// * 1：纯音频（暂不支持）
-	// 默认值为0
-	MediaType     *int32                               `json:"MediaType,omitempty"`
-	SpatialConfig *StartRecordBodyControlSpatialConfig `json:"SpatialConfig,omitempty"`
-}
-
-type StartRecordBodyControlSpatialConfig struct {
-	AudienceSpatialOrientation *StartRecordBodyControlSpatialConfigAudienceSpatialOrientation `json:"AudienceSpatialOrientation,omitempty"`
-
-	// 观众所在位置的三维坐标，默认值为[0,0,0]。数组长度为3，三个值依次对应X,Y,Z，每个值的取值范围为 [-100,100]。
-	AudienceSpatialPosition []*int32 `json:"AudienceSpatialPosition,omitempty"`
-
-	// 是否开启空间音频处理功能。
-	// * false：关闭。
-	// * true：开启
-	// 默认值为 false。
-	EnableSpatialRender *bool `json:"EnableSpatialRender,omitempty"`
-}
-
-type StartRecordBodyControlSpatialConfigAudienceSpatialOrientation struct {
-
-	// 前方朝向
-	Forward []*float32 `json:"Forward,omitempty"`
-
-	// 右边朝向
-	Right []*float32 `json:"Right,omitempty"`
-
-	// 头顶朝向
-	Up []*float32 `json:"Up,omitempty"`
+	// * 0：音视频；
+	// * 1：纯音频。
+	// 默认值为0。
+	MediaType *int32 `json:"MediaType,omitempty"`
 }
 
 type StartRecordBodyEncode struct {
@@ -6232,9 +6222,6 @@ type UnbanUserStreamBody struct {
 	// REQUIRED; 房间的 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 用于校验当前账号是否具有解封权限的 Token，生成方式与加入房间时的 Token 生成方式一致
-	Token string `json:"Token"`
-
 	// REQUIRED; 需要被解封音/视频流的用户的 ID
 	UserID string `json:"UserId"`
 
@@ -6303,11 +6290,11 @@ type UpdateBanRoomUserRuleBody struct {
 	// REQUIRED; 你的音视频应用的唯一标志，参看获取 AppId [https://www.volcengine.com/docs/6348/69865#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E5%88%9B%E5%BB%BA-rtc-%E5%BA%94%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96-appid]。
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 指定房间 ID
-	RoomID string `json:"RoomId"`
-
-	// 封禁时长，取值范围为 [60,259290]，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值大于 0，且小于 60，自动修改为 60。 若传入值大于 259290，自动修改为 259290。
+	// 封禁时长，取值范围为 {0,[10,604800]}，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值小于 10，自动修改为 10。 若传入值大于 604800，自动修改为 604800。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
+
+	// 指定房间 ID
+	RoomID *string `json:"RoomId,omitempty"`
 
 	// 希望封禁用户的 ID
 	UserID *string `json:"UserId,omitempty"`
@@ -6399,7 +6386,7 @@ type UpdatePublicStreamParamBodyControl struct {
 	// 任务的空闲超时时间，超过此时间后，任务自动终止。取值范围为[10, 86400]，单位为秒，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
+	// 房间用户发布状态回调间隔，仅在纯音频时生效。取值范围为 [1000,2147483647]，单位为毫秒，默认值为 2000。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
@@ -6408,10 +6395,10 @@ type UpdatePublicStreamParamBodyControl struct {
 	// 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
+	// 房间用户采集状态回调间隔，仅在纯音频时生效。取值范围为[1000,2147483647]，单位为毫秒，默认值为2000。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
-	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
+	// 是否开启房间用户采集状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
 	// * false：不开启房间用户采集状态回调。
 	// 默认值为false。
@@ -6709,7 +6696,11 @@ type UpdatePushMixedStreamToCDNBody struct {
 	// 业务标识
 	BusinessID *string                                `json:"BusinessId,omitempty"`
 	Control    *UpdatePushMixedStreamToCDNBodyControl `json:"Control,omitempty"`
-	Encode     *UpdatePushMixedStreamToCDNBodyEncode  `json:"Encode,omitempty"`
+
+	// 音视频编码参数。
+	// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+	// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
+	Encode *UpdatePushMixedStreamToCDNBodyEncode `json:"Encode,omitempty"`
 
 	// 是否更新部分参数。
 	// * false：否。
@@ -6741,8 +6732,8 @@ type UpdatePushMixedStreamToCDNBodyControl struct {
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
 	// 流的类型，用于全局控制订阅的流的类型。支持取值及含义如下：
-	// * 0 ：音视频，
-	// * 1 ：纯音频（当前该值无效）。
+	// * 0 ：音视频；
+	// * 1 ：纯音频。
 	// 默认值为 0。
 	MediaType *int32 `json:"MediaType,omitempty"`
 
@@ -6823,16 +6814,14 @@ type UpdatePushMixedStreamToCDNBodyControlSpatialConfigAudienceSpatialOrientatio
 	Up []*float32 `json:"Up,omitempty"`
 }
 
+// UpdatePushMixedStreamToCDNBodyEncode - 音视频编码参数。
+// * 单流录制时，你仅可以设置VideoFps、VideoBitrate和所有音频相关参数。
+// * 合流录制时，你仅可以设置VideoWidth、VideoHeight、VideoFps、VideoBitrate和所有音频相关参数。
 type UpdatePushMixedStreamToCDNBodyEncode struct {
 
-	// 音频码率。取值范围为 [32,192],单位为 Kbps，默认值为 64。
-	// 当AudioProfile=0时： 若输入参数取值范围为 [32,192]，编码码率等于输入码率。
-	// 当AudioProfile=1时：
-	// * 若输入参数取值范围为 [32,128]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [128,192]，编码码率固定为128。
-	// 当AudioProfile=2时：
-	// * 若输入参数取值范围为 [32,64]，编码码率等于输入码率。
-	// * 若输入参数取值范围为 [64,192]，编码码率固定为64。
+	// 音频码率。取值范围为 [32,192],单位为 Kbps。
+	// * 该参数若不填，RTC 会根据音频配置文件类型、采样率、声道数的配置生成音频码率取值。
+	// * 该参数若填写，实际生效的码率也会随着音频配置文件类型、采样率、声道数的配置而变化。若你发现生效的码率值没有达到你设定的值，可能是该值已经超过该场景下的极限码率。
 	AudioBitrate *int32 `json:"AudioBitrate,omitempty"`
 
 	// 音频声道数。支持取值及含义如下：
@@ -6851,7 +6840,7 @@ type UpdatePushMixedStreamToCDNBodyEncode struct {
 	// 默认值为 0。
 	AudioProfile *int32 `json:"AudioProfile,omitempty"`
 
-	// 音频采样率。可取值为：32000,44100，48000，单位为 Hz，默认值为 48000。
+	// 音频采样率。可取值为：{32000,44100，48000}，单位为 Hz，默认值为 48000。
 	AudioSampleRate *int32 `json:"AudioSampleRate,omitempty"`
 
 	// 视频码率。取值范围为 [0,10000]，单位为 Kbps，默认值为 0。0 表示自适应码率，会自动根据 VideoFps , VideoWidth 以及VideoHeight 计算出合理的码率。 自适应码率模式下，RTC 默认不会设置超高码率。如果订阅屏幕流，建议自行设置高码率。不同场景下设置码率等视频发布参数,请参考设置视频发布参数
@@ -7791,6 +7780,9 @@ type WbTranscodeGetResResultImagesItem struct {
 
 	// REQUIRED; 缩略图URL
 	ThumbnailURL string `json:"ThumbnailUrl"`
+
+	// REQUIRED; 如果该页异常，会转为空白图片，并在此给出提示信息
+	Warning string `json:"Warning"`
 }
 
 type WbTranscodeQueryQuery struct {

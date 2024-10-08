@@ -27,6 +27,18 @@ var (
 				Service: ServiceName,
 			},
 		},
+		"ap-singapore-1": {
+			Timeout: DefaultTimeout,
+			Scheme:  "https",
+			Host:    "open-ap-singapore-1.volcengineapi.com",
+			Header: http.Header{
+				"Accept": []string{"application/json"},
+			},
+			Credentials: common.Credentials{
+				Region:  "ap-singapore-1",
+				Service: ServiceName,
+			},
+		},
 	}
 	ApiListInfo = map[string]*common.ApiInfo{
 
