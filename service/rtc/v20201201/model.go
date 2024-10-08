@@ -60,11 +60,11 @@ type BanRoomUserBody struct {
 	// REQUIRED; 你的音视频应用的唯一标志
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 指定房间 ID
-	RoomID string `json:"RoomId"`
-
-	// 封禁时长，单位为秒，取值范围为[60,259200]。 若传入值为空或 0表示允许用户重新进房。 若传入值大于0，且小于60，自动修改为60。 若传入值大于259200，自动修改为259200。
+	// 封禁时长，取值范围为 {0,[10,604800]}，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值小于 10，自动修改为 10。 若传入值大于 604800，自动修改为 604800。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
+
+	// 指定房间 ID
+	RoomID *string `json:"RoomId,omitempty"`
 
 	// 希望封禁用户的 ID
 	UserID *string `json:"UserId,omitempty"`
@@ -127,10 +127,10 @@ type BanUserStreamBody struct {
 	// REQUIRED; 房间的 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 用于校验当前账号是否具有封禁权限的 Token，生成方式与加入房间时的 Token 生成方式一致
+	// REQUIRED; 需要封禁用户所属 Token
 	Token string `json:"Token"`
 
-	// REQUIRED; 你希望封禁音/视频流的用户的 ID
+	// REQUIRED; 你需要封禁音/视频流的用户的 ID
 	UserID string `json:"UserId"`
 
 	// 是否封禁音频流，置为 true 时，表示封禁音频流
@@ -2710,7 +2710,7 @@ type ListMusicsBody struct {
 	PageSize *int32 `json:"PageSize,omitempty"`
 
 	// 查询歌曲 ID，最多可以指定 200 个
-	SongIDs []*int32 `json:"SongIds,omitempty"`
+	SongIDs []*string `json:"SongIds,omitempty"`
 }
 
 type ListMusicsRes struct {
@@ -5076,7 +5076,7 @@ type StartPushPublicStreamBodyControl struct {
 	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为[10, 86400]，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。 值不合法时自动调整为默认值。
+	// 房间用户发布状态回调间隔，仅在纯音频时生效。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。 值不合法时自动调整为默认值。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
@@ -5084,10 +5084,10 @@ type StartPushPublicStreamBodyControl struct {
 	// * false：不开启房间用户发布状态回调。 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。 值不合法时自动调整为默认值。
+	// 房间用户采集状态回调间隔，仅在纯音频时生效。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。 值不合法时自动调整为默认值。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
-	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
+	// 是否开启房间用户采集状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
 	// * false：不开启房间用户采集状态回调。 默认值为false。
 	UserCaptureStatsMode *bool `json:"UserCaptureStatsMode,omitempty"`
@@ -6905,7 +6905,7 @@ type UnbanUserStreamBody struct {
 	// REQUIRED; 房间的 ID，是房间的唯一标志
 	RoomID string `json:"RoomId"`
 
-	// REQUIRED; 用于校验当前账号是否具有解封权限的 Token，生成方式与加入房间时的Token生成方式一致
+	// REQUIRED; 需要解除封禁用户所属 Token
 	Token string `json:"Token"`
 
 	// REQUIRED; 需要被解封音/视频流的用户的 ID
@@ -6970,11 +6970,11 @@ type UpdateBanRoomUserRuleBody struct {
 	// REQUIRED; 你的音视频应用的唯一标志
 	AppID string `json:"AppId"`
 
-	// REQUIRED; 指定房间 ID
-	RoomID string `json:"RoomId"`
-
-	// 封禁时长，单位为秒，取值范围为[60,259290]。 若传入值为空或 0表示允许用户重新进房。 若传入值大于0，且小于60，自动修改为60。 若传入值大于259290，自动修改为259290。
+	// 封禁时长，取值范围为 {0,[10,604800]}，单位为秒。 若传入值为空或 0 表示允许用户重新进房。 若传入值小于 10，自动修改为 10。 若传入值大于 604800，自动修改为 604800。
 	ForbiddenInterval *int32 `json:"ForbiddenInterval,omitempty"`
+
+	// 指定房间 ID
+	RoomID *string `json:"RoomId,omitempty"`
 
 	// 希望封禁用户的 ID
 	UserID *string `json:"UserId,omitempty"`
@@ -7214,7 +7214,7 @@ type UpdatePublicStreamParamBodyControl struct {
 	// 任务的空闲超时时间，超过此时间后，任务自动终止。单位为秒。取值范围为[10, 86400]，默认值为180。只在调用StartPushPublicStream时有效。
 	MaxIdleTime *int32 `json:"MaxIdleTime,omitempty"`
 
-	// 房间用户发布状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。 值不合法时自动调整为默认值。
+	// 房间用户发布状态回调间隔，仅在纯音频时生效。单位为毫秒，默认值为 2000，取值范围为 [1000,2147483647]。 值不合法时自动调整为默认值。
 	StreamPublishStatsInterval *int32 `json:"StreamPublishStatsInterval,omitempty"`
 
 	// 是否开启房间用户发布状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
@@ -7222,10 +7222,10 @@ type UpdatePublicStreamParamBodyControl struct {
 	// * false：不开启房间用户发布状态回调。 默认值为false。
 	StreamPublishStatsMode *bool `json:"StreamPublishStatsMode,omitempty"`
 
-	// 房间用户采集状态回调间隔，仅在纯音频时触发。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。 值不合法时自动调整为默认值。
+	// 房间用户采集状态回调间隔，仅在纯音频时生效。单位为毫秒，默认值为2000，取值范围为[1000,2147483647]。 值不合法时自动调整为默认值。
 	UserCaptureStatsInterval *int32 `json:"UserCaptureStatsInterval,omitempty"`
 
-	// 是否开启房间用户采集状态回调，仅在纯音频时触发。开启后会通过onPublicStreamDataMessageReceived回调。
+	// 是否开启房间用户采集状态回调。开启后会通过onPublicStreamDataMessageReceived回调。
 	// * true：开启房间用户采集状态回调。
 	// * false：不开启房间用户采集状态回调。 默认值为false。
 	UserCaptureStatsMode *bool `json:"UserCaptureStatsMode,omitempty"`
@@ -8620,6 +8620,9 @@ type WbTranscodeGetResResultImagesItem struct {
 
 	// REQUIRED; 缩略图 URL
 	ThumbnailURL string `json:"thumbnail_url"`
+
+	// REQUIRED; 如果该页异常，会转为空白图片，并在此给出提示信息
+	Warning string `json:"warning"`
 }
 
 type WbTranscodeQueryQuery struct {
