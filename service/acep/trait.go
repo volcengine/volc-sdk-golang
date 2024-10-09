@@ -2136,6 +2136,34 @@ func (c *ACEP) ListImageResource(ctx context.Context, arg *ListImageResourceQuer
 	return result, nil
 }
 
+func (c *ACEP) ListImage(ctx context.Context, arg *ListImageQuery) (*ListImageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "ListImage", query)
+	if err != nil {
+		if len(data) != 0 {
+			result := new(ListImageRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(ListImageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *ACEP) GetImagePreheating(ctx context.Context, arg *GetImagePreheatingQuery) (*GetImagePreheatingRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2576,6 +2604,146 @@ func (c *ACEP) ResetHost(ctx context.Context, arg *ResetHostBody) (*ResetHostRes
 	}
 
 	result := new(ResetHostRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *ACEP) CreateDNSRule(ctx context.Context, arg *CreateDNSRuleBody) (*CreateDNSRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateDNSRule", url.Values{}, string(body))
+	if err != nil {
+		if len(data) != 0 {
+			result := new(CreateDNSRuleRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(CreateDNSRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *ACEP) DeleteDNSRule(ctx context.Context, arg *DeleteDNSRuleBody) (*DeleteDNSRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteDNSRule", url.Values{}, string(body))
+	if err != nil {
+		if len(data) != 0 {
+			result := new(DeleteDNSRuleRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(DeleteDNSRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *ACEP) UpdateDNSRule(ctx context.Context, arg *UpdateDNSRuleBody) (*UpdateDNSRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateDNSRule", url.Values{}, string(body))
+	if err != nil {
+		if len(data) != 0 {
+			result := new(UpdateDNSRuleRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(UpdateDNSRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *ACEP) DetailDNSRule(ctx context.Context, arg *DetailDNSRuleBody) (*DetailDNSRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DetailDNSRule", url.Values{}, string(body))
+	if err != nil {
+		if len(data) != 0 {
+			result := new(DetailDNSRuleRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(DetailDNSRuleRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *ACEP) ListDNSRule(ctx context.Context, arg *ListDNSRuleBody) (*ListDNSRuleRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListDNSRule", url.Values{}, string(body))
+	if err != nil {
+		if len(data) != 0 {
+			result := new(ListDNSRuleRes)
+			err = unmarshalResultInto(data, result)
+			if err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, err
+	}
+
+	result := new(ListDNSRuleRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

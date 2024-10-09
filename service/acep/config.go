@@ -606,6 +606,14 @@ var (
 				"Version": []string{"2023-10-30"},
 			},
 		},
+		"ListImage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListImage"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
 		"GetImagePreheating": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -731,6 +739,46 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ResetHost"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
+		"CreateDNSRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateDNSRule"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
+		"DeleteDNSRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteDNSRule"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
+		"UpdateDNSRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateDNSRule"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
+		"DetailDNSRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetailDNSRule"},
+				"Version": []string{"2023-10-30"},
+			},
+		},
+		"ListDNSRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListDNSRule"},
 				"Version": []string{"2023-10-30"},
 			},
 		},
