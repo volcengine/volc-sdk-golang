@@ -73,6 +73,7 @@ type VodUploadFuncRequest struct {
 	ClientNetWorkMode string
 	ClientIDCMode     string
 	ExpireTime        string
+	UploadHostPrefer  string
 }
 
 type VodUploadMediaInnerFuncRequest struct {
@@ -91,6 +92,7 @@ type VodUploadMediaInnerFuncRequest struct {
 	ClientNetWorkMode string
 	ClientIDCMode     string
 	ExpireTime        string
+	UploadHostPrefer  string
 }
 
 type UploadAuthOpt func(option *UploadAuthOption)
