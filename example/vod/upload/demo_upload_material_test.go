@@ -43,13 +43,14 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
-		SpaceName:     spaceName,
-		FilePath:      filePath,
-		CallbackArgs:  "my callback",
-		Functions:     string(fbts),
-		FileType:      consts.FileTypeMedia,
-		FileName:      "",
-		FileExtension: ".mp4",
+		SpaceName:        spaceName,
+		FilePath:         filePath,
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeMedia,
+		FileName:         "",
+		FileExtension:    ".mp4",
+		UploadHostPrefer: "",
 	}
 
 	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
@@ -95,13 +96,14 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
-		SpaceName:     spaceName,
-		FilePath:      filePath,
-		CallbackArgs:  "my callback",
-		Functions:     string(fbts),
-		FileType:      consts.FileTypeImage,
-		FileName:      "",
-		FileExtension: ".jpg",
+		SpaceName:        spaceName,
+		FilePath:         filePath,
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeImage,
+		FileName:         "",
+		FileExtension:    ".jpg",
+		UploadHostPrefer: "",
 	}
 
 	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
@@ -147,13 +149,14 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 	fbts, _ := json.Marshal(vodFunctions)
 
 	vodUploadMaterialRequest := &request.VodUploadMaterialRequest{
-		SpaceName:     spaceName,
-		FilePath:      filePath,
-		CallbackArgs:  "my callback",
-		Functions:     string(fbts),
-		FileType:      consts.FileTypeObject,
-		FileName:      "",
-		FileExtension: ".vtt",
+		SpaceName:        spaceName,
+		FilePath:         filePath,
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeObject,
+		FileName:         "",
+		FileExtension:    ".vtt",
+		UploadHostPrefer: "",
 	}
 
 	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)

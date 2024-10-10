@@ -269,6 +269,7 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 		ClientNetWorkMode: mediaRequset.ClientNetWorkMode,
 		ClientIDCMode:     mediaRequset.ClientIDCMode,
 		ExpireTime:        mediaRequset.ExpireTime,
+		UploadHostPrefer:  mediaRequset.UploadHostPrefer,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -285,16 +286,17 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 	}
 
 	req := &model.VodUploadMediaInnerFuncRequest{
-		FilePath:      materialRequest.GetFilePath(),
-		Rd:            file,
-		Size:          stat.Size(),
-		ParallelNum:   int(materialRequest.GetParallelNum()),
-		SpaceName:     materialRequest.GetSpaceName(),
-		FileType:      materialRequest.GetFileType(),
-		CallbackArgs:  materialRequest.GetCallbackArgs(),
-		Funcs:         materialRequest.GetFunctions(),
-		FileName:      materialRequest.GetFileName(),
-		FileExtension: materialRequest.GetFileExtension(),
+		FilePath:         materialRequest.GetFilePath(),
+		Rd:               file,
+		Size:             stat.Size(),
+		ParallelNum:      int(materialRequest.GetParallelNum()),
+		SpaceName:        materialRequest.GetSpaceName(),
+		FileType:         materialRequest.GetFileType(),
+		CallbackArgs:     materialRequest.GetCallbackArgs(),
+		Funcs:            materialRequest.GetFunctions(),
+		FileName:         materialRequest.GetFileName(),
+		FileExtension:    materialRequest.GetFileExtension(),
+		UploadHostPrefer: materialRequest.GetUploadHostPrefer(),
 	}
 	return p.UploadMediaInner(req)
 }
@@ -312,6 +314,7 @@ func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInne
 		StorageClass:      uploadMediaInnerRequest.StorageClass,
 		ClientNetWorkMode: uploadMediaInnerRequest.ClientNetWorkMode,
 		ClientIDCMode:     uploadMediaInnerRequest.ClientIDCMode,
+		UploadHostPrefer:  uploadMediaInnerRequest.UploadHostPrefer,
 	}
 	logId, sessionKey, err, code := p.Upload(req)
 	if err != nil {
@@ -413,6 +416,7 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 		ClientNetWorkMode: vodUploadFuncRequest.ClientNetWorkMode,
 		ClientIDCMode:     vodUploadFuncRequest.ClientIDCMode,
 		NeedFallback:      true, // default set
+		UploadHostPrefer:  vodUploadFuncRequest.UploadHostPrefer,
 	}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
