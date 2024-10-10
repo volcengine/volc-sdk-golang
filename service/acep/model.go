@@ -18,6 +18,8 @@ type CopyPodResResponseMetadataErrorCodeN int32
 
 type CreateAppImageResResponseMetadataErrorCodeN int32
 
+type CreateDNSRuleResResponseMetadataErrorCodeN int32
+
 type CreateDisplayLayoutMiniResResponseMetadataErrorCodeN int32
 
 type CreateImageOneStepResResponseMetadataErrorCodeN int32
@@ -29,11 +31,13 @@ type CreatePortMappingRuleResResponseMetadataErrorCodeN int32
 type CreateTagResResponseMetadataErrorCodeN int32
 type DeleteAppResResponseMetadataErrorCodeN int32
 type DeleteContainerImagesResResponseMetadataErrorCodeN int32
+type DeleteDNSRuleResResponseMetadataErrorCodeN int32
 type DeleteDisplayLayoutResResponseMetadataErrorCodeN int32
 type DeletePodResResponseMetadataErrorCodeN int32
 type DeleteTagResResponseMetadataErrorCodeN int32
 type DetailAppResResponseMetadataErrorCodeN int32
 type DetailAppVersionImageResResponseMetadataErrorCodeN int32
+type DetailDNSRuleResResponseMetadataErrorCodeN int32
 type DetailDisplayLayoutMiniResResponseMetadataErrorCodeN int32
 type DetailHostResResponseMetadataErrorCodeN int32
 type DetailPodResResponseMetadataErrorCodeN int32
@@ -110,7 +114,6 @@ type Enum7 int32
 type Enum70 int32
 type Enum71 int32
 type Enum72 int32
-type Enum73 int32
 type Enum74 int32
 type Enum75 int32
 type Enum76 int32
@@ -126,7 +129,14 @@ type Enum84 int32
 type Enum85 int32
 type Enum86 int32
 type Enum87 int32
+type Enum88 int32
+type Enum89 int32
 type Enum9 int32
+type Enum90 int32
+type Enum91 int32
+type Enum92 int32
+type Enum93 int32
+type Enum94 int32
 type GetAppCrashLogResResponseMetadataErrorCodeN int32
 type GetImagePreheatingResResponseMetadataErrorCodeN int32
 type GetPodAppListResResponseMetadataErrorCodeN int32
@@ -143,9 +153,12 @@ type ListAppResResponseMetadataErrorCodeN int32
 type ListAppVersionDeployResResponseMetadataErrorCodeN int32
 type ListConfigurationResResponseMetadataErrorCodeN int32
 type ListContainerImagesResResponseMetadataErrorCodeN int32
+type ListDNSRuleResResponseMetadataErrorCodeN int32
 type ListDcResResponseMetadataErrorCodeN int32
 type ListDisplayLayoutMiniResResponseMetadataErrorCodeN int32
 type ListHostResResponseMetadataErrorCodeN int32
+type ListImageResResponseMetadataErrorCodeN int32
+type ListImageResResultRowItemImageStatus int32
 type ListImageResourceResResponseMetadataErrorCodeN int32
 type ListPodResResponseMetadataErrorCodeN int32
 type ListPodResourceResResponseMetadataErrorCodeN int32
@@ -181,6 +194,7 @@ type UnbindPortMappingRuleResResponseMetadataErrorCodeN int32
 type UninstallAppResResponseMetadataErrorCodeN int32
 type UnsubscribeHostResourceResResponseMetadataErrorCodeN int32
 type UpdateAppResResponseMetadataErrorCodeN int32
+type UpdateDNSRuleResResponseMetadataErrorCodeN int32
 type UpdateHostResResponseMetadataErrorCodeN int32
 type UpdatePodPropertyResResponseMetadataErrorCodeN int32
 type UpdatePodResResponseMetadataErrorCodeN int32
@@ -717,7 +731,7 @@ type CloseAppResResultJobsItem struct {
 	Status *int32 `json:"Status,omitempty"`
 }
 
-type Components120H4XvSchemasListpropertyruleresPropertiesResultPropertiesRowItemsPropertiesOverlaysettingsItems struct {
+type ListPropertyRuleResResultRowOverlaySettingsItem struct {
 	SettingsName *string `json:"SettingsName,omitempty"`
 
 	SettingsType *string `json:"SettingsType,omitempty"`
@@ -727,7 +741,7 @@ type Components120H4XvSchemasListpropertyruleresPropertiesResultPropertiesRowIte
 	SettingsValueType *string `json:"SettingsValueType,omitempty"`
 }
 
-type Components17Kd2C7SchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOverlaypersistpropertyItems struct {
+type CreatePodBodyPodSpecListOverlayPersistPropertyItem struct {
 	SystemPropertyName string `json:"SystemPropertyName"`
 
 	SystemPropertyValue string `json:"SystemPropertyValue"`
@@ -735,7 +749,7 @@ type Components17Kd2C7SchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOv
 	SystemPropertyValueType string `json:"SystemPropertyValueType"`
 }
 
-type Components1K5Bet0SchemasListpropertyruleresPropertiesResultPropertiesRowItemsPropertiesOverlaypersistpropertyItems struct {
+type ListPropertyRuleResResultRowOverlayPersistPropertyItem struct {
 	SystemPropertyName *string `json:"SystemPropertyName,omitempty"`
 
 	SystemPropertyValue *string `json:"SystemPropertyValue,omitempty"`
@@ -743,7 +757,7 @@ type Components1K5Bet0SchemasListpropertyruleresPropertiesResultPropertiesRowIte
 	SystemPropertyValueType *string `json:"SystemPropertyValueType,omitempty"`
 }
 
-type ComponentsAdx78WSchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOverlaysettingsItems struct {
+type CreatePodBodyPodSpecListOverlaySettingsItem struct {
 	SettingsName string `json:"SettingsName"`
 
 	SettingsType string `json:"SettingsType"`
@@ -753,7 +767,7 @@ type ComponentsAdx78WSchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOve
 	SettingsValueType string `json:"SettingsValueType"`
 }
 
-type ComponentsC4R0Z5SchemasListpodresPropertiesResultPropertiesRowItemsPropertiesDisplaylayoutPropertiesRowsAdditionalproperties struct {
+type ListpodresResultRowItemsDisplaylayoutRows struct {
 	AudioZone *int32 `json:"AudioZone,omitempty"`
 
 	Bottom *string `json:"Bottom,omitempty"`
@@ -959,6 +973,102 @@ type CreateAppImageResResultJobsItem struct {
 
 	// 子任务执行状态，为0时可能omit
 	Status *int32 `json:"Status,omitempty"`
+}
+
+type CreateDNSRuleBody struct {
+	// REQUIRED; 机房ID, 可通过 ListDc 接口获取
+	Dc string `json:"Dc"`
+
+	// REQUIRED; DNS 地址列表
+	IPList []CreateDNSRuleBodyIPListItem `json:"IPList"`
+
+	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
+	ProductID string `json:"ProductId"`
+
+	// DNS 名称，支持中英文、数字、下划线、中划线，长度限制为0~64个字符
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// 0: 非默认DNS, 1: 默认DNS. 同一个业务的单个dc只支持一个默认的DNS策略
+	Type *int32 `json:"Type,omitempty"`
+}
+
+type CreateDNSRuleBodyIPListItem struct {
+	// REQUIRED; IP地址
+	IP string `json:"IP"`
+
+	// REQUIRED; 运营商，1：移动，2：联通，4：电信，8：BGP
+	ISP int32 `json:"ISP"`
+}
+
+type CreateDNSRuleRes struct {
+	// REQUIRED
+	ResponseMetadata CreateDNSRuleResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result CreateDNSRuleResResult `json:"Result"`
+}
+
+type CreateDNSRuleResResponseMetadata struct {
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                                 `json:"Version"`
+	Error   *CreateDNSRuleResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type CreateDNSRuleResResponseMetadataError struct {
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN CreateDNSRuleResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
+type CreateDNSRuleResResult struct {
+	// DNS 解析规则创建时间，Unix 时间戳，单位为秒。
+	CreateAt *int64 `json:"CreateAt,omitempty"`
+
+	// DNS 规则 ID。
+	DNSID *string `json:"DNSId,omitempty"`
+
+	// DNS 规则名称。
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// 机房 ID。
+	Dc *string `json:"Dc,omitempty"`
+
+	// IP 列表。
+	IPList []*CreateDNSRuleResResultIPListItem `json:"IPList,omitempty"`
+
+	// 业务 ID。
+	ProductID *string `json:"ProductId,omitempty"`
+
+	// 是否为默认 DNS 规则。
+	Type *int32 `json:"Type,omitempty"`
+}
+
+type CreateDNSRuleResResultIPListItem struct {
+	// REQUIRED; IP地址
+	IP string `json:"IP"`
+
+	// REQUIRED; 运营商，1：移动，2：联通，4：电信，8：BGP
+	ISP int32 `json:"ISP"`
 }
 
 type CreateDisplayLayoutMiniBody struct {
@@ -1250,13 +1360,13 @@ type CreatePodBodyPodSpecListItem struct {
 	ImageID *string `json:"ImageId,omitempty"`
 
 	// 实例初始化系统属性，持久化
-	OverlayPersistProperty []*Components17Kd2C7SchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOverlaypersistpropertyItems `json:"OverlayPersistProperty,omitempty"`
+	OverlayPersistProperty []*CreatePodBodyPodSpecListOverlayPersistPropertyItem `json:"OverlayPersistProperty,omitempty"`
 
 	// 实例初始化系统属性
-	OverlayProperty []*CreatePodBodyPodSpecListPropertiesItemsItem `json:"OverlayProperty,omitempty"`
+	OverlayProperty []*CreatePodBodyPodSpecListOverlayPropertyItem `json:"OverlayProperty,omitempty"`
 
 	// 实例初始化 Settings 属性
-	OverlaySettings []*ComponentsAdx78WSchemasCreatepodbodyPropertiesPodspeclistItemsPropertiesOverlaysettingsItems `json:"OverlaySettings,omitempty"`
+	OverlaySettings []*CreatePodBodyPodSpecListOverlaySettingsItem `json:"OverlaySettings,omitempty"`
 
 	// 实例名称
 	PodName *string `json:"PodName,omitempty"`
@@ -1274,7 +1384,7 @@ type CreatePodBodyPodSpecListItem struct {
 	UpBandwidthLimit *int32 `json:"UpBandwidthLimit,omitempty"`
 }
 
-type CreatePodBodyPodSpecListPropertiesItemsItem struct {
+type CreatePodBodyPodSpecListOverlayPropertyItem struct {
 	// REQUIRED; 属性名称，已可修改的系统属性及属性值
 	SystemPropertyName string `json:"SystemPropertyName"`
 
@@ -1727,6 +1837,54 @@ type DeleteContainerImagesResResultFailedListItem struct {
 	Msg *string `json:"msg,omitempty"`
 }
 
+type DeleteDNSRuleBody struct {
+	// REQUIRED; DNS ID，可通过调用 ListDNSRule 接口获取
+	DNSID string `json:"DNSId"`
+
+	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
+	ProductID string `json:"ProductId"`
+}
+
+type DeleteDNSRuleRes struct {
+	// REQUIRED
+	ResponseMetadata DeleteDNSRuleResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; Result 字段
+	Result string `json:"Result"`
+}
+
+type DeleteDNSRuleResResponseMetadata struct {
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                                 `json:"Version"`
+	Error   *DeleteDNSRuleResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type DeleteDNSRuleResResponseMetadataError struct {
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN DeleteDNSRuleResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
 type DeleteDisplayLayoutBody struct {
 	// REQUIRED; 屏幕布局ID
 	DisplayLayoutID string `json:"DisplayLayoutId"`
@@ -2105,6 +2263,88 @@ type DetailAppVersionImageResResult struct {
 	VersionCode       *int32  `json:"VersionCode,omitempty"`
 }
 
+type DetailDNSRuleBody struct {
+	// REQUIRED; DNS ID，可通过调用 ListDNSRule 接口获取
+	DNSID string `json:"DNSId"`
+
+	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
+	ProductID string `json:"ProductId"`
+}
+
+type DetailDNSRuleRes struct {
+	// REQUIRED
+	ResponseMetadata DetailDNSRuleResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DetailDNSRuleResResult `json:"Result"`
+}
+
+type DetailDNSRuleResResponseMetadata struct {
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                                 `json:"Version"`
+	Error   *DetailDNSRuleResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type DetailDNSRuleResResponseMetadataError struct {
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN DetailDNSRuleResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
+type DetailDNSRuleResResult struct {
+	// DNS 解析规则创建时间，Unix 时间戳，单位为秒。
+	CreateAt *int64 `json:"CreateAt,omitempty"`
+
+	// DNS 规则 ID。
+	DNSID *string `json:"DNSId,omitempty"`
+
+	// DNS 规则名称。
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// 机房 ID。
+	Dc *string `json:"Dc,omitempty"`
+
+	// DNS 地址列表。
+	IPList []*DetailDNSRuleResResultIPListItem `json:"IPList,omitempty"`
+
+	// 业务 ID。
+	ProductID *string `json:"ProductId,omitempty"`
+
+	// 是否为默认 DNS 规则。
+	Type *int32 `json:"Type,omitempty"`
+
+	// DNS 解析规则更新时间，Unix 时间戳，单位为秒。
+	UpdateAt *int64 `json:"UpdateAt,omitempty"`
+}
+
+type DetailDNSRuleResResultIPListItem struct {
+	// REQUIRED; IP地址
+	IP string `json:"IP"`
+
+	// REQUIRED; 运营商，1：移动，2：联通，4：电信，8：BGP
+	ISP int32 `json:"ISP"`
+}
+
 type DetailDisplayLayoutMiniQuery struct {
 	// REQUIRED; 屏幕布局 ID。
 	DisplayLayoutID string `json:"DisplayLayoutId" query:"DisplayLayoutId"`
@@ -2358,7 +2598,8 @@ type DetailPodResResult struct {
 	Configuration *DetailPodResResultConfiguration `json:"Configuration,omitempty"`
 
 	// 实例创建时间
-	CreateAt *int64 `json:"CreateAt,omitempty"`
+	CreateAt *int64  `json:"CreateAt,omitempty"`
+	DNSID    *string `json:"DNSId,omitempty"`
 
 	// 实例的用户存储分区大小，即 Data 分区容量大小。可选的容量如下：
 	// * 4Gi
@@ -4268,6 +4509,105 @@ type ListContainerImagesResResultRowItem struct {
 	UpdateAt *int64 `json:"update_at,omitempty"`
 }
 
+type ListDNSRuleBody struct {
+	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
+	ProductID string `json:"ProductId"`
+
+	// 分页大小，默认值为 10，最大值为 100。
+	Count *int64 `json:"Count,omitempty"`
+
+	// DNS 名称，支持中英文、数字、下划线、中划线，长度限制为0~64个字符
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// 分页偏移量。默认值为 0。
+	Offset *int64 `json:"Offset,omitempty"`
+
+	// 0: 非默认DNS, 1: 默认DNS. 同一个业务的单个dc只支持一个默认的DNS策略
+	Type *int32 `json:"Type,omitempty"`
+}
+
+type ListDNSRuleRes struct {
+	// REQUIRED
+	ResponseMetadata ListDNSRuleResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result ListDNSRuleResResult `json:"Result"`
+}
+
+type ListDNSRuleResResponseMetadata struct {
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                               `json:"Version"`
+	Error   *ListDNSRuleResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ListDNSRuleResResponseMetadataError struct {
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN ListDNSRuleResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
+type ListDNSRuleResResult struct {
+	// 查询到的 DNS 规则信息列表，参看 DetailDNSRuleResult 数据结构说明。
+	Row []*ListDNSRuleResResultRowItem `json:"Row,omitempty"`
+
+	// 查询结果总数。
+	Total *int64 `json:"Total,omitempty"`
+}
+
+type ListDNSRuleResResultRowItem struct {
+	// DNS 解析规则创建时间，Unix 时间戳，单位为秒。
+	CreateAt *int64 `json:"CreateAt,omitempty"`
+
+	// DNS 规则 ID。
+	DNSID *string `json:"DNSId,omitempty"`
+
+	// DNS 规则名称。
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// 机房 ID。
+	Dc *string `json:"Dc,omitempty"`
+
+	// DNS 地址列表。
+	IPList []*ListDNSRuleResResultRowPropertiesItemsItem `json:"IPList,omitempty"`
+
+	// 业务 ID。
+	ProductID *string `json:"ProductId,omitempty"`
+
+	// 是否为默认 DNS 规则。
+	Type *int32 `json:"Type,omitempty"`
+
+	// DNS 解析规则更新时间，Unix 时间戳，单位为秒。
+	UpdateAt *int64 `json:"UpdateAt,omitempty"`
+}
+
+type ListDNSRuleResResultRowPropertiesItemsItem struct {
+	// REQUIRED; IP地址
+	IP string `json:"IP"`
+
+	// REQUIRED; 运营商，1：移动，2：联通，4：电信，8：BGP
+	ISP int32 `json:"ISP"`
+}
+
 type ListDcQuery struct {
 	// REQUIRED; 业务 ID。您可在云手机控制台 > 业务管理 > 业务详情中获取。
 	ProductID string `json:"ProductId" query:"ProductId"`
@@ -4660,6 +5000,142 @@ type ListHostResResultRowItem struct {
 	VolcRegion *string `json:"VolcRegion,omitempty"`
 }
 
+type ListImageQuery struct {
+	// REQUIRED; 火山引擎账号 ID。
+	AccountID string `json:"AccountId" query:"AccountId"`
+
+	// 镜像版本，包含以下取值：
+	// * 10：AOSP 10；
+	// * 11：AOSP 11。
+	AospVersion *string `json:"AospVersion,omitempty" query:"AospVersion"`
+
+	// 分页大小，默认值为 10，最大值为 100。
+	Count *int64 `json:"Count,omitempty" query:"Count"`
+
+	// 是否查询未发布的公共镜像，包含以下取值：
+	// * true：是，此时需要提供准确的 ImageId；
+	// * false：（默认值）否，只查询已发布的公共镜像
+	ExpandScope *bool `json:"ExpandScope,omitempty" query:"ExpandScope"`
+
+	// 镜像 ID。可以指定单个需要查询的镜像。
+	ImageID *string `json:"ImageId,omitempty" query:"ImageId"`
+
+	// 镜像 ID 列表，可以指定多个需要查询的镜像，以英文逗号","分割。
+	ImageIDList *string `json:"ImageIdList,omitempty" query:"ImageIdList"`
+
+	// 镜像名称
+	ImageName *string `json:"ImageName,omitempty" query:"ImageName"`
+
+	// 镜像状态，包含以下取值：
+	// * 0：未知；
+	// * 1：导入中，待构建；
+	// * 2：构建中；
+	// * 11：构建完成；
+	// * -1：构建失败。
+	ImageStatus *int32 `json:"ImageStatus,omitempty" query:"ImageStatus"`
+
+	// 是否查找公共镜像，包含以下取值：
+	// * true：查找公共镜像；
+	// * false：（默认值）用户自定义镜像。
+	IsPublic *bool `json:"IsPublic,omitempty" query:"IsPublic"`
+
+	// 分页偏移量，默认值为 0。
+	Offset *int64 `json:"Offset,omitempty" query:"Offset"`
+
+	// 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取。
+	ProductID *string `json:"ProductId,omitempty" query:"ProductId"`
+}
+
+type ListImageRes struct {
+	// REQUIRED
+	ResponseMetadata ListImageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result ListImageResResult `json:"Result"`
+}
+
+type ListImageResResponseMetadata struct {
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                             `json:"Version"`
+	Error   *ListImageResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ListImageResResponseMetadataError struct {
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN ListImageResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
+type ListImageResResult struct {
+	// 镜像列表
+	Row []*ListImageResResultRowItem `json:"Row,omitempty"`
+
+	// 总数
+	Total *int64 `json:"Total,omitempty"`
+}
+
+type ListImageResResultRowItem struct {
+	// 镜像版本
+	AospVersion *string `json:"AospVersion,omitempty"`
+
+	// 镜像版本名称
+	AospVersionName *string `json:"AospVersionName,omitempty"`
+
+	// 构建任务创建时间戳
+	CreateAt *int64 `json:"CreateAt,omitempty"`
+
+	// 镜像下载地址，cube加白用户可以返回
+	ImageDownloadURL *string `json:"ImageDownloadUrl,omitempty"`
+
+	// 镜像 ID
+	ImageID *string `json:"ImageId,omitempty"`
+
+	// 镜像名称
+	ImageName *string `json:"ImageName,omitempty"`
+
+	// 镜像描述
+	ImageRemark *string `json:"ImageRemark,omitempty"`
+
+	// 镜像资源类型
+	ImageResourceType *string `json:"ImageResourceType,omitempty"`
+
+	// 镜像大小，单位 byte
+	ImageSize   *int64                                `json:"ImageSize,omitempty"`
+	ImageStatus *ListImageResResultRowItemImageStatus `json:"ImageStatus,omitempty"`
+
+	// 镜像状态描述
+	ImageStatusStr *string `json:"ImageStatusStr,omitempty"`
+
+	// 预加热状态
+	PreheatStatus *int32 `json:"PreheatStatus,omitempty"`
+
+	// 构建任务更新时间戳
+	UpdateAt *int64 `json:"UpdateAt,omitempty"`
+
+	// 镜像上传状态，cube加白用户可以返回
+	UploadImageStatus *int32 `json:"UploadImageStatus,omitempty"`
+}
+
 type ListImageResourceQuery struct {
 	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
 	ProductID string `json:"ProductId" query:"ProductId"`
@@ -4763,6 +5239,9 @@ type ListPodQuery struct {
 
 	// 分页大小，默认值为 10，最大值为 100。
 	Count *int64 `json:"Count,omitempty" query:"Count"`
+
+	// 筛选条件, 自定义dns id
+	DNSID *string `json:"DNSId,omitempty" query:"DNSId"`
 
 	// 筛选条件，集群 ID 列表，多个机房 ID 列表以英文逗号,分隔。可通过调用ListDc [https://www.volcengine.com/docs/6394/1221465]接口获取。
 	DcList *string `json:"DcList,omitempty" query:"DcList"`
@@ -5033,8 +5512,8 @@ type ListPodResResultRowItemDisplayLayout struct {
 	RowTotal *int32 `json:"RowTotal,omitempty"`
 
 	// 屏幕信息，key为屏幕编号，value为屏幕信息
-	Rows       map[string]*ComponentsC4R0Z5SchemasListpodresPropertiesResultPropertiesRowItemsPropertiesDisplaylayoutPropertiesRowsAdditionalproperties `json:"Rows,omitempty"`
-	ScreenType *int32                                                                                                                                   `json:"ScreenType,omitempty"`
+	Rows       map[string]*ListpodresResultRowItemsDisplaylayoutRows `json:"Rows,omitempty"`
+	ScreenType *int32                                                `json:"ScreenType,omitempty"`
 }
 
 type ListPodResResultRowItemEip struct {
@@ -5543,19 +6022,19 @@ type ListPropertyRuleResResult struct {
 
 type ListPropertyRuleResResultRowItem struct {
 	// 实例初始化系统属性，持久化，重启实例后生效；详细信息，参考 System Properties 定义说明：适用于只读系统属性，或 AOSP 原生非持久化的系统属性的修改，如 ro.product.model；属性值支持传入正则表达式，每次根据正则表达式随机生成字符串
-	OverlayPersistProperty []*Components1K5Bet0SchemasListpropertyruleresPropertiesResultPropertiesRowItemsPropertiesOverlaypersistpropertyItems `json:"OverlayPersistProperty,omitempty"`
+	OverlayPersistProperty []*ListPropertyRuleResResultRowOverlayPersistPropertyItem `json:"OverlayPersistProperty,omitempty"`
 
 	// 实例 Settings 系统属性，非持久化，立即生效，重启实例后失效；详细信息，参考 System Properties 定义；属性值支持传入正则表达式，每次根据正则表达式随机生成字符串
-	OverlayProperty []*ListPropertyRuleResResultRowPropertiesItemsItem `json:"OverlayProperty,omitempty"`
+	OverlayProperty []*ListPropertyRuleResResultRowOverlayPropertyItem `json:"OverlayProperty,omitempty"`
 
 	// 实例 Settings 属性列表；详细信息，参考 Settings 定义；属性值支持传入正则表达式，每次根据正则表达式随机生成字符串
-	OverlaySettings []*Components120H4XvSchemasListpropertyruleresPropertiesResultPropertiesRowItemsPropertiesOverlaysettingsItems `json:"OverlaySettings,omitempty"`
+	OverlaySettings []*ListPropertyRuleResResultRowOverlaySettingsItem `json:"OverlaySettings,omitempty"`
 
 	// 规则名称，账户下规则名称唯一
 	RuleName *string `json:"RuleName,omitempty"`
 }
 
-type ListPropertyRuleResResultRowPropertiesItemsItem struct {
+type ListPropertyRuleResResultRowOverlayPropertyItem struct {
 	// 属性名称，已可修改的系统属性及属性值
 	SystemPropertyName *string `json:"SystemPropertyName,omitempty"`
 
@@ -7084,7 +7563,6 @@ type SetProxyBody struct {
 }
 
 type SetProxyRes struct {
-
 	// REQUIRED
 	ResponseMetadata SetProxyResResponseMetadata `json:"ResponseMetadata"`
 
@@ -7093,7 +7571,6 @@ type SetProxyRes struct {
 }
 
 type SetProxyResResponseMetadata struct {
-
 	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
 	Action string `json:"Action"`
 
@@ -7112,7 +7589,6 @@ type SetProxyResResponseMetadata struct {
 }
 
 type SetProxyResResponseMetadataError struct {
-
 	// REQUIRED; 状态消息
 	Code string `json:"Code"`
 
@@ -7127,7 +7603,6 @@ type SetProxyResResponseMetadataError struct {
 }
 
 type SetProxyResResult struct {
-
 	// 子任务列表
 	JobList []*SetProxyResResultJobListItem `json:"JobList,omitempty"`
 
@@ -7139,7 +7614,6 @@ type SetProxyResResult struct {
 }
 
 type SetProxyResResultJobListItem struct {
-
 	// 子任务 ID。
 	JobID *string `json:"JobId,omitempty"`
 
@@ -7148,7 +7622,6 @@ type SetProxyResResultJobListItem struct {
 }
 
 type StartRecordingBody struct {
-
 	// REQUIRED; 录制最大时长单位s
 	DurationLimit int32 `json:"DurationLimit"`
 
@@ -7166,7 +7639,6 @@ type StartRecordingBody struct {
 }
 
 type StartRecordingRes struct {
-
 	// REQUIRED
 	ResponseMetadata StartRecordingResResponseMetadata `json:"ResponseMetadata"`
 
@@ -7175,7 +7647,6 @@ type StartRecordingRes struct {
 }
 
 type StartRecordingResResponseMetadata struct {
-
 	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
 	Action string `json:"Action"`
 
@@ -7194,7 +7665,6 @@ type StartRecordingResResponseMetadata struct {
 }
 
 type StartRecordingResResponseMetadataError struct {
-
 	// REQUIRED; 状态消息
 	Code string `json:"Code"`
 
@@ -7209,7 +7679,6 @@ type StartRecordingResResponseMetadataError struct {
 }
 
 type StopRecordingBody struct {
-
 	// REQUIRED; 实例ID
 	PodID string `json:"PodId"`
 
@@ -7218,7 +7687,6 @@ type StopRecordingBody struct {
 }
 
 type StopRecordingRes struct {
-
 	// REQUIRED
 	ResponseMetadata StopRecordingResResponseMetadata `json:"ResponseMetadata"`
 
@@ -7227,7 +7695,6 @@ type StopRecordingRes struct {
 }
 
 type StopRecordingResResponseMetadata struct {
-
 	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
 	Action string `json:"Action"`
 
@@ -7246,7 +7713,6 @@ type StopRecordingResResponseMetadata struct {
 }
 
 type StopRecordingResResponseMetadataError struct {
-
 	// REQUIRED; 状态消息
 	Code string `json:"Code"`
 
@@ -7261,7 +7727,6 @@ type StopRecordingResResponseMetadataError struct {
 }
 
 type SubscribeResourceAutoBody struct {
-
 	// REQUIRED; 配置单列表
 	PreOrderList []SubscribeResourceAutoBodyPreOrderListItem `json:"PreOrderList"`
 
@@ -7276,7 +7741,6 @@ type SubscribeResourceAutoBody struct {
 }
 
 type SubscribeResourceAutoBodyPreOrderListItem struct {
-
 	// REQUIRED; 已订购资源总数
 	ApplyNum int64 `json:"ApplyNum"`
 
@@ -7312,7 +7776,6 @@ type SubscribeResourceAutoBodyPreOrderListItem struct {
 }
 
 type SubscribeResourceAutoRes struct {
-
 	// REQUIRED
 	ResponseMetadata SubscribeResourceAutoResResponseMetadata `json:"ResponseMetadata"`
 
@@ -7321,7 +7784,6 @@ type SubscribeResourceAutoRes struct {
 }
 
 type SubscribeResourceAutoResResponseMetadata struct {
-
 	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
 	Action string `json:"Action"`
 
@@ -7340,7 +7802,6 @@ type SubscribeResourceAutoResResponseMetadata struct {
 }
 
 type SubscribeResourceAutoResResponseMetadataError struct {
-
 	// REQUIRED; 状态消息
 	Code string `json:"Code"`
 
@@ -7355,7 +7816,6 @@ type SubscribeResourceAutoResResponseMetadataError struct {
 }
 
 type UnbindPortMappingRuleBody struct {
-
 	// REQUIRED; 实例ID列表
 	PodIDList []string `json:"PodIdList"`
 
@@ -7367,7 +7827,6 @@ type UnbindPortMappingRuleBody struct {
 }
 
 type UnbindPortMappingRuleRes struct {
-
 	// REQUIRED
 	ResponseMetadata UnbindPortMappingRuleResResponseMetadata `json:"ResponseMetadata"`
 
@@ -7376,7 +7835,6 @@ type UnbindPortMappingRuleRes struct {
 }
 
 type UnbindPortMappingRuleResResponseMetadata struct {
-
 	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
 	Action string `json:"Action"`
 
@@ -7395,7 +7853,6 @@ type UnbindPortMappingRuleResResponseMetadata struct {
 }
 
 type UnbindPortMappingRuleResResponseMetadataError struct {
-
 	// REQUIRED; 状态消息
 	Code string `json:"Code"`
 
@@ -7410,7 +7867,6 @@ type UnbindPortMappingRuleResResponseMetadataError struct {
 }
 
 type UnbindPortMappingRuleResResult struct {
-
 	// 设置失败实例信息列表
 	ErrorPodInfoList []*UnbindPortMappingRuleResResultErrorPodInfoListItem `json:"ErrorPodInfoList,omitempty"`
 
@@ -7650,6 +8106,76 @@ type UpdateAppResResponseMetadataError struct {
 
 	// REQUIRED
 	CodeN UpdateAppResResponseMetadataErrorCodeN `json:"CodeN"`
+
+	// REQUIRED; 具体的错误描述信息
+	Message string `json:"Message"`
+
+	// 返回对应的中文错误信息
+	BusinessText *string `json:"BusinessText,omitempty"`
+}
+
+type UpdateDNSRuleBody struct {
+
+	// REQUIRED; DNS ID，可通过调用 ListDNSRule 接口获取
+	DNSID string `json:"DNSId"`
+
+	// REQUIRED; 业务 ID，可在「云手机控制台-业务管理-业务详情」中获取
+	ProductID string `json:"ProductId"`
+
+	// DNS 名称，支持中英文、数字、下划线、中划线，长度限制为0~64个字符
+	DNSName *string `json:"DNSName,omitempty"`
+
+	// DNS 地址列表
+	IPList []*UpdateDNSRuleBodyIPListItem `json:"IPList,omitempty"`
+
+	// 0: 非默认DNS, 1: 默认DNS. 同一个业务的单个dc只支持一个默认的DNS策略
+	Type *int32 `json:"Type,omitempty"`
+}
+
+type UpdateDNSRuleBodyIPListItem struct {
+
+	// REQUIRED; IP地址
+	IP string `json:"IP"`
+
+	// REQUIRED; 运营商，1：移动，2：联通，4：电信，8：BGP
+	ISP int32 `json:"ISP"`
+}
+
+type UpdateDNSRuleRes struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateDNSRuleResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; Result 字段
+	Result string `json:"Result"`
+}
+
+type UpdateDNSRuleResResponseMetadata struct {
+
+	// REQUIRED; 接口名称，与具体的接口相关，表示要执行的操作
+	Action string `json:"Action"`
+
+	// REQUIRED; 服务区域
+	Region string `json:"Region"`
+
+	// REQUIRED; 请求 ID
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 服务名称
+	Service string `json:"Service"`
+
+	// REQUIRED; 接口版本
+	Version string                                 `json:"Version"`
+	Error   *UpdateDNSRuleResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type UpdateDNSRuleResResponseMetadataError struct {
+
+	// REQUIRED; 状态消息
+	Code string `json:"Code"`
+
+	// REQUIRED
+	CodeN UpdateDNSRuleResResponseMetadataErrorCodeN `json:"CodeN"`
 
 	// REQUIRED; 具体的错误描述信息
 	Message string `json:"Message"`
@@ -8198,6 +8724,8 @@ type CopyPod struct{}
 type CopyPodQuery struct{}
 type CreateAppImage struct{}
 type CreateAppImageQuery struct{}
+type CreateDNSRule struct{}
+type CreateDNSRuleQuery struct{}
 type CreateDisplayLayoutMini struct{}
 type CreateDisplayLayoutMiniQuery struct{}
 type CreateImageOneStep struct{}
@@ -8214,6 +8742,8 @@ type DeleteApp struct{}
 type DeleteAppQuery struct{}
 type DeleteContainerImages struct{}
 type DeleteContainerImagesQuery struct{}
+type DeleteDNSRule struct{}
+type DeleteDNSRuleQuery struct{}
 type DeleteDisplayLayout struct{}
 type DeleteDisplayLayoutQuery struct{}
 type DeletePod struct{}
@@ -8224,6 +8754,8 @@ type DetailApp struct{}
 type DetailAppBody struct{}
 type DetailAppVersionImage struct{}
 type DetailAppVersionImageBody struct{}
+type DetailDNSRule struct{}
+type DetailDNSRuleQuery struct{}
 type DetailDisplayLayoutMini struct{}
 type DetailDisplayLayoutMiniBody struct{}
 type DetailHost struct{}
@@ -8266,12 +8798,16 @@ type ListConfiguration struct{}
 type ListConfigurationBody struct{}
 type ListContainerImages struct{}
 type ListContainerImagesBody struct{}
+type ListDNSRule struct{}
+type ListDNSRuleQuery struct{}
 type ListDc struct{}
 type ListDcBody struct{}
 type ListDisplayLayoutMini struct{}
 type ListDisplayLayoutMiniBody struct{}
 type ListHost struct{}
 type ListHostBody struct{}
+type ListImage struct{}
+type ListImageBody struct{}
 type ListImageResource struct{}
 type ListImageResourceBody struct{}
 type ListPod struct{}
@@ -8342,6 +8878,8 @@ type UnsubscribeHostResource struct{}
 type UnsubscribeHostResourceQuery struct{}
 type UpdateApp struct{}
 type UpdateAppQuery struct{}
+type UpdateDNSRule struct{}
+type UpdateDNSRuleQuery struct{}
 type UpdateHost struct{}
 type UpdateHostQuery struct{}
 type UpdatePod struct{}
@@ -8392,6 +8930,10 @@ type CreateAppImageReq struct {
 	*CreateAppImageQuery
 	*CreateAppImageBody
 }
+type CreateDNSRuleReq struct {
+	*CreateDNSRuleQuery
+	*CreateDNSRuleBody
+}
 type CreateDisplayLayoutMiniReq struct {
 	*CreateDisplayLayoutMiniQuery
 	*CreateDisplayLayoutMiniBody
@@ -8424,6 +8966,10 @@ type DeleteContainerImagesReq struct {
 	*DeleteContainerImagesQuery
 	*DeleteContainerImagesBody
 }
+type DeleteDNSRuleReq struct {
+	*DeleteDNSRuleQuery
+	*DeleteDNSRuleBody
+}
 type DeleteDisplayLayoutReq struct {
 	*DeleteDisplayLayoutQuery
 	*DeleteDisplayLayoutBody
@@ -8443,6 +8989,10 @@ type DetailAppReq struct {
 type DetailAppVersionImageReq struct {
 	*DetailAppVersionImageQuery
 	*DetailAppVersionImageBody
+}
+type DetailDNSRuleReq struct {
+	*DetailDNSRuleQuery
+	*DetailDNSRuleBody
 }
 type DetailDisplayLayoutMiniReq struct {
 	*DetailDisplayLayoutMiniQuery
@@ -8528,6 +9078,10 @@ type ListContainerImagesReq struct {
 	*ListContainerImagesQuery
 	*ListContainerImagesBody
 }
+type ListDNSRuleReq struct {
+	*ListDNSRuleQuery
+	*ListDNSRuleBody
+}
 type ListDcReq struct {
 	*ListDcQuery
 	*ListDcBody
@@ -8539,6 +9093,10 @@ type ListDisplayLayoutMiniReq struct {
 type ListHostReq struct {
 	*ListHostQuery
 	*ListHostBody
+}
+type ListImageReq struct {
+	*ListImageQuery
+	*ListImageBody
 }
 type ListImageResourceReq struct {
 	*ListImageResourceQuery
@@ -8679,6 +9237,10 @@ type UnsubscribeHostResourceReq struct {
 type UpdateAppReq struct {
 	*UpdateAppQuery
 	*UpdateAppBody
+}
+type UpdateDNSRuleReq struct {
+	*UpdateDNSRuleQuery
+	*UpdateDNSRuleBody
 }
 type UpdateHostReq struct {
 	*UpdateHostQuery

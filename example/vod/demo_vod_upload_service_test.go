@@ -59,6 +59,7 @@ func Test_ApplyUploadInfo(t *testing.T) {
 		ClientNetWorkMode: "your ClientNetWorkMode",
 		ClientIDCMode:     "your ClientIDCMode",
 		NeedFallback:      false,
+		UploadHostPrefer:  "your UploadHostPrefer",
 	}
 
 	resp, status, err := instance.ApplyUploadInfo(query)
