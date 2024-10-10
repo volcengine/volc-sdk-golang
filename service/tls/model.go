@@ -259,6 +259,8 @@ type Topic struct {
 	TimeFormat      string    `json:"TimeFormat"`
 	Tags            []TagInfo `json:"Tags"`
 	LogPublicIP     bool      `json:"LogPublicIP"`
+	EnableHotTtl    bool      `json:"EnableHotTtl"`
+	HotTtl          int32     `json:"HotTtl"`
 }
 
 type DescribeTopicsResponse struct {
@@ -1632,4 +1634,107 @@ type PutLogsV2Request struct {
 	Source       string
 	FileName     string
 	Logs         []Log
+}
+
+type TargetResource struct {
+	Alias   string
+	TopicID string `json:"TopicId"`
+}
+
+type CreateETLTaskRequest struct {
+	CommonRequest
+	DSLType         string
+	Description     *string `json:",omitempty"`
+	Enable          bool
+	FromTime        *int64 `json:",omitempty"`
+	Name            string
+	Script          string
+	SourceTopicId   string
+	TargetResources []TargetResource
+	TaskType        string
+	ToTime          *int64 `json:",omitempty"`
+}
+
+type CreateETLTaskResponse struct {
+	CommonResponse
+	TaskID string `json:"TaskId"`
+}
+
+type DeleteETLTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+}
+
+type ModifyETLTaskRequest struct {
+	CommonRequest
+	TaskID          string  `json:"TaskId"`
+	Description     *string `json:",omitempty"`
+	Name            *string `json:",omitempty"`
+	Script          *string `json:",omitempty"`
+	TargetResources []TargetResource
+}
+
+type DescribeETLTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+}
+
+type TargetResourcesResp struct {
+	Alias       string
+	TopicID     string `json:"TopicId"`
+	TopicName   string
+	ProjectName string
+	ProjectID   string `json:"ProjectId"`
+}
+
+type ETLTaskResponse struct {
+	CreateTime      string
+	DSLType         string
+	TaskID          string `json:"TaskId"`
+	Description     string
+	ETLStatus       string
+	Enable          bool
+	FromTime        *int64
+	LastEnableTime  string
+	ModifyTime      string
+	Name            string
+	ProjectID       string `json:"ProjectId"`
+	ProjectName     string
+	Script          string
+	SourceTopicID   string `json:"SourceTopicId"`
+	SourceTopicName string
+	TargetResources []TargetResourcesResp
+	TaskType        string
+	ToTime          *int64
+}
+
+type DescribeETLTaskResponse struct {
+	CommonResponse
+	ETLTaskResponse
+}
+
+type DescribeETLTasksRequest struct {
+	CommonRequest
+	ProjectID       string `json:"ProjectId"`
+	ProjectName     string
+	IamProjectName  string
+	SourceTopicID   string `json:"SourceTopicId"`
+	SourceTopicName string
+	TaskID          string `json:"TaskId"`
+	TaskName        string
+	Status          string
+	PageNumber      int
+	PageSize        int
+}
+
+type DescribeETLTasksResponse struct {
+	CommonResponse
+	Tasks []ETLTaskResponse
+	Total int
+}
+
+type ModifyETLTaskStatusRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+	Enable bool
 }

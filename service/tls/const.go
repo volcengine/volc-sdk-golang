@@ -91,6 +91,13 @@ const (
 	PathAddTagsToResource      = "/AddTagsToResource"
 	PathRemoveTagsFromResource = "/RemoveTagsFromResource"
 
+	PathCreateETLTask       = "/CreateETLTask"
+	PathDeleteETLTask       = "/DeleteETLTask"
+	PathDescribeETLTask     = "/DescribeETLTask"
+	PathModifyETLTask       = "/ModifyETLTask"
+	PathDescribeETLTasks    = "/DescribeETLTasks"
+	PathModifyETLTaskStatus = "/ModifyETLTaskStatus"
+
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"
 	APIVersion3      = "0.3.0"

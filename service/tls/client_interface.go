@@ -103,4 +103,11 @@ type Client interface {
 
 	AddTagsToResource(request *AddTagsToResourceRequest) (*CommonResponse, error)
 	RemoveTagsFromResource(request *RemoveTagsFromResourceRequest) (*CommonResponse, error)
+
+	CreateETLTask(request *CreateETLTaskRequest) (*CreateETLTaskResponse, error)
+	DeleteETLTask(request *DeleteETLTaskRequest) (*CommonResponse, error)
+	ModifyETLTask(request *ModifyETLTaskRequest) (*CommonResponse, error)
+	DescribeETLTask(request *DescribeETLTaskRequest) (*DescribeETLTaskResponse, error)
+	DescribeETLTasks(request *DescribeETLTasksRequest) (*DescribeETLTasksResponse, error)
+	ModifyETLTaskStatus(request *ModifyETLTaskStatusRequest) (*CommonResponse, error)
 }
