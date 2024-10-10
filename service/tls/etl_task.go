@@ -8,24 +8,9 @@ import (
 	"strconv"
 )
 
-// CreateTopic 创建日志主题
-func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
-
+func (c *LsClient) CreateETLTask(request *CreateETLTaskRequest) (*CreateETLTaskResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
-	}
-
-	if request.AutoSplit && request.MaxSplitShard == nil {
-		request.MaxSplitShard = new(int32)
-		*request.MaxSplitShard = int32(50)
-	}
-
-	if request.LogPublicIP == nil {
-		request.LogPublicIP = new(bool)
-		*request.LogPublicIP = true
 	}
 
 	bytesBody, err := json.Marshal(request)
@@ -33,7 +18,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCreateTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathCreateETLTask, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +29,7 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 		return nil, err
 	}
 
-	var response = &CreateTopicResponse{}
+	var response = &CreateETLTaskResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -54,18 +39,14 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 	return response, nil
 }
 
-// DeleteTopic 删除日志主题
-func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
+func (c *LsClient) DeleteETLTask(request *DeleteETLTaskRequest) (*CommonResponse, error) {
 
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
 
 	reqBody := map[string]string{
-		"TopicId": request.TopicID,
+		"TaskId": request.TaskID,
 	}
 
 	bytesBody, err := json.Marshal(reqBody)
@@ -73,7 +54,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodDelete, PathDeleteTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteETLTask, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -93,11 +74,7 @@ func (c *LsClient) DeleteTopic(request *DeleteTopicRequest) (r *CommonResponse, 
 	return response, nil
 }
 
-// ModifyTopic 更新日志主题信息
-func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
+func (c *LsClient) ModifyETLTask(request *ModifyETLTaskRequest) (*CommonResponse, error) {
 
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
@@ -108,7 +85,7 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, 
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPut, PathModifyTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyETLTask, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -127,24 +104,23 @@ func (c *LsClient) ModifyTopic(request *ModifyTopicRequest) (r *CommonResponse, 
 	return response, nil
 }
 
-// DescribeTopic 获取一个日志主题的信息
-func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopicResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
+func (c *LsClient) DescribeETLTask(request *DescribeETLTaskRequest) (*DescribeETLTaskResponse, error) {
 
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
 
 	params := map[string]string{
-		"TopicId": request.TopicID,
+		"TaskId": request.TaskID,
 	}
 
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopic, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeETLTask, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +131,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopi
 		return nil, err
 	}
 
-	var response = &DescribeTopicResponse{}
+	var response = &DescribeETLTaskResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
@@ -165,12 +141,7 @@ func (c *LsClient) DescribeTopic(request *DescribeTopicRequest) (r *DescribeTopi
 	return response, nil
 }
 
-// DescribeTopics 获取日志主题列表
-func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTopicsResponse, e error) {
-	if err := request.CheckValidation(); err != nil {
-		return nil, NewClientError(err)
-	}
-
+func (c *LsClient) DescribeETLTasks(request *DescribeETLTasksRequest) (*DescribeETLTasksResponse, error) {
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -181,12 +152,32 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		params["ProjectId"] = request.ProjectID
 	}
 
-	if len(request.TopicName) != 0 {
-		params["TopicName"] = request.TopicName
+	if len(request.ProjectName) != 0 {
+		params["ProjectName"] = request.ProjectName
 	}
 
-	if len(request.TopicID) != 0 {
-		params["TopicId"] = request.TopicID
+	if len(request.IamProjectName) != 0 {
+		params["IamProjectName"] = request.IamProjectName
+	}
+
+	if len(request.SourceTopicID) != 0 {
+		params["SourceTopicId"] = request.SourceTopicID
+	}
+
+	if len(request.SourceTopicName) != 0 {
+		params["SourceTopicName"] = request.SourceTopicName
+	}
+
+	if len(request.TaskID) != 0 {
+		params["TaskId"] = request.TaskID
+	}
+
+	if len(request.TaskName) != 0 {
+		params["TaskName"] = request.TaskName
+	}
+
+	if len(request.Status) != 0 {
+		params["Status"] = request.Status
 	}
 
 	if request.PageNumber != 0 {
@@ -197,20 +188,13 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
-	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
-
-	if request.Tags != nil && len(request.Tags) > 0 {
-		tagsBytes, err := json.Marshal(request.Tags)
-		if err != nil {
-			return nil, err
-		}
-		params["Tags"] = string(tagsBytes)
-	}
-
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeTopics, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeETLTasks, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -221,12 +205,42 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		return nil, err
 	}
 
-	var response = &DescribeTopicsResponse{}
+	var response = &DescribeETLTasksResponse{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
+
+	return response, nil
+}
+
+func (c *LsClient) ModifyETLTaskStatus(request *ModifyETLTaskStatusRequest) (*CommonResponse, error) {
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	bytesBody, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPut, PathModifyETLTaskStatus, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	defer rawResponse.Body.Close()
+
+	if rawResponse.StatusCode != http.StatusOK {
+		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.New(string(errorMessage))
+	}
+	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
 
 	return response, nil
 }
