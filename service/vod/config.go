@@ -31,7 +31,7 @@ func NewInstanceWithRegion(region string) *Vod {
 		serviceInfo = &base.ServiceInfo{
 			Timeout: 60 * time.Second,
 			Scheme:  "https",
-			Host:    fmt.Sprintf("vod-%s.volcengineapi.com", region),
+			Host:    fmt.Sprintf("vod.%s.volcengineapi.com", region),
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
