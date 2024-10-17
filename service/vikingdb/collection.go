@@ -19,7 +19,13 @@ type Collection struct {
 	UpdatePerson    string
 }
 
-func (collection *Collection) UpsertData(data interface{}) error {
+func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) error {
+	options := ParamOptions{
+		AsyncUpsert: false,
+	}
+	for _, opt := range opts {
+		opt(&options)
+	}
 	if _, ok := data.(Data); ok {
 		data := data.(Data)
 		fieldsArr := []interface{}{data.Fields}
@@ -29,6 +35,9 @@ func (collection *Collection) UpsertData(data interface{}) error {
 		}
 		if data.TTL != 0 {
 			params["ttl"] = data.TTL
+		}
+		if options.AsyncUpsert {
+			params["async"] = true
 		}
 		//fmt.Println(params)
 		res, err := collection.VikingDBService.DoRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params))
@@ -55,7 +64,10 @@ func (collection *Collection) UpsertData(data interface{}) error {
 			if index != 0 {
 				params["ttl"] = index
 			}
-			//fmt.Println(params)
+			if options.AsyncUpsert {
+				params["async"] = true
+			}
+			// fmt.Println(params)
 			res, err := collection.VikingDBService.DoRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params))
 			_ = res
 			if err != nil {
