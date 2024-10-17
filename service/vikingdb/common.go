@@ -214,3 +214,14 @@ func (updateIndexOptions *UpdateIndexOptions) SetShardCount(shardCount int64) *U
 	updateIndexOptions.shardCount = &shardCount
 	return updateIndexOptions
 }
+
+type ParamOptions struct {
+	AsyncUpsert bool
+}
+type ParamOption func(*ParamOptions)
+
+func WithAsyncUpsert(yes bool) ParamOption {
+	return func(co *ParamOptions) {
+		co.AsyncUpsert = yes
+	}
+}

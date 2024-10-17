@@ -254,7 +254,6 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 		} else if fields, ok = resData[0].(map[string]interface{}); !ok {
 			return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
 		}
-		fmt.Println(res)
 		data := &Data{
 			Id: id,
 			Fields: map[string]interface{}{

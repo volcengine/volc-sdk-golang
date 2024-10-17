@@ -618,7 +618,11 @@ func (vikingDBService *VikingDBService) CreateCollection(collectionName string, 
 		}
 		_fields = append(_fields, _field)
 	}
-	params["primary_key"] = primaryKey
+	if len(primaryKey) == 0 {
+		params["primary_key"] = "__AUTO_ID__"
+	} else {
+		params["primary_key"] = primaryKey
+	}
 	params["fields"] = _fields
 
 	request, err := vikingDBService.DoRequest(context.Background(), "CreateCollection", nil, vikingDBService.convertMapToJson(params))
