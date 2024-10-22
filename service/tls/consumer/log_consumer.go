@@ -29,7 +29,7 @@ type logConsumer struct {
 	status             int
 	shard              *tls.ConsumeShard
 	consumeFunc        func(topicID string, shardID int, l *pb.LogGroupList)
-	checkpointCh       chan<- *checkpointInfo
+	checkpoint         *checkpointManager
 	heartbeatRestartCh chan<- struct{}
 	commitCh           chan<- struct{}
 
@@ -178,10 +178,10 @@ func (lc *logConsumer) consume() error {
 	}
 
 	lc.consumeFunc(lc.shard.TopicID, lc.shard.ShardID, lc.currLogGroupList)
-	lc.checkpointCh <- &checkpointInfo{
+	lc.checkpoint.addCheckpoint(&checkpointInfo{
 		shardInfo:  lc.shard,
 		checkpoint: lc.nextCheckpoint,
-	}
+	})
 
 	return nil
 }

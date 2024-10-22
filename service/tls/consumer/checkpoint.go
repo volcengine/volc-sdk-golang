@@ -18,7 +18,6 @@ type checkpointManager struct {
 
 	mapLock       *sync.RWMutex
 	checkpointMap map[string]*checkpointInfo
-	checkpointCh  <-chan *checkpointInfo
 	commitCh      <-chan struct{}
 }
 
@@ -39,8 +38,6 @@ func (c *checkpointManager) run(ctx context.Context, wg *sync.WaitGroup) {
 			c.uploadCheckpoint()
 		case <-uploadCheckpointTicker.C:
 			c.uploadCheckpoint()
-		case newCheckpoint := <-c.checkpointCh:
-			c.addCheckpoint(newCheckpoint)
 		}
 	}
 }
@@ -53,10 +50,14 @@ func (c *checkpointManager) addCheckpoint(checkpoint *checkpointInfo) {
 }
 
 func (c *checkpointManager) uploadCheckpoint() {
+	checkpointSnapshot := make(map[string]checkpointInfo)
 	c.mapLock.Lock()
-	defer c.mapLock.Unlock()
-
 	for k, checkpoint := range c.checkpointMap {
+		checkpointSnapshot[k] = *checkpoint
+	}
+	c.mapLock.Unlock()
+
+	for k, checkpoint := range checkpointSnapshot {
 		if _, err := c.client.ModifyCheckPoint(&tls.ModifyCheckPointRequest{
 			ProjectID:         c.conf.ProjectID,
 			TopicID:           checkpoint.shardInfo.TopicID,
@@ -65,10 +66,17 @@ func (c *checkpointManager) uploadCheckpoint() {
 			Checkpoint:        checkpoint.checkpoint,
 		}); err != nil {
 			level.Error(c.logger).Log("error", "upload checkpoint failed, err: "+err.Error())
-		} else {
+			delete(checkpointSnapshot, k)
+		}
+	}
+
+	c.mapLock.Lock()
+	for k, checkpoint := range checkpointSnapshot {
+		if checkpoint.checkpoint == c.checkpointMap[k].checkpoint {
 			delete(c.checkpointMap, k)
 		}
 	}
+	c.mapLock.Unlock()
 }
 
 type checkpointInfo struct {
@@ -76,15 +84,13 @@ type checkpointInfo struct {
 	checkpoint string
 }
 
-func newCheckpointManager(logger log.Logger, conf *Config, client tls.Client,
-	checkpointChan <-chan *checkpointInfo, commitCh chan struct{}) *checkpointManager {
+func newCheckpointManager(logger log.Logger, conf *Config, client tls.Client, commitCh chan struct{}) *checkpointManager {
 	return &checkpointManager{
 		logger:        logger,
 		conf:          conf,
 		client:        client,
 		mapLock:       &sync.RWMutex{},
 		checkpointMap: make(map[string]*checkpointInfo),
-		checkpointCh:  checkpointChan,
 		commitCh:      commitCh,
 	}
 }
