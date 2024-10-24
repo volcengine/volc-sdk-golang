@@ -681,3 +681,58 @@ func (s *CDN) ListUsageReports(dto *ListUsageReportsRequest) (responseBody *List
 	}
 	return
 }
+
+func (s *CDN) DescribeSharedConfig(dto *DescribeSharedConfigRequest) (responseBody *DescribeSharedConfigResponse, err error) {
+	responseBody = new(DescribeSharedConfigResponse)
+	if err = s.post("DescribeSharedConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) ListSharedConfig(dto *ListSharedConfigRequest) (responseBody *ListSharedConfigResponse, err error) {
+	responseBody = new(ListSharedConfigResponse)
+	if err = s.post("ListSharedConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DeleteSharedConfig(dto *DeleteSharedConfigRequest) (responseBody *DeleteSharedConfigResponse, err error) {
+	responseBody = new(DeleteSharedConfigResponse)
+	if err = s.post("DeleteSharedConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) UpdateSharedConfig(dto *UpdateSharedConfigRequest) (responseBody *UpdateSharedConfigResponse, err error) {
+	responseBody = new(UpdateSharedConfigResponse)
+	if err = s.post("UpdateSharedConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) AddSharedConfig(dto *AddSharedConfigRequest) (responseBody *AddSharedConfigResponse, err error) {
+	responseBody = new(AddSharedConfigResponse)
+	if err = s.post("AddSharedConfig", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}

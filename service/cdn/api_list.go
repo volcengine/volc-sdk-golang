@@ -503,4 +503,44 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DescribeSharedConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeSharedConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"ListSharedConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"ListSharedConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DeleteSharedConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DeleteSharedConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"UpdateSharedConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"UpdateSharedConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"AddSharedConfig": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"AddSharedConfig"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 }
