@@ -59,6 +59,7 @@ type AddCdnDomainRequest struct {
 	IpFreqLimit         *IpFreqLimit        `json:",omitempty"`
 	MassCompression     *MassCompression    `json:",omitempty"`
 	MethodDeniedRule    *MethodDeniedRule   `json:",omitempty"`
+	MultiRange          *MultiRange         `json:",omitempty"`
 	NegativeCache       []NegativeCache
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
@@ -81,7 +82,8 @@ type AddCdnDomainRequest struct {
 	RequestHeader       []RequestHeaderRule
 	ResourceTags        []ResourceTag
 	ResponseHeader      []ResponseHeaderRule
-	ServiceRegion       *string `json:",omitempty"`
+	RewriteHLS          *RewriteHLS `json:",omitempty"`
+	ServiceRegion       *string     `json:",omitempty"`
 	ServiceType         string
 	SignedUrlAuth       *SignedUrlAuth       `json:",omitempty"`
 	Sparrow             *Sparrow             `json:",omitempty"`
@@ -124,6 +126,21 @@ type AddResourceTagsRequest struct {
 }
 
 type AddResourceTagsResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+}
+
+type AddSharedConfigRequest struct {
+	AllowIpAccessRule      *GlobalIPAccessRule      `json:",omitempty"`
+	AllowRefererAccessRule *GlobalRefererAccessRule `json:",omitempty"`
+	CommonMatchList        *CommonMatchList         `json:",omitempty"`
+	ConfigName             string
+	ConfigType             string
+	DenyIpAccessRule       *GlobalIPAccessRule      `json:",omitempty"`
+	DenyRefererAccessRule  *GlobalRefererAccessRule `json:",omitempty"`
+	Project                *string                  `json:",omitempty"`
+}
+
+type AddSharedConfigResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
 }
 
@@ -223,6 +240,7 @@ type BatchUpdateCdnConfigRequest struct {
 	IpAccessRule        *IpAccessRule       `json:",omitempty"`
 	IpFreqLimit         *IpFreqLimit        `json:",omitempty"`
 	MethodDeniedRule    *MethodDeniedRule   `json:",omitempty"`
+	MultiRange          *MultiRange         `json:",omitempty"`
 	NegativeCache       []NegativeCache
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
@@ -368,6 +386,10 @@ type CommonGlobalConfig struct {
 	ConfigName *string `json:",omitempty"`
 }
 
+type CommonMatchList struct {
+	CommonType *GlobalRefererCommonType `json:",omitempty"`
+}
+
 type CommonReferType struct {
 	IgnoreCase   *bool `json:",omitempty"`
 	IgnoreScheme *bool `json:",omitempty"`
@@ -383,6 +405,7 @@ type CompressionAction struct {
 	CompressionFormat *string `json:",omitempty"`
 	CompressionTarget *string `json:",omitempty"`
 	CompressionType   []string
+	MaxFileSizeKB     *int64 `json:",omitempty"`
 	MinFileSizeKB     *int64 `json:",omitempty"`
 }
 
@@ -504,6 +527,7 @@ type CustomizeRule struct {
 }
 
 type DataPoint struct {
+	Item      string
 	TimeStamp int64
 	Value     float64
 }
@@ -530,6 +554,14 @@ type DeleteResourceTagsRequest struct {
 }
 
 type DeleteResourceTagsResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+}
+
+type DeleteSharedConfigRequest struct {
+	ConfigName string
+}
+
+type DeleteSharedConfigResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
 }
 
@@ -736,6 +768,7 @@ type DescribeCdnServiceResult struct {
 type DescribeCdnUpperIpRequest struct {
 	Domain    string
 	IpVersion *string `json:",omitempty"`
+	RsIp      *bool   `json:",omitempty"`
 }
 
 type DescribeCdnUpperIpResponse struct {
@@ -1305,6 +1338,27 @@ type DescribeOriginTopStatusCodeResult struct {
 	TopDataDetails []TopStatusCodeDetail
 }
 
+type DescribeSharedConfigRequest struct {
+	ConfigName *string `json:",omitempty"`
+}
+
+type DescribeSharedConfigResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeSharedConfigResult
+}
+
+type DescribeSharedConfigResult struct {
+	AllowIpAccessRule      GlobalIPAccessRule
+	AllowRefererAccessRule GlobalRefererAccessRule
+	CommonMatchList        CommonMatchList
+	ConfigName             string
+	ConfigType             string
+	DenyIpAccessRule       GlobalIPAccessRule
+	DenyRefererAccessRule  GlobalRefererAccessRule
+	ErrorPageRule          GlobalErrorPageRule
+	Project                string
+}
+
 type DescribeStatisticalRankingRequest struct {
 	Area      *string `json:",omitempty"`
 	Domain    string
@@ -1381,6 +1435,7 @@ type DomainConfig struct {
 	LockStatus          *string              `json:",omitempty"`
 	MassCompression     *MassCompression     `json:",omitempty"`
 	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
+	MultiRange          *MultiRange          `json:",omitempty"`
 	NegativeCache       []NegativeCache
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
@@ -1390,6 +1445,7 @@ type DomainConfig struct {
 	OriginIPv6          string
 	OriginProtocol      string
 	OriginRange         *bool               `json:",omitempty"`
+	OriginRetry         *OriginRetry        `json:",omitempty"`
 	OriginRewrite       *OriginRewrite      `json:",omitempty"`
 	OriginSni           *OriginSni          `json:",omitempty"`
 	PageOptimization    *PageOptimization   `json:",omitempty"`
@@ -1518,6 +1574,26 @@ type FeatureConfig struct {
 type ForcedRedirect struct {
 	EnableForcedRedirect *bool   `json:",omitempty"`
 	StatusCode           *string `json:",omitempty"`
+}
+
+type GlobalErrorPageRule struct {
+	RuleContent string
+}
+
+type GlobalIPAccessRule struct {
+	Option *string `json:",omitempty"`
+	Rules  []string
+}
+
+type GlobalRefererAccessRule struct {
+	AllowEmpty *bool                    `json:",omitempty"`
+	CommonType *GlobalRefererCommonType `json:",omitempty"`
+}
+
+type GlobalRefererCommonType struct {
+	IgnoreCase *bool   `json:",omitempty"`
+	Option     *string `json:",omitempty"`
+	Rules      []string
 }
 
 type HTTPS struct {
@@ -1693,6 +1769,27 @@ type ListResourceTagsResult struct {
 	ResourceTags []ResourceTag
 }
 
+type ListSharedConfigRequest struct {
+	ConfigName     *string `json:",omitempty"`
+	ConfigType     *string `json:",omitempty"`
+	ConfigTypeList []string
+	PageNum        *int64  `json:",omitempty"`
+	PageSize       *int64  `json:",omitempty"`
+	Project        *string `json:",omitempty"`
+}
+
+type ListSharedConfigResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           ListSharedConfigResult
+}
+
+type ListSharedConfigResult struct {
+	ConfigData []SharedConfig
+	PageNum    int64
+	PageSize   int64
+	Total      int64
+}
+
 type ListUsageReportsRequest struct {
 	ExportType *string `json:",omitempty"`
 	PageNum    *int64  `json:",omitempty"`
@@ -1745,6 +1842,10 @@ type MetricTimestampValue struct {
 type MetricValue struct {
 	Metric string
 	Value  float64
+}
+
+type MultiRange struct {
+	Switch *bool `json:",omitempty"`
 }
 
 type NamePair struct {
@@ -2070,6 +2171,14 @@ type SharedCname struct {
 	Switch *bool   `json:",omitempty"`
 }
 
+type SharedConfig struct {
+	ConfigName  string
+	ConfigType  string
+	DomainCount int64
+	Project     string
+	UpdateTime  int64
+}
+
 type SignedOriginAuth struct {
 	SignedOriginAuthRules []SignedOriginAuthRule
 	Switch                *bool `json:",omitempty"`
@@ -2358,6 +2467,7 @@ type UpdateCdnConfigRequest struct {
 	IpFreqLimit         *IpFreqLimit         `json:",omitempty"`
 	MassCompression     *MassCompression     `json:",omitempty"`
 	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
+	MultiRange          *MultiRange          `json:",omitempty"`
 	NegativeCache       []NegativeCache
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
@@ -2401,6 +2511,19 @@ type UpdateResourceTagsRequest struct {
 }
 
 type UpdateResourceTagsResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+}
+
+type UpdateSharedConfigRequest struct {
+	AllowIpAccessRule      *GlobalIPAccessRule      `json:",omitempty"`
+	AllowRefererAccessRule *GlobalRefererAccessRule `json:",omitempty"`
+	CommonMatchList        *CommonMatchList         `json:",omitempty"`
+	ConfigName             string
+	DenyIpAccessRule       *GlobalIPAccessRule      `json:",omitempty"`
+	DenyRefererAccessRule  *GlobalRefererAccessRule `json:",omitempty"`
+}
+
+type UpdateSharedConfigResponse struct {
 	ResponseMetadata *ResponseMetadata `json:",omitempty"`
 }
 
