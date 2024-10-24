@@ -225,6 +225,14 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"DeleteMaterial": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteMaterial"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"GetMediaInfos": {
 			Method: http.MethodGet,
 			Path:   "/",
