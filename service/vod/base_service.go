@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"hash/crc32"
+	"hash/crc64"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -239,6 +241,7 @@ func (p *Vod) UploadObjectWithCallbackV2(uploadReq *request.VodUploadObjectReque
 		FileExtension:     uploadReq.FileExtension,
 		ClientIDCMode:     uploadReq.ClientIDCMode,
 		ClientNetWorkMode: uploadReq.ClientNetWorkMode,
+		ChunkSize:         uploadReq.ChunkSize,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -270,6 +273,7 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 		ClientIDCMode:     mediaRequset.ClientIDCMode,
 		ExpireTime:        mediaRequset.ExpireTime,
 		UploadHostPrefer:  mediaRequset.UploadHostPrefer,
+		ChunkSize:         mediaRequset.ChunkSize,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -286,17 +290,20 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 	}
 
 	req := &model.VodUploadMediaInnerFuncRequest{
-		FilePath:         materialRequest.GetFilePath(),
-		Rd:               file,
-		Size:             stat.Size(),
-		ParallelNum:      int(materialRequest.GetParallelNum()),
-		SpaceName:        materialRequest.GetSpaceName(),
-		FileType:         materialRequest.GetFileType(),
-		CallbackArgs:     materialRequest.GetCallbackArgs(),
-		Funcs:            materialRequest.GetFunctions(),
-		FileName:         materialRequest.GetFileName(),
-		FileExtension:    materialRequest.GetFileExtension(),
-		UploadHostPrefer: materialRequest.GetUploadHostPrefer(),
+		FilePath:          materialRequest.GetFilePath(),
+		Rd:                file,
+		Size:              stat.Size(),
+		ParallelNum:       int(materialRequest.GetParallelNum()),
+		SpaceName:         materialRequest.GetSpaceName(),
+		FileType:          materialRequest.GetFileType(),
+		CallbackArgs:      materialRequest.GetCallbackArgs(),
+		Funcs:             materialRequest.GetFunctions(),
+		FileName:          materialRequest.GetFileName(),
+		FileExtension:     materialRequest.GetFileExtension(),
+		UploadHostPrefer:  materialRequest.GetUploadHostPrefer(),
+		ChunkSize:         materialRequest.ChunkSize,
+		ClientNetWorkMode: materialRequest.GetClientNetWorkMode(),
+		ClientIDCMode:     materialRequest.GetClientIDCMode(),
 	}
 	return p.UploadMediaInner(req)
 }
@@ -315,6 +322,7 @@ func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInne
 		ClientNetWorkMode: uploadMediaInnerRequest.ClientNetWorkMode,
 		ClientIDCMode:     uploadMediaInnerRequest.ClientIDCMode,
 		UploadHostPrefer:  uploadMediaInnerRequest.UploadHostPrefer,
+		ChunkSize:         uploadMediaInnerRequest.ChunkSize,
 	}
 	logId, sessionKey, err, code := p.Upload(req)
 	if err != nil {
@@ -406,6 +414,9 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 	if vodUploadFuncRequest.Size == 0 {
 		return "", "", fmt.Errorf("file size is zero"), http.StatusBadRequest
 	}
+	if vodUploadFuncRequest.ChunkSize < consts.MinChunckSize {
+		vodUploadFuncRequest.ChunkSize = consts.MinChunckSize
+	}
 
 	applyRequest := &request.VodApplyUploadInfoRequest{
 		SpaceName:         vodUploadFuncRequest.SpaceName,
@@ -417,6 +428,7 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 		ClientIDCMode:     vodUploadFuncRequest.ClientIDCMode,
 		NeedFallback:      true, // default set
 		UploadHostPrefer:  vodUploadFuncRequest.UploadHostPrefer,
+		FileSize:          float64(vodUploadFuncRequest.Size),
 	}
 
 	resp, code, err := p.ApplyUploadInfo(applyRequest)
@@ -427,6 +439,18 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 
 	if resp.ResponseMetadata.Error != nil && resp.ResponseMetadata.Error.Code != "0" {
 		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
+	}
+
+	// vpc upload
+	if vpcUploadAddress := resp.GetResult().GetData().GetVpcTosUploadAddress(); vpcUploadAddress != nil {
+		err := p.vpcUpload(vpcUploadAddress, vodUploadFuncRequest)
+		if err != nil {
+			return logId, "", err, http.StatusBadRequest
+		}
+		uploadAddress := resp.GetResult().GetData().GetUploadAddress()
+		oid := uploadAddress.StoreInfos[0].GetStoreUri()
+		sessionKey := uploadAddress.GetSessionKey()
+		return oid, sessionKey, nil, http.StatusOK
 	}
 
 	// using candidate address first
@@ -450,7 +474,7 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 			auth := uploadAddress.GetStoreInfos()[0].GetAuth()
 
 			var lazyUploadFn func() error
-			if int(vodUploadFuncRequest.Size) < consts.MinChunckSize {
+			if vodUploadFuncRequest.Size < vodUploadFuncRequest.ChunkSize {
 				if len(bts) == 0 {
 					bts, err = ioutil.ReadAll(vodUploadFuncRequest.Rd)
 					if err != nil {
@@ -462,9 +486,10 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 				}
 			} else {
 				uploadPart := model.UploadPartCommon{
-					TosHost: tosHost,
-					Oid:     oid,
-					Auth:    auth,
+					TosHost:   tosHost,
+					Oid:       oid,
+					Auth:      auth,
+					ChunkSize: vodUploadFuncRequest.ChunkSize,
 				}
 				if vodUploadFuncRequest.ParallelNum == 0 {
 					vodUploadFuncRequest.ParallelNum = 1
@@ -512,7 +537,7 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 			sessionKey := uploadAddress.GetSessionKey()
 			auth := uploadAddress.GetStoreInfos()[0].GetAuth()
 			client := &http.Client{}
-			if int(vodUploadFuncRequest.Size) < consts.MinChunckSize {
+			if vodUploadFuncRequest.Size < vodUploadFuncRequest.ChunkSize {
 				bts, err := ioutil.ReadAll(vodUploadFuncRequest.Rd)
 				if err != nil {
 					return logId, "", err, http.StatusBadRequest
@@ -522,9 +547,10 @@ func (p *Vod) Upload(vodUploadFuncRequest *model.VodUploadFuncRequest) (string, 
 				}
 			} else {
 				uploadPart := model.UploadPartCommon{
-					TosHost: tosHost,
-					Oid:     oid,
-					Auth:    auth,
+					TosHost:   tosHost,
+					Oid:       oid,
+					Auth:      auth,
+					ChunkSize: vodUploadFuncRequest.ChunkSize,
 				}
 				if vodUploadFuncRequest.ParallelNum == 0 {
 					vodUploadFuncRequest.ParallelNum = 1
@@ -575,14 +601,205 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	return nil
 }
 
+func crc64ecma(f io.Reader) (string, error) {
+
+	crc64Hash := crc64.New(crc64.MakeTable(crc64.ECMA))
+	if _, err := io.Copy(crc64Hash, f); err != nil {
+		return "", errors.New("crc64")
+	}
+	return fmt.Sprintf("%v", crc64Hash.Sum64()), nil
+}
+
+func (p *Vod) vpcUpload(vpcUploadAddress *business.VpcTosUploadAddress, vodUploadFuncRequest *model.VodUploadFuncRequest) error {
+	if vpcUploadAddress == nil {
+		return errors.New("nil VpcUploadAddress")
+	}
+
+	if vpcUploadAddress.GetQuickCompleteMode() == "enable" {
+		return nil
+	}
+	client := &http.Client{Timeout: 900 * time.Second}
+
+	if vpcUploadAddress.GetUploadMode() == "direct" {
+		return p.vpcPut(vpcUploadAddress, vodUploadFuncRequest.FilePath, client)
+	} else if vpcUploadAddress.GetUploadMode() == "part" {
+		return p.vpcPartUpload(vpcUploadAddress.GetPartUploadInfo(), vodUploadFuncRequest.FilePath, vodUploadFuncRequest.Size, client)
+	}
+
+	return nil
+}
+
+func (p *Vod) vpcPartUpload(partUploadInfo *business.PartUploadInfo, filePath string, size int64, client *http.Client) error {
+	if partUploadInfo == nil {
+		return errors.New("empty partInfo")
+	}
+	chunkSize := partUploadInfo.GetPartSize()
+	totalNum := size / chunkSize
+
+	if int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 {
+		return errors.New("mismatch part upload")
+	}
+	f, err := os.Open(filePath)
+	if err != nil {
+		return errors.New("file open")
+	}
+	defer f.Close()
+
+	offset := int64(0)
+	partsInfo := &model.VpcUploadPartsInfo{
+		Parts: make([]*model.VpcUploadPartInfo, 0),
+	}
+	for i := 0; i < len(partUploadInfo.GetPartPutUrls())-1; i++ {
+		partUrl := partUploadInfo.GetPartPutUrls()[i]
+		etag, err := p.vpcPartPut(f, partUrl, offset, chunkSize, client)
+		if err != nil {
+			return err
+		}
+		partsInfo.Parts = append(partsInfo.Parts, &model.VpcUploadPartInfo{
+			PartNumber: i + 1,
+			ETag:       etag,
+		})
+		offset += chunkSize
+	}
+
+	lastChunkSize := size - offset
+	etag, err := p.vpcPartPut(f, partUploadInfo.GetPartPutUrls()[totalNum], offset, lastChunkSize, client)
+	if err != nil {
+		return err
+	}
+	partsInfo.Parts = append(partsInfo.Parts, &model.VpcUploadPartInfo{
+		PartNumber: int(totalNum + 1),
+		ETag:       etag,
+	})
+
+	return p.vpcPost(partUploadInfo, partsInfo, client)
+}
+
+func (p *Vod) vpcPartPut(f *os.File, putUrl string, offset, size int64, client *http.Client) (string, error) {
+
+	sectionReader := io.NewSectionReader(f, offset, size)
+	hashCrc64, err := crc64ecma(sectionReader)
+	if err != nil {
+		return "", errors.New("crc64")
+	}
+	_, err = sectionReader.Seek(0, 0)
+	if err != nil {
+		return "", errors.New("reader seek")
+	}
+
+	req, err := http.NewRequest("PUT", putUrl, sectionReader)
+	if err != nil {
+		return "", err
+	}
+	rsp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	if rsp == nil {
+		return "", errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return "", errors.New("put error:" + logId)
+	}
+
+	resCrc64 := rsp.Header.Get("x-tos-hash-crc64ecma")
+	if resCrc64 != hashCrc64 {
+		return "", errors.New("integrity check failed")
+	}
+	etag := rsp.Header.Get("ETag")
+
+	return etag, nil
+}
+
+func (p *Vod) vpcPut(vpcUploadAddress *business.VpcTosUploadAddress, filePath string, client *http.Client) error {
+	putUrl := vpcUploadAddress.GetPutUrl()
+	f, err := os.Open(filePath)
+	if err != nil {
+		return errors.New("file open")
+	}
+	defer f.Close()
+	hashCrc64, err := crc64ecma(f)
+	if err != nil {
+		return errors.New("crc64")
+	}
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		return errors.New("file seek")
+	}
+
+	req, err := http.NewRequest("PUT", putUrl, f)
+	if err != nil {
+		return err
+	}
+	for key, value := range vpcUploadAddress.GetPutUrlHeaders() {
+		req.Header.Set(key, value)
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if rsp == nil {
+		return errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return errors.New("put error:" + logId)
+	}
+
+	resCrc64 := rsp.Header.Get("x-tos-hash-crc64ecma")
+	if resCrc64 != hashCrc64 {
+		return errors.New("integrity check failed")
+	}
+
+	return nil
+}
+
+func (p *Vod) vpcPost(partUploadInfo *business.PartUploadInfo, partsInfo *model.VpcUploadPartsInfo, client *http.Client) error {
+	postUrl := partUploadInfo.GetCompletePartUrl()
+	bodyBytes, err := json.Marshal(partsInfo)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("POST", postUrl, bytes.NewReader(bodyBytes))
+	if err != nil {
+		return err
+	}
+	for key, value := range partUploadInfo.GetCompleteUrlHeaders() {
+		req.Header.Set(key, value)
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if rsp == nil {
+		return errors.New("post error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return errors.New("post error:" + logId)
+	}
+
+	return nil
+}
+
 type UploadPartInfo struct {
 	Number int
 	OffSet int64
 	Size   int64
 }
 
-func calculateUploadParts(size int64) (int, []*UploadPartInfo, error) {
-	totalNum := size / consts.MinChunckSize
+func calculateUploadParts(size, chunkSize int64) (int, []*UploadPartInfo, error) {
+	totalNum := size / chunkSize
 	if totalNum > 10000 {
 		return 0, nil, errors.New("parts over 10000")
 	}
@@ -591,13 +808,13 @@ func calculateUploadParts(size int64) (int, []*UploadPartInfo, error) {
 	for i := 0; i < int(totalNum); i++ {
 		partInfo := &UploadPartInfo{
 			Number: i + 1,
-			OffSet: int64(i * consts.MinChunckSize),
-			Size:   consts.MinChunckSize,
+			OffSet: int64(i) * chunkSize,
+			Size:   chunkSize,
 		}
 		uploadPartInfos = append(uploadPartInfos, partInfo)
 	}
 
-	last := size % consts.MinChunckSize
+	last := size % chunkSize
 	if last != 0 {
 		uploadPartInfos[totalNum-1].Size += last
 	}
@@ -692,7 +909,7 @@ func worker(p *Vod, jobs <-chan *Jobs, results chan<- *model.UploadPartResponse,
 
 func (p *Vod) chunkUpload(filePath string, uploadPartCommon model.UploadPartCommon, client *http.Client, size int64, parallelNum int, storageClass int32) error {
 	// 1. 计算分片
-	totalNum, uploadPartInfos, err := calculateUploadParts(size)
+	totalNum, uploadPartInfos, err := calculateUploadParts(size, uploadPartCommon.ChunkSize)
 	if err != nil {
 		return err
 	}

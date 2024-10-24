@@ -31,7 +31,7 @@ func NewInstanceWithRegion(region string) *Vod {
 		serviceInfo = &base.ServiceInfo{
 			Timeout: 60 * time.Second,
 			Scheme:  "https",
-			Host:    fmt.Sprintf("vod-%s.volcengineapi.com", region),
+			Host:    fmt.Sprintf("vod.%s.volcengineapi.com", region),
 			Header: http.Header{
 				"Accept": []string{"application/json"},
 			},
@@ -223,6 +223,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"UpdateMediaStorageClass"},
 				"Version": []string{"2022-12-01"},
+			},
+		},
+		"DeleteMaterial": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteMaterial"},
+				"Version": []string{"2023-07-01"},
 			},
 		},
 		"GetMediaInfos": {

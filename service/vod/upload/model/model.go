@@ -58,6 +58,7 @@ type UploadPartCommon struct {
 	Oid               string
 	Auth              string
 	ObjectContentType string
+	ChunkSize         int64
 }
 
 type VodUploadFuncRequest struct {
@@ -74,6 +75,7 @@ type VodUploadFuncRequest struct {
 	ClientIDCMode     string
 	ExpireTime        string
 	UploadHostPrefer  string
+	ChunkSize         int64
 }
 
 type VodUploadMediaInnerFuncRequest struct {
@@ -93,6 +95,7 @@ type VodUploadMediaInnerFuncRequest struct {
 	ClientIDCMode     string
 	ExpireTime        string
 	UploadHostPrefer  string
+	ChunkSize         int64
 }
 
 type UploadAuthOpt func(option *UploadAuthOption)
@@ -108,4 +111,13 @@ type UploadPolicy struct {
 	ContentTypeWhiteList []string `json:"ContentTypeWhiteList,omitempty"` // 上传文件Content-Type白名单，建议不和黑名单同时使用
 	FileSizeUpLimit      string   `json:"FileSizeUpLimit,omitempty"`      // 上传文件大小上限
 	FileSizeBottomLimit  string   `json:"FileSizeBottomLimit,omitempty"`  // 上传文件大小下限
+}
+
+type VpcUploadPartsInfo struct {
+	Parts []*VpcUploadPartInfo `json:"Parts"`
+}
+
+type VpcUploadPartInfo struct {
+	PartNumber int    `json:"PartNumber"`
+	ETag       string `json:"ETag"`
 }
