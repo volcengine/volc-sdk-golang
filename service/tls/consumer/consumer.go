@@ -18,7 +18,6 @@ type consumer struct {
 	ctx                context.Context
 	cancel             context.CancelFunc
 	logger             log.Logger
-	checkpointCh       chan *checkpointInfo
 	conf               *Config
 	consumeFunc        func(topicID string, shardID int, l *pb.LogGroupList)
 	heartbeatExpiredCh chan struct{}
@@ -39,20 +38,18 @@ func newConsumer(ctx context.Context, conf *Config, consumeFunc func(topicID str
 
 	client := tls.NewClient(conf.Endpoint, conf.AccessKeyID, conf.AccessKeySecret, conf.SecurityToken, conf.Region)
 	logger := common.LogConfig(conf.LoggerConfig)
-	checkpointCh := make(chan *checkpointInfo)
 	heartbeatExpiredCh := make(chan struct{})
 	commitCh := make(chan struct{})
 
 	return &consumer{
 		ctx:                ctx,
 		logger:             logger,
-		checkpointCh:       checkpointCh,
 		conf:               conf,
 		consumeFunc:        consumeFunc,
 		heartbeatExpiredCh: heartbeatExpiredCh,
 		commitCh:           commitCh,
 		heartbeat:          newHeartbeatRunner(logger, client, conf, heartbeatExpiredCh),
-		checkpoint:         newCheckpointManager(logger, conf, client, checkpointCh, commitCh),
+		checkpoint:         newCheckpointManager(logger, conf, client, commitCh),
 		workerMap:          make(map[string]*logConsumer),
 		client:             client,
 		wg:                 &sync.WaitGroup{},
@@ -134,7 +131,7 @@ func (c *consumer) newLogConsumer(consumeShard *tls.ConsumeShard) *logConsumer {
 		status:             pending,
 		shard:              consumeShard,
 		consumeFunc:        c.consumeFunc,
-		checkpointCh:       c.checkpointCh,
+		checkpoint:         c.checkpoint,
 		heartbeatRestartCh: c.heartbeatExpiredCh,
 		commitCh:           c.commitCh,
 		nextCheckpoint:     "",
