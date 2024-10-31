@@ -32,11 +32,11 @@ func main() {
 	// }
 	// print(collection)
 
-	//res, err := service.GetCollection("sparse_go")
-	//if err != nil {
-	//	print(err.Error())
-	//}
-	//fmt.Println(res)
+	res, err := service.GetIndex("sparse", "sparse")
+	if err != nil {
+		print(err.Error())
+	}
+	fmt.Println(res)
 
 	// collection, _ := service.GetCollection("sparse_go")
 	// sparse := map[string]float64{"like": 0.5}
@@ -373,14 +373,14 @@ func main() {
 	//	fmt.Println(err.Error())
 	//}
 
-	collection, _ := service.GetCollection("tt")
-	res, err := collection.FetchData([]string{"2222"})
-	if err != nil {
-		fmt.Println(err)
-	}
-	for _, item := range res {
-		fmt.Println(item)
-	}
+	// collection, _ := service.GetCollection("tt")
+	// res, err := collection.FetchData([]string{"2222"})
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, item := range res {
+	// 	fmt.Println(item)
+	// }
 
 	// collection, _ := service.GetCollection("tt")
 	// res, err := collection.FetchData([]string{"111", "222", "333", "444"})

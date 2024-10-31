@@ -7,6 +7,9 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -643,10 +646,26 @@ func (vikingDBService *VikingDBService) GetCollection(collectionName string) (*C
 	params := map[string]interface{}{
 		"collection_name": collectionName,
 	}
-	resData, err := vikingDBService.DoRequest(context.Background(), "GetCollection", nil, vikingDBService.convertMapToJson(params))
-	if err != nil {
-		return nil, err
+	retryCount := 3
+	var resData map[string]interface{}
+	var err error
+	for i := 0; i < retryCount; i++ {
+		resData, err = vikingDBService.DoRequest(context.Background(), "GetCollection", nil, vikingDBService.convertMapToJson(params))
+		if err != nil {
+			_, code, _, extractExceptionErr := extractExceptionDetails(err.Error())
+			if extractExceptionErr != nil {
+				return nil, err
+			}
+			if code == 1000029 && i != retryCount-1 {
+				time.Sleep(time.Duration(i*2+1) * time.Second)
+				continue
+			} else {
+				return nil, err
+			}
+		}
+		break
 	}
+
 	var res map[string]interface{}
 	if d, ok := resData["data"]; !ok {
 		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
@@ -752,9 +771,25 @@ func (vikingDBService *VikingDBService) GetIndex(collectionName string, indexNam
 		"collection_name": collectionName,
 		"index_name":      indexName,
 	}
-	resData, err := vikingDBService.DoRequest(context.Background(), "GetIndex", nil, vikingDBService.convertMapToJson(params))
-	if err != nil {
-		return nil, err
+
+	retryCount := 3
+	var resData map[string]interface{}
+	var err error
+	for i := 0; i < retryCount; i++ {
+		resData, err = vikingDBService.DoRequest(context.Background(), "GetIndex", nil, vikingDBService.convertMapToJson(params))
+		if err != nil {
+			_, code, _, extractExceptionErr := extractExceptionDetails(err.Error())
+			if extractExceptionErr != nil {
+				return nil, err
+			}
+			if code == 1000029 && i != retryCount-1 {
+				time.Sleep(time.Duration(i*2+1) * time.Second)
+				continue
+			} else {
+				return nil, err
+			}
+		}
+		break
 	}
 	var res map[string]interface{}
 	if d, ok := resData["data"]; !ok {
@@ -1008,4 +1043,20 @@ func (vikingDBService *VikingDBService) EmbeddingV2(embModel EmbModel, rawData i
 		return nil, fmt.Errorf("invalid response, data is not a map: %v", data)
 	}
 	return items, nil
+}
+
+func extractExceptionDetails(exceptionMessage string) (string, int, string, error) {
+	pattern := `"code":(\d+),"message":"(.*?)","request_id":"([a-fA-F0-9]+)"`
+	re := regexp.MustCompile(pattern)
+	match := re.FindStringSubmatch(exceptionMessage)
+	if len(match) > 0 {
+		message := strings.TrimSpace(match[2]) // 除去空格
+		code, err := strconv.Atoi(strings.TrimSpace(match[1]))
+		if err != nil {
+			return "", 0, "", err
+		}
+		requestID := strings.TrimSpace(match[3])
+		return message, code, requestID, nil
+	}
+	return "", 0, "", fmt.Errorf("input string does not match the expected format")
 }
