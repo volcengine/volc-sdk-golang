@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -199,6 +200,42 @@ func getApiInfo() map[string]*base.ApiInfo {
 		"EmbeddingV2": {
 			Method: http.MethodPost,
 			Path:   "/api/data/embedding/version/2",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+
+		"CreateTask": {
+			Method: http.MethodPost,
+			Path:   "/api/task/create",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+
+		"GetTask": {
+			Method: http.MethodPost,
+			Path:   "/api/task/info",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+
+		"DropTask": {
+			Method: http.MethodPost,
+			Path:   "/api/task/drop",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+
+		"ListTasks": {
+			Method: http.MethodPost,
+			Path:   "/api/task/list",
 			Header: http.Header{
 				"Accept":       []string{"application/json"},
 				"Content-Type": []string{"application/json"},
@@ -1043,6 +1080,173 @@ func (vikingDBService *VikingDBService) EmbeddingV2(embModel EmbModel, rawData i
 		return nil, fmt.Errorf("invalid response, data is not a map: %v", data)
 	}
 	return items, nil
+}
+
+func (vikingDBService *VikingDBService) packageTask(res map[string]interface{}) (*Task, error) {
+	var collectionName string
+	var createTime string
+	var processInfo map[string]interface{}
+	var taskID string
+	var taskParams map[string]interface{}
+	var taskStatus string
+	var taskType string
+	var updatePerson string
+	var updateTime string
+
+	if value, exist := res["collection_name"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, collectionName is not string: %v", res)
+		} else {
+			collectionName = v
+		}
+	}
+	if value, exist := res["create_time"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, createTime is not string: %v", res)
+		} else {
+			createTime = v
+		}
+	}
+	if value, exist := res["task_id"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, taskID is not string: %v", res)
+		} else {
+			taskID = v
+		}
+	}
+	if value, exist := res["task_status"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, taskStatus is not string: %v", res)
+		} else {
+			taskStatus = v
+		}
+	}
+	if value, exist := res["task_type"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, taskType is not string: %v", res)
+		} else {
+			taskType = v
+		}
+	}
+	if value, exist := res["update_person"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, updatePerson is not string: %v", res)
+		} else {
+			updatePerson = v
+		}
+	}
+	if value, exist := res["update_time"]; exist {
+		if v, ok := value.(string); !ok {
+			return nil, fmt.Errorf("invalid response, updateTime is not string: %v", res)
+		} else {
+			updateTime = v
+		}
+	}
+	if value, exist := res["process_info"]; exist {
+		if v, ok := value.(map[string]interface{}); ok {
+			processInfo = v
+		} else if _, ok := value.(string); ok { // 兼容
+			processInfo = map[string]interface{}{}
+		} else {
+			return nil, fmt.Errorf("invalid response, processInfo is not a map: %v", res)
+		}
+	}
+	if value, exist := res["task_params"]; exist {
+		if v, ok := value.(map[string]interface{}); !ok {
+			return nil, fmt.Errorf("invalid response, taskParams is not a map: %v", res)
+		} else {
+			taskParams = v
+		}
+	}
+	task := &Task{
+		CollectionName: collectionName,
+		CreateTime:     createTime,
+		ProcessInfo:    processInfo,
+		TaskID:         taskID,
+		TaskParams:     taskParams,
+		TaskStatus:     taskStatus,
+		TaskType:       taskType,
+		UpdatePerson:   updatePerson,
+		UpdateTime:     updateTime,
+	}
+	return task, nil
+}
+
+func (vikingDBService *VikingDBService) CreateTask(taskType string, taskParams map[string]interface{}) (string, error) {
+	params := map[string]interface{}{
+		"task_type":   taskType,
+		"task_params": taskParams,
+	}
+	res, err := vikingDBService.DoRequest(context.Background(), "CreateTask", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return "", err
+	}
+	if d, ok := res["data"]; !ok {
+		return "", fmt.Errorf("invalid response, data does not exist: %v", res)
+	} else if data, ok := d.(map[string]interface{}); !ok {
+		return "", fmt.Errorf("invalid response, data is not a map: %v", data)
+	} else if taskID, ok := data["task_id"]; !ok {
+		return "", fmt.Errorf("invalid response, taskID does not exist: %v", res)
+	} else if taskIDStr, ok := taskID.(string); !ok {
+		return "", fmt.Errorf("invalid response, taskID is not string: %v", reflect.TypeOf(taskID))
+	} else {
+		return taskIDStr, nil
+	}
+}
+
+func (vikingDBService *VikingDBService) GetTask(taskID string) (*Task, error) {
+	params := map[string]interface{}{
+		"task_id": taskID,
+	}
+	resData, err := vikingDBService.DoRequest(context.Background(), "GetTask", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return nil, err
+	}
+	var res map[string]interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.(map[string]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a map: %v", resData)
+	}
+	return vikingDBService.packageTask(res)
+}
+
+func (vikingDBService *VikingDBService) ListTasks() ([]*Task, error) {
+	params := map[string]interface{}{}
+	resData, err := vikingDBService.DoRequest(context.Background(), "ListTasks", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return nil, err
+	}
+	var res []interface{}
+	if d, ok := resData["data"]; !ok {
+		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
+	} else if res, ok = d.([]interface{}); !ok {
+		return nil, fmt.Errorf("invalid response, data is not a list: %v", resData)
+	}
+	tasks := []*Task{}
+	for _, itemMap := range res {
+		item, ok := itemMap.(map[string]interface{})
+		if !ok {
+			return nil, fmt.Errorf("invalid response, data is not a list[map]: %v", reflect.TypeOf(itemMap))
+		}
+		task, err := vikingDBService.packageTask(item)
+		if err != nil {
+			return nil, err
+		}
+		tasks = append(tasks, task)
+	}
+	return tasks, err
+}
+
+func (vikingDBService *VikingDBService) DropTask(taskID string) error {
+	params := map[string]interface{}{
+		"task_id": taskID,
+	}
+	_, err := vikingDBService.DoRequest(context.Background(), "DropTask", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func extractExceptionDetails(exceptionMessage string) (string, int, string, error) {

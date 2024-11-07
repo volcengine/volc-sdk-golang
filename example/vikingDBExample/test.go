@@ -10,6 +10,32 @@ import (
 
 func main() {
 	service := vikingdb.NewVikingDBService("", "", "", "", "")
+
+	// id, err := service.CreateTask(vikingdb.Data_Import, map[string]interface{}{"tos_path": "demo-1028/demo_1030", "file_type": "json", "ignore_error": false, "collection_name": "demo_1029"})
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(id)
+
+	// task, err := service.GetTask("752b0b8c-2783-5efd-8307-8dd590e22cfc")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(task)
+
+	// tasks, err := service.ListTasks()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, task := range tasks {
+	// 	fmt.Println(task)
+	// }
+
+	// err := service.DropTask("752b0b8c-2783-5efd-8307-8dd590e22cfc")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
 	// fields := []vikingdb.Field{
 	// 	{
 	// 		FieldName:    "id",
@@ -32,11 +58,11 @@ func main() {
 	// }
 	// print(collection)
 
-	res, err := service.GetIndex("sparse", "sparse")
-	if err != nil {
-		print(err.Error())
-	}
-	fmt.Println(res)
+	// res, err := service.GetIndex("sparse", "sparse")
+	// if err != nil {
+	// 	print(err.Error())
+	// }
+	// fmt.Println(res)
 
 	// collection, _ := service.GetCollection("sparse_go")
 	// sparse := map[string]float64{"like": 0.5}
