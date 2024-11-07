@@ -29,6 +29,8 @@ const (
 
 	Custom = "custom"
 	Auto   = "auto"
+
+	Data_Import = "data_import"
 )
 
 type Field struct {
