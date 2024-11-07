@@ -222,6 +222,46 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"CreateCVImageGenerateTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCVImageGenerateTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetCVTextGenerateImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCVTextGenerateImage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetCVImageGenerateTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCVImageGenerateTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetCVAnimeGenerateImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCVAnimeGenerateImage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetCVImageGenerateResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCVImageGenerateResult"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXSummary": {
 			Method: http.MethodGet,
 			Path:   "/",

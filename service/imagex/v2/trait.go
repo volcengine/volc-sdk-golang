@@ -386,6 +386,131 @@ func (c *Imagex) DescribeImageXSourceRequestBandwidth(ctx context.Context, arg *
 	return result, nil
 }
 
+func (c *Imagex) GetCVImageGenerateResult(ctx context.Context, arg *GetCVImageGenerateResultReq) (*GetCVImageGenerateResultRes, error) {
+	query, err := marshalToQuery(arg.GetCVImageGenerateResultQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetCVImageGenerateResultBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetCVImageGenerateResult", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetCVImageGenerateResultRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetCVAnimeGenerateImage(ctx context.Context, arg *GetCVAnimeGenerateImageReq) (*GetCVAnimeGenerateImageRes, error) {
+	query, err := marshalToQuery(arg.GetCVAnimeGenerateImageQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetCVAnimeGenerateImageBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetCVAnimeGenerateImage", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetCVAnimeGenerateImageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetCVImageGenerateTask(ctx context.Context, arg *GetCVImageGenerateTaskReq) (*GetCVImageGenerateTaskRes, error) {
+	query, err := marshalToQuery(arg.GetCVImageGenerateTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetCVImageGenerateTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetCVImageGenerateTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetCVImageGenerateTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetCVTextGenerateImage(ctx context.Context, arg *GetCVTextGenerateImageReq) (*GetCVTextGenerateImageRes, error) {
+	query, err := marshalToQuery(arg.GetCVTextGenerateImageQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetCVTextGenerateImageBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetCVTextGenerateImage", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetCVTextGenerateImageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateCVImageGenerateTask(ctx context.Context, arg *CreateCVImageGenerateTaskReq) (*CreateCVImageGenerateTaskRes, error) {
+	query, err := marshalToQuery(arg.CreateCVImageGenerateTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateCVImageGenerateTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateCVImageGenerateTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateCVImageGenerateTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXSourceRequestTraffic(ctx context.Context, arg *DescribeImageXSourceRequestTrafficQuery) (*DescribeImageXSourceRequestTrafficRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {

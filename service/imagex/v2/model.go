@@ -16337,6 +16337,390 @@ type UpdateResponseHeaderBodyRespHdrsItem struct {
 	Value string `json:"value,omitempty"`
 }
 
+type CreateCVImageGenerateTaskBody struct {
+
+	// REQUIRED; 服务下绑定的域名，域名状态需正常可用。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取绑定的域名信息。
+	// * 您也可以通过 OpenAPI 的方式获取域名，具体请参考获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 模型接口action
+	ModelAction string `json:"ModelAction"`
+
+	// REQUIRED; 文生图系列模型的接口 Version 名称。
+	// 例如，使用通用 2.0S-文生图异步 [https://www.volcengine.com/docs/6791/1347773]，则 ModelVersion 需要取值为 2022-08-31。
+	ModelVersion string `json:"ModelVersion"`
+
+	// REQUIRED; 指定输出图片的文件名，输入限制如下所示：
+	// * 不支持空格。
+	// * 不支持以/开头或结尾，不支持/连续出现，最大长度限制为 180 个字节。
+	Output string `json:"Output"`
+
+	// REQUIRED; 请求的JSON字符串。
+	ReqJSON map[string]interface{} `json:"ReqJson"`
+
+	// REQUIRED; 服务下创建的图片处理模板名称，指定后，将按照模板中的处理配置对生成的原始图片进行图片处理。
+	// 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版名称，例如 tplv-f0****5k-test。
+	Template string `json:"Template"`
+
+	// 是否覆盖现有内容。 * false：不覆盖；
+	// * true：覆盖。
+	// 默认值为false。
+	Overwrite bool `json:"Overwrite,omitempty"`
+}
+
+type CreateCVImageGenerateTaskQuery struct {
+
+	// REQUIRED; 指定存储结果图并计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type CreateCVImageGenerateTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateCVImageGenerateTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateCVImageGenerateTaskResResult `json:"Result,omitempty"`
+}
+
+type CreateCVImageGenerateTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// CreateCVImageGenerateTaskResResult - 视请求的接口而定
+type CreateCVImageGenerateTaskResResult struct {
+
+	// REQUIRED; 响应的JSON数据。
+	RespJSON map[string]interface{} `json:"RespJson"`
+
+	// REQUIRED; 任务 ID，用于查询结果。
+	TaskID string `json:"TaskId"`
+}
+
+type GetCVTextGenerateImageBody struct {
+
+	// REQUIRED; 服务下绑定的域名，域名状态需正常可用。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取绑定的域名信息。
+	// * 您也可以通过 OpenAPI 的方式获取域名，具体请参考获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 操作模型action
+	ModelAction string `json:"ModelAction"`
+
+	// REQUIRED; 模型版本。
+	ModelVersion string `json:"ModelVersion"`
+
+	// REQUIRED; 输出结果。
+	Outputs []string `json:"Outputs"`
+
+	// REQUIRED; 请求的JSON数据。
+	ReqJSON map[string]interface{} `json:"ReqJson"`
+
+	// REQUIRED; 服务下创建的图片处理模板名称，指定后，将按照模板中的处理配置对豆包大模型生成的图片进行图片处理。
+	// 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版名称，例如 tplv-f0****5k-test。
+	Template string `json:"Template"`
+
+	// 覆盖现有内容。
+	Overwrite bool `json:"Overwrite,omitempty"`
+}
+
+type GetCVTextGenerateImageQuery struct {
+
+	// REQUIRED; 指定存储结果图并计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetCVTextGenerateImageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetCVTextGenerateImageResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetCVTextGenerateImageResResult `json:"Result,omitempty"`
+}
+
+type GetCVTextGenerateImageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetCVTextGenerateImageResResult - 视请求的接口而定
+type GetCVTextGenerateImageResResult struct {
+
+	// REQUIRED; 存储URI列表。
+	ImageUrls []string `json:"ImageUrls"`
+
+	// REQUIRED; 响应的JSON字符串。
+	RespJSON map[string]interface{} `json:"RespJson"`
+}
+
+type GetCVTextGenerateImageReq struct {
+	*GetCVTextGenerateImageQuery
+	*GetCVTextGenerateImageBody
+}
+
+type GetCVImageGenerateTaskBody struct {
+
+	// REQUIRED; 操作模型。
+	ModelAction string `json:"ModelAction"`
+
+	// REQUIRED; 模型版本。
+	ModelVersion string `json:"ModelVersion"`
+
+	// REQUIRED; 请求的JSON数据。
+	ReqJSON map[string]interface{} `json:"ReqJson"`
+
+	// REQUIRED; 指定文生图异步任务的任务 ID。
+	TaskID string `json:"TaskId"`
+}
+
+type GetCVImageGenerateTaskQuery struct {
+
+	// REQUIRED; 指定要查询的服务 ID。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetCVImageGenerateTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetCVImageGenerateTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetCVImageGenerateTaskResResult `json:"Result,omitempty"`
+}
+
+type GetCVImageGenerateTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetCVImageGenerateTaskResResult - 视请求的接口而定
+type GetCVImageGenerateTaskResResult struct {
+
+	// REQUIRED; 最终上传至 veImageX 服务的结果图存储 URI，数量为 1。
+	ImageUrls []string `json:"ImageUrls"`
+
+	// REQUIRED; 响应的 JSON 数据。
+	RespJSON map[string]interface{} `json:"RespJson"`
+
+	// REQUIRED; 任务状态，取值如下所示：
+	// * in_queue：任务已提交
+	// * generating：任务处理中
+	// * done：任务处理完成
+	// * not_found：任务未找到，可能原因是无此任务或任务已过期（12小时）
+	Status string `json:"Status"`
+
+	// REQUIRED; 任务 ID
+	TaskID string `json:"TaskId"`
+}
+
+type GetCVImageGenerateTaskReq struct {
+	*GetCVImageGenerateTaskQuery
+	*GetCVImageGenerateTaskBody
+}
+
+type GetCVAnimeGenerateImageBody struct {
+
+	// REQUIRED; 服务下绑定的域名，域名状态需正常可用。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取绑定的域名信息。
+	// * 您也可以通过 OpenAPI 的方式获取域名，具体请参考获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 模型操作action
+	ModelAction string `json:"ModelAction"`
+
+	// REQUIRED; 模型版本。
+	ModelVersion string `json:"ModelVersion"`
+
+	// REQUIRED; 输出结果。
+	Outputs []string `json:"Outputs"`
+
+	// REQUIRED; 请求的JSON数据。
+	ReqJSON map[string]interface{} `json:"ReqJson"`
+
+	// REQUIRED; 服务下创建的图片处理模板名称，指定后，将按照模板中的处理配置对豆包大模型生成的图片进行图片处理。
+	// 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版名称，例如 tplv-f0****5k-test。
+	Template string `json:"Template"`
+
+	// 是否覆盖现有文件。
+	Overwrite bool `json:"Overwrite,omitempty"`
+}
+
+type GetCVAnimeGenerateImageQuery struct {
+
+	// REQUIRED; 指定存储结果图并计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetCVAnimeGenerateImageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetCVAnimeGenerateImageResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetCVAnimeGenerateImageResResult `json:"Result,omitempty"`
+}
+
+type GetCVAnimeGenerateImageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetCVAnimeGenerateImageResResult - 视请求的接口而定
+type GetCVAnimeGenerateImageResResult struct {
+
+	// REQUIRED; 存储URI列表。
+	ImageUrls []string `json:"ImageUrls"`
+
+	// REQUIRED; 响应的JSON数据。
+	RespJSON map[string]interface{} `json:"RespJson"`
+}
+
+type GetCVAnimeGenerateImageReq struct {
+	*GetCVAnimeGenerateImageQuery
+	*GetCVAnimeGenerateImageBody
+}
+
+type GetCVImageGenerateResultBody struct {
+
+	// REQUIRED; 服务下绑定的域名，域名状态需正常可用。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取绑定的域名信息。
+	// * 您也可以通过 OpenAPI 的方式获取域名，具体请参考获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 模型操作action
+	ModelAction string `json:"ModelAction"`
+
+	// REQUIRED; 模型版本。
+	ModelVersion string `json:"ModelVersion"`
+
+	// REQUIRED; 输出结果。
+	Outputs []string `json:"Outputs"`
+
+	// REQUIRED; 请求的JSON字符串。
+	ReqJSON map[string]interface{} `json:"ReqJson"`
+
+	// REQUIRED; 服务下创建的图片处理模板名称，指定后，将按照模板中的处理配置对豆包大模型生成的图片进行图片处理。
+	// 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版名称，例如 tplv-f0****5k-test。
+	Template string `json:"Template"`
+
+	// 图片URL
+	ImageURL string `json:"ImageUrl,omitempty"`
+
+	// 是否覆盖现有文件。
+	Overwrite bool `json:"Overwrite,omitempty"`
+}
+
+type GetCVImageGenerateResultQuery struct {
+
+	// REQUIRED; 指定存储结果图并计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetCVImageGenerateResultRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetCVImageGenerateResultResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetCVImageGenerateResultResResult `json:"Result,omitempty"`
+}
+
+type GetCVImageGenerateResultResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetCVImageGenerateResultResResult - 视请求的接口而定
+type GetCVImageGenerateResultResResult struct {
+
+	// REQUIRED; 图片URL列表。
+	ImageUrls []string `json:"ImageUrls"`
+
+	// REQUIRED; 响应的JSON内容。
+	RespJSON map[string]interface{} `json:"RespJson"`
+}
+
+type GetCVImageGenerateResultReq struct {
+	*GetCVImageGenerateResultQuery
+	*GetCVImageGenerateResultBody
+}
+
 type UpdateResponseHeaderQuery struct {
 
 	// REQUIRED; 服务 ID。
@@ -16903,6 +17287,12 @@ type DescribeImageXClientCountByTimeReq struct {
 	*DescribeImageXClientCountByTimeQuery
 	*DescribeImageXClientCountByTimeBody
 }
+
+type CreateCVImageGenerateTaskReq struct {
+	*CreateCVImageGenerateTaskQuery
+	*CreateCVImageGenerateTaskBody
+}
+
 type DescribeImageXClientDecodeDurationByTimeReq struct {
 	*DescribeImageXClientDecodeDurationByTimeQuery
 	*DescribeImageXClientDecodeDurationByTimeBody
