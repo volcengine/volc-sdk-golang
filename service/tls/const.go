@@ -98,6 +98,18 @@ const (
 	PathDescribeETLTasks    = "/DescribeETLTasks"
 	PathModifyETLTaskStatus = "/ModifyETLTaskStatus"
 
+	PathCreateImportTask    = "/CreateImportTask"
+	PathDeleteImportTask    = "/DeleteImportTask"
+	PathModifyImportTask    = "/ModifyImportTask"
+	PathDescribeImportTask  = "/DescribeImportTask"
+	PathDescribeImportTasks = "/DescribeImportTasks"
+
+	PathCreateShipper    = "/CreateShipper"
+	PathDeleteShipper    = "/DeleteShipper"
+	PathModifyShipper    = "/ModifyShipper"
+	PathDescribeShipper  = "/DescribeShipper"
+	PathDescribeShippers = "/DescribeShippers"
+
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"
 	APIVersion3      = "0.3.0"
