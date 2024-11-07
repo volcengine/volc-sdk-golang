@@ -1738,3 +1738,280 @@ type ModifyETLTaskStatusRequest struct {
 	TaskID string `json:"TaskId"`
 	Enable bool
 }
+
+type TosSourceInfo struct {
+	Bucket       string `json:"bucket,omitempty"`
+	Prefix       string `json:"prefix,omitempty"`
+	Region       string `json:"region,omitempty"`
+	CompressType string `json:"compress_type,omitempty"`
+}
+
+type KafkaSourceInfo struct {
+	Host              string `json:"host,omitempty"`
+	Group             string `json:"group,omitempty"`
+	Topic             string `json:"topic,omitempty"`
+	Encode            string `json:"encode,omitempty"`
+	Password          string `json:"password,omitempty"`
+	Protocol          string `json:"protocol,omitempty"`
+	Username          string `json:"username,omitempty"`
+	Mechanism         string `json:"mechanism,omitempty"`
+	InstanceID        string `json:"instance_id,omitempty"`
+	IsNeedAuth        bool   `json:"is_need_auth,omitempty"`
+	InitialOffset     int    `json:"initial_offset,omitempty"`
+	TimeSourceDefault int    `json:"time_source_default,omitempty"`
+}
+
+type ImportSourceInfo struct {
+	*TosSourceInfo   `json:"TosSourceInfo,omitempty"`
+	*KafkaSourceInfo `json:"KafkaSourceInfo,omitempty"`
+}
+
+type ImportExtractRule struct {
+	TimeZone         string `json:"TimeZone,omitempty"`
+	SkipLineCount    int    `json:"SkipLineCount,omitempty"`
+	TimeExtractRegex string `json:"TimeExtractRegex,omitempty"`
+	*ExtractRule
+}
+
+type TargetInfo struct {
+	Region         string             `json:"Region"`
+	LogType        string             `json:"LogType"`
+	LogSample      string             `json:"LogSample"`
+	ExtractRule    *ImportExtractRule `json:"ExtractRule,omitempty"`
+	UserDefineRule *UserDefineRule    `json:"UserDefineRule,omitempty"`
+}
+
+type CreateImportTaskRequest struct {
+	CommonRequest
+	ProjectID        string            `json:"ProjectID"`
+	TopicID          string            `json:"TopicID"`
+	TaskName         string            `json:"TaskName"`
+	SourceType       string            `json:"SourceType"`
+	Description      string            `json:"Description,omitempty"`
+	ImportSourceInfo *ImportSourceInfo `json:"ImportSourceInfo"`
+	TargetInfo       *TargetInfo       `json:"TargetInfo"`
+}
+
+func (v *CreateImportTaskRequest) CheckValidation() error {
+	return nil
+}
+
+type CreateImportTaskResponse struct {
+	CommonResponse
+	TaskID string `json:"TaskId"`
+}
+
+type DeleteImportTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+}
+
+type DeleteImportTaskResponse struct {
+	CommonResponse
+}
+
+type ModifyImportTaskRequest struct {
+	CommonRequest
+	ProjectID        string            `json:"ProjectID,omitempty"`
+	TopicID          string            `json:"TopicID"`
+	TaskID           string            `json:"TaskId"`
+	TaskName         string            `json:"TaskName"`
+	Status           int               `json:"Status"`
+	SourceType       string            `json:"SourceType"`
+	Description      *string           `json:"Description,omitempty"`
+	ImportSourceInfo *ImportSourceInfo `json:"ImportSourceInfo"`
+	TargetInfo       *TargetInfo       `json:"TargetInfo"`
+}
+
+type ModifyImportTaskResponse struct {
+	CommonResponse
+}
+
+type DescribeImportTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId,omitempty"`
+}
+
+type TaskStatistics struct {
+	Total            int    `json:"Total"`
+	Failed           int    `json:"Failed"`
+	Skipped          int    `json:"Skipped"`
+	NotExist         int    `json:"NotExist"`
+	BytesTotal       int    `json:"BytesTotal"`
+	TaskStatus       string `json:"TaskStatus"`
+	Transferred      int    `json:"Transferred"`
+	BytesTransferred int    `json:"BytesTransferred"`
+}
+
+type ImportTaskInfo struct {
+	TaskID           string            `json:"TaskId"`
+	Status           int               `json:"status"`
+	TopicID          string            `json:"TopicId"`
+	TaskName         string            `json:"TaskName"`
+	ProjectID        string            `json:"ProjectId"`
+	TopicName        string            `json:"TopicName"`
+	CreateTime       string            `json:"CreateTime"`
+	SourceType       string            `json:"SourceType"`
+	Description      string            `json:"Description"`
+	ProjectName      string            `json:"ProjectName"`
+	TargetInfo       *TargetInfo       `json:"TargetInfo"`
+	TaskStatistics   *TaskStatistics   `json:"TaskStatistics"`
+	ImportSourceInfo *ImportSourceInfo `json:"ImportSourceInfo"`
+}
+
+type DescribeImportTaskResponse struct {
+	CommonResponse
+	TaskInfo *ImportTaskInfo `json:"TaskInfo"`
+}
+
+type DescribeImportTasksRequest struct {
+	CommonRequest
+	TaskID         string `json:"TaskId,omitempty"`
+	TaskName       string `json:"TaskName,omitempty"`
+	ProjectID      string `json:"ProjectId,omitempty"`
+	ProjectName    string `json:"ProjectName,omitempty"`
+	IamProjectName string `json:"IamProjectName,omitempty"`
+	TopicID        string `json:"TopicId,omitempty"`
+	TopicName      string `json:"TopicName,omitempty"`
+	PageNumber     int    `json:"PageNumber,omitempty"`
+	PageSize       int    `json:"PageSize,omitempty"`
+	SourceType     string `json:"SourceType,omitempty"`
+	Status         string `json:"Status,omitempty"`
+}
+
+type DescribeImportTasksResponse struct {
+	CommonResponse
+	TaskInfo []*ImportTaskInfo `json:"TaskInfo"`
+	Total    int               `json:"Total"`
+}
+
+type CsvInfo struct {
+	Keys            []string `json:"Keys"`
+	Delimiter       string   `json:"Delimiter"`
+	EscapeChar      string   `json:"EscapeChar"`
+	PrintHeader     bool     `json:"PrintHeader"`
+	NonFieldContent string   `json:"NonFieldContent"`
+}
+
+type JsonInfo struct {
+	Keys   []string `json:"Keys,omitempty"`
+	Enable bool     `json:"Enable"`
+	Escape bool     `json:"Escape,omitempty"`
+}
+
+type ContentInfo struct {
+	Format   string    `json:"Format,omitempty"`
+	CsvInfo  *CsvInfo  `json:"CsvInfo,omitempty"`
+	JsonInfo *JsonInfo `json:"JsonInfo,omitempty"`
+}
+
+type TosShipperInfo struct {
+	Bucket          string `json:"Bucket,omitempty"`
+	Prefix          string `json:"Prefix,omitempty"`
+	MaxSize         int    `json:"MaxSize,omitempty"`
+	Compress        string `json:"Compress,omitempty"`
+	Interval        int    `json:"Interval,omitempty"`
+	PartitionFormat string `json:"PartitionFormat,omitempty"`
+}
+
+type KafkaShipperInfo struct {
+	Instance   string `json:"Instance"`
+	Compress   string `json:"Compress"`
+	KafkaTopic string `json:"KafkaTopic"`
+	StartTime  int    `json:"StartTime,omitempty"`
+	EndTime    int    `json:"EndTime,omitempty"`
+}
+
+type CreateShipperRequest struct {
+	CommonRequest
+	TopicId          string            `json:"TopicId"`
+	ShipperName      string            `json:"ShipperName"`
+	ShipperType      string            `json:"ShipperType"`
+	ShipperStartTime int               `json:"ShipperStartTime,omitempty"`
+	ShipperEndTime   int               `json:"ShipperEndTime,omitempty"`
+	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
+	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
+	ContentInfo      *ContentInfo      `json:"ContentInfo"`
+}
+
+func (v *CreateShipperRequest) CheckValidation() error {
+	return nil
+}
+
+type CreateShipperResponse struct {
+	CommonResponse
+	ShipperId string `json:"ShipperId"`
+}
+
+type DeleteShipperRequest struct {
+	CommonRequest
+	ShipperId string `json:"ShipperId"`
+}
+
+type DeleteShipperResponse struct {
+	CommonResponse
+}
+
+type ModifyShipperRequest struct {
+	CommonRequest
+	ShipperId        string            `json:"ShipperId"`
+	ShipperName      string            `json:"ShipperName,omitempty"`
+	ShipperType      string            `json:"ShipperType"`
+	Status           *bool             `json:"Status,omitempty"`
+	ContentInfo      *ContentInfo      `json:"ContentInfo,omitempty"`
+	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
+	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
+}
+
+func (v *ModifyShipperRequest) CheckValidation() error {
+	return nil
+}
+
+type ModifyShipperResponse struct {
+	CommonResponse
+}
+
+type DescribeShipperRequest struct {
+	CommonRequest
+	ShipperId string `json:"ShipperId"`
+}
+
+type DescribeShipperResponse struct {
+	CommonResponse
+	ProjectId        string            `json:"ProjectId,omitempty"`
+	ProjectName      string            `json:"ProjectName,omitempty"`
+	TopicId          string            `json:"TopicId,omitempty"`
+	TopicName        string            `json:"TopicName,omitempty"`
+	ShipperId        string            `json:"ShipperId,omitempty"`
+	ShipperName      string            `json:"ShipperName,omitempty"`
+	ShipperType      string            `json:"ShipperType,omitempty"`
+	DashboardId      string            `json:"DashboardId,omitempty"`
+	CreateTime       string            `json:"CreateTime,omitempty"`
+	ModifyTime       string            `json:"ModifyTime,omitempty"`
+	ShipperStartTime int               `json:"ShipperStartTime,omitempty"`
+	ShipperEndTime   int               `json:"ShipperEndTime,omitempty"`
+	Status           bool              `json:"Status,omitempty"`
+	ContentInfo      *ContentInfo      `json:"ContentInfo,omitempty"`
+	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
+	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
+}
+
+type DescribeShippersRequest struct {
+	CommonRequest
+	IamProjectName string `json:"IamProjectName,omitempty"`
+	ProjectId      string `json:"ProjectId,omitempty"`
+	ProjectName    string `json:"ProjectName,omitempty"`
+	TopicId        string `json:"TopicId,omitempty"`
+	TopicName      string `json:"TopicName,omitempty"`
+	ShipperId      string `json:"ShipperId,omitempty"`
+	ShipperName    string `json:"ShipperName,omitempty"`
+	ShipperType    string `json:"ShipperType,omitempty"`
+	PageNumber     int    `json:"PageNumber,omitempty"`
+	PageSize       int    `json:"PageSize,omitempty"`
+}
+
+type DescribeShippersResponse struct {
+	CommonResponse
+	Shippers []*DescribeShipperResponse `json:"Shippers"`
+	Total    int                        `json:"Total"`
+}

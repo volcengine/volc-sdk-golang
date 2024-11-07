@@ -110,4 +110,16 @@ type Client interface {
 	DescribeETLTask(request *DescribeETLTaskRequest) (*DescribeETLTaskResponse, error)
 	DescribeETLTasks(request *DescribeETLTasksRequest) (*DescribeETLTasksResponse, error)
 	ModifyETLTaskStatus(request *ModifyETLTaskStatusRequest) (*CommonResponse, error)
+
+	CreateImportTask(request *CreateImportTaskRequest) (*CreateImportTaskResponse, error)
+	DeleteImportTask(request *DeleteImportTaskRequest) (*DeleteImportTaskResponse, error)
+	ModifyImportTask(request *ModifyImportTaskRequest) (*ModifyImportTaskResponse, error)
+	DescribeImportTask(request *DescribeImportTaskRequest) (*DescribeImportTaskResponse, error)
+	DescribeImportTasks(request *DescribeImportTasksRequest) (*DescribeImportTasksResponse, error)
+
+	CreateShipper(request *CreateShipperRequest) (*CreateShipperResponse, error)
+	DeleteShipper(request *DeleteShipperRequest) (*DeleteShipperResponse, error)
+	ModifyShipper(request *ModifyShipperRequest) (*ModifyShipperResponse, error)
+	DescribeShipper(request *DescribeShipperRequest) (*DescribeShipperResponse, error)
+	DescribeShippers(request *DescribeShippersRequest) (*DescribeShippersResponse, error)
 }
