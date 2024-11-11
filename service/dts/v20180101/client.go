@@ -27,3 +27,9 @@ func NewInstanceWithRegion(region string) *Dts {
 	}
 	return instance
 }
+
+func (client *Dts) SetRegionAndHost(region, host string) *Dts {
+	client.ServiceInfo.Host = host
+	client.ServiceInfo.Credentials.Region = region
+	return client
+}
