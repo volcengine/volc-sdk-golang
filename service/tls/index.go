@@ -1,6 +1,8 @@
 package tls
 
 import (
+	"bytes"
+	"compress/gzip"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -173,8 +175,9 @@ func (c *LsClient) ModifyIndex(request *ModifyIndexRequest) (r *CommonResponse, 
 
 func (c *LsClient) SearchLogs(request *SearchLogsRequest) (r *SearchLogsResponse, e error) {
 	reqHeaders := map[string]string{
-		"Content-Type":   "application/json",
-		HeaderAPIVersion: APIVersion2,
+		"Content-Type":    "application/json",
+		"Accept-Encoding": CompressGz,
+		HeaderAPIVersion:  APIVersion2,
 	}
 
 	return c.search(request, reqHeaders)
@@ -215,7 +218,18 @@ func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]stri
 	var response = &SearchLogsResponse{}
 	response.FillRequestId(rawResponse)
 
-	decoder := json.NewDecoder(strings.NewReader(string(responseBody)))
+	var decoder *json.Decoder
+
+	if rawResponse.Header.Get("Content-Encoding") == CompressGz {
+		gzReader, err := gzip.NewReader(bytes.NewReader(responseBody))
+		if err != nil {
+			return nil, err
+		}
+		decoder = json.NewDecoder(gzReader)
+	} else {
+		decoder = json.NewDecoder(strings.NewReader(string(responseBody)))
+	}
+
 	decoder.UseNumber()
 
 	if err := decoder.Decode(response); err != nil {
@@ -227,8 +241,9 @@ func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]stri
 // SearchLogsV2 搜索按照0.3.0api版本进行，和默认的0.2.0版本区别见文档https://www.volcengine.com/docs/6470/112170
 func (c *LsClient) SearchLogsV2(request *SearchLogsRequest) (*SearchLogsResponse, error) {
 	reqHeaders := map[string]string{
-		"Content-Type":   "application/json",
-		HeaderAPIVersion: APIVersion3,
+		"Content-Type":    "application/json",
+		"Accept-Encoding": CompressGz,
+		HeaderAPIVersion:  APIVersion3,
 	}
 
 	return c.search(request, reqHeaders)
