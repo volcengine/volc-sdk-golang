@@ -1088,6 +1088,14 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"DescribeVodVidTrafficFileLog": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeVodVidTrafficFileLog"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 迁移平台
 		// **********************************************************************
