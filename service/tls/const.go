@@ -7,6 +7,7 @@ const (
 	ServiceName      = "TLS"
 
 	CompressLz4  = "lz4"
+	CompressGz   = "gzip"
 	CompressNone = "none"
 
 	FullTextIndexKey = "__content__"
