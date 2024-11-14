@@ -342,8 +342,14 @@ type TaskInfo struct {
 	// 提交的各个厂商任务详情
 	SubTasks []*SubTaskInfo `form:"SubTasks" json:"SubTasks" query:"SubTasks"`
 
+	// 任务状态
+	TaskStatus string `form:"TaskStatus" json:"TaskStatus" query:"TaskStatus"`
+
 	// 创建时间
 	CreatedAt int64 `form:"CreatedAt" json:"CreatedAt" query:"CreatedAt"`
+
+	// 结束时间
+	EndAt int64 `form:"EndAt" json:"EndAt" query:"EndAt"`
 }
 
 type SubTaskInfo struct {
