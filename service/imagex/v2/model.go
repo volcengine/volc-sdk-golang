@@ -16351,10 +16351,8 @@ type CreateCVImageGenerateTaskBody struct {
 	// 例如，使用通用 2.0S-文生图异步 [https://www.volcengine.com/docs/6791/1347773]，则 ModelVersion 需要取值为 2022-08-31。
 	ModelVersion string `json:"ModelVersion"`
 
-	// REQUIRED; 指定输出图片的文件名，输入限制如下所示：
-	// * 不支持空格。
-	// * 不支持以/开头或结尾，不支持/连续出现，最大长度限制为 180 个字节。
-	Output string `json:"Output"`
+	// REQUIRED; 参数输出。
+	Outputs []string `json:"Outputs"`
 
 	// REQUIRED; 请求的JSON字符串。
 	ReqJSON map[string]interface{} `json:"ReqJson"`
@@ -16484,6 +16482,9 @@ type GetCVTextGenerateImageResResult struct {
 
 	// REQUIRED; 响应的JSON字符串。
 	RespJSON map[string]interface{} `json:"RespJson"`
+
+	// REQUIRED; 存储URI。
+	StoreUris []string `json:"StoreUris"`
 }
 
 type GetCVTextGenerateImageReq struct {
@@ -16542,7 +16543,7 @@ type GetCVImageGenerateTaskResResponseMetadata struct {
 // GetCVImageGenerateTaskResResult - 视请求的接口而定
 type GetCVImageGenerateTaskResResult struct {
 
-	// REQUIRED; 最终上传至 veImageX 服务的结果图存储 URI，数量为 1。
+	// REQUIRED; 最终上传至 veImageX 服务的结果图访问 URL，数量为 1。
 	ImageUrls []string `json:"ImageUrls"`
 
 	// REQUIRED; 响应的 JSON 数据。
@@ -16554,6 +16555,9 @@ type GetCVImageGenerateTaskResResult struct {
 	// * done：任务处理完成
 	// * not_found：任务未找到，可能原因是无此任务或任务已过期（12小时）
 	Status string `json:"Status"`
+
+	// REQUIRED; 存储URI。
+	StoreUris []string `json:"StoreUris"`
 
 	// REQUIRED; 任务 ID
 	TaskID string `json:"TaskId"`
@@ -16634,6 +16638,9 @@ type GetCVAnimeGenerateImageResResult struct {
 
 	// REQUIRED; 响应的JSON数据。
 	RespJSON map[string]interface{} `json:"RespJson"`
+
+	// REQUIRED; 存储URI。
+	StoreUris []string `json:"StoreUris"`
 }
 
 type GetCVAnimeGenerateImageReq struct {
@@ -16714,6 +16721,9 @@ type GetCVImageGenerateResultResResult struct {
 
 	// REQUIRED; 响应的JSON内容。
 	RespJSON map[string]interface{} `json:"RespJson"`
+
+	// REQUIRED; 存储URI。
+	StoreUris []string `json:"StoreUris"`
 }
 
 type GetCVImageGenerateResultReq struct {
