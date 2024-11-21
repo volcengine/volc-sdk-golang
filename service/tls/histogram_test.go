@@ -129,3 +129,79 @@ func (suite *SDKHistogramTestSuite) TestDescribeHistogramAbnormally() {
 		suite.validateError(err, expectedErr)
 	}
 }
+
+func (suite *SDKHistogramTestSuite) TestDescribeHistogramV1Normally() {
+	startTime := time.Now().Unix()
+
+	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
+	suite.NoError(err)
+
+	testcases := map[*DescribeHistogramV1Request]*DescribeHistogramV1Response{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   startTime + 15,
+			Interval:  5000,
+		}: {
+			ResultStatus: "complete",
+			TotalCount:   100,
+		},
+	}
+
+	for req, expectedResp := range testcases {
+		resp, err := suite.cli.DescribeHistogramV1(req)
+		suite.NoError(err)
+		suite.Equal(expectedResp.ResultStatus, resp.ResultStatus)
+		suite.Equal(expectedResp.TotalCount, resp.TotalCount)
+	}
+}
+
+func (suite *SDKHistogramTestSuite) TestDescribeHistogramV1Normally2() {
+	startTime := time.Now().Unix()
+
+	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
+	suite.NoError(err)
+
+	testcases := map[*DescribeHistogramV1Request]*DescribeHistogramV1Response{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   startTime + 15,
+		}: {
+			ResultStatus: "complete",
+			TotalCount:   100,
+		},
+	}
+
+	for req, expectedResp := range testcases {
+		resp, err := suite.cli.DescribeHistogramV1(req)
+		suite.NoError(err)
+		suite.Equal(expectedResp.ResultStatus, resp.ResultStatus)
+		suite.Equal(expectedResp.TotalCount, resp.TotalCount)
+		suite.Equal(15, len(resp.HistogramInfos))
+	}
+}
+
+func (suite *SDKHistogramTestSuite) TestDescribeHistogramV1Abnormally() {
+	startTime := time.Now().Unix() - 60
+
+	testcases := map[*DescribeHistogramV1Request]*Error{
+		{
+			TopicID:   suite.topic,
+			Query:     "*",
+			StartTime: startTime,
+			EndTime:   startTime,
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument key StartTime, value " + strconv.FormatInt(startTime, 10) + ", please check argument.",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.DescribeHistogramV1(req)
+		suite.validateError(err, expectedErr)
+	}
+}

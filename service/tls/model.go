@@ -1409,6 +1409,40 @@ type DescribeHistogramResponse struct {
 	ResultStatus   string          `json:"ResultStatus"`
 }
 
+type HistogramInfoV1 struct {
+	Count        int64  `json:"Count"`
+	EndTime      int64  `json:"EndTime"`
+	StartTime    int64  `json:"StartTime"`
+	ResultStatus string `json:"ResultStatus"`
+}
+
+type DescribeHistogramV1Request struct {
+	CommonRequest
+	TopicID   string `json:"TopicId"`
+	Query     string `json:"Query"`
+	StartTime int64  `json:"StartTime"`
+	EndTime   int64  `json:"EndTime"`
+	Interval  int64  `json:"Interval,omitempty"`
+}
+
+func (v *DescribeHistogramV1Request) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if v.EndTime < v.StartTime {
+		return errors.New("Invalid argument, EndTime < StartTime")
+	}
+	// Query is okay to be empty, ignore.
+	return nil
+}
+
+type DescribeHistogramV1Response struct {
+	CommonResponse
+	HistogramInfos []HistogramInfoV1 `json:"Histogram"`
+	ResultStatus   string            `json:"ResultStatus"`
+	TotalCount     int64             `json:"TotalCount"`
+}
+
 type OpenKafkaConsumerRequest struct {
 	CommonRequest
 	TopicID string `json:"TopicId"`
