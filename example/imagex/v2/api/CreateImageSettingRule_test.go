@@ -10,7 +10,7 @@ import (
 	imagex "github.com/volcengine/volc-sdk-golang/service/imagex/v2"
 )
 
-func Test_DescribeImageXSensibleTopRAMURL(t *testing.T) {
+func Test_CreateImageSettingRule(t *testing.T) {
 	instance := imagex.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,12 +18,12 @@ func Test_DescribeImageXSensibleTopRAMURL(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.DescribeImageXSensibleTopRAMURLReq{
-		DescribeImageXSensibleTopRAMURLQuery: &imagex.DescribeImageXSensibleTopRAMURLQuery{},
-		DescribeImageXSensibleTopRAMURLBody:  &imagex.DescribeImageXSensibleTopRAMURLBody{},
+	param := &imagex.CreateImageSettingRuleReq{
+		CreateImageSettingRuleQuery: &imagex.CreateImageSettingRuleQuery{},
+		CreateImageSettingRuleBody:  &imagex.CreateImageSettingRuleBody{},
 	}
 
-	resp, err := instance.DescribeImageXSensibleTopRAMURL(context.Background(), param)
+	resp, err := instance.CreateImageSettingRule(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)

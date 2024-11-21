@@ -18,7 +18,10 @@ func Test_DescribeImageXMirrorRequestHTTPCodeOverview(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.DescribeImageXMirrorRequestHTTPCodeOverviewBody{}
+	param := &imagex.DescribeImageXMirrorRequestHTTPCodeOverviewReq{
+		DescribeImageXMirrorRequestHTTPCodeOverviewQuery: &imagex.DescribeImageXMirrorRequestHTTPCodeOverviewQuery{},
+		DescribeImageXMirrorRequestHTTPCodeOverviewBody:  &imagex.DescribeImageXMirrorRequestHTTPCodeOverviewBody{},
+	}
 
 	resp, err := instance.DescribeImageXMirrorRequestHTTPCodeOverview(context.Background(), param)
 
