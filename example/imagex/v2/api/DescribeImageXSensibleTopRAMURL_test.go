@@ -18,7 +18,10 @@ func Test_DescribeImageXSensibleTopRAMURL(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.DescribeImageXSensibleTopRAMURLBody{}
+	param := &imagex.DescribeImageXSensibleTopRAMURLReq{
+		DescribeImageXSensibleTopRAMURLQuery: &imagex.DescribeImageXSensibleTopRAMURLQuery{},
+		DescribeImageXSensibleTopRAMURLBody:  &imagex.DescribeImageXSensibleTopRAMURLBody{},
+	}
 
 	resp, err := instance.DescribeImageXSensibleTopRAMURL(context.Background(), param)
 

@@ -89,7 +89,9 @@ type Client interface {
 	CloseKafkaConsumer(request *CloseKafkaConsumerRequest) (*CloseKafkaConsumerResponse, error)
 	DescribeKafkaConsumer(request *DescribeKafkaConsumerRequest) (*DescribeKafkaConsumerResponse, error)
 
+	// Deprecated: use DescribeHistogramV1 instead
 	DescribeHistogram(request *DescribeHistogramRequest) (*DescribeHistogramResponse, error)
+	DescribeHistogramV1(request *DescribeHistogramV1Request) (*DescribeHistogramV1Response, error)
 
 	CreateConsumerGroup(request *CreateConsumerGroupRequest) (*CreateConsumerGroupResponse, error)
 	DeleteConsumerGroup(request *DeleteConsumerGroupRequest) (*CommonResponse, error)

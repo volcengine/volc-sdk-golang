@@ -64,54 +64,32 @@ func main() {
 	// }
 	// fmt.Println(res)
 
-	// collection, _ := service.GetCollection("sparse_go")
-	// sparse := map[string]float64{"like": 0.5}
+	// collection, _ := service.GetCollection("example1")
 	// field1 := map[string]interface{}{
-	// 	"id":     "111",
-	// 	"vector": genRandomVector(12),
-	// 	"sparse": sparse,
-	// }
-	// field2 := map[string]interface{}{
-	// 	"id":     "222",
-	// 	"vector": genRandomVector(12),
-	// 	"sparse": sparse,
-	// }
-	// field3 := map[string]interface{}{
-	// 	"id":     "333",
-	// 	"vector": genRandomVector(12),
-	// 	"sparse": sparse,
-	// }
-	// field4 := map[string]interface{}{
-	// 	"id":     "444",
-	// 	"vector": genRandomVector(12),
-	// 	"sparse": sparse,
+	// 	"doc_id":      "111",
+	// 	"text_vector": genRandomVector(12),
+	// 	"like":        4,
+	// 	"price":       4.44,
+	// 	"author":      []string{"gy", "xjq"},
+	// 	"aim":         false,
 	// }
 	// data1 := vikingdb.Data{
 	// 	Fields: field1,
 	// }
-	// data2 := vikingdb.Data{
-	// 	Fields: field2,
-	// }
-	// data3 := vikingdb.Data{
-	// 	Fields: field3,
-	// }
-	// data4 := vikingdb.Data{
-	// 	Fields: field4,
-	// }
 	// datas := []vikingdb.Data{
 	// 	data1,
-	// 	data2,
-	// 	data3,
-	// 	data4,
 	// }
 	// err := collection.UpsertData(datas)
 	// if err != nil {
-	// 	print(err.Error())
+	// 	fmt.Println(err)
 	// }
 
-	//collection, _ := service.GetCollection("sparse_go")
-	//res, _ := collection.FetchData("222")
-	//fmt.Println(res[0])
+	// collection, _ := service.GetCollection("example1")
+	// res, err := collection.FetchData("111")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(res)
 
 	// vectorIndex := &vikingdb.VectorIndexParams{
 	// 	Distance:  vikingdb.COSINE,
@@ -140,7 +118,7 @@ func main() {
 	// }
 
 	// index, _ := service.GetIndex("sparse_go", "sparse_go_test2")
-	// searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
+	// searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01}).SetRetry(true)
 	// res, err := index.SearchByVector(genRandomVector(12), searchOption)
 	// if err != nil {
 	// 	fmt.Println(err)
@@ -149,15 +127,15 @@ func main() {
 	// 	fmt.Println(item)
 	// }
 
-	//index, _ := service.GetIndex("sparse_go", "sparse_go")
-	//searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
-	//res, err := index.SearchById("111", searchOption)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//for _, item := range res {
-	//	fmt.Println(item)
-	//}
+	// index, _ := service.GetIndex("sparse_go", "sparse_go_test2")
+	// searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01}).SetRetry(true)
+	// res, err := index.SearchById("111", searchOption)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, item := range res {
+	// 	fmt.Println(item)
+	// }
 
 	//index, _ := service.GetIndex("sparse_go", "sparse_go")
 	//searchOption := vikingdb.NewSearchOptions().SetDenseWeight(0.5).SetSparseVectors(map[string]interface{}{"hello1": 0.01})
@@ -262,11 +240,11 @@ func main() {
 	//}
 	//print(collection)
 
-	//collection, err := service.GetCollection("tt")
-	//if err != nil {
-	//	print(err.Error())
-	//}
-	//fmt.Println(collection)
+	// collection, err := service.GetCollection("example")
+	// if err != nil {
+	// 	print(err.Error())
+	// }
+	// fmt.Println(collection)
 
 	//err := service.DropCollection("go")
 	//if err != nil {
@@ -465,15 +443,15 @@ func main() {
 	//	fmt.Println(item)
 	//}
 
-	//index, _ := service.GetIndex("tt", "tt")
-	//searchOption := vikingdb.NewSearchOptions().SetOutputFields([]string{"doc_id", "like", "text_vector", "price"})
-	//res, err := index.FetchData("111", searchOption)
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//for _, item := range res {
-	//	fmt.Println(item)
-	//}
+	// index, _ := service.GetIndex("sparse_go", "sparse_go_test5")
+	// searchOption := vikingdb.NewSearchOptions()
+	// res, err := index.FetchData("111", searchOption)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// for _, item := range res {
+	// 	fmt.Println(item)
+	// }
 
 	//collection1, _ := service.GetCollection("goTest")
 	//fmt.Println(collection1)
@@ -580,8 +558,11 @@ func main() {
 	//if err != nil {
 	//	fmt.Println(err)
 	//}
-	//index1, _ := service.GetIndex("example", "example_index")
-	//fmt.Println(index1)
+	// index1, err := service.GetIndex("example", "example2")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(index1)
 
 }
 func genRandomVector(dim int) []float64 {

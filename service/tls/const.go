@@ -72,7 +72,8 @@ const (
 
 	PathWebTracks = "/WebTracks"
 
-	PathDescribeHistogram = "/DescribeHistogram"
+	PathDescribeHistogram   = "/DescribeHistogram"
+	PathDescribeHistogramV1 = "/DescribeHistogramV1"
 
 	PathOpenKafkaConsumer     = "/OpenKafkaConsumer"
 	PathCloseKafkaConsumer    = "/CloseKafkaConsumer"
