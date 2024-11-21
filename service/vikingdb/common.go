@@ -31,6 +31,10 @@ const (
 	Auto   = "auto"
 
 	Data_Import = "data_import"
+
+	MAX_RETRIES         = 3
+	INITIAL_RETRY_DELAY = 0.5
+	MAX_RETRY_DELAY     = 8.0
 )
 
 type Field struct {

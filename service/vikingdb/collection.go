@@ -40,7 +40,7 @@ func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) 
 			params["async"] = true
 		}
 		//fmt.Println(params)
-		res, err := collection.VikingDBService.DoRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params))
+		res, err := collection.VikingDBService.retryRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		_ = res
 		return err
 		//fmt.Println(res)
@@ -68,7 +68,7 @@ func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) 
 				params["async"] = true
 			}
 			// fmt.Println(params)
-			res, err := collection.VikingDBService.DoRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params))
+			res, err := collection.VikingDBService.retryRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 			_ = res
 			if err != nil {
 				return err
@@ -158,7 +158,7 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 			"collection_name": collection.CollectionName,
 			"primary_keys":    id,
 		}
-		res, err := collection.VikingDBService.DoRequest(context.Background(), "FetchData", nil, collection.VikingDBService.convertMapToJson(params))
+		res, err := collection.VikingDBService.retryRequest(context.Background(), "FetchData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		if err != nil {
 			return nil, err
 		}
@@ -185,7 +185,7 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 			"collection_name": collection.CollectionName,
 			"primary_keys":    id,
 		}
-		res, err := collection.VikingDBService.DoRequest(context.Background(), "FetchData", nil, collection.VikingDBService.convertMapToJson(params))
+		res, err := collection.VikingDBService.retryRequest(context.Background(), "FetchData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		if err != nil {
 			return nil, err
 		}
