@@ -18,7 +18,10 @@ func Test_DescribeImageXMirrorRequestHTTPCodeByTime(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &imagex.DescribeImageXMirrorRequestHTTPCodeByTimeBody{}
+	param := &imagex.DescribeImageXMirrorRequestHTTPCodeByTimeReq{
+		DescribeImageXMirrorRequestHTTPCodeByTimeQuery: &imagex.DescribeImageXMirrorRequestHTTPCodeByTimeQuery{},
+		DescribeImageXMirrorRequestHTTPCodeByTimeBody:  &imagex.DescribeImageXMirrorRequestHTTPCodeByTimeBody{},
+	}
 
 	resp, err := instance.DescribeImageXMirrorRequestHTTPCodeByTime(context.Background(), param)
 
