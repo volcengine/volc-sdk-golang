@@ -5,6 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"math"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -268,6 +270,30 @@ func (vikingDBService *VikingDBService) DoRequest(ctx context.Context, api strin
 	//fmt.Println(data)
 	return data, err
 }
+
+func (vikingDBService *VikingDBService) retryRequest(ctx context.Context, api string, query url.Values, body string, remainingRetries int) (map[string]interface{}, error) {
+	res, _, err := vikingDBService.Client.CtxJson(ctx, api, query, body)
+	if err != nil {
+		_, errCode, _, extractExceptionErr := extractExceptionDetails(err.Error())
+		if extractExceptionErr != nil {
+			return nil, err
+		}
+		if errCode == 1000029 && remainingRetries > 0 {
+			remainingRetries = remainingRetries - 1
+			timeout := vikingDBService.calculateRetryTimeout(remainingRetries)
+			time.Sleep(time.Duration(timeout) * time.Second)
+			return vikingDBService.retryRequest(ctx, api, query, body, remainingRetries)
+		}
+		return nil, err
+	}
+	var data map[string]interface{}
+	err = json.Unmarshal(res, &data)
+	if err != nil {
+		return nil, err
+	}
+	return data, err
+}
+
 func getServiceInfo(host string, region string, ak string, sk string, scheme string) *base.ServiceInfo {
 	serviceInfo := &base.ServiceInfo{
 		Scheme: scheme,
@@ -683,26 +709,10 @@ func (vikingDBService *VikingDBService) GetCollection(collectionName string) (*C
 	params := map[string]interface{}{
 		"collection_name": collectionName,
 	}
-	retryCount := 3
-	var resData map[string]interface{}
-	var err error
-	for i := 0; i < retryCount; i++ {
-		resData, err = vikingDBService.DoRequest(context.Background(), "GetCollection", nil, vikingDBService.convertMapToJson(params))
-		if err != nil {
-			_, code, _, extractExceptionErr := extractExceptionDetails(err.Error())
-			if extractExceptionErr != nil {
-				return nil, err
-			}
-			if code == 1000029 && i != retryCount-1 {
-				time.Sleep(time.Duration(i*2+1) * time.Second)
-				continue
-			} else {
-				return nil, err
-			}
-		}
-		break
+	resData, err := vikingDBService.retryRequest(context.Background(), "GetCollection", nil, vikingDBService.convertMapToJson(params), MAX_RETRIES)
+	if err != nil {
+		return nil, err
 	}
-
 	var res map[string]interface{}
 	if d, ok := resData["data"]; !ok {
 		return nil, fmt.Errorf("invalid response, data does not exist: %v", resData)
@@ -808,25 +818,10 @@ func (vikingDBService *VikingDBService) GetIndex(collectionName string, indexNam
 		"collection_name": collectionName,
 		"index_name":      indexName,
 	}
-
-	retryCount := 3
 	var resData map[string]interface{}
-	var err error
-	for i := 0; i < retryCount; i++ {
-		resData, err = vikingDBService.DoRequest(context.Background(), "GetIndex", nil, vikingDBService.convertMapToJson(params))
-		if err != nil {
-			_, code, _, extractExceptionErr := extractExceptionDetails(err.Error())
-			if extractExceptionErr != nil {
-				return nil, err
-			}
-			if code == 1000029 && i != retryCount-1 {
-				time.Sleep(time.Duration(i*2+1) * time.Second)
-				continue
-			} else {
-				return nil, err
-			}
-		}
-		break
+	resData, err := vikingDBService.retryRequest(context.Background(), "GetIndex", nil, vikingDBService.convertMapToJson(params), MAX_RETRIES)
+	if err != nil {
+		return nil, err
 	}
 	var res map[string]interface{}
 	if d, ok := resData["data"]; !ok {
@@ -1263,4 +1258,15 @@ func extractExceptionDetails(exceptionMessage string) (string, int, string, erro
 		return message, code, requestID, nil
 	}
 	return "", 0, "", fmt.Errorf("input string does not match the expected format")
+}
+
+func (vikingDBService *VikingDBService) calculateRetryTimeout(remainingRetries int) float64 {
+	nbRetries := MAX_RETRIES - remainingRetries
+	sleepSeconds := math.Min(INITIAL_RETRY_DELAY*math.Pow(2.0, float64(nbRetries)), MAX_RETRY_DELAY)
+	jitter := 1 - 0.25*rand.Float64()
+	timeout := sleepSeconds * jitter
+	if timeout < 0 {
+		return 0
+	}
+	return timeout
 }

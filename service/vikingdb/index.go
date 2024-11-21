@@ -31,6 +31,7 @@ type SearchOptions struct {
 	partition      string
 	dense_weight   *float64
 	sparse_vectors []map[string]interface{}
+	retry          bool
 }
 
 func NewSearchOptions() *SearchOptions {
@@ -41,6 +42,7 @@ func NewSearchOptions() *SearchOptions {
 		partition:      "default",
 		dense_weight:   nil,
 		sparse_vectors: nil,
+		retry:          false,
 	}
 	return searchOptions
 }
@@ -66,6 +68,10 @@ func (searchOptions *SearchOptions) SetDenseWeight(dense_weight float64) *Search
 }
 func (searchOptions *SearchOptions) SetSparseVectors(sparse_vectors map[string]interface{}) *SearchOptions {
 	searchOptions.sparse_vectors = []map[string]interface{}{sparse_vectors}
+	return searchOptions
+}
+func (searchOptions *SearchOptions) SetRetry(retry bool) *SearchOptions {
+	searchOptions.retry = retry
 	return searchOptions
 }
 
@@ -102,7 +108,11 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 			"index_name":      index.IndexName,
 			"search":          search,
 		}
-		res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+		remainingRetries := 0
+		if searchOptions.retry {
+			remainingRetries = MAX_RETRIES
+		}
+		res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
 		if err != nil {
 			return nil, err
 		}
@@ -125,7 +135,11 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 			"index_name":      index.IndexName,
 			"search":          search,
 		}
-		res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+		remainingRetries := 0
+		if searchOptions.retry {
+			remainingRetries = MAX_RETRIES
+		}
+		res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
 		if err != nil {
 			return nil, err
 		}
@@ -156,7 +170,11 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 		"index_name":      index.IndexName,
 		"search":          search,
 	}
-	res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+	remainingRetries := 0
+	if searchOptions.retry {
+		remainingRetries = MAX_RETRIES
+	}
+	res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +207,11 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 		"search":          search,
 	}
 	//fmt.Println(params)
-	res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+	remainingRetries := 0
+	if searchOptions.retry {
+		remainingRetries = MAX_RETRIES
+	}
+	res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +241,11 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 		"index_name":      index.IndexName,
 		"search":          search,
 	}
-	res, err := index.VikingDBService.DoRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params))
+	remainingRetries := 0
+	if searchOptions.retry {
+		remainingRetries = MAX_RETRIES
+	}
+	res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +266,7 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 		if searchOptions.outputFields != nil {
 			params["output_fields"] = searchOptions.outputFields
 		}
-		res, err := index.VikingDBService.DoRequest(context.Background(), "FetchIndexData", nil, index.VikingDBService.convertMapToJson(params))
+		res, err := index.VikingDBService.retryRequest(context.Background(), "FetchIndexData", nil, index.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		if err != nil {
 			return nil, err
 		}
@@ -285,7 +311,7 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 			params["output_fields"] = searchOptions.outputFields
 		}
 		//fmt.Println(params)
-		res, err := index.VikingDBService.DoRequest(context.Background(), "FetchIndexData", nil, index.VikingDBService.convertMapToJson(params))
+		res, err := index.VikingDBService.retryRequest(context.Background(), "FetchIndexData", nil, index.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		if err != nil {
 			return nil, err
 		}
