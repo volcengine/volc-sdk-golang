@@ -2,6 +2,7 @@ package producer
 
 import (
 	"errors"
+	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -9,7 +10,6 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	. "github.com/volcengine/volc-sdk-golang/service/tls"
-	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
@@ -35,7 +35,12 @@ type producer struct {
 }
 
 func newProducer(producerConfig *Config) *producer {
-	logger := common.LogConfig(producerConfig.LoggerConfig)
+	var logger log.Logger
+	if producerConfig.Logger != nil {
+		logger = *producerConfig.Logger
+	} else {
+		logger = common.LogConfig(producerConfig.LoggerConfig)
+	}
 	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret,
 		producerConfig.SecurityToken, producerConfig.Region)
 

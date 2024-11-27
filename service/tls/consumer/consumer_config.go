@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"errors"
+	"github.com/go-kit/kit/log"
 	"regexp"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
@@ -20,6 +21,7 @@ type Config struct {
 	FlushCheckpointIntervalSecond  int
 	MaxFetchLogGroupCount          int
 	OrderedConsume                 bool
+	Logger                         *log.Logger
 }
 
 func GetDefaultConsumerConfig() *Config {
