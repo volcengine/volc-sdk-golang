@@ -243,6 +243,15 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+
+		"UpdateTask": {
+			Method: http.MethodPost,
+			Path:   "/api/task/update",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 	}
 	return apiInfos
 }
@@ -1238,6 +1247,18 @@ func (vikingDBService *VikingDBService) DropTask(taskID string) error {
 		"task_id": taskID,
 	}
 	_, err := vikingDBService.DoRequest(context.Background(), "DropTask", nil, vikingDBService.convertMapToJson(params))
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (vikingDBService *VikingDBService) UpdateTask(taskID string, taskStatus string) error {
+	params := map[string]interface{}{
+		"task_id":     taskID,
+		"task_status": taskStatus,
+	}
+	_, err := vikingDBService.DoRequest(context.Background(), "UpdateTask", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
 		return err
 	}
