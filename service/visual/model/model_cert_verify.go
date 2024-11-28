@@ -40,6 +40,14 @@ type CertVerifyQueryRequest struct {
 	OmitData   bool   `json:"omit_data"`
 }
 
+type CertLivenessVerifyQueryRequest struct {
+	ReqKey        string `json:"req_key"`
+	BytedToken    string `json:"byted_token"`
+	OmitData      bool   `json:"omit_data"`
+	OmitImageData bool   `json:"omit_image_data"`
+	OmitVideoData bool   `json:"omit_video_data"`
+}
+
 type CertConfigInitRequest struct {
 	ReqKey         string `json:"req_key"`
 	ConfigName     string `json:"config_name"`
@@ -155,6 +163,46 @@ type CertVerifyQueryResult struct {
 	Status           int                    `json:"status"`
 	TimeElapsed      string                 `json:"time_elapsed"`
 	Data             *CertVerifyQueryData   `json:"data"`
+}
+
+type CertLivenessVerifyQueryData struct {
+	IsAttack                bool   `json:"is_attack"`
+	HasFinishMotionLiveness bool   `json:"has_finish_motion_liveness"`
+	RiskResult              string `json:"risk_result"`
+	Images                  *struct {
+		ImageBest string `json:"image_best"`
+		ImageEnv  string `json:"image_env"`
+	} `json:"images"`
+	Video             string `json:"video"`
+	ImagesQualityInfo *struct {
+		ImageBest string `json:"image_best"`
+		ImageEnv  string `json:"image_env"`
+		TosData   *struct {
+			Bucket       string `json:"bucket"`
+			ImageEnvKey  string `json:"image_env_key"`
+			ImageBestKey string `json:"image_best_key"`
+			VideoKey     string `json:"video_key"`
+			CertDataKey  string `json:"cert_data_key"`
+		} `json:"tos_data"`
+		VerifyAlgorithmBaseResp *struct {
+			StatusCode    int    `json:"status_code"`
+			StatusMessage string `json:"status_message"`
+		} `json:"verify_algorithm_base_resp"`
+		VerifyReqMeasureInfo *struct {
+			MeasureType string `json:"measure_type"`
+			Value       int    `json:"value"`
+		} `json:"verify_req_measure_info"`
+	} `json:"images_quality_info"`
+}
+
+type CertLivenessVerifyQueryResult struct {
+	ResponseMetadata *base.ResponseMetadata       `json:",omitempty"`
+	RequestId        string                       `json:"request_id"`
+	Code             int                          `json:"code"`
+	Message          string                       `json:"message"`
+	Status           int                          `json:"status"`
+	TimeElapsed      string                       `json:"time_elapsed"`
+	Data             *CertLivenessVerifyQueryData `json:"data"`
 }
 
 type CertConfigInitData struct {
