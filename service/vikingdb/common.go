@@ -30,11 +30,20 @@ const (
 	Custom = "custom"
 	Auto   = "auto"
 
-	Data_Import = "data_import"
+	Data_Import   = "data_import"
+	Filter_Delete = "filter_delete"
 
 	MAX_RETRIES         = 3
 	INITIAL_RETRY_DELAY = 0.5
 	MAX_RETRY_DELAY     = 8.0
+
+	Init      = "init"
+	Queued    = "queued"
+	Running   = "running"
+	Done      = "done"
+	Fail      = "fail"
+	Confirm   = "confirm"
+	Confirmed = "confirmed"
 )
 
 type Field struct {

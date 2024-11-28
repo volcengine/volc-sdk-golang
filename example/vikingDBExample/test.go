@@ -11,13 +11,24 @@ import (
 func main() {
 	service := vikingdb.NewVikingDBService("", "", "", "", "")
 
+	// err := service.UpdateTask("bd376e6b-c7ee-52a4-ac90-01d64dd20623", vikingdb.Confirmed)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// id, err := service.CreateTask(vikingdb.Filter_Delete, map[string]interface{}{"collection_name": "example", "filter": map[string]interface{}{"like": []int64{3}}})
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+	// fmt.Println(id)
+
 	// id, err := service.CreateTask(vikingdb.Data_Import, map[string]interface{}{"tos_path": "demo-1028/demo_1030", "file_type": "json", "ignore_error": false, "collection_name": "demo_1029"})
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
 	// fmt.Println(id)
 
-	// task, err := service.GetTask("752b0b8c-2783-5efd-8307-8dd590e22cfc")
+	// task, err := service.GetTask("bd376e6b-c7ee-52a4-ac90-01d64dd20623")
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
@@ -84,12 +95,12 @@ func main() {
 	// 	fmt.Println(err)
 	// }
 
-	// collection, _ := service.GetCollection("example1")
-	// res, err := collection.FetchData("111")
+	// collection, _ := service.GetCollection("example")
+	// res, err := collection.FetchData("333")
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
-	// fmt.Println(res)
+	// fmt.Println(res[0].Fields)
 
 	// vectorIndex := &vikingdb.VectorIndexParams{
 	// 	Distance:  vikingdb.COSINE,

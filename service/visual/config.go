@@ -733,6 +733,17 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"CertLivenessVerifyQuery": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CertLivenessVerifyQuery"},
+				"Version": []string{"2022-08-31"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 		"Img2Video3D": {
 			Method: http.MethodPost,
 			Path:   "/",

@@ -1,6 +1,7 @@
 package producer
 
 import (
+	"github.com/go-kit/kit/log"
 	"time"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
@@ -25,6 +26,7 @@ type Config struct {
 
 	common.LoggerConfig
 	common.ClientConfig
+	Logger *log.Logger
 }
 
 func GetDefaultProducerConfig() *Config {

@@ -19,9 +19,9 @@ func LogConfig(producerConfig LoggerConfig) log.Logger {
 		}
 	} else {
 		if producerConfig.IsJsonType {
-			logger = log.NewLogfmtLogger(initLogFlusher(producerConfig))
-		} else {
 			logger = log.NewJSONLogger(initLogFlusher(producerConfig))
+		} else {
+			logger = log.NewLogfmtLogger(initLogFlusher(producerConfig))
 		}
 	}
 	switch producerConfig.LogLevel {

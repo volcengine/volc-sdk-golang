@@ -37,7 +37,12 @@ func newConsumer(ctx context.Context, conf *Config, consumeFunc func(topicID str
 	}
 
 	client := tls.NewClient(conf.Endpoint, conf.AccessKeyID, conf.AccessKeySecret, conf.SecurityToken, conf.Region)
-	logger := common.LogConfig(conf.LoggerConfig)
+	var logger log.Logger
+	if conf.Logger != nil {
+		logger = *conf.Logger
+	} else {
+		logger = common.LogConfig(conf.LoggerConfig)
+	}
 	heartbeatExpiredCh := make(chan struct{})
 	commitCh := make(chan struct{})
 
