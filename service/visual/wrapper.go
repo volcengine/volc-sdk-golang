@@ -683,6 +683,20 @@ func (p *Visual) CertVerifyQuery(req *model.CertVerifyQueryRequest) (*model.Cert
 	return resp, statusCode, nil
 }
 
+func (p *Visual) CertLivenessVerifyQuery(req *model.CertLivenessVerifyQueryRequest) (*model.CertLivenessVerifyQueryResult, int, error) {
+	jsonStr, err := json.Marshal(req)
+
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := new(model.CertLivenessVerifyQueryResult)
+	statusCode, err := p.commonJsonHandler("CertLivenessVerifyQuery", string(jsonStr), resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) Img2Video3D(req *model.Img2Video3DRequest) (*model.Img2Video3DResult, int, error) {
 	if req.RenderSpec.LongSide == 0 {
 		req.RenderSpec.LongSide = 960
