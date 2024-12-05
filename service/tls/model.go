@@ -137,6 +137,8 @@ type CreateTopicRequest struct {
 	LogPublicIP    *bool     `json:",omitempty"`
 	EnableHotTtl   *bool     `json:",omitempty"`
 	HotTtl         *int32    `json:",omitempty"`
+	ColdTtl        *int32    `json:",omitempty"`
+	ArchiveTtl     *int32    `json:",omitempty"`
 }
 
 func (v *CreateTopicRequest) CheckValidation() error {
@@ -186,6 +188,8 @@ type ModifyTopicRequest struct {
 	LogPublicIP    *bool   `json:",omitempty"`
 	EnableHotTtl   *bool   `json:",omitempty"`
 	HotTtl         *int32  `json:",omitempty"`
+	ColdTtl        *int32  `json:",omitempty"`
+	ArchiveTtl     *int32  `json:",omitempty"`
 }
 
 func (v *ModifyTopicRequest) CheckValidation() error {
@@ -226,6 +230,8 @@ type DescribeTopicResponse struct {
 	LogPublicIP     bool      `json:"LogPublicIP"`
 	EnableHotTtl    bool      `json:"EnableHotTtl"`
 	HotTtl          int32     `json:"HotTtl"`
+	ColdTtl         int32     `json:"ColdTtl"`
+	ArchiveTtl      int32     `json:"ArchiveTtl"`
 }
 
 type DescribeTopicsRequest struct {
@@ -261,6 +267,8 @@ type Topic struct {
 	LogPublicIP     bool      `json:"LogPublicIP"`
 	EnableHotTtl    bool      `json:"EnableHotTtl"`
 	HotTtl          int32     `json:"HotTtl"`
+	ColdTtl         int32     `json:"ColdTtl"`
+	ArchiveTtl      int32     `json:"ArchiveTtl"`
 }
 
 type DescribeTopicsResponse struct {
