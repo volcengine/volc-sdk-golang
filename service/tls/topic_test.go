@@ -88,25 +88,39 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 			LogPublicIP: true,
 		},
 		{
-			ProjectID:   suite.project,
-			TopicName:   "topic2",
-			Ttl:         30,
-			Description: "create a topic with new arguments",
-			ShardCount:  2,
-			TimeKey:     &timeKey,
-			TimeFormat:  &timeFormat,
-			Tags:        tags,
-			LogPublicIP: &logPublicIP,
+			ProjectID:      suite.project,
+			TopicName:      "topic2",
+			Ttl:            120,
+			Description:    "create a topic with new arguments",
+			ShardCount:     2,
+			MaxSplitShard:  Int32Ptr(2),
+			AutoSplit:      true,
+			EnableTracking: BoolPtr(false),
+			TimeKey:        &timeKey,
+			TimeFormat:     &timeFormat,
+			Tags:           tags,
+			LogPublicIP:    &logPublicIP,
+			EnableHotTtl:   BoolPtr(true),
+			HotTtl:         Int32Ptr(30),
+			ColdTtl:        Int32Ptr(30),
+			ArchiveTtl:     Int32Ptr(60),
 		}: {
-			ProjectID:   suite.project,
-			TopicName:   "topic2",
-			Ttl:         30,
-			Description: "create a topic with new arguments",
-			ShardCount:  2,
-			TimeKey:     timeKey,
-			TimeFormat:  timeFormat,
-			Tags:        tags,
-			LogPublicIP: logPublicIP,
+			ProjectID:      suite.project,
+			TopicName:      "topic2",
+			Ttl:            120,
+			Description:    "create a topic with new arguments",
+			ShardCount:     2,
+			MaxSplitShard:  2,
+			AutoSplit:      true,
+			EnableTracking: false,
+			TimeKey:        timeKey,
+			TimeFormat:     timeFormat,
+			Tags:           tags,
+			LogPublicIP:    logPublicIP,
+			EnableHotTtl:   true,
+			HotTtl:         30,
+			ColdTtl:        30,
+			ArchiveTtl:     60,
 		},
 	}
 
@@ -130,6 +144,20 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 		} else {
 			suite.Equal(topicInfo.Tags, getTopicResponse.Tags)
 		}
+
+		if topicInfo.AutoSplit {
+			suite.True(getTopicResponse.AutoSplit)
+			suite.Equal(topicInfo.MaxSplitShard, getTopicResponse.MaxSplitShard)
+		} else {
+			suite.False(getTopicResponse.AutoSplit)
+			suite.Equal(int32(0), getTopicResponse.MaxSplitShard)
+		}
+
+		suite.Equal(topicInfo.EnableTracking, getTopicResponse.EnableTracking)
+		suite.Equal(topicInfo.EnableHotTtl, getTopicResponse.EnableHotTtl)
+		suite.Equal(topicInfo.HotTtl, getTopicResponse.HotTtl)
+		suite.Equal(topicInfo.ColdTtl, getTopicResponse.ColdTtl)
+		suite.Equal(topicInfo.ArchiveTtl, getTopicResponse.ArchiveTtl)
 	}
 }
 
@@ -195,18 +223,23 @@ func (suite *SDKTopicTestSuite) TestModifyTopicNormally() {
 	suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 
 	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{
-		TopicID:   createTopicResp.TopicID,
-		TopicName: StrPtr("new-topic-name"),
-		HotTtl:    Int32Ptr(7),
+		Ttl:        Uint16Ptr(67),
+		TopicID:    createTopicResp.TopicID,
+		TopicName:  StrPtr("new-topic-name"),
+		HotTtl:     Int32Ptr(7),
+		ColdTtl:    Int32Ptr(30),
+		ArchiveTtl: Int32Ptr(30),
 	})
 	suite.NoError(err)
 	describeTopicResp, err := suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
 	suite.NoError(err)
 	suite.Equal("new-topic-name", describeTopicResp.TopicName)
-	suite.Equal(9, int(describeTopicResp.Ttl))
+	suite.Equal(67, int(describeTopicResp.Ttl))
 	suite.Equal(7, int(describeTopicResp.HotTtl))
 	suite.Equal(true, describeTopicResp.EnableHotTtl)
 	suite.Equal("test topic", describeTopicResp.Description)
+	suite.Equal(30, int(describeTopicResp.ColdTtl))
+	suite.Equal(30, int(describeTopicResp.ArchiveTtl))
 
 	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{
 		TopicID:     createTopicResp.TopicID,
@@ -319,36 +352,52 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 
 	createTopicReqs := []*CreateTopicRequest{
 		{
-			ProjectID:   suite.project,
-			TopicName:   "sdk-a" + uuid.New().String(),
-			Ttl:         1,
-			Description: "test topic",
-			ShardCount:  2,
+			ProjectID:    suite.project,
+			TopicName:    "sdk-a" + uuid.New().String(),
+			Ttl:          1,
+			Description:  "test topic",
+			ShardCount:   2,
+			EnableHotTtl: BoolPtr(false),
+			HotTtl:       Int32Ptr(0),
+			ColdTtl:      Int32Ptr(0),
+			ArchiveTtl:   Int32Ptr(0),
 		},
 		{
-			ProjectID:   suite.project,
-			TopicName:   "sdk-a" + uuid.New().String(),
-			Ttl:         2,
-			Description: "test topic",
-			ShardCount:  2,
+			ProjectID:    suite.project,
+			TopicName:    "sdk-a" + uuid.New().String(),
+			Ttl:          2,
+			Description:  "test topic",
+			ShardCount:   2,
+			EnableHotTtl: BoolPtr(false),
+			HotTtl:       Int32Ptr(0),
+			ColdTtl:      Int32Ptr(0),
+			ArchiveTtl:   Int32Ptr(0),
 		},
 		{
-			ProjectID:   suite.project,
-			TopicName:   "sdk-b" + uuid.New().String(),
-			Ttl:         3,
-			Description: "test topic",
-			ShardCount:  2,
+			ProjectID:    suite.project,
+			TopicName:    "sdk-b" + uuid.New().String(),
+			Ttl:          3,
+			Description:  "test topic",
+			ShardCount:   2,
+			EnableHotTtl: BoolPtr(false),
+			HotTtl:       Int32Ptr(0),
+			ColdTtl:      Int32Ptr(0),
+			ArchiveTtl:   Int32Ptr(0),
 		},
 		{
-			ProjectID:   suite.project,
-			TopicName:   "sdk-c" + uuid.New().String(),
-			Ttl:         30,
-			Description: "create a topic with new arguments",
-			ShardCount:  2,
-			TimeKey:     &timeKey,
-			TimeFormat:  &timeFormat,
-			Tags:        tags,
-			LogPublicIP: &logPublicIP,
+			ProjectID:    suite.project,
+			TopicName:    "sdk-c" + uuid.New().String(),
+			Ttl:          120,
+			Description:  "create a topic with new arguments",
+			ShardCount:   2,
+			TimeKey:      &timeKey,
+			TimeFormat:   &timeFormat,
+			Tags:         tags,
+			LogPublicIP:  &logPublicIP,
+			EnableHotTtl: BoolPtr(true),
+			HotTtl:       Int32Ptr(30),
+			ColdTtl:      Int32Ptr(30),
+			ArchiveTtl:   Int32Ptr(60),
 		},
 	}
 
@@ -364,32 +413,48 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		}: {
 			Topics: []*Topic{
 				{
-					TopicName:   createTopicReqs[3].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[3].Ttl,
-					ShardCount:  int32(createTopicReqs[3].ShardCount),
-					Description: createTopicReqs[3].Description,
+					TopicName:    createTopicReqs[3].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[3].Ttl,
+					ShardCount:   int32(createTopicReqs[3].ShardCount),
+					Description:  createTopicReqs[3].Description,
+					EnableHotTtl: *createTopicReqs[3].EnableHotTtl,
+					HotTtl:       *createTopicReqs[3].HotTtl,
+					ColdTtl:      *createTopicReqs[3].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[3].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[2].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[2].Ttl,
-					ShardCount:  int32(createTopicReqs[2].ShardCount),
-					Description: createTopicReqs[2].Description,
+					TopicName:    createTopicReqs[2].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[2].Ttl,
+					ShardCount:   int32(createTopicReqs[2].ShardCount),
+					Description:  createTopicReqs[2].Description,
+					EnableHotTtl: *createTopicReqs[2].EnableHotTtl,
+					HotTtl:       *createTopicReqs[2].HotTtl,
+					ColdTtl:      *createTopicReqs[2].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[2].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[1].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[1].Ttl,
-					ShardCount:  int32(createTopicReqs[1].ShardCount),
-					Description: createTopicReqs[1].Description,
+					TopicName:    createTopicReqs[1].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[1].Ttl,
+					ShardCount:   int32(createTopicReqs[1].ShardCount),
+					Description:  createTopicReqs[1].Description,
+					EnableHotTtl: *createTopicReqs[1].EnableHotTtl,
+					HotTtl:       *createTopicReqs[1].HotTtl,
+					ColdTtl:      *createTopicReqs[1].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[1].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[0].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[0].Ttl,
-					ShardCount:  int32(createTopicReqs[0].ShardCount),
-					Description: createTopicReqs[0].Description,
+					TopicName:    createTopicReqs[0].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[0].Ttl,
+					ShardCount:   int32(createTopicReqs[0].ShardCount),
+					Description:  createTopicReqs[0].Description,
+					EnableHotTtl: *createTopicReqs[0].EnableHotTtl,
+					HotTtl:       *createTopicReqs[0].HotTtl,
+					ColdTtl:      *createTopicReqs[0].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[0].ArchiveTtl,
 				},
 			},
 			Total: 4,
@@ -401,32 +466,48 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		}: {
 			Topics: []*Topic{
 				{
-					TopicName:   createTopicReqs[3].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[3].Ttl,
-					ShardCount:  int32(createTopicReqs[3].ShardCount),
-					Description: createTopicReqs[3].Description,
+					TopicName:    createTopicReqs[3].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[3].Ttl,
+					ShardCount:   int32(createTopicReqs[3].ShardCount),
+					Description:  createTopicReqs[3].Description,
+					EnableHotTtl: *createTopicReqs[3].EnableHotTtl,
+					HotTtl:       *createTopicReqs[3].HotTtl,
+					ColdTtl:      *createTopicReqs[3].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[3].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[2].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[2].Ttl,
-					ShardCount:  int32(createTopicReqs[2].ShardCount),
-					Description: createTopicReqs[2].Description,
+					TopicName:    createTopicReqs[2].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[2].Ttl,
+					ShardCount:   int32(createTopicReqs[2].ShardCount),
+					Description:  createTopicReqs[2].Description,
+					EnableHotTtl: *createTopicReqs[2].EnableHotTtl,
+					HotTtl:       *createTopicReqs[2].HotTtl,
+					ColdTtl:      *createTopicReqs[2].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[2].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[1].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[1].Ttl,
-					ShardCount:  int32(createTopicReqs[1].ShardCount),
-					Description: createTopicReqs[1].Description,
+					TopicName:    createTopicReqs[1].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[1].Ttl,
+					ShardCount:   int32(createTopicReqs[1].ShardCount),
+					Description:  createTopicReqs[1].Description,
+					EnableHotTtl: *createTopicReqs[1].EnableHotTtl,
+					HotTtl:       *createTopicReqs[1].HotTtl,
+					ColdTtl:      *createTopicReqs[1].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[1].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[0].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[0].Ttl,
-					ShardCount:  int32(createTopicReqs[0].ShardCount),
-					Description: createTopicReqs[0].Description,
+					TopicName:    createTopicReqs[0].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[0].Ttl,
+					ShardCount:   int32(createTopicReqs[0].ShardCount),
+					Description:  createTopicReqs[0].Description,
+					EnableHotTtl: *createTopicReqs[0].EnableHotTtl,
+					HotTtl:       *createTopicReqs[0].HotTtl,
+					ColdTtl:      *createTopicReqs[0].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[0].ArchiveTtl,
 				},
 			},
 			Total: 4,
@@ -438,18 +519,26 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		}: {
 			Topics: []*Topic{
 				{
-					TopicName:   createTopicReqs[1].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[1].Ttl,
-					ShardCount:  int32(createTopicReqs[1].ShardCount),
-					Description: createTopicReqs[1].Description,
+					TopicName:    createTopicReqs[1].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[1].Ttl,
+					ShardCount:   int32(createTopicReqs[1].ShardCount),
+					Description:  createTopicReqs[1].Description,
+					EnableHotTtl: *createTopicReqs[1].EnableHotTtl,
+					HotTtl:       *createTopicReqs[1].HotTtl,
+					ColdTtl:      *createTopicReqs[1].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[1].ArchiveTtl,
 				},
 				{
-					TopicName:   createTopicReqs[0].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[0].Ttl,
-					ShardCount:  int32(createTopicReqs[0].ShardCount),
-					Description: createTopicReqs[0].Description,
+					TopicName:    createTopicReqs[0].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[0].Ttl,
+					ShardCount:   int32(createTopicReqs[0].ShardCount),
+					Description:  createTopicReqs[0].Description,
+					EnableHotTtl: *createTopicReqs[0].EnableHotTtl,
+					HotTtl:       *createTopicReqs[0].HotTtl,
+					ColdTtl:      *createTopicReqs[0].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[0].ArchiveTtl,
 				},
 			},
 			Total: 2,
@@ -463,11 +552,15 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 		}: {
 			Topics: []*Topic{
 				{
-					TopicName:   createTopicReqs[3].TopicName,
-					ProjectID:   suite.project,
-					Ttl:         createTopicReqs[3].Ttl,
-					ShardCount:  int32(createTopicReqs[3].ShardCount),
-					Description: createTopicReqs[3].Description,
+					TopicName:    createTopicReqs[3].TopicName,
+					ProjectID:    suite.project,
+					Ttl:          createTopicReqs[3].Ttl,
+					ShardCount:   int32(createTopicReqs[3].ShardCount),
+					Description:  createTopicReqs[3].Description,
+					EnableHotTtl: *createTopicReqs[3].EnableHotTtl,
+					HotTtl:       *createTopicReqs[3].HotTtl,
+					ColdTtl:      *createTopicReqs[3].ColdTtl,
+					ArchiveTtl:   *createTopicReqs[3].ArchiveTtl,
 				},
 			},
 			Total: 1,
@@ -493,6 +586,10 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 					suite.Equal(expectTopic.Ttl, actualTopic.Ttl)
 					suite.Equal(expectTopic.ShardCount, actualTopic.ShardCount)
 					suite.Equal(expectTopic.Description, actualTopic.Description)
+					suite.Equal(expectTopic.EnableHotTtl, actualTopic.EnableHotTtl)
+					suite.Equal(expectTopic.HotTtl, actualTopic.HotTtl)
+					suite.Equal(expectTopic.ColdTtl, actualTopic.ColdTtl)
+					suite.Equal(expectTopic.ArchiveTtl, actualTopic.ArchiveTtl)
 					break
 				}
 			}
