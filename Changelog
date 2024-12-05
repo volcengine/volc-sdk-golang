@@ -1,5 +1,8 @@
 ### Change log
 
+2024-12-05 Bumped to version v1.0.188
+- Updated service rtc/tls
+
 2024-11-28 Bumped to version v1.0.187
 - Updated service vikingdb/visual/tls
 
