@@ -895,6 +895,25 @@ func (c *Rtc) WbTranscodeGet(ctx context.Context, arg *WbTranscodeGetQuery) (*Wb
 	return nil, statusCode, err
 }
 
+func (c *Rtc) ListRealTimePublicStreamInfo(ctx context.Context, arg *ListRealTimePublicStreamInfoBody) (*ListRealTimePublicStreamInfoRes, int, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	data, statusCode, err := c.Client.CtxJson(ctx, "ListRealTimePublicStreamInfo", url.Values{}, string(body))
+
+	if len(data) > 0 {
+		result := new(ListRealTimePublicStreamInfoRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
+	}
+
+	return nil, statusCode, err
+}
+
 func (c *Rtc) ListRealTimeQualityDistribution(ctx context.Context, arg *ListRealTimeQualityDistributionBody) (*ListRealTimeQualityDistributionRes, int, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -905,6 +924,25 @@ func (c *Rtc) ListRealTimeQualityDistribution(ctx context.Context, arg *ListReal
 
 	if len(data) > 0 {
 		result := new(ListRealTimeQualityDistributionRes)
+		if err2 := json.Unmarshal(data, result); err2 != nil {
+			return nil, statusCode, err2
+		}
+		return result, statusCode, err
+	}
+
+	return nil, statusCode, err
+}
+
+func (c *Rtc) ListRealTimeQuality(ctx context.Context, arg *ListRealTimeQualityBody) (*ListRealTimeQualityRes, int, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	data, statusCode, err := c.Client.CtxJson(ctx, "ListRealTimeQuality", url.Values{}, string(body))
+
+	if len(data) > 0 {
+		result := new(ListRealTimeQualityRes)
 		if err2 := json.Unmarshal(data, result); err2 != nil {
 			return nil, statusCode, err2
 		}
@@ -1009,16 +1047,16 @@ func (c *Rtc) ListOperationData(ctx context.Context, arg *ListOperationDataBody)
 	return nil, statusCode, err
 }
 
-func (c *Rtc) ListRealTimeQuality(ctx context.Context, arg *ListRealTimeQualityBody) (*ListRealTimeQualityRes, int, error) {
+func (c *Rtc) ListUsages(ctx context.Context, arg *ListUsagesBody) (*ListUsagesRes, int, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, 0, err
 	}
 
-	data, statusCode, err := c.Client.CtxJson(ctx, "ListRealTimeQuality", url.Values{}, string(body))
+	data, statusCode, err := c.Client.CtxJson(ctx, "ListUsages", url.Values{}, string(body))
 
 	if len(data) > 0 {
-		result := new(ListRealTimeQualityRes)
+		result := new(ListUsagesRes)
 		if err2 := json.Unmarshal(data, result); err2 != nil {
 			return nil, statusCode, err2
 		}
@@ -1133,25 +1171,6 @@ func (c *Rtc) StartDetection(ctx context.Context, arg *StartDetectionBody) (*Sta
 
 	if len(data) > 0 {
 		result := new(StartDetectionRes)
-		if err2 := json.Unmarshal(data, result); err2 != nil {
-			return nil, statusCode, err2
-		}
-		return result, statusCode, err
-	}
-
-	return nil, statusCode, err
-}
-
-func (c *Rtc) ListUsages(ctx context.Context, arg *ListUsagesBody) (*ListUsagesRes, int, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, 0, err
-	}
-
-	data, statusCode, err := c.Client.CtxJson(ctx, "ListUsages", url.Values{}, string(body))
-
-	if len(data) > 0 {
-		result := new(ListUsagesRes)
 		if err2 := json.Unmarshal(data, result); err2 != nil {
 			return nil, statusCode, err2
 		}

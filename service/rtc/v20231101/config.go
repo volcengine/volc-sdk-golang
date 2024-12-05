@@ -378,11 +378,27 @@ var (
 				"Version": []string{"2023-11-01"},
 			},
 		},
+		"ListRealTimePublicStreamInfo": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListRealTimePublicStreamInfo"},
+				"Version": []string{"2023-11-01"},
+			},
+		},
 		"ListRealTimeQualityDistribution": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListRealTimeQualityDistribution"},
+				"Version": []string{"2023-11-01"},
+			},
+		},
+		"ListRealTimeQuality": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListRealTimeQuality"},
 				"Version": []string{"2023-11-01"},
 			},
 		},
@@ -426,11 +442,11 @@ var (
 				"Version": []string{"2023-11-01"},
 			},
 		},
-		"ListRealTimeQuality": {
+		"ListUsages": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListRealTimeQuality"},
+				"Action":  []string{"ListUsages"},
 				"Version": []string{"2023-11-01"},
 			},
 		},
@@ -479,14 +495,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"StartDetection"},
-				"Version": []string{"2023-11-01"},
-			},
-		},
-		"ListUsages": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListUsages"},
 				"Version": []string{"2023-11-01"},
 			},
 		},
