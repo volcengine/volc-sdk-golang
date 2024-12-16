@@ -161,6 +161,56 @@ func createAlarms(cli Client, projectID string, topicID string, alarmNotifyGroup
 			},
 			UserDefineMsg: StrPtr("this is an alarm"),
 		},
+		{
+			AlarmName: "golang-sdk-test-alarm-3",
+			ProjectID: projectID,
+			Status:    &status,
+			QueryRequest: []QueryRequest{
+				{
+					Query:           "Failed | select count(*) as errCount",
+					Number:          1,
+					TopicID:         topicID,
+					StartTimeOffset: -15,
+					EndTimeOffset:   0,
+				},
+				{
+					Query:           "Error | select count(*) as errCount",
+					Number:          2,
+					TopicID:         topicID,
+					StartTimeOffset: -15,
+					EndTimeOffset:   0,
+				},
+			},
+			RequestCycle: RequestCycle{
+				Type:    "Period",
+				Time:    10,
+				CronTab: "0 18 * * *",
+			},
+			Condition:        "$1.errNum>0",
+			TriggerPeriod:    2,
+			AlarmPeriod:      60,
+			AlarmNotifyGroup: []string{alarmNotifyGroupID},
+			Severity:         StrPtr("critical"),
+			AlarmPeriodDetail: &AlarmPeriodSetting{
+				Sms:            10,
+				Phone:          10,
+				Email:          10,
+				GeneralWebhook: 10,
+			},
+			UserDefineMsg: StrPtr("this is an alarm with "),
+			JoinConfigurations: []JoinConfig{
+				{
+					SetOperationType: "CrossJoin",
+					Condition:        "",
+				},
+			},
+			TriggerConditions: []TriggerCondition{
+				{
+					Condition: "$1.errCount + $2.errCount >= 10",
+					Severity:  "warning",
+				},
+			},
+		},
 	}
 
 	alarmList := make([]string, len(createAlarmReqs))
@@ -461,7 +511,29 @@ func (suite *SDKAlarmTaskTestSuite) TestModifyAlarmNormally() {
 		ProjectID:     suite.project,
 		AlarmPolicyID: &alarmID,
 	})
+	suite.NoError(err)
 	suite.Equal(triggerPeriod, resp.AlarmPolicies[0].TriggerPeriod)
+
+	alarmID = alarmList[2]
+	triggerConditions := []TriggerCondition{
+		{
+			Condition: "$1.errCount + $2.errCount >= 100",
+			Severity:  "warning",
+		},
+	}
+	_, err = suite.cli.ModifyAlarm(&ModifyAlarmRequest{
+		AlarmID:           alarmID,
+		TriggerConditions: triggerConditions,
+	})
+	suite.NoError(err)
+
+	resp, err = suite.cli.DescribeAlarms(&DescribeAlarmsRequest{
+		ProjectID:     suite.project,
+		AlarmPolicyID: &alarmID,
+	})
+	suite.NoError(err)
+	suite.Equal(triggerConditions[0].Condition, resp.AlarmPolicies[0].TriggerConditions[0].Condition)
+
 }
 
 func (suite *SDKAlarmTaskTestSuite) TestModifyAlarmAbnormally() {
