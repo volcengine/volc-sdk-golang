@@ -146,6 +146,8 @@ type AudioDetailV2 struct {
 type AudioLiveDetailV2 struct {
 	StartTime              int              `json:"StartTime"`
 	EndTime                int              `json:"EndTime"`
+	StartTimeStamp         int64            `json:"StartTimeStamp"`
+	EndTimeStamp           int64            `json:"EndTimeStamp"`
 	FrameUrl               string           `json:"FrameUrl"`
 	AudioText              string           `json:"AudioText"`
 	SliceId                string           `json:"SliceId"`
