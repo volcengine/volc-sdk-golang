@@ -151,6 +151,48 @@ func TestSDKLogTestSuite(t *testing.T) {
 	suite.Run(t, new(SDKLogTestSuite))
 }
 
+func (suite *SDKLogTestSuite) TestPutLogsNormally() {
+	req := &PutLogsRequest{
+		TopicID:      suite.topic,
+		CompressType: "lz4",
+		LogBody:      &pb.LogGroupList{},
+	}
+	var logGroups []*pb.LogGroup
+	for i := 0; i < 3; i++ {
+		idx := strconv.Itoa(i)
+		if i == 1 {
+			logGroups = append(logGroups, &pb.LogGroup{
+				Source:   "localhost",
+				FileName: "log" + idx,
+				Logs:     []*pb.Log{},
+			})
+		} else {
+			logGroups = append(logGroups, &pb.LogGroup{
+				Source:   "localhost",
+				FileName: "log" + idx,
+				Logs: []*pb.Log{
+					{
+						Contents: []*pb.LogContent{
+							{
+								Key:   "key-1",
+								Value: "test-message" + idx,
+							},
+							{
+								Key:   "key-2",
+								Value: idx,
+							},
+						},
+					},
+				},
+			})
+		}
+	}
+	req.LogBody.LogGroups = logGroups
+
+	_, err := suite.cli.PutLogs(req)
+	suite.NoError(err)
+}
+
 func (suite *SDKLogTestSuite) TestPutLogsV2Normally() {
 	_, err := suite.cli.PutLogsV2(&PutLogsV2Request{
 		TopicID:      suite.topic,

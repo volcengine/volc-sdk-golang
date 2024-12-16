@@ -23,12 +23,10 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		return nil, NewClientError(err)
 	}
 
-	if len(request.LogBody.LogGroups) == 0 {
-		return nil, nil
-	}
-
+	var logGroups []*pb.LogGroup
 	for _, logGroup := range request.LogBody.LogGroups {
-		if logGroup.Logs != nil {
+		if len(logGroup.Logs) > 0 {
+			logGroups = append(logGroups, logGroup)
 			for _, log := range logGroup.Logs {
 				if log.Time == 0 {
 					log.Time = time.Now().Unix()
@@ -36,6 +34,10 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 			}
 		}
 	}
+	if len(logGroups) == 0 {
+		return nil, nil
+	}
+	request.LogBody.LogGroups = logGroups
 
 	params := map[string]string{
 		"TopicId": request.TopicID,
@@ -79,6 +81,9 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 }
 
 func (c *LsClient) PutLogsV2(request *PutLogsV2Request) (r *CommonResponse, e error) {
+	if len(request.Logs) == 0 {
+		return nil, nil
+	}
 	var realRequest = &PutLogsRequest{
 		TopicID:      request.TopicID,
 		HashKey:      request.HashKey,
