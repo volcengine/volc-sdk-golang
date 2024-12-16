@@ -79,9 +79,7 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 	meta := getMetaData(credentials, tsDateV4(formatDate))
 
 	requestSignMap := make(map[string][]string)
-	if credentials.SessionToken != "" {
-		requestSignMap["X-Security-Token"] = []string{credentials.SessionToken}
-	}
+
 	signRequest := SignRequest{
 		XDate:          formatDate,
 		XSecurityToken: credentials.SessionToken,
@@ -90,6 +88,9 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 	if requestParam.IsSignUrl {
 		for k, v := range requestParam.QueryList {
 			requestSignMap[k] = v
+		}
+		if credentials.SessionToken != "" {
+			requestSignMap["X-Security-Token"] = []string{credentials.SessionToken}
 		}
 		requestSignMap["X-Date"], requestSignMap["X-NotSignBody"], requestSignMap["X-Credential"], requestSignMap["X-Algorithm"], requestSignMap["X-SignedHeaders"], requestSignMap["X-SignedQueries"] =
 			[]string{formatDate}, []string{""}, []string{credentials.AccessKeyID + "/" + meta.credentialScope}, []string{meta.algorithm}, []string{meta.signedHeaders}, []string{""}
@@ -107,6 +108,9 @@ func GetSignRequest(requestParam RequestParam, credentials Credentials) SignRequ
 	} else {
 		for k, v := range requestParam.Headers {
 			requestSignMap[k] = v
+		}
+		if credentials.SessionToken != "" {
+			requestSignMap["X-Security-Token"] = []string{credentials.SessionToken}
 		}
 		if requestSignMap["Content-Type"] == nil {
 			signRequest.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
