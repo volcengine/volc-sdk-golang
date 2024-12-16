@@ -691,26 +691,6 @@ func (c *Live) UpdateSnapshotPresetV2(ctx context.Context, arg *UpdateSnapshotPr
 	return result, nil
 }
 
-func (c *Live) UpdateSnapshotPreset(ctx context.Context, arg *UpdateSnapshotPresetBody) (*UpdateSnapshotPresetRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "UpdateSnapshotPreset", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(UpdateSnapshotPresetRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DescribeCDNSnapshotHistory(ctx context.Context, arg *DescribeCDNSnapshotHistoryBody) (*DescribeCDNSnapshotHistoryRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -751,26 +731,6 @@ func (c *Live) ListVhostSnapshotPresetV2(ctx context.Context, arg *ListVhostSnap
 	return result, nil
 }
 
-func (c *Live) ListVhostSnapshotPreset(ctx context.Context, arg *ListVhostSnapshotPresetBody) (*ListVhostSnapshotPresetRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "ListVhostSnapshotPreset", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(ListVhostSnapshotPresetRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) CreateSnapshotPresetV2(ctx context.Context, arg *CreateSnapshotPresetV2Body) (*CreateSnapshotPresetV2Res, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -783,26 +743,6 @@ func (c *Live) CreateSnapshotPresetV2(ctx context.Context, arg *CreateSnapshotPr
 	}
 
 	result := new(CreateSnapshotPresetV2Res)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) CreateSnapshotPreset(ctx context.Context, arg *CreateSnapshotPresetBody) (*CreateSnapshotPresetRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "CreateSnapshotPreset", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(CreateSnapshotPresetRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2011,6 +1951,26 @@ func (c *Live) DescribeIPInfo(ctx context.Context, arg *DescribeIPInfoBody) (*De
 	return result, nil
 }
 
+func (c *Live) DescribeLiveTopPlayData(ctx context.Context, arg *DescribeLiveTopPlayDataBody) (*DescribeLiveTopPlayDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveTopPlayData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveTopPlayDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLiveRegionData(ctx context.Context) (*DescribeLiveRegionDataRes, error) {
 
 	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveRegionData", url.Values{}, "")
@@ -2643,26 +2603,6 @@ func (c *Live) DeleteReferer(ctx context.Context, arg *DeleteRefererBody) (*Dele
 	return result, nil
 }
 
-func (c *Live) DescribeDenyConfig(ctx context.Context, arg *DescribeDenyConfigBody) (*DescribeDenyConfigRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "DescribeDenyConfig", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(DescribeDenyConfigRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
 func (c *Live) DescribeReferer(ctx context.Context, arg *DescribeRefererBody) (*DescribeRefererRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2695,26 +2635,6 @@ func (c *Live) DescribeAuth(ctx context.Context, arg *DescribeAuthBody) (*Descri
 	}
 
 	result := new(DescribeAuthRes)
-	err = unmarshalResultInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Live) UpdateDenyConfig(ctx context.Context, arg *UpdateDenyConfigBody) (*UpdateDenyConfigRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "UpdateDenyConfig", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(UpdateDenyConfigRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

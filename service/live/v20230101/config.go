@@ -254,14 +254,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"UpdateSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateSnapshotPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DescribeCDNSnapshotHistory": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -278,27 +270,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"ListVhostSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListVhostSnapshotPreset"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"CreateSnapshotPresetV2": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSnapshotPresetV2"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"CreateSnapshotPreset": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"CreateSnapshotPreset"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -782,6 +758,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveTopPlayData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveTopPlayData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeLiveRegionData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1038,14 +1022,6 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"DescribeDenyConfig": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DescribeDenyConfig"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
 		"DescribeReferer": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1059,14 +1035,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeAuth"},
-				"Version": []string{"2023-01-01"},
-			},
-		},
-		"UpdateDenyConfig": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateDenyConfig"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
