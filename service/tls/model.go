@@ -1015,20 +1015,33 @@ type AlarmPeriodSetting struct {
 	GeneralWebhook int `json:"GeneralWebhook"`
 }
 
+type JoinConfig struct {
+	Condition        string `json:"Condition"`
+	SetOperationType string `json:"SetOperationType"`
+}
+
+type TriggerCondition struct {
+	Severity       string `json:"Severity"`
+	Condition      string `json:"Condition"`
+	CountCondition string `json:"CountCondition"`
+}
+
 type CreateAlarmRequest struct {
 	CommonRequest
-	AlarmName         string              `json:"AlarmName"`
-	ProjectID         string              `json:"ProjectId"`
-	Status            *bool               `json:"Status,omitempty"`
-	QueryRequest      QueryRequests       `json:"QueryRequest"`
-	RequestCycle      RequestCycle        `json:"RequestCycle"`
-	Condition         string              `json:"Condition"`
-	TriggerPeriod     int                 `json:"TriggerPeriod"`
-	AlarmPeriod       int                 `json:"AlarmPeriod"`
-	AlarmNotifyGroup  []string            `json:"AlarmNotifyGroup"`
-	UserDefineMsg     *string             `json:"UserDefineMsg,omitempty"`
-	Severity          *string             `json:"Severity,omitempty"`
-	AlarmPeriodDetail *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
+	AlarmName          string              `json:"AlarmName"`
+	ProjectID          string              `json:"ProjectId"`
+	Status             *bool               `json:"Status,omitempty"`
+	QueryRequest       QueryRequests       `json:"QueryRequest"`
+	RequestCycle       RequestCycle        `json:"RequestCycle"`
+	Condition          string              `json:"Condition"`
+	TriggerPeriod      int                 `json:"TriggerPeriod"`
+	AlarmPeriod        int                 `json:"AlarmPeriod"`
+	AlarmNotifyGroup   []string            `json:"AlarmNotifyGroup"`
+	UserDefineMsg      *string             `json:"UserDefineMsg,omitempty"`
+	Severity           *string             `json:"Severity,omitempty"`
+	AlarmPeriodDetail  *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
+	JoinConfigurations []JoinConfig        `json:"JoinConfigurations,omitempty"`
+	TriggerConditions  []TriggerCondition  `json:"TriggerConditions,omitempty"`
 }
 
 func (v *CreateAlarmRequest) CheckValidation() error {
@@ -1062,8 +1075,9 @@ func (v *CreateAlarmRequest) CheckValidation() error {
 type QueryRequests []QueryRequest
 
 type RequestCycle struct {
-	Type string `json:"Type"`
-	Time int    `json:"Time"`
+	Type    string `json:"Type"`
+	Time    int    `json:"Time"`
+	CronTab string `json:"CronTab"`
 }
 
 type QueryRequest struct {
@@ -1095,18 +1109,20 @@ func (v *DeleteAlarmRequest) CheckValidation() error {
 
 type ModifyAlarmRequest struct {
 	CommonRequest
-	AlarmID           string              `json:"AlarmId"`
-	AlarmName         *string             `json:"AlarmName"`
-	Status            *bool               `json:"Status"`
-	QueryRequest      *QueryRequests      `json:"QueryRequest"`
-	RequestCycle      *RequestCycle       `json:"RequestCycle"`
-	Condition         *string             `json:"Condition"`
-	TriggerPeriod     *int                `json:"TriggerPeriod"`
-	AlarmPeriod       *int                `json:"AlarmPeriod"`
-	AlarmNotifyGroup  *[]string           `json:"AlarmNotifyGroup"`
-	UserDefineMsg     *string             `json:"UserDefineMsg"`
-	Severity          *string             `json:"Severity,omitempty"`
-	AlarmPeriodDetail *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
+	AlarmID            string              `json:"AlarmId"`
+	AlarmName          *string             `json:"AlarmName"`
+	Status             *bool               `json:"Status"`
+	QueryRequest       *QueryRequests      `json:"QueryRequest"`
+	RequestCycle       *RequestCycle       `json:"RequestCycle"`
+	Condition          *string             `json:"Condition"`
+	TriggerPeriod      *int                `json:"TriggerPeriod"`
+	AlarmPeriod        *int                `json:"AlarmPeriod"`
+	AlarmNotifyGroup   *[]string           `json:"AlarmNotifyGroup"`
+	UserDefineMsg      *string             `json:"UserDefineMsg"`
+	Severity           *string             `json:"Severity,omitempty"`
+	AlarmPeriodDetail  *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
+	JoinConfigurations []JoinConfig        `json:"JoinConfigurations,omitempty"`
+	TriggerConditions  []TriggerCondition  `json:"TriggerConditions,omitempty"`
 }
 
 func (v *ModifyAlarmRequest) CheckValidation() error {
@@ -1142,21 +1158,23 @@ type DescribeAlarmsResponse struct {
 }
 
 type QueryResp struct {
-	AlarmID           string             `json:"AlarmId"`
-	AlarmName         string             `json:"AlarmName"`
-	ProjectID         string             `json:"ProjectId"`
-	Status            bool               `json:"Status"`
-	QueryRequest      []QueryRequest     `json:"QueryRequest"`
-	RequestCycle      RequestCycle       `json:"RequestCycle"`
-	Condition         string             `json:"Condition"`
-	TriggerPeriod     int                `json:"TriggerPeriod"`
-	AlarmPeriod       int                `json:"AlarmPeriod"`
-	AlarmNotifyGroup  []NotifyGroupsInfo `json:"AlarmNotifyGroup"`
-	UserDefineMsg     string             `json:"UserDefineMsg"`
-	CreateTimestamp   string             `json:"CreateTime"`
-	ModifyTimestamp   string             `json:"ModifyTime"`
-	Severity          string             `json:"Severity"`
-	AlarmPeriodDetail AlarmPeriodSetting `json:"AlarmPeriodDetail"`
+	AlarmID            string             `json:"AlarmId"`
+	AlarmName          string             `json:"AlarmName"`
+	ProjectID          string             `json:"ProjectId"`
+	Status             bool               `json:"Status"`
+	QueryRequest       []QueryRequest     `json:"QueryRequest"`
+	RequestCycle       RequestCycle       `json:"RequestCycle"`
+	Condition          string             `json:"Condition"`
+	TriggerPeriod      int                `json:"TriggerPeriod"`
+	AlarmPeriod        int                `json:"AlarmPeriod"`
+	AlarmNotifyGroup   []NotifyGroupsInfo `json:"AlarmNotifyGroup"`
+	UserDefineMsg      string             `json:"UserDefineMsg"`
+	CreateTimestamp    string             `json:"CreateTime"`
+	ModifyTimestamp    string             `json:"ModifyTime"`
+	Severity           string             `json:"Severity"`
+	AlarmPeriodDetail  AlarmPeriodSetting `json:"AlarmPeriodDetail"`
+	JoinConfigurations []JoinConfig       `json:"JoinConfigurations"`
+	TriggerConditions  []TriggerCondition `json:"TriggerConditions"`
 }
 
 type NotifyGroupsInfo struct {

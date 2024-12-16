@@ -55,12 +55,15 @@ func main() {
     // 创建日志主题
     // 请根据您的需要，填写ProjectId、TopicName、Ttl、Description、ShardCount等参数值
     // CreateTopic API的请求参数规范请参阅https://www.volcengine.com/docs/6470/112180
+	maxSplitShard := int32(50)
     createTopicResp, err := client.CreateTopic(&tls.CreateTopicRequest{
        ProjectID:   projectID,
        TopicName:   "topic-name",
        Ttl:         30,
        Description: "topic-description",
        ShardCount:  2,
+	   AutoSplit: true,
+	   MaxSplitShard: &maxSplitShard,
     })
     if err != nil {
        // 处理错误
