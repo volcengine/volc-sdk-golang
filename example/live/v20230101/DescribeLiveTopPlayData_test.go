@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_UpdateSnapshotPreset(t *testing.T) {
+func Test_DescribeLiveTopPlayData(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_UpdateSnapshotPreset(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.UpdateSnapshotPresetBody{}
+	param := &live_v20230101.DescribeLiveTopPlayDataBody{}
 
-	resp, err := instance.UpdateSnapshotPreset(context.Background(), param)
+	resp, err := instance.DescribeLiveTopPlayData(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)
