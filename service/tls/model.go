@@ -645,14 +645,16 @@ type ContainerRule struct {
 }
 
 type KubernetesRule struct {
-	NamespaceNameRegex   string            `json:"NamespaceNameRegex,omitempty"`
-	WorkloadType         string            `json:"WorkloadType,omitempty"`
-	WorkloadNameRegex    string            `json:"WorkloadNameRegex,omitempty"`
-	PodNameRegex         string            `json:"PodNameRegex,omitempty"`
-	IncludePodLabelRegex map[string]string `json:"IncludePodLabelRegex,omitempty"`
-	ExcludePodLabelRegex map[string]string `json:"ExcludePodLabelRegex,omitempty"`
-	LabelTag             map[string]string `json:"LabelTag,omitempty"`
-	AnnotationTag        map[string]string `json:"AnnotationTag,omitempty"`
+	NamespaceNameRegex        string            `json:"NamespaceNameRegex,omitempty"`
+	WorkloadType              string            `json:"WorkloadType,omitempty"`
+	WorkloadNameRegex         string            `json:"WorkloadNameRegex,omitempty"`
+	PodNameRegex              string            `json:"PodNameRegex,omitempty"`
+	IncludePodLabelRegex      map[string]string `json:"IncludePodLabelRegex,omitempty"`
+	ExcludePodLabelRegex      map[string]string `json:"ExcludePodLabelRegex,omitempty"`
+	LabelTag                  map[string]string `json:"LabelTag,omitempty"`
+	AnnotationTag             map[string]string `json:"AnnotationTag,omitempty"`
+	IncludePodAnnotationRegex map[string]string `json:"IncludePodAnnotationRegex,omitempty"`
+	ExcludePodAnnotationRegex map[string]string `json:"ExcludePodAnnotationRegex,omitempty"`
 }
 
 type CreateRuleResponse struct {
