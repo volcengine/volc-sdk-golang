@@ -34,6 +34,7 @@ func Test_StartWorkflow(t *testing.T) {
 		EnableLowPriority: false,
 		DirectUrl:         nil,
 		TaskListId:        "your TaskListId",
+		ClientToken:       "your ClientToken",
 	}
 
 	resp, status, err := instance.StartWorkflow(query)
