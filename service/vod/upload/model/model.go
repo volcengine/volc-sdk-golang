@@ -1,6 +1,9 @@
 package model
 
-import "io"
+import (
+	"io"
+	"net/http"
+)
 
 type UploadPartCommonResponse struct {
 	Version string          `json:"Version"`
@@ -120,4 +123,36 @@ type VpcUploadPartsInfo struct {
 type VpcUploadPartInfo struct {
 	PartNumber int    `json:"PartNumber"`
 	ETag       string `json:"ETag"`
+}
+
+type UploadCommonInfo struct {
+	Auth               string
+	Hosts              []string
+	Oid                string
+	Client             *http.Client
+	StorageClass       int32
+	SessionKey         string
+	PreferredHostIndex int
+}
+
+type CreateMultipartUploadInput struct {
+	UploadCommonInfo *UploadCommonInfo
+}
+
+type UploadPartInput struct {
+	UploadCommonInfo *UploadCommonInfo
+	PartNumber       int64
+	UploadId         string
+	Data             []byte
+}
+
+type CompleteMultipartUploadInput struct {
+	UploadCommonInfo *UploadCommonInfo
+	UploadId         string
+	PartList         []*UploadPartResponse
+}
+
+type PutObjectInput struct {
+	UploadCommonInfo *UploadCommonInfo
+	Data             []byte
 }

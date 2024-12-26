@@ -1079,6 +1079,150 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 	return res, nil
 }
 
+func (p *Vod) BuildVodCommonUploadInfo(resp *response.VodApplyUploadInfoResponse) (*model.UploadCommonInfo, error) {
+	if resp == nil || resp.ResponseMetadata == nil || resp.Result == nil {
+		return nil, errors.New("empty input")
+	}
+
+	if resp.ResponseMetadata.Error != nil && resp.ResponseMetadata.Error.Code != "0" {
+		return nil, fmt.Errorf("%+v", resp.ResponseMetadata.Error)
+	}
+
+	uploadCommonInfo := &model.UploadCommonInfo{
+		Client: &http.Client{},
+	}
+
+	// using candidate address first
+	candidateUploadAddress := resp.GetResult().GetData().GetCandidateUploadAddresses()
+	var allUploadAddress []*business.UploadAddress
+	if candidateUploadAddress != nil {
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetMainUploadAddresses()...)
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetBackupUploadAddresses()...)
+		allUploadAddress = append(allUploadAddress, candidateUploadAddress.GetFallbackUploadAddresses()...)
+	}
+	uploadAddress := resp.GetResult().GetData().GetUploadAddress()
+	if uploadAddress == nil || len(allUploadAddress) == 0 {
+		return nil, errors.New("empty address")
+	}
+
+	if uploadAddress != nil {
+		if len(uploadAddress.GetUploadHosts()) == 0 {
+			return nil, fmt.Errorf("no tos host found")
+		}
+		if len(uploadAddress.GetStoreInfos()) == 0 || (uploadAddress.GetStoreInfos()[0] == nil) {
+			return nil, fmt.Errorf("no store info found")
+		}
+
+		uploadCommonInfo.Hosts = uploadAddress.GetUploadHosts()
+		uploadCommonInfo.Oid = uploadAddress.StoreInfos[0].GetStoreUri()
+		uploadCommonInfo.SessionKey = uploadAddress.GetSessionKey()
+		uploadCommonInfo.Auth = uploadAddress.GetStoreInfos()[0].GetAuth()
+	}
+
+	if len(allUploadAddress) > 0 {
+		candidateHosts := make([]string, 0)
+		for _, candidateAddress := range allUploadAddress {
+			candidateHosts = append(candidateHosts, candidateAddress.UploadHosts...)
+		}
+		if len(candidateHosts) > 0 {
+			uploadCommonInfo.Hosts = candidateHosts
+		}
+	}
+
+	return uploadCommonInfo, nil
+}
+
+func (p *Vod) checkUploadCommonInfo(uploadInfo *model.UploadCommonInfo) error {
+	if uploadInfo == nil || uploadInfo.Auth == "" || uploadInfo.Oid == "" ||
+		len(uploadInfo.Hosts) == 0 || uploadInfo.Client == nil {
+		return UploadError{
+			Message: "wrong upload common info",
+		}
+	}
+	return nil
+}
+
+func (p *Vod) pickUploadHost(uploadInfo *model.UploadCommonInfo) string {
+	index := 0
+	if uploadInfo.PreferredHostIndex > 0 &&
+		uploadInfo.PreferredHostIndex < len(uploadInfo.Hosts) {
+		index = uploadInfo.PreferredHostIndex
+	}
+	host := uploadInfo.Hosts[index]
+	return host
+}
+
+func (p *Vod) CreateMultipartUpload(input *model.CreateMultipartUploadInput) (string, error) {
+	if input == nil {
+		return "", UploadError{
+			Message: "empty input",
+		}
+	}
+	err := p.checkUploadCommonInfo(input.UploadCommonInfo)
+	if err != nil {
+		return "", err
+	}
+
+	host := p.pickUploadHost(input.UploadCommonInfo)
+	return p.InitUploadPart(host, input.UploadCommonInfo.Oid, input.UploadCommonInfo.Auth, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+}
+
+func (p *Vod) UploadPart(input *model.UploadPartInput) (*model.UploadPartResponse, error) {
+	if input == nil {
+		return nil, UploadError{
+			Message: "empty input",
+		}
+	}
+	err := p.checkUploadCommonInfo(input.UploadCommonInfo)
+	if err != nil {
+		return nil, err
+	}
+
+	host := p.pickUploadHost(input.UploadCommonInfo)
+	partInfo := model.UploadPartCommon{
+		TosHost: host,
+		Oid:     input.UploadCommonInfo.Oid,
+		Auth:    input.UploadCommonInfo.Auth,
+	}
+	return p.uploadPart(partInfo, input.UploadId, int(input.PartNumber), input.Data,
+		input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+}
+
+func (p *Vod) CompleteMultipartUpload(input *model.CompleteMultipartUploadInput) error {
+	if input == nil {
+		return UploadError{
+			Message: "empty input",
+		}
+	}
+	err := p.checkUploadCommonInfo(input.UploadCommonInfo)
+	if err != nil {
+		return err
+	}
+
+	host := p.pickUploadHost(input.UploadCommonInfo)
+	uploadPart := model.UploadPartCommon{
+		TosHost: host,
+		Oid:     input.UploadCommonInfo.Oid,
+		Auth:    input.UploadCommonInfo.Auth,
+	}
+	return p.UploadMergePart(uploadPart, input.UploadId, input.PartList, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+}
+
+func (p *Vod) PutObject(input *model.PutObjectInput) error {
+	if input == nil {
+		return UploadError{
+			Message: "empty input",
+		}
+	}
+	err := p.checkUploadCommonInfo(input.UploadCommonInfo)
+	if err != nil {
+		return err
+	}
+
+	host := p.pickUploadHost(input.UploadCommonInfo)
+	return p.directUpload(host, input.UploadCommonInfo.Oid, input.UploadCommonInfo.Auth, input.Data, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+}
+
 func (p *Vod) InitUploadPart(tosHost string, oid string, auth string, client *http.Client, storageClass int32) (string, error) {
 	url := fmt.Sprintf("https://%s/%s?uploads", tosHost, oid)
 	req, err := http.NewRequest("PUT", url, nil)

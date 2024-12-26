@@ -628,6 +628,14 @@ func getJsonFormatRulesMap() map[string]string {
 				"LabelTag": {
 					"Key1": "Value1",
 					"Key2": "Value2"
+				},
+				"IncludePodAnnotationRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"ExcludePodAnnotationRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
 				}
 			}
 		}
@@ -717,6 +725,14 @@ func getJsonFormatRulesMap() map[string]string {
 				},
 				"PodNameRegex": ".*test.*",
 				"LabelTag": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"IncludePodAnnotationRegex": {
+					"Key1": "Value1",
+					"Key2": "Value2"
+				},
+				"ExcludePodAnnotationRegex": {
 					"Key1": "Value1",
 					"Key2": "Value2"
 				}
@@ -893,6 +909,46 @@ func (suite *SDKRuleTestSuite) TestModifyRuleNormally() {
 	suite.NoError(err)
 	resp, err := suite.cli.DescribeRule(&DescribeRuleRequest{RuleID: ruleID})
 	suite.Equal("modified-rule-name", resp.RuleInfo.RuleName)
+}
+
+func (suite *SDKRuleTestSuite) TestModifyContainerRuleNormally() {
+	specificRule := "标准容器输出"
+	ruleMap, err := createRules(suite.cli, suite.createRuleRequestsMap, specificRule)
+	suite.NoError(err)
+	for _, ruleID := range ruleMap {
+		suite.ruleList = append(suite.ruleList, ruleID)
+	}
+
+	ruleID := ruleMap[specificRule]
+	_, err = suite.cli.ModifyRule(&ModifyRuleRequest{
+		RuleID:   ruleID,
+		RuleName: StrPtr("modified-rule-name"),
+		ContainerRule: &ContainerRule{
+			Stream: "all",
+			KubernetesRule: KubernetesRule{
+				IncludePodAnnotationRegex: map[string]string{
+					"Key1": "modify-value1",
+					"Key2": "modify-value2",
+				},
+				ExcludePodAnnotationRegex: map[string]string{
+					"Key1": "modify-value1",
+					"Key2": "modify-value2",
+				},
+			},
+		},
+	})
+	suite.NoError(err)
+	resp, err := suite.cli.DescribeRule(&DescribeRuleRequest{RuleID: ruleID})
+	suite.NoError(err)
+	suite.Equal("modified-rule-name", resp.RuleInfo.RuleName)
+	suite.Equal(map[string]string{
+		"Key1": "modify-value1",
+		"Key2": "modify-value2",
+	}, resp.RuleInfo.ContainerRule.KubernetesRule.IncludePodAnnotationRegex)
+	suite.Equal(map[string]string{
+		"Key1": "modify-value1",
+		"Key2": "modify-value2",
+	}, resp.RuleInfo.ContainerRule.KubernetesRule.IncludePodAnnotationRegex)
 }
 
 func (suite *SDKRuleTestSuite) TestModifyRuleAbnormally() {
