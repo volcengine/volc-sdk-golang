@@ -543,4 +543,20 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"CheckDomain": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"CheckDomain"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeRetrieveInfo": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeRetrieveInfo"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 }
