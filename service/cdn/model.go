@@ -1,5 +1,13 @@
 package cdn
 
+type AccessInfo struct {
+	Access         bool
+	Domain         string
+	ErrorMsg       string
+	ErrorType      int64
+	RetrieveStatus string
+}
+
 type AccountingData struct {
 	Metric string
 	Values []DataPoint
@@ -61,6 +69,7 @@ type AddCdnDomainRequest struct {
 	MethodDeniedRule    *MethodDeniedRule   `json:",omitempty"`
 	MultiRange          *MultiRange         `json:",omitempty"`
 	NegativeCache       []NegativeCache
+	OfflineCache        *OfflineCache `json:",omitempty"`
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
 	OriginArg           []OriginArgRule
@@ -205,9 +214,10 @@ type BandwidthLimitRule struct {
 }
 
 type BatchDeployCertRequest struct {
-	CertId  string
-	CertId2 *string `json:",omitempty"`
-	Domain  string
+	CertId       string
+	CertId2      *string `json:",omitempty"`
+	Domain       string
+	TargetConfig *string `json:",omitempty"`
 }
 
 type BatchDeployCertResponse struct {
@@ -242,6 +252,7 @@ type BatchUpdateCdnConfigRequest struct {
 	MethodDeniedRule    *MethodDeniedRule   `json:",omitempty"`
 	MultiRange          *MultiRange         `json:",omitempty"`
 	NegativeCache       []NegativeCache
+	OfflineCache        *OfflineCache `json:",omitempty"`
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
 	OriginArg           []OriginArgRule
@@ -380,6 +391,20 @@ type Certificate struct {
 	EncryptionCert *string `json:",omitempty"`
 	EncryptionKey  *string `json:",omitempty"`
 	PrivateKey     *string `json:",omitempty"`
+}
+
+type CheckDomainRequest struct {
+	Domain        string
+	ServiceRegion string
+}
+
+type CheckDomainResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           CheckDomainResult
+}
+
+type CheckDomainResult struct {
+	Data []AccessInfo
 }
 
 type CommonGlobalConfig struct {
@@ -652,8 +677,9 @@ type DescribeCdnAccessLogResult struct {
 }
 
 type DescribeCdnConfigRequest struct {
-	Domain   string
-	LockInfo *bool `json:",omitempty"`
+	Domain        string
+	FeatureConfig *bool `json:",omitempty"`
+	LockInfo      *bool `json:",omitempty"`
 }
 
 type DescribeCdnConfigResponse struct {
@@ -782,11 +808,12 @@ type DescribeCdnUpperIpResult struct {
 }
 
 type DescribeCertConfigRequest struct {
-	CertId    string
-	CertId2   *string `json:",omitempty"`
-	CertType  *string `json:",omitempty"`
-	EncryType *string `json:",omitempty"`
-	Status    *string `json:",omitempty"`
+	CertId       string
+	CertId2      *string `json:",omitempty"`
+	CertType     *string `json:",omitempty"`
+	EncryType    *string `json:",omitempty"`
+	Status       *string `json:",omitempty"`
+	TargetConfig *string `json:",omitempty"`
 }
 
 type DescribeCertConfigResponse struct {
@@ -1338,6 +1365,21 @@ type DescribeOriginTopStatusCodeResult struct {
 	TopDataDetails []TopStatusCodeDetail
 }
 
+type DescribeRetrieveInfoRequest struct {
+	Domain string
+}
+
+type DescribeRetrieveInfoResponse struct {
+	ResponseMetadata *ResponseMetadata `json:",omitempty"`
+	Result           DescribeRetrieveInfoResult
+}
+
+type DescribeRetrieveInfoResult struct {
+	Host        string
+	RecordType  string
+	RecordValue string
+}
+
 type DescribeSharedConfigRequest struct {
 	ConfigName *string `json:",omitempty"`
 }
@@ -1437,6 +1479,7 @@ type DomainConfig struct {
 	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
 	MultiRange          *MultiRange          `json:",omitempty"`
 	NegativeCache       []NegativeCache
+	OfflineCache        OfflineCache
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
 	OriginArg           []OriginArgRule
@@ -1741,6 +1784,7 @@ type ListCertInfoRequest struct {
 	Name             *string   `json:",omitempty"`
 	PageNum          *int64    `json:",omitempty"`
 	PageSize         *int64    `json:",omitempty"`
+	SearchCertName   *string   `json:",omitempty"`
 	SetPagination    *bool     `json:",omitempty"`
 	SortRule         *SortRule `json:",omitempty"`
 	Source           string
@@ -1885,6 +1929,12 @@ type NrtDataSummaryResource struct {
 	Name          string
 }
 
+type OfflineCache struct {
+	Object     *string `json:",omitempty"`
+	StatusCode *string `json:",omitempty"`
+	Switch     *bool   `json:",omitempty"`
+}
+
 type OriginAccessRule struct {
 	AllowEmpty *bool `json:",omitempty"`
 	IgnoreCase *bool `json:",omitempty"`
@@ -1913,7 +1963,8 @@ type OriginArgRule struct {
 }
 
 type OriginCertCheck struct {
-	Switch *bool `json:",omitempty"`
+	CertInfoList []CertInfo
+	Switch       *bool `json:",omitempty"`
 }
 
 type OriginLine struct {
@@ -2469,6 +2520,7 @@ type UpdateCdnConfigRequest struct {
 	MethodDeniedRule    *MethodDeniedRule    `json:",omitempty"`
 	MultiRange          *MultiRange          `json:",omitempty"`
 	NegativeCache       []NegativeCache
+	OfflineCache        *OfflineCache `json:",omitempty"`
 	Origin              []OriginRule
 	OriginAccessRule    *OriginAccessRule `json:",omitempty"`
 	OriginArg           []OriginArgRule

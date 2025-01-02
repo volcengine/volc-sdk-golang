@@ -736,3 +736,25 @@ func (s *CDN) AddSharedConfig(dto *AddSharedConfigRequest) (responseBody *AddSha
 	}
 	return
 }
+
+func (s *CDN) CheckDomain(dto *CheckDomainRequest) (responseBody *CheckDomainResponse, err error) {
+	responseBody = new(CheckDomainResponse)
+	if err = s.post("CheckDomain", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeRetrieveInfo(dto *DescribeRetrieveInfoRequest) (responseBody *DescribeRetrieveInfoResponse, err error) {
+	responseBody = new(DescribeRetrieveInfoResponse)
+	if err = s.post("DescribeRetrieveInfo", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
