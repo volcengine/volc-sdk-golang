@@ -67,20 +67,61 @@ func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) 
 			if options.AsyncUpsert {
 				params["async"] = true
 			}
-			// fmt.Println(params)
-			res, err := collection.VikingDBService.retryRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
-			_ = res
+			_, err := collection.VikingDBService.retryRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 			if err != nil {
 				return err
 			}
-			//fmt.Println(res)
 		}
 		return nil
 	} else {
 		return errors.New("invalid data")
 	}
-
 }
+
+func (collection *Collection) UpdateData(data interface{}, opts ...ParamOption) error {
+	if _, ok := data.(Data); ok {
+		data := data.(Data)
+		fieldsArr := []interface{}{data.Fields}
+		params := map[string]interface{}{
+			"collection_name": collection.CollectionName,
+			"fields":          fieldsArr,
+		}
+		if data.TTL != 0 {
+			params["ttl"] = data.TTL
+		}
+		_, err := collection.VikingDBService.retryRequest(context.Background(), "UpdateData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
+		return err
+	} else if _, ok := data.([]Data); ok {
+		datas := data.([]Data)
+		record := map[int64][]interface{}{}
+		for _, item := range datas {
+			if value, exist := record[item.TTL]; exist {
+				fields := value
+				fields = append(fields, item.Fields)
+				record[item.TTL] = fields
+			} else {
+				record[item.TTL] = []interface{}{item.Fields}
+			}
+		}
+		for idx, item := range record {
+			params := map[string]interface{}{
+				"collection_name": collection.CollectionName,
+				"fields":          item,
+			}
+			if idx != 0 {
+				params["ttl"] = idx
+			}
+			_, err := collection.VikingDBService.retryRequest(context.Background(), "UpdateData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	} else {
+		return errors.New("invalid data")
+	}
+}
+
 func (collection *Collection) AsyncUpsertData(data interface{}) error {
 	if _, ok := data.(Data); ok {
 		data := data.(Data)

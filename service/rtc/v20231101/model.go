@@ -4875,6 +4875,11 @@ type StartRecordBodyStorageConfigCustomConfig struct {
 	// 默认值为0。
 	Region *int32 `json:"Region,omitempty"`
 
+	// 第三方云存储的临时访问凭证。该凭证由云服务商的安全令牌服务 (Security Token Service, STS) 临时颁发，具有有效期，超过有效期凭证将失效，减少因凭证泄露带来的安全风险。
+	// * 有效时长要求：SecurityToken 的有效时长需要大于录制时长，并预留至少1小时的失败重试时间，否则可能存在丢失部分数据的风险。
+	// * 不支持的云服务商：七牛云 Kodo 暂不支持。
+	SecurityToken *string `json:"SecurityToken,omitempty"`
+
 	// 第三方云存储平台。支持取值及含义如下：
 	// * 0：Amazon S3
 	// * 1：阿里云 OSS

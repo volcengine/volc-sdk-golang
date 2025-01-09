@@ -153,6 +153,7 @@ type CertVerifyQueryData struct {
 		MeasureType string `json:"measure_type"`
 		Value       int    `json:"value"`
 	} `json:"verify_req_measure_info"`
+	RiskResult string `json:"risk_result"`
 }
 
 type CertVerifyQueryResult struct {
