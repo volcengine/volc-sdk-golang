@@ -111,6 +111,14 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"UpdateData": {
+			Method: http.MethodPost,
+			Path:   "/api/collection/update_data",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 		"AsyncUpsertData": {
 			Method: http.MethodPost,
 			Path:   "/api/collection/async_upsert_data",
