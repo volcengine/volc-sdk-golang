@@ -407,8 +407,10 @@ func (index *Index) getData(resData map[string]interface{}, outputField interfac
 			var scoreFloat float64
 			if s, ok := item["score"]; !ok {
 				return nil, fmt.Errorf("invalid response, score not exists: %v", resData)
-			} else if scoreFloat, ok = s.(float64); !ok {
-				return nil, fmt.Errorf("invalid response, score is not float64: %v", resData)
+			} else if val, err := ParseJsonFloat64Field(s); err != nil {
+				return nil, fmt.Errorf("invalid response, score is %v, res is %v", s, res)
+			} else {
+				scoreFloat = val
 			}
 			data := &Data{
 				Fields:    fields,

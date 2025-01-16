@@ -173,14 +173,6 @@ func (collection *Collection) AsyncUpsertData(data interface{}) error {
 
 }
 func (collection *Collection) DeleteData(id interface{}) error {
-	_, isString := id.(string)
-	_, isInt := id.(int)
-	_, isListString := id.([]string)
-	_, isListInt := id.([]int)
-	if !isString && !isInt && !isListInt && !isListString {
-		return errors.New("invalid id")
-	}
-
 	params := map[string]interface{}{
 		"collection_name": collection.CollectionName,
 		"primary_keys":    id,
