@@ -198,8 +198,16 @@ func (suite *SDKConsumerGroupTestSuite) TestDescribeConsumerGroupsNormally() {
 	err := createConsumerGroup(suite.cli, suite.project, suite.topic, consumerGroupName)
 	suite.NoError(err)
 
-	resp, err := suite.cli.DescribeConsumerGroups(&DescribeConsumerGroupsRequest{
+	project, err := suite.cli.DescribeProject(&DescribeProjectRequest{
 		ProjectID: suite.project,
+	})
+	suite.NoError(err)
+
+	resp, err := suite.cli.DescribeConsumerGroups(&DescribeConsumerGroupsRequest{
+		ProjectID:         suite.project,
+		ProjectName:       project.ProjectName,
+		TopicID:           suite.topic,
+		ConsumerGroupName: consumerGroupName,
 	})
 	suite.NoError(err)
 	suite.Equal(1, len(resp.ConsumerGroups))

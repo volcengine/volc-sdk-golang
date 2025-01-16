@@ -145,7 +145,23 @@ func (c *consumer) newLogConsumer(consumeShard *tls.ConsumeShard) *logConsumer {
 }
 
 func (c *consumer) init() error {
-	_, err := c.client.CreateConsumerGroup(&tls.CreateConsumerGroupRequest{
+
+	describeConsumerGroupsRes, err := c.client.DescribeConsumerGroups(&tls.DescribeConsumerGroupsRequest{
+		ProjectID:         c.conf.ProjectID,
+		ConsumerGroupName: c.conf.ConsumerGroupName,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	for _, consumerGroup := range describeConsumerGroupsRes.ConsumerGroups {
+		if consumerGroup.ConsumerGroupName == c.conf.ConsumerGroupName {
+			return nil
+		}
+	}
+
+	_, err = c.client.CreateConsumerGroup(&tls.CreateConsumerGroupRequest{
 		ProjectID:         c.conf.ProjectID,
 		TopicIDList:       c.conf.TopicIDList,
 		ConsumerGroupName: c.conf.ConsumerGroupName,
