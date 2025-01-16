@@ -280,7 +280,7 @@ func (vikingDBService *VikingDBService) DoRequest(ctx context.Context, api strin
 	}
 	_ = code
 	var data map[string]interface{}
-	err = json.Unmarshal(res, &data)
+	err = ParseJsonUseNumber2(res, &data)
 	if err != nil {
 		return nil, err
 	}
@@ -304,7 +304,7 @@ func (vikingDBService *VikingDBService) retryRequest(ctx context.Context, api st
 		return nil, err
 	}
 	var data map[string]interface{}
-	err = json.Unmarshal(res, &data)
+	err = ParseJsonUseNumber2(res, &data)
 	if err != nil {
 		return nil, err
 	}
@@ -424,10 +424,10 @@ func (vikingDBService *VikingDBService) packageCollection(collectionName string,
 				defaultVal = value
 			}
 			if value, exist := itemMap["dim"]; exist {
-				if v, ok := value.(float64); !ok {
-					return nil, fmt.Errorf("invalid response, dim is not a number: %v", res)
+				if val, err := ParseJsonInt64Field(value); err != nil {
+					return nil, fmt.Errorf("invalid dim value: %v, type: %s", value, reflect.TypeOf(value))
 				} else {
-					dim = int64(v)
+					dim = val
 				}
 			}
 			if value, exist := itemMap["pipeline_name"]; exist {
@@ -519,10 +519,10 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 		}
 	}
 	if value, exist := res["cpu_quota"]; exist {
-		if v, ok := value.(float64); !ok {
-			return nil, fmt.Errorf("invalid response, cpu_quota is not a number: %v", res)
+		if val, err := ParseJsonInt64Field(value); err != nil {
+			return nil, fmt.Errorf("invalid cpu_quota value: %v, type: %s", value, reflect.TypeOf(value))
 		} else {
-			cpuQuota = int64(v)
+			shardCount = val
 		}
 	}
 	if value, exist := res["partition_by"]; exist {
@@ -540,10 +540,10 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 		}
 	}
 	if value, exist := res["shard_count"]; exist {
-		if v, ok := value.(float64); !ok {
-			return nil, fmt.Errorf("invalid response, shard_count is not a number: %v", res)
+		if val, err := ParseJsonInt64Field(value); err != nil {
+			return nil, fmt.Errorf("invalid shard_count value: %v, type: %s", value, reflect.TypeOf(value))
 		} else {
-			shardCount = int64(v)
+			shardCount = val
 		}
 	}
 	if value, exist := res["shard_policy"]; exist {
@@ -589,24 +589,24 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 			}
 		}
 		if v, e := item["hnsw_m"]; e {
-			if vf, ok := v.(float64); !ok {
-				return nil, fmt.Errorf("invalid response, hnsw_m is not a number: %v", res)
+			if val, err := ParseJsonInt64Field(v); err != nil {
+				return nil, fmt.Errorf("invalid hnsw_m value: %v, type: %s", value, reflect.TypeOf(value))
 			} else {
-				vectorIndex.HnswM = int64(vf)
+				vectorIndex.HnswM = val
 			}
 		}
 		if v, e := item["hnsw_sef"]; e {
-			if vf, ok := v.(float64); !ok {
-				return nil, fmt.Errorf("invalid response, hnsw_sef is not a number: %v", res)
+			if val, err := ParseJsonInt64Field(v); err != nil {
+				return nil, fmt.Errorf("invalid hnsw_sef value: %v, type: %s", value, reflect.TypeOf(value))
 			} else {
-				vectorIndex.HnswSef = int64(vf)
+				vectorIndex.HnswSef = val
 			}
 		}
 		if v, e := item["hnsw_cef"]; e {
-			if vf, ok := v.(float64); !ok {
-				return nil, fmt.Errorf("invalid response, hnsw_cef is not a number: %v", res)
+			if val, err := ParseJsonInt64Field(v); err != nil {
+				return nil, fmt.Errorf("invalid hnsw_cef value: %v, type: %s", value, reflect.TypeOf(value))
 			} else {
-				vectorIndex.HnswCef = int64(vf)
+				vectorIndex.HnswCef = val
 			}
 		}
 	}
@@ -970,10 +970,10 @@ func (vikingDBService *VikingDBService) Embedding(embModel EmbModel, rawData int
 			return nil, fmt.Errorf("invalid response, dataType is not list: %v", res["data"])
 		}
 		for _, item := range l {
-			if itemFloat, ok := item.(float64); !ok {
+			if val, err := ParseJsonFloat64Field(item); err != nil {
 				return nil, fmt.Errorf("invalid response, dataNum is not float64: %v", res["data"])
 			} else {
-				floatList = append(floatList, itemFloat)
+				floatList = append(floatList, val)
 			}
 		}
 		ret = append(ret, floatList)
@@ -1012,7 +1012,7 @@ func (vikingDBService *VikingDBService) Rerank(query string, content string, tit
 	}
 	if d, ok := data["data"]; !ok {
 		return 0, fmt.Errorf("invalid response, data does not exist: %v", data)
-	} else if score, ok := d.(float64); !ok {
+	} else if score, err := ParseJsonFloat64Field(d); err != nil {
 		return 0, fmt.Errorf("invalid response, data is not float64: %v", data)
 	} else {
 		return score, nil
@@ -1034,7 +1034,7 @@ func (vikingDBService *VikingDBService) BatchRerank(datas []map[string]interface
 		return nil, fmt.Errorf("invalid response, data is not a list: %v", data)
 	}
 	for _, score := range scores {
-		if scoreFloat, ok := score.(float64); !ok {
+		if scoreFloat, err := ParseJsonFloat64Field(score); err != nil {
 			return nil, fmt.Errorf("invalid response, data is not list[float64]: %v", data)
 		} else {
 			res = append(res, scoreFloat)
