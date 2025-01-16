@@ -1527,6 +1527,19 @@ type CreateConsumerGroupRequest struct {
 	OrderedConsume    bool     `json:"OrderedConsume"`
 }
 
+func (v *CreateConsumerGroupRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.TopicIDList) <= 0 {
+		return errors.New("Invalid argument, empty TopicIDList")
+	}
+	if len(v.ConsumerGroupName) <= 0 {
+		return errors.New("Invalid argument, empty ConsumerGroupName")
+	}
+	return nil
+}
+
 type CreateConsumerGroupResponse struct {
 	CommonResponse
 }
@@ -1541,10 +1554,12 @@ type DeleteConsumerGroupResponse struct {
 }
 
 type DescribeConsumerGroupsRequest struct {
-	ProjectID string `json:"ProjectID"`
-
-	PageNumber int
-	PageSize   int
+	ProjectID         string `json:"ProjectID"`
+	ProjectName       string `json:"ProjectName"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	TopicID           string `json:"TopicID"`
+	PageNumber        int
+	PageSize          int
 }
 
 type ConsumerGroupResp struct {

@@ -9,6 +9,10 @@ import (
 )
 
 func (c *LsClient) CreateConsumerGroup(request *CreateConsumerGroupRequest) (*CreateConsumerGroupResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
 	reqHeaders := map[string]string{
 		"Content-Type": "application/json",
 	}
@@ -89,6 +93,18 @@ func (c *LsClient) DescribeConsumerGroups(request *DescribeConsumerGroupsRequest
 	params := make(map[string]string)
 	if len(request.ProjectID) != 0 {
 		params["ProjectId"] = request.ProjectID
+	}
+
+	if len(request.ProjectName) != 0 {
+		params["ProjectName"] = request.ProjectName
+	}
+
+	if len(request.ConsumerGroupName) != 0 {
+		params["ConsumerGroupName"] = request.ConsumerGroupName
+	}
+
+	if len(request.TopicID) != 0 {
+		params["TopicId"] = request.TopicID
 	}
 
 	if request.PageNumber != 0 {
