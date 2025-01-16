@@ -1,5 +1,14 @@
 package vikingdb
 
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"math"
+	"reflect"
+	"strconv"
+)
+
 const (
 	Vector        = "vector"
 	Int64         = "int64"
@@ -239,5 +248,89 @@ type ParamOption func(*ParamOptions)
 func WithAsyncUpsert(yes bool) ParamOption {
 	return func(co *ParamOptions) {
 		co.AsyncUpsert = yes
+	}
+}
+
+func ParseJsonUseNumber2(input []byte, target interface{}) error {
+	var d *json.Decoder
+	var err error
+	d = json.NewDecoder(bytes.NewBuffer(input))
+	if d == nil {
+		return fmt.Errorf("ParseJsonUseNumber init NewDecoder failed")
+	}
+	d.UseNumber()
+	err = d.Decode(&target)
+	if err != nil {
+		return fmt.Errorf("ParseJsonUseNumber Decode failed %v", err)
+	}
+	return nil
+}
+
+func SerilizeToJsonBytesUseNumber(source interface{}) ([]byte, error) {
+	//  buffer := make([]byte, 0)
+	buf := new(bytes.Buffer)
+	encoder := json.NewEncoder(buf)
+	err := encoder.Encode(source)
+	if err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+
+func HasDecimalPart(f float64) bool {
+	_, decimal := math.Modf(f)
+	return decimal > 1e-16
+}
+
+func ParseJsonInt64Field(default_val_i interface{}) (int64, error) {
+	if default_val_i == nil {
+		return 0, nil
+	}
+	if default_val_int64, ok := default_val_i.(int64); ok {
+		return default_val_int64, nil
+	} else if default_val_float64, ok := default_val_i.(float64); ok {
+		default_val_int64 := int64(default_val_float64)
+		if HasDecimalPart(default_val_float64) {
+			return 0, fmt.Errorf("can not convert float64 to int64: not int")
+		}
+		return default_val_int64, nil
+	} else if default_val_string, ok := default_val_i.(string); ok {
+		if default_val_int64, err := strconv.ParseInt(default_val_string, 10, 64); err != nil {
+			return 0, fmt.Errorf("can not convert string to int64: %v", err)
+		} else {
+			return default_val_int64, nil
+		}
+	} else if default_val_jsonNumber, ok := default_val_i.(json.Number); ok {
+		if default_val_int64, err := default_val_jsonNumber.Int64(); err != nil {
+			return 0, fmt.Errorf("can not convert json.Number[%v] to int64: %v", default_val_jsonNumber, err)
+		} else {
+			return default_val_int64, nil
+		}
+	} else {
+		return 0, fmt.Errorf("can not convert %s to int64", reflect.TypeOf(default_val_i))
+	}
+}
+
+func ParseJsonFloat64Field(default_val_i interface{}) (float64, error) {
+	if default_val_i == nil {
+		return 0, nil
+	}
+	if val, ok := default_val_i.(float64); ok {
+		return val, nil
+	} else if default_val_jsonNumber, ok := default_val_i.(json.Number); ok {
+		if default_val_float64, err := default_val_jsonNumber.Float64(); err != nil {
+			return 0, fmt.Errorf("can not convert json.Number[%v] to float64: %v", default_val_jsonNumber, err)
+		} else {
+			return default_val_float64, nil
+		}
+	} else if default_val_string, ok := default_val_i.(string); ok {
+		default_val_jsonNumber := json.Number(default_val_string)
+		if default_val_float64, err := default_val_jsonNumber.Float64(); err != nil {
+			return 0, fmt.Errorf("can not convert json.Number[%v] to float64: %v", default_val_jsonNumber, err)
+		} else {
+			return default_val_float64, nil
+		}
+	} else {
+		return 0, fmt.Errorf("invalid field for float type")
 	}
 }
