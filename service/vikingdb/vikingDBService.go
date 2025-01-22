@@ -151,6 +151,22 @@ func getApiInfo() map[string]*base.ApiInfo {
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"SearchAgg": {
+			Method: http.MethodPost,
+			Path:   "/api/index/search/agg",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
+		"IndexSort": {
+			Method: http.MethodPost,
+			Path:   "/api/index/sort",
+			Header: http.Header{
+				"Accept":       []string{"application/json"},
+				"Content-Type": []string{"application/json"},
+			},
+		},
 		"FetchIndexData": {
 			Method: http.MethodGet,
 			Path:   "/api/index/fetch_data",
@@ -265,8 +281,8 @@ func getApiInfo() map[string]*base.ApiInfo {
 }
 func (vikingDBService *VikingDBService) SetHeader(header map[string]string) {
 	apiInfo := vikingDBService.Client.ApiInfoList
-	for key, _ := range apiInfo {
-		for item, _ := range header {
+	for key := range apiInfo {
+		for item := range header {
 			apiInfo[key].Header[item] = []string{header[item]}
 		}
 	}
@@ -284,7 +300,6 @@ func (vikingDBService *VikingDBService) DoRequest(ctx context.Context, api strin
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(data)
 	return data, err
 }
 
@@ -754,7 +769,6 @@ func (vikingDBService *VikingDBService) ListCollections() ([]*Collection, error)
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(res)
 	var collections []*Collection
 
 	var res []interface{}
@@ -805,12 +819,10 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 	if indexOptions.shardPolicy != "" {
 		params["shard_policy"] = indexOptions.shardPolicy
 	}
-	// fmt.Println(vikingDBService.convertMapToJson(params))
 	res, err := vikingDBService.DoRequest(context.Background(), "CreateIndex", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(res)
 	_ = res
 	index := &Index{
 		CollectionName:  collectionName,
@@ -858,7 +870,6 @@ func (vikingDBService *VikingDBService) DropIndex(collectionName string, indexNa
 		return err
 	}
 	return nil
-	//fmt.Println(res)
 }
 func (vikingDBService *VikingDBService) ListIndexes(collectionName string) ([]*Index, error) {
 	params := map[string]interface{}{
@@ -953,7 +964,6 @@ func (vikingDBService *VikingDBService) Embedding(embModel EmbModel, rawData int
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(res)
 	var ret [][]float64
 	var items []interface{}
 	if d, ok := res["data"]; !ok {
@@ -1084,7 +1094,6 @@ func (vikingDBService *VikingDBService) EmbeddingV2(embModel EmbModel, rawData i
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(res)
 	var items map[string]interface{}
 	if d, ok := res["data"]; !ok {
 		return nil, fmt.Errorf("invalid response, data does not exist: %v", data)

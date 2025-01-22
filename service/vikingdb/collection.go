@@ -39,11 +39,9 @@ func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) 
 		if options.AsyncUpsert {
 			params["async"] = true
 		}
-		//fmt.Println(params)
 		res, err := collection.VikingDBService.retryRequest(context.Background(), "UpsertData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		_ = res
 		return err
-		//fmt.Println(res)
 	} else if _, ok := data.([]Data); ok {
 		datas := data.([]Data)
 		record := map[int64][]interface{}{}
@@ -133,11 +131,9 @@ func (collection *Collection) AsyncUpsertData(data interface{}) error {
 		if data.TTL != 0 {
 			params["ttl"] = data.TTL
 		}
-		//fmt.Println(params)
 		res, err := collection.VikingDBService.DoRequest(context.Background(), "AsyncUpsertData", nil, collection.VikingDBService.convertMapToJson(params))
 		_ = res
 		return err
-		//fmt.Println(res)
 	} else if _, ok := data.([]Data); ok {
 		datas := data.([]Data)
 		record := map[int64][]interface{}{}
@@ -158,13 +154,11 @@ func (collection *Collection) AsyncUpsertData(data interface{}) error {
 			if index != 0 {
 				params["ttl"] = index
 			}
-			//fmt.Println(params)
 			res, err := collection.VikingDBService.DoRequest(context.Background(), "AsyncUpsertData", nil, collection.VikingDBService.convertMapToJson(params))
 			_ = res
 			if err != nil {
 				return err
 			}
-			//fmt.Println(res)
 		}
 		return nil
 	} else {
@@ -172,6 +166,7 @@ func (collection *Collection) AsyncUpsertData(data interface{}) error {
 	}
 
 }
+
 func (collection *Collection) DeleteData(id interface{}) error {
 	params := map[string]interface{}{
 		"collection_name": collection.CollectionName,
@@ -180,6 +175,7 @@ func (collection *Collection) DeleteData(id interface{}) error {
 	_, err := collection.VikingDBService.DoRequest(context.Background(), "DeleteData", nil, collection.VikingDBService.convertMapToJson(params))
 	return err
 }
+
 func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 	_, intType := id.(int)
 	_, stringType := id.(string)
@@ -206,7 +202,6 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 			return nil, fmt.Errorf("invalid response, data is not list[map]: %v", res)
 		}
 
-		//fmt.Println(res)
 		data := &Data{
 			Id:        id,
 			Fields:    fields,

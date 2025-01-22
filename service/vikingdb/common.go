@@ -20,18 +20,21 @@ const (
 	Text          = "text"
 	Sparse_Vector = "sparse_vector"
 
-	L2          = "l2"
-	IP          = "ip"
-	COSINE      = "cosine"
+	L2     = "l2"
+	IP     = "ip"
+	COSINE = "cosine"
+
 	FLAT        = "flat"
 	HNSW        = "hnsw"
 	IVF         = "ivf"
 	DiskANN     = "DiskANN"
 	HNSW_HYBRID = "hnsw_hybrid"
-	Float       = "float"
-	Int8        = "int8"
-	Fix16       = "fix16"
-	PQ          = "pq"
+	Sort        = "sort"
+
+	Float = "float"
+	Int8  = "int8"
+	Fix16 = "fix16"
+	PQ    = "pq"
 
 	Asc  = "asc"
 	Desc = "desc"
