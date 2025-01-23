@@ -409,7 +409,8 @@ func (suite *SDKTopicTestSuite) TestDescribeTopicsNormally() {
 
 	testcases := map[*DescribeTopicsRequest]*DescribeTopicsResponse{
 		{
-			ProjectID: suite.project,
+			ProjectID:   suite.project,
+			ProjectName: "sdk-",
 		}: {
 			Topics: []*Topic{
 				{

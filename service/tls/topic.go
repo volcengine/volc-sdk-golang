@@ -181,6 +181,10 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		params["ProjectId"] = request.ProjectID
 	}
 
+	if len(request.ProjectName) != 0 {
+		params["ProjectName"] = request.ProjectName
+	}
+
 	if len(request.TopicName) != 0 {
 		params["TopicName"] = request.TopicName
 	}
