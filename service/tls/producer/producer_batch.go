@@ -7,22 +7,24 @@ import (
 )
 
 type Batch struct {
-	totalDataSize        int64
-	lock                 sync.RWMutex
-	logGroup             *pb.LogGroup
-	logGroupSize         int
-	logGroupCount        int
-	attemptCount         int
-	baseRetryBackoffMs   int64
-	nextRetryMs          int64
-	maxRetryIntervalInMs int64
-	callBackList         []CallBack
-	createTime           time.Time
-	maxRetryTimes        int
-	topic                string
-	shardHash            *string
-	result               *Result
-	maxReservedAttempts  int
+	totalDataSize              int64
+	lock                       sync.RWMutex
+	logGroup                   *pb.LogGroup
+	logGroupSize               int
+	logGroupCount              int
+	attemptCount               int
+	retryBackoffMs             int64
+	baseRetryBackoffMs         int64
+	baseIncreaseRetryBackoffMs int64
+	nextRetryMs                int64
+	maxRetryIntervalInMs       int64
+	callBackList               []CallBack
+	createTime                 time.Time
+	maxRetryTimes              int
+	topic                      string
+	shardHash                  *string
+	result                     *Result
+	maxReservedAttempts        int
 }
 
 func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
@@ -37,16 +39,18 @@ func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 
 	currentTime := time.Now()
 	producerBatch := &Batch{
-		logGroup:             logGroup,
-		attemptCount:         0,
-		maxRetryIntervalInMs: config.MaxRetryBackoffMs,
-		callBackList:         []CallBack{},
-		createTime:           currentTime,
-		maxRetryTimes:        config.Retries,
-		baseRetryBackoffMs:   config.BaseRetryBackoffMs,
-		topic:                batchLog.Key.Topic,
-		result:               newResult(),
-		maxReservedAttempts:  config.MaxReservedAttempts,
+		logGroup:                   logGroup,
+		attemptCount:               0,
+		maxRetryIntervalInMs:       config.MaxRetryBackoffMs,
+		callBackList:               []CallBack{},
+		createTime:                 currentTime,
+		maxRetryTimes:              config.Retries,
+		retryBackoffMs:             0,
+		baseRetryBackoffMs:         config.BaseRetryBackoffMs,
+		baseIncreaseRetryBackoffMs: 1000,
+		topic:                      batchLog.Key.Topic,
+		result:                     newResult(),
+		maxReservedAttempts:        config.MaxReservedAttempts,
 	}
 
 	producerBatch.shardHash = parseHash(batchLog.Key.ShardHash)
