@@ -1,7 +1,8 @@
 package producer
 
 import (
-	"math"
+	"errors"
+	"math/rand"
 	"sync/atomic"
 	"time"
 
@@ -87,47 +88,47 @@ func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 	for _, callBack := range batch.callBackList {
 		callBack.Success(batch.result)
 	}
+
+	batch.retryBackoffMs = 0
 }
 
 func (sender *Sender) handleFailure(batch *Batch, err error) {
-	level.Info(sender.logger).Log("msg", "sendToServer failed", "error", err)
+	_ = level.Info(sender.logger).Log("msg", "sendToServer failed", "error", err)
 
-	if sender.IsShutDown() {
+	noRetryStatusCode := false
+	var sdkError *Error
+	tlsErrOk := errors.As(err, &sdkError)
+	if tlsErrOk {
+		_, noRetryStatusCode = sender.noRetryStatusCodeMap[int(sdkError.HTTPCode)]
+	}
+
+	noNeedRetry := batch.attemptCount >= batch.maxRetryTimes
+
+	if sender.IsShutDown() || (tlsErrOk && noRetryStatusCode) || noNeedRetry {
 		sender.addErrorMessageToBatchAttempt(batch, err, false)
 		sender.FailedCallback(batch)
 
 		return
 	}
 
-	if sdkError, ok := err.(*Error); ok {
-		if _, ok := sender.noRetryStatusCodeMap[int(sdkError.HTTPCode)]; ok {
-			sender.addErrorMessageToBatchAttempt(batch, err, false)
-			sender.FailedCallback(batch)
+	_ = level.Debug(sender.logger).Log("msg", "Submit to the retry queue after meeting the retry criteria")
 
-			return
-		}
+	sender.addErrorMessageToBatchAttempt(batch, err, true)
+
+	if batch.attemptCount == 1 {
+		batch.retryBackoffMs += batch.baseRetryBackoffMs
+	} else {
+		increaseBackoffMs := rand.Float64() * float64(batch.baseIncreaseRetryBackoffMs)
+		batch.retryBackoffMs += int64(increaseBackoffMs)
 	}
 
-	if batch.attemptCount < batch.maxRetryTimes {
-		level.Debug(sender.logger).Log("msg", "Submit to the retry queue after meeting the retry criteria")
-
-		sender.addErrorMessageToBatchAttempt(batch, err, true)
-		retryWaitTime := batch.baseRetryBackoffMs * int64(math.Pow(2, float64(batch.attemptCount)-1))
-
-		batch.nextRetryMs = GetTimeMs(time.Now().UnixNano())
-		if retryWaitTime < batch.maxRetryIntervalInMs {
-			batch.nextRetryMs += retryWaitTime
-		} else {
-			batch.nextRetryMs += batch.maxRetryIntervalInMs
-		}
-
-		sender.retryQueue.addToRetryQueue(batch, sender.logger)
-
-		return
+	if batch.retryBackoffMs > batch.maxRetryIntervalInMs {
+		batch.retryBackoffMs = batch.maxRetryIntervalInMs
 	}
 
-	sender.addErrorMessageToBatchAttempt(batch, err, false)
-	sender.FailedCallback(batch)
+	batch.nextRetryMs = GetTimeMs(time.Now().UnixNano()) + batch.retryBackoffMs
+
+	sender.retryQueue.addToRetryQueue(batch, sender.logger)
 }
 
 func (sender *Sender) FailedCallback(batch *Batch) {

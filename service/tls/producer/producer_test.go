@@ -211,3 +211,30 @@ func (suite *SDKProducerTestSuite) TestSendLogs() {
 		}
 	}
 }
+
+// first mock putLogs return 429
+func (suite *SDKProducerTestSuite) TestSendLogsWithdrawalMechanism() {
+
+	log := &pb.Log{
+		Time: time.Now().Unix(),
+		Contents: []*pb.LogContent{
+			{
+				Key:   "key-1",
+				Value: "test-message1",
+			},
+			{
+				Key:   "key-2",
+				Value: "test-message2",
+			},
+		},
+	}
+
+	// update 1 logGroupLists without compression
+	err := suite.producer.SendLog("", suite.topic, "test-source", "test-filename", log, nil)
+	if err != nil {
+		return
+	}
+
+	// wait for consumption
+	time.Sleep(600 * time.Second)
+}
