@@ -1,4 +1,6 @@
-package main
+package vikingdbtest
+
+/*
 
 import (
 	"fmt"
@@ -584,3 +586,4 @@ func genRandomVector(dim int) []float64 {
 	}
 	return res
 }
+*/
