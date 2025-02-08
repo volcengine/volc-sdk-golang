@@ -1090,6 +1090,8 @@ type QueryRequest struct {
 	TopicName       string `json:"TopicName,omitempty"`
 	StartTimeOffset int    `json:"StartTimeOffset"`
 	EndTimeOffset   int    `json:"EndTimeOffset"`
+	TimeSpanType    string `json:"TimeSpanType,omitempty"`
+	TruncatedTime   string `json:"TruncatedTime,omitempty"`
 }
 
 type CreateAlarmResponse struct {
