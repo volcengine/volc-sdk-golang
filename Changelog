@@ -1,5 +1,8 @@
 ### Change log
 
+2025-02-13 Bumped to version v1.0.195
+- Updated service imp/live/vikingdb/tls
+
 2025-01-23 Bumped to version v1.0.194
 - Updated service tls/vikingdb
 

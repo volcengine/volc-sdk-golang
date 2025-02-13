@@ -176,6 +176,15 @@ func (collection *Collection) DeleteData(id interface{}) error {
 	return err
 }
 
+func (collection *Collection) DeleteAllData() error {
+	params := map[string]interface{}{
+		"collection_name": collection.CollectionName,
+		"del_all":         true,
+	}
+	_, err := collection.VikingDBService.DoRequest(context.Background(), "DeleteData", nil, collection.VikingDBService.convertMapToJson(params))
+	return err
+}
+
 func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 	_, intType := id.(int)
 	_, stringType := id.(string)

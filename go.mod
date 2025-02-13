@@ -9,7 +9,6 @@ require (
 	github.com/cenkalti/backoff/v4 v4.1.2
 	github.com/go-kit/kit v0.12.0
 	github.com/gogo/protobuf v1.3.2
-	github.com/golang/protobuf v1.5.2
 	github.com/google/go-querystring v1.1.0
 	github.com/google/martian v2.1.0+incompatible
 	github.com/google/uuid v1.3.0
