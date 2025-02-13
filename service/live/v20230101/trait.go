@@ -2347,6 +2347,26 @@ func (c *Live) DescribeLiveBatchStreamTrafficData(ctx context.Context, arg *Desc
 	return result, nil
 }
 
+func (c *Live) DescribeLiveEdgeStatData(ctx context.Context, arg *DescribeLiveEdgeStatDataBody) (*DescribeLiveEdgeStatDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveEdgeStatData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveEdgeStatDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLiveISPData(ctx context.Context) (*DescribeLiveISPDataRes, error) {
 
 	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveISPData", url.Values{}, "")
@@ -3187,6 +3207,126 @@ func (c *Live) CreateSubtitleTranscodePreset(ctx context.Context, arg *CreateSub
 	}
 
 	result := new(CreateSubtitleTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreateLivePadPreset(ctx context.Context, arg *CreateLivePadPresetBody) (*CreateLivePadPresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateLivePadPreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateLivePadPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteLivePadPreset(ctx context.Context, arg *DeleteLivePadPresetBody) (*DeleteLivePadPresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteLivePadPreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteLivePadPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) StopLivePadStream(ctx context.Context, arg *StopLivePadStreamBody) (*StopLivePadStreamRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "StopLivePadStream", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(StopLivePadStreamRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateLivePadPreset(ctx context.Context, arg *UpdateLivePadPresetBody) (*UpdateLivePadPresetRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateLivePadPreset", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateLivePadPresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLivePadStreamList(ctx context.Context, arg *DescribeLivePadStreamListBody) (*DescribeLivePadStreamListRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLivePadStreamList", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLivePadStreamListRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLivePadPresetDetail(ctx context.Context, arg *DescribeLivePadPresetDetailBody) (*DescribeLivePadPresetDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLivePadPresetDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLivePadPresetDetailRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
