@@ -236,13 +236,14 @@ type DescribeTopicResponse struct {
 
 type DescribeTopicsRequest struct {
 	CommonRequest
-	ProjectID  string
-	PageNumber int
-	PageSize   int
-	TopicName  string
-	TopicID    string
-	IsFullName bool
-	Tags       []TagInfo
+	ProjectID   string
+	ProjectName string
+	PageNumber  int
+	PageSize    int
+	TopicName   string
+	TopicID     string
+	IsFullName  bool
+	Tags        []TagInfo
 }
 
 func (v *DescribeTopicsRequest) CheckValidation() error {
