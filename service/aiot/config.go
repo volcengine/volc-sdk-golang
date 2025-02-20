@@ -1305,6 +1305,26 @@ var (
 			Path:   "/",
 			Query:  url.Values{"Action": []string{"GetNssInfoList"}, "Version": []string{ServiceVersion20210101}},
 		},
+		"CreateVerifyContent": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CreateVerifyContent"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"VerifyDomainOwner": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"VerifyDomainOwner"}, "Version": []string{ServiceVersion20231001}},
+		},
+		"SetStreamTemplate": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"SetStreamTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
+		"CancelStreamTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query:  url.Values{"Action": []string{"CancelStreamTemplate"}, "Version": []string{ServiceVersion20210101}},
+		},
 	}
 )
 

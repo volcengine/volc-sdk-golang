@@ -1,5 +1,7 @@
 package aiot
 
+import "github.com/volcengine/volc-sdk-golang/base"
+
 type SDKProductValidDurationEnum int
 type SDKGeneralDeviceAVAbilityBitmask int
 type SDKNVRAVAbilityEnum int
@@ -1036,4 +1038,66 @@ type GetAIAnalysisResultRequest struct {
 	StartT   int64               `json:"StartTime"`
 	EndT     int64               `json:"EndTime"`
 	AI       map[string][]string `json:"AI"`
+}
+
+type VerifyDomainOwnerBody struct {
+
+	// REQUIRED; 推拉流域名
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 校验方式，取值：
+	// * dnsCheck：DNS验证。
+	// * fileCheck：文件验证。
+	VerifyType string `json:"VerifyType"`
+}
+
+type VerifyDomainOwnerRes struct {
+
+	// REQUIRED
+	ResponseMetadata base.ResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *VerifyDomainOwnerResResult `json:"Result,omitempty"`
+}
+
+// VerifyDomainOwnerResResult - 视请求的接口而定
+type VerifyDomainOwnerResResult struct {
+
+	// REQUIRED; 检查结果
+	CheckResult bool `json:"CheckResult"`
+}
+
+type CreateVerifyContentBody struct {
+
+	// REQUIRED; 推拉流域名
+	Domain string `json:"Domain"`
+}
+
+type CreateVerifyContentRes struct {
+
+	// REQUIRED
+	ResponseMetadata base.ResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateVerifyContentResResult `json:"Result,omitempty"`
+}
+
+// CreateVerifyContentResResult - 视请求的接口而定
+type CreateVerifyContentResResult struct {
+
+	// 校验内容记录值
+	Content *string `json:"Content,omitempty"`
+
+	// 主机记录
+	SubDomain *string `json:"SubDomain,omitempty"`
+}
+
+type SetStreamTemplateRequest struct {
+	StreamID   string
+	TemplateID string
+}
+
+type CancelStreamTemplateRequest struct {
+	StreamID     string
+	TemplateType string
 }
