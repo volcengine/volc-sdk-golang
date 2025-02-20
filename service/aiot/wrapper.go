@@ -2512,3 +2512,51 @@ func (p *AIoT) ClearDeviceAlarmV3(spaceID, deviceID string) (*RawResponse, int, 
 	}
 	return resp, statusCode, nil
 }
+
+func (p *AIoT) CreateVerifyContent(domain string) (*CreateVerifyContentRes, int, error) {
+	resp := new(CreateVerifyContentRes)
+	req := CreateVerifyContentBody{
+		Domain: domain,
+	}
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("CreateVerifyContent", query, resp, &req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) VerifyDomainOwner(domain, verifyCheck string) (*VerifyDomainOwnerRes, int, error) {
+	resp := new(VerifyDomainOwnerRes)
+	req := VerifyDomainOwnerBody{
+		Domain:     domain,
+		VerifyType: verifyCheck,
+	}
+	query := url.Values{}
+	statusCode, err := p.commonHandlerJson("VerifyDomainOwner", query, resp, &req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) SetStreamTemplate(req *SetStreamTemplateRequest) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	statusCode, err := p.commonHandlerJson("SetStreamTemplate", url.Values{}, resp, &req)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *AIoT) CancelStreamTemplate(req *CancelStreamTemplateRequest) (*RawResponse, int, error) {
+	resp := new(RawResponse)
+	statusCode, err := p.commonHandler("CancelStreamTemplate", url.Values{
+		"StreamID":     []string{req.StreamID},
+		"TemplateType": []string{req.TemplateType},
+	}, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
