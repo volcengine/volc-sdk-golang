@@ -670,6 +670,8 @@ type AITemplateItem struct {
 type EnableTime struct {
 	EnableFrom string
 	EnableTo   string
+	Weekdays   int
+	Enable     bool
 }
 type EnableTimes []EnableTime
 
