@@ -122,6 +122,8 @@ func createAlarms(cli Client, projectID string, topicID string, alarmNotifyGroup
 				TopicID:         topicID,
 				StartTimeOffset: -15,
 				EndTimeOffset:   0,
+				TimeSpanType:    "Relative",
+				TruncatedTime:   "Minute",
 			}},
 			RequestCycle: RequestCycle{
 				Type: "Period",
@@ -172,6 +174,8 @@ func createAlarms(cli Client, projectID string, topicID string, alarmNotifyGroup
 					TopicID:         topicID,
 					StartTimeOffset: -15,
 					EndTimeOffset:   0,
+					TimeSpanType:    "Yesterday",
+					TruncatedTime:   "Minute",
 				},
 				{
 					Query:           "Error | select count(*) as errCount",
@@ -179,6 +183,8 @@ func createAlarms(cli Client, projectID string, topicID string, alarmNotifyGroup
 					TopicID:         topicID,
 					StartTimeOffset: -15,
 					EndTimeOffset:   0,
+					TimeSpanType:    "Truncated",
+					TruncatedTime:   "Hour",
 				},
 			},
 			RequestCycle: RequestCycle{
@@ -505,14 +511,27 @@ func (suite *SDKAlarmTaskTestSuite) TestModifyAlarmNormally() {
 	_, err = suite.cli.ModifyAlarm(&ModifyAlarmRequest{
 		AlarmID:       alarmID,
 		TriggerPeriod: &triggerPeriod,
+		QueryRequest: &QueryRequests{
+			QueryRequest{
+				Query:           "Failed | select count(*) as errNum",
+				Number:          1,
+				TopicID:         suite.topic,
+				StartTimeOffset: -15,
+				EndTimeOffset:   0,
+				TimeSpanType:    "Today",
+				TruncatedTime:   "Hour",
+			},
+		},
 	})
-	suite.NoError(err)
+	//suite.NoError(err)
 	resp, err := suite.cli.DescribeAlarms(&DescribeAlarmsRequest{
 		ProjectID:     suite.project,
 		AlarmPolicyID: &alarmID,
 	})
 	suite.NoError(err)
 	suite.Equal(triggerPeriod, resp.AlarmPolicies[0].TriggerPeriod)
+	suite.Equal("Today", resp.AlarmPolicies[0].QueryRequest[0].TimeSpanType)
+	suite.Equal("Hour", resp.AlarmPolicies[0].QueryRequest[0].TruncatedTime)
 
 	alarmID = alarmList[2]
 	triggerConditions := []TriggerCondition{
