@@ -200,6 +200,7 @@ type CloudRecordPlayRequestV3 struct {
 	StartTime      int64  `json:"StartTime"`
 	EndTime        int64  `json:"EndTime"`
 	TokenValid     *int   `json:"TokenValid"`
+	EndTimeOffset  *int   `json:"EndTimeOffset"` //偏移量
 }
 
 type ListHistoryRequest struct {
