@@ -21,6 +21,13 @@ type RiskDetectionResponse struct {
 	Data      DecisionData `json:"Data"`
 }
 
+type DeviceIdResponse struct {
+	RequestId string     `json:"RequestId"`
+	Code      int        `json:"Code"`
+	Message   string     `json:"Message"`
+	Data      DeviceInfo `json:"Data"`
+}
+
 type DecisionData struct {
 	Score      int        `json:"Score"`
 	Tags       []string   `json:"Tags"`
@@ -31,6 +38,7 @@ type DecisionData struct {
 type DeviceInfo struct {
 	DevSecID      string `json:"DevSecID"`
 	TokenCreateTs int64  `json:"TokenCreateTs"`
+	AccDevSecID   string `json:"AccDevSecID"`
 }
 
 type AsyncRiskDetectionRequest struct {
@@ -297,10 +305,10 @@ type FrameResult struct {
 }
 
 type TextResultResponse struct {
-	RequestId string         `json:"RequestId"`
-	Code      int            `json:"Code"`
-	Message   string         `json:"Message"`
-	VideoResp TextRiskRespV2 `json:"Data"`
+	RequestId    string         `json:"RequestId"`
+	Code         int            `json:"Code"`
+	Message      string         `json:"Message"`
+	TextRiskResp TextRiskRespV2 `json:"Data"`
 }
 
 type TextRiskRespV2 struct {
@@ -310,10 +318,10 @@ type TextRiskRespV2 struct {
 }
 
 type TextSliceResultResponse struct {
-	RequestId string         `json:"RequestId"`
-	Code      int            `json:"Code"`
-	Message   string         `json:"Message"`
-	VideoResp TextRiskRespV3 `json:"Data"`
+	RequestId    string         `json:"RequestId"`
+	Code         int            `json:"Code"`
+	Message      string         `json:"Message"`
+	TextRiskResp TextRiskRespV3 `json:"Data"`
 }
 
 type TextRiskRespV3 struct {
@@ -1027,4 +1035,161 @@ type CancelActivateRiskResultResp struct {
 
 type CancelActivateRiskResultInfo struct {
 	Success bool `json:"Success"`
+}
+
+type ContentStatisticsReq struct {
+	AppId      int64  `json:"AppId"`
+	Scene      string `json:"Scene"`
+	LabelsType string `json:"LabelsType"`
+	StartTime  int64  `json:"StartTime"`
+	EndTime    int64  `json:"EndTime"`
+}
+
+type TextRiskStatisticsRsp struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      TextRiskStatisticsInfo `json:"Data"`
+}
+
+type TextRiskStatisticsInfo struct {
+	TextTotal           TextBaseStatisticsRsp     `json:"TextTotal"`
+	TextTrendRecord     []*TextBaseTrendRecordRsp `json:"TextTrendRecord"`
+	TextRiskTotal       ContentRiskBaseCountRsp   `json:"TextRiskTotal"`
+	TextRiskTrendRecord ContentRiskBaseCountRsp   `json:"TextRiskTrendRecord"`
+}
+
+type CommonStatisticsInfo struct {
+	RequestCount int64 `json:"RequestCnt"`
+	PassCount    int64 `json:"PassCnt"`
+	BlockCount   int64 `json:"BlockCnt"`
+	ReviewCount  int64 `json:"ReviewCnt"`
+}
+
+type FrameStatisticsInfo struct {
+	PassFrameCnt   int64 `json:"PassFrameCnt"`
+	BlockFrameCnt  int64 `json:"BlockFrameCnt"`
+	ReviewFrameCnt int64 `json:"ReviewFrameCnt"`
+}
+
+type SplitStatisticsInfo struct {
+	SplitCnt        int64   `json:"SplitCnt"`
+	PassSplitCnt    int64   `json:"PassSplitCnt"`
+	BlockSplitCnt   int64   `json:"BlockSplitCnt"`
+	ReviewSplitCnt  int64   `json:"ReviewSplitCnt"`
+	RequestDuration float64 `json:"RequestDuration"`
+	PassDuration    float64 `json:"PassDuration"`
+	BlockDuration   float64 `json:"BlockDuration"`
+	ReviewDuration  float64 `json:"ReviewDuration"`
+}
+
+type TextBaseStatisticsRsp struct {
+	CommonStatisticsInfo
+	RequestWordCnt int64 `json:"RequestWordCnt"`
+	PassWordCnt    int64 `json:"PassWordCnt"`
+	BlockWordCnt   int64 `json:"BlockWordCnt"`
+	ReviewWordCnt  int64 `json:"ReviewWordCnt"`
+}
+
+type TextBaseTrendRecordRsp struct {
+	TextBaseStatisticsRsp
+	StartTime int64 `json:"StartTime"`
+}
+
+type ContentRiskBaseCountRsp struct {
+	All    []map[string]int64 `json:"All"`
+	Block  []map[string]int64 `json:"Block"`
+	Review []map[string]int64 `json:"Review"`
+}
+
+type ImageRiskStatisticsRsp struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      ImageRiskStatisticsInfo `json:"Data"`
+}
+
+type ImageRiskStatisticsInfo struct {
+	ImageTotal           ImageBaseStatisticsRsp     `json:"ImageTotal"`
+	ImageTrendRecord     []*ImageBaseTrendRecordRsp `json:"ImageTrendRecord"`
+	ImageRiskTotal       ContentRiskBaseCountRsp    `json:"ImageRiskTotal"`
+	ImageRiskTrendRecord ContentRiskBaseCountRsp    `json:"ImageRiskTrendRecord"`
+}
+
+type ImageBaseStatisticsRsp struct {
+	CommonStatisticsInfo
+	FrameStatisticsInfo
+	RequestFrameCnt int64 `json:"RequestFrameCnt"`
+}
+
+type ImageBaseTrendRecordRsp struct {
+	StartTime       int64 `json:"StartTime"`
+	RequestFrameCnt int64 `json:"RequestFrameCnt"`
+	CommonStatisticsInfo
+	FrameStatisticsInfo
+}
+
+type VideoRiskStatisticsRsp struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      VideoRiskStatisticsInfo `json:"Data"`
+}
+
+type VideoRiskStatisticsInfo struct {
+	VideoTotal           VideoBaseStatisticsRsp     `json:"VideoTotal"`
+	VideoTrendRecord     []*VideoBaseTrendRecordRsp `json:"VideoTrendRecord"`
+	VideoRiskTotal       VideoContentRiskCountRsp   `json:"VideoRiskTotal"`
+	VideoRiskTrendRecord VideoContentRiskCountRsp   `json:"VideoRiskTrendRecord"`
+}
+
+type VideoContentRiskCountRsp struct {
+	RequestStatistics ContentRiskBaseCountRsp `json:"Request"`
+	FrameStatistics   ContentRiskBaseCountRsp `json:"Frame"`
+	SplitStatistics   ContentRiskBaseCountRsp `json:"Split"`
+}
+
+type AudioContentRiskCountRsp struct {
+	RequestStatistics ContentRiskBaseCountRsp `json:"Request"`
+	SplitStatistics   ContentRiskBaseCountRsp `json:"Split"`
+}
+
+type VideoBaseStatisticsRsp struct {
+	CommonStatisticsInfo
+	SplitStatisticsInfo
+	FrameStatisticsInfo
+	FrameCnt int64 `json:"FrameCnt"`
+}
+
+type VideoBaseTrendRecordRsp struct {
+	StartTime int64 `json:"StartTime"`
+	CommonStatisticsInfo
+	SplitStatisticsInfo
+	FrameStatisticsInfo
+	FrameCnt int64 `json:"FrameCnt"`
+}
+
+type AudioRiskStatisticsRsp struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      AudioRiskStatisticsInfo `json:"Data"`
+}
+
+type AudioRiskStatisticsInfo struct {
+	AudioTotal           AudioBaseStatisticsRsp     `json:"AudioTotal"`
+	AudioTrendRecord     []*AudioBaseTrendRecordRsp `json:"AudioTrendRecord"`
+	AudioRiskTotal       AudioContentRiskCountRsp   `json:"AudioRiskTotal"`
+	AudioRiskTrendRecord AudioContentRiskCountRsp   `json:"AudioRiskTrendRecord"`
+}
+
+type AudioBaseStatisticsRsp struct {
+	CommonStatisticsInfo
+	SplitStatisticsInfo
+}
+
+type AudioBaseTrendRecordRsp struct {
+	StartTime int64 `json:"StartTime"`
+	CommonStatisticsInfo
+	SplitStatisticsInfo
 }
