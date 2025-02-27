@@ -555,5 +555,59 @@ var (
 				"Version": []string{"2023-10-01"},
 			},
 		},
+		"GetTextStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetTextStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"GetImageStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"GetVideoStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetVideoStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"GetAudioLiveStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioLiveStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"GetVideoLiveStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetVideoLiveStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"GetAudioStatisticsOpen": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioStatisticsOpen"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
 	}
 )

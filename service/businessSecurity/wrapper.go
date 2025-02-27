@@ -10,6 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"io"
 	"io/ioutil"
+	"net/url"
 )
 
 // Synchronous risk detection
@@ -1838,6 +1839,186 @@ func (p *BusinessSecurity) CancelActivateRiskResult(req *CancelActivateRiskResul
 		return nil, fmt.Errorf("UploadImageLibContent: fail to do request, %v", err)
 	}
 	result := new(CancelActivateRiskResultResp)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetTextStatistics(req *ContentStatisticsReq) (*TextRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetTextStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetTextStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetTextStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetTextStatistics: fail to do request, %v", err)
+			}
+			result := new(TextRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetTextStatistics: fail to do request, %v", err)
+	}
+	result := new(TextRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetImageStatistics(req *ContentStatisticsReq) (*ImageRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetImageStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetImageStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetImageStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetImageStatistics: fail to do request, %v", err)
+			}
+			result := new(ImageRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetImageStatistics: fail to do request, %v", err)
+	}
+	result := new(ImageRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetVideoStatistics(req *ContentStatisticsReq) (*VideoRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetVideoStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetVideoStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetVideoStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetVideoStatistics: fail to do request, %v", err)
+			}
+			result := new(VideoRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetVideoStatistics: fail to do request, %v", err)
+	}
+	result := new(VideoRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetAudioStatistics(req *ContentStatisticsReq) (*AudioRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetAudioStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetAudioStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetAudioStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetAudioStatistics: fail to do request, %v", err)
+			}
+			result := new(AudioRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetAudioStatistics: fail to do request, %v", err)
+	}
+	result := new(AudioRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetAudioLiveStatistics(req *ContentStatisticsReq) (*AudioRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetAudioLiveStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetAudioLiveStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetAudioLiveStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetAudioLiveStatistics: fail to do request, %v", err)
+			}
+			result := new(AudioRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetAudioLiveStatistics: fail to do request, %v", err)
+	}
+	result := new(AudioRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) GetVideoLiveStatistics(req *ContentStatisticsReq) (*VideoRiskStatisticsRsp, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("GetVideoLiveStatistics: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("GetVideoLiveStatisticsOpen", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("GetVideoLiveStatisticsOpen", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("GetVideoLiveStatistics: fail to do request, %v", err)
+			}
+			result := new(VideoRiskStatisticsRsp)
+			if err = UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("GetVideoLiveStatistics: fail to do request, %v", err)
+	}
+	result := new(VideoRiskStatisticsRsp)
+	if err = UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (r *RiskDetectionRequest) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
+
+// Synchronous device id
+// 风险识别实时接口
+func (p *BusinessSecurity) DeviceId(req *RiskDetectionRequest) (*DeviceIdResponse, error) {
+	respBody, _, err := p.Client.Query("DeviceId", req.ToQuery())
+	if err != nil {
+		return nil, fmt.Errorf("RiskDetection: fail to do request, %v", err)
+	}
+	result := new(DeviceIdResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
