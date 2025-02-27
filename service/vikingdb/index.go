@@ -3,6 +3,7 @@ package vikingdb
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 )
 
@@ -37,6 +38,8 @@ type SearchOptions struct {
 	primaryKeyNotIn       []interface{}
 	postProcessOps        []map[string]interface{}
 	postProcessInputLimit *int64
+	text                  *string
+	image                 *string
 	retry                 bool
 }
 
@@ -99,6 +102,14 @@ func (s *SearchOptions) SetPostProcessOps(postProcessOps []map[string]interface{
 }
 func (s *SearchOptions) SetPostProcessInputLimit(postProcessInputLimit int64) *SearchOptions {
 	s.postProcessInputLimit = &postProcessInputLimit
+	return s
+}
+func (s *SearchOptions) SetText(text string) *SearchOptions {
+	s.text = &text
+	return s
+}
+func (s *SearchOptions) SetImage(image string) *SearchOptions {
+	s.image = &image
 	return s
 }
 func (s *SearchOptions) SetRetry(retry bool) *SearchOptions {
@@ -367,6 +378,65 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 		remainingRetries = MAX_RETRIES
 	}
 	res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil, index.VikingDBService.convertMapToJson(params), remainingRetries)
+	if err != nil {
+		return nil, err
+	}
+	return index.getData(res, outputFields)
+}
+
+func (index *Index) SearchWithMultiModal(searchOptions *SearchOptions) ([]*Data, error) {
+	if searchOptions.text == nil && searchOptions.image == nil {
+		return nil, errors.New("invalid searchOptions, not any modal data params exist")
+	}
+	orderByRaw := make(map[string]interface{})
+	if searchOptions.text != nil {
+		orderByRaw["text"] = searchOptions.text
+	}
+	if searchOptions.image != nil {
+		orderByRaw["image"] = searchOptions.image
+	}
+	search := map[string]interface{}{
+		"order_by_raw": orderByRaw,
+		"limit":        searchOptions.limit,
+		"partition":    searchOptions.partition,
+	}
+	if searchOptions.filter != nil {
+		search["filter"] = searchOptions.filter
+	}
+	if searchOptions.denseWeight != nil {
+		search["dense_weight"] = *searchOptions.denseWeight
+	}
+	var outputFields interface{} = nil
+	if searchOptions.outputFields != nil {
+		search["output_fields"] = searchOptions.outputFields
+		outputFields = searchOptions.outputFields
+	}
+	if searchOptions.needInstruction != nil {
+		search["need_instruction"] = *searchOptions.needInstruction
+	}
+	if searchOptions.primaryKeyIn != nil {
+		search["primary_key_in"] = searchOptions.primaryKeyIn
+	}
+	if searchOptions.primaryKeyNotIn != nil {
+		search["primary_key_not_in"] = searchOptions.primaryKeyNotIn
+	}
+	if searchOptions.postProcessOps != nil {
+		search["post_process_ops"] = searchOptions.postProcessOps
+	}
+	if searchOptions.postProcessInputLimit != nil {
+		search["post_process_input_limit"] = searchOptions.postProcessInputLimit
+	}
+	params := map[string]interface{}{
+		"collection_name": index.CollectionName,
+		"index_name":      index.IndexName,
+		"search":          search,
+	}
+	remainingRetries := 0
+	if searchOptions.retry {
+		remainingRetries = MAX_RETRIES
+	}
+	res, err := index.VikingDBService.retryRequest(context.Background(), "SearchIndex", nil,
+		index.VikingDBService.convertMapToJson(params), remainingRetries)
 	if err != nil {
 		return nil, err
 	}
