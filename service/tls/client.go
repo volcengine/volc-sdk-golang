@@ -50,7 +50,7 @@ func init() {
 }
 
 type LsClient struct {
-	BaseClient      *base.Client
+	Client          *http.Client
 	Endpoint        string
 	accessLock      *sync.RWMutex
 	AccessKeyID     string
@@ -81,8 +81,20 @@ func (c *LsClient) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityTok
 }
 
 func (c *LsClient) SetTimeout(timeout time.Duration) {
-	defaultHttpClient.Timeout = timeout
+	c.Client.Timeout = timeout
 	defaultRequestTimeout = timeout
+}
+
+func (c *LsClient) GetHttpClient() *http.Client {
+	return c.Client
+}
+
+func (c *LsClient) SetHttpClient(client *http.Client) error {
+	if client == nil {
+		return errors.New("client can not be nil")
+	}
+	c.Client = client
+	return nil
 }
 
 func (c *LsClient) SetRetryIntervalMs(interval time.Duration) {
@@ -232,7 +244,7 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	req = credential.Sign(req)
 
 	// Get ready to do request
-	resp, err := defaultHttpClient.Do(req)
+	resp, err := c.Client.Do(req)
 	if err != nil {
 		return nil, err
 	}
