@@ -18,6 +18,7 @@ const (
 	Float32       = "float32"
 	Bool          = "bool"
 	Text          = "text"
+	Image         = "image"
 	Sparse_Vector = "sparse_vector"
 
 	L2     = "l2"
@@ -58,6 +59,55 @@ const (
 	Confirm   = "confirm"
 	Confirmed = "confirmed"
 )
+
+type VectorizeTuple struct {
+	Dense  *VectorizeModelConf `json:"dense"`
+	Sparse *VectorizeModelConf `json:"sparse,omitempty"`
+}
+
+func NewVectorizeTuple() *VectorizeTuple {
+	return &VectorizeTuple{}
+}
+func (vt *VectorizeTuple) SetDense(dense *VectorizeModelConf) *VectorizeTuple {
+	vt.Dense = dense
+	return vt
+}
+func (vt *VectorizeTuple) SetSparse(sparse *VectorizeModelConf) *VectorizeTuple {
+	vt.Sparse = sparse
+	return vt
+}
+
+type VectorizeModelConf struct {
+	TextField    *string `json:"text_field,omitempty"`
+	ImageField   *string `json:"image_field,omitempty"`
+	ModelName    *string `json:"model_name"`
+	ModelVersion *string `json:"model_version,omitempty"`
+	Dim          *int64  `json:"dim,omitempty"`
+}
+
+func NewVectorizeModelConf() *VectorizeModelConf {
+	return &VectorizeModelConf{}
+}
+func (v *VectorizeModelConf) SetTextField(textField string) *VectorizeModelConf {
+	v.TextField = &textField
+	return v
+}
+func (v *VectorizeModelConf) SetImageField(imageField string) *VectorizeModelConf {
+	v.ImageField = &imageField
+	return v
+}
+func (v *VectorizeModelConf) SetModelName(modelName string) *VectorizeModelConf {
+	v.ModelName = &modelName
+	return v
+}
+func (v *VectorizeModelConf) SetModelVersion(modelVersion string) *VectorizeModelConf {
+	v.ModelVersion = &modelVersion
+	return v
+}
+func (v *VectorizeModelConf) SetDim(dim int64) *VectorizeModelConf {
+	v.Dim = &dim
+	return v
+}
 
 type Field struct {
 	FieldName    string
@@ -123,6 +173,7 @@ type ScalarOrder struct {
 	FieldName string
 	Order     string
 }
+
 type TextObject struct {
 	Text   string
 	Url    string
