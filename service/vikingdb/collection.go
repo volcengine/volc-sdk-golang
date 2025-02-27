@@ -9,6 +9,7 @@ import (
 type Collection struct {
 	CollectionName  string
 	Fields          []Field
+	Vectorize       []*VectorizeTuple
 	VikingDBService *VikingDBService
 	PrimaryKey      string
 	Indexes         []*Index

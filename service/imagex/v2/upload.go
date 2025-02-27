@@ -9,6 +9,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -170,7 +171,7 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	}
 
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(imageBytes))
-	url := fmt.Sprintf("https://%s/%s", host, storeInfo.StoreUri)
+	url := fmt.Sprintf("https://%s/%s", host, getEscapePath(storeInfo.StoreUri))
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(imageBytes))
 	if err != nil {
 		return fmt.Errorf("fail to new put request %s, %v", url, err)
@@ -285,7 +286,7 @@ func (c *segmentedUploadParam) chunkUpload() error {
 }
 
 func (c *segmentedUploadParam) initUploadPart() (string, error) {
-	url := fmt.Sprintf("https://%s/%s?uploads", c.host, c.StoreUri)
+	url := fmt.Sprintf("https://%s/%s?uploads", c.host, getEscapePath(c.StoreUri))
 	req, err := http.NewRequest("PUT", url, nil)
 	if err != nil {
 		return "", err
@@ -327,7 +328,7 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 }
 
 func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data []byte) (string, error) {
-	url := fmt.Sprintf("https://%s/%s?partNumber=%d&uploadID=%s", c.host, c.StoreUri, partNumber, uploadID)
+	url := fmt.Sprintf("https://%s/%s?partNumber=%d&uploadID=%s", c.host, getEscapePath(c.StoreUri), partNumber, uploadID)
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(data))
 	req, err := http.NewRequest("PUT", url, bytes.NewReader(data))
 	if err != nil {
@@ -372,7 +373,7 @@ func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data 
 }
 
 func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []string) error {
-	url := fmt.Sprintf("https://%s/%s?uploadID=%s", c.host, c.StoreUri, uploadID)
+	url := fmt.Sprintf("https://%s/%s?uploadID=%s", c.host, getEscapePath(c.StoreUri), uploadID)
 	body, err := c.genMergeBody(checkSum)
 	if err != nil {
 		return err
@@ -426,4 +427,12 @@ func (c *segmentedUploadParam) genMergeBody(checkSum []string) (string, error) {
 		s[partNumber] = fmt.Sprintf("%d:%s", partNumber, crc)
 	}
 	return strings.Join(s, ","), nil
+}
+
+func getEscapePath(path string) string {
+	elems := strings.Split(path, "/")
+	for i := range elems {
+		elems[i] = url.PathEscape(elems[i])
+	}
+	return strings.Join(elems, "/")
 }

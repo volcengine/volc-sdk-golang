@@ -7,22 +7,16 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/vikingdb"
 )
 
-func Test_Search_By_Raw(t *testing.T) {
-	index, err := service.GetIndex("test_coll_for_sdk", "index_hnsw_hybrid")
+func Test_Search_With_MultiModal(t *testing.T) {
+	index, err := service.GetIndex("test_coll_for_sdk_with_vectorize", "index_hnsw_hybrid")
 	if err != nil {
 		panic(err)
 	}
-	raw := vikingdb.TextObject{
-		Text: "this is eeecejjdggahifbfgdbdadabbciaejgaihidbhhacifcgfbdig",
-	}
-	filter := map[string]interface{}{
-		"op":    "range",
-		"field": "f_int64",
-		"gt":    90,
-	}
-	searchOpt := vikingdb.NewSearchOptions().SetFilter(filter).SetLimit(5).
+	searchOpt := vikingdb.NewSearchOptions().SetLimit(5).
+		SetText("这是一个测试").
+		SetImage("tos://{your_bucket}/{your_object}").
 		SetNeedInstruction(false).SetRetry(true)
-	datas, err := index.SearchByText(raw, searchOpt)
+	datas, err := index.SearchWithMultiModal(searchOpt)
 	if err != nil {
 		panic(err)
 	}

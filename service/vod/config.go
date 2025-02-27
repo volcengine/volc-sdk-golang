@@ -954,6 +954,22 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"DescribeDomainVerifyContent": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeDomainVerifyContent"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"VerifyDomainOwner": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VerifyDomainOwner"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************

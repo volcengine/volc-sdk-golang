@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"net/http"
 	"sync"
 	"time"
 )
@@ -8,6 +9,7 @@ import (
 func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
 	apiVersion := APIVersion3
 	return &LsClient{
+		Client:          defaultHttpClient,
 		Endpoint:        endpoint,
 		accessLock:      &sync.RWMutex{},
 		AccessKeyID:     accessKeyID,
@@ -19,6 +21,8 @@ func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region str
 }
 
 type Client interface {
+	GetHttpClient() *http.Client
+	SetHttpClient(client *http.Client) error
 	ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string)
 	SetTimeout(timeout time.Duration)
 	SetAPIVersion(version string)

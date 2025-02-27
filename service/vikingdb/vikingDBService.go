@@ -358,6 +358,7 @@ func (vikingDBService *VikingDBService) packageCollection(collectionName string,
 	var createTime string
 	var updateTime string
 	var updatePerson string
+	var vectorize []*VectorizeTuple
 	if value, exist := res["description"]; exist {
 		if v, ok := value.(string); !ok {
 			return nil, fmt.Errorf("invalid response, description is not string: %v", res)
@@ -469,11 +470,17 @@ func (vikingDBService *VikingDBService) packageCollection(collectionName string,
 			}
 			fields = append(fields, field)
 		}
-
+	}
+	if value, exist := res["vectorize"]; exist {
+		marshaledBytes, _ := json.Marshal(value)
+		if err := json.Unmarshal(marshaledBytes, &vectorize); err != nil {
+			return nil, fmt.Errorf("invalid response, vectorize unmarshal error: %w", err)
+		}
 	}
 	collection := &Collection{
 		CollectionName:  collectionName,
 		Fields:          fields,
+		Vectorize:       vectorize,
 		VikingDBService: vikingDBService,
 		PrimaryKey:      res["primary_key"].(string),
 		Indexes:         indexes,
@@ -690,7 +697,10 @@ func (vikingDBService *VikingDBService) packageIndex(collectionName string, inde
 	return index, nil
 }
 
-func (vikingDBService *VikingDBService) CreateCollection(collectionName string, fields []Field, description string) (*Collection, error) {
+// CreateCollection
+// opts: 0: []*VectorizeTuple  配置多模态向量化参数
+func (vikingDBService *VikingDBService) CreateCollection(collectionName string,
+	fields []Field, description string, opts ...interface{}) (*Collection, error) {
 	params := map[string]interface{}{
 		"collection_name": collectionName,
 		"description":     description,
@@ -723,6 +733,19 @@ func (vikingDBService *VikingDBService) CreateCollection(collectionName string, 
 	}
 	params["fields"] = _fields
 
+	var vectorize []*VectorizeTuple
+	for i := range opts {
+		if i == 0 {
+			if val, ok := opts[i].([]*VectorizeTuple); !ok {
+				return nil, fmt.Errorf("type of opts[%d] should be []*VectorizeTuple, actual type is %v",
+					i, reflect.TypeOf(opts[i]))
+			} else {
+				vectorize = val
+				params["vectorize"] = vectorize
+			}
+		}
+	}
+
 	request, err := vikingDBService.DoRequest(context.Background(), "CreateCollection", nil, vikingDBService.convertMapToJson(params))
 	_ = request
 	if err != nil {
@@ -734,6 +757,7 @@ func (vikingDBService *VikingDBService) CreateCollection(collectionName string, 
 		VikingDBService: vikingDBService,
 		PrimaryKey:      primaryKey,
 		Description:     description,
+		Vectorize:       vectorize,
 	}
 	return collection, err
 }
