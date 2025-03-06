@@ -67,6 +67,9 @@ func (p *SMS) GetSmsSendDetails(req *GetSmsSendDetailsRequest) (*GetSmsSendDetai
 
 func (p *SMS) smsHandler(api string, req interface{}, resp interface{}) (int, error) {
 	reqJ, err := json.Marshal(req)
+	if err != nil {
+		return http.StatusBadRequest, err
+	}
 	respBody, statusCode, err := p.Client.Json(api, nil, string(reqJ))
 	if err != nil {
 		return statusCode, err
