@@ -458,6 +458,22 @@ var (
 				"Version": []string{"2022-12-01"},
 			},
 		},
+		"GetInnerAuditURLs": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetInnerAuditURLs"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"GetAdAuditResultByVid": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAdAuditResultByVid"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 转码
