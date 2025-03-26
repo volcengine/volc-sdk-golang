@@ -1,7 +1,8 @@
 package consts
 
 const (
-	MinChunckSize = 1024 * 1024 * 20
+	MinChunckSize      = 1024 * 1024 * 20
+	StreamMinChunkSize = 1024 * 1024 * 5
 
 	FileTypeMedia  = "media"
 	FileTypeImage  = "image"
