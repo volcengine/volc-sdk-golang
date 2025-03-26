@@ -601,6 +601,42 @@ func (p *Vod) directUpload(tosHost string, oid string, auth string, fileBytes []
 	return nil
 }
 
+func (p *Vod) directUploadStream(tosHost string, oid string, auth string, content io.Reader, client *http.Client, storageClass int32) error {
+	checkSum := "Ignore"
+	url := fmt.Sprintf("https://%s/%s", tosHost, oid)
+	req, err := http.NewRequest("PUT", url, content)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-CRC32", checkSum)
+	req.Header.Set("Authorization", auth)
+
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
+	}
+	if storageClass == int32(business.StorageClassType_IA) {
+		req.Header.Set("X-Upload-Storage-Class", "ia")
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	b, err := ioutil.ReadAll(rsp.Body)
+	defer rsp.Body.Close()
+	if err != nil {
+		return err
+	}
+	res := &model.UploadPartCommonResponse{}
+	if err := json.Unmarshal(b, res); err != nil {
+		return err
+	}
+	if res.Success != 0 {
+		return errors.New(res.Error.Message)
+	}
+	return nil
+}
+
 func crc64ecma(f io.Reader) (string, error) {
 
 	crc64Hash := crc64.New(crc64.MakeTable(crc64.ECMA))
@@ -635,8 +671,10 @@ func (p *Vod) vpcPartUpload(partUploadInfo *business.PartUploadInfo, filePath st
 	}
 	chunkSize := partUploadInfo.GetPartSize()
 	totalNum := size / chunkSize
+	lastPartSize := size % chunkSize
 
-	if int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 {
+	if (int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 && lastPartSize > 0) ||
+		(int64(len(partUploadInfo.GetPartPutUrls())) != totalNum && lastPartSize == 0) {
 		return errors.New("mismatch part upload")
 	}
 	f, err := os.Open(filePath)
@@ -1079,6 +1117,50 @@ func (p *Vod) uploadPart(uploadPart model.UploadPartCommon, uploadID string, par
 	return res, nil
 }
 
+func (p *Vod) uploadPartStream(uploadPart model.UploadPartCommon, uploadID string, partNumber int, content io.Reader, client *http.Client, storageClass int32) (*model.UploadPartResponse, error) {
+	url := fmt.Sprintf("https://%s/%s?partNumber=%d&uploadID=%s", uploadPart.TosHost, uploadPart.Oid, partNumber, uploadID)
+	checkSum := "Ignore"
+	req, err := http.NewRequest("PUT", url, content)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-CRC32", checkSum)
+	req.Header.Set("Authorization", uploadPart.Auth)
+	req.Header.Set("X-Storage-Mode", "gateway")
+
+	if storageClass == int32(business.StorageClassType_Archive) {
+		req.Header.Set("X-Upload-Storage-Class", "archive")
+	}
+	if storageClass == int32(business.StorageClassType_IA) {
+		req.Header.Set("X-Upload-Storage-Class", "ia")
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	b, err := ioutil.ReadAll(rsp.Body)
+	defer rsp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+	res := &model.UploadPartResponse{}
+	if err := json.Unmarshal(b, res); err != nil {
+		return nil, err
+	}
+	if res.Success != 0 {
+		return nil, UploadError{
+			Code:      res.Error.Code,
+			ErrorCode: res.Error.ErrorCode,
+			Message:   res.Error.Message,
+		}
+	}
+	res.PartNumber = partNumber
+	res.CheckSum = checkSum
+	//return checkSum, res.PayLoad.Meta.ObjectContentType, nil
+	return res, nil
+}
+
 func (p *Vod) BuildVodCommonUploadInfo(resp *response.VodApplyUploadInfoResponse) (*model.UploadCommonInfo, error) {
 	if resp == nil || resp.ResponseMetadata == nil || resp.Result == nil {
 		return nil, errors.New("empty input")
@@ -1184,8 +1266,16 @@ func (p *Vod) UploadPart(input *model.UploadPartInput) (*model.UploadPartRespons
 		Oid:     input.UploadCommonInfo.Oid,
 		Auth:    input.UploadCommonInfo.Auth,
 	}
-	return p.uploadPart(partInfo, input.UploadId, int(input.PartNumber), input.Data,
-		input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+
+	if input.Data != nil && len(input.Data) != 0 {
+		return p.uploadPart(partInfo, input.UploadId, int(input.PartNumber), input.Data,
+			input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+	} else if input.Content != nil {
+		return p.uploadPartStream(partInfo, input.UploadId, int(input.PartNumber), input.Content,
+			input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+	}
+
+	return nil, errors.New("nil data&content")
 }
 
 func (p *Vod) CompleteMultipartUpload(input *model.CompleteMultipartUploadInput) error {
@@ -1220,7 +1310,12 @@ func (p *Vod) PutObject(input *model.PutObjectInput) error {
 	}
 
 	host := p.pickUploadHost(input.UploadCommonInfo)
-	return p.directUpload(host, input.UploadCommonInfo.Oid, input.UploadCommonInfo.Auth, input.Data, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+	if input.Data != nil && len(input.Data) != 0 {
+		return p.directUpload(host, input.UploadCommonInfo.Oid, input.UploadCommonInfo.Auth, input.Data, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+	} else if input.Content != nil {
+		return p.directUploadStream(host, input.UploadCommonInfo.Oid, input.UploadCommonInfo.Auth, input.Content, input.UploadCommonInfo.Client, input.UploadCommonInfo.StorageClass)
+	}
+	return errors.New("nil data and content")
 }
 
 func (p *Vod) InitUploadPart(tosHost string, oid string, auth string, client *http.Client, storageClass int32) (string, error) {
@@ -1286,4 +1381,355 @@ func (p *Vod) MoveObjectCrossSpace(req *request.VodSubmitMoveObjectTaskRequest, 
 		time.Sleep(time.Second)
 	}
 	return nil, http.StatusGatewayTimeout, errors.New(fmt.Sprintf("task run time out, requestId is %s , please retry or contact volc assistant", submitResp.GetResponseMetadata().GetRequestId()))
+}
+
+func (p *Vod) UploadMediaStreamWithCallback(mediaRequset *model.VodStreamUploadRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	mediaRequset.FileType = "media"
+	return p.StreamUploadInner(mediaRequset)
+}
+
+func (p *Vod) UploadMaterialStreamWithCallback(mediaRequset *model.VodStreamUploadRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	return p.StreamUploadInner(mediaRequset)
+}
+
+func (p *Vod) UploadObjectStreamWithCallback(mediaRequset *model.VodStreamUploadRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	mediaRequset.FileType = "object"
+	return p.StreamUploadInner(mediaRequset)
+}
+
+func (p *Vod) StreamUploadInner(streamUploadInnerRequest *model.VodStreamUploadRequest) (*response.VodCommitUploadInfoResponse, int, error) {
+	req := &model.VodStreamUploadRequest{
+		Content:           streamUploadInnerRequest.Content,
+		Size:              streamUploadInnerRequest.Size,
+		SpaceName:         streamUploadInnerRequest.SpaceName,
+		FileType:          streamUploadInnerRequest.FileType,
+		FileName:          streamUploadInnerRequest.FileName,
+		FileExtension:     streamUploadInnerRequest.FileExtension,
+		StorageClass:      streamUploadInnerRequest.StorageClass,
+		ClientNetWorkMode: streamUploadInnerRequest.ClientNetWorkMode,
+		ClientIDCMode:     streamUploadInnerRequest.ClientIDCMode,
+		UploadHostPrefer:  streamUploadInnerRequest.UploadHostPrefer,
+		ChunkSize:         streamUploadInnerRequest.ChunkSize,
+	}
+	logId, sessionKey, err, code := p.StreamUpload(req)
+	if err != nil {
+		return p.fillCommitUploadInfoResponseWhenError(logId, err.Error()), code, err
+	}
+
+	commitRequest := &request.VodCommitUploadInfoRequest{
+		SpaceName:       streamUploadInnerRequest.SpaceName,
+		SessionKey:      sessionKey,
+		CallbackArgs:    streamUploadInnerRequest.CallbackArgs,
+		Functions:       streamUploadInnerRequest.Functions,
+		VodUploadSource: streamUploadInnerRequest.VodUploadSource,
+		ExpireTime:      streamUploadInnerRequest.ExpireTime,
+	}
+
+	commitResp, code, err := p.CommitUploadInfo(commitRequest)
+	if err != nil {
+		return commitResp, code, err
+	}
+	return commitResp, code, nil
+}
+
+func (p *Vod) StreamUpload(vodStreamUploadRequest *model.VodStreamUploadRequest) (string, string, error, int) {
+	if vodStreamUploadRequest.ChunkSize == 0 {
+		vodStreamUploadRequest.ChunkSize = consts.MinChunckSize
+	}
+	if vodStreamUploadRequest.ChunkSize < consts.StreamMinChunkSize {
+		return "", "", errors.New("chunk size must be greater than 5MB"), 0
+	}
+	if vodStreamUploadRequest.Content == nil {
+		return "", "", errors.New("content is nil"), 0
+	}
+
+	applyRequest := &request.VodApplyUploadInfoRequest{
+		SpaceName:         vodStreamUploadRequest.SpaceName,
+		FileType:          vodStreamUploadRequest.FileType,
+		FileName:          vodStreamUploadRequest.FileName,
+		FileExtension:     vodStreamUploadRequest.FileExtension,
+		StorageClass:      vodStreamUploadRequest.StorageClass,
+		ClientNetWorkMode: vodStreamUploadRequest.ClientNetWorkMode,
+		ClientIDCMode:     vodStreamUploadRequest.ClientIDCMode,
+		NeedFallback:      true, // default set
+		UploadHostPrefer:  vodStreamUploadRequest.UploadHostPrefer,
+		FileSize:          float64(vodStreamUploadRequest.Size),
+	}
+
+	resp, code, err := p.ApplyUploadInfo(applyRequest)
+	logId := resp.GetResponseMetadata().GetRequestId()
+	if err != nil {
+		return logId, "", err, code
+	}
+
+	if resp.ResponseMetadata.Error != nil && resp.ResponseMetadata.Error.Code != "0" {
+		return logId, "", fmt.Errorf("%+v", resp.ResponseMetadata.Error), code
+	}
+
+	//vpc upload
+	if vpcUploadAddress := resp.GetResult().GetData().GetVpcTosUploadAddress(); vpcUploadAddress != nil {
+		err := p.vpcUploadStream(vpcUploadAddress, vodStreamUploadRequest)
+		if err != nil {
+			return logId, "", err, http.StatusBadRequest
+		}
+		uploadAddress := resp.GetResult().GetData().GetUploadAddress()
+		oid := uploadAddress.StoreInfos[0].GetStoreUri()
+		sessionKey := uploadAddress.GetSessionKey()
+		return oid, sessionKey, nil, http.StatusOK
+	}
+
+	uploadCommonInfo, err := p.BuildVodCommonUploadInfo(resp)
+	if err != nil {
+		return logId, "", fmt.Errorf("build common upload info error:%+v", err), code
+	}
+	uploadCommonInfo.StorageClass = vodStreamUploadRequest.StorageClass
+
+	err = p.StreamUploadContent(&model.UploadContentParam{
+		UploadCommonInfo: uploadCommonInfo,
+		ChunkSize:        vodStreamUploadRequest.ChunkSize,
+		Size:             vodStreamUploadRequest.Size,
+		Content:          vodStreamUploadRequest.Content,
+	})
+	if err != nil {
+		return logId, "", err, http.StatusBadRequest
+	}
+
+	return uploadCommonInfo.Oid, uploadCommonInfo.SessionKey, nil, http.StatusOK
+}
+
+func (p *Vod) StreamUploadContent(param *model.UploadContentParam) error {
+	if param.UploadCommonInfo == nil {
+		return errors.New("nil upload common info")
+	}
+	err := p.checkUploadCommonInfo(param.UploadCommonInfo)
+	if err != nil {
+		return err
+	}
+
+	uploadCommonInfo := param.UploadCommonInfo
+	if param.Size == 0 {
+		return p.StreamUploadContentInChunk(param)
+	}
+
+	// part upload
+	if param.Size > param.ChunkSize {
+		uploadId, err := p.CreateMultipartUpload(&model.CreateMultipartUploadInput{
+			UploadCommonInfo: uploadCommonInfo,
+		})
+		if err != nil {
+			return fmt.Errorf("CreateMultipartUpload Error:%v", err)
+		}
+
+		probeBytes := make([]byte, 1)
+		var index int64 = 1
+		partList := make([]*model.UploadPartResponse, 0)
+		for {
+			_, err := io.ReadFull(param.Content, probeBytes)
+			if err == io.EOF {
+				break
+			}
+
+			chunkReader := io.LimitReader(io.MultiReader(bytes.NewReader(probeBytes), param.Content), param.ChunkSize)
+			partInfo, err := p.UploadPart(&model.UploadPartInput{
+				UploadCommonInfo: uploadCommonInfo,
+				PartNumber:       index,
+				UploadId:         uploadId,
+				Content:          chunkReader,
+			})
+			if err != nil {
+				return fmt.Errorf("UploadPart Error:%v", err)
+			}
+			partList = append(partList, partInfo)
+			index++
+		}
+
+		err = p.CompleteMultipartUpload(&model.CompleteMultipartUploadInput{
+			UploadCommonInfo: uploadCommonInfo,
+			UploadId:         uploadId,
+			PartList:         partList,
+		})
+		if err != nil {
+			return fmt.Errorf("CompleteMultipartUpload Error:%v", err)
+		}
+	} else {
+		return p.PutObject(&model.PutObjectInput{
+			UploadCommonInfo: uploadCommonInfo,
+			Content:          param.Content,
+		})
+	}
+
+	return nil
+}
+
+func (p *Vod) StreamUploadContentInChunk(param *model.UploadContentParam) error {
+	if param.UploadCommonInfo == nil {
+		return errors.New("nil upload common info")
+	}
+	err := p.checkUploadCommonInfo(param.UploadCommonInfo)
+	if err != nil {
+		return err
+	}
+	uploadCommonInfo := param.UploadCommonInfo
+
+	firstReader := io.LimitReader(param.Content, param.ChunkSize)
+	data, err := ioutil.ReadAll(firstReader)
+	if err != nil {
+		return err
+	}
+
+	if int64(len(data)) < param.ChunkSize {
+		return p.PutObject(&model.PutObjectInput{
+			UploadCommonInfo: uploadCommonInfo,
+			Data:             data,
+		})
+	} else {
+		uploadId, err := p.CreateMultipartUpload(&model.CreateMultipartUploadInput{
+			UploadCommonInfo: uploadCommonInfo,
+		})
+		if err != nil {
+			return fmt.Errorf("CreateMultipartUpload Error:%v", err)
+		}
+
+		var index int64 = 1
+		partList := make([]*model.UploadPartResponse, 0)
+		for {
+			partInfo, err := p.UploadPart(&model.UploadPartInput{
+				UploadCommonInfo: uploadCommonInfo,
+				PartNumber:       index,
+				UploadId:         uploadId,
+				Data:             data,
+			})
+			if err != nil {
+				return fmt.Errorf("UploadPart Error:%v", err)
+			}
+			partList = append(partList, partInfo)
+			index++
+
+			limitReader := io.LimitReader(param.Content, param.ChunkSize)
+			data, err = ioutil.ReadAll(limitReader)
+			if err != nil {
+				return err
+			}
+
+			if len(data) == 0 {
+				break
+			}
+		}
+
+		err = p.CompleteMultipartUpload(&model.CompleteMultipartUploadInput{
+			UploadCommonInfo: uploadCommonInfo,
+			UploadId:         uploadId,
+			PartList:         partList,
+		})
+		if err != nil {
+			return fmt.Errorf("CompleteMultipartUpload Error:%v", err)
+		}
+	}
+
+	return nil
+}
+
+func (p *Vod) vpcUploadStream(vpcUploadAddress *business.VpcTosUploadAddress, vodStreamUploadRequest *model.VodStreamUploadRequest) error {
+	if vpcUploadAddress == nil {
+		return errors.New("nil VpcUploadAddress")
+	}
+
+	if vpcUploadAddress.GetQuickCompleteMode() == "enable" {
+		return nil
+	}
+	client := &http.Client{Timeout: 900 * time.Second}
+
+	if vpcUploadAddress.GetUploadMode() == "direct" {
+		return p.vpcPutStream(vpcUploadAddress, vodStreamUploadRequest.Content, client)
+	} else if vpcUploadAddress.GetUploadMode() == "part" {
+		return p.vpcPartUploadStream(vpcUploadAddress.GetPartUploadInfo(), vodStreamUploadRequest.Content, vodStreamUploadRequest.Size, client)
+	}
+
+	return nil
+}
+
+func (p *Vod) vpcPutStream(vpcUploadAddress *business.VpcTosUploadAddress, content io.Reader, client *http.Client) error {
+	putUrl := vpcUploadAddress.GetPutUrl()
+
+	req, err := http.NewRequest("PUT", putUrl, content)
+	if err != nil {
+		return err
+	}
+	for key, value := range vpcUploadAddress.GetPutUrlHeaders() {
+		req.Header.Set(key, value)
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if rsp == nil {
+		return errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return errors.New("put error:" + logId)
+	}
+
+	return nil
+}
+
+func (p *Vod) vpcPartPutStream(putUrl string, content io.Reader, client *http.Client) (string, error) {
+	req, err := http.NewRequest("PUT", putUrl, content)
+	if err != nil {
+		return "", err
+	}
+	rsp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	if rsp == nil {
+		return "", errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return "", errors.New("put error:" + logId)
+	}
+
+	etag := rsp.Header.Get("ETag")
+	return etag, nil
+}
+
+func (p *Vod) vpcPartUploadStream(partUploadInfo *business.PartUploadInfo, content io.Reader, size int64, client *http.Client) error {
+	if partUploadInfo == nil {
+		return errors.New("empty partInfo")
+	}
+	chunkSize := partUploadInfo.GetPartSize()
+	totalNum := size / chunkSize
+
+	if int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 {
+		return errors.New("mismatch part upload")
+	}
+
+	partsInfo := &model.VpcUploadPartsInfo{
+		Parts: make([]*model.VpcUploadPartInfo, 0),
+	}
+	for i := 0; i < len(partUploadInfo.GetPartPutUrls()); i++ {
+		partUrl := partUploadInfo.GetPartPutUrls()[i]
+		etag, err := p.vpcPartPutStream(partUrl, io.LimitReader(content, chunkSize), client)
+		if err != nil {
+			return err
+		}
+		partsInfo.Parts = append(partsInfo.Parts, &model.VpcUploadPartInfo{
+			PartNumber: i + 1,
+			ETag:       etag,
+		})
+	}
+
+	probeBytes := make([]byte, 1)
+	_, err := io.ReadFull(content, probeBytes)
+	if err != io.EOF {
+		return errors.New("size & content mismatch")
+	}
+
+	return p.vpcPost(partUploadInfo, partsInfo, client)
 }

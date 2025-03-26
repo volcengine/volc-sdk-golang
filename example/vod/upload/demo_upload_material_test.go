@@ -3,6 +3,7 @@ package upload
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/vod/upload/model"
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/base"
@@ -54,6 +55,61 @@ func TestVod_UploadMediaMaterialWithCallback(t *testing.T) {
 	}
 
 	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
+	if err != nil {
+		fmt.Printf("error %v", err)
+	} else {
+		bts, _ := json.Marshal(resp)
+		fmt.Printf("\nresp = %s", bts)
+	}
+
+	fmt.Println(resp.GetResponseMetadata().GetRequestId())
+	fmt.Println(resp.GetResult().GetData().GetMid())
+	fmt.Printf("%d\n", int(resp.GetResult().GetData().GetSourceInfo().GetSize()))
+
+}
+
+func TestVod_UploadMediaMaterialStreamWithCallback(t *testing.T) {
+	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	// or set ak and ak as follow
+	//vod.NewInstance().SetAccessKey("")
+	//vod.NewInstance().SetSecretKey("")
+
+	spaceName := "your space"
+
+	snapShotFunc := functions.SnapshotFunc(business.VodUploadFunctionInput{SnapshotTime: 1.3})
+	getMetaFunc := functions.GetMetaFunc()
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
+		Title:       "素材测试视频",             // 标题
+		Tags:        "test",               // 多个标签可用逗号隔开
+		Description: "素材测试，视频文件",          // 素材描述信息
+		Category:    consts.CategoryVideo, // 素材分类，在 video、audio、image、dynamic_img、subtitle、font 中枚举
+		RecordType:  2,                    // 素材上传 Type 值为 2
+		Format:      "mp4",                //格式。若传入 Format 的话，以您传入参数为准，否则以系统识别出的 Format 为准。若遇到特殊文件无法识别，Format 可能为空。
+	})
+
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc, snapShotFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &model.VodStreamUploadRequest{
+		SpaceName:        spaceName,
+		Content:          nil, // 上传内容
+		Size:             0,   // 内容大小
+		ChunkSize:        0,   // 期望分片大小，默认20MB
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeMedia,
+		FileName:         "",
+		FileExtension:    ".mp4",
+		UploadHostPrefer: "",
+	}
+
+	resp, _, err := instance.UploadMaterialStreamWithCallback(vodUploadMaterialRequest)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
@@ -120,6 +176,60 @@ func TestVod_UploadImageMaterialWithCallback(t *testing.T) {
 
 }
 
+func TestVod_UploadImageMaterialStreamWithCallback(t *testing.T) {
+	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	// or set ak and ak as follow
+	//vod.NewInstance().SetAccessKey("")
+	//vod.NewInstance().SetSecretKey("")
+
+	spaceName := "your space"
+
+	getMetaFunc := functions.GetMetaFunc()
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
+		Title:       "素材测试图片",
+		Tags:        "test",
+		Description: "素材测试，图片文件",
+		Category:    consts.CategoryImage,
+		RecordType:  2,
+		Format:      "jpg",
+	})
+
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &model.VodStreamUploadRequest{
+		SpaceName:        spaceName,
+		Content:          nil, // 上传内容
+		Size:             0,   // 内容大小
+		ChunkSize:        0,   // 期望分片大小，默认20MB
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeImage,
+		FileName:         "",
+		FileExtension:    ".jpg",
+		UploadHostPrefer: "",
+	}
+
+	resp, _, err := instance.UploadMaterialStreamWithCallback(vodUploadMaterialRequest)
+	if err != nil {
+		fmt.Printf("error %v", err)
+	} else {
+		bts, _ := json.Marshal(resp)
+		fmt.Printf("\nresp = %s", bts)
+	}
+
+	fmt.Println(resp.String())
+	fmt.Println(resp.GetResponseMetadata().GetRequestId())
+	fmt.Println(resp.GetResult().GetData().GetMid())
+
+}
+
 func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 	// call below method if you dont set ak and sk in ～/.vcloud/config
 	instance := vod.NewInstance()
@@ -160,6 +270,60 @@ func TestVod_UploadObjectMaterialWithCallback(t *testing.T) {
 	}
 
 	resp, _, err := instance.UploadMaterialWithCallback(vodUploadMaterialRequest)
+	if err != nil {
+		fmt.Printf("error %v", err)
+	} else {
+		bts, _ := json.Marshal(resp)
+		fmt.Printf("\nresp = %s", bts)
+	}
+
+	fmt.Println(resp.String())
+	fmt.Println(resp.GetResponseMetadata().GetRequestId())
+	fmt.Println(resp.GetResult().GetData().GetMid())
+
+}
+
+func TestVod_UploadObjectMaterialStreamWithCallback(t *testing.T) {
+	// call below method if you dont set ak and sk in ～/.vcloud/config
+	instance := vod.NewInstance()
+	instance.SetCredential(base.Credentials{
+		AccessKeyID:     "your ak",
+		SecretAccessKey: "your sk",
+	})
+
+	// or set ak and ak as follow
+	//vod.NewInstance().SetAccessKey("")
+	//vod.NewInstance().SetSecretKey("")
+
+	spaceName := "your space"
+
+	getMetaFunc := functions.GetMetaFunc()
+	addOptionFunc := functions.AddOptionInfoFunc(business.VodUploadFunctionInput{
+		Title:       "素材测试字幕",
+		Tags:        "test",
+		Description: "素材测试，字幕文件",
+		Category:    consts.CategorySubtitle,
+		RecordType:  2,
+		Format:      "vtt",
+	})
+
+	vodFunctions := []business.VodUploadFunction{addOptionFunc, getMetaFunc}
+	fbts, _ := json.Marshal(vodFunctions)
+
+	vodUploadMaterialRequest := &model.VodStreamUploadRequest{
+		SpaceName:        spaceName,
+		Content:          nil, // 上传内容
+		Size:             0,   // 内容大小
+		ChunkSize:        0,   // 期望分片大小，默认20MB
+		CallbackArgs:     "my callback",
+		Functions:        string(fbts),
+		FileType:         consts.FileTypeObject,
+		FileName:         "",
+		FileExtension:    ".vtt",
+		UploadHostPrefer: "",
+	}
+
+	resp, _, err := instance.UploadMaterialStreamWithCallback(vodUploadMaterialRequest)
 	if err != nil {
 		fmt.Printf("error %v", err)
 	} else {
