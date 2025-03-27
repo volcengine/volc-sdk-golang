@@ -991,6 +991,26 @@ func (c *Imagex) GetImageAddOnTag(ctx context.Context, arg *GetImageAddOnTagQuer
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXCubeUsage(ctx context.Context, arg *DescribeImageXCubeUsageQuery) (*DescribeImageXCubeUsageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXCubeUsage", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXCubeUsageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXSourceRequestBandwidth(ctx context.Context, arg *DescribeImageXSourceRequestBandwidthQuery) (*DescribeImageXSourceRequestBandwidthRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -1063,6 +1083,26 @@ func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *De
 	}
 
 	result := new(DescribeImageXBucketRetrievalUsageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DescribeImageXAIRequestCntUsage(ctx context.Context, arg *DescribeImageXAIRequestCntUsageQuery) (*DescribeImageXAIRequestCntUsageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXAIRequestCntUsage", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXAIRequestCntUsageRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2941,6 +2981,26 @@ func (c *Imagex) UpdateImageFileCT(ctx context.Context, arg *UpdateImageFileCTRe
 	return result, nil
 }
 
+func (c *Imagex) ApplyVpcUploadInfo(ctx context.Context, arg *ApplyVpcUploadInfoQuery) (*ApplyVpcUploadInfoRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "ApplyVpcUploadInfo", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ApplyVpcUploadInfoRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) ApplyImageUpload(ctx context.Context, arg *ApplyImageUploadQuery) (*ApplyImageUploadRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -4293,6 +4353,31 @@ func (c *Imagex) UpdateStorageRules(ctx context.Context, arg *UpdateStorageRules
 	}
 
 	result := new(UpdateStorageRulesRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) UpdateStorageRulesV2(ctx context.Context, arg *UpdateStorageRulesV2Req) (*UpdateStorageRulesV2Res, error) {
+	query, err := marshalToQuery(arg.UpdateStorageRulesV2Query)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateStorageRulesV2Body)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateStorageRulesV2", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateStorageRulesV2Res)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err

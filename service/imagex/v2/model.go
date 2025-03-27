@@ -18,34 +18,40 @@ type GetImageTranscodeQueuesResResultQueuesItemType string
 
 type AddDomainV1Body struct {
 
-	// REQUIRED; 域名，您可以通过调用 获取服务下全部域名 [https://www.volcengine.com/docs/508/9379] 获取当前服务下所有域名。
+	// REQUIRED; 新增域名。
 	Domain string `json:"domain"`
 
-	// 访问控制配置
+	// 访问控制配置。
 	AccessControl []*AddDomainV1BodyAccessControlItem `json:"access_control,omitempty"`
 
 	// 证书配置，海外加速或者全球加速为必选，否则审核不通过。
 	HTTPS []*AddDomainV1BodyHTTPSItem `json:"https,omitempty"`
 
-	// 请求需要添加的响应头
+	// 请求需要添加的响应头。
 	RespHdrs []*AddDomainV1BodyRespHdrsItem `json:"resp_hdrs,omitempty"`
 }
 
 type AddDomainV1BodyAccessControlItem struct {
 
-	// Refer 配置
+	// Referer 配置。
 	ReferLink []*AddDomainV1BodyAccessControlPropertiesItemsItem `json:"refer_link,omitempty"`
 }
 
 type AddDomainV1BodyAccessControlPropertiesItemsItem struct {
 
-	// REQUIRED; 是否开启黑白名单配置，取值如下所示：* true：允许空 Refer* false：不允许空 Refer
+	// REQUIRED; 是否开启 Referer 防盗链，取值如下所示：
+	// * true：开启
+	// * false：关闭
 	Enabled bool `json:"enabled"`
 
-	// 是否允许空 Refer，取值如下所示：
+	// 是否允许空 Referer，取值如下所示：
+	// * true：允许空 Referer
+	// * false：不允许空 Referer
 	AllowEmptyRefer bool `json:"allow_empty_refer,omitempty"`
 
-	// 是否选择白名单，取值如下所示：
+	// 是否配置白名单，取值如下所示：
+	// * true：配置白名单
+	// * false：配置黑名单
 	IsWhiteMode bool `json:"is_white_mode,omitempty"`
 
 	// 根据是否为白名单，为对应的白/黑名单的值。
@@ -57,19 +63,23 @@ type AddDomainV1BodyHTTPSItem struct {
 	// 证书 ID，若enable_https为true，则为必选。
 	CertID string `json:"cert_id,omitempty"`
 
-	// 是否开启 Https，取值如下所示：* true：强制* false：不强制
+	// 是否开启 Https，取值如下所示：
+	// * true：开启
+	// * false：关闭
 	EnableHTTPS bool `json:"enable_https,omitempty"`
 
 	// 是否强制使用 Https，取值如下所示：
+	// * true：强制
+	// * false：不强制
 	ForceHTTPS bool `json:"force_https,omitempty"`
 }
 
 type AddDomainV1BodyRespHdrsItem struct {
 
-	// REQUIRED; Header Key
+	// REQUIRED; Header Key，请见支持配置的响应头 [https://www.volcengine.com/docs/508/196704#%E6%94%AF%E6%8C%81%E9%85%8D%E7%BD%AE%E7%9A%84%E5%93%8D%E5%BA%94%E5%A4%B4]。
 	Key string `json:"key"`
 
-	// Header Value
+	// Header Value，设置该响应头字段的值。字段值不能超过 1,024 个字符，可以包含除美元符号（$），Delete（ASCII code 127）外的可打印 ASCII 字符。
 	Value string `json:"value,omitempty"`
 }
 
@@ -108,12 +118,8 @@ type AddDomainV1ResResponseMetadata struct {
 
 type AddDomainV1ResResult struct {
 
-	// 新增域名内容安全审核工单ID，仅对内
-	BPMID string `json:"BPMID,omitempty"`
-
-	// 新增域名内容安全审核工单，仅对内
-	BPMLink string `json:"BPMLink,omitempty"`
-	Domain  string `json:"Domain,omitempty"`
+	// 新增的域名。
+	Domain string `json:"Domain,omitempty"`
 }
 
 type AddImageBackgroundColorsBody struct {
@@ -225,8 +231,7 @@ type ApplyImageUploadQuery struct {
 
 	// 上传文件的存储 Key。默认使用随机生成的字符串作为存储 Key。
 	// * 数组长度和UploadNum保持一致。
-	// * 不支持空格，如果中间有空格将会导致上传失败。
-	// * 不支持以/开头或结尾，不支持/连续出现，Key 值最大长度限制为 180 个字节。 :::tip 仅对于 veImageX 上传场景生效。 :::
+	// * 存储 Key 详细命名规范请参看 veImageX 存储 Key 通用字符规则 [https://www.volcengine.com/docs/508/1458331]。
 	StoreKeys []string `json:"StoreKeys,omitempty" query:"StoreKeys"`
 
 	// 上传文件的数量，将决定下发的 StoreUri 的数量，取值范围为[1,10]，默认为 1。
@@ -300,6 +305,132 @@ type ApplyImageUploadResResultUploadAddressStoreInfosItem struct {
 
 	// REQUIRED; 资源 ID。
 	StoreURI string `json:"StoreUri"`
+}
+
+type ApplyVpcUploadInfoQuery struct {
+
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+
+	// 上传文件的 Content-Type 值。
+	// 需确保指定值在服务维度的白名单内，否则无法成功上传，参看上传 Content-Type 限制 [https://www.volcengine.com/docs/508/1319948]。
+	ContentType string `json:"ContentType,omitempty" query:"ContentType"`
+
+	// 文件扩展名，最大长度限制为 8 个字节。
+	// :::tip 仅当未指定 StoreKeys 时生效。 :::
+	FileExtension string `json:"FileExtension,omitempty" query:"FileExtension"`
+
+	// 文件大小。
+	FileSize int `json:"FileSize,omitempty" query:"FileSize"`
+
+	// 是否开启重名文件覆盖上传，取值如下所示：
+	// * true：开启
+	// * false：（默认）关闭
+	// :::tip 在指定Overwrite为true前，请确保您指定的ServiceId对应服务已开启了覆盖上传 [https://www.volcengine.com/docs/508/1119912]能力。 :::
+	Overwrite bool `json:"Overwrite,omitempty" query:"Overwrite"`
+
+	// 分片大小，单位为字节，默认值为 200 MB。 当 FileSize 大于 PartSize 时，下发分片上传的 URL。
+	PartSize int `json:"PartSize,omitempty" query:"PartSize"`
+
+	// 指定的上传文件路径。指定 Prefix 时，下发的存储 Key 为：Prefix/{随机Key}.{FileExtension}，拼接形成的存储 Key 需满足veImageX 存储 Key 通用字符规则 [https://www.volcengine.com/docs/508/1458331]。
+	// :::tip 仅当未指定 StoreKeys 时生效。 :::
+	Prefix string `json:"Prefix,omitempty" query:"Prefix"`
+
+	// 存储类型。
+	// * STANDARD：标准存储
+	// * IA：低频存储
+	// * ARCHIVE_FR：归档闪回存储
+	// * ARCHIVE：归档存储
+	// * COLD_ARCHIVE：冷归档存储
+	StorageClass string `json:"StorageClass,omitempty" query:"StorageClass"`
+
+	// 上传文件的存储 Key。默认使用随机生成的字符串作为存储 Key。
+	// 存储 Key 详细命名规范请参看veImageX 存储 Key 通用字符规则 [https://www.volcengine.com/docs/508/1458331]。
+	StoreKey string `json:"StoreKey,omitempty" query:"StoreKey"`
+}
+
+type ApplyVpcUploadInfoRes struct {
+
+	// REQUIRED
+	ResponseMetadata *ApplyVpcUploadInfoResResponseMetadata `json:"ResponseMetadata"`
+	Result           *ApplyVpcUploadInfoResResult           `json:"Result,omitempty"`
+}
+
+type ApplyVpcUploadInfoResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type ApplyVpcUploadInfoResResult struct {
+
+	// REQUIRED; 参数的唯一标识符
+	Oid string `json:"Oid"`
+
+	// REQUIRED; 分片上传信息。
+	PartUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo `json:"PartUploadInfo"`
+
+	// REQUIRED; 上传URL。
+	PutURL string `json:"PutURL"`
+
+	// REQUIRED; 自定义请求头。
+	PutURLHeaders []*ApplyVpcUploadInfoResResultPutURLHeadersItem `json:"PutURLHeaders"`
+
+	// REQUIRED; 上传会话
+	SessionKey string `json:"SessionKey"`
+
+	// REQUIRED; 上传模式。
+	// * direct：直接上传
+	// * part：分片上传
+	UploadMode string `json:"UploadMode"`
+}
+
+// ApplyVpcUploadInfoResResultPartUploadInfo - 分片上传信息。
+type ApplyVpcUploadInfoResResultPartUploadInfo struct {
+
+	// REQUIRED; 完整部分的URL。
+	CompletePartURL string `json:"CompletePartURL"`
+
+	// REQUIRED; 合并分片请求头信息，map结构
+	CompletePartURLHeaders []*ApplyVpcUploadInfoResResultPartUploadInfoCompletePartURLHeadersItem `json:"CompletePartURLHeaders"`
+
+	// REQUIRED; 分块上传URL列表。
+	PartPutURLs []string `json:"PartPutURLs"`
+
+	// REQUIRED; 上传分片大小，默认为 200MB。
+	PartSize int `json:"PartSize"`
+}
+
+type ApplyVpcUploadInfoResResultPartUploadInfoCompletePartURLHeadersItem struct {
+
+	// REQUIRED; 请提供具体的Key和string值，我将根据这些信息生成参数的一句话描述。
+	Key string `json:"Key"`
+
+	// REQUIRED; 请提供参数的名字和类型。
+	Value string `json:"Value"`
+}
+
+type ApplyVpcUploadInfoResResultPutURLHeadersItem struct {
+
+	// REQUIRED; 请提供具体的Key和string值，我将根据这些信息生成参数描述。
+	Key string `json:"Key"`
+
+	// REQUIRED; 参数的值。
+	Value string `json:"Value"`
 }
 
 type CommitImageUploadBody struct {
@@ -489,16 +620,28 @@ type Components18K1KvdSchemasGetallimageservicesresPropertiesResultPropertiesSer
 	Value string `json:"Value"`
 }
 
+type Components1AkatydSchemasGetimageserviceresPropertiesResultPropertiesStoragerulesv2ItemsPropertiesNoncurrentversiontransitionsItems struct {
+	StorageClass string `json:"StorageClass"`
+
+	NonCurrentDate string `json:"NonCurrentDate,omitempty"`
+
+	NonCurrentDays int `json:"NonCurrentDays,omitempty"`
+}
+
 type Components1D40MkcSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesStoragerulesItems struct {
-	Action string `json:"Action"`
-
-	Day int `json:"Day"`
-
 	Enable bool `json:"Enable"`
 
 	Event string `json:"Event"`
 
 	Prefix string `json:"Prefix"`
+
+	Action string `json:"Action,omitempty"`
+
+	Day int `json:"Day,omitempty"`
+
+	NonCurrentAction string `json:"NonCurrentAction,omitempty"`
+
+	NonCurrentDay int `json:"NonCurrentDay,omitempty"`
 }
 
 // Components1Muxqr1SchemasGetimagealertrecordsresPropertiesResultPropertiesAlertrecordsItemsPropertiesAlertcondPropertiesAlertcontent
@@ -619,6 +762,14 @@ type ComponentsPqmsj3SchemasGetallimageservicesresPropertiesResultPropertiesServ
 	Schema string `json:"Schema"`
 
 	Source string `json:"Source"`
+}
+
+type ComponentsQpab6RSchemasUpdatestoragerulesv2BodyPropertiesStoragerulesItemsPropertiesNoncurrentversiontransitionsItems struct {
+	StorageClass string `json:"StorageClass"`
+
+	NonCurrentDate string `json:"NonCurrentDate,omitempty"`
+
+	NonCurrentDays int `json:"NonCurrentDays,omitempty"`
 }
 
 type CreateBatchProcessTaskBody struct {
@@ -773,6 +924,9 @@ type CreateFileRestoreBody struct {
 	// * 您可以在 veImageX 控制台资源管理 [https://console.volcengine.com/imagex/resource_manage/]页面，在已上传文件的名称列获取资源 URI。
 	// * 您也可以通过 OpenAPI 的方式获取 URI，具体请参考获取服务下全部上传文件 [https://www.volcengine.com/docs/508/9393]。
 	StoreURI string `json:"StoreUri"`
+
+	// 取回方式： Expedited：快速取回 Standard：标准取回 Bulk：批量取回；不设置默认standard
+	Tier string `json:"Tier,omitempty"`
 }
 
 type CreateFileRestoreQuery struct {
@@ -877,6 +1031,9 @@ type CreateHiddenWatermarkImageResResult struct {
 
 type CreateImageAnalyzeTaskBody struct {
 
+	// REQUIRED; 其中原图阶段为"origin", 结果图阶段为"final",其他对应filter name
+	EvalStages []string `json:"EvalStages"`
+
 	// REQUIRED; 自定义离线评估任务名称
 	Name string `json:"Name"`
 
@@ -894,6 +1051,9 @@ type CreateImageAnalyzeTaskBody struct {
 	// * UrlFile：在线提交 URL 离线评估，即在.txt 文件（评估文件）内填写了待评估图片文件 URL，并将该 txt 文件上传至指定服务后获取并传入该文件的 StoreUri。
 	// * UriFile：在线提交 URI 离线评估，即在.txt 文件（评估文件）内填写了待评估图片文件 URI，并将该 txt 文件上传至指定服务后获取并传入该文件的 StoreUri。
 	Type string `json:"Type"`
+
+	// REQUIRED; 选择的评估指标 "vqscore"，"noise"，"aesthetic"，"psnr"，"ssim"，"vmaf"
+	VqTypes []string `json:"VqTypes"`
 
 	// 任务描述，可作为该条任务的备注信息。
 	Desc string `json:"Desc,omitempty"`
@@ -1299,6 +1459,11 @@ type CreateImageFromURIResResult struct {
 
 type CreateImageHmEmbedBody struct {
 
+	// REQUIRED; 算法模型，取值如下所示：
+	// * default：文本嵌入模型，默认文本嵌入模型；
+	// * adapt_resize：画质自适应文本嵌入模型。
+	Algorithm string `json:"Algorithm"`
+
 	// REQUIRED; 自定义盲水印文本内容。
 	// * 文本嵌入模型支持最长可嵌入115个水印内容字符。
 	// * 画质自适应文本嵌入模型无水印内容长度限制。
@@ -1311,11 +1476,6 @@ type CreateImageHmEmbedBody struct {
 
 	// REQUIRED; 待添加盲水印的原图 Uri。
 	StoreURI string `json:"StoreUri"`
-
-	// 算法模型，取值如下所示：
-	// * default：文本嵌入模型，默认文本嵌入模型；
-	// * adapt_resize：画质自适应文本嵌入模型。
-	Algorithm string `json:"Algorithm,omitempty"`
 
 	// 待添加盲水印的可公网访问原图 Url。当 StoreUri 和 ImageUrl 均不为空，以 StoreUri 取值为准。
 	ImageURL string `json:"ImageUrl,omitempty"`
@@ -2518,6 +2678,9 @@ type CreateImageTranscodeCallbackBody struct {
 
 	// REQUIRED; 任务条目 ID
 	EntryID string `json:"EntryId"`
+
+	// 地域。
+	Region string `json:"Region,omitempty"`
 }
 
 type CreateImageTranscodeCallbackRes struct {
@@ -2620,23 +2783,10 @@ type CreateImageTranscodeQueueResResult struct {
 
 type CreateImageTranscodeTaskBody struct {
 
-	// REQUIRED; DataList和Filelist二选一必填，同时配置时，DataList优先生效。
-	// 待转码的图片 uri 或 url 列表，最多支持 10 万条。
-	// * 若DataType取值uri，此处请传入指定 ServiceId 下的存储 URI。
-	// * 若DataType取值url，此处请传入公网可访问的 URL。
-	DataList []string `json:"DataList"`
-
 	// REQUIRED; 数据类型，取值如下所示：
 	// * uri：指定 ServiceId 下存储 URI。
 	// * url：公网可访问的 URL。
 	DataType string `json:"DataType"`
-
-	// REQUIRED; DataList和Filelist二选一必填，同时配置时，DataList优先生效。
-	// 待转码的图片 uri 或 url 文件列表。具体使用方式如下：
-	// 1. 在 txt、csv 文件内填写指定数据类型的待转码图片地址，每行填写一个，最多不超过 10 万条。
-	// 2. 将该文件上传至指定服务后，获取其存储 URI。
-	// 3. 将该存储 URI，传入 FileList。
-	FileList []string `json:"FileList"`
 
 	// REQUIRED; 服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
@@ -2649,19 +2799,22 @@ type CreateImageTranscodeTaskBody struct {
 	// 任务回调配置。缺省情况下默认使用队列回调配置。
 	CallbackConf *CreateImageTranscodeTaskBodyCallbackConf `json:"CallbackConf,omitempty"`
 
+	// 数据列表。
+	DataList []string `json:"DataList,omitempty"`
+
 	// 转码是否保留 exif。取值如下所示：
 	// * true：保留
 	// * false：（默认）不保留
 	EnableExif bool `json:"EnableExif,omitempty"`
 
+	// 文件列表。
+	FileList []string `json:"FileList,omitempty"`
+
 	// 任务队列名称 ID。缺省情况下提交至账号默认任务队列。您可通过调用GetImageTranscodeQueues [https://www.volcengine.com/docs/508/1160404]获取该账号下全部任务队列 ID。
 	QueueID string `json:"QueueId,omitempty"`
 
-	// 转码产物的 Storekey 列表，仅当DataList不为空时有效，长度需与DataList长度一致。不传时默认使用固定规则生成产物的 Storekey。填写规则如下：
-	// * 使用 UTF-8 编码。
-	// * 长度必须在 1～1024 个字符之间。
-	// * 不能以反斜线（\）开头。
-	// * 不支持\a、\b、\t、\n、\v、\f、\r字符。
+	// 转码产物的存储 Key 列表，仅当 DataList 不为空时有效，长度需与DataList长度一致。不传时默认使用固定规则生成产物的存储 Key。
+	// 存储 Key 详细命名规范请参看 veImageX 存储 Key 通用字符规则 [https://www.volcengine.com/docs/508/1458331]。
 	ResKeyList []string `json:"ResKeyList,omitempty"`
 }
 
@@ -2681,6 +2834,9 @@ type CreateImageTranscodeTaskBodyCallbackConf struct {
 	// * XML
 	// * JSON（默认）
 	DataFormat string `json:"DataFormat,omitempty"`
+
+	// 参数类型。
+	Type string `json:"Type,omitempty"`
 }
 
 type CreateImageTranscodeTaskRes struct {
@@ -3348,13 +3504,23 @@ type DeleteImageTranscodeQueueResResponseMetadata struct {
 
 type DeleteImageUploadFilesBody struct {
 
-	// REQUIRED; 文件 Uri 列表，最多传 1000 个。
+	// REQUIRED; 待删除文件的存储 URI 列表，最多传 1000 个。您可以通过调用获取服务下的上传文件 [https://www.volcengine.com/docs/508/9392]来获取所需的文件 URI。
 	StoreUris []string `json:"StoreUris"`
+
+	// 待删除文件的存储版本 ID。传值时需要和 StoreUris 一一对应。您可在 veImageX 控制台资源管理查看文件版本号，或调用 GetImageStorageVersionFiles [https://www.volcengine.com/docs/508/1359366]
+	// 查询服务下所有文件的版本信息。
+	// :::warning 当删除文件未指定 StoreVersions，那么删除逻辑将根据版本控制的状态产生以下差异。
+	// * 若此时版本控制为未开启，则 StoreUris 对应文件将被永久删除，不可恢复。
+	// * 若此时版本控制为开启，则 StoreUris 对应文件未被真正删除，该文件可以被恢复，同时将增加一个删除标记 [https://www.volcengine.com/docs/508/1359410]用于标识该文件为删除状态。
+	// * 若此时版本控制为暂停，则根据版本 ID 是否为 null 而有以下差异： * 若文件的版本 ID 为 null，则 StoreUris 对应文件被真正删除，不可恢复，同时将增加一个删除标记 [https://www.volcengine.com/docs/508/1359410]用于标识该文件为删除状态。
+	// * 若文件的版本 ID 不为 null，则 StoreUris 对应文件未被真正删除，而是转换为历史版本保留。该文件可以被恢复，同时将增加一个删除标记 [https://www.volcengine.com/docs/508/1359410]。
+	// :::
+	StoreVersions []string `json:"StoreVersions,omitempty"`
 }
 
 type DeleteImageUploadFilesQuery struct {
 
-	// REQUIRED; 服务 ID。
+	// REQUIRED; 待删除文件所在的服务 ID。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
@@ -3395,6 +3561,12 @@ type DeleteImageUploadFilesResResult struct {
 
 	// REQUIRED; 文件不存在的无效 URI 列表
 	InvaildFiles []string `json:"InvaildFiles"`
+
+	// 已删除文件的版本列表。
+	DeletedFilesVersion []string `json:"DeletedFilesVersion,omitempty"`
+
+	// 无效文件版本列表。
+	InvaildFilesVersion []string `json:"InvaildFilesVersion,omitempty"`
 }
 
 type DeleteTemplatesFromBinBody struct {
@@ -3552,6 +3724,99 @@ type DescribeImageVolcCdnAccessLogResResultLogsItem struct {
 
 	// REQUIRED; 日志起始时间。
 	StartTime int `json:"StartTime"`
+}
+
+type DescribeImageXAIRequestCntUsageQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 组件名称。支持查询多个组件，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有组件。您可通过调用 GetImageAddOnConf [https://www.volcengine.com/docs/508/66145] 查看Key返回值。
+	AdvFeats string `json:"AdvFeats,omitempty" query:"AdvFeats"`
+
+	// 是否叠加计费倍率。默认为false。
+	EnableBillingRate bool `json:"EnableBillingRate,omitempty" query:"EnableBillingRate"`
+
+	// 维度拆分的维度值。不传表示不拆分维度，只能传入单个参数。支持取值如下：
+	// * ServiceId：服务
+	// * AdvFeat：组件
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+
+	// 图片处理模板。支持查询多个模板，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有模板。您可通过调用 GetAllImageTemplates [https://www.volcengine.com/docs/508/9386] 获取服务下全部模版信息。
+	Templates string `json:"Templates,omitempty" query:"Templates"`
+}
+
+type DescribeImageXAIRequestCntUsageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXAIRequestCntUsageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXAIRequestCntUsageResResult `json:"Result"`
+}
+
+type DescribeImageXAIRequestCntUsageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXAIRequestCntUsageResResult struct {
+
+	// REQUIRED; 请求次数据。
+	RequestCntData []*DescribeImageXAIRequestCntUsageResResultRequestCntDataItem `json:"RequestCntData"`
+}
+
+type DescribeImageXAIRequestCntUsageResResultRequestCntDataItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXAIRequestCntUsageResResultRequestCntDataPropertiesItemsItem `json:"Data"`
+
+	// 附加组件类型，GroupBy包含AdvFeat时有返回值。如：enhance，smartcut。取值为total，表示包含所选AdvFeat总请求次数。
+	AdvFeat string `json:"AdvFeat,omitempty"`
+
+	// 服务 ID，GroupBy包含ServiceId时有返回值。
+	ServiceID string `json:"ServiceId,omitempty"`
+}
+
+type DescribeImageXAIRequestCntUsageResResultRequestCntDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片结束时刻。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 请求次
+	Value int `json:"Value"`
 }
 
 type DescribeImageXBaseOpUsageQuery struct {
@@ -4009,6 +4274,9 @@ type DescribeImageXCdnDurationAllBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -4123,6 +4391,9 @@ type DescribeImageXCdnDurationDetailByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -4236,6 +4507,9 @@ type DescribeImageXCdnErrorCodeAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -4366,6 +4640,9 @@ type DescribeImageXCdnErrorCodeByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -4474,6 +4751,9 @@ type DescribeImageXCdnProtocolRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -4581,6 +4861,9 @@ type DescribeImageXCdnReuseRateAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -4696,6 +4979,9 @@ type DescribeImageXCdnReuseRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -4803,6 +5089,9 @@ type DescribeImageXCdnSuccessRateAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -4918,6 +5207,9 @@ type DescribeImageXCdnSuccessRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -5028,6 +5320,9 @@ type DescribeImageXClientCountByTimeBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -5140,6 +5435,9 @@ type DescribeImageXClientDecodeDurationByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -5250,6 +5548,9 @@ type DescribeImageXClientDecodeSuccessRateByTimeBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -5365,6 +5666,9 @@ type DescribeImageXClientDemotionRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -5472,6 +5776,9 @@ type DescribeImageXClientErrorCodeAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -5602,6 +5909,9 @@ type DescribeImageXClientErrorCodeByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -5712,6 +6022,9 @@ type DescribeImageXClientFailureRateBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -5824,6 +6137,9 @@ type DescribeImageXClientFileSizeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -5931,6 +6247,9 @@ type DescribeImageXClientLoadDurationAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -6046,6 +6365,9 @@ type DescribeImageXClientLoadDurationBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -6160,6 +6482,9 @@ type DescribeImageXClientQualityRateByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -6270,6 +6595,9 @@ type DescribeImageXClientQueueDurationByTimeBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -6385,6 +6713,9 @@ type DescribeImageXClientScoreByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -6493,6 +6824,9 @@ type DescribeImageXClientSdkVerByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -6583,6 +6917,9 @@ type DescribeImageXClientTopDemotionURLBody struct {
 	// 应用 ID。默认为空，不传则匹配账号下的所有的 App ID。
 	Appid string `json:"Appid,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -6642,6 +6979,9 @@ type DescribeImageXClientTopFileSizeBody struct {
 
 	// 应用 ID。默认为空，不传则匹配账号下的所有的 App ID。
 	Appid string `json:"Appid,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -6708,6 +7048,9 @@ type DescribeImageXClientTopQualityURLBody struct {
 
 	// 应用 ID。默认为空，不传则匹配账号下的所有的 App ID。
 	Appid string `json:"Appid,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp,Domain,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -6838,6 +7181,79 @@ type DescribeImageXCompressUsageResResultCompressDataPropertiesItemsItem struct 
 
 	// REQUIRED; 压缩前大小，单位Byte
 	Value float64 `json:"Value"`
+}
+
+type DescribeImageXCubeUsageQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+}
+
+type DescribeImageXCubeUsageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXCubeUsageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXCubeUsageResResult `json:"Result"`
+}
+
+type DescribeImageXCubeUsageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXCubeUsageResResult struct {
+
+	// REQUIRED; 创意魔方数据。
+	CubeData []*DescribeImageXCubeUsageResResultCubeDataItem `json:"CubeData"`
+}
+
+type DescribeImageXCubeUsageResResultCubeDataItem struct {
+
+	// REQUIRED; 时序数据
+	Data []*DescribeImageXCubeUsageResResultCubeDataPropertiesItemsItem `json:"Data"`
+}
+
+type DescribeImageXCubeUsageResResultCubeDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 创意魔方请求次数
+	Value int `json:"Value"`
 }
 
 type DescribeImageXDomainBandwidthDataQuery struct {
@@ -7552,6 +7968,9 @@ type DescribeImageXExceedCountByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -7651,6 +8070,9 @@ type DescribeImageXExceedFileSizeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -7743,6 +8165,9 @@ type DescribeImageXExceedResolutionRatioAllBody struct {
 
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -7845,6 +8270,9 @@ type DescribeImageXHeifEncodeDurationByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType,ImageResolution），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配所有系统。取值如下所示： iOS Android
 	OS string `json:"OS,omitempty"`
 
@@ -7943,6 +8371,9 @@ type DescribeImageXHeifEncodeErrorCodeByTimeBody struct {
 
 	// 需要匹配的图片类型，不传则匹配所有图片类型。
 	ImageType []string `json:"ImageType,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType,ImageResolution），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配所有系统。取值如下所示： iOS Android
 	OS string `json:"OS,omitempty"`
@@ -8046,6 +8477,9 @@ type DescribeImageXHeifEncodeFileInSizeByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType,ImageResolution），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配所有系统。取值如下所示： iOS Android
 	OS string `json:"OS,omitempty"`
 
@@ -8148,6 +8582,9 @@ type DescribeImageXHeifEncodeFileOutSizeByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType,ImageResolution），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配所有系统。取值如下所示： iOS Android
 	OS string `json:"OS,omitempty"`
 
@@ -8249,6 +8686,9 @@ type DescribeImageXHeifEncodeSuccessCountByTimeBody struct {
 
 	// 需要匹配的图片类型，不传则匹配所有图片类型。
 	ImageType []string `json:"ImageType,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType,ImageResolution），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配所有系统。取值如下所示： iOS Android
 	OS string `json:"OS,omitempty"`
@@ -9149,6 +9589,9 @@ type DescribeImageXSensibleCacheHitRateByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -9248,6 +9691,9 @@ type DescribeImageXSensibleCountByTimeBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -9344,6 +9790,9 @@ type DescribeImageXSensibleTopRAMURLBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -9436,6 +9885,9 @@ type DescribeImageXSensibleTopResolutionURLBody struct {
 
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -9539,6 +9991,9 @@ type DescribeImageXSensibleTopSizeURLBody struct {
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
 
@@ -9631,6 +10086,9 @@ type DescribeImageXSensibleTopUnknownURLBody struct {
 
 	// 需要匹配的图片类型，不传则匹配所有图片类型。 GIF PNG JPEG HEIF HEIC WEBP AWEBP VVIC 其他
 	ImageType []string `json:"ImageType,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,ImageType），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型，不传则匹配非WEB端所有系统。取值如下所示： iOS Android WEB
 	OS string `json:"OS,omitempty"`
@@ -10398,6 +10856,9 @@ type DescribeImageXUploadCountByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
 	// * iOS：iOS。
@@ -10512,6 +10973,9 @@ type DescribeImageXUploadDurationBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
 	// * iOS：iOS。
@@ -10622,6 +11086,9 @@ type DescribeImageXUploadErrorCodeAllBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
@@ -10752,6 +11219,9 @@ type DescribeImageXUploadErrorCodeByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
 	// * iOS：iOS。
@@ -10865,6 +11335,9 @@ type DescribeImageXUploadFileSizeBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
@@ -10983,6 +11456,9 @@ type DescribeImageXUploadSegmentSpeedByTimeBody struct {
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
 
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
+
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
 	// * iOS：iOS。
@@ -11093,6 +11569,9 @@ type DescribeImageXUploadSpeedBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
@@ -11207,6 +11686,9 @@ type DescribeImageXUploadSuccessRateByTimeBody struct {
 
 	// 需要匹配的运营商名称，不传则匹配所有运营商。支持取值如下： 电信 联通 移动 铁通 鹏博士 教育网 其他
 	Isp []string `json:"Isp,omitempty"`
+
+	// 取值为不等于的维度（默认为等于）。支持取值：公共维度（AppVer,SdkVer,Country,Province,Isp），自定义维度（通过"获取自定义维度列表"接口获取）
+	Not []string `json:"Not,omitempty"`
 
 	// 需要匹配的系统类型。取值如下所示：
 	// * 不传或传空字符串：Android+iOS。
@@ -11703,6 +12185,9 @@ type GetAllImageServicesResResultServicesItem struct {
 	// * false：否
 	HasSigkey bool `json:"HasSigkey"`
 
+	// REQUIRED
+	ImageY bool `json:"ImageY"`
+
 	// REQUIRED; 自定义处理样式具体配置
 	ImageYAttribute *GetAllImageServicesResResultServicesItemImageYAttribute `json:"ImageYAttribute"`
 
@@ -11720,7 +12205,7 @@ type GetAllImageServicesResResultServicesItem struct {
 	// REQUIRED; 仅tob账号有值
 	ProjectName string `json:"ProjectName"`
 
-	// REQUIRED
+	// REQUIRED; 资源封禁配置
 	ResourceLimitedVisit *GetAllImageServicesResResultServicesItemResourceLimitedVisit `json:"ResourceLimitedVisit"`
 
 	// REQUIRED; 仅tob账号有值
@@ -11737,7 +12222,6 @@ type GetAllImageServicesResResultServicesItem struct {
 
 	// REQUIRED; 服务地域，取值如下所示：
 	// * cn：中国
-	// * va：美东
 	// * sg：新加坡
 	ServiceRegion string `json:"ServiceRegion"`
 
@@ -11770,6 +12254,12 @@ type GetAllImageServicesResResultServicesItem struct {
 
 	// 降冷存储配置
 	StorageRules []*Components1D40MkcSchemasGetallimageservicesresPropertiesResultPropertiesServicesItemsPropertiesStoragerulesItems `json:"StorageRules,omitempty"`
+
+	// 版本控制启用状态，取值如下所示：
+	// * 0：未开启
+	// * 1：已开启
+	// * 2：暂停
+	StorageVersioning int `json:"StorageVersioning,omitempty"`
 }
 
 // GetAllImageServicesResResultServicesItemImageYAttribute - 自定义处理样式具体配置
@@ -11788,7 +12278,7 @@ type GetAllImageServicesResResultServicesItemImageYAttribute struct {
 type GetAllImageServicesResResultServicesItemMirror struct {
 
 	// REQUIRED; 镜像回源下载原图时，携带的 HTTP 头部，键值都为 String 类型。
-	Headers map[string]interface{} `json:"Headers"`
+	Headers map[string]string `json:"Headers"`
 
 	// REQUIRED; 镜像回源域名。
 	Host string `json:"Host"`
@@ -11815,12 +12305,15 @@ type GetAllImageServicesResResultServicesItemMirrorItemOrigin struct {
 	Type string `json:"Type"`
 }
 
+// GetAllImageServicesResResultServicesItemResourceLimitedVisit - 资源封禁配置
 type GetAllImageServicesResResultServicesItemResourceLimitedVisit struct {
 
-	// REQUIRED
+	// REQUIRED; 域名白名单列表，封禁资源仅可被白名单的域名访问。
 	AllowDomains []string `json:"AllowDomains"`
 
-	// REQUIRED
+	// REQUIRED; 资源封禁开关，取值如下所示：
+	// * true：开启
+	// * false：关闭
 	Enable bool `json:"Enable"`
 }
 
@@ -13959,10 +14452,16 @@ type GetImageAnalyzeTasksResResult struct {
 type GetImageAnalyzeTasksResResultTasksItem struct {
 
 	// REQUIRED
+	EvalStages []string `json:"EvalStages"`
+
+	// REQUIRED
 	ID string `json:"Id"`
 
 	// REQUIRED; 评估任务更新时间
 	UpdateAt string `json:"UpdateAt"`
+
+	// REQUIRED
+	VqTypes []string `json:"VqTypes"`
 
 	// 评估任务创建时间
 	CreateAt string `json:"CreateAt,omitempty"`
@@ -14801,7 +15300,7 @@ type GetImageDetectResultResResultFacesItem struct {
 	// REQUIRED; 人脸坐标位置。 :::tip 例如[11,22,33,44]，表示人脸的左上角和右下角坐标。其中11为左上角横坐标，22为左上角纵坐标，33为右下角横坐标，44为右下角纵坐标。 :::
 	Box []int `json:"Box"`
 
-	// REQUIRED; 坐标置信度，表示识别内容可信程度。值越大内容越准确。
+	// REQUIRED; 坐标置信度，表示识别内容可信程度。 值越大，代表可信程度越高。置信度高于 90% 表示高可信，60%～90% 建议人工二次确认，低于 60% 表示不可信。
 	Score float64 `json:"Score"`
 }
 
@@ -16140,6 +16639,10 @@ type GetImageServiceResResult struct {
 	// 存储降冷策略
 	StorageRules []*GetImageServiceResResultStorageRulesItem `json:"StorageRules,omitempty"`
 
+	// 存储规则。
+	StorageRulesV2    []*GetImageServiceResResultStorageRulesV2Item `json:"StorageRulesV2,omitempty"`
+	StorageVersioning int                                           `json:"StorageVersioning,omitempty"`
+
 	// 是否开启覆盖上传，取值如下所示：
 	// * true：开启
 	// * false：关闭
@@ -16261,16 +16764,6 @@ type GetImageServiceResResultStorage struct {
 
 type GetImageServiceResResultStorageRulesItem struct {
 
-	// REQUIRED; 策略命中后需要执行的操作，取值如下所示：
-	// * DELETE：删除文件
-	// * IA：文件转低频存储
-	// * ARCHIVE：文件转归档存储
-	// * COLD_ARCHIVE：文件转冷归档存储
-	Action string `json:"Action"`
-
-	// REQUIRED; 策略天数，按照 Event 事件 Day 天后执行 Action 事件，即当匹配文件的上传时间符合指定天数后，自动按照处理策略对资源进行处理。
-	Day int `json:"Day"`
-
 	// REQUIRED; 是否启用策略，取值如下所示：
 	// * true：是
 	// * false：否
@@ -16279,8 +16772,110 @@ type GetImageServiceResResultStorageRulesItem struct {
 	// REQUIRED; 策略类型，固定取值Upload，表示按上传时间。
 	Event string `json:"Event"`
 
-	// REQUIRED; 文件前缀，例如设置为prefix后，规则将只对名称以prefix开头的存储资源生效。
+	// * DELETE，删除
+	// * IA，转为低频存储
+	// * ARCHIVE_FR，转为归档闪回存储
+	// * COLD_ARCHIVE，转为冷归档存储
+	// * ARCHIVE，转为归档存储
+	Action string `json:"Action,omitempty"`
+
+	// 天数，与Date冲突
+	Day              int    `json:"Day,omitempty"`
+	NonCurrentAction string `json:"NonCurrentAction,omitempty"`
+
+	// 非当前天数。取值范围为 [ ]，单位为，默认值为``。
+	NonCurrentDay int `json:"NonCurrentDay,omitempty"`
+
+	// 前缀。
+	Prefix string `json:"Prefix,omitempty"`
+}
+
+type GetImageServiceResResultStorageRulesV2Item struct {
+
+	// REQUIRED; 是否启用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 事件类型。
+	Event string `json:"Event"`
+
+	// REQUIRED; 请提供参数的名字（Id）和类型（string），我会根据输入生成参数的一句话描述。
+	ID string `json:"Id"`
+
+	// REQUIRED; 参数的前缀和类型。
 	Prefix string `json:"Prefix"`
+
+	// 中止未完成的分段上传配置。
+	AbortIncompleteMultipartUpload *GetImageServiceResResultStorageRulesV2ItemAbortIncompleteMultipartUpload `json:"AbortIncompleteMultipartUpload,omitempty"`
+
+	// 过期时间。
+	Expiration *GetImageServiceResResultStorageRulesV2ItemExpiration `json:"Expiration,omitempty"`
+
+	// 过滤条件。
+	Filter *GetImageServiceResResultStorageRulesV2ItemFilter `json:"Filter,omitempty"`
+
+	// 非当前版本的过期时间。
+	NonCurrentVersionExpiration *GetImageServiceResResultStorageRulesV2ItemNonCurrentVersionExpiration `json:"NonCurrentVersionExpiration,omitempty"`
+
+	// 非当前版本转换规则。
+	NonCurrentVersionTransitions []*Components1AkatydSchemasGetimageserviceresPropertiesResultPropertiesStoragerulesv2ItemsPropertiesNoncurrentversiontransitionsItems `json:"NonCurrentVersionTransitions,omitempty"`
+
+	// 状态转换。
+	Transitions []*GetImageServiceResResultStorageRulesV2PropertiesItemsItem `json:"Transitions,omitempty"`
+}
+
+// GetImageServiceResResultStorageRulesV2ItemAbortIncompleteMultipartUpload - 中止未完成的分段上传配置。
+type GetImageServiceResResultStorageRulesV2ItemAbortIncompleteMultipartUpload struct {
+
+	// 距启动后的天数。
+	DaysAfterInitiation int `json:"DaysAfterInitiation,omitempty"`
+}
+
+// GetImageServiceResResultStorageRulesV2ItemExpiration - 过期时间。
+type GetImageServiceResResultStorageRulesV2ItemExpiration struct {
+
+	// 日期。
+	Date string `json:"Date,omitempty"`
+
+	// 天数。
+	Days int `json:"Days,omitempty"`
+}
+
+// GetImageServiceResResultStorageRulesV2ItemFilter - 过滤条件。
+type GetImageServiceResResultStorageRulesV2ItemFilter struct {
+
+	// 是否包含大于等于。
+	GreaterThanIncludeEqual string `json:"GreaterThanIncludeEqual,omitempty"`
+
+	// 小于等于条件。
+	LessThanIncludeEqual string `json:"LessThanIncludeEqual,omitempty"`
+
+	// 对象大小大于。取值范围为 [ ]，单位为，默认值为``。
+	ObjectSizeGreaterThan int `json:"ObjectSizeGreaterThan,omitempty"`
+
+	// 对象大小上限。
+	ObjectSizeLessThan int `json:"ObjectSizeLessThan,omitempty"`
+}
+
+// GetImageServiceResResultStorageRulesV2ItemNonCurrentVersionExpiration - 非当前版本的过期时间。
+type GetImageServiceResResultStorageRulesV2ItemNonCurrentVersionExpiration struct {
+
+	// 非当前日期。
+	NonCurrentDate string `json:"NonCurrentDate,omitempty"`
+
+	// 非当前天数。
+	NonCurrentDays int `json:"NonCurrentDays,omitempty"`
+}
+
+type GetImageServiceResResultStorageRulesV2PropertiesItemsItem struct {
+
+	// REQUIRED; 存储类型。
+	StorageClass string `json:"StorageClass"`
+
+	// 日期字符串。
+	Date string `json:"Date,omitempty"`
+
+	// 天数。
+	Days int `json:"Days,omitempty"`
 }
 
 // GetImageServiceResResultVodSpace - 绑定的点播空间信息
@@ -16794,7 +17389,7 @@ type GetImageStorageFilesQuery struct {
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// 指定目录分隔符，默认值为 /。所有文件名字包含指定的前缀，第一次出现 Delimiter 字符之间的文件作为一组元素（即 CommonPrefixe）。
+	// 指定目录分隔符，默认值为空。所有文件名字包含指定的前缀，第一次出现 Delimiter 字符之间的文件作为一组元素（即 CommonPrefixe）。
 	Delimiter string `json:"Delimiter,omitempty" query:"Delimiter"`
 
 	// 一次查询列出的文件信息条目数，取值范围为[1,1000]。默认值为 10。
@@ -16813,55 +17408,66 @@ type GetImageStorageFilesRes struct {
 
 	// REQUIRED
 	ResponseMetadata *GetImageStorageFilesResResponseMetadata `json:"ResponseMetadata"`
-	Result           *GetImageStorageFilesResResult           `json:"Result,omitempty"`
+
+	// REQUIRED
+	Result *GetImageStorageFilesResResult `json:"Result"`
 }
 
 type GetImageStorageFilesResResponseMetadata struct {
 
-	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	// REQUIRED
 	Action string `json:"Action"`
 
-	// REQUIRED; 请求的Region，例如：cn-north-1
+	// REQUIRED
 	Region string `json:"Region"`
 
-	// REQUIRED; RequestID为每次API请求的唯一标识。
+	// REQUIRED
 	RequestID string `json:"RequestId"`
 
-	// REQUIRED; 请求的服务，属于请求的公共参数。
+	// REQUIRED
 	Service string `json:"Service"`
 
-	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	// REQUIRED
 	Version string `json:"Version"`
 }
 
 type GetImageStorageFilesResResult struct {
 
-	// REQUIRED; 是否还有更多文件
+	// REQUIRED; 返回目录名称的数组集合。
+	CommonPrefix []string `json:"CommonPrefix"`
+
+	// REQUIRED; 是否还有更多文件，取值如下所示：
+	// * true：是，还有文件信息未列出
+	// * false：否，已列出所有文件信息
 	HasMore bool `json:"HasMore"`
 
 	// REQUIRED; 文件列表
 	Items []*GetImageStorageFilesResResultItemsItem `json:"Items"`
 
-	// 当前遍历目录包含的目录名称，对于子目录，需要递归列举
-	CommonPrefix []string `json:"CommonPrefix,omitempty"`
-
-	// HasMore = true时，下次列举从该Marker开始
-	Marker string `json:"Marker,omitempty"`
+	// REQUIRED; HasMore取值true时，即本次查询还有未列举到的文件信息时。Marker作为起始条目位置标记，您需要在下一次列举时传入该值。
+	Marker string `json:"Marker"`
 }
 
 type GetImageStorageFilesResResultItemsItem struct {
 
-	// REQUIRED; 文件大小，单位字节
-	FileSize int `json:"FileSize"`
+	// 文件大小，单位为 byte。
+	FileSize int `json:"FileSize,omitempty"`
 
-	// REQUIRED; 文件存储key
-	Key string `json:"Key"`
+	// 文件存储 Key
+	Key string `json:"Key,omitempty"`
 
-	// REQUIRED; 文件最后修改时间
-	LastModified string `json:"LastModified"`
+	// 文件最后修改时间，RFC 时间格式。
+	LastModified string `json:"LastModified,omitempty"`
 
-	// REQUIRED; 文件URI
-	StoreURI string `json:"StoreUri"`
+	// 文件的存储类型，取值如下所示：
+	// * STANDARD：标准存储
+	// * IA：低频存储
+	// * ARCHIVE：归档存储
+	// * COLD_ARCHIVE：冷归档存储
+	StorageClass string `json:"StorageClass,omitempty"`
+
+	// 文件存储 URI
+	StoreURI string `json:"StoreUri,omitempty"`
 }
 
 type GetImageStyleDetailQuery struct {
@@ -17445,7 +18051,7 @@ type GetImageTranscodeDetailsQuery struct {
 	// 分页偏移量，默认为 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
 	Offset int `json:"Offset,omitempty" query:"Offset"`
 
-	// 队列所在地区。默认当前地区。ToB取值枚举：cn、va、sg。
+	// 队列所在地区。默认当前地区为 cn。
 	Region string `json:"Region,omitempty" query:"Region"`
 
 	// 返回图片 url 或 uri 中包含该值的任务。默认为空，不传则返回所有任务。
@@ -17457,6 +18063,9 @@ type GetImageTranscodeDetailsQuery struct {
 	// * Success：执行成功
 	// * Fail：执行失败
 	Status string `json:"Status,omitempty" query:"Status"`
+
+	// 任务 ID，缺省情况下查询指定队列下所有任务详情。您可通过调用 GetImageTranscodeTasks [https://www.volcengine.com/docs/508/1356555]获取指定队列的全部任务 ID。
+	TaskID string `json:"TaskId,omitempty" query:"TaskId"`
 }
 
 type GetImageTranscodeDetailsRes struct {
@@ -17500,7 +18109,7 @@ type GetImageTranscodeDetailsResResultExecInfoItem struct {
 	// 结束时间
 	EndAt string `json:"EndAt,omitempty"`
 
-	// 执行条目 ID
+	// 条目 ID
 	EntryID string `json:"EntryId,omitempty"`
 
 	// 执行输入
@@ -17526,7 +18135,7 @@ type GetImageTranscodeDetailsResResultExecInfoItem struct {
 // GetImageTranscodeDetailsResResultExecInfoItemExecInput - 执行输入
 type GetImageTranscodeDetailsResResultExecInfoItemExecInput struct {
 
-	// REQUIRED; 图片 url 或 uri
+	// REQUIRED; 原图图片的 URL 或存储 URI。
 	Image string `json:"Image"`
 
 	// REQUIRED; 转码模板
@@ -17542,14 +18151,60 @@ type GetImageTranscodeDetailsResResultExecInfoItemExecOutput struct {
 	// REQUIRED; 转码失败错误信息。仅当Status值为Fail时，ErrMsg有值。
 	ErrMsg string `json:"ErrMsg"`
 
+	// REQUIRED; 请提供具体的参数名字和类型。
+	Evals []*GetImageTranscodeDetailsResResultExecInfoPropertiesItemsItem `json:"Evals"`
+
 	// REQUIRED; 转码结果图格式
 	Format string `json:"Format"`
 
 	// REQUIRED; 转码结果图的存储 URI。仅当Status值为Success时，Output有值。
 	Output string `json:"Output"`
 
-	// REQUIRED; 转码结果图大小，单位为 byte
+	// REQUIRED; 尺寸。取值范围为 [ ]，单位为，默认值为``。
 	Size int `json:"Size"`
+}
+
+// GetImageTranscodeDetailsResResultExecInfoItemExecOutputEvalsItemValue - 参数值。
+type GetImageTranscodeDetailsResResultExecInfoItemExecOutputEvalsItemValue struct {
+
+	// REQUIRED; 美学配置。
+	Aesthetic float64 `json:"Aesthetic"`
+
+	// REQUIRED; 噪声类型。
+	Noise float64 `json:"Noise"`
+
+	// REQUIRED; 峰值信噪比。
+	PSNR float64 `json:"PSNR"`
+
+	// REQUIRED; 结构相似性指数。
+	SSIM float64 `json:"SSIM"`
+
+	// REQUIRED; 视频多重评估函数。
+	VMAF float64 `json:"VMAF"`
+
+	// REQUIRED; 视频质量评分。
+	VQScore float64 `json:"VQScore"`
+}
+
+type GetImageTranscodeDetailsResResultExecInfoPropertiesItemsItem struct {
+
+	// REQUIRED; 参数格式。
+	Format string `json:"Format"`
+
+	// REQUIRED; 请提供具体的参数名字（Index）和类型（string），以便我为您生成参数描述。
+	Index int `json:"Index"`
+
+	// REQUIRED; 参数名称。
+	Name string `json:"Name"`
+
+	// REQUIRED; 当前阶段。
+	Phase string `json:"Phase"`
+
+	// REQUIRED; 实例规格。
+	Size int `json:"Size"`
+
+	// REQUIRED; 参数值。
+	Value *GetImageTranscodeDetailsResResultExecInfoItemExecOutputEvalsItemValue `json:"Value"`
 }
 
 type GetImageTranscodeQueuesQuery struct {
@@ -17784,6 +18439,12 @@ type GetImageUploadFileResResult struct {
 
 	// 文件恢复副本的到期时间。仅当文件执行过恢复操作时有值
 	RestoreExpiryDate string `json:"RestoreExpiryDate,omitempty"`
+
+	// 恢复请求日期。
+	RestoreRequestDate string `json:"RestoreRequestDate,omitempty"`
+
+	// 恢复取回方式
+	RestoreTier string `json:"RestoreTier,omitempty"`
 
 	// 文件是否处于恢复中状态。
 	Restoring bool `json:"Restoring,omitempty"`
@@ -18271,6 +18932,9 @@ type GetProductAIGCResultBody struct {
 	// 额外参数
 	Extra string `json:"Extra,omitempty"`
 
+	// Lora 配置。
+	LoraConfig string `json:"LoraConfig,omitempty"`
+
 	// 使用分割处理图片，False则不做分割，从输入图像读取alpha通道作为mask
 	NeedSeg bool `json:"NeedSeg,omitempty"`
 
@@ -18289,6 +18953,9 @@ type GetProductAIGCResultBody struct {
 	// 商品mask长宽与output_size比值的上限，（0，1）
 	ProductRatio float64 `json:"ProductRatio,omitempty"`
 
+	// 商品比例
+	ProductRatios [][]float64 `json:"ProductRatios,omitempty"`
+
 	// 根据业务需要，取值为True时，只返回最高分的生成图及其得分，否则返回所有生成图及其得分
 	ReturnTop1 bool `json:"ReturnTop1,omitempty"`
 
@@ -18303,6 +18970,9 @@ type GetProductAIGCResultBody struct {
 
 	// 卖点图配置信息。
 	SellingPointConfig *GetProductAIGCResultBodySellingPointConfig `json:"SellingPointConfig,omitempty"`
+
+	// 打分策略规则。
+	StrategyRules map[string]interface{} `json:"StrategyRules,omitempty"`
 
 	// 取值为True时，使用blip模型提取对商品的描述，和positive_prompt共同作为输入到AIGC模型的正向提示词
 	UseCaption bool `json:"UseCaption,omitempty"`
@@ -18391,6 +19061,9 @@ type GetProductAIGCResultResResult struct {
 
 	// 商品场景图对应的美学得分，值越高表示图片越符合美学测评。
 	AestheticScores []float64 `json:"AestheticScores,omitempty"`
+
+	// AIGC图像评分。
+	AigcImageScores map[string][]float64 `json:"AigcImageScores,omitempty"`
 
 	// 商品场景图 URI 列表，未采用文字卖点。
 	BackgroundImages []string                 `json:"BackgroundImages,omitempty"`
@@ -19358,11 +20031,11 @@ type UpdateDomainAdaptiveFmtResResponseMetadata struct {
 
 type UpdateFileStorageClassBody struct {
 
-	// REQUIRED; 修改后的存储类型，取值如下所示：
-	// * STANDARD：标准存储
-	// * IA：低频存储
-	// * ARCHIVE：归档存储
-	// * COLD_ARCHIVE：冷归档存储
+	// REQUIRED; * STANDARD 标准存储
+	// * IA 低频存储
+	// * ARCHIVE_FR 归档闪回存储
+	// * COLD_ARCHIVE 冷归档存储
+	// * ARCHIVE 归档存储
 	StorageClass string `json:"StorageClass"`
 
 	// REQUIRED; 文件存储 URI。
@@ -19496,6 +20169,9 @@ type UpdateHTTPSResResponseMetadata struct {
 
 type UpdateImageAnalyzeTaskBody struct {
 
+	// REQUIRED; 原图阶段为"origin", 结果图阶段为"final",其他对应filter name
+	EvalStages []string `json:"EvalStages"`
+
 	// REQUIRED; 任务名称
 	Name string `json:"Name"`
 
@@ -19504,6 +20180,9 @@ type UpdateImageAnalyzeTaskBody struct {
 
 	// REQUIRED; 待更新的任务 ID，您可以通过调用 GetImageAnalyzeTasks [https://www.volcengine.com/docs/508/1160417] 获取指定地区全部离线评估任务详情。
 	TaskID string `json:"TaskId"`
+
+	// REQUIRED; "vqscore"，"noise"，"aesthetic"，"psnr"，"ssim"，"vmaf"
+	VqTypes []string `json:"VqTypes"`
 
 	// 任务描述
 	Desc string `json:"Desc,omitempty"`
@@ -19969,8 +20648,12 @@ type UpdateImageDomainConfigBody struct {
 	RemoteAuth *UpdateImageDomainConfigBodyRemoteAuth `json:"remote_auth,omitempty"`
 
 	// HTTP 响应头配置
-	RespHdrs   []*UpdateImageDomainConfigBodyRespHdrsItem `json:"resp_hdrs,omitempty"`
-	ShareCache *UpdateImageDomainConfigBodyShareCache     `json:"share_cache,omitempty"`
+	RespHdrs []*UpdateImageDomainConfigBodyRespHdrsItem `json:"resp_hdrs,omitempty"`
+
+	// 共享缓存配置。共享缓存允许同账号下多个加速域名共享同一份节点上的缓存。在 veImageX 中，您可以通过设置共享缓存配置，使各个子站点之间可共享相同的公共资源，以减少带宽的使用，提高资源命中率。详细功能说明参看共享缓存 [https://www.volcengine.com/docs/508/196769]。
+	// :::tip 共享缓存为白名单功能，请提交工单 [https://console.volcengine.com/workorder/create?step=2&SubProductID=P00000080]联系技术支持为您的账号开启配置能力。
+	// :::
+	ShareCache *UpdateImageDomainConfigBodyShareCache `json:"share_cache,omitempty"`
 
 	// URL 鉴权配置
 	URLAuth *UpdateImageDomainConfigBodyURLAuth `json:"url_auth,omitempty"`
@@ -20124,7 +20807,7 @@ type UpdateImageDomainConfigBodyIPAuth struct {
 	// * false：配置黑名单
 	IsWhiteMode bool `json:"is_white_mode"`
 
-	// REQUIRED; 黑白名单 IP 地址，最大限制为 100。
+	// REQUIRED; 黑白名单 IP 地址，最大限制为 1000。
 	Values []string `json:"values"`
 }
 
@@ -20146,26 +20829,20 @@ type UpdateImageDomainConfigBodyPageOptimization struct {
 // UpdateImageDomainConfigBodyRefererLink - Referer 防盗链配置
 type UpdateImageDomainConfigBodyRefererLink struct {
 
-	// REQUIRED; 是否允许空 Refer，取值如下所示：
-	// * true：允许空 Refer
-	// * false：不允许空 Refer
-	AllowEmptyRefer bool `json:"allow_empty_refer"`
-
 	// REQUIRED; 是否开启 Referer 防盗链，取值如下所示：
 	// * true：开启
 	// * false：关闭
 	Enabled bool `json:"enabled"`
 
 	// REQUIRED; 是否选择白名单，取值如下所示：
-	// * true：选择白名单
-	// * false：不选择白名单
+	// * true：配置白名单
+	// * false：配置黑名单
 	IsWhiteMode bool `json:"is_white_mode"`
 
-	// REQUIRED; 正则表达式规则列表
-	RegexValues []string `json:"regex_values"`
-
-	// REQUIRED; 根据是否为白名单，为对应的白/黑名单的值。
-	Values []string `json:"values"`
+	// 是否允许空 Referer，取值如下所示：
+	// * true：允许空 Referer
+	// * false：不允许空 Referer
+	AllowEmptyRefer bool `json:"allow_empty_refer,omitempty"`
 
 	// 是否忽略大小写。取值如下所示：
 	// * true: （默认）大小写不敏感。
@@ -20176,6 +20853,12 @@ type UpdateImageDomainConfigBodyRefererLink struct {
 	// * true: 表示不以 HTTP 或者 HTTPS 开头的 Referer 头部值是合法的。在这个情况下，veImagex 会尝试将其与 Referers 列表匹配。
 	// * false: （默认）表示不以 HTTP 或者 HTTPS 开头 Referer 头部值是非法的。在这个情况下，veImagex 判定为不匹配 CommonType 下的这个 Referers 列表。
 	IgnoreScheme bool `json:"ignore_scheme,omitempty"`
+
+	// 请提供具体的参数名字和类型。
+	RegexValues []string `json:"regex_values,omitempty"`
+
+	// 请提供具体的参数名字（values）和参数类型（array），以便我为您生成参数描述。
+	Values []string `json:"values,omitempty"`
 }
 
 // UpdateImageDomainConfigBodyRemoteAuth - 远程鉴权设置
@@ -20402,26 +21085,20 @@ type UpdateImageDomainConfigBodyRemoteAuthServer struct {
 
 type UpdateImageDomainConfigBodyRespHdrsItem struct {
 
-	// REQUIRED; 表示对响应头的操作。该参数有以下取值：
-	// * set：表示设置一个头部。设置操作包括添加与修改。如果源站响应中已包含该头部，该头部的值会被覆盖。如果源站响应中没有包含该头部，该头部会被添加。
-	// * delete：表示删除一个头部。
-	Action string `json:"action"`
-
 	// REQUIRED; Header Key，请见支持配置的响应头 [https://www.volcengine.com/docs/508/196704#%E6%94%AF%E6%8C%81%E9%85%8D%E7%BD%AE%E7%9A%84%E5%93%8D%E5%BA%94%E5%A4%B4]。
 	Key string `json:"key"`
 
 	// REQUIRED; Header Value，设置该响应头字段的值。字段值不能超过 1,024 个字符，可以包含除美元符号（$），Delete（ASCII code 127）外的可打印 ASCII 字符。
 	Value string `json:"value"`
-
-	// 开启跨域校验，取值如下所示：
-	// * true：开启
-	// * false：关闭
-	AccessOriginControl bool `json:"access_origin_control,omitempty"`
 }
 
+// UpdateImageDomainConfigBodyShareCache - 共享缓存配置。共享缓存允许同账号下多个加速域名共享同一份节点上的缓存。在 veImageX 中，您可以通过设置共享缓存配置，使各个子站点之间可共享相同的公共资源，以减少带宽的使用，提高资源命中率。详细功能说明参看共享缓存
+// [https://www.volcengine.com/docs/508/196769]。
+// :::tip 共享缓存为白名单功能，请提交工单 [https://console.volcengine.com/workorder/create?step=2&SubProductID=P00000080]联系技术支持为您的账号开启配置能力。
+// :::
 type UpdateImageDomainConfigBodyShareCache struct {
 
-	// REQUIRED
+	// REQUIRED; 共享域名。
 	Domains []string `json:"domains"`
 }
 
@@ -20528,7 +21205,7 @@ type UpdateImageDomainConfigBodyUserAgentACL struct {
 	// REQUIRED; deny黑名单，allow白名单
 	RuleType string `json:"rule_type"`
 
-	// REQUIRED; Agent 列表，最多可支持输入100个，支持通配符*匹配任意字符串。
+	// REQUIRED; Agent 列表，最多可支持输入 1000 个，支持通配符 * 匹配任意字符串。
 	UserAgents []string `json:"user_agents"`
 }
 
@@ -20673,8 +21350,10 @@ type UpdateImageDomainIPAuthBodyIPAuth struct {
 	// * false：配置黑名单
 	IsWhiteMode bool `json:"is_white_mode"`
 
-	// REQUIRED; 黑白名单 IP 地址，您可以指定一个或者多个 IP 地址（如 192.0.2.0）和 IP 地址网段（192.0.2.0/24）。IP 地址和网段可以是 IPv4 或 IPv6 格式，可混合填写，最多可输入 100 个地址。
-	// :::warning 若您需要对名单内已配置的 values 地址进行增删处理，那么您需提供已配置的全量地址，并在此基础上添加或删除您期望变更的地址后，再重新传入 values。 :::
+	// REQUIRED; 黑白名单 IP 地址，您可以指定一个或者多个 IP 地址（如 192.0.2.0）和 IP 地址网段（192.0.2.0/24）。IP 地址和网段可以是 IPv4 或 IPv6 格式，可混合填写，最多可输入 1000
+	// 个地址。
+	// :::warning 若您需要对同类型名单内已设定的 values 地址进行增删处理，那么您可调用 获取域名配置 [https://www.volcengine.com/docs/508/9366#ip-auth] 接口获取已配置的全部地址列表后，在此基础上添加或删除您期望变更的地址，最后重新传入
+	// values。 :::
 	Values []string `json:"values"`
 }
 
@@ -20701,26 +21380,32 @@ type UpdateImageDomainIPAuthResResponseMetadata struct {
 
 type UpdateImageDomainUaAccessBody struct {
 
-	// REQUIRED; 域名
+	// REQUIRED; 域名，您可以通过获取服务下全部域名 [https://www.volcengine.com/docs/508/9379]获取服务下域名信息。
 	Domain string `json:"domain"`
 
-	// REQUIRED; ua访问限制配置
+	// REQUIRED; UA 访问限制配置。
 	UaAuth *UpdateImageDomainUaAccessBodyUaAuth `json:"ua_auth"`
 }
 
-// UpdateImageDomainUaAccessBodyUaAuth - ua访问限制配置
+// UpdateImageDomainUaAccessBodyUaAuth - UA 访问限制配置。
 type UpdateImageDomainUaAccessBodyUaAuth struct {
 
-	// REQUIRED; 表示是否允许 UA 为空或者不包含 UA 字段的请求访问加速域名
+	// REQUIRED; 是否允许 UA 为空或者不包含 UA 字段的请求访问加速域名。取值如下所示：
+	// * true：允许
+	// * false：不允许
 	AllowEmpty bool `json:"allow_empty"`
 
-	// REQUIRED; 是否开启ua访问限制
+	// REQUIRED; 是否开启 UA 访问限制，取值如下所示：
+	// * true：开启
+	// * false：未开启（默认）
 	Enable bool `json:"enable"`
 
 	// REQUIRED; deny黑名单，allow白名单
 	RuleType string `json:"rule_type"`
 
-	// REQUIRED; agent列表
+	// REQUIRED; Agent 列表，最多可支持输入 1000 个，支持通配符 * 匹配任意字符串。输入多个时以 | 分割，或者一行仅输入一个。
+	// :::warning 若您需要对同类型名单内已设定的 Agent 列表进行增删处理，那么您可调用获取域名配置 [https://www.volcengine.com/docs/508/9366#ua-list]接口获取已配置的全部列表后，在此基础上添加或删除您期望变更的值，最后重新传入user_agents。
+	// :::
 	UserAgents []string `json:"user_agents"`
 }
 
@@ -20748,7 +21433,7 @@ type UpdateImageDomainUaAccessResResponseMetadata struct {
 type UpdateImageDomainVolcOriginBody struct {
 
 	// REQUIRED; 域名
-	Doamin string `json:"doamin"`
+	Domain string `json:"domain"`
 
 	// REQUIRED
 	OriginConfig *UpdateImageDomainVolcOriginBodyOriginConfig `json:"origin_config"`
@@ -21906,7 +22591,7 @@ type UpdateReferBodyReferLink struct {
 	// * false：选择黑名单
 	IsWhiteMode bool `json:"is_white_mode,omitempty"`
 
-	// Referer 的正则表达式的列表，仅支持填写 IPv4 和 IPv6 格式的 IP 地址，参数长度范围为（1，1024）。不支持域名、泛域名、CIDR 网段。
+	// Referer 的正则表达式的列表，仅支持填写 IPv4 和 IPv6 格式的 IP 地址，参数长度范围为（1，1024）。不支持域名、泛域名、CIDR 网段。最多支持设置 100 条规则。
 	RegexValues []string `json:"regex_values,omitempty"`
 
 	// 是否启用正则表达列表，取值如下所示：
@@ -21915,9 +22600,12 @@ type UpdateReferBodyReferLink struct {
 	RegexValuesEnabled bool `json:"regex_values_enabled,omitempty"`
 
 	// Referer 通用规则列表，根据是否为白名单，为对应的白/黑名单的值。您可以指定一个或者多个 IP 地址，域名和泛域名。支持填写二级域名，支持混合输入。
-	// * IP 地址格式支持 IPv4 和 IPv6，最多可输入 100 个 IP 地址。
+	// * IP 地址格式支持 IPv4 和 IPv6，最多可输入 1000 个 IP 地址。
 	// * 域名无需包含http://或https://。
-	// :::tipvalues 和 regex_valses 均存在时，两者同时生效。 :::
+	// :::tip
+	// * values 和 regex_valses 均存在时，两者同时生效。
+	// * 若您需要对同类型名单内已设定的values地址进行增删处理，那么您可调用获取域名配置 [https://www.volcengine.com/docs/508/9366#refer-link]接口获取已配置的全部地址列表后，在此基础上添加或删除您期望变更的值，最后重新传入values。
+	// :::
 	Values []string `json:"values,omitempty"`
 }
 
@@ -22141,23 +22829,31 @@ type UpdateStorageRulesBody struct {
 
 type UpdateStorageRulesBodyStorageRulesItem struct {
 
-	// REQUIRED; 策略命中后需要执行的操作，取值如下所示：
+	// REQUIRED; 最新版本文件在策略命中后需要执行的操作，取值如下所示：
 	// * DELETE：删除文件
 	// * IA：文件转低频存储
 	// * ARCHIVE：文件转归档存储
 	// * COLD_ARCHIVE：文件转冷归档存储
 	Action string `json:"Action"`
 
-	// REQUIRED; 策略天数，取值范围为 [1,365]，单位为天。按照 Event 事件 Day 天后执行 Action 事件，即当匹配文件的上传时间符合指定天数后，自动按照处理策略对资源进行处理。
+	// REQUIRED; 最新版本文件的策略天数，取值范围为 [1,365]，单位为天。按照 Event 事件 Day 天后执行 Action 事件，即当匹配文件的上传时间符合指定天数后，自动按照处理策略对资源进行处理。
 	Day int `json:"Day"`
 
-	// REQUIRED; 是否启用策略，取值如下所示：
-	// * true：是
-	// * false：否
+	// REQUIRED; 是否启用。 * false： ；
+	// * true： 。
+	// *
+	// * false
+	// *
 	Enable bool `json:"Enable"`
 
 	// REQUIRED; 策略类型，固定取值 Upload，表示按上传时间。
 	Event string `json:"Event"`
+
+	// REQUIRED; 非当前操作类型。
+	NonCurrentAction string `json:"NonCurrentAction"`
+
+	// REQUIRED; 非当前日期。
+	NonCurrentDay int `json:"NonCurrentDay"`
 
 	// 文件前缀。例如设置为prefix后，规则将只对名称以prefix开头的存储资源生效。输入规则如下：
 	// * 不能以正斜线（/）或者反斜线（\）开头；
@@ -22200,6 +22896,139 @@ type UpdateStorageRulesResResponseMetadata struct {
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
 }
+
+type UpdateStorageRulesV2Body struct {
+
+	// 存储规则。
+	StorageRules []*UpdateStorageRulesV2BodyStorageRulesItem `json:"StorageRules,omitempty"`
+}
+
+type UpdateStorageRulesV2BodyStorageRulesItem struct {
+
+	// REQUIRED; 是否启用。
+	Enable bool `json:"Enable"`
+
+	// REQUIRED; 事件名称，目前仅支持upload
+	Event string `json:"Event"`
+
+	// REQUIRED; 规则名称，长度256以内
+	ID string `json:"Id"`
+
+	// REQUIRED; 文件前缀
+	Prefix string `json:"Prefix"`
+
+	// 中止未完成的分段上传配置。
+	AbortIncompleteMultipartUpload *UpdateStorageRulesV2BodyStorageRulesItemAbortIncompleteMultipartUpload `json:"AbortIncompleteMultipartUpload,omitempty"`
+
+	// 过期时间。过期后会删除文件。过期时间要小于Transitions中天数，另外不能与Transitions里混用Day与Date
+	Expiration *UpdateStorageRulesV2BodyStorageRulesItemExpiration `json:"Expiration,omitempty"`
+
+	// 过滤条件。
+	Filter *UpdateStorageRulesV2BodyStorageRulesItemFilter `json:"Filter,omitempty"`
+
+	// 多版本过期配置。过期后会删除旧版本文件。
+	NonCurrentVersionExpiration *UpdateStorageRulesV2BodyStorageRulesItemNonCurrentVersionExpiration `json:"NonCurrentVersionExpiration,omitempty"`
+
+	// 非当前版本转换规则。要么全部days要么全部date，不能混合配置
+	NonCurrentVersionTransitions []*ComponentsQpab6RSchemasUpdatestoragerulesv2BodyPropertiesStoragerulesItemsPropertiesNoncurrentversiontransitionsItems `json:"NonCurrentVersionTransitions,omitempty"`
+
+	// 存储沉降配置，要么全部days要么全部date，不能混合配置
+	Transitions []*UpdateStorageRulesV2BodyStorageRulesPropertiesItemsItem `json:"Transitions,omitempty"`
+}
+
+// UpdateStorageRulesV2BodyStorageRulesItemAbortIncompleteMultipartUpload - 中止未完成的分段上传配置。
+type UpdateStorageRulesV2BodyStorageRulesItemAbortIncompleteMultipartUpload struct {
+
+	// 分片过期时间
+	DaysAfterInitiation int `json:"DaysAfterInitiation,omitempty"`
+}
+
+// UpdateStorageRulesV2BodyStorageRulesItemExpiration - 过期时间。过期后会删除文件。过期时间要小于Transitions中天数，另外不能与Transitions里混用Day与Date
+type UpdateStorageRulesV2BodyStorageRulesItemExpiration struct {
+
+	// 过期日期。与day冲突
+	Date string `json:"Date,omitempty"`
+
+	// 过期天数。与date冲突
+	Days int `json:"Days,omitempty"`
+}
+
+// UpdateStorageRulesV2BodyStorageRulesItemFilter - 过滤条件。
+type UpdateStorageRulesV2BodyStorageRulesItemFilter struct {
+
+	// 是否包含大于等于。
+	GreaterThanIncludeEqual string `json:"GreaterThanIncludeEqual,omitempty"`
+
+	// 小于等于条件。
+	LessThanIncludeEqual string `json:"LessThanIncludeEqual,omitempty"`
+
+	// 对象大小大于。
+	ObjectSizeGreaterThan int `json:"ObjectSizeGreaterThan,omitempty"`
+
+	// 对象大小上限。
+	ObjectSizeLessThan int `json:"ObjectSizeLessThan,omitempty"`
+}
+
+// UpdateStorageRulesV2BodyStorageRulesItemNonCurrentVersionExpiration - 多版本过期配置。过期后会删除旧版本文件。
+type UpdateStorageRulesV2BodyStorageRulesItemNonCurrentVersionExpiration struct {
+
+	// 日期，只填写年月日，无法指定时分秒
+	NonCurrentDate string `json:"NonCurrentDate,omitempty"`
+
+	// 多版本过期天数。
+	NonCurrentDays int `json:"NonCurrentDays,omitempty"`
+}
+
+type UpdateStorageRulesV2BodyStorageRulesPropertiesItemsItem struct {
+
+	// REQUIRED; 沉降存储类别。
+	// * IA，转为低频存储
+	// * ARCHIVE_FR，转为归档闪回存储
+	// * COLD_ARCHIVE，转为冷归档存储
+	// * ARCHIVE，转为归档存储
+	StorageClass string `json:"StorageClass"`
+
+	// 日期。
+	Date string `json:"Date,omitempty"`
+
+	// 天数。
+	Days int `json:"Days,omitempty"`
+}
+
+type UpdateStorageRulesV2Query struct {
+
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type UpdateStorageRulesV2Res struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateStorageRulesV2ResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateStorageRulesV2ResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
 type AddDomainV1 struct{}
 type AddImageBackgroundColors struct{}
 type AddImageBackgroundColorsQuery struct{}
@@ -22207,6 +23036,8 @@ type AddImageElements struct{}
 type AddImageElementsQuery struct{}
 type ApplyImageUpload struct{}
 type ApplyImageUploadBody struct{}
+type ApplyVpcUploadInfo struct{}
+type ApplyVpcUploadInfoBody struct{}
 type CommitImageUpload struct{}
 type CreateBatchProcessTask struct{}
 type CreateCVImageGenerateTask struct{}
@@ -22277,6 +23108,8 @@ type DeleteImageTranscodeQueueQuery struct{}
 type DeleteImageUploadFiles struct{}
 type DeleteTemplatesFromBin struct{}
 type DescribeImageVolcCdnAccessLog struct{}
+type DescribeImageXAIRequestCntUsage struct{}
+type DescribeImageXAIRequestCntUsageBody struct{}
 type DescribeImageXBaseOpUsage struct{}
 type DescribeImageXBaseOpUsageBody struct{}
 type DescribeImageXBillingRequestCntUsage struct{}
@@ -22341,6 +23174,8 @@ type DescribeImageXClientTopQualityURL struct{}
 type DescribeImageXClientTopQualityURLQuery struct{}
 type DescribeImageXCompressUsage struct{}
 type DescribeImageXCompressUsageBody struct{}
+type DescribeImageXCubeUsage struct{}
+type DescribeImageXCubeUsageBody struct{}
 type DescribeImageXDomainBandwidthData struct{}
 type DescribeImageXDomainBandwidthDataBody struct{}
 type DescribeImageXDomainBandwidthNinetyFiveData struct{}
@@ -22640,6 +23475,7 @@ type UpdateResponseHeader struct{}
 type UpdateServiceName struct{}
 type UpdateSlimConfig struct{}
 type UpdateStorageRules struct{}
+type UpdateStorageRulesV2 struct{}
 type AddDomainV1Req struct {
 	*AddDomainV1Query
 	*AddDomainV1Body
@@ -22655,6 +23491,10 @@ type AddImageElementsReq struct {
 type ApplyImageUploadReq struct {
 	*ApplyImageUploadQuery
 	*ApplyImageUploadBody
+}
+type ApplyVpcUploadInfoReq struct {
+	*ApplyVpcUploadInfoQuery
+	*ApplyVpcUploadInfoBody
 }
 type CommitImageUploadReq struct {
 	*CommitImageUploadQuery
@@ -22824,6 +23664,10 @@ type DescribeImageVolcCdnAccessLogReq struct {
 	*DescribeImageVolcCdnAccessLogQuery
 	*DescribeImageVolcCdnAccessLogBody
 }
+type DescribeImageXAIRequestCntUsageReq struct {
+	*DescribeImageXAIRequestCntUsageQuery
+	*DescribeImageXAIRequestCntUsageBody
+}
 type DescribeImageXBaseOpUsageReq struct {
 	*DescribeImageXBaseOpUsageQuery
 	*DescribeImageXBaseOpUsageBody
@@ -22951,6 +23795,10 @@ type DescribeImageXClientTopQualityURLReq struct {
 type DescribeImageXCompressUsageReq struct {
 	*DescribeImageXCompressUsageQuery
 	*DescribeImageXCompressUsageBody
+}
+type DescribeImageXCubeUsageReq struct {
+	*DescribeImageXCubeUsageQuery
+	*DescribeImageXCubeUsageBody
 }
 type DescribeImageXDomainBandwidthDataReq struct {
 	*DescribeImageXDomainBandwidthDataQuery
@@ -23623,4 +24471,8 @@ type UpdateSlimConfigReq struct {
 type UpdateStorageRulesReq struct {
 	*UpdateStorageRulesQuery
 	*UpdateStorageRulesBody
+}
+type UpdateStorageRulesV2Req struct {
+	*UpdateStorageRulesV2Query
+	*UpdateStorageRulesV2Body
 }

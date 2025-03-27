@@ -635,8 +635,10 @@ func (p *Vod) vpcPartUpload(partUploadInfo *business.PartUploadInfo, filePath st
 	}
 	chunkSize := partUploadInfo.GetPartSize()
 	totalNum := size / chunkSize
+	lastPartSize := size % chunkSize
 
-	if int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 {
+	if (int64(len(partUploadInfo.GetPartPutUrls())) != totalNum+1 && lastPartSize > 0) ||
+		(int64(len(partUploadInfo.GetPartPutUrls())) != totalNum && lastPartSize == 0) {
 		return errors.New("mismatch part upload")
 	}
 	f, err := os.Open(filePath)

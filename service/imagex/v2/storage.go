@@ -4,10 +4,13 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -273,6 +276,86 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		return nil, err
 	}
 	uploadTaskSet.fill(commitResp)
+	return commitResp, nil
+}
+
+// 上传图片
+func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadRequest) (*CommitUploadImageResult, error) {
+	if uploadRequest == nil || (uploadRequest.FilePath == "" && len(uploadRequest.Data) == 0) ||
+		(uploadRequest.FilePath != "" && len(uploadRequest.Data) != 0) {
+		return nil, errors.New("UploadImages: filePath and data can not be empty or not empty at the same time")
+	}
+
+	fileSize := 0
+	var file *os.File
+	var err error
+	if uploadRequest.FilePath != "" {
+		file, err = os.Open(filepath.Clean(uploadRequest.FilePath))
+		if err != nil {
+			return nil, err
+		}
+		defer func(fs *os.File) {
+			_ = fs.Close()
+		}(file)
+
+		stat, err := file.Stat()
+		if err != nil {
+			return nil, err
+		}
+		fileSize = int(stat.Size())
+	} else {
+		fileSize = len(uploadRequest.Data)
+	}
+
+	// 1. apply
+	applyResp, err := c.ApplyVpcUploadInfo(ctx, &ApplyVpcUploadInfoQuery{
+		ContentType:   uploadRequest.ContentType,
+		FileExtension: uploadRequest.FileExtension,
+		FileSize:      fileSize,
+		PartSize:      uploadRequest.PartSize,
+		Prefix:        uploadRequest.Prefix,
+		ServiceID:     uploadRequest.ServiceId,
+		StorageClass:  uploadRequest.StorageClass,
+		StoreKey:      uploadRequest.StoreKey,
+		Overwrite:     uploadRequest.Overwrite,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if applyResp.ResponseMetadata == nil {
+		return nil, errors.New("miss response metadata")
+	}
+	uploadAddr := applyResp.Result
+	if uploadAddr == nil || uploadAddr.UploadMode == "" {
+		return nil, fmt.Errorf("miss result, request id %s", applyResp.ResponseMetadata.RequestID)
+	}
+
+	// 2. upload
+	dataParam := &vpcUploadDataParam{f: file, size: fileSize, data: uploadRequest.Data}
+	// commit param
+	commitParams := &CommitUploadImageParam{
+		ServiceId:   uploadRequest.ServiceId,
+		SessionKey:  uploadAddr.SessionKey,
+		SuccessOids: []string{},
+		SkipMeta:    uploadRequest.SkipMeta,
+	}
+	if uploadRequest.CommitParam != nil {
+		commitParams.Functions = uploadRequest.CommitParam.Functions
+	}
+
+	err = c.vpcUpload(uploadAddr, dataParam)
+	if err != nil {
+		// try commit fail result
+		_, _ = c.CommitUploadImage(commitParams)
+		return nil, err
+	}
+
+	// 3. commit
+	commitParams.SuccessOids = []string{uploadAddr.Oid}
+	commitResp, err := c.CommitUploadImage(commitParams)
+	if err != nil {
+		return nil, err
+	}
 	return commitResp, nil
 }
 

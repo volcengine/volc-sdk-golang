@@ -398,6 +398,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"DescribeImageXCubeUsage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXCubeUsage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXSourceRequestBandwidth": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -427,6 +435,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeImageXBucketRetrievalUsage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DescribeImageXAIRequestCntUsage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXAIRequestCntUsage"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
@@ -1142,6 +1158,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"ApplyVpcUploadInfo": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplyVpcUploadInfo"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"ApplyImageUpload": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -1635,6 +1659,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateStorageRules"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"UpdateStorageRulesV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateStorageRulesV2"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
