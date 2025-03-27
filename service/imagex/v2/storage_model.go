@@ -15,6 +15,21 @@ type ApplyUploadImageParam struct {
 	Overwrite     bool
 }
 
+type VpcUploadRequest struct {
+	ServiceId     string
+	FilePath      string
+	Data          []byte
+	StoreKey      string
+	Prefix        string
+	FileExtension string
+	ContentType   string
+	StorageClass  string
+	PartSize      int
+	Overwrite     bool
+	SkipMeta      bool
+	CommitParam   *CommitUploadImageParam
+}
+
 type ApplyUploadImageResult struct {
 	UploadAddress UploadAddress `json:"UploadAddress"`
 	RequestId     string        `json:"RequestId"`
