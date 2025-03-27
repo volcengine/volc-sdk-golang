@@ -4,12 +4,14 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"hash/crc32"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"sync"
 
@@ -435,4 +437,181 @@ func getEscapePath(path string) string {
 		elems[i] = url.PathEscape(elems[i])
 	}
 	return strings.Join(elems, "/")
+}
+
+type vpcUploadDataParam struct {
+	f    *os.File
+	data []byte
+	size int
+}
+
+type vpcUploadPartsInfo struct {
+	Parts []*vpcUploadPartInfo `json:"Parts"`
+}
+
+type vpcUploadPartInfo struct {
+	PartNumber int    `json:"PartNumber"`
+	ETag       string `json:"ETag"`
+}
+
+func (c *Imagex) vpcUpload(vpcUploadInfo *ApplyVpcUploadInfoResResult, dataParam *vpcUploadDataParam) error {
+	if vpcUploadInfo == nil || dataParam == nil {
+		return errors.New("vpc upload info is nil")
+	}
+
+	if vpcUploadInfo.UploadMode == "direct" {
+		return c.vpcPut(vpcUploadInfo, dataParam)
+	} else if vpcUploadInfo.UploadMode == "part" {
+		return c.vpcPartUpload(vpcUploadInfo.PartUploadInfo, dataParam)
+	}
+
+	return errors.New("unknown upload mode")
+}
+
+func (c *Imagex) vpcPartUpload(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo, dataParam *vpcUploadDataParam) error {
+	if partUploadInfo == nil {
+		return errors.New("part upload info is nil")
+	}
+
+	totalNum := dataParam.size / partUploadInfo.PartSize
+	lastPartSize := dataParam.size % partUploadInfo.PartSize
+	if (len(partUploadInfo.PartPutURLs) != totalNum+1 && lastPartSize > 0) ||
+		(lastPartSize == 0 && len(partUploadInfo.PartPutURLs) != totalNum) {
+		return errors.New("mismatch part upload urls")
+	}
+
+	partsInfo := &vpcUploadPartsInfo{
+		Parts: make([]*vpcUploadPartInfo, 0),
+	}
+	for i := 0; i < len(partUploadInfo.PartPutURLs); i++ {
+		etag, err := c.vpcPartPut(partUploadInfo, dataParam, i)
+		if err != nil {
+			return err
+		}
+		partsInfo.Parts = append(partsInfo.Parts, &vpcUploadPartInfo{
+			PartNumber: i + 1,
+			ETag:       etag,
+		})
+	}
+
+	return c.vpcPost(partUploadInfo, partsInfo)
+}
+
+func (c *Imagex) vpcPost(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo, partsInfo *vpcUploadPartsInfo) error {
+	postUrl := partUploadInfo.CompletePartURL
+	bodyBytes, err := json.Marshal(partsInfo)
+	if err != nil {
+		return err
+	}
+
+	client := http.DefaultClient
+	req, err := http.NewRequest("POST", postUrl, bytes.NewReader(bodyBytes))
+	if err != nil {
+		return err
+	}
+
+	for _, putHeader := range partUploadInfo.CompletePartURLHeaders {
+		req.Header.Set(putHeader.Key, putHeader.Value)
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if rsp == nil {
+		return errors.New("post error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return fmt.Errorf("post error: code %v, logId %v", rsp.StatusCode, logId)
+	}
+
+	return nil
+}
+
+func (c *Imagex) vpcPartPut(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo, dataParam *vpcUploadDataParam, index int) (string, error) {
+	var dataReader io.Reader
+
+	partPutUrl := partUploadInfo.PartPutURLs[index]
+	chunkSize := partUploadInfo.PartSize
+	offset := index * partUploadInfo.PartSize
+	if index == len(partUploadInfo.PartPutURLs)-1 {
+		chunkSize = dataParam.size - offset
+	}
+
+	if dataParam.f != nil {
+		sectionReader := io.NewSectionReader(dataParam.f, int64(offset), int64(chunkSize))
+		_, err := sectionReader.Seek(0, 0)
+		if err != nil {
+			return "", errors.New("reader seek")
+		}
+		dataReader = sectionReader
+	} else {
+		dataReader = bytes.NewReader(dataParam.data[offset : offset+chunkSize])
+	}
+
+	client := http.DefaultClient
+	req, err := http.NewRequest("PUT", partPutUrl, dataReader)
+	if err != nil {
+		return "", err
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	if rsp == nil {
+		return "", errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return "", fmt.Errorf("put error: code %v, logId %v ", rsp.StatusCode, logId)
+	}
+	etag := rsp.Header.Get("ETag")
+
+	return etag, nil
+}
+
+func (c *Imagex) vpcPut(vpcUploadInfo *ApplyVpcUploadInfoResResult, dataParam *vpcUploadDataParam) error {
+	var dataReader io.Reader
+	putUrl := vpcUploadInfo.PutURL
+
+	if dataParam.f != nil {
+		_, err := dataParam.f.Seek(0, 0)
+		if err != nil {
+			return errors.New("file seek")
+		}
+		dataReader = dataParam.f
+	} else {
+		dataReader = bytes.NewReader(dataParam.data)
+	}
+	client := http.DefaultClient
+	req, err := http.NewRequest("PUT", putUrl, dataReader)
+	if err != nil {
+		return err
+	}
+
+	for _, putHeader := range vpcUploadInfo.PutURLHeaders {
+		req.Header.Set(putHeader.Key, putHeader.Value)
+	}
+
+	rsp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if rsp == nil {
+		return errors.New("put error: nil resp")
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		logId := rsp.Header.Get("x-tos-request-id")
+		return fmt.Errorf("put error: code %v, logId %v ", rsp.StatusCode, logId)
+	}
+
+	return nil
 }
