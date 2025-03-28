@@ -1,8 +1,6 @@
 package tls
 
 import (
-	"bytes"
-	"compress/gzip"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -217,19 +215,7 @@ func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]stri
 
 	var response = &SearchLogsResponse{}
 	response.FillRequestId(rawResponse)
-
-	var decoder *json.Decoder
-
-	if rawResponse.Header.Get("Content-Encoding") == CompressGz {
-		gzReader, err := gzip.NewReader(bytes.NewReader(responseBody))
-		if err != nil {
-			return nil, err
-		}
-		decoder = json.NewDecoder(gzReader)
-	} else {
-		decoder = json.NewDecoder(strings.NewReader(string(responseBody)))
-	}
-
+	decoder := json.NewDecoder(strings.NewReader(string(responseBody)))
 	decoder.UseNumber()
 
 	if err := decoder.Decode(response); err != nil {
