@@ -46,14 +46,19 @@ func (c *Imagex) ApplyUploadImage(params *ApplyUploadImageParam) (*ApplyUploadIm
 	query.Add("FileExtension", params.FileExtension)
 	query.Add("Overwrite", strconv.FormatBool(params.Overwrite))
 
-	respBody, _, err := c.Client.Query("ApplyImageUpload", query)
+	now := time.Now()
+	respBody, code, err := c.Client.Query("ApplyImageUpload", query)
 	if err != nil {
-		return nil, fmt.Errorf("ApplyUploadImage: fail to do request, %v", err)
+		err = fmt.Errorf("ApplyUploadImage: fail to do request, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionApplyUploadInfo, "", err.Error()))
+		return nil, err
 	}
 
 	result := new(ApplyUploadImageResult)
 	if err := unmarshalResultInto(respBody, result); err != nil {
-		return nil, fmt.Errorf("ApplyUploadImage: fail to unmarshal response, %v", err)
+		err = fmt.Errorf("ApplyUploadImage: fail to unmarshal response, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionApplyUploadInfo, "", err.Error()))
+		return nil, err
 	}
 	return result, nil
 }
@@ -69,13 +74,46 @@ func (c *Imagex) CommitUploadImage(params *CommitUploadImageParam) (*CommitUploa
 		return nil, fmt.Errorf("CommitUploadImage: fail to marshal request, %v", err)
 	}
 
-	respBody, _, err := c.Client.Json("CommitImageUpload", query, string(bts))
+	now := time.Now()
+	respBody, code, err := c.Client.Json("CommitImageUpload", query, string(bts))
 	if err != nil {
-		return nil, fmt.Errorf("CommitUploadImage: fail to do request, %v", err)
+		err = fmt.Errorf("CommitUploadImage: fail to do request, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionCommitUploadInfo, "", err.Error()))
+		return nil, err
 	}
 
 	result := new(CommitUploadImageResult)
 	if err := unmarshalResultInto(respBody, result); err != nil {
+		err = fmt.Errorf("CommitUploadImage: fail to unmarshal response, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionCommitUploadInfo, "", err.Error()))
+		return nil, err
+	}
+	return result, nil
+}
+
+// CommitImageUpload 图片上传完成上报VPC
+func (c *Imagex) CommitVPCUploadImage(params *CommitUploadImageParam) (*CommitUploadImageResult, error) {
+	query := url.Values{}
+	query.Add("ServiceId", params.ServiceId)
+	query.Add("SkipMeta", fmt.Sprintf("%v", params.SkipMeta))
+
+	bts, err := json.Marshal(params)
+	if err != nil {
+		return nil, fmt.Errorf("CommitUploadImage: fail to marshal request, %v", err)
+	}
+
+	now := time.Now()
+	respBody, code, err := c.Client.Json("CommitImageUpload", query, string(bts))
+	if err != nil {
+		err = fmt.Errorf("CommitUploadImage: fail to do request, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionCommitVpcUploadInfo, "", err.Error()))
+		return nil, err
+	}
+
+	result := new(CommitUploadImageResult)
+	if err := unmarshalResultInto(respBody, result); err != nil {
+		err = fmt.Errorf("CommitUploadImage: fail to unmarshal response, respBody: %s, err: %v", respBody, err)
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionCommitVpcUploadInfo, "", err.Error()))
 		return nil, err
 	}
 	return result, nil
@@ -102,6 +140,7 @@ func (c *Imagex) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 			idx:         item.idx,
 			set:         set,
 			ct:          item.ct,
+			imagex:      c,
 		}
 		err := arg.chunkUpload()
 		if err != nil {
@@ -114,7 +153,7 @@ func (c *Imagex) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 
 // 上传图片
 // 请确保 content 长度和 size 长度一致
-func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadImageParam, content []io.Reader, size []int64) (*CommitUploadImageResult, error) {
+func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadImageParam, content []io.Reader, size []int64) (ret *CommitUploadImageResult, e error) {
 	if len(content) != len(size) {
 		return nil, fmt.Errorf("expect len(size) == len(content), but len(size) = %d, len(content) = %d", len(size), len(content))
 	}
@@ -126,6 +165,23 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 			return nil, fmt.Errorf("size[%d] is zero", idx)
 		}
 	}
+
+	var evs error
+	now := time.Now()
+	defer func() {
+		var (
+			msg  string
+			code = 200
+		)
+		if e != nil {
+			msg = e.Error()
+			code = 500
+		} else if evs != nil {
+			msg = evs.Error()
+			code = 500
+		}
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionFinishUpload, "", msg))
+	}()
 
 	// 1. apply
 	applyResp, err := c.ApplyUploadImage(params)
@@ -147,12 +203,13 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 
 	wg := &sync.WaitGroup{}
 	uploadTaskSet := &uploadTaskSet{
-		ctx:     ctx,
-		host:    host,
-		info:    uploadAddr.StoreInfos,
-		content: content,
-		size:    size,
-		cts:     params.ContentTypes,
+		ctx:       ctx,
+		host:      host,
+		info:      uploadAddr.StoreInfos,
+		content:   content,
+		size:      size,
+		cts:       params.ContentTypes,
+		serviceId: params.ServiceId,
 	}
 	uploadTaskSet.init()
 
@@ -174,6 +231,7 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 					uploadTaskSet.addSuccess(item.info.StoreUri)
 				} else {
 					uploadTaskSet.result[item.idx].errMsg = err.Error()
+					evs = err
 				}
 			}
 		}()
@@ -204,8 +262,25 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 }
 
 // 上传图片
-func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*CommitUploadImageResult, error) {
+func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (ret *CommitUploadImageResult, e error) {
 	params.UploadNum = len(images)
+
+	now := time.Now()
+	var evs error
+	defer func() {
+		var (
+			msg  string
+			code = 200
+		)
+		if e != nil {
+			msg = e.Error()
+			code = 500
+		} else if evs != nil {
+			msg = evs.Error()
+			code = 500
+		}
+		reporter.report(c, c.buildDefaultUploadReport(params.ServiceId, time.Since(now).Microseconds(), code, 0, "", actionFinishUpload, "", msg))
+	}()
 
 	// 1. apply
 	applyResp, err := c.ApplyUploadImage(params)
@@ -223,11 +298,12 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 	// 2. upload
 	host := uploadAddr.UploadHosts[0]
 	uploadTaskSet := &uploadTaskSet{
-		ctx:     context.Background(),
-		host:    host,
-		info:    uploadAddr.StoreInfos,
-		content: make([]io.Reader, 0),
-		size:    make([]int64, 0),
+		ctx:       context.Background(),
+		host:      host,
+		info:      uploadAddr.StoreInfos,
+		content:   make([]io.Reader, 0),
+		size:      make([]int64, 0),
+		serviceId: params.ServiceId,
 	}
 	uploadTaskSet.init()
 	for i, image := range images {
@@ -248,6 +324,7 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		}, retry.Attempts(2))
 		if err != nil {
 			uploadTaskSet.result[idx].errMsg = err.Error()
+			evs = err
 		} else {
 			uploadTaskSet.result[idx].success = true
 			uploadTaskSet.result[idx].errMsg = ""
@@ -280,11 +357,24 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 }
 
 // 上传图片
-func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadRequest) (*CommitUploadImageResult, error) {
+func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadRequest) (ret *CommitUploadImageResult, e error) {
 	if uploadRequest == nil || (uploadRequest.FilePath == "" && len(uploadRequest.Data) == 0) ||
 		(uploadRequest.FilePath != "" && len(uploadRequest.Data) != 0) {
 		return nil, errors.New("UploadImages: filePath and data can not be empty or not empty at the same time")
 	}
+
+	n := time.Now()
+	defer func() {
+		var (
+			msg  string
+			code = 200
+		)
+		if e != nil {
+			msg = e.Error()
+			code = 500
+		}
+		reporter.report(c, c.buildDefaultUploadReport(uploadRequest.ServiceId, time.Since(n).Microseconds(), code, 0, "", actionFinishUpload, "", msg))
+	}()
 
 	fileSize := 0
 	var file *os.File
@@ -307,6 +397,7 @@ func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadReq
 		fileSize = len(uploadRequest.Data)
 	}
 
+	now := time.Now()
 	// 1. apply
 	applyResp, err := c.ApplyVpcUploadInfo(ctx, &ApplyVpcUploadInfoQuery{
 		ContentType:   uploadRequest.ContentType,
@@ -320,6 +411,9 @@ func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadReq
 		Overwrite:     uploadRequest.Overwrite,
 	})
 	if err != nil {
+		if applyResp == nil {
+			reporter.report(c, c.buildDefaultUploadReport(uploadRequest.ServiceId, time.Since(now).Microseconds(), 500, 0, "", actionApplyVpcUploadInfo, "", err.Error()))
+		}
 		return nil, err
 	}
 	if applyResp.ResponseMetadata == nil {
@@ -331,7 +425,7 @@ func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadReq
 	}
 
 	// 2. upload
-	dataParam := &vpcUploadDataParam{f: file, size: fileSize, data: uploadRequest.Data}
+	dataParam := &vpcUploadDataParam{f: file, size: fileSize, data: uploadRequest.Data, serviceId: uploadRequest.ServiceId}
 	// commit param
 	commitParams := &CommitUploadImageParam{
 		ServiceId:   uploadRequest.ServiceId,
@@ -346,13 +440,13 @@ func (c *Imagex) VpcUploadImage(ctx context.Context, uploadRequest *VpcUploadReq
 	err = c.vpcUpload(uploadAddr, dataParam)
 	if err != nil {
 		// try commit fail result
-		_, _ = c.CommitUploadImage(commitParams)
+		_, _ = c.CommitVPCUploadImage(commitParams)
 		return nil, err
 	}
 
 	// 3. commit
 	commitParams.SuccessOids = []string{uploadAddr.Oid}
-	commitResp, err := c.CommitUploadImage(commitParams)
+	commitResp, err := c.CommitVPCUploadImage(commitParams)
 	if err != nil {
 		return nil, err
 	}
