@@ -1094,6 +1094,38 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"AIProcess": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AIProcess"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"CreateImageAITask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageAITask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetImageAITasks": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAITasks"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetImageAIDetails": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAIDetails"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"UpdateImageResourceStatus": {
 			Method: http.MethodPost,
 			Path:   "/",
