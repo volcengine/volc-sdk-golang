@@ -15,6 +15,50 @@ type GetImageStylesResResultStylesItemUnit string
 type GetImageTranscodeQueuesResResultQueuesItemStatus string
 
 type GetImageTranscodeQueuesResResultQueuesItemType string
+type AIProcessBody struct {
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; AI 图像处理模板参数，需要将 JSON 压缩并转义为字符串。根据您需要的图像处理功能，参看 AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板
+	// ID 和参数信息。
+	WorkflowParameter string `json:"WorkflowParameter"`
+
+	// REQUIRED; AI 图像处理模板 ID。根据您需要的图像处理功能，参看 AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 和参数信息。
+	WorkflowTemplateID string `json:"WorkflowTemplateId"`
+}
+
+type AIProcessRes struct {
+	// REQUIRED
+	ResponseMetadata *AIProcessResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result *AIProcessResResult `json:"Result"`
+}
+
+type AIProcessResResponseMetadata struct {
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// AIProcessResResult - 视请求的接口而定
+type AIProcessResResult struct {
+	// REQUIRED; AI 图像处理结果，是 JSON 压缩并转义后的字符串。参看 AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 和参数信息，根据具体的工作流的说明进行解析。
+	Output string `json:"Output"`
+}
 
 type AddDomainV1Body struct {
 
@@ -1029,10 +1073,92 @@ type CreateHiddenWatermarkImageResResult struct {
 	StoreURI string `json:"StoreUri"`
 }
 
-type CreateImageAnalyzeTaskBody struct {
+type CreateImageAITaskBody struct {
 
-	// REQUIRED; 其中原图阶段为"origin", 结果图阶段为"final",其他对应filter name
-	EvalStages []string `json:"EvalStages"`
+	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。
+	// :::warning 若 DataType 取值 uri，则待转码图片 URI 必须为指定服务 ID 下的存储 URI。您可通过调用GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]获取指定服务下全部的上传文件存储
+	// URI。 :::
+	DataList []string `json:"DataList"`
+
+	// REQUIRED; 需要提交的图片数据类型，取值如下所示：
+	// * uri：指定 ServiceId 下存储 URI。
+	// * url：公网可访问的 URL。
+	DataType string `json:"DataType"`
+
+	// REQUIRED; 服务 ID。若 DataType 取值 uri，则提交的图片 URI 列表需在该服务内。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; AI 图像处理模板参数，需要将 JSON 压缩并转义为字符串。根据您需要的图像处理功能，参看AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID
+	// 和参数信息。
+	WorkflowParameter string `json:"WorkflowParameter"`
+
+	// REQUIRED; AI 图像处理模板 ID。根据您需要的图像处理功能，参看 AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 和参数信息。
+	WorkflowTemplateID string `json:"WorkflowTemplateId"`
+
+	// 任务回调配置，缺省情况下默认使用队列回调配置。
+	CallbackConf *CreateImageAITaskBodyCallbackConf `json:"CallbackConf,omitempty"`
+}
+
+// CreateImageAITaskBodyCallbackConf - 任务回调配置，缺省情况下默认使用队列回调配置。
+type CreateImageAITaskBodyCallbackConf struct {
+
+	// REQUIRED; 回调 HTTP 请求地址，用于接收转码结果详情。支持使用 https 和 http 协议。
+	Endpoint string `json:"Endpoint"`
+
+	// REQUIRED; 回调方式，仅支持取值 HTTP。
+	Method string `json:"Method"`
+
+	// 业务自定义回调参数，将在回调消息的 callback_args 中透传。具体回调参数请参考回调内容 [https://www.volcengine.com/docs/508/1104726#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	Args string `json:"Args,omitempty"`
+
+	// 回调数据格式，仅支持取值 JSON。
+	DataFormat string `json:"DataFormat,omitempty"`
+
+	// 回调的维度类型，缺省情况下按照条目级别进行回调。取值如下所示：
+	// * task：将按照任务级别进行回调。可分批回调，一个批次内最多一次性可回调 5000 条图片转码条目执行信息。
+	// * entry：将按照条目级别进行回调。当该条目执行完毕，将立即产生回调。
+	Type string `json:"Type,omitempty"`
+}
+
+type CreateImageAITaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateImageAITaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *CreateImageAITaskResResult `json:"Result"`
+}
+
+type CreateImageAITaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type CreateImageAITaskResResult struct {
+
+	// REQUIRED; 队列 ID。查询接口需要使用，请注意保存。
+	QueueID string `json:"QueueId"`
+
+	// REQUIRED; 任务 ID。查询接口需要使用，请注意保存。
+	TaskID string `json:"TaskId"`
+}
+
+type CreateImageAnalyzeTaskBody struct {
 
 	// REQUIRED; 自定义离线评估任务名称
 	Name string `json:"Name"`
@@ -1052,16 +1178,8 @@ type CreateImageAnalyzeTaskBody struct {
 	// * UriFile：在线提交 URI 离线评估，即在.txt 文件（评估文件）内填写了待评估图片文件 URI，并将该 txt 文件上传至指定服务后获取并传入该文件的 StoreUri。
 	Type string `json:"Type"`
 
-	// REQUIRED; 选择的评估指标 "vqscore"，"noise"，"aesthetic"，"psnr"，"ssim"，"vmaf"
-	VqTypes []string `json:"VqTypes"`
-
 	// 任务描述，可作为该条任务的备注信息。
 	Desc string `json:"Desc,omitempty"`
-
-	// 仅当Type 取值 UriFile 时，配置有效。 是否模拟模板每阶段输出，取值如下所示：
-	// * true：是，一个模版中可以选择多种图像处理, 模拟输出时会将所有的处理逐步叠加并编码为最终图片格式运行并输出评估结果。
-	// * false：否。
-	EvalPerStage bool `json:"EvalPerStage,omitempty"`
 
 	// txt 评估文件的 Store URI，该文件需上传至指定服务对应存储中。
 	// * Type 取值 UrlFile 时，填写合法 URL
@@ -12268,10 +12386,16 @@ type GetAllImageServicesResResultServicesItemImageYAttribute struct {
 	// REQUIRED; 是否开启原图保护，取值如下所示：
 	// * true：开启
 	// * false：关闭
-	ResourceProtect bool `json:"ResourceProtect"`
+	ImageProtect bool `json:"ImageProtect"`
 
-	// REQUIRED; 样式分割符
-	StyleSeparators []string `json:"StyleSeparators"`
+	// REQUIRED; 图像样式分隔符。
+	ImageStyleSeparators []string `json:"ImageStyleSeparators"`
+
+	// REQUIRED
+	QnCosPreference string `json:"QnCosPreference"`
+
+	// REQUIRED
+	QueryStyleCombine bool `json:"QueryStyleCombine"`
 }
 
 // GetAllImageServicesResResultServicesItemMirror - 镜像回源配置。
@@ -14022,6 +14146,243 @@ type GetDomainConfigResResultRespHdrsItem struct {
 
 	// REQUIRED; header value
 	Value string `json:"value"`
+}
+
+type GetImageAIDetailsQuery struct {
+
+	// REQUIRED; 查询的结束 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
+	EndTime int `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 分页条数，取值范围为 (0, 100]。
+	Limit int `json:"Limit" query:"Limit"`
+
+	// REQUIRED; 队列 ID，通过 CreateImageAITask 接口返回。
+	QueueID string `json:"QueueId" query:"QueueId"`
+
+	// REQUIRED; 服务 ID。若 DataType 取值 uri，则提交的图片 URI 列表需在该服务内。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+
+	// REQUIRED; 查询的起始 Unix 时间戳，StartTime与EndTime时间间隔最大不超过 7 天。
+	StartTime int `json:"StartTime" query:"StartTime"`
+
+	// REQUIRED; 任务 ID，通过 CreateImageAITask 接口返回，缺省时查询指定队列下全部的任务。
+	TaskID string `json:"TaskId" query:"TaskId"`
+
+	// 分页偏移量，默认为 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
+	Offset int `json:"Offset,omitempty" query:"Offset"`
+
+	// 返回图片 URL 或 URI 中包含该值的任务。默认为空，不传则返回所有任务。
+	SearchPtn string `json:"SearchPtn,omitempty" query:"SearchPtn"`
+
+	// 执行状态，填入多个时使用英文逗号分隔。取值如下所示：
+	// * Pending：排队中
+	// * Running：执行中
+	// * Success：执行成功
+	// * Fail：执行失败
+	Status string `json:"Status,omitempty" query:"Status"`
+}
+
+type GetImageAIDetailsRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageAIDetailsResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *GetImageAIDetailsResResult `json:"Result"`
+}
+
+type GetImageAIDetailsResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type GetImageAIDetailsResResult struct {
+
+	// REQUIRED; 任务中每个条目的执行详情。
+	ExecInfo []*GetImageAIDetailsResResultExecInfoItem `json:"ExecInfo"`
+
+	// REQUIRED; 任务中包含的条目数。
+	Total int `json:"Total"`
+}
+
+type GetImageAIDetailsResResultExecInfoItem struct {
+
+	// 结束时间。
+	EndAt string `json:"EndAt,omitempty"`
+
+	// 条目 ID。
+	EntryID string `json:"EntryId,omitempty"`
+
+	// 执行输入。
+	ExecInput *GetImageAIDetailsResResultExecInfoItemExecInput `json:"ExecInput,omitempty"`
+
+	// 执行输出。
+	ExecOutput *GetImageAIDetailsResResultExecInfoItemExecOutput `json:"ExecOutput,omitempty"`
+
+	// 开始时间。
+	StartAt string `json:"StartAt,omitempty"`
+
+	// 执行状态。取值如下所示：
+	// * Pending：排队中
+	// * Running：执行中
+	// * Success：执行成功
+	// * Fail：执行失败
+	Status string `json:"Status,omitempty"`
+
+	// 提交时间。
+	SubmitAt string `json:"SubmitAt,omitempty"`
+}
+
+// GetImageAIDetailsResResultExecInfoItemExecInput - 执行输入。
+type GetImageAIDetailsResResultExecInfoItemExecInput struct {
+
+	// REQUIRED; 图片 URL 或 URI。
+	ObjectKey string `json:"ObjectKey"`
+}
+
+// GetImageAIDetailsResResultExecInfoItemExecOutput - 执行输出。
+type GetImageAIDetailsResResultExecInfoItemExecOutput struct {
+
+	// REQUIRED; AI 图像处理失败错误码 [https://www.volcengine.com/docs/508/1104726#%E9%94%99%E8%AF%AF%E7%A0%81]。仅当 Status 值为 Fail 时，ErrCode
+	// 有值。
+	ErrCode string `json:"ErrCode"`
+
+	// REQUIRED; AI 图像处理失败错误信息。
+	ErrMsg string `json:"ErrMsg"`
+
+	// REQUIRED; AI 图像处理结果，是 JSON 压缩并转义后的字符串，仅当 Status 值为 Success 时，Output 有值。参看AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板
+	// ID 和参数信息，根据具体的工作流的说明进行解析。
+	Output string `json:"Output"`
+}
+
+type GetImageAITasksQuery struct {
+
+	// REQUIRED; 查询的结束 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
+	EndTime int `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 队列 ID，通过 CreateImageAITask 接口返回。
+	QueueID string `json:"QueueId" query:"QueueId"`
+
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+
+	// REQUIRED; 查询的起始 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
+	StartTime int `json:"StartTime" query:"StartTime"`
+
+	// 单次查询列出的任务的个数，取值范围为 (0,1000]，默认值为 1000。
+	Limit int `json:"Limit,omitempty" query:"Limit"`
+
+	// 上一次查询返回的位置标记，作为本次查询的起点信息，默认值为空。
+	Marker string `json:"Marker,omitempty" query:"Marker"`
+
+	// 指定查询的任务状态，缺省时将查询全部状态的任务。取值如下所示：
+	// * Running：任务运行中
+	// * Suspend：任务中断
+	// * Done：任务已完成
+	// * Cancel：任务取消
+	// * Failed：任务失败
+	Status string `json:"Status,omitempty" query:"Status"`
+
+	// 任务 ID，通过 CreateImageAITask 接口返回，缺省时查询指定队列下全部的任务。
+	TaskID string `json:"TaskId,omitempty" query:"TaskId"`
+}
+
+type GetImageAITasksRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageAITasksResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result *GetImageAITasksResResult `json:"Result"`
+}
+
+type GetImageAITasksResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetImageAITasksResResult - 视请求的接口而定
+type GetImageAITasksResResult struct {
+
+	// REQUIRED; 是否还有更多任务，取值如下所示：
+	// * true：是，还有任务未列出。
+	// * false：否，已列出所有任务。
+	HasMore bool `json:"HasMore"`
+
+	// REQUIRED; 指定的队列 ID。
+	QueueID string `json:"QueueId"`
+
+	// REQUIRED; AI 图像处理任务的各类信息。
+	TaskInfo []*GetImageAITasksResResultTaskInfoItem `json:"TaskInfo"`
+
+	// HasMore取值为true时（即本次查询还有未列举到的任务时），Marker应作为查询起始位置标记，您需要在下一次查询时传入该值。
+	Marker string `json:"Marker,omitempty"`
+}
+
+type GetImageAITasksResResultTaskInfoItem struct {
+
+	// REQUIRED; 任务的结束执行时间。
+	EndAt string `json:"EndAt"`
+
+	// REQUIRED; 任务中执行失败的条目数。
+	Fail int `json:"Fail"`
+
+	// REQUIRED; 任务中重试的条目数。
+	// :::tip 当因系统内部原因导致的条目转码失败，系统将自动重试该条目，最大重试次数为 5。 :::
+	Retry int `json:"Retry"`
+
+	// REQUIRED; 任务的开始执行时间。
+	StartAt string `json:"StartAt"`
+
+	// REQUIRED; 任务的执行状态，取值如下所示：
+	// * Running：任务运行中
+	// * Suspend：任务中断
+	// * Done：任务已完成
+	// * Cancel：任务取消
+	// * Failed：任务失败
+	Status string `json:"Status"`
+
+	// REQUIRED; 任务的提交时间。
+	SubmitAt string `json:"SubmitAt"`
+
+	// REQUIRED; 任务中执行成功的条目数。
+	Success int `json:"Success"`
+
+	// REQUIRED; 任务 ID。
+	TaskID string `json:"TaskId"`
+
+	// REQUIRED; 任务中包含的条目数。
+	Total int `json:"Total"`
 }
 
 type GetImageAddOnTagQuery struct {
@@ -16704,10 +17065,16 @@ type GetImageServiceResResultImageYAttribute struct {
 	// REQUIRED; 是否开启原图保护，取值如下所示：
 	// * true：开启
 	// * false：关闭
-	ResourceProtect bool `json:"ResourceProtect"`
+	ImageProtect bool `json:"ImageProtect"`
 
 	// REQUIRED; 样式分割符
-	StyleSeparators []string `json:"StyleSeparators"`
+	ImageStyleSeparators []string `json:"ImageStyleSeparators"`
+
+	// REQUIRED
+	QnCosPreference string `json:"QnCosPreference"`
+
+	// REQUIRED
+	QueryStyleCombine bool `json:"QueryStyleCombine"`
 }
 
 // GetImageServiceResResultMirror - 镜像回源配置，默认关闭。
@@ -20169,9 +20536,6 @@ type UpdateHTTPSResResponseMetadata struct {
 
 type UpdateImageAnalyzeTaskBody struct {
 
-	// REQUIRED; 原图阶段为"origin", 结果图阶段为"final",其他对应filter name
-	EvalStages []string `json:"EvalStages"`
-
 	// REQUIRED; 任务名称
 	Name string `json:"Name"`
 
@@ -20180,9 +20544,6 @@ type UpdateImageAnalyzeTaskBody struct {
 
 	// REQUIRED; 待更新的任务 ID，您可以通过调用 GetImageAnalyzeTasks [https://www.volcengine.com/docs/508/1160417] 获取指定地区全部离线评估任务详情。
 	TaskID string `json:"TaskId"`
-
-	// REQUIRED; "vqscore"，"noise"，"aesthetic"，"psnr"，"ssim"，"vmaf"
-	VqTypes []string `json:"VqTypes"`
 
 	// 任务描述
 	Desc string `json:"Desc,omitempty"`
@@ -23029,6 +23390,8 @@ type UpdateStorageRulesV2ResResponseMetadata struct {
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
 }
+type AIProcess struct{}
+type AIProcessQuery struct{}
 type AddDomainV1 struct{}
 type AddImageBackgroundColors struct{}
 type AddImageBackgroundColorsQuery struct{}
@@ -23043,6 +23406,8 @@ type CreateBatchProcessTask struct{}
 type CreateCVImageGenerateTask struct{}
 type CreateFileRestore struct{}
 type CreateHiddenWatermarkImage struct{}
+type CreateImageAITask struct{}
+type CreateImageAITaskQuery struct{}
 type CreateImageAnalyzeTask struct{}
 type CreateImageAnalyzeTaskQuery struct{}
 type CreateImageAuditTask struct{}
@@ -23301,6 +23666,10 @@ type GetDedupTaskStatusBody struct{}
 type GetDenoisingImage struct{}
 type GetDomainConfig struct{}
 type GetDomainConfigBody struct{}
+type GetImageAIDetails struct{}
+type GetImageAIDetailsBody struct{}
+type GetImageAITasks struct{}
+type GetImageAITasksBody struct{}
 type GetImageAddOnTag struct{}
 type GetImageAddOnTagBody struct{}
 type GetImageAiGenerateTask struct{}
@@ -23476,6 +23845,10 @@ type UpdateServiceName struct{}
 type UpdateSlimConfig struct{}
 type UpdateStorageRules struct{}
 type UpdateStorageRulesV2 struct{}
+type AIProcessReq struct {
+	*AIProcessQuery
+	*AIProcessBody
+}
 type AddDomainV1Req struct {
 	*AddDomainV1Query
 	*AddDomainV1Body
@@ -23515,6 +23888,10 @@ type CreateFileRestoreReq struct {
 type CreateHiddenWatermarkImageReq struct {
 	*CreateHiddenWatermarkImageQuery
 	*CreateHiddenWatermarkImageBody
+}
+type CreateImageAITaskReq struct {
+	*CreateImageAITaskQuery
+	*CreateImageAITaskBody
 }
 type CreateImageAnalyzeTaskReq struct {
 	*CreateImageAnalyzeTaskQuery
@@ -24059,6 +24436,14 @@ type GetDenoisingImageReq struct {
 type GetDomainConfigReq struct {
 	*GetDomainConfigQuery
 	*GetDomainConfigBody
+}
+type GetImageAIDetailsReq struct {
+	*GetImageAIDetailsQuery
+	*GetImageAIDetailsBody
+}
+type GetImageAITasksReq struct {
+	*GetImageAITasksQuery
+	*GetImageAITasksBody
 }
 type GetImageAddOnTagReq struct {
 	*GetImageAddOnTagQuery

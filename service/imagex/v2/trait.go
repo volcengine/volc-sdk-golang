@@ -2786,6 +2786,96 @@ func (c *Imagex) GetBatchTaskInfo(ctx context.Context, arg *GetBatchTaskInfoQuer
 	return result, nil
 }
 
+func (c *Imagex) AIProcess(ctx context.Context, arg *AIProcessReq) (*AIProcessRes, error) {
+	query, err := marshalToQuery(arg.AIProcessQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.AIProcessBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "AIProcess", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(AIProcessRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateImageAITask(ctx context.Context, arg *CreateImageAITaskReq) (*CreateImageAITaskRes, error) {
+	query, err := marshalToQuery(arg.CreateImageAITaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateImageAITaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateImageAITask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateImageAITaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageAITasks(ctx context.Context, arg *GetImageAITasksQuery) (*GetImageAITasksRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetImageAITasks", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageAITasksRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageAIDetails(ctx context.Context, arg *GetImageAIDetailsQuery) (*GetImageAIDetailsRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetImageAIDetails", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageAIDetailsRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) UpdateImageResourceStatus(ctx context.Context, arg *UpdateImageResourceStatusReq) (*UpdateImageResourceStatusRes, error) {
 	query, err := marshalToQuery(arg.UpdateImageResourceStatusQuery)
 	if err != nil {
