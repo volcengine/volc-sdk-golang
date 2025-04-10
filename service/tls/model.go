@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
@@ -2094,4 +2095,435 @@ type DescribeShippersResponse struct {
 	CommonResponse
 	Shippers []*DescribeShipperResponse `json:"Shippers"`
 	Total    int                        `json:"Total"`
+}
+
+type Intent int32
+
+const (
+	IntentText2Tls               Intent = 0
+	IntentTls2Text               Intent = 1
+	IntentDocChat                Intent = 2
+	IntentSyntaxErrorFix         Intent = 3
+	IntentSyntaxErrorExplanation Intent = 4
+	IntentUnknown                Intent = 20
+)
+
+type IntentInfo struct {
+	Name   string `json:"Name,omitempty"`
+	Reason string `json:"Reason,omitempty"`
+	Type   Intent `json:"Type,omitempty"`
+}
+
+type DescribeSessionAnswerReq struct {
+	CommonRequest
+	// 用户创建的Ai assistant实例id
+	InstanceId string `json:"InstanceId" binding:"required"`
+	// TopicId
+	TopicId string `json:"TopicId" binding:"required"`
+	// 对话id
+	SessionId string `json:"SessionId" binding:"required"`
+	// 用户问题
+	Question string `json:"Question" binding:"required"`
+	// QuestionId 问题的id,重新回答时使用
+	QuestionId string `json:"QuestionId,omitempty"`
+	// 用户意图
+	Intent *Intent `json:"Intent,omitempty"`
+}
+
+const (
+	MaxQuestionLength = 2000
+)
+
+func (v *DescribeSessionAnswerReq) CheckValidation() error {
+	if len(v.InstanceId) == 0 {
+		return errors.New("invalid argument, empty InstanceId")
+	}
+	if len(v.TopicId) == 0 {
+		return errors.New("invalid argument, empty TopicId")
+	}
+	if len(v.SessionId) == 0 {
+		return errors.New("invalid argument, empty SessionId")
+	}
+	if len(v.Question) == 0 || len(v.Question) > MaxQuestionLength {
+		return errors.New("invalid argument Question")
+	}
+
+	return nil
+}
+
+type SessionMessageType string
+
+const (
+	CopilotProgress SessionMessageType = "progress"
+	CopilotMessage  SessionMessageType = "message"
+	CopilotError    SessionMessageType = "error"
+)
+
+type SessionResponseMessage struct {
+	// 问题id
+	QuestionId string `json:"QuestionId"`
+	SessionId  string `json:"SessionId"`
+	MessageId  string `json:"MessageId"`
+	Answer     string `json:"Answer"`
+	// 是否通过校验,未通过前端需处理
+	PassDetect bool `json:"PassDetect"`
+}
+
+type AgentRspMsgType int32
+
+const (
+	// AgentRspMsgTypeIntentRecognition 意图识别
+	AgentRspMsgTypeIntentRecognition AgentRspMsgType = 0
+	// AgentRspMsgTypeToolCalling 工具调用
+	AgentRspMsgTypeToolCalling AgentRspMsgType = 1
+	// AgentRspMsgTypeInference 实际回答
+	AgentRspMsgTypeInference AgentRspMsgType = 2
+	// AgentRspMsgTypeQuestionsSuggestions 问题建议
+	AgentRspMsgTypeQuestionsSuggestions AgentRspMsgType = 3
+	// AgentRspMsgTypeRetrieval 语料召回
+	AgentRspMsgTypeRetrieval AgentRspMsgType = 4
+	// AgentRspMsgTypeReasoning 思考过程
+	AgentRspMsgTypeReasoning AgentRspMsgType = 5
+)
+
+type ToolCallingInfo struct {
+	Name string `json:"Name,omitempty"`
+}
+
+type KnowledgeRetrieval struct {
+	// 参考的文档
+	Documents []string `json:"Documents,omitempty"`
+}
+
+type ModelAnswer struct {
+	Answer     string `json:"Answer,omitempty"`
+	PassDetect bool   `json:"PassDetect,omitempty"`
+}
+
+type Stage struct {
+	NodeName    string `json:"NodeName,omitempty"`
+	NodeContent string `json:"NodeContent,omitempty"`
+}
+
+type SSEMessage struct {
+	Event string
+	Data  DescribeSessionAnswerResp
+}
+
+type CopilotAnswer struct {
+	QuestionId string `json:"QuestionId"`
+	SessionId  string `json:"SessionId"`
+	// 模型回答的messageId
+	MessageId string `json:"MessageId"`
+
+	// 如果SessionMessageType为Message，此字段用于指示消息类型
+	RspMsgType AgentRspMsgType `json:"RspMsgType,omitempty"`
+	// 模型回答部分
+	ModelAnswer *ModelAnswer `json:"ModelAnswer,omitempty"`
+	// 意图识别细节
+	IntentInfo *IntentInfo `json:"IntentInfo,omitempty"`
+	// 工具调用细节
+	Tools *ToolCallingInfo `json:"Tools,omitempty"`
+	// 知识召回细节
+	RetrievalInfo *KnowledgeRetrieval `json:"RetrievalInfo,omitempty"`
+	// 关联问题建议
+	Suggestions []string `json:"Suggestions,omitempty"`
+
+	// 深度思考部分
+	ReasoningContent *ModelAnswer `json:"ReasoningContent,omitempty"`
+	// 上屏展示的工作流推进进度
+	StageInfo *Stage `json:"FlowStage,omitempty"`
+}
+
+type DescribeSessionAnswerResp struct {
+	// SSE报文类型
+	ConversationMessageType SessionMessageType `json:"ConversationMessageType" enums:"progress,message,error"`
+	// 模型回答的消息内容
+	Message *SessionResponseMessage `json:"Message,omitempty"`
+	// 如果SessionMessageType为Message，此字段用于指示消息类型
+	RspMsgType AgentRspMsgType `json:"RspMsgType,omitempty"`
+	// 意图识别细节
+	IntentInfo *IntentInfo `json:"IntentInfo,omitempty"`
+	// 工具调用细节
+	Tools *ToolCallingInfo `json:"Tools,omitempty"`
+	// 知识召回细节
+	RetrievalInfo *KnowledgeRetrieval `json:"RetrievalInfo,omitempty"`
+	// 关联问题建议
+	Suggestions []string `json:"Suggestions,omitempty"`
+
+	// 深度思考部分
+	ReasoningContent *ModelAnswer `json:"ReasoningContent,omitempty"`
+	// 上屏展示的工作流推进进度
+	StageInfo *Stage `json:"FlowStage,omitempty"`
+
+	QuestionId string `json:"QuestionId"`
+	SessionId  string `json:"SessionId"`
+	// 模型回答的messageId
+	MessageId string `json:"MessageId"`
+}
+
+type CreateAppInstanceReq struct {
+	CommonRequest
+	// 实例类型，如ai助手等
+	InstanceType AppInstanceType `json:"InstanceType"  binding:"required" enums:"anomaly_analysis,ai_assistant,other"`
+	// 实例名称，当InstanceType为ai_assistant时，传入账户ID
+	InstanceName string `json:"InstanceName"  binding:"required"`
+	// 实例描述
+	Description *string `json:"Description"`
+}
+
+func (c *CreateAppInstanceReq) CheckValidation() error {
+	if len(c.InstanceName) == 0 {
+		return errors.New("invalid argument, empty InstanceName")
+	}
+
+	return c.InstanceType.Validate()
+}
+
+type AppInstanceType string
+
+const (
+	AppInstanceTypeAiAssistant AppInstanceType = "ai_assistant"
+)
+
+func (a *AppInstanceType) Validate() error {
+	switch *a {
+	case AppInstanceTypeAiAssistant:
+		return nil
+	}
+	return errors.New("invalid AppInstanceType")
+}
+
+type CreateAppInstanceResp struct {
+	CommonResponse
+	InstanceID string `json:"InstanceID"`
+}
+
+type DescribeAppInstancesReq struct {
+	CommonRequest
+	PageNumber   int              `json:"PageNumber"`
+	PageSize     int              `json:"PageSize"`
+	InstanceName *string          `json:"InstanceName"`
+	InstanceType *AppInstanceType `json:"InstanceType"`
+}
+
+func (d *DescribeAppInstancesReq) CheckValidation() error {
+	if d.PageNumber <= 0 {
+		return errors.New("invalid argument, PageNumber")
+	}
+	if d.PageSize <= 0 {
+		return errors.New("invalid argument, PageSize")
+	}
+	return nil
+}
+
+type DescribeAppInstancesResp struct {
+	CommonResponse
+	InstanceInfo []*InstanceInfo `json:"InstanceInfo"`
+	Total        int64           `json:"Total"`
+}
+
+type InstanceInfo struct {
+	// 实例Id
+	InstanceId string `json:"InstanceId" required:"true"`
+	// 实例名称
+	InstanceName string `json:"InstanceName" required:"true"`
+	// 实例类型
+	InstanceType AppInstanceType `json:"InstanceType" required:"true"`
+	// 描述
+	Description *string `json:"Description"`
+	// 创建时间
+	CreateTime string `json:"CreateTime,omitempty"`
+	// 更新时间
+	UpdateTime string `json:"UpdateTime,omitempty"`
+}
+
+type DeleteAppInstanceReq struct {
+	CommonRequest
+	InstanceId string `json:"InstanceId"  binding:"required"`
+}
+
+func (d *DeleteAppInstanceReq) CheckValidation() error {
+	if d.InstanceId == "" {
+		return errors.New("invalid argument, InstanceId")
+	}
+	return nil
+}
+
+type DeleteAppInstanceResp struct {
+	CommonResponse
+}
+
+type APPMetaType string
+
+var (
+	AppMetaTypeAiAssistantSession            APPMetaType = "tls.app.ai_assistant.session"             // AI助手会话
+	AppMetaTypeAiAssistantHistoryMessage     APPMetaType = "tls.app.ai_assistant.history_message"     // AI助手会话历史消息
+	AppMetaTypeAiAssistantText2SqlSuggestion APPMetaType = "tls.app.ai_assistant.text2sql_suggestion" // AI助手文本转SQL建议
+	AppMetaTypeAiAssistantText2SqlFeedBack   APPMetaType = "tls.app.ai_assistant.feed_back"           // AI助手文本转SQL 反馈
+)
+
+type CreateAppSceneMetaReq struct {
+	CommonRequest
+	// 应用实例id
+	InstanceId string `json:"InstanceId"  binding:"required"`
+	// 创建的App对应的Meta信息
+	CreateAPPMetaType APPMetaType `json:"CreateAPPMetaType" binding:"required" enums:"tls.app.ai_assistant.session"`
+	// topicId
+	Id string `json:"Id"`
+}
+
+func (d *CreateAppSceneMetaReq) CheckValidation() error {
+	if d.InstanceId == "" {
+		return errors.New("invalid argument, InstanceId")
+	}
+
+	return nil
+}
+
+type CreateAppSceneMetaResp struct {
+	CommonResponse
+	Id string `json:"Id"`
+}
+
+type DescribeAppSceneMetasReq struct {
+	CommonRequest
+	InstanceId          string      `json:"InstanceId"`
+	Id                  *string     `json:"Id"`
+	DescribeAPPMetaType APPMetaType `json:"DescribeAPPMetaType" binding:"required" enums:"tls.app.ai_assistant.session,tls.app.ai_assistant.history_message,tls.app.ai_assistant.text2sql_suggestion"`
+	PageNumber          int         `json:"PageNumber"`
+	PageSize            int         `json:"PageSize"`
+	PageContext         *string     `json:"PageContext"`
+}
+
+func (d *DescribeAppSceneMetasReq) CheckValidation() error {
+	if d.InstanceId == "" {
+		return errors.New("invalid argument, InstanceId")
+	}
+	if d.PageNumber < 0 {
+		return errors.New("invalid argument, PageNumber")
+	}
+	if d.PageSize < 0 {
+		return errors.New("invalid argument, PageSize")
+	}
+	return nil
+}
+
+type DescribeSessionMeta struct {
+	SessionId  string `json:"SessionId"`
+	Title      string `json:"Title"`
+	CreateTime string `json:"CreateTime"`
+	UpdateTime string `json:"UpdateTime"`
+}
+type DescribeSessionMessage struct {
+	// 消息Id
+	MessageId string `json:"MessageId"`
+	// 创建消息时间
+	CreatedTimeStamp string `json:"CreatedTimeStamp"`
+	// 消息类型
+	SessionMessageType string `json:"SessionMessageType" enums:"User,Assistant,System"`
+	// 消息状态
+	MsgStatus string `json:"MsgStatus" enums:"InProcess,Finished"`
+	// 消息内容
+	Messages []string `json:"Messages"`
+	// 是否通过敏感词
+	PassDetect bool `json:"PassDetect"`
+	// 推理内容
+	ReasoningContent string `json:"ReasoningContent"`
+}
+
+type DescribeAppSceneMetasRes struct {
+	// 查询会话列表
+	DescribeSessionMeta *DescribeSessionMeta `json:"DescribeSessionMeta,omitempty"`
+	// 查询历史会话消息
+	DescribeSessionMessage []*DescribeSessionMessage `json:"DescribeSessionMessage,omitempty"`
+	// 查询会话建议
+	DescribeSessionSuggestion string `json:"DescribeSessionSuggestion,omitempty"`
+}
+
+type DescribeAppSceneMetasResp struct {
+	CommonResponse
+	PageContext string                      `json:"PageContext,omitempty"`
+	Total       int64                       `json:"Total"`
+	Items       []*DescribeAppSceneMetasRes `json:"Items"`
+}
+
+type DeleteAppSceneMetaReq struct {
+	CommonRequest
+	InstanceId string `json:"InstanceId"  binding:"required"`
+	MetaId     string `json:"MetaId"`
+	// 场景类型
+	DeleteAPPMetaType APPMetaType `json:"DeleteAPPMetaType" binding:"required" enums:"tls.app.ai_assistant.session"`
+}
+
+func (d *DeleteAppSceneMetaReq) CheckValidation() error {
+	if d.InstanceId == "" {
+		return errors.New("invalid argument, InstanceId")
+	}
+	if d.MetaId == "" {
+		return errors.New("invalid argument, MetaId")
+	}
+	if d.DeleteAPPMetaType == AppMetaTypeAiAssistantSession {
+		_, err := strconv.ParseInt(d.MetaId, 10, 64)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+type DeleteAppSceneMetaResp struct {
+	CommonResponse
+}
+
+type ModifyAppSceneMetaReq struct {
+	CommonRequest
+	// Ai应用实例的Id
+	InstanceId string `json:"InstanceId"  binding:"required"`
+	// 修改的App类型
+	ModifyAPPMetaType APPMetaType `json:"ModifyAPPMetaType" binding:"required" enums:"tls.app.ai_assistant.feed_back"`
+	// topicId
+	Id     string     `json:"Id"`
+	Record MetaRecord `json:"Record"  binding:"required"`
+}
+
+func (m *ModifyAppSceneMetaReq) CheckValidation() error {
+	if m.InstanceId == "" {
+		return errors.New("invalid argument, InstanceId")
+	}
+	return nil
+}
+
+type MetaRecord struct {
+	// 反馈信息
+	FeedBackMeta *FeedBackMeta `json:"FeedBackMeta,omitempty"`
+}
+
+type Feature int32
+
+const (
+	FeatureText2Sql         Feature = 0
+	FeatureDoc              Feature = 1
+	FeatureErrorFix         Feature = 3
+	FeatureErrorExplanation Feature = 4
+)
+
+const (
+	FeedBackTypePositive = "Positive"
+	FeedBackTypeNegative = "Negative"
+)
+
+type FeedBackMeta struct {
+	// 对话id
+	SessionId string `json:"SessionId"`
+	// 消息id
+	MessageId string `json:"MessageId"`
+	// 反馈类型
+	FeedBackType string `json:"FeedBackType" enums:"Positive,Negative"`
+	// Feature类型
+	AiAssistantFeature Feature `json:"AiAssistantFeature"`
+}
+
+type ModifyAppSceneMetaResp struct {
+	CommonResponse
 }

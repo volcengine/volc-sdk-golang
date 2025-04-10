@@ -128,4 +128,18 @@ type Client interface {
 	ModifyShipper(request *ModifyShipperRequest) (*ModifyShipperResponse, error)
 	DescribeShipper(request *DescribeShipperRequest) (*DescribeShipperResponse, error)
 	DescribeShippers(request *DescribeShippersRequest) (*DescribeShippersResponse, error)
+
+	// AI应用实例管理
+	CreateAppInstance(request *CreateAppInstanceReq) (*CreateAppInstanceResp, error)
+	DescribeAppInstances(request *DescribeAppInstancesReq) (*DescribeAppInstancesResp, error)
+	DeleteAppInstance(request *DeleteAppInstanceReq) (*DeleteAppInstanceResp, error)
+
+	// AI场景元数据管理
+	CreateAppSceneMeta(request *CreateAppSceneMetaReq) (*CreateAppSceneMetaResp, error)
+	DescribeAppSceneMetas(request *DescribeAppSceneMetasReq) (*DescribeAppSceneMetasResp, error)
+	DeleteAppSceneMeta(request *DeleteAppSceneMetaReq) (*DeleteAppSceneMetaResp, error)
+	ModifyAppSceneMeta(request *ModifyAppSceneMetaReq) (*ModifyAppSceneMetaResp, error)
+
+	// AI对话接口
+	DescribeSessionAnswer(request *DescribeSessionAnswerReq) (reader *CopilotSSEReader, err error)
 }

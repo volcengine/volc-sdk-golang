@@ -112,6 +112,15 @@ const (
 	PathDescribeShipper  = "/DescribeShipper"
 	PathDescribeShippers = "/DescribeShippers"
 
+	PathDescribeSessionAnswer = "/DescribeSessionAnswer"
+	PathCreateAppInstance     = "/CreateAppInstance"
+	PathDescribeAppInstances  = "/DescribeAppInstances"
+	PathDeleteAppInstance     = "/DeleteAppInstance"
+	PathCreateAppSceneMeta    = "/CreateAppSceneMeta"
+	PathDescribeAppSceneMetas = "/DescribeAppSceneMetas"
+	PathModifyAppSceneMeta    = "/ModifyAppSceneMeta"
+	PathDeleteAppSceneMeta    = "/DeleteAppSceneMeta"
+
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"
 	APIVersion3      = "0.3.0"
