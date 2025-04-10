@@ -14,17 +14,40 @@ type Vod struct {
 	*base.Client
 	DomainCache map[string]map[string]int
 	Lock        sync.RWMutex
+	disableLog  bool
 }
 
-func NewInstance() *Vod {
+type config struct {
+	disableLog bool
+}
+
+type Option func(c *config)
+
+func WithDisableLog() Option {
+	return func(c *config) {
+		c.disableLog = true
+	}
+}
+
+func NewInstance(opts ...Option) *Vod {
+	cfg := &config{}
+	for _, opt := range opts {
+		opt(cfg)
+	}
 	instance := &Vod{
 		DomainCache: make(map[string]map[string]int),
 		Client:      base.NewClient(ServiceInfoMap[base.RegionCnNorth1], ApiInfoList),
+		disableLog:  cfg.disableLog,
 	}
+	initReporterClient()
 	return instance
 }
 
-func NewInstanceWithRegion(region string) *Vod {
+func NewInstanceWithRegion(region string, opts ...Option) *Vod {
+	cfg := &config{}
+	for _, opt := range opts {
+		opt(cfg)
+	}
 	var serviceInfo *base.ServiceInfo
 	var ok bool
 	if serviceInfo, ok = ServiceInfoMap[region]; !ok {
@@ -42,7 +65,9 @@ func NewInstanceWithRegion(region string) *Vod {
 	instance := &Vod{
 		DomainCache: make(map[string]map[string]int),
 		Client:      base.NewClient(serviceInfo, ApiInfoList),
+		disableLog:  cfg.disableLog,
 	}
+	initReporterClient()
 	return instance
 }
 
@@ -1152,6 +1177,17 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"SubmitCloudMigrateJob"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		// **********************************************************************
+		// 上报打点
+		// **********************************************************************
+		"ReportEvent": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ReportEvent"},
 				"Version": []string{"2023-07-01"},
 			},
 		},
