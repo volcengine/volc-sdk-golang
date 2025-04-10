@@ -21,6 +21,10 @@ type UploadPartResponse struct {
 	PayLoad    UploadPartPayLoad `json:"payload,omitempty"`
 	PartNumber int
 	CheckSum   string
+
+	// inner use
+	LogId      string
+	StatusCode int
 }
 
 type Meta struct {
@@ -50,6 +54,9 @@ type UploadPartError struct {
 	Error     string `json:"error"`
 	ErrorCode int    `json:"error_code"`
 	Message   string `json:"message"`
+
+	StatusCode int
+	Logid      string
 }
 
 type InitPartPayLoad struct {
@@ -57,11 +64,17 @@ type InitPartPayLoad struct {
 }
 
 type UploadPartCommon struct {
+	Client            *http.Client
 	TosHost           string
 	Oid               string
 	Auth              string
 	ObjectContentType string
 	ChunkSize         int64
+	FileSize          int64
+	ParallelNum       int
+	StorageClass      int32
+	SpaceName         string
+	RetryTimes        int
 }
 
 type VodUploadFuncRequest struct {
@@ -133,6 +146,7 @@ type UploadCommonInfo struct {
 	StorageClass       int32
 	SessionKey         string
 	PreferredHostIndex int
+	SpaceName          string
 }
 
 type CreateMultipartUploadInput struct {
