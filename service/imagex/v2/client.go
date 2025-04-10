@@ -13,19 +13,38 @@ var DefaultInstance = NewInstance()
 
 type Imagex struct {
 	*common.Client
+	disableLog bool
 }
 
-func NewInstance() *Imagex {
-	return NewInstanceWithRegion("cn-north-1")
+type config struct {
+	disableLog bool
 }
 
-func NewInstanceWithRegion(region string) *Imagex {
+type Option func(c *config)
+
+func WithDisableLog() Option {
+	return func(c *config) {
+		c.disableLog = true
+	}
+}
+
+func NewInstance(opts ...Option) *Imagex {
+	return NewInstanceWithRegion("cn-north-1", opts...)
+}
+
+func NewInstanceWithRegion(region string, opts ...Option) *Imagex {
+	cfg := &config{}
+	for _, opt := range opts {
+		opt(cfg)
+	}
 	serviceInfo, ok := ServiceInfoMap[region]
 	if !ok {
 		panic(fmt.Errorf("Imagex not support region %s", region))
 	}
 	instance := &Imagex{
-		Client: common.NewClient(&serviceInfo, ApiListInfo),
+		Client:     common.NewClient(&serviceInfo, ApiListInfo),
+		disableLog: cfg.disableLog,
 	}
+	initReporterClient()
 	return instance
 }

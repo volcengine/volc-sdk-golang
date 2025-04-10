@@ -2876,6 +2876,31 @@ func (c *Imagex) GetImageAIDetails(ctx context.Context, arg *GetImageAIDetailsQu
 	return result, nil
 }
 
+func (c *Imagex) ReportEvent(ctx context.Context, arg *ReportEventReq) (*ReportEventRes, error) {
+	query, err := marshalToQuery(arg.ReportEventQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.ReportEventBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ReportEvent", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ReportEventRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) UpdateImageResourceStatus(ctx context.Context, arg *UpdateImageResourceStatusReq) (*UpdateImageResourceStatusRes, error) {
 	query, err := marshalToQuery(arg.UpdateImageResourceStatusQuery)
 	if err != nil {

@@ -2,6 +2,7 @@ package tls
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"crypto/md5"
 	"encoding/json"
@@ -248,7 +249,12 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	if err != nil {
 		return nil, err
 	}
-
+	if resp.Header.Get("Content-Encoding") == CompressGz {
+		resp.Body, err = gzip.NewReader(resp.Body)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if resp.StatusCode != http.StatusOK {
 		err := &Error{}
 		err.HTTPCode = (int32)(resp.StatusCode)

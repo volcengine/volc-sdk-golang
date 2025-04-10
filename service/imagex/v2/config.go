@@ -1126,6 +1126,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"ReportEvent": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ReportEvent"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"UpdateImageResourceStatus": {
 			Method: http.MethodPost,
 			Path:   "/",
