@@ -14,17 +14,19 @@ import (
 	"os"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/avast/retry-go"
 )
 
 type uploadTaskSet struct {
-	ctx     context.Context
-	host    string
-	info    []StoreInfo
-	content []io.Reader
-	size    []int64
-	cts     []string
+	ctx       context.Context
+	host      string
+	info      []StoreInfo
+	content   []io.Reader
+	size      []int64
+	cts       []string
+	serviceId string
 
 	lock        sync.Mutex
 	taskChan    chan *uploadTaskElement
@@ -185,8 +187,10 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	}
 	req = req.WithContext(ctx)
 
+	now := time.Now()
 	rsp, err := http.DefaultClient.Do(req)
 	if err != nil {
+		reporter.report(c, c.buildDefaultUploadReport(set.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionDirectUpload, host, err.Error()))
 		return fmt.Errorf("fail to do request to %s, %v", url, err)
 	}
 	defer rsp.Body.Close()
@@ -194,6 +198,7 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	//goland:noinspection GoDeprecation
 	body, err := ioutil.ReadAll(rsp.Body)
 	if err != nil {
+		reporter.report(c, c.buildDefaultUploadReport(set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionDirectUpload, host, err.Error()))
 		return fmt.Errorf("fail to read response body %s, %v", url, err)
 	}
 
@@ -201,7 +206,9 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 		Success: -1,
 	}
 	if err = json.Unmarshal(body, &putResp); err != nil {
-		return fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(body), err)
+		err = fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(body), err)
+		reporter.report(c, c.buildDefaultUploadReport(set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionDirectUpload, host, err.Error()))
+		return err
 	}
 	if putResp.Success != 0 {
 		set.result[idx].errMsg = fmt.Sprintf("upload fail, %s", putResp.Error.Message)
@@ -227,6 +234,7 @@ type segmentedUploadParam struct {
 	idx         int
 	set         *uploadTaskSet
 	ct          string
+	imagex      *Imagex
 }
 
 func (c *segmentedUploadParam) chunkUpload() error {
@@ -242,7 +250,11 @@ func (c *segmentedUploadParam) chunkUpload() error {
 	lastNum := int(num) - 1
 
 	// 读 n-1 片并上传上去
-	var part string
+	var (
+		part       string
+		logid      string
+		statusCode int
+	)
 	for i := 0; i < lastNum; i++ {
 		n, err := io.ReadFull(c.content, cur)
 		if err != nil {
@@ -253,11 +265,13 @@ func (c *segmentedUploadParam) chunkUpload() error {
 		if c.isLargeFile {
 			partNumber++
 		}
+		now := time.Now()
 		err = retry.Do(func() error {
-			part, err = c.uploadPart(uploadID, partNumber, cur)
+			part, logid, statusCode, err = c.uploadPart(uploadID, partNumber, cur)
 			return err
 		}, retry.Attempts(3))
 		if err != nil {
+			reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), statusCode, 0, logid, actionChunkUpload, c.host, err.Error()))
 			return err
 		}
 		parts = append(parts, part)
@@ -276,11 +290,13 @@ func (c *segmentedUploadParam) chunkUpload() error {
 	if c.isLargeFile {
 		lastNum++
 	}
+	now := time.Now()
 	err = retry.Do(func() error {
-		part, err = c.uploadPart(uploadID, lastNum, bts)
+		part, logid, statusCode, err = c.uploadPart(uploadID, lastNum, bts)
 		return err
 	}, retry.Attempts(3))
 	if err != nil {
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), statusCode, 0, logid, actionChunkUpload, c.host, err.Error()))
 		return err
 	}
 	parts = append(parts, part)
@@ -301,22 +317,27 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 		req.Header.Set("Specified-Content-Type", c.ct)
 	}
 
+	now := time.Now()
 	client := http.DefaultClient
 	rsp, err := client.Do(req)
 	if err != nil {
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionInitChunk, c.host, err.Error()))
 		return "", err
 	}
 	//goland:noinspection GoDeprecation
 	b, err := ioutil.ReadAll(rsp.Body)
 	defer rsp.Body.Close()
 	if err != nil {
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionInitChunk, c.host, err.Error()))
 		return "", err
 	}
 
 	res := &uploadPartResponse{}
 	res.Success = -1
 	if err := json.Unmarshal(b, res); err != nil {
-		return "", fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
+		err = fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionInitChunk, c.host, err.Error()))
+		return "", err
 	}
 	if res.Success != 0 {
 		c.set.result[c.idx].putErr = &PutError{
@@ -329,12 +350,12 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 	return res.PayLoad.UploadID, nil
 }
 
-func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data []byte) (string, error) {
+func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data []byte) (string, string, int, error) {
 	url := fmt.Sprintf("https://%s/%s?partNumber=%d&uploadID=%s", c.host, getEscapePath(c.StoreUri), partNumber, uploadID)
 	checkSum := fmt.Sprintf("%08x", crc32.ChecksumIEEE(data))
 	req, err := http.NewRequest("PUT", url, bytes.NewReader(data))
 	if err != nil {
-		return "", err
+		return "", "", -1, err
 	}
 	req.Header.Set("Content-CRC32", checkSum)
 	req.Header.Set("Authorization", c.Auth)
@@ -348,20 +369,20 @@ func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data 
 	client := http.DefaultClient
 	rsp, err := client.Do(req)
 	if err != nil {
-		return "", err
+		return "", "", 500, err
 	}
 	//goland:noinspection GoDeprecation
 	b, err := ioutil.ReadAll(rsp.Body)
 	defer rsp.Body.Close()
 	if err != nil {
-		return "", err
+		return "", rsp.Header.Get(logHeader), rsp.StatusCode, err
 	}
 
 	res := &uploadPartResponse{}
 	res.Success = -1
 
 	if err := json.Unmarshal(b, res); err != nil {
-		return "", fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
+		return "", rsp.Header.Get(logHeader), rsp.StatusCode, fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
 	}
 	if res.Success != 0 {
 		c.set.result[c.idx].putErr = &PutError{
@@ -369,9 +390,9 @@ func (c *segmentedUploadParam) uploadPart(uploadID string, partNumber int, data 
 			Error:     res.Error.Error,
 			Message:   res.Error.Message,
 		}
-		return "", fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(b), res)
+		return "", rsp.Header.Get(logHeader), rsp.StatusCode, fmt.Errorf("fail to put url %s, body %s, err: %+v", url, string(b), res)
 	}
-	return checkSum, nil
+	return checkSum, rsp.Header.Get(logHeader), rsp.StatusCode, nil
 }
 
 func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []string) error {
@@ -392,22 +413,27 @@ func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []strin
 		req.Header.Set("Specified-Content-Type", c.ct)
 	}
 
+	now := time.Now()
 	client := http.DefaultClient
 	rsp, err := client.Do(req)
 	if err != nil {
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionMergeChunk, c.host, err.Error()))
 		return err
 	}
 	//goland:noinspection GoDeprecation
 	b, err := ioutil.ReadAll(rsp.Body)
 	defer rsp.Body.Close()
 	if err != nil {
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionMergeChunk, c.host, err.Error()))
 		return err
 	}
 
 	res := &uploadMergeResponse{}
 	res.Success = -1
 	if err := json.Unmarshal(b, res); err != nil {
-		return fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
+		err = fmt.Errorf("fail to unmarshal response url %s, body: %s, err:  %v", url, string(b), err)
+		reporter.report(c.imagex, c.imagex.buildDefaultUploadReport(c.set.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, rsp.Header.Get(logHeader), actionMergeChunk, c.host, err.Error()))
+		return err
 	}
 	if res.Success != 0 {
 		c.set.result[c.idx].putErr = &PutError{
@@ -440,9 +466,10 @@ func getEscapePath(path string) string {
 }
 
 type vpcUploadDataParam struct {
-	f    *os.File
-	data []byte
-	size int
+	f         *os.File
+	data      []byte
+	size      int
+	serviceId string
 }
 
 type vpcUploadPartsInfo struct {
@@ -494,14 +521,18 @@ func (c *Imagex) vpcPartUpload(partUploadInfo *ApplyVpcUploadInfoResResultPartUp
 		})
 	}
 
-	return c.vpcPost(partUploadInfo, partsInfo)
+	return c.vpcPost(partUploadInfo, partsInfo, dataParam)
 }
 
-func (c *Imagex) vpcPost(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo, partsInfo *vpcUploadPartsInfo) error {
+func (c *Imagex) vpcPost(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadInfo, partsInfo *vpcUploadPartsInfo, param *vpcUploadDataParam) error {
 	postUrl := partUploadInfo.CompletePartURL
 	bodyBytes, err := json.Marshal(partsInfo)
 	if err != nil {
 		return err
+	}
+	u, err := url.Parse(postUrl)
+	if err != nil {
+		return errors.New("postUrl is invalid")
 	}
 
 	client := http.DefaultClient
@@ -514,17 +545,22 @@ func (c *Imagex) vpcPost(partUploadInfo *ApplyVpcUploadInfoResResultPartUploadIn
 		req.Header.Set(putHeader.Key, putHeader.Value)
 	}
 
+	now := time.Now()
 	rsp, err := client.Do(req)
 	if err != nil {
+		reporter.report(c, c.buildDefaultUploadReport(param.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionVpcMergeChunk, u.Host, err.Error()))
 		return err
 	}
-
-	if rsp == nil {
-		return errors.New("post error: nil resp")
-	}
+	defer rsp.Body.Close()
 
 	if rsp.StatusCode != http.StatusOK {
 		logId := rsp.Header.Get("x-tos-request-id")
+		var errMsg string
+		bts, err := ioutil.ReadAll(rsp.Body)
+		if err == nil {
+			errMsg = string(bts)
+		}
+		reporter.report(c, c.buildDefaultUploadReport(param.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, logId, actionVpcMergeChunk, u.Host, errMsg))
 		return fmt.Errorf("post error: code %v, logId %v", rsp.StatusCode, logId)
 	}
 
@@ -552,23 +588,33 @@ func (c *Imagex) vpcPartPut(partUploadInfo *ApplyVpcUploadInfoResResultPartUploa
 		dataReader = bytes.NewReader(dataParam.data[offset : offset+chunkSize])
 	}
 
+	u, err := url.Parse(partPutUrl)
+	if err != nil {
+		return "", errors.New("partPutUrl is invalid")
+	}
+
 	client := http.DefaultClient
 	req, err := http.NewRequest("PUT", partPutUrl, dataReader)
 	if err != nil {
 		return "", err
 	}
 
+	now := time.Now()
 	rsp, err := client.Do(req)
 	if err != nil {
+		reporter.report(c, c.buildDefaultUploadReport(dataParam.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionVpcChunkUpload, u.Host, err.Error()))
 		return "", err
 	}
-
-	if rsp == nil {
-		return "", errors.New("put error: nil resp")
-	}
+	defer rsp.Body.Close()
 
 	if rsp.StatusCode != http.StatusOK {
 		logId := rsp.Header.Get("x-tos-request-id")
+		var errMsg string
+		bts, err := ioutil.ReadAll(rsp.Body)
+		if err == nil {
+			errMsg = string(bts)
+		}
+		reporter.report(c, c.buildDefaultUploadReport(dataParam.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, logId, actionVpcChunkUpload, u.Host, errMsg))
 		return "", fmt.Errorf("put error: code %v, logId %v ", rsp.StatusCode, logId)
 	}
 	etag := rsp.Header.Get("ETag")
@@ -579,7 +625,10 @@ func (c *Imagex) vpcPartPut(partUploadInfo *ApplyVpcUploadInfoResResultPartUploa
 func (c *Imagex) vpcPut(vpcUploadInfo *ApplyVpcUploadInfoResResult, dataParam *vpcUploadDataParam) error {
 	var dataReader io.Reader
 	putUrl := vpcUploadInfo.PutURL
-
+	u, err := url.Parse(putUrl)
+	if err != nil {
+		return errors.New("putUrl parse failed")
+	}
 	if dataParam.f != nil {
 		_, err := dataParam.f.Seek(0, 0)
 		if err != nil {
@@ -599,17 +648,22 @@ func (c *Imagex) vpcPut(vpcUploadInfo *ApplyVpcUploadInfoResResult, dataParam *v
 		req.Header.Set(putHeader.Key, putHeader.Value)
 	}
 
+	now := time.Now()
 	rsp, err := client.Do(req)
 	if err != nil {
+		reporter.report(c, c.buildDefaultUploadReport(dataParam.serviceId, time.Since(now).Microseconds(), 500, 0, "", actionVpcDirectUpload, u.Host, err.Error()))
 		return err
 	}
-
-	if rsp == nil {
-		return errors.New("put error: nil resp")
-	}
+	defer rsp.Body.Close()
 
 	if rsp.StatusCode != http.StatusOK {
 		logId := rsp.Header.Get("x-tos-request-id")
+		var errMsg string
+		bts, err := ioutil.ReadAll(rsp.Body)
+		if err == nil {
+			errMsg = string(bts)
+		}
+		reporter.report(c, c.buildDefaultUploadReport(dataParam.serviceId, time.Since(now).Microseconds(), rsp.StatusCode, 0, logId, actionVpcDirectUpload, u.Host, errMsg))
 		return fmt.Errorf("put error: code %v, logId %v ", rsp.StatusCode, logId)
 	}
 

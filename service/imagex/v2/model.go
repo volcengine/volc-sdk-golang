@@ -1075,7 +1075,7 @@ type CreateHiddenWatermarkImageResResult struct {
 
 type CreateImageAITaskBody struct {
 
-	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。
+	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。传入图片的短边不小于 256 px，长边不大于 2048 px，大小不超过 10 MB。
 	// :::warning 若 DataType 取值 uri，则待转码图片 URI 必须为指定服务 ID 下的存储 URI。您可通过调用GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]获取指定服务下全部的上传文件存储
 	// URI。 :::
 	DataList []string `json:"DataList"`
@@ -1097,11 +1097,11 @@ type CreateImageAITaskBody struct {
 	// REQUIRED; AI 图像处理模板 ID。根据您需要的图像处理功能，参看 AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 和参数信息。
 	WorkflowTemplateID string `json:"WorkflowTemplateId"`
 
-	// 任务回调配置，缺省情况下默认使用队列回调配置。
+	// 任务回调配置。
 	CallbackConf *CreateImageAITaskBodyCallbackConf `json:"CallbackConf,omitempty"`
 }
 
-// CreateImageAITaskBodyCallbackConf - 任务回调配置，缺省情况下默认使用队列回调配置。
+// CreateImageAITaskBodyCallbackConf - 任务回调配置。
 type CreateImageAITaskBodyCallbackConf struct {
 
 	// REQUIRED; 回调 HTTP 请求地址，用于接收转码结果详情。支持使用 https 和 http 协议。
@@ -1110,7 +1110,7 @@ type CreateImageAITaskBodyCallbackConf struct {
 	// REQUIRED; 回调方式，仅支持取值 HTTP。
 	Method string `json:"Method"`
 
-	// 业务自定义回调参数，将在回调消息的 callback_args 中透传。具体回调参数请参考回调内容 [https://www.volcengine.com/docs/508/1104726#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	// 业务自定义回调参数，将在回调消息的 callback_args 中透传。具体回调参数请参考 AI 图像处理回调 [https://www.volcengine.com/docs/508/1526662]。
 	Args string `json:"Args,omitempty"`
 
 	// 回调数据格式，仅支持取值 JSON。
@@ -13127,8 +13127,7 @@ type GetCVTextGenerateImageBody struct {
 	// REQUIRED; 请求的JSON数据。
 	ReqJSON map[string]interface{} `json:"ReqJson"`
 
-	// REQUIRED; 服务下创建的图片处理模板名称，指定后，将按照模板中的处理配置对豆包大模型生成的图片进行图片处理。
-	// 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版名称，例如 tplv-f0****5k-test。
+	// REQUIRED; 服务下创建的图片处理模板配置（不带~），指定后，将按照模板中的处理配置对豆包大模型生成的图片进行图片处理。 您可在 veImageX 控制台的处理配置页面，参考新建模板 [https://www.volcengine.com/docs/508/8087]配置模板并获取模版信息，例如tplv-f0****5k-test.image。
 	Template string `json:"Template"`
 
 	// 覆盖现有内容。
@@ -20142,6 +20141,33 @@ type PreviewImageUploadFileResResult struct {
 	ImageDuration int `json:"ImageDuration,omitempty"`
 }
 
+type ReportEventRes struct {
+
+	// REQUIRED
+	ResponseMetadata *ReportEventResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type ReportEventResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type RerunImageMigrateTaskQuery struct {
 
 	// REQUIRED; 仅当任务状态为Partial时生效。 任务 ID，请参考GetImageMigrateTasks [https://www.volcengine.com/docs/508/1108670]获取返回的任务 ID。
@@ -23782,6 +23808,9 @@ type GetVendorBuckets struct{}
 type GetVendorBucketsQuery struct{}
 type PreviewImageUploadFile struct{}
 type PreviewImageUploadFileBody struct{}
+type ReportEvent struct{}
+type ReportEventBody struct{}
+type ReportEventQuery struct{}
 type RerunImageMigrateTask struct{}
 type RerunImageMigrateTaskBody struct{}
 type SetDefaultDomain struct{}
@@ -24680,6 +24709,10 @@ type GetVendorBucketsReq struct {
 type PreviewImageUploadFileReq struct {
 	*PreviewImageUploadFileQuery
 	*PreviewImageUploadFileBody
+}
+type ReportEventReq struct {
+	*ReportEventQuery
+	*ReportEventBody
 }
 type RerunImageMigrateTaskReq struct {
 	*RerunImageMigrateTaskQuery
