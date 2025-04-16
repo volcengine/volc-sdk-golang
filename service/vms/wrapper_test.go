@@ -495,3 +495,18 @@ func TestRisk_CanCall(t *testing.T) {
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
+
+func TestRouteAAuth(t *testing.T) {
+	req := &RouteAAuthRequest{
+		RequestId:   "sadasdasewr",
+		IdType:      1,
+		Name:        "张三",
+		PhoneNumber: "138000000xx",
+		IdNumber:    "220121xxx",
+		Photo:       "123211231232432",
+	}
+	result, statusCode, err := DefaultInstance.RouteAAuth(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
