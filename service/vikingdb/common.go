@@ -45,6 +45,7 @@ const (
 	Data_Import   = "data_import"
 	Filter_Delete = "filter_delete"
 	Data_Export   = "data_export"
+	Filter_Update = "filter_update"
 
 	MAX_RETRIES         = 3
 	INITIAL_RETRY_DELAY = 0.5
