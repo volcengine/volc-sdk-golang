@@ -226,6 +226,14 @@ var (
 				"Version": []string{DefaultVersion},
 			},
 		},
+		"RouteAAuth": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RouteAAuth"},
+				"Version": []string{DefaultVersion},
+			},
+		},
 		"CreateNumberPool": {
 			Method: http.MethodPost,
 			Path:   "/",

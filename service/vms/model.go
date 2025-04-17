@@ -83,6 +83,16 @@ type SecretBindResult struct {
 	YbStatus         int32
 }
 
+type RouteAAuthResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           RouteAAuthResult
+}
+
+type RouteAAuthResult struct {
+	Code    string
+	Message string
+}
+
 type OperationResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           bool
@@ -251,6 +261,15 @@ type UpdateAXNERequest struct {
 	UserData       string
 	OutId          string
 	AutoCreateFlag int32
+}
+
+type RouteAAuthRequest struct {
+	RequestId   string
+	IdType      int32
+	Name        string
+	PhoneNumber string
+	IdNumber    string
+	Photo       string
 }
 
 type Click2CallRequest struct {
