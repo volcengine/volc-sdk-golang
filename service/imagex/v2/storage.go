@@ -136,11 +136,12 @@ func (c *Imagex) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 			StoreInfo:   item.info,
 			content:     item.content,
 			size:        item.size,
-			isLargeFile: item.size > LargeFileSize,
+			isLargeFile:  item.size > LargeFileSize || set.preferredHost != "",
 			idx:         item.idx,
 			set:         set,
 			ct:          item.ct,
 			imagex:      c,
+			storageClass: item.storageClass,
 		}
 		err := arg.chunkUpload()
 		if err != nil {
@@ -210,6 +211,8 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 		size:      size,
 		cts:       params.ContentTypes,
 		serviceId: params.ServiceId,
+		preferredHost:  params.UploadHost,
+		storageClasses: params.StorageClasses,
 	}
 	uploadTaskSet.init()
 
@@ -297,6 +300,9 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (r
 
 	// 2. upload
 	host := uploadAddr.UploadHosts[0]
+	if params.UploadHost != "" {
+		host = params.UploadHost
+	}
 	uploadTaskSet := &uploadTaskSet{
 		ctx:       context.Background(),
 		host:      host,
@@ -304,6 +310,7 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (r
 		content:   make([]io.Reader, 0),
 		size:      make([]int64, 0),
 		serviceId: params.ServiceId,
+		storageClasses: params.StorageClasses,
 	}
 	uploadTaskSet.init()
 	for i, image := range images {
