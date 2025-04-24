@@ -93,6 +93,20 @@ type RouteAAuthResult struct {
 	Message string
 }
 
+type AuthQueryRequest struct {
+	Phone   string
+}
+
+type AuthQueryResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           AuthQueryResult
+}
+
+type AuthQueryResult struct {
+	Status     int32
+	FailReason string
+}
+
 type OperationResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           bool
