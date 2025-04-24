@@ -27,6 +27,8 @@ type uploadTaskSet struct {
 	size      []int64
 	cts       []string
 	serviceId string
+	preferredHost  string
+	storageClasses []string
 
 	lock        sync.Mutex
 	taskChan    chan *uploadTaskElement
@@ -90,13 +92,14 @@ func (r *uploadTaskSet) fill(result *CommitUploadImageResult) {
 }
 
 type uploadTaskElement struct {
-	ctx     context.Context
-	host    string
-	idx     int
-	info    StoreInfo
-	content io.Reader
-	size    int64
-	ct      string
+	ctx          context.Context
+	host         string
+	idx          int
+	info         StoreInfo
+	content      io.Reader
+	size         int64
+	ct           string
+	storageClass string
 }
 
 func (r *uploadTaskSet) init() {
@@ -105,9 +108,13 @@ func (r *uploadTaskSet) init() {
 	r.result = make([]uploadTaskResult, len(r.info))
 	r.taskChan = make(chan *uploadTaskElement, len(r.size))
 	for idx := range r.size {
+		host := r.host
+		if r.preferredHost != "" {
+			host = r.preferredHost
+		}
 		ele := &uploadTaskElement{
 			ctx:     r.ctx,
-			host:    r.host,
+			host:    host,
 			idx:     idx,
 			info:    r.info[idx],
 			content: r.content[idx],
@@ -115,6 +122,9 @@ func (r *uploadTaskSet) init() {
 		}
 		if idx < len(r.cts) {
 			ele.ct = r.cts[idx]
+		}
+		if idx < len(r.storageClasses) {
+			ele.storageClass = r.storageClasses[idx]
 		}
 		r.taskChan <- ele
 	}
@@ -185,6 +195,9 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	if ct != "" {
 		req.Header.Set("Specified-Content-Type", ct)
 	}
+	if set != nil && idx < len(set.storageClasses) {
+		req.Header.Set("X-VeImageX-Storage-Class", set.storageClasses[idx])
+	}
 	req = req.WithContext(ctx)
 
 	now := time.Now()
@@ -235,6 +248,7 @@ type segmentedUploadParam struct {
 	set         *uploadTaskSet
 	ct          string
 	imagex      *Imagex
+	storageClass string
 }
 
 func (c *segmentedUploadParam) chunkUpload() error {
@@ -315,6 +329,9 @@ func (c *segmentedUploadParam) initUploadPart() (string, error) {
 	}
 	if c.ct != "" {
 		req.Header.Set("Specified-Content-Type", c.ct)
+	}
+	if c.storageClass != "" {
+		req.Header.Set("X-VeImageX-Storage-Class", c.storageClass)
 	}
 
 	now := time.Now()
@@ -411,6 +428,9 @@ func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []strin
 	}
 	if c.ct != "" {
 		req.Header.Set("Specified-Content-Type", c.ct)
+	}
+	if c.storageClass != "" {
+		req.Header.Set("X-VeImageX-Storage-Class", c.storageClass)
 	}
 
 	now := time.Now()
