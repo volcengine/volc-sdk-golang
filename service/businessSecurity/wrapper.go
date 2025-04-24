@@ -489,12 +489,15 @@ func (p *BusinessSecurity) TextSliceRisk(req *RiskDetectionRequest) (*TextSliceR
 		return nil, fmt.Errorf("TextSliceRisk: fail to marshal request, %v", err)
 	}
 
-	respBody, _, err := p.Client.Json("TextSliceRisk", nil, string(reqData))
+	var aidMap = url.Values{
+		"aid": []string{fmt.Sprintf("%d", req.AppId)},
+	}
+	respBody, _, err := p.Client.Json("TextSliceRisk", aidMap, string(reqData))
 	if err != nil {
 		// Retry on error
 		// 支持错误重试
 		if p.Retry() {
-			respBody, _, err = p.Client.Json("TextSliceRisk", nil, string(reqData))
+			respBody, _, err = p.Client.Json("TextSliceRisk", aidMap, string(reqData))
 			if err != nil {
 				return nil, fmt.Errorf("TextSliceRisk: fail to do request, %v", err)
 			}
@@ -507,6 +510,66 @@ func (p *BusinessSecurity) TextSliceRisk(req *RiskDetectionRequest) (*TextSliceR
 		return nil, fmt.Errorf("TextSliceRisk: fail to do request, %v", err)
 	}
 	result := new(TextSliceResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *BusinessSecurity) TextAsyncRisk(req *RiskDetectionRequest) (*AsyncTextRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("TextSliceRisk: fail to marshal request, %v", err)
+	}
+
+	var aidMap = url.Values{
+		"aid": []string{fmt.Sprintf("%d", req.AppId)},
+	}
+	respBody, _, err := p.Client.Json("TextAsyncRisk", aidMap, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("TextAsyncRisk", aidMap, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("TextSliceRisk: fail to do request, %v", err)
+			}
+			result := new(AsyncTextRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("TextSliceRisk: fail to do request, %v", err)
+	}
+	result := new(AsyncTextRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// Risk result
+// 风险识别结果获取接口
+func (p *BusinessSecurity) TextResult(req *TextResultRequest) (*TextResultResponse, error) {
+	respBody, _, err := p.Client.Query("TextResult", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("TextResult", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("TextResult fail to do request, %v", err)
+			}
+			result := new(TextResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("TextResult: fail to do request, %v", err)
+	}
+	result := new(TextResultResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

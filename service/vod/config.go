@@ -759,6 +759,22 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"DescribeUploadSpaceConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeUploadSpaceConfig"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"UpdateUploadSpaceConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateUploadSpaceConfig"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 分发加速管理

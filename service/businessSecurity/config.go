@@ -330,6 +330,22 @@ var (
 				"Version": []string{"2022-11-07"},
 			},
 		},
+		"TextAsyncRisk": {
+			Method: http.MethodPost,
+			Path:   "/open/api/v3/async_text_risk",
+			Query: url.Values{
+				"Action":  []string{"TextAsyncRisk"},
+				"Version": []string{"2022-11-07"},
+			},
+		},
+		"TextResult": {
+			Method: http.MethodGet,
+			Path:   "/open/api/v3/text_result",
+			Query: url.Values{
+				"Action":  []string{"TextResult"},
+				"Version": []string{"2022-11-07"},
+			},
+		},
 		"SimpleRiskStat": {
 			Method:  http.MethodGet,
 			Path:    "/",

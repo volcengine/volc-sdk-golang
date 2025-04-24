@@ -26,6 +26,9 @@ func main_SegmentedUploadImages() {
 	params := &imagex.ApplyUploadImageParam{
 		ServiceId: "service id", // 服务 ID
 		// StoreKeys: []string{"example.jpg"}, // 指定文件存储名
+		// UploadHost:     "",						//指定上传域名
+		// ContentTypes:   []string{"image/jpg"},	//指定Content-Type
+		// StorageClasses: []string{"ARCHIVE"},		//指定存储类型
 	}
 
 	files := make([]io.Reader, 0)
