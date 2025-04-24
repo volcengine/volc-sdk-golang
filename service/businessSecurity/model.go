@@ -88,11 +88,24 @@ type AsyncVideoRiskResponse struct {
 	Data      RequestData `json:"Data"`
 }
 
+type AsyncTextRiskResponse struct {
+	RequestId string      `json:"RequestId"`
+	Code      int         `json:"Code"`
+	Message   string      `json:"Message"`
+	Data      RequestData `json:"Data"`
+}
+
 type RequestData struct {
 	PassThrough string `json:"PassThrough"`
 }
 
 type VideoResultRequest struct {
+	DataId  string `json:"DataId"`
+	AppId   int64  `json:"AppId"`
+	Service string `json:"Service"`
+}
+
+type TextResultRequest struct {
 	DataId  string `json:"DataId"`
 	AppId   int64  `json:"AppId"`
 	Service string `json:"Service"`
@@ -304,11 +317,19 @@ type FrameResult struct {
 	LibName      string   `json:"LibName"`
 }
 
+func (t *TextResultResponse) ToString() string {
+	respJSON, err := json.Marshal(t)
+	if err != nil {
+		return err.Error()
+	}
+	return string(respJSON)
+}
+
 type TextResultResponse struct {
-	RequestId    string         `json:"RequestId"`
-	Code         int            `json:"Code"`
-	Message      string         `json:"Message"`
-	TextRiskResp TextRiskRespV2 `json:"Data"`
+	RequestId string         `json:"RequestId"`
+	Code      int            `json:"Code"`
+	Message   string         `json:"Message"`
+	TextResp  TextRiskRespV3 `json:"Data"`
 }
 
 type TextRiskRespV2 struct {
@@ -325,6 +346,8 @@ type TextSliceResultResponse struct {
 }
 
 type TextRiskRespV3 struct {
+	DataId         string        `json:"DataId"`
+	PassThrough    string        `json:"PassThrough"`
 	Decision       string        `json:"Decision"`
 	DecisionDetail string        `json:"DecisionDetail"`
 	FinalLabel     string        `json:"FinalLabel"`
@@ -357,6 +380,7 @@ type Label struct {
 type Context struct {
 	MatchedWords []string   `json:"MatchedWords"`
 	LibName      string     `json:"LibName"`
+	Description  string     `json:"Description"`
 	Positions    []Position `json:"Positions"`
 }
 
@@ -462,6 +486,10 @@ func (r *RiskResultRequest) ToQuery() url.Values {
 }
 
 func (r *VideoResultRequest) ToQuery() url.Values {
+	return ToUrlValues(r)
+}
+
+func (r *TextResultRequest) ToQuery() url.Values {
 	return ToUrlValues(r)
 }
 
