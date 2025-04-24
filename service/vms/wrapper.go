@@ -161,6 +161,15 @@ func (p *Vms) RouteAAuth(req *RouteAAuthRequest) (*RouteAAuthResponse, int, erro
 	}
 }
 
+func (p *Vms) QueryAuth(req *AuthQueryRequest) (*AuthQueryResponse, int, error) {
+	resp := new(AuthQueryResponse)
+	if statusCode, err := p.Handler("QueryAuth", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *Vms) Click2Call(req *Click2CallRequest) (*Click2CallResponse, int, error) {
 	resp := new(Click2CallResponse)
 	if statusCode, err := p.Handler("Click2Call", req, resp); err != nil {
