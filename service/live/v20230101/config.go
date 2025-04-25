@@ -1318,5 +1318,61 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"CreateCarouselTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateCarouselTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteCarouselTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteCarouselTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateCarouselTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateCarouselTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"GetCarouselDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetCarouselDetail"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListCarouselTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListCarouselTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"CreateHighLightTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateHighLightTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteTaskByAccountID": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTaskByAccountID"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 	}
 )

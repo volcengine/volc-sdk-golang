@@ -371,6 +371,138 @@ type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultProperti
 	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
 }
 
+type CreateCarouselTaskBody struct {
+
+	// REQUIRED; 轮播任务名称，运行中的任务，名称不能重复
+	Name string `json:"Name"`
+
+	// REQUIRED; 轮播规则，用于指定轮播播放的素材和行为等。
+	Rule CreateCarouselTaskBodyRule `json:"Rule"`
+}
+
+// CreateCarouselTaskBodyRule - 轮播规则，用于指定轮播播放的素材和行为等。
+type CreateCarouselTaskBodyRule struct {
+
+	// REQUIRED; -1代表无限循环，最终停止由StopTime字段控制，或者系统默认的停止时间（3天）
+	Loop int32 `json:"Loop"`
+
+	// REQUIRED; 0为普通模式，此模式下系统会根据前后两个点播素材的头信息来判断是否能不断流拼接，如果不满足拼接条件，在进行素材切换时会断流。 2为转码模式，此模式下系统会将所有素材格式化为固定参数，用户可以配置这个音视频参数，如果不配置默认参数跟随第一个素材，在进行素材切换时不会断流
+	Mode int32 `json:"Mode"`
+
+	// REQUIRED; 轮播任务的推流参数，包括视频、音频、推流地址及回调信息。
+	Output CreateCarouselTaskBodyRuleOutput `json:"Output"`
+
+	// REQUIRED; 轮播素材列表，用于指定在轮播过程中播放的素材资源。
+	Source []CreateCarouselTaskBodyRuleSourceItem `json:"Source"`
+
+	// 播放时间，选填，默认会等待第一个视频缓存完毕，如果系统时间大于此值，则开始播放
+	PlayTime *int32 `json:"PlayTime,omitempty"`
+
+	// 停止时间，选填，当此字段被设置时，系统会遵循此时间设置关闭任务
+	StopTime *int32 `json:"StopTime,omitempty"`
+}
+
+// CreateCarouselTaskBodyRuleOutput - 轮播任务的推流参数，包括视频、音频、推流地址及回调信息。
+type CreateCarouselTaskBodyRuleOutput struct {
+
+	// REQUIRED; 推流rtmp地址或者rtmps地址，支持多推，最多填写8条地址，最少1条地址
+	URL []string `json:"Url"`
+
+	// 转码模式下有效，可选配置推流的音频参数
+	Audio *CreateCarouselTaskBodyRuleOutputAudio `json:"Audio,omitempty"`
+
+	// 回调函数。
+	Callback *CreateCarouselTaskBodyRuleOutputCallback `json:"Callback,omitempty"`
+
+	// 转码模式下有效，可选配置推流的视频参数
+	Video *CreateCarouselTaskBodyRuleOutputVideo `json:"Video,omitempty"`
+}
+
+// CreateCarouselTaskBodyRuleOutputAudio - 转码模式下有效，可选配置推流的音频参数
+type CreateCarouselTaskBodyRuleOutputAudio struct {
+
+	// 音频码率设置
+	BitRate *int32 `json:"BitRate,omitempty"`
+
+	// mono：单声道；stereo：双声道
+	ChannelLayout *string `json:"ChannelLayout,omitempty"`
+
+	// 采样率，可选：22000、32000、44100、48000
+	SampleRate *int32 `json:"SampleRate,omitempty"`
+}
+
+// CreateCarouselTaskBodyRuleOutputCallback - 回调函数。
+type CreateCarouselTaskBodyRuleOutputCallback struct {
+
+	// REQUIRED; 回调地址，系统会将部分信息回调出去
+	URL string `json:"Url"`
+}
+
+// CreateCarouselTaskBodyRuleOutputVideo - 转码模式下有效，可选配置推流的视频参数
+type CreateCarouselTaskBodyRuleOutputVideo struct {
+
+	// 视频码率，单位是bit
+	BitRate *int32 `json:"BitRate,omitempty"`
+
+	// 视频帧率取值[10,60]
+	FrameRate *int32 `json:"FrameRate,omitempty"`
+
+	// 取值[1,10]
+	GOP *int32 `json:"GOP,omitempty"`
+
+	// 取值范围[10,2160]
+	Height *int32 `json:"Height,omitempty"`
+
+	// 取值范围[10,2160]
+	Width *int32 `json:"Width,omitempty"`
+}
+
+type CreateCarouselTaskBodyRuleSourceItem struct {
+
+	// REQUIRED; 播放列表内不允许重复
+	ID string `json:"ID"`
+
+	// REQUIRED; vod：点播文件；m3u8：m3u8文件
+	Type string `json:"Type"`
+
+	// REQUIRED; 轮播素材的公网可访问地址。确保提供的地址能够被公网正常访问，以便正确加载轮播素材内容。
+	URL string `json:"Url"`
+
+	// 此素材连续播放几次，字段必须大于等于0
+	Loop *int32 `json:"Loop,omitempty"`
+
+	// 可以控制当前素材跳过开头进行播放，单位是秒，注意此字段如果小于等于0或者大于视频长度不生效，只在素材type为vod时生效
+	Seek *int32 `json:"Seek,omitempty"`
+}
+
+type CreateCarouselTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata CreateCarouselTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result CreateCarouselTaskResResult `json:"Result"`
+}
+
+type CreateCarouselTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type CreateCarouselTaskResResult struct {
+
+	// REQUIRED; 轮播任务数据对象。
+	Data CreateCarouselTaskResResultData `json:"Data"`
+}
+
+// CreateCarouselTaskResResultData - 轮播任务数据对象。
+type CreateCarouselTaskResResultData struct {
+
+	// REQUIRED; 任务唯一标识
+	TaskID string `json:"TaskID"`
+}
+
 type CreateCertBody struct {
 
 	// REQUIRED; 证书信息。
@@ -767,11 +899,6 @@ type CreateDomainV2BodyDomainsItem struct {
 
 type CreateDomainV2BodyTagsItem struct {
 
-	// REQUIRED; 标签类型，支持以下取值。
-	// * System：系统内置标签；
-	// * Custom：自定义标签。
-	Category string `json:"Category"`
-
 	// REQUIRED; 标签 Key 值。
 	Key string `json:"Key"`
 
@@ -814,6 +941,158 @@ type CreateDomainV2ResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type CreateHighLightTaskBody struct {
+
+	// REQUIRED; 输出高光信息回调参数。
+	CallbackParam CreateHighLightTaskBodyCallbackParam `json:"CallbackParam"`
+
+	// REQUIRED; 算法模型类型。0:足球体育
+	Model int32 `json:"Model"`
+
+	// REQUIRED; 任务名称。
+	Name string `json:"Name"`
+
+	// REQUIRED; 数据源。直播：拉流地址支持：FLV、HLS、RTMP 、RTM
+	Sources []CreateHighLightTaskBodySourcesItem `json:"Sources"`
+
+	// REQUIRED; 任务类型。0:直播
+	Type int32 `json:"Type"`
+
+	// 是否需要输出【高光片段】以及相关配置参数设置
+	HLClipsParam *CreateHighLightTaskBodyHLClipsParam `json:"HLClipsParam,omitempty"`
+
+	// 是否需要输出【高光混剪】以及相关配置参数设置
+	HLMixParam *CreateHighLightTaskBodyHLMixParam `json:"HLMixParam,omitempty"`
+
+	// 直播高光剪辑任务配置参数设置，仅当“数据源类型”选择为【直播】时可设置生效。
+	LiveParam *CreateHighLightTaskBodyLiveParam `json:"LiveParam,omitempty"`
+
+	// 输出高光视频上传VOD系统参数
+	VodParam *CreateHighLightTaskBodyVodParam `json:"VodParam,omitempty"`
+}
+
+// CreateHighLightTaskBodyCallbackParam - 输出高光信息回调参数。
+type CreateHighLightTaskBodyCallbackParam struct {
+
+	// REQUIRED; 回调类型。需要填1:表示http回调。
+	CallbackType int32 `json:"CallbackType"`
+
+	// REQUIRED; HTTP回调参数。
+	HTTPParams CreateHighLightTaskBodyCallbackParamHTTPParams `json:"HttpParams"`
+
+	// 业务自定义设置的参数信息，通过回调直接透传，便于业务自定义标识，默认为空
+	CallbackExtra *string `json:"CallbackExtra,omitempty"`
+}
+
+// CreateHighLightTaskBodyCallbackParamHTTPParams - HTTP回调参数。
+type CreateHighLightTaskBodyCallbackParamHTTPParams struct {
+
+	// REQUIRED; HTTP回调地址。
+	CallbackAdr string `json:"CallbackAdr"`
+}
+
+// CreateHighLightTaskBodyHLClipsParam - 是否需要输出【高光片段】以及相关配置参数设置
+type CreateHighLightTaskBodyHLClipsParam struct {
+
+	// 启用状态。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 是否生产高光片段视频素材
+	OutputHLClips *bool `json:"OutputHLClips,omitempty"`
+}
+
+// CreateHighLightTaskBodyHLMixParam - 是否需要输出【高光混剪】以及相关配置参数设置
+type CreateHighLightTaskBodyHLMixParam struct {
+
+	// 相对任务开始时，生成并返回【高光混剪】时间点，支持设置多个时间节点。精确到【分钟】，取值范围[5,1440]。仅针对数据源类型为【直播】时生效。默认为【任务结束后返回】
+	CreateTimestamps []*int32 `json:"CreateTimestamps,omitempty"`
+
+	// 高光混剪参数：每个高光混剪的时长上限，精确到s。若不填或者填0，服务内部默认值为210
+	DurationMax *int32 `json:"DurationMax,omitempty"`
+
+	// 高光混剪参数：每个高光混剪的时长下限，精确到s。若不填或者填0，服务内部默认值为180。
+	DurationMin *int32 `json:"DurationMin,omitempty"`
+
+	// 启用状态。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 累计生成高光混剪数量上限。默认值为1，取值范围[1,100]。
+	NumLimit *int32 `json:"NumLimit,omitempty"`
+}
+
+// CreateHighLightTaskBodyLiveParam - 直播高光剪辑任务配置参数设置，仅当“数据源类型”选择为【直播】时可设置生效。
+type CreateHighLightTaskBodyLiveParam struct {
+
+	// 切片策略，即针对直播流剪辑送检的切片时长。 默认为300s，取值范围[60,10800]
+	ClipsDuration *int32 `json:"ClipsDuration,omitempty"`
+
+	// 判断断流时长，即断流超过该时间范围，则默认直播流结束。仅当【TaskEndTime】为空时，该规则作为直播流结束的判断标志生效。默认120s，取值范围[60,900]
+	StreamEndTime *int32 `json:"StreamEndTime,omitempty"`
+
+	// 指定高光提取任务的结束时间，RFC3339 格式的时间戳，精度为秒。默认为空，表示高光提取任务执行到直播流结束。
+	TaskEndTime *string `json:"TaskEndTime,omitempty"`
+
+	// 指定高光提取任务的开始时间，RFC3339 格式的时间戳，精度为秒。默认为空，表示立即开始。
+	TaskStartTime *string `json:"TaskStartTime,omitempty"`
+}
+
+type CreateHighLightTaskBodySourcesItem struct {
+
+	// REQUIRED; 视频源路径。直播：拉流地址支持：FLV、HLS、RTMP 、RTM
+	Path string `json:"Path"`
+
+	// REQUIRED; 视频源类型。0:表示网络源
+	SourceType int32 `json:"SourceType"`
+}
+
+// CreateHighLightTaskBodyVodParam - 输出高光视频上传VOD系统参数
+type CreateHighLightTaskBodyVodParam struct {
+
+	// REQUIRED; VOD空间名称。
+	Space string `json:"Space"`
+}
+
+type CreateHighLightTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata CreateHighLightTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result CreateHighLightTaskResResult `json:"Result"`
+}
+
+type CreateHighLightTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的唯一标识符。
+	RequestID string `json:"RequestID"`
+
+	// 请求的接口名，属于请求的公共参数。
+	Action *string `json:"Action,omitempty"`
+
+	// 请求的Region，例如：cn-north-1
+	Region *string `json:"Region,omitempty"`
+
+	// 请求的服务，属于请求的公共参数。
+	Service *string `json:"Service,omitempty"`
+
+	// 请求的版本号，属于请求的公共参数。
+	Version *string `json:"Version,omitempty"`
+}
+
+// CreateHighLightTaskResResult - 视请求的接口而定
+type CreateHighLightTaskResResult struct {
+
+	// REQUIRED; 参数数据。
+	Data CreateHighLightTaskResResultData `json:"Data"`
+}
+
+// CreateHighLightTaskResResultData - 参数数据。
+type CreateHighLightTaskResResultData struct {
+
+	// REQUIRED; 任务ID。
+	TaskID string `json:"TaskID"`
 }
 
 type CreateLivePadPresetBody struct {
@@ -1033,7 +1312,7 @@ type CreateLiveVideoQualityAnalysisTaskResResponseMetadata struct {
 type CreateLiveVideoQualityAnalysisTaskResResult struct {
 
 	// REQUIRED; 任务ID
-	ID string `json:"ID"`
+	ID int64 `json:"ID"`
 
 	// REQUIRED; 任务名称
 	Name string `json:"Name"`
@@ -1111,11 +1390,6 @@ type CreatePullToPushGroupBody struct {
 }
 
 type CreatePullToPushGroupBodyTagsItem struct {
-
-	// REQUIRED; 标签类型，支持以下取值。
-	// * System：系统内置标签；
-	// * Custom：自定义标签。
-	Category string `json:"Category"`
 
 	// REQUIRED; 标签 Key 值。
 	Key string `json:"Key"`
@@ -1335,10 +1609,10 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 录制为 MP4 格式时的录制参数。 :::tip 您需至少配置一种录制格式，即 FlvParam、HlsParam、Mp4Param 至少开启一个。 :::
 	Mp4Param *CreateRecordPresetV2BodyRecordPresetConfigMp4Param `json:"Mp4Param,omitempty"`
 
-	// 是否源流录制，默认值为 0，支持的取值及含义如下所示。
+	// 是否录制源流，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
 	// * 1：录制。
-	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
+	// :::tip 转码流和源流需至少选一个进行录制，即 TranscodeRecord 和 OriginRecord 的取值不能同时为 0。 :::
 	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
 	// 录制为 HLS 格式时，单个 TS 切片时长，单位为秒，默认值为 10，取值范围为 [2,100]。
@@ -1347,11 +1621,11 @@ type CreateRecordPresetV2BodyRecordPresetConfig struct {
 	// 是否录制转码流，默认值为 0，支持的取值及含义如下所示。
 	// * 0：不录制；
 	// * 1：录制全部转码流；
-	// * 2：录制指定转码流，即通过转码后缀列表 TranscodeSuffixList匹配转码流进行录制，如果转码流后缀列表为空仍表示录制全部转码流。
-	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
+	// * 2：录制指定转码流，根据转码后缀列表 TranscodeSuffixList决定录制哪些转码流。如果这个列表为空，则效果和设置为 1 一样，即录制所有转码流。
+	// :::tip 转码流和源流需至少选一个进行录制，即 TranscodeRecord 和 OriginRecord 的取值不能同时为 0。 :::
 	TranscodeRecord *int32 `json:"TranscodeRecord,omitempty"`
 
-	// 转码流后缀列表，转码流录制配置为根据转码流列表匹配（TranscodeRecord 取值为 2）时生效，TranscodeSuffixList 默认配置为空，效果等同于录制全部转码流。
+	// 转码后缀列表。
 	TranscodeSuffixList []*string `json:"TranscodeSuffixList,omitempty"`
 }
 
@@ -1407,16 +1681,23 @@ type CreateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件存储到 TOS 时的存储路径和文件名规则。支持输入字母（A - Z、a - z）、数字（0 - 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。最大长度为 200 个字符，
+	// 支持以下字段作为占位符：
+	// * record：自定义字段，可遵照支持字符进行自定义。
+	// * {PubDomain}：当前配置中的 vhost 值。
+	// * {App}：当前配置中的 AppName 值。
+	// * {Stream}：当前配置中的 StreamName 值。
+	// * {StartTime}：录制开始的 Unix 时间戳，精度为 s。
+	// * {EndTime}：录制结束的 Unix 时间戳，精度为 s。
+	// 存储路径必须至少包含两级目录。例如：live/{App}/{Stream}
+	// 合法示例：
+	// record/{PubDomain}/{App}/{Stream}/{StartTime}-{EndTime}
+	// {App}/archive/{Stream}/recording_{StartTime}
+	// vod/{Stream}/!highlight_{EndTime}
+	// a/b/custom_record
+	// 错误示例：
+	// single_level # 错误：路径层级不足两级
+	// invalid_/{S@ream}/file # 错误：含非法字符@
 	ExactObject *string `json:"ExactObject,omitempty"`
 
 	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
@@ -1978,7 +2259,7 @@ type CreateSnapshotPresetV2ResResponseMetadata struct {
 // CreateSnapshotPresetV2ResResult - 视请求的接口而定
 type CreateSnapshotPresetV2ResResult struct {
 
-	// REQUIRED
+	// REQUIRED; 截图配置名称。
 	PresetName string `json:"PresetName"`
 }
 
@@ -2612,6 +2893,33 @@ type DeleteCallbackResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+type DeleteCarouselTaskBody struct {
+
+	// REQUIRED; 待删除的轮播任务 ID，任务的唯一标识。调用 CreateCarouselTask 接口创建轮播任务时返回。
+	TaskID string `json:"TaskID"`
+}
+
+type DeleteCarouselTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata DeleteCarouselTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DeleteCarouselTaskResResult `json:"Result"`
+}
+
+type DeleteCarouselTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type DeleteCarouselTaskResResult struct {
+
+	// REQUIRED; 删除任务的操作结果信息，返回任务是否成功删除以及相关的 Mesos ID 和操作影响记录数。
+	Data string `json:"Data"`
+}
+
 type DeleteCertBody struct {
 
 	// REQUIRED; 待删除的 HTTPS 证书的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
@@ -2855,7 +3163,7 @@ type DeleteLivePadPresetResResponseMetadata struct {
 type DeleteLiveVideoQualityAnalysisTaskBody struct {
 
 	// 任务ID，和任务名二选一
-	ID *string `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 任务名，和任务ID二选一
 	Name *string `json:"Name,omitempty"`
@@ -3348,6 +3656,34 @@ type DeleteSubtitleTranscodePresetResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
+}
+
+type DeleteTaskByAccountIDBody struct {
+
+	// REQUIRED; 任务ID。
+	TaskID string `json:"TaskID"`
+}
+
+type DeleteTaskByAccountIDRes struct {
+
+	// REQUIRED
+	ResponseMetadata DeleteTaskByAccountIDResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 操作结果。
+	Result DeleteTaskByAccountIDResResult `json:"Result"`
+}
+
+type DeleteTaskByAccountIDResResponseMetadata struct {
+
+	// REQUIRED; 请求的唯一标识符。
+	RequestID string `json:"RequestID"`
+}
+
+// DeleteTaskByAccountIDResResult - 操作结果。
+type DeleteTaskByAccountIDResResult struct {
+
+	// REQUIRED; 任务删除操作的详细信息。
+	Data string `json:"Data"`
 }
 
 type DeleteTimeShiftPresetV3Body struct {
@@ -4198,7 +4534,8 @@ type DescribeDomainResResultDomainListItem struct {
 	// * 2：禁用，禁止使用，此时域名加速不生效；
 	// * 3：删除；
 	// * 4：审核被驳回，审核不通过，需要重新创建并审核；
-	// * 5：欠费关停。
+	// * 5：欠费关停；
+	// * 6：域名未备案被封禁。
 	Status int32 `json:"Status"`
 
 	// REQUIRED; 域名类型，包含两种类型。
@@ -9031,7 +9368,7 @@ type DescribeLiveStreamCountDataResResult struct {
 	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
 	EndTime string `json:"EndTime"`
 
-	// REQUIRED; 当前查询条件时流数最大值。
+	// REQUIRED; 当前查询条件下流数的最大值，表示在指定的时间范围内推流、回源流或转码流的最高并发数。
 	PeakCount int32 `json:"PeakCount"`
 
 	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
@@ -9276,8 +9613,7 @@ type DescribeLiveStreamSessionDataBody struct {
 	// CDN 节点 IP 所属区域的列表，缺省情况下表示所有区域。
 	RegionList []*DescribeLiveStreamSessionDataBodyRegionListItem `json:"RegionList,omitempty"`
 
-	// 流名称，取值与直播流地址中的 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。 :::tip 查询流粒度的请求数和在线人数数据时，需同时指定
-	// Domain 、App 和 Stream 来指定直播流。 :::
+	// 数据流名称。
 	Stream *string `json:"Stream,omitempty"`
 }
 
@@ -10803,6 +11139,9 @@ type GeneratePlayURLBody struct {
 	// REQUIRED; 流名称，取值与直播流地址中 StreamName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 100 个字符。
 	Stream string `json:"Stream"`
 
+	// REQUIRED; 生成地址为源流地址/转码流地址还是abr地址
+	StreamType string `json:"StreamType"`
+
 	// 拉流地址的过期时间，RFC3339 格式的 UTC 时间，精度为秒，过期后需要重新生成。缺省情况下表示当前时间往后的 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime
 	// 的时间为准。 :::
 	ExpiredTime *string `json:"ExpiredTime,omitempty"`
@@ -10816,7 +11155,7 @@ type GeneratePlayURLBody struct {
 	// * 3rd：第三方 CDN。
 	Type *string `json:"Type,omitempty"`
 
-	// 拉流地址的有效时长，单位为秒，超过有效时长后需要重新生成。缺省值为 604800 表示 7 天，取值范围为正整数。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
+	// 拉流地址的有效时长，单位为秒，超过有效时长后需要重新生成。取值范围为正整数，缺省值为 604800，即 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
 	// :::
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 }
@@ -10872,6 +11211,9 @@ type GeneratePlayURLResResultURLListItem struct {
 	// REQUIRED; 协议类型，包括 hls、flv、rtmp、udp 和 cmaf。
 	Protocol string `json:"Protocol"`
 
+	// REQUIRED; 子流地址。仅当 StreamType 为 abr 时返回。
+	SubStreamURL []GeneratePlayURLResResultURLListPropertiesItemsItem `json:"SubStreamURL"`
+
 	// REQUIRED; 地址类型，取值及含义如下所示。
 	// * pull：拉流地址；
 	// * 3rd_play(relay_source)：第三方回源地址，当配置了回源且 CDN 类型为第三方 CDN 时返回；
@@ -10880,6 +11222,15 @@ type GeneratePlayURLResResultURLListItem struct {
 
 	// REQUIRED; 生成的拉流地址。
 	URL string `json:"URL"`
+}
+
+type GeneratePlayURLResResultURLListPropertiesItemsItem struct {
+
+	// REQUIRED; 子流转码后缀。
+	Suffix string `json:"Suffix"`
+
+	// REQUIRED; 地址标签。包括 drm、hls加密等。
+	Tag string `json:"Tag"`
 }
 
 type GeneratePushURLBody struct {
@@ -10900,7 +11251,7 @@ type GeneratePushURLBody struct {
 	// :::
 	ExpiredTime *string `json:"ExpiredTime,omitempty"`
 
-	// 推流地址的有效时长，单位为秒，超过有效时长后需要重新生成。默认值为 604800 表示 7 天，取值范围为正整数。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
+	// 推流地址的有效时长，单位为秒，超过有效时长后需要重新生成。取值范围为正整数，默认值为 604800，即 7 天。 :::tip 如果同时设置 ValidDuration 和 ExpiredTime，以 ExpiredTime 的时间为准。
 	// :::
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
 }
@@ -10971,6 +11322,52 @@ type GeneratePushURLResResultPushURLListDetailItem struct {
 
 	// REQUIRED; 推流地址。
 	URL string `json:"URL"`
+}
+
+type GetCarouselDetailBody struct {
+
+	// REQUIRED; 待查询的轮播任务 ID，任务的唯一标识。调用 CreateCarouselTask 接口创建轮播任务时返回。
+	TaskID string `json:"TaskID"`
+}
+
+type GetCarouselDetailRes struct {
+
+	// REQUIRED
+	ResponseMetadata GetCarouselDetailResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result GetCarouselDetailResResult `json:"Result"`
+}
+
+type GetCarouselDetailResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type GetCarouselDetailResResult struct {
+
+	// REQUIRED; 包含轮播任务相关信息的数据对象。
+	Data GetCarouselDetailResResultData `json:"Data"`
+}
+
+// GetCarouselDetailResResultData - 包含轮播任务相关信息的数据对象。
+type GetCarouselDetailResResultData struct {
+
+	// REQUIRED; 最新的播放列表序列号
+	LastOperationIndex int32 `json:"LastOperationIndex"`
+
+	// REQUIRED; 当前播放列表序列号
+	LastSuccessOperationIndex int32 `json:"LastSuccessOperationIndex"`
+
+	// REQUIRED; 当前的播放信息，json字符串
+	PlayInfo string `json:"PlayInfo"`
+
+	// REQUIRED; 当前的播单信息
+	Rule string `json:"Rule"`
+
+	// REQUIRED; 任务状态： pending：任务等待调度中 prepare：任务初始化中 running：任务运行中 prestop：任务停止中 done：任务已经停止
+	Status string `json:"Status"`
 }
 
 type GetCloudMixTaskDetailBody struct {
@@ -11075,10 +11472,10 @@ type GetHLSEncryptDataKeyResResult struct {
 
 type GetLiveVideoQualityAnalysisTaskDetailBody struct {
 
-	// 查询的任务 ID。 :::tip Name 和 ID 二选一必填。 :::
-	ID *string `json:"ID,omitempty"`
+	// 查询的任务 ID。 :::tipName 和 ID 二选一必填。 :::
+	ID *int64 `json:"ID,omitempty"`
 
-	// 查询的任务名称。 :::tip Name 和 ID 二选一必填。 :::
+	// 查询的任务名称。 :::tipName 和 ID 二选一必填。 :::
 	Name *string `json:"Name,omitempty"`
 }
 
@@ -11118,8 +11515,11 @@ type GetLiveVideoQualityAnalysisTaskDetailResResult struct {
 // GetLiveVideoQualityAnalysisTaskDetailResResultTask - 测评任务详细信息。
 type GetLiveVideoQualityAnalysisTaskDetailResResultTask struct {
 
-	// REQUIRED; 测试任务的持续时长。
+	// REQUIRED; 测试任务的持续时长，单位为秒。
 	Duration int32 `json:"Duration"`
+
+	// REQUIRED; 请提供具体的参数ID和类型string，以便我为您生成参数描述。
+	ID int64 `json:"ID"`
 
 	// REQUIRED; 画质测评的打点间隔。
 	Interval int32 `json:"Interval"`
@@ -11130,11 +11530,8 @@ type GetLiveVideoQualityAnalysisTaskDetailResResultTask struct {
 	// REQUIRED; 画质测评结果。
 	ScoringResult GetLiveVideoQualityAnalysisTaskDetailResResultTaskScoringResult `json:"ScoringResult"`
 
-	// REQUIRED; 测试流的播放地址。
+	// REQUIRED; 画质测评视频流的播放地址。
 	SrcURL string `json:"SrcURL"`
-
-	// REQUIRED; 任务 ID。
-	TaskID string `json:"TaskID"`
 }
 
 // GetLiveVideoQualityAnalysisTaskDetailResResultTaskScoringResult - 画质测评结果。
@@ -11146,10 +11543,13 @@ type GetLiveVideoQualityAnalysisTaskDetailResResultTaskScoringResult struct {
 
 type GetLiveVideoQualityAnalysisTaskDetailResResultTaskScoringResultVQScoreLiveItem struct {
 
-	// REQUIRED; 测试打点的时间，Unix 时间戳。
+	// REQUIRED; 测评打点的时间，Unix 时间戳，精度为秒。
 	Timestamp int32 `json:"Timestamp"`
 
-	// REQUIRED; 测评点的画质得分。
+	// REQUIRED; 测评点的画质得分，画质评分范围为 0 到 100，评分越高表示视频画面色彩越好。不同的评分段对应不同的视频质量感受：
+	// * 0～60：主观感受较差。
+	// * 60～70：主观感受良好。
+	// * 70～100：主观感受清晰。
 	Value float32 `json:"Value"`
 }
 
@@ -11339,6 +11739,93 @@ type ListBindEncryptDRMResResultDRMBindingListItem struct {
 	Vhost string `json:"Vhost"`
 }
 
+type ListCarouselTaskBody struct {
+
+	// REQUIRED; 分页功能，展示第几页
+	Page int32 `json:"Page"`
+
+	// REQUIRED; 分页功能，页大小
+	PageSize int32 `json:"PageSize"`
+}
+
+type ListCarouselTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListCarouselTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result ListCarouselTaskResResult `json:"Result"`
+}
+
+type ListCarouselTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type ListCarouselTaskResResult struct {
+
+	// REQUIRED; 轮播任务数据对象。
+	Data ListCarouselTaskResResultData `json:"Data"`
+}
+
+// ListCarouselTaskResResultData - 轮播任务数据对象。
+type ListCarouselTaskResResultData struct {
+
+	// REQUIRED; 满足查询条件的轮播任务总数。
+	Count int32 `json:"Count"`
+
+	// REQUIRED; 轮播任务的数组，每个元素表示一个任务的详细信息。
+	Result []ListCarouselTaskResResultDataResultItem `json:"Result"`
+}
+
+type ListCarouselTaskResResultDataResultItem struct {
+
+	// REQUIRED; 任务的创建时间，RFC3339 格式的时间戳，精度为秒。
+	CreatedAt ListCarouselTaskResResultDataResultItemCreatedAt `json:"CreatedAt"`
+
+	// REQUIRED; 轮播任务名称。
+	Name string `json:"Name"`
+
+	// REQUIRED; 轮播任务的当前状态。取值和含义如下：
+	// * pending：任务等待调度中；
+	// * prepare：任务初始化中；
+	// * running：任务运行中；
+	// * prestop：任务停止中；
+	// * done：任务已经停止。
+	Status string `json:"Status"`
+
+	// REQUIRED; 任务的结束时间，RFC3339 格式的时间戳，精度为秒。
+	StoppedAt ListCarouselTaskResResultDataResultItemStoppedAt `json:"StoppedAt"`
+
+	// REQUIRED; 轮播任务的唯一标识。
+	TaskID string `json:"TaskID"`
+
+	// REQUIRED; 任务的更新时间，RFC3339 格式的时间戳，精度为秒。
+	UpdatedAt ListCarouselTaskResResultDataResultItemUpdatedAt `json:"UpdatedAt"`
+}
+
+// ListCarouselTaskResResultDataResultItemCreatedAt - 任务的创建时间，RFC3339 格式的时间戳，精度为秒。
+type ListCarouselTaskResResultDataResultItemCreatedAt struct {
+
+	// REQUIRED; 任务的创建时间，RFC3339 格式的时间戳，精度为秒。
+	Time string `json:"Time"`
+}
+
+// ListCarouselTaskResResultDataResultItemStoppedAt - 任务的结束时间，RFC3339 格式的时间戳，精度为秒。
+type ListCarouselTaskResResultDataResultItemStoppedAt struct {
+
+	// REQUIRED; 任务的结束时间，RFC3339 格式的时间戳，精度为秒。
+	Time string `json:"Time"`
+}
+
+// ListCarouselTaskResResultDataResultItemUpdatedAt - 任务的更新时间，RFC3339 格式的时间戳，精度为秒。
+type ListCarouselTaskResResultDataResultItemUpdatedAt struct {
+
+	// REQUIRED; 任务的更新时间，RFC3339 格式的时间戳，精度为秒。
+	Time string `json:"Time"`
+}
+
 type ListCertV2Body struct {
 
 	// 证书是否启用，默认值为 true，支持的取值及含义如下所示。
@@ -11354,6 +11841,15 @@ type ListCertV2Body struct {
 
 	// 只有填了Available，这个字段才生效。
 	Expiring *bool `json:"Expiring,omitempty"`
+
+	// 页码。不填默认返回全部。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 分页大小。不填默认返回所有。
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 项目名称。
+	ProjectName *string `json:"ProjectName,omitempty"`
 }
 
 type ListCertV2Res struct {
@@ -11393,8 +11889,14 @@ type ListCertV2ResResponseMetadataError struct {
 
 type ListCertV2ResResult struct {
 
+	// REQUIRED; 本次查询所有证书的过期信息。
+	ExpirationInfo ListCertV2ResResultExpirationInfo `json:"ExpirationInfo"`
+
 	// 证书列表。
 	CertList []*ListCertV2ResResultCertListItem `json:"CertList,omitempty"`
+
+	// 总数。
+	Total *int32 `json:"Total,omitempty"`
 }
 
 type ListCertV2ResResultCertListItem struct {
@@ -11414,6 +11916,9 @@ type ListCertV2ResResultCertListItem struct {
 	// REQUIRED; 火山引擎证书中心证书链 ID。
 	ChainIDVolc string `json:"ChainIDVolc"`
 
+	// REQUIRED; 创建时间。
+	CreateTime string `json:"CreateTime"`
+
 	// REQUIRED; 证书的过期时间，RFC3339 格式的 UTC 时间，精度为秒。
 	NotAfter string `json:"NotAfter"`
 
@@ -11431,6 +11936,19 @@ type ListCertV2ResResultCertListItem struct {
 	// * 7days：有效期剩余 7 天；
 	// * 1days：有效期剩余 1 天。
 	Status string `json:"Status"`
+}
+
+// ListCertV2ResResultExpirationInfo - 本次查询所有证书的过期信息。
+type ListCertV2ResResultExpirationInfo struct {
+
+	// REQUIRED; 生效数量。
+	ActiveNum int32 `json:"ActiveNum"`
+
+	// REQUIRED; 快要过期数量，一个月之内
+	ClosingExpireNum int32 `json:"ClosingExpireNum"`
+
+	// REQUIRED; 过期数量。
+	ExpireNum int32 `json:"ExpireNum"`
 }
 
 type ListCloudMixTaskBody struct {
@@ -11727,7 +12245,8 @@ type ListDomainDetailBody struct {
 	// * 2：禁用，禁止使用，此时 domain 不生效；
 	// * 3：删除；
 	// * 4：审核被驳回。审核不通过，需要重新创建并审核；
-	// * 5：欠费关停。
+	// * 5：欠费关停；
+	// * 6：域名未备案被封禁。
 	DomainStatusList []*int32 `json:"DomainStatusList,omitempty"`
 
 	// 域名类型列表，缺省情况下表示全部类型的域名。支持的取值如下所示。
@@ -11811,8 +12330,8 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 2：不可用，域名为其他的不可用状态。
 	DomainCheck int32 `json:"DomainCheck"`
 
-	// REQUIRED
-	EnableCloudMonitor bool `json:"EnableCloudMonitor"`
+	// REQUIRED; HTTP/2协议。
+	HTTP2 bool `json:"HTTP2"`
 
 	// REQUIRED; ICP 备案校验是否通过，是否过期信息。
 	// * 1：备案正常，未过期；
@@ -11837,7 +12356,8 @@ type ListDomainDetailResResultDomainListItem struct {
 	// * 2：禁用，禁止使用，此时 domain 不生效；
 	// * 3：删除；
 	// * 4：审核被驳回。审核不通过，需要重新创建并审核；
-	// * 5：欠费关停。
+	// * 5：欠费关停；
+	// * 6：域名未备案被封禁。
 	Status int32 `json:"Status"`
 
 	// REQUIRED; 域名空间的标签信息。
@@ -11875,7 +12395,7 @@ type ListLiveVideoQualityAnalysisTasksBody struct {
 	PageSize int32 `json:"PageSize"`
 
 	// 查询的任务ID列表， 和Names二选一
-	IDs []*string `json:"IDs,omitempty"`
+	IDs []*int64 `json:"IDs,omitempty"`
 
 	// 查询的任务名称列表， 和TaskIDs二选一
 	Names []*string `json:"Names,omitempty"`
@@ -11926,7 +12446,7 @@ type ListLiveVideoQualityAnalysisTasksResResultTasksItem struct {
 	Duration *int32 `json:"Duration,omitempty"`
 
 	// 任务 ID。
-	ID *string `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 画质测评的打点间隔。
 	Interval *int32 `json:"Interval,omitempty"`
@@ -11945,6 +12465,18 @@ type ListPullRecordTaskBody struct {
 
 	// REQUIRED; 分页的大小
 	PageSize int32 `json:"PageSize"`
+
+	// 应用名称
+	App *string `json:"App,omitempty"`
+
+	// 域名
+	Domain *string `json:"Domain,omitempty"`
+
+	// 流名称
+	Stream *string `json:"Stream,omitempty"`
+
+	// 域名空间名称
+	Vhost *string `json:"Vhost,omitempty"`
 }
 
 type ListPullRecordTaskRes struct {
@@ -12111,11 +12643,6 @@ type ListPullToPushGroupResResultListPropertiesItemsItem struct {
 
 type ListPullToPushTaskQuery struct {
 
-	// 群组名称。
-	// * 使用主账号调用时，为非必填，默认为空，表示查询所有群组的任务信息。
-	// * 使用子账号调用时，非必填。
-	GroupName *string `json:"GroupName,omitempty" query:"GroupName"`
-
 	// 查询数据的页码，默认为 1，表示查询第一页的数据。
 	Page *int32 `json:"Page,omitempty" query:"Page"`
 
@@ -12184,11 +12711,6 @@ type ListPullToPushTaskResResultListItem struct {
 
 	// 任务的结束时间，RFC3339 格式的 UTC 时间，单位为秒。
 	EndTime *string `json:"EndTime,omitempty"`
-
-	// 任务所属的群组名称，您可以调用 ListPullToPushGroup [https://www.volcengine.com/docs/6469/1327382] 获取可用的群组。 :::tip
-	// * 使用主账号调用时，为非必填，默认为空表示查询所有群组的任务列表。
-	// * 使用子账号调用时，为必填。 :::
-	GroupName *string `json:"GroupName,omitempty"`
 
 	// 点播文件启播时间偏移值，单位为秒，数量与拉流地址列表中地址数量相等，缺省情况下为空表示不进行偏移。拉流来源类型为点播视频时，参数生效。
 	OffsetS []*float32 `json:"OffsetS,omitempty"`
@@ -13822,7 +14344,7 @@ type RestartTranscodingJobRes struct {
 	ResponseMetadata RestartTranscodingJobResResponseMetadata `json:"ResponseMetadata"`
 
 	// 视请求的接口而定
-	Result *RestartTranscodingJobResResult `json:"Result,omitempty"`
+	Result interface{} `json:"Result,omitempty"`
 }
 
 type RestartTranscodingJobResResponseMetadata struct {
@@ -13841,28 +14363,6 @@ type RestartTranscodingJobResResponseMetadata struct {
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
-}
-
-// RestartTranscodingJobResResult - 视请求的接口而定
-type RestartTranscodingJobResResult struct {
-
-	// REQUIRED
-	Code int32 `json:"Code"`
-
-	// REQUIRED
-	Data []RestartTranscodingJobResResultDataItem `json:"Data"`
-
-	// REQUIRED
-	Msg string `json:"Msg"`
-}
-
-type RestartTranscodingJobResResultDataItem struct {
-
-	// REQUIRED; 开始时间。
-	StartTime int32 `json:"StartTime"`
-
-	// REQUIRED
-	Status string `json:"Status"`
 }
 
 type ResumeStreamBody struct {
@@ -14228,7 +14728,9 @@ type UpdateAuthKeyRes struct {
 
 	// REQUIRED
 	ResponseMetadata UpdateAuthKeyResResponseMetadata `json:"ResponseMetadata"`
-	Result           *UpdateAuthKeyResResult          `json:"Result,omitempty"`
+
+	// Anything
+	Result interface{} `json:"Result,omitempty"`
 }
 
 type UpdateAuthKeyResResponseMetadata struct {
@@ -14257,12 +14759,6 @@ type UpdateAuthKeyResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
-}
-
-type UpdateAuthKeyResResult struct {
-
-	// REQUIRED; 版本号
-	VersionID int32 `json:"VersionID"`
 }
 
 type UpdateCallbackBody struct {
@@ -14347,6 +14843,94 @@ type UpdateCallbackResResponseMetadataError struct {
 
 	// 错误信息
 	Message *string `json:"Message,omitempty"`
+}
+
+type UpdateCarouselTaskBody struct {
+
+	// REQUIRED; 轮播规则，用于指定轮播播放的素材和行为等。
+	Rule UpdateCarouselTaskBodyRule `json:"Rule"`
+
+	// REQUIRED; 待更新的轮播任务 ID，任务的唯一标识。调用 CreateCarouselTask 接口创建轮播任务时返回。
+	TaskID string `json:"TaskID"`
+}
+
+// UpdateCarouselTaskBodyRule - 轮播规则，用于指定轮播播放的素材和行为等。
+type UpdateCarouselTaskBodyRule struct {
+
+	// REQUIRED; 轮播素材列表，用于指定在轮播过程中播放的素材资源。
+	Source []UpdateCarouselTaskBodyRuleSourceItem `json:"Source"`
+
+	// 循环次数。取值范围为 [ ]，单位为，默认值为``。
+	Loop *int32 `json:"Loop,omitempty"`
+
+	// 对素材更新后的播放行为进行控制
+	SeekInfo *UpdateCarouselTaskBodyRuleSeekInfo `json:"SeekInfo,omitempty"`
+}
+
+// UpdateCarouselTaskBodyRuleSeekInfo - 对素材更新后的播放行为进行控制
+type UpdateCarouselTaskBodyRuleSeekInfo struct {
+
+	// 0 表示推完当前播放的素材后再进行素材切换；1 表示立刻切换到指定的素材、指定的进度
+	Immediate *int64 `json:"Immediate,omitempty"`
+
+	// 更新后播放的素材ID，为空代表不指定。
+	SourceID *string `json:"SourceID,omitempty"`
+
+	// 切换素材后，素材播放的位置。
+	SourceSeek *int64 `json:"SourceSeek,omitempty"`
+}
+
+type UpdateCarouselTaskBodyRuleSourceItem struct {
+
+	// REQUIRED; 注意，如果ID相同，此结构的其余字段也需要保证相同
+	ID string `json:"ID"`
+
+	// REQUIRED; 轮播素材的文件类型，用于指定素材的文件来源类型。支持以下取值：
+	// * vod：点播 MP4 或 FLV 文件；
+	// * m3u8：点播 M3U8 文件。
+	// :::tip 如果素材的 ID 没有变化（即更新的 ID 与原素材的 ID 相同），Type 取值要和元素材保持一致。 :::
+	Type string `json:"Type"`
+
+	// REQUIRED; 轮播素材的公网可访问地址。确保提供的地址能够被公网正常访问，以便正确加载轮播素材内容。 :::tip 如果素材的 ID 没有变化（即更新的 ID 与原素材的 ID 相同），Url 取值要和元素材保持一致。 :::
+	URL string `json:"Url"`
+
+	// 指定此素材连续播放的次数。该字段值必须大于等于 0，不传时，将保持原有轮播配置。支持的取值及含义如下：
+	// * 0：不循环播放；
+	// * 其他正整数：按照指定次数循环播放。
+	Loop *int32 `json:"Loop,omitempty"`
+
+	// 用于控制当前素材播放时跳过开头的一段时间，例如，跳过片头，单位为秒。该字段仅在素材类型为视频点播（type=vod）时有效。以下是该字段的使用规则：
+	// * 如果 Seek 的取值小于等于 0 或大于视频的实际时长，则该字段不生效。
+	// * 确保根据点播素材的实际长度设置合适的值，以实现跳过片头的效果。
+	Seek *int32 `json:"Seek,omitempty"`
+}
+
+type UpdateCarouselTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata UpdateCarouselTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result UpdateCarouselTaskResResult `json:"Result"`
+}
+
+type UpdateCarouselTaskResResponseMetadata struct {
+
+	// REQUIRED
+	RequestID string `json:"RequestID"`
+}
+
+type UpdateCarouselTaskResResult struct {
+
+	// REQUIRED; 包含任务更新相关信息的数据对象。
+	Data UpdateCarouselTaskResResultData `json:"Data"`
+}
+
+// UpdateCarouselTaskResResultData - 包含任务更新相关信息的数据对象。
+type UpdateCarouselTaskResResultData struct {
+
+	// REQUIRED; 当前生效的序列号
+	OptID int32 `json:"OptID"`
 }
 
 type UpdateCloudMixTaskBody struct {
@@ -15098,8 +15682,7 @@ type UpdateRecordPresetV2BodyRecordPresetConfig struct {
 	// * 0：不录制；
 	// * 1：录制。
 	// :::tip 转码流和源流需至少选一个进行录制，即是否录制转码流（TranscodeRecord）和是否录制源流（OriginRecord）的取值至少一个不为 0。 :::
-	OriginRecord      *int32  `json:"OriginRecord,omitempty"`
-	RecordClusterType *string `json:"RecordClusterType,omitempty"`
+	OriginRecord *int32 `json:"OriginRecord,omitempty"`
 
 	// 录制为 HLS 格式时，单个 TS 切片时长，单位为秒，默认值为 10，取值范围为 [5,30]。
 	SliceDuration *int32 `json:"SliceDuration,omitempty"`
@@ -15166,16 +15749,23 @@ type UpdateRecordPresetV2BodyRecordPresetConfigFlvParamTOSParam struct {
 	// * true：使用。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 录制文件的存储规则，最大长度为 200 个字符，支持以record/{PubDomain}/{App}/{Stream}/{StartTime}_{EndTime} 样式设置存储规则，支持输入字母（A - Z、a - z）、数字（0 -
-	// 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。
-	// 存储规则设置注意事项如下。
-	// * 目录层级至少包含2级及以上，如live/{App}/{Stream}。
-	// * record 为自定义字段；
-	// * {PubDomain} 取值为当前配置的 vhost 值；
-	// * {App} 取值为当前配置的 AppName 值；
-	// * {Stream} 取值为当前配置的 StreamName 值；
-	// * {StartTime} 取值为录制的开始时间戳；
-	// * {EndTime} 取值为录制的结束时间戳。
+	// 录制文件存储到 TOS 时的存储路径和文件名规则。支持输入字母（A - Z、a - z）、数字（0 - 9）、短横线（-）、叹号（!）、下划线（_）、句点（.）、星号（*）及占位符。最大长度为 200 个字符，
+	// 支持以下字段作为占位符：
+	// * record：自定义字段，可遵照支持字符进行自定义。
+	// * {PubDomain}：当前配置中的 vhost 值。
+	// * {App}：当前配置中的 AppName 值。
+	// * {Stream}：当前配置中的 StreamName 值。
+	// * {StartTime}：录制开始的 Unix 时间戳，精度为 s。
+	// * {EndTime}：录制结束的 Unix 时间戳，精度为 s。
+	// 存储路径必须至少包含两级目录。例如：live/{App}/{Stream}
+	// 合法示例：
+	// record/{PubDomain}/{App}/{Stream}/{StartTime}-{EndTime}
+	// {App}/archive/{Stream}/recording_{StartTime}
+	// vod/{Stream}/!highlight_{EndTime}
+	// a/b/custom_record
+	// 错误示例：
+	// single_level # 错误：路径层级不足两级
+	// invalid_/{S@ream}/file # 错误：含非法字符@
 	ExactObject *string `json:"ExactObject,omitempty"`
 
 	// TOS 存储对应 Bucket 下的存储目录，默认为空。例如，存储位置为 live-test-tos-example/live/liveapp 时，StorageDir 取值为 live/liveapp。
@@ -16551,6 +17141,8 @@ type BindCert struct{}
 type BindCertQuery struct{}
 type BindEncryptDRM struct{}
 type BindEncryptDRMQuery struct{}
+type CreateCarouselTask struct{}
+type CreateCarouselTaskQuery struct{}
 type CreateCert struct{}
 type CreateCertQuery struct{}
 type CreateCloudMixTask struct{}
@@ -16559,6 +17151,8 @@ type CreateDomain struct{}
 type CreateDomainQuery struct{}
 type CreateDomainV2 struct{}
 type CreateDomainV2Query struct{}
+type CreateHighLightTask struct{}
+type CreateHighLightTaskQuery struct{}
 type CreateLivePadPreset struct{}
 type CreateLivePadPresetQuery struct{}
 type CreateLiveStreamRecordIndexFiles struct{}
@@ -16591,6 +17185,8 @@ type CreateWatermarkPresetV2 struct{}
 type CreateWatermarkPresetV2Query struct{}
 type DeleteCallback struct{}
 type DeleteCallbackQuery struct{}
+type DeleteCarouselTask struct{}
+type DeleteCarouselTaskQuery struct{}
 type DeleteCert struct{}
 type DeleteCertQuery struct{}
 type DeleteCloudMixTask struct{}
@@ -16625,6 +17221,8 @@ type DeleteStreamQuotaConfig struct{}
 type DeleteStreamQuotaConfigQuery struct{}
 type DeleteSubtitleTranscodePreset struct{}
 type DeleteSubtitleTranscodePresetQuery struct{}
+type DeleteTaskByAccountID struct{}
+type DeleteTaskByAccountIDQuery struct{}
 type DeleteTimeShiftPresetV3 struct{}
 type DeleteTimeShiftPresetV3Query struct{}
 type DeleteTranscodePreset struct{}
@@ -16759,6 +17357,8 @@ type GeneratePlayURL struct{}
 type GeneratePlayURLQuery struct{}
 type GeneratePushURL struct{}
 type GeneratePushURLQuery struct{}
+type GetCarouselDetail struct{}
+type GetCarouselDetailQuery struct{}
 type GetCloudMixTaskDetail struct{}
 type GetCloudMixTaskDetailQuery struct{}
 type GetHLSEncryptDataKey struct{}
@@ -16771,6 +17371,8 @@ type KillStream struct{}
 type KillStreamQuery struct{}
 type ListBindEncryptDRM struct{}
 type ListBindEncryptDRMQuery struct{}
+type ListCarouselTask struct{}
+type ListCarouselTaskQuery struct{}
 type ListCertV2 struct{}
 type ListCertV2Query struct{}
 type ListCloudMixTask struct{}
@@ -16831,6 +17433,8 @@ type UpdateAuthKey struct{}
 type UpdateAuthKeyQuery struct{}
 type UpdateCallback struct{}
 type UpdateCallbackQuery struct{}
+type UpdateCarouselTask struct{}
+type UpdateCarouselTaskQuery struct{}
 type UpdateCloudMixTask struct{}
 type UpdateCloudMixTaskQuery struct{}
 type UpdateDomainVhost struct{}
@@ -16881,6 +17485,10 @@ type BindEncryptDRMReq struct {
 	*BindEncryptDRMQuery
 	*BindEncryptDRMBody
 }
+type CreateCarouselTaskReq struct {
+	*CreateCarouselTaskQuery
+	*CreateCarouselTaskBody
+}
 type CreateCertReq struct {
 	*CreateCertQuery
 	*CreateCertBody
@@ -16896,6 +17504,10 @@ type CreateDomainReq struct {
 type CreateDomainV2Req struct {
 	*CreateDomainV2Query
 	*CreateDomainV2Body
+}
+type CreateHighLightTaskReq struct {
+	*CreateHighLightTaskQuery
+	*CreateHighLightTaskBody
 }
 type CreateLivePadPresetReq struct {
 	*CreateLivePadPresetQuery
@@ -16960,6 +17572,10 @@ type CreateWatermarkPresetV2Req struct {
 type DeleteCallbackReq struct {
 	*DeleteCallbackQuery
 	*DeleteCallbackBody
+}
+type DeleteCarouselTaskReq struct {
+	*DeleteCarouselTaskQuery
+	*DeleteCarouselTaskBody
 }
 type DeleteCertReq struct {
 	*DeleteCertQuery
@@ -17028,6 +17644,10 @@ type DeleteStreamQuotaConfigReq struct {
 type DeleteSubtitleTranscodePresetReq struct {
 	*DeleteSubtitleTranscodePresetQuery
 	*DeleteSubtitleTranscodePresetBody
+}
+type DeleteTaskByAccountIDReq struct {
+	*DeleteTaskByAccountIDQuery
+	*DeleteTaskByAccountIDBody
 }
 type DeleteTimeShiftPresetV3Req struct {
 	*DeleteTimeShiftPresetV3Query
@@ -17289,6 +17909,10 @@ type GeneratePushURLReq struct {
 	*GeneratePushURLQuery
 	*GeneratePushURLBody
 }
+type GetCarouselDetailReq struct {
+	*GetCarouselDetailQuery
+	*GetCarouselDetailBody
+}
 type GetCloudMixTaskDetailReq struct {
 	*GetCloudMixTaskDetailQuery
 	*GetCloudMixTaskDetailBody
@@ -17312,6 +17936,10 @@ type KillStreamReq struct {
 type ListBindEncryptDRMReq struct {
 	*ListBindEncryptDRMQuery
 	*ListBindEncryptDRMBody
+}
+type ListCarouselTaskReq struct {
+	*ListCarouselTaskQuery
+	*ListCarouselTaskBody
 }
 type ListCertV2Req struct {
 	*ListCertV2Query
@@ -17432,6 +18060,10 @@ type UpdateAuthKeyReq struct {
 type UpdateCallbackReq struct {
 	*UpdateCallbackQuery
 	*UpdateCallbackBody
+}
+type UpdateCarouselTaskReq struct {
+	*UpdateCarouselTaskQuery
+	*UpdateCarouselTaskBody
 }
 type UpdateCloudMixTaskReq struct {
 	*UpdateCloudMixTaskQuery
