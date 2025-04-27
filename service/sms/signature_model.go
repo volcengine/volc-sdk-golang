@@ -77,6 +77,32 @@ type ApplySmsSignatureRequest struct {
 	SignatureIdentificationID int64          `json:"signatureIdentificationID"` // 绑定的资质id
 }
 
+type ApplySmsSignatureRequestV2 struct {
+	SubAccount                string         `json:"subAccount"`
+	Content                   string         `json:"content"`
+	Source                    int            `json:"source"`
+	Domain                    string         `json:"domain"`
+	Desc                      string         `json:"desc,omitempty"`
+	UploadFileList            []SignAuthFile `json:"uploadFileList"`
+	Purpose                   int            `json:"purpose"`
+	SignatureIdentificationID int64          `json:"signatureIdentificationID"` // 绑定的资质id
+	AppIcp                    AppIcp         `json:"appIcp"`                    // app icp信息
+	Trademark                 Trademark      `json:"trademark"`                 // 商标信息
+	Scene                     string         `json:"scene"`                     // 业务场景
+}
+
+type AppIcp struct {
+	AppIcpFilling  string         `json:"appIcpFilling"`
+	AppIcpFileList []SignAuthFile `json:"appIcpFileList"` // AppIcp相关的文件信息
+}
+
+type Trademark struct {
+	TrademarkCn       string         `json:"trademarkCn"`
+	TrademarkEn       string         `json:"trademarkEn"`
+	TrademarkNumber   string         `json:"trademarkNumber"`
+	TrademarkFileList []SignAuthFile `json:"trademarkFileList"` // 商标相关的文件信息
+}
+
 type SignAuthFile struct {
 	FileType    DocType `json:"fileType"`
 	FileContent string  `json:"fileContent"` // 文件base64

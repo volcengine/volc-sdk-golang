@@ -28,6 +28,15 @@ func (p *SMS) ApplySmsSignature(req *ApplySmsSignatureRequest) (*ApplySmsSignatu
 	return resp, statusCode, nil
 }
 
+func (p *SMS) ApplySmsSignatureV2(req *ApplySmsSignatureRequestV2) (*ApplySmsSignatureResponse, int, error) {
+	resp := new(ApplySmsSignatureResponse)
+	statusCode, err := p.smsHandler("ApplySmsSignatureV2", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *SMS) DeleteSignature(req *DeleteSignatureRequest) (*DeleteSignatureResponse, int, error) {
 	resp := new(DeleteSignatureResponse)
 	statusCode, err := p.smsHandler("DeleteSignature", req, resp)
