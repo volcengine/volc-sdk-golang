@@ -61,6 +61,49 @@ func TestDeleteSignature(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestApplySmsSignatureV2(t *testing.T) {
+	fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+	if err != nil {
+		t.Logf("err = %+v\n", err)
+		return
+	}
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	req := &sms.ApplySmsSignatureRequestV2{
+		Desc:       "测试 SDK",
+		SubAccount: "smsAccount",
+		Content:    "sign",
+		Source:     1,
+		AppIcp: sms.AppIcp{
+			AppIcpFilling: "appName",
+			AppIcpFileList: []sms.SignAuthFile{
+				{
+					FileType:    16,
+					FileContent: fileBase64String,
+					FileSuffix:  "jpg",
+				},
+			},
+		},
+		Trademark: sms.Trademark{
+			TrademarkCn:     "商标中文名",
+			TrademarkEn:     "商标英文名",
+			TrademarkNumber: "商标编号",
+			TrademarkFileList: []sms.SignAuthFile{
+				{
+					FileType:    17,
+					FileContent: fileBase64String,
+					FileSuffix:  "jpg",
+				},
+			},
+		},
+		Scene: "scene",
+	}
+	result, statusCode, err := sms.DefaultInstance.ApplySmsSignatureV2(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestGetSignatureIdentList(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
