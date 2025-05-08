@@ -1071,6 +1071,26 @@ func (c *Imagex) DescribeImageXSourceRequest(ctx context.Context, arg *DescribeI
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXStorageUsage(ctx context.Context, arg *DescribeImageXStorageUsageQuery) (*DescribeImageXStorageUsageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXStorageUsage", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXStorageUsageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *DescribeImageXBucketRetrievalUsageQuery) (*DescribeImageXBucketRetrievalUsageRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -3216,6 +3236,26 @@ func (c *Imagex) PreviewImageUploadFile(ctx context.Context, arg *PreviewImageUp
 	return result, nil
 }
 
+func (c *Imagex) GetImageEraseResult(ctx context.Context, arg *GetImageEraseResultBody) (*GetImageEraseResultRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetImageEraseResult", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageEraseResultRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) GetImageService(ctx context.Context, arg *GetImageServiceQuery) (*GetImageServiceRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -3688,26 +3728,6 @@ func (c *Imagex) GetImagePSDetection(ctx context.Context, arg *GetImagePSDetecti
 	}
 
 	result := new(GetImagePSDetectionRes)
-	err = unmarshalInto(data, result)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
-}
-
-func (c *Imagex) GetImageEraseResult(ctx context.Context, arg *GetImageEraseResultBody) (*GetImageEraseResultRes, error) {
-	body, err := marshalToJson(arg)
-	if err != nil {
-		return nil, err
-	}
-
-	data, _, err := c.Client.CtxJson(ctx, "GetImageEraseResult", url.Values{}, string(body))
-	if err != nil {
-		return nil, err
-	}
-
-	result := new(GetImageEraseResultRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err

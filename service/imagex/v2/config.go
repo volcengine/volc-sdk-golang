@@ -430,6 +430,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"DescribeImageXStorageUsage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXStorageUsage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXBucketRetrievalUsage": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -1246,6 +1254,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"GetImageEraseResult": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageEraseResult"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"GetImageService": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -1427,14 +1443,6 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImagePSDetection"},
-				"Version": []string{"2023-05-01"},
-			},
-		},
-		"GetImageEraseResult": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetImageEraseResult"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
