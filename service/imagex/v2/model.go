@@ -4117,6 +4117,11 @@ type DescribeImageXBucketRetrievalUsageQuery struct {
 	// * StorageType：存储类型
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
+	// 是否查询数据取回量。
+	// * true：查询取回量。
+	// * false：查询存储量。
+	IsRetrieval bool `json:"IsRetrieval,omitempty" query:"IsRetrieval"`
+
 	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
@@ -4167,11 +4172,19 @@ type DescribeImageXBucketRetrievalUsageResResultStorageDataItem struct {
 	// 服务 ID，GroupBy包含ServiceId时有返回值。
 	ServiceID string `json:"ServiceId,omitempty"`
 
-	// 存储类型，GroupBy包含StorageType时有返回值。取值：
+	// 存储类型，GroupBy包含StorageType时有返回值。 当传参IsRetrieval=false时，表示存储值，取值：
 	// * STANDARD：标准存储
 	// * IA：低频存储
 	// * ARCHIVE：归档存储
 	// * COLD_ARCHIVE：冷归档存储
+	// * ARCHIVE_FR：归档闪回存储
+	// 当传参IsRetrieval=true时，表示取回值，取值：
+	// * IA：低频取回
+	// * ARCHIVE：归档标准取回
+	// * COLD_ARCHIVE：冷归档快速取回
+	// * ARCHIVE_FR：归档闪回取回
+	// * COLD_ARCHIVE_STANDARD：冷归档标准取回
+	// * COLD_ARCHIVE_BULK：冷归档批量取回
 	StorageType string `json:"StorageType,omitempty"`
 }
 
@@ -10854,6 +10867,111 @@ type DescribeImageXSourceRequestTrafficResResultTrafficDataPropertiesItemsItem s
 	Value float64 `json:"Value"`
 }
 
+type DescribeImageXStorageUsageQuery struct {
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 查询数据的时间粒度。单位为秒，缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。支持以下取值：
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval" query:"Interval"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近一年历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2010-11-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// Bucket 名称。支持同时查询多个 BucketName，不同的 BucketNmae 使用逗号分隔。 您可以通过调用 GetAllImageServices [https://www.volcengine.com/docs/508/9360]
+	// 获取所需的 Bucket 名称。
+	BucketNames string `json:"BucketNames,omitempty" query:"BucketNames"`
+
+	// 需要分组查询的参数，多个数据用逗号分隔。支持取值如下：
+	// * ServiceId：服务 ID
+	// * BucketName：Bucket 名称
+	// * StorageType：存储类型
+	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
+
+	// 是否查询数据取回量。
+	// * true：查询取回量。
+	// * false：查询存储量。
+	IsRetrieval bool `json:"IsRetrieval,omitempty" query:"IsRetrieval"`
+
+	// 服务 ID。为空时表示不筛选，支持查询多个服务，使用逗号分隔不同的服务。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考GetAllImageServices [https://www.volcengine.com/docs/508/9360]。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+}
+
+type DescribeImageXStorageUsageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXStorageUsageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *DescribeImageXStorageUsageResResult `json:"Result"`
+}
+
+type DescribeImageXStorageUsageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DescribeImageXStorageUsageResResult struct {
+
+	// REQUIRED; 计量数据列表
+	StorageData []*DescribeImageXStorageUsageResResultStorageDataItem `json:"StorageData"`
+}
+
+type DescribeImageXStorageUsageResResultStorageDataItem struct {
+
+	// REQUIRED; 具体数据
+	Data []*DescribeImageXStorageUsageResResultStorageDataPropertiesItemsItem `json:"Data"`
+
+	// Bucket 名称，GroupBy包含BucketName时有返回值。
+	BucketName string `json:"BucketName,omitempty"`
+
+	// 服务 ID，GroupBy包含ServiceId时有返回值。
+	ServiceID string `json:"ServiceId,omitempty"`
+
+	// 存储类型，GroupBy包含StorageType时有返回值。 当传参IsRetrieval=false时，表示存储值，取值：
+	// * STANDARD：标准存储
+	// * IA：低频存储
+	// * ARCHIVE：归档存储
+	// * COLD_ARCHIVE：冷归档存储
+	// * ARCHIVE_FR：归档闪回存储
+	// 当传参IsRetrieval=true时，表示取回值，取值：
+	// * IA：低频取回
+	// * ARCHIVE：归档标准取回
+	// * COLD_ARCHIVE：冷归档快速取回
+	// * ARCHIVE_FR：归档闪回取回
+	// * COLD_ARCHIVE_STANDARD：冷归档标准取回
+	// * COLD_ARCHIVE_BULK：冷归档批量取回
+	StorageType string `json:"StorageType,omitempty"`
+}
+
+type DescribeImageXStorageUsageResResultStorageDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片开始时刻，格式为：YYYY-MM-DDThh:mm:ss±hh:mm
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 单位：Byte
+	Value int `json:"Value"`
+}
+
 type DescribeImageXSummaryQuery struct {
 
 	// REQUIRED; 数据查询时间段，即Timestamp所在月份的 1 日 0 时起至传入时间Timestamp的时间范围。 格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
@@ -15941,6 +16059,15 @@ type GetImageEraseResultBodyBBoxItem struct {
 
 	// REQUIRED; 待修复区域右下角的 Y 坐标，取值范围为[0,1]。
 	Y2 float64 `json:"Y2"`
+
+	// 是否模糊匹配，开启文字匹配后必选
+	OCRMode int `json:"OCRMode,omitempty"`
+
+	// 匹配的文本
+	Text string `json:"Text,omitempty"`
+
+	// 是否开启文字匹配
+	UseOCR int `json:"UseOCR,omitempty"`
 }
 
 type GetImageEraseResultRes struct {
@@ -18288,7 +18415,7 @@ type GetImageTemplateResResult struct {
 	ServiceID string `json:"ServiceId"`
 
 	// REQUIRED; 是否同步处理，仅对heic图有效
-	Sync string `json:"Sync"`
+	Sync bool `json:"Sync"`
 
 	// REQUIRED; 模板名称，必须使用该服务的图片模板固定前缀，具体参考GetImageService接口的返回参数TemplatePrefix。模板名称能包含的字符正则集合为[a-zA-Z0-9_-]
 	TemplateName string `json:"TemplateName"`
@@ -23639,6 +23766,8 @@ type DescribeImageXSourceRequestBandwidthBody struct{}
 type DescribeImageXSourceRequestBody struct{}
 type DescribeImageXSourceRequestTraffic struct{}
 type DescribeImageXSourceRequestTrafficBody struct{}
+type DescribeImageXStorageUsage struct{}
+type DescribeImageXStorageUsageBody struct{}
 type DescribeImageXSummary struct{}
 type DescribeImageXSummaryBody struct{}
 type DescribeImageXUploadCountByTime struct{}
@@ -24349,6 +24478,10 @@ type DescribeImageXSourceRequestBandwidthReq struct {
 type DescribeImageXSourceRequestTrafficReq struct {
 	*DescribeImageXSourceRequestTrafficQuery
 	*DescribeImageXSourceRequestTrafficBody
+}
+type DescribeImageXStorageUsageReq struct {
+	*DescribeImageXStorageUsageQuery
+	*DescribeImageXStorageUsageBody
 }
 type DescribeImageXSummaryReq struct {
 	*DescribeImageXSummaryQuery
