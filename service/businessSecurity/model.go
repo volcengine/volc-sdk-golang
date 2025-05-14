@@ -244,6 +244,7 @@ type ImageContentRiskResp struct {
 	Scores         map[string]float64         `json:"Scores"`
 	OcrDetails     []*ImageContentFrameDetail `json:"OcrDetails"`
 	QrcodeDetails  []*QrcodeData              `json:"QrcodeDetails"`
+	PassThrough    string                     `json:"PassThrough"`
 }
 
 type ImageContentRiskTag struct {
