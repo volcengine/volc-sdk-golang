@@ -21,6 +21,7 @@ var (
 			Host:    "rtc.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
+				"X-IM-SDK-Version": []string{"Golang-V1.0.1"},
 			},
 			Credentials: common.Credentials{
 				Region:  "cn-north-1",
@@ -30,9 +31,10 @@ var (
 		"ap-southeast-1": {
 			Timeout: DefaultTimeout,
 			Scheme:  "https",
-			Host:    "rtc.volcengineapi.com",
+			Host:    "open-ap-singapore-1.volcengineapi.com",
 			Header: http.Header{
 				"Accept": []string{"application/json"},
+				"X-IM-SDK-Version": []string{"Golang-V1.0.1"},
 			},
 			Credentials: common.Credentials{
 				Region:  "ap-southeast-1",

@@ -1,7 +1,6 @@
 package im
 
 type AddBlackListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -16,7 +15,6 @@ type AddBlackListBody struct {
 }
 
 type AddBlackListBodyBlackListInfosItem struct {
-
 	// REQUIRED; 加入黑名单的用户 ID
 	BlackListUserID int64 `json:"BlackListUserId"`
 
@@ -25,7 +23,6 @@ type AddBlackListBodyBlackListInfosItem struct {
 }
 
 type AddBlackListRes struct {
-
 	// REQUIRED
 	ResponseMetadata AddBlackListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -34,7 +31,6 @@ type AddBlackListRes struct {
 }
 
 type AddBlackListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -53,7 +49,6 @@ type AddBlackListResResponseMetadata struct {
 }
 
 type AddBlackListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -62,13 +57,11 @@ type AddBlackListResResponseMetadataError struct {
 }
 
 type AddBlackListResResult struct {
-
 	// REQUIRED; 添加黑名单失败的用户信息
 	FailedInfos []AddBlackListResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type AddBlackListResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -80,7 +73,6 @@ type AddBlackListResResultFailedInfosItem struct {
 }
 
 type AddFriendBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -98,7 +90,6 @@ type AddFriendBody struct {
 }
 
 type AddFriendRes struct {
-
 	// REQUIRED
 	ResponseMetadata AddFriendResResponseMetadata `json:"ResponseMetadata"`
 
@@ -107,7 +98,6 @@ type AddFriendRes struct {
 }
 
 type AddFriendResResponseMetadata struct {
-
 	// REQUIRED
 	Action string `json:"Action"`
 
@@ -126,7 +116,6 @@ type AddFriendResResponseMetadata struct {
 }
 
 type AddFriendResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -135,13 +124,11 @@ type AddFriendResResponseMetadataError struct {
 }
 
 type AddFriendResResult struct {
-
 	// 添加失败的好友信息
 	FailedInfos []AddFriendResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type AddFriendResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -153,7 +140,6 @@ type AddFriendResResultFailedInfosItem struct {
 }
 
 type BatchAddBlockParticipantsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -163,6 +149,9 @@ type BatchAddBlockParticipantsBody struct {
 	// REQUIRED; key 为群成员 ID，类型：String，只能传userId，value 为禁言或者拉黑时长，类型：int，单位为秒。
 	ParticipantBlockInfos map[string]int64 `json:"ParticipantBlockInfos"`
 
+	// 与 ParticipantBlockInfos 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantBlockInfosStr map[string]int64 `json:"ParticipantBlockInfosStr,omitempty"`
+
 	// 操作行为
 	// * 0：禁言。用户无法在直播群中发言。
 	// * 1：拉黑。用户无法加入直播群。
@@ -171,7 +160,6 @@ type BatchAddBlockParticipantsBody struct {
 }
 
 type BatchAddBlockParticipantsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchAddBlockParticipantsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -180,7 +168,6 @@ type BatchAddBlockParticipantsRes struct {
 }
 
 type BatchAddBlockParticipantsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -199,7 +186,6 @@ type BatchAddBlockParticipantsResResponseMetadata struct {
 }
 
 type BatchAddBlockParticipantsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -208,13 +194,14 @@ type BatchAddBlockParticipantsResResponseMetadataError struct {
 }
 
 type BatchAddBlockParticipantsResResult struct {
-
 	// REQUIRED; 禁言或者拉黑失败的会话成员 UserId
 	FailedParticipantUserIDs []int64 `json:"FailedParticipantUserIds"`
+
+	// 与 FailedParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedParticipantUserIDsStr []string `json:"FailedParticipantUserIdsStr,omitempty"`
 }
 
 type BatchAddConversationParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -235,7 +222,6 @@ type BatchAddConversationParticipantBody struct {
 }
 
 type BatchAddConversationParticipantBodyParticipantInfosItem struct {
-
 	// REQUIRED; 添加成员所属 UserId，UserId 必须大于 0。
 	ParticipantUserID int64 `json:"ParticipantUserId"`
 
@@ -260,7 +246,6 @@ type BatchAddConversationParticipantBodyParticipantInfosItem struct {
 }
 
 type BatchAddConversationParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchAddConversationParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -269,7 +254,6 @@ type BatchAddConversationParticipantRes struct {
 }
 
 type BatchAddConversationParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -288,7 +272,6 @@ type BatchAddConversationParticipantResResponseMetadata struct {
 }
 
 type BatchAddConversationParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码
 	Code string `json:"Code"`
 
@@ -297,13 +280,11 @@ type BatchAddConversationParticipantResResponseMetadataError struct {
 }
 
 type BatchAddConversationParticipantResResult struct {
-
 	// REQUIRED; 成功时为空，失败时返回失败用户 ID
 	FailedUserIDs []int64 `json:"FailedUserIds"`
 }
 
 type BatchAddManagerBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -313,12 +294,17 @@ type BatchAddManagerBody struct {
 	// REQUIRED; 要添加为管理员的群成员 UserId
 	ManagerUserIDs []int64 `json:"ManagerUserIds"`
 
+	// 与 ManagerUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ManagerUserIDsStr []string `json:"ManagerUserIdsStr,omitempty"`
+
 	// REQUIRED; 操作人 UserId
 	Operator int64 `json:"Operator"`
+
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
 }
 
 type BatchAddManagerRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchAddManagerResResponseMetadata `json:"ResponseMetadata"`
 
@@ -327,7 +313,6 @@ type BatchAddManagerRes struct {
 }
 
 type BatchAddManagerResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -346,7 +331,6 @@ type BatchAddManagerResResponseMetadata struct {
 }
 
 type BatchAddManagerResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -355,13 +339,14 @@ type BatchAddManagerResResponseMetadataError struct {
 }
 
 type BatchAddManagerResResult struct {
-
 	// REQUIRED; 添加失败的 UserId
 	FailedManagerUserIDs []int64 `json:"FailedManagerUserIds"`
+
+	// 与 FailedManagerUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedManagerUserIDsStr []string `json:"FailedManagerUserIdsStr,omitempty"`
 }
 
 type BatchAddWhitelistParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -371,12 +356,17 @@ type BatchAddWhitelistParticipantBody struct {
 	// REQUIRED; 操作人 UserId
 	Operator int64 `json:"Operator"`
 
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
+
 	// REQUIRED; 要添加白名单成员 UserId
 	ParticipantUserIDs []int64 `json:"ParticipantUserIds"`
+
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDsStr []string `json:"ParticipantUserIdsStr,omitempty"`
 }
 
 type BatchAddWhitelistParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchAddWhitelistParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -385,7 +375,6 @@ type BatchAddWhitelistParticipantRes struct {
 }
 
 type BatchAddWhitelistParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -404,7 +393,6 @@ type BatchAddWhitelistParticipantResResponseMetadata struct {
 }
 
 type BatchAddWhitelistParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -413,13 +401,14 @@ type BatchAddWhitelistParticipantResResponseMetadataError struct {
 }
 
 type BatchAddWhitelistParticipantResResult struct {
-
 	// REQUIRED; 添加失败的 UserId
 	FailedUserIDs []int64 `json:"FailedUserIds"`
+
+	// 与 FailedUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedUserIDsStr []string `json:"FailedUserIdsStr,omitempty"`
 }
 
 type BatchDeleteBlockParticipantsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -429,6 +418,9 @@ type BatchDeleteBlockParticipantsBody struct {
 	// REQUIRED; 取消禁言或者取消拉黑的会员成员 UserId 列表
 	ParticipantUserIDs []int64 `json:"ParticipantUserIds"`
 
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDsStr []string `json:"ParticipantUserIdsStr,omitempty"`
+
 	// 操作行为。
 	// * 0：取消禁言。
 	// * 1：取消拉黑。
@@ -437,7 +429,6 @@ type BatchDeleteBlockParticipantsBody struct {
 }
 
 type BatchDeleteBlockParticipantsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchDeleteBlockParticipantsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -446,7 +437,6 @@ type BatchDeleteBlockParticipantsRes struct {
 }
 
 type BatchDeleteBlockParticipantsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -465,7 +455,6 @@ type BatchDeleteBlockParticipantsResResponseMetadata struct {
 }
 
 type BatchDeleteBlockParticipantsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -474,13 +463,14 @@ type BatchDeleteBlockParticipantsResResponseMetadataError struct {
 }
 
 type BatchDeleteBlockParticipantsResResult struct {
-
 	// REQUIRED; 取消禁言或者取消拉黑失败的会话成员 UserId
 	FailedParticipantUserIDs []int64 `json:"FailedParticipantUserIds"`
+
+	// 与 FailedParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedParticipantUserIDsStr []string `json:"FailedParticipantUserIdsStr,omitempty"`
 }
 
 type BatchDeleteConversationParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -495,7 +485,6 @@ type BatchDeleteConversationParticipantBody struct {
 }
 
 type BatchDeleteConversationParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchDeleteConversationParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -504,7 +493,6 @@ type BatchDeleteConversationParticipantRes struct {
 }
 
 type BatchDeleteConversationParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -523,7 +511,6 @@ type BatchDeleteConversationParticipantResResponseMetadata struct {
 }
 
 type BatchDeleteConversationParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -532,13 +519,11 @@ type BatchDeleteConversationParticipantResResponseMetadataError struct {
 }
 
 type BatchDeleteConversationParticipantResResult struct {
-
 	// REQUIRED; 成功时为空，失败时返回失败用户 ID
 	FailedUserIDs []int64 `json:"FailedUserIds"`
 }
 
 type BatchGetBlockParticipantsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -559,7 +544,6 @@ type BatchGetBlockParticipantsBody struct {
 }
 
 type BatchGetBlockParticipantsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchGetBlockParticipantsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -568,7 +552,6 @@ type BatchGetBlockParticipantsRes struct {
 }
 
 type BatchGetBlockParticipantsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -587,7 +570,6 @@ type BatchGetBlockParticipantsResResponseMetadata struct {
 }
 
 type BatchGetBlockParticipantsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -596,7 +578,6 @@ type BatchGetBlockParticipantsResResponseMetadataError struct {
 }
 
 type BatchGetBlockParticipantsResResult struct {
-
 	// REQUIRED; 是否还有更多数据
 	HasMore bool `json:"HasMore"`
 
@@ -608,7 +589,6 @@ type BatchGetBlockParticipantsResResult struct {
 }
 
 type BatchGetBlockParticipantsResResultParticipantsItem struct {
-
 	// REQUIRED; 禁言/拉黑成员头像
 	AvatarURL string `json:"AvatarUrl"`
 
@@ -629,10 +609,12 @@ type BatchGetBlockParticipantsResResultParticipantsItem struct {
 
 	// REQUIRED; 群成员 ID
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 }
 
 type BatchGetConversationParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -644,7 +626,6 @@ type BatchGetConversationParticipantBody struct {
 }
 
 type BatchGetConversationParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchGetConversationParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -653,7 +634,6 @@ type BatchGetConversationParticipantRes struct {
 }
 
 type BatchGetConversationParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -672,7 +652,6 @@ type BatchGetConversationParticipantResResponseMetadata struct {
 }
 
 type BatchGetConversationParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -681,13 +660,11 @@ type BatchGetConversationParticipantResResponseMetadataError struct {
 }
 
 type BatchGetConversationParticipantResResult struct {
-
 	// REQUIRED; 成功时返回查询会话成员信息，失败时为空。
 	Participants []BatchGetConversationParticipantResResultParticipantsItem `json:"Participants"`
 }
 
 type BatchGetConversationParticipantResResultParticipantsItem struct {
-
 	// REQUIRED; 会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
 
@@ -725,7 +702,6 @@ type BatchGetConversationParticipantResResultParticipantsItem struct {
 }
 
 type BatchGetConversationsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -740,7 +716,6 @@ type BatchGetConversationsBody struct {
 }
 
 type BatchGetConversationsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchGetConversationsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -749,7 +724,6 @@ type BatchGetConversationsRes struct {
 }
 
 type BatchGetConversationsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -768,7 +742,6 @@ type BatchGetConversationsResResponseMetadata struct {
 }
 
 type BatchGetConversationsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -777,13 +750,11 @@ type BatchGetConversationsResResponseMetadataError struct {
 }
 
 type BatchGetConversationsResResult struct {
-
 	// REQUIRED; 会话详细信息
 	ConversationCoreInfos []BatchGetConversationsResResultConversationCoreInfosItem `json:"ConversationCoreInfos"`
 }
 
 type BatchGetConversationsResResultConversationCoreInfosItem struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -802,6 +773,9 @@ type BatchGetConversationsResResultConversationCoreInfosItem struct {
 	// REQUIRED; 创群人 UserId
 	CreatorUserID int64 `json:"CreatorUserId"`
 
+	// 与 CreatorUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	CreatorUserIDStr *string `json:"CreatorUserIdStr,omitempty"`
+
 	// REQUIRED; 信箱,用于逻辑隔离
 	InboxType int32 `json:"InboxType"`
 
@@ -810,6 +784,9 @@ type BatchGetConversationsResResultConversationCoreInfosItem struct {
 
 	// REQUIRED; 群主 UserId
 	OwnerUserID int64 `json:"OwnerUserId"`
+
+	// 与 OwnerUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
 
 	// 群头像 url
 	AvatarURL *string `json:"AvatarUrl,omitempty"`
@@ -835,12 +812,14 @@ type BatchGetConversationsResResultConversationCoreInfosItem struct {
 	// 单聊会话另一个 UserId
 	OtherUserID *int64 `json:"OtherUserId,omitempty"`
 
+	// 与 OtherUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OtherUserIDStr *string `json:"OtherUserIdStr,omitempty"`
+
 	// 会话状态。 0：正常 1：已解散
 	Status *int32 `json:"Status,omitempty"`
 }
 
 type BatchGetUserBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -849,7 +828,6 @@ type BatchGetUserBody struct {
 }
 
 type BatchGetUserRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchGetUserResResponseMetadata `json:"ResponseMetadata"`
 
@@ -858,7 +836,6 @@ type BatchGetUserRes struct {
 }
 
 type BatchGetUserResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -877,7 +854,6 @@ type BatchGetUserResResponseMetadata struct {
 }
 
 type BatchGetUserResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -886,7 +862,6 @@ type BatchGetUserResResponseMetadataError struct {
 }
 
 type BatchGetUserResResult struct {
-
 	// REQUIRED; 未查到的用户uid，原因：未注册或者已注销
 	NotFoundUsers []int64 `json:"NotFoundUsers"`
 
@@ -895,7 +870,6 @@ type BatchGetUserResResult struct {
 }
 
 type BatchGetUserResResultUsersItem struct {
-
 	// REQUIRED; 用户所属应用
 	AppID int32 `json:"AppId"`
 
@@ -919,10 +893,12 @@ type BatchGetUserResResultUsersItem struct {
 
 	// []string
 	Tags []string `json:"Tags,omitempty"`
+
+	// 用户是否为机器人
+	IsRobot bool `json:"IsRobot,omitempty"`
 }
 
 type BatchGetWhitelistParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -937,7 +913,6 @@ type BatchGetWhitelistParticipantBody struct {
 }
 
 type BatchGetWhitelistParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchGetWhitelistParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -946,7 +921,6 @@ type BatchGetWhitelistParticipantRes struct {
 }
 
 type BatchGetWhitelistParticipantResResponseMetadata struct {
-
 	// REQUIRED
 	Action string `json:"Action"`
 
@@ -965,7 +939,6 @@ type BatchGetWhitelistParticipantResResponseMetadata struct {
 }
 
 type BatchGetWhitelistParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -974,7 +947,6 @@ type BatchGetWhitelistParticipantResResponseMetadataError struct {
 }
 
 type BatchGetWhitelistParticipantResResult struct {
-
 	// REQUIRED; 是否还有更多数据
 	HasMore bool `json:"HasMore"`
 
@@ -986,7 +958,6 @@ type BatchGetWhitelistParticipantResResult struct {
 }
 
 type BatchGetWhitelistParticipantResResultParticipantsItem struct {
-
 	// REQUIRED; 白名单成员头像
 	AvatarURL string `json:"AvatarUrl"`
 
@@ -1010,7 +981,6 @@ type BatchGetWhitelistParticipantResResultParticipantsItem struct {
 }
 
 type BatchModifyConversationParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1025,7 +995,6 @@ type BatchModifyConversationParticipantBody struct {
 }
 
 type BatchModifyConversationParticipantBodyParticipantInfosItem struct {
-
 	// REQUIRED; 进行修改的群成员的 UserId，UserId 必须大于 0。
 	ParticipantUserID int64 `json:"ParticipantUserId"`
 
@@ -1050,7 +1019,6 @@ type BatchModifyConversationParticipantBodyParticipantInfosItem struct {
 }
 
 type BatchModifyConversationParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchModifyConversationParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1059,7 +1027,6 @@ type BatchModifyConversationParticipantRes struct {
 }
 
 type BatchModifyConversationParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1078,7 +1045,6 @@ type BatchModifyConversationParticipantResResponseMetadata struct {
 }
 
 type BatchModifyConversationParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1087,13 +1053,11 @@ type BatchModifyConversationParticipantResResponseMetadataError struct {
 }
 
 type BatchModifyConversationParticipantResResult struct {
-
 	// REQUIRED; 成功时为空，失败时返回失败用户 ID
 	FailedUserIDs []int64 `json:"FailedUserIds"`
 }
 
 type BatchRemoveManagerBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1103,12 +1067,17 @@ type BatchRemoveManagerBody struct {
 	// REQUIRED; 操作人 UserId
 	Operator int64 `json:"Operator"`
 
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
+
 	// REQUIRED; 要移除的管理员 UserId
 	RemoveManagerUserIDs []int64 `json:"RemoveManagerUserIds"`
+
+	// 与 RemoveManagerUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	RemoveManagerUserIDsStr []string `json:"RemoveManagerUserIdsStr,omitempty"`
 }
 
 type BatchRemoveManagerRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchRemoveManagerResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1117,7 +1086,6 @@ type BatchRemoveManagerRes struct {
 }
 
 type BatchRemoveManagerResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1136,7 +1104,6 @@ type BatchRemoveManagerResResponseMetadata struct {
 }
 
 type BatchRemoveManagerResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1145,13 +1112,14 @@ type BatchRemoveManagerResResponseMetadataError struct {
 }
 
 type BatchRemoveManagerResResult struct {
-
 	// REQUIRED; 移除失败的管理员 UserId
 	FailedManagerUserIDs []int64 `json:"FailedManagerUserIds"`
+
+	// 与 FailedManagerUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedManagerUserIDsStr []string `json:"FailedManagerUserIdsStr,omitempty"`
 }
 
 type BatchRemoveWhitelistParticipantBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1161,12 +1129,17 @@ type BatchRemoveWhitelistParticipantBody struct {
 	// REQUIRED; 操作人 UserId
 	Operator int64 `json:"Operator"`
 
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
+
 	// REQUIRED; 要移除白名单用户 UserId
 	ParticipantUserIDs []int64 `json:"ParticipantUserIds"`
+
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDsStr []string `json:"ParticipantUserIdsStr,omitempty"`
 }
 
 type BatchRemoveWhitelistParticipantRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchRemoveWhitelistParticipantResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1175,7 +1148,6 @@ type BatchRemoveWhitelistParticipantRes struct {
 }
 
 type BatchRemoveWhitelistParticipantResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1194,7 +1166,6 @@ type BatchRemoveWhitelistParticipantResResponseMetadata struct {
 }
 
 type BatchRemoveWhitelistParticipantResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1203,13 +1174,14 @@ type BatchRemoveWhitelistParticipantResResponseMetadataError struct {
 }
 
 type BatchRemoveWhitelistParticipantResResult struct {
-
 	// REQUIRED; 移除失败的 UserId
 	FailedUserIDs []int64 `json:"FailedUserIds"`
+
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	FailedUserIDsStr []string `json:"FailedUserIdsStr,omitempty"`
 }
 
 type BatchUpdateLiveParticipantsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1224,9 +1196,11 @@ type BatchUpdateLiveParticipantsBody struct {
 }
 
 type BatchUpdateLiveParticipantsBodyParticipantInfosItem struct {
-
 	// REQUIRED; 群成员用户 ID
 	UserID int64 `json:"UserId"`
+
+	// 与 UserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	UserIDStr *string `json:"UserIdStr,omitempty"`
 
 	// 群成员头像。AvatarUrl、NickName和Ext均为非必填参数，但是至少需要填一个，否则服务端会报错。
 	AvatarURL *string `json:"AvatarUrl,omitempty"`
@@ -1242,7 +1216,6 @@ type BatchUpdateLiveParticipantsBodyParticipantInfosItem struct {
 }
 
 type BatchUpdateLiveParticipantsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchUpdateLiveParticipantsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1251,7 +1224,6 @@ type BatchUpdateLiveParticipantsRes struct {
 }
 
 type BatchUpdateLiveParticipantsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1270,7 +1242,6 @@ type BatchUpdateLiveParticipantsResResponseMetadata struct {
 }
 
 type BatchUpdateLiveParticipantsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1279,13 +1250,11 @@ type BatchUpdateLiveParticipantsResResponseMetadataError struct {
 }
 
 type BatchUpdateLiveParticipantsResResult struct {
-
 	// 更新资料失败的群成员信息
 	FailedInfos []*BatchUpdateLiveParticipantsResResultFailedInfosItem `json:"FailedInfos,omitempty"`
 }
 
 type BatchUpdateLiveParticipantsResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1294,10 +1263,12 @@ type BatchUpdateLiveParticipantsResResultFailedInfosItem struct {
 
 	// REQUIRED; 更新资料失败的群成员的 UserId
 	UserID int64 `json:"UserId"`
+
+	// 与 UserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	UserIDStr *string `json:"UserIdStr,omitempty"`
 }
 
 type BatchUpdateUserBody struct {
-
 	// REQUIRED; 用户的唯一标识
 	AppID int32 `json:"AppId"`
 
@@ -1306,7 +1277,6 @@ type BatchUpdateUserBody struct {
 }
 
 type BatchUpdateUserBodyUsersItem struct {
-
 	// REQUIRED; 扩展字段。key 的类型为 string，value 的类型为 string。
 	Ext map[string]string `json:"Ext"`
 
@@ -1324,7 +1294,6 @@ type BatchUpdateUserBodyUsersItem struct {
 }
 
 type BatchUpdateUserRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchUpdateUserResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1333,7 +1302,6 @@ type BatchUpdateUserRes struct {
 }
 
 type BatchUpdateUserResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1352,7 +1320,6 @@ type BatchUpdateUserResResponseMetadata struct {
 }
 
 type BatchUpdateUserResResponseMetadataError struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1362,13 +1329,11 @@ type BatchUpdateUserResResponseMetadataError struct {
 
 // BatchUpdateUserResResult - 视请求的接口而定
 type BatchUpdateUserResResult struct {
-
 	// REQUIRED; 更新失败的用户信息
 	FailedInfos []BatchUpdateUserResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type BatchUpdateUserResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码。参考错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1380,7 +1345,6 @@ type BatchUpdateUserResResultFailedInfosItem struct {
 }
 
 type BatchUpdateUserTagsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1395,7 +1359,6 @@ type BatchUpdateUserTagsBody struct {
 }
 
 type BatchUpdateUserTagsRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchUpdateUserTagsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1404,7 +1367,6 @@ type BatchUpdateUserTagsRes struct {
 }
 
 type BatchUpdateUserTagsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1423,7 +1385,6 @@ type BatchUpdateUserTagsResResponseMetadata struct {
 }
 
 type BatchUpdateUserTagsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1432,13 +1393,11 @@ type BatchUpdateUserTagsResResponseMetadataError struct {
 }
 
 type BatchUpdateUserTagsResResult struct {
-
 	// REQUIRED; 更新失败的用户信息
 	FailedInfos []BatchUpdateUserTagsResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type BatchUpdateUserTagsResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码。参考:错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1450,7 +1409,6 @@ type BatchUpdateUserTagsResResultFailedInfosItem struct {
 }
 
 type CreateConversationBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1460,6 +1418,9 @@ type CreateConversationBody struct {
 	// REQUIRED; 会话成员 UserId
 	OwnerUserID int64 `json:"OwnerUserId"`
 
+	// 与 OwnerUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
+
 	// 幂等id，如果创建时指定了此字段，并且数据库中存在此 id 对应的会话，则不会重复创建，并且接口返回的Exist字段为true。
 	IdempotentID *string `json:"IdempotentId,omitempty"`
 
@@ -1468,11 +1429,13 @@ type CreateConversationBody struct {
 
 	// 另一个成员的 UserId， 创建单聊必填
 	OtherUserID *int64 `json:"OtherUserId,omitempty"`
+
+	// 与 OtherUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OtherUserIDStr *string `json:"OtherUserIdStr,omitempty"`
 }
 
 // CreateConversationBodyConversationCoreInfo - 会话详细信息
 type CreateConversationBodyConversationCoreInfo struct {
-
 	// REQUIRED; 会话类型
 	// * 1：单聊
 	// * 2：群聊
@@ -1496,7 +1459,6 @@ type CreateConversationBodyConversationCoreInfo struct {
 }
 
 type CreateConversationRes struct {
-
 	// REQUIRED
 	ResponseMetadata CreateConversationResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1505,7 +1467,6 @@ type CreateConversationRes struct {
 }
 
 type CreateConversationResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1524,7 +1485,6 @@ type CreateConversationResResponseMetadata struct {
 }
 
 type CreateConversationResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1533,7 +1493,6 @@ type CreateConversationResResponseMetadataError struct {
 }
 
 type CreateConversationResResult struct {
-
 	// REQUIRED; 会话详细信息
 	ConversationInfo CreateConversationResResultConversationInfo `json:"ConversationInfo"`
 
@@ -1549,7 +1508,6 @@ type CreateConversationResResult struct {
 
 // CreateConversationResResultConversationInfo - 会话详细信息
 type CreateConversationResResultConversationInfo struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1576,6 +1534,9 @@ type CreateConversationResResultConversationInfo struct {
 	// 创群人 UserId
 	CreatorUserID *int64 `json:"CreatorUserId,omitempty"`
 
+	// 与 CreatorUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	CreatorUserIDStr *string `json:"CreatorUserIdStr,omitempty"`
+
 	// 群描述
 	Description *string `json:"Description,omitempty"`
 
@@ -1600,8 +1561,14 @@ type CreateConversationResResultConversationInfo struct {
 	// 单聊另一个成员的 UserId
 	OtherUserID *int64 `json:"OtherUserId,omitempty"`
 
+	// 与 OtherUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OtherUserIDStr *string `json:"OtherUserIdStr,omitempty"`
+
 	// 群主 UserId
 	OwnerUserID *int64 `json:"OwnerUserId,omitempty"`
+
+	// 与 CreatorUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
 
 	// 会话状态。
 	// * 0：正常
@@ -1610,7 +1577,6 @@ type CreateConversationResResultConversationInfo struct {
 }
 
 type DeleteConversationMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1628,7 +1594,6 @@ type DeleteConversationMessageBody struct {
 }
 
 type DeleteConversationMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata DeleteConversationMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1637,7 +1602,6 @@ type DeleteConversationMessageRes struct {
 }
 
 type DeleteConversationMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1656,7 +1620,6 @@ type DeleteConversationMessageResResponseMetadata struct {
 }
 
 type DeleteConversationMessageResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1665,7 +1628,6 @@ type DeleteConversationMessageResResponseMetadataError struct {
 }
 
 type DeleteFriendBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1680,7 +1642,6 @@ type DeleteFriendBody struct {
 }
 
 type DeleteFriendRes struct {
-
 	// REQUIRED
 	ResponseMetadata DeleteFriendResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1689,7 +1650,6 @@ type DeleteFriendRes struct {
 }
 
 type DeleteFriendResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1708,7 +1668,6 @@ type DeleteFriendResResponseMetadata struct {
 }
 
 type DeleteFriendResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1717,13 +1676,11 @@ type DeleteFriendResResponseMetadataError struct {
 }
 
 type DeleteFriendResResult struct {
-
 	// 删除失败的好友信息
 	FailedInfos []DeleteFriendResResultFailedInfosItem `json:"FailedInfos,omitempty"`
 }
 
 type DeleteFriendResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1735,7 +1692,6 @@ type DeleteFriendResResultFailedInfosItem struct {
 }
 
 type DeleteMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1750,7 +1706,6 @@ type DeleteMessageBody struct {
 }
 
 type DeleteMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata DeleteMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1759,7 +1714,6 @@ type DeleteMessageRes struct {
 }
 
 type DeleteMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1778,7 +1732,6 @@ type DeleteMessageResResponseMetadata struct {
 }
 
 type DeleteMessageResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1787,7 +1740,6 @@ type DeleteMessageResResponseMetadataError struct {
 }
 
 type DestroyConversationBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1796,10 +1748,12 @@ type DestroyConversationBody struct {
 
 	// REQUIRED; 群主 UserId
 	OwnerUserID int64 `json:"OwnerUserId"`
+
+	// 与 OwnerUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
 }
 
 type DestroyConversationRes struct {
-
 	// REQUIRED
 	ResponseMetadata DestroyConversationResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1808,7 +1762,6 @@ type DestroyConversationRes struct {
 }
 
 type DestroyConversationResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1827,7 +1780,6 @@ type DestroyConversationResResponseMetadata struct {
 }
 
 type DestroyConversationResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1836,7 +1788,6 @@ type DestroyConversationResResponseMetadataError struct {
 }
 
 type GetAppTokenBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1845,10 +1796,12 @@ type GetAppTokenBody struct {
 
 	// REQUIRED; 用户UserId
 	UserID int64 `json:"UserId"`
+
+	// 与 UserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	UserIDStr *string `json:"UserIdStr,omitempty"`
 }
 
 type GetAppTokenRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetAppTokenResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1857,7 +1810,6 @@ type GetAppTokenRes struct {
 }
 
 type GetAppTokenResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1876,7 +1828,6 @@ type GetAppTokenResResponseMetadata struct {
 }
 
 type GetAppTokenResResponseMetadataError struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -1886,7 +1837,6 @@ type GetAppTokenResResponseMetadataError struct {
 
 // GetAppTokenResResult - 视请求的接口而定
 type GetAppTokenResResult struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1895,10 +1845,12 @@ type GetAppTokenResResult struct {
 
 	// REQUIRED; 用户UserId
 	UserID int64 `json:"UserId"`
+
+	// 字符串类型的 UserId，若用户 ID 为字符串类型，使用该字段
+	UserIDStr *string `json:"UserIdStr,omitempty"`
 }
 
 type GetBlackListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -1922,7 +1874,6 @@ type GetBlackListBody struct {
 }
 
 type GetBlackListRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetBlackListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -1931,7 +1882,6 @@ type GetBlackListRes struct {
 }
 
 type GetBlackListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -1950,7 +1900,6 @@ type GetBlackListResResponseMetadata struct {
 }
 
 type GetBlackListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -1959,7 +1908,6 @@ type GetBlackListResResponseMetadataError struct {
 }
 
 type GetBlackListResResult struct {
-
 	// REQUIRED; 黑名单用户详细信息
 	BlackListInfos []GetBlackListResResultBlackListInfosItem `json:"BlackListInfos"`
 
@@ -1974,7 +1922,6 @@ type GetBlackListResResult struct {
 }
 
 type GetBlackListResResultBlackListInfosItem struct {
-
 	// REQUIRED; 黑名单用户 ID
 	BlackListUserID int64 `json:"BlackListUserId"`
 
@@ -1993,7 +1940,6 @@ type GetBlackListResResultBlackListInfosItem struct {
 
 // GetBlackListResResultBlackListInfosItemFriendUserInfo - 好友信息。若黑名单用户并不是查询用户好友则不返回此字段。
 type GetBlackListResResultBlackListInfosItemFriendUserInfo struct {
-
 	// REQUIRED; 好友备注
 	Alias string `json:"Alias"`
 
@@ -2014,7 +1960,6 @@ type GetBlackListResResultBlackListInfosItemFriendUserInfo struct {
 }
 
 type GetConversationMessagesBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2035,7 +1980,6 @@ type GetConversationMessagesBody struct {
 }
 
 type GetConversationMessagesRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetConversationMessagesResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2044,7 +1988,6 @@ type GetConversationMessagesRes struct {
 }
 
 type GetConversationMessagesResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2063,7 +2006,6 @@ type GetConversationMessagesResResponseMetadata struct {
 }
 
 type GetConversationMessagesResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2072,7 +2014,6 @@ type GetConversationMessagesResResponseMetadataError struct {
 }
 
 type GetConversationMessagesResResult struct {
-
 	// REQUIRED; 是否还有下一页
 	HasMore bool `json:"HasMore"`
 
@@ -2084,7 +2025,6 @@ type GetConversationMessagesResResult struct {
 }
 
 type GetConversationMessagesResResultMessagesItem struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2117,6 +2057,9 @@ type GetConversationMessagesResResultMessagesItem struct {
 	// REQUIRED; 消息发送人 UserId
 	Sender int64 `json:"Sender"`
 
+	// 与 Sender 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	SenderStr *string `json:"SenderStr,omitempty"`
+
 	// REQUIRED; 消息状态，取值为0，表示消息可见。
 	Status int32 `json:"Status"`
 
@@ -2132,7 +2075,6 @@ type GetConversationMessagesResResultMessagesItem struct {
 
 // GetConversationMessagesResResultMessagesItemRefMsgInfo - 引用消息
 type GetConversationMessagesResResultMessagesItemRefMsgInfo struct {
-
 	// REQUIRED; 消息引用时展示的文本内容
 	Hint string `json:"Hint"`
 
@@ -2158,7 +2100,6 @@ type GetConversationMessagesResResultMessagesItemRefMsgInfo struct {
 }
 
 type GetConversationMarksBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2167,14 +2108,12 @@ type GetConversationMarksBody struct {
 }
 
 type GetConversationMarksRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetConversationMarksResResponseMetadata `json:"ResponseMetadata"`
 	Result           *GetConversationMarksResResult          `json:"Result,omitempty"`
 }
 
 type GetConversationMarksResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2193,7 +2132,6 @@ type GetConversationMarksResResponseMetadata struct {
 }
 
 type GetConversationMarksResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2202,13 +2140,11 @@ type GetConversationMarksResResponseMetadataError struct {
 }
 
 type GetConversationMarksResResult struct {
-
 	// REQUIRED; 标记类型
 	MarkTypes []string `json:"MarkTypes"`
 }
 
 type GetConversationSettingBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2218,6 +2154,9 @@ type GetConversationSettingBody struct {
 	// REQUIRED; 会话成员 UserId，UserId 必须大于 0。
 	ParticipantUserID int64 `json:"ParticipantUserId"`
 
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
+
 	// 是否需要该成员在会话中的已读位置。
 	// * true：不需要。
 	// * false：需要。
@@ -2225,7 +2164,6 @@ type GetConversationSettingBody struct {
 }
 
 type GetConversationSettingRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetConversationSettingResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2234,7 +2172,6 @@ type GetConversationSettingRes struct {
 }
 
 type GetConversationSettingResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2253,7 +2190,6 @@ type GetConversationSettingResResponseMetadata struct {
 }
 
 type GetConversationSettingResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2262,14 +2198,12 @@ type GetConversationSettingResResponseMetadataError struct {
 }
 
 type GetConversationSettingResResult struct {
-
 	// REQUIRED; 用户会话设置
 	ConversationSettingInfo GetConversationSettingResResultConversationSettingInfo `json:"ConversationSettingInfo"`
 }
 
 // GetConversationSettingResResultConversationSettingInfo - 用户会话设置
 type GetConversationSettingResResultConversationSettingInfo struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2289,6 +2223,9 @@ type GetConversationSettingResResultConversationSettingInfo struct {
 
 	// REQUIRED; 群成员UserId
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 
 	// REQUIRED; 用户已读位置
 	ReadIndex int64 `json:"ReadIndex"`
@@ -2319,7 +2256,6 @@ type GetConversationSettingResResultConversationSettingInfo struct {
 }
 
 type GetConversationUserCountBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2328,7 +2264,6 @@ type GetConversationUserCountBody struct {
 }
 
 type GetConversationUserCountRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetConversationUserCountResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2337,7 +2272,6 @@ type GetConversationUserCountRes struct {
 }
 
 type GetConversationUserCountResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2356,7 +2290,6 @@ type GetConversationUserCountResResponseMetadata struct {
 }
 
 type GetConversationUserCountResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2365,13 +2298,11 @@ type GetConversationUserCountResResponseMetadataError struct {
 }
 
 type GetConversationUserCountResResult struct {
-
 	// REQUIRED; 会话成员数量
 	Count int64 `json:"Count"`
 }
 
 type GetMessagesReadReceiptBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2383,7 +2314,6 @@ type GetMessagesReadReceiptBody struct {
 }
 
 type GetMessagesReadReceiptRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetMessagesReadReceiptResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2392,7 +2322,6 @@ type GetMessagesReadReceiptRes struct {
 }
 
 type GetMessagesReadReceiptResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2411,7 +2340,6 @@ type GetMessagesReadReceiptResResponseMetadata struct {
 }
 
 type GetMessagesReadReceiptResResponseMetadataError struct {
-
 	// REQUIRED
 	Code string `json:"Code"`
 
@@ -2421,13 +2349,11 @@ type GetMessagesReadReceiptResResponseMetadataError struct {
 
 // GetMessagesReadReceiptResResult - 视请求的接口而定
 type GetMessagesReadReceiptResResult struct {
-
 	// REQUIRED; 已读回执详情
 	ReadReceipt []GetMessagesReadReceiptResResultReadReceiptItem `json:"ReadReceipt"`
 }
 
 type GetMessagesReadReceiptResResultReadReceiptItem struct {
-
 	// REQUIRED; 会话Id
 	ConversationShortID int64 `json:"ConversationShortId"`
 
@@ -2437,15 +2363,20 @@ type GetMessagesReadReceiptResResultReadReceiptItem struct {
 	// REQUIRED; 消息已读的UserId列表
 	ReadUserIDs []int64 `json:"ReadUserIds"`
 
+	// 与 ReadUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ReadUserIDsStr []string `json:"ReadUserIdsStr,omitempty"`
+
 	// REQUIRED; 单聊中消息的接收方是否已读（只有单聊会话这个字段才有意义）
 	ReceiverIsRead bool `json:"ReceiverIsRead"`
 
 	// REQUIRED; 消息未读的UserId列表
 	UnReadUserIDs []int64 `json:"UnReadUserIds"`
+
+	// 与 UnReadUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	UnReadUserIDsStr []string `json:"UnReadUserIdsStr,omitempty"`
 }
 
 type GetMessagesBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2457,7 +2388,6 @@ type GetMessagesBody struct {
 }
 
 type GetMessagesRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetMessagesResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2466,7 +2396,6 @@ type GetMessagesRes struct {
 }
 
 type GetMessagesResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2485,7 +2414,6 @@ type GetMessagesResResponseMetadata struct {
 }
 
 type GetMessagesResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2494,13 +2422,11 @@ type GetMessagesResResponseMetadataError struct {
 }
 
 type GetMessagesResResult struct {
-
 	// REQUIRED; 消息详细信息
 	Messages []GetMessagesResResultMessagesItem `json:"Messages"`
 }
 
 type GetMessagesResResultMessagesItem struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2533,6 +2459,9 @@ type GetMessagesResResultMessagesItem struct {
 	// REQUIRED; 消息发送人 UserId
 	Sender int64 `json:"Sender"`
 
+	// 与 Sender 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	SenderStr *string `json:"SenderStr,omitempty"`
+
 	// REQUIRED; 消息状态，取值为0，表示消息可见。
 	Status int32 `json:"Status"`
 
@@ -2548,7 +2477,6 @@ type GetMessagesResResultMessagesItem struct {
 
 // GetMessagesResResultMessagesItemRefMsgInfo - 引用消息
 type GetMessagesResResultMessagesItemRefMsgInfo struct {
-
 	// REQUIRED; 消息引用时展示的文本内容
 	Hint string `json:"Hint"`
 
@@ -2574,7 +2502,6 @@ type GetMessagesResResultMessagesItemRefMsgInfo struct {
 }
 
 type GetParticipantReadIndexBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2583,7 +2510,6 @@ type GetParticipantReadIndexBody struct {
 }
 
 type GetParticipantReadIndexRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetParticipantReadIndexResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2592,7 +2518,6 @@ type GetParticipantReadIndexRes struct {
 }
 
 type GetParticipantReadIndexResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2611,7 +2536,6 @@ type GetParticipantReadIndexResResponseMetadata struct {
 }
 
 type GetParticipantReadIndexResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2620,22 +2544,22 @@ type GetParticipantReadIndexResResponseMetadataError struct {
 }
 
 type GetParticipantReadIndexResResult struct {
-
 	// REQUIRED; 会话成员信息
 	ReadIndexes []GetParticipantReadIndexResResultReadIndexesItem `json:"ReadIndexes"`
 }
 
 type GetParticipantReadIndexResResultReadIndexesItem struct {
-
 	// REQUIRED; 会话成员 UserId
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 
 	// REQUIRED; 成员已读位置。若没有返回某个成员的 ReadIndex，则表示该成员的 ReadIndex 为 0。
 	ReadIndex int64 `json:"ReadIndex"`
 }
 
 type GetUserConversationsBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2647,6 +2571,9 @@ type GetUserConversationsBody struct {
 
 	// REQUIRED; 查询用户 UserId
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// REQUIRED; 查询用户 UserId，字符串类型
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 
 	// 数据来源。
 	// * 0：从缓存中拉取，按会话最近活跃排序。
@@ -2664,7 +2591,6 @@ type GetUserConversationsBody struct {
 }
 
 type GetUserConversationsRes struct {
-
 	// REQUIRED
 	ResponseMetadata GetUserConversationsResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2673,7 +2599,6 @@ type GetUserConversationsRes struct {
 }
 
 type GetUserConversationsResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2692,7 +2617,6 @@ type GetUserConversationsResResponseMetadata struct {
 }
 
 type GetUserConversationsResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2701,7 +2625,6 @@ type GetUserConversationsResResponseMetadataError struct {
 }
 
 type GetUserConversationsResResult struct {
-
 	// REQUIRED; 会话详细信息
 	ConversationInfos []GetUserConversationsResResultConversationInfosItem `json:"ConversationInfos"`
 
@@ -2713,7 +2636,6 @@ type GetUserConversationsResResult struct {
 }
 
 type GetUserConversationsResResultConversationInfosItem struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2734,6 +2656,9 @@ type GetUserConversationsResResultConversationInfosItem struct {
 	// REQUIRED; 创群人 UserId
 	CreatorUserID int64 `json:"CreatorUserId"`
 
+	// 与 CreatorUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	CreatorUserIDStr *string `json:"CreatorUserIdStr,omitempty"`
+
 	// REQUIRED; 信箱，用于逻辑隔离
 	InboxType int32 `json:"InboxType"`
 
@@ -2742,6 +2667,9 @@ type GetUserConversationsResResultConversationInfosItem struct {
 
 	// REQUIRED; 群主 UserId
 	OwnerUserID int64 `json:"OwnerUserId"`
+
+	// 与 OwnerUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
 
 	// 群头像 url
 	AvatarURL *string `json:"AvatarUrl,omitempty"`
@@ -2767,6 +2695,9 @@ type GetUserConversationsResResultConversationInfosItem struct {
 	// 单聊会话另一个 UserId
 	OtherUserID *int64 `json:"OtherUserId,omitempty"`
 
+	// 与 OtherUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OtherUserIDStr *string `json:"OtherUserIdStr,omitempty"`
+
 	// 会话状态。
 	// * 0：正常
 	// * 1：已解散
@@ -2774,7 +2705,6 @@ type GetUserConversationsResResultConversationInfosItem struct {
 }
 
 type IsFriendBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2789,7 +2719,6 @@ type IsFriendBody struct {
 }
 
 type IsFriendRes struct {
-
 	// REQUIRED
 	ResponseMetadata IsFriendResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2798,7 +2727,6 @@ type IsFriendRes struct {
 }
 
 type IsFriendResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2817,7 +2745,6 @@ type IsFriendResResponseMetadata struct {
 }
 
 type IsFriendResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2826,13 +2753,11 @@ type IsFriendResResponseMetadataError struct {
 }
 
 type IsFriendResResult struct {
-
 	// REQUIRED; 好友关系详情
 	Infos []IsFriendResResultInfosItem `json:"Infos"`
 }
 
 type IsFriendResResultInfosItem struct {
-
 	// REQUIRED; 校验好友的 UserId
 	FriendUserID int64 `json:"FriendUserId"`
 
@@ -2843,7 +2768,6 @@ type IsFriendResResultInfosItem struct {
 }
 
 type IsInBlackListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2858,7 +2782,6 @@ type IsInBlackListBody struct {
 }
 
 type IsInBlackListRes struct {
-
 	// REQUIRED
 	ResponseMetadata IsInBlackListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2867,7 +2790,6 @@ type IsInBlackListRes struct {
 }
 
 type IsInBlackListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2886,7 +2808,6 @@ type IsInBlackListResResponseMetadata struct {
 }
 
 type IsInBlackListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2895,13 +2816,11 @@ type IsInBlackListResResponseMetadataError struct {
 }
 
 type IsInBlackListResResult struct {
-
 	// REQUIRED; 校验结果。key 为 uid，value 为 true：在黑名单中。 value 为 false：不在黑名单中
 	IsInBlackListInfos map[string]bool `json:"IsInBlackListInfos"`
 }
 
 type IsUserInConversationBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2913,7 +2832,6 @@ type IsUserInConversationBody struct {
 }
 
 type IsUserInConversationRes struct {
-
 	// REQUIRED
 	ResponseMetadata IsUserInConversationResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2922,7 +2840,6 @@ type IsUserInConversationRes struct {
 }
 
 type IsUserInConversationResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -2941,7 +2858,6 @@ type IsUserInConversationResResponseMetadata struct {
 }
 
 type IsUserInConversationResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -2950,7 +2866,6 @@ type IsUserInConversationResResponseMetadataError struct {
 }
 
 type IsUserInConversationResResult struct {
-
 	// REQUIRED; 用户是否在会话中。
 	// * true：是。
 	// * false：否。
@@ -2958,7 +2873,6 @@ type IsUserInConversationResResult struct {
 }
 
 type ListFriendBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -2982,7 +2896,6 @@ type ListFriendBody struct {
 }
 
 type ListFriendRes struct {
-
 	// REQUIRED
 	ResponseMetadata ListFriendResResponseMetadata `json:"ResponseMetadata"`
 
@@ -2991,7 +2904,6 @@ type ListFriendRes struct {
 }
 
 type ListFriendResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3010,7 +2922,6 @@ type ListFriendResResponseMetadata struct {
 }
 
 type ListFriendResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3019,7 +2930,6 @@ type ListFriendResResponseMetadataError struct {
 }
 
 type ListFriendResResult struct {
-
 	// REQUIRED; 好友详细信息
 	FriendInfos []ListFriendResResultFriendInfosItem `json:"FriendInfos"`
 
@@ -3034,7 +2944,6 @@ type ListFriendResResult struct {
 }
 
 type ListFriendResResultFriendInfosItem struct {
-
 	// REQUIRED; 好友备注
 	Alias string `json:"Alias"`
 
@@ -3055,7 +2964,6 @@ type ListFriendResResultFriendInfosItem struct {
 }
 
 type MarkConversationBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3072,10 +2980,12 @@ type MarkConversationBody struct {
 
 	// 操作人UserId
 	Operator *int64 `json:"Operator,omitempty"`
+
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
 }
 
 type MarkConversationRes struct {
-
 	// REQUIRED
 	ResponseMetadata MarkConversationResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3084,7 +2994,6 @@ type MarkConversationRes struct {
 }
 
 type MarkConversationResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3103,7 +3012,6 @@ type MarkConversationResResponseMetadata struct {
 }
 
 type MarkConversationResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3112,7 +3020,6 @@ type MarkConversationResResponseMetadataError struct {
 }
 
 type ModifyConversationBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3122,7 +3029,6 @@ type ModifyConversationBody struct {
 
 // ModifyConversationBodyConversationCoreInfo - 会话信息
 type ModifyConversationBodyConversationCoreInfo struct {
-
 	// REQUIRED; 需要修改的会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
 
@@ -3143,10 +3049,12 @@ type ModifyConversationBodyConversationCoreInfo struct {
 
 	// 会话拥有人 UserId
 	OwnerUserID *int64 `json:"OwnerUserId,omitempty"`
+
+	// 与 OwnerUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OwnerUserIDStr *string `json:"OwnerUserIdStr,omitempty"`
 }
 
 type ModifyConversationRes struct {
-
 	// REQUIRED
 	ResponseMetadata ModifyConversationResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3155,7 +3063,6 @@ type ModifyConversationRes struct {
 }
 
 type ModifyConversationResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3174,7 +3081,6 @@ type ModifyConversationResResponseMetadata struct {
 }
 
 type ModifyConversationResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3183,7 +3089,6 @@ type ModifyConversationResResponseMetadataError struct {
 }
 
 type ModifyConversationSettingBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3193,7 +3098,6 @@ type ModifyConversationSettingBody struct {
 
 // ModifyConversationSettingBodyConversationSettingInfo - 用户会话设置
 type ModifyConversationSettingBodyConversationSettingInfo struct {
-
 	// REQUIRED; 需要修改的会话 ID
 	ConversationShortID int64 `json:"ConversationShortId"`
 
@@ -3223,7 +3127,6 @@ type ModifyConversationSettingBodyConversationSettingInfo struct {
 }
 
 type ModifyConversationSettingRes struct {
-
 	// REQUIRED
 	ResponseMetadata ModifyConversationSettingResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3232,7 +3135,6 @@ type ModifyConversationSettingRes struct {
 }
 
 type ModifyConversationSettingResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3251,7 +3153,6 @@ type ModifyConversationSettingResResponseMetadata struct {
 }
 
 type ModifyConversationSettingResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3260,7 +3161,6 @@ type ModifyConversationSettingResResponseMetadataError struct {
 }
 
 type ModifyMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3278,7 +3178,6 @@ type ModifyMessageBody struct {
 }
 
 type ModifyMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata ModifyMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3287,7 +3186,6 @@ type ModifyMessageRes struct {
 }
 
 type ModifyMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3306,7 +3204,6 @@ type ModifyMessageResResponseMetadata struct {
 }
 
 type ModifyMessageResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3315,7 +3212,6 @@ type ModifyMessageResResponseMetadataError struct {
 }
 
 type ModifyParticipantReadIndexBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3325,12 +3221,14 @@ type ModifyParticipantReadIndexBody struct {
 	// REQUIRED; 修改成员所属 UserId，UserId 必须大于 0。
 	ParticipantUserID int64 `json:"ParticipantUserId"`
 
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
+
 	// REQUIRED; 成员已读位置。传入的ReadIndex必须要大于该会话成员目前的ReadIndex。
 	ReadIndex int64 `json:"ReadIndex"`
 }
 
 type ModifyParticipantReadIndexRes struct {
-
 	// REQUIRED
 	ResponseMetadata ModifyParticipantReadIndexResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3339,7 +3237,6 @@ type ModifyParticipantReadIndexRes struct {
 }
 
 type ModifyParticipantReadIndexResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3358,7 +3255,6 @@ type ModifyParticipantReadIndexResResponseMetadata struct {
 }
 
 type ModifyParticipantReadIndexResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3367,7 +3263,6 @@ type ModifyParticipantReadIndexResResponseMetadataError struct {
 }
 
 type QueryLiveParticipantStatusBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3376,10 +3271,12 @@ type QueryLiveParticipantStatusBody struct {
 
 	// REQUIRED; 查询群成员 UserId
 	ParticipantUserIDs []int64 `json:"ParticipantUserIds"`
+
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDsStr []string `json:"ParticipantUserIdsStr,omitempty"`
 }
 
 type QueryLiveParticipantStatusRes struct {
-
 	// REQUIRED
 	ResponseMetadata QueryLiveParticipantStatusResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3388,7 +3285,6 @@ type QueryLiveParticipantStatusRes struct {
 }
 
 type QueryLiveParticipantStatusResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3407,7 +3303,6 @@ type QueryLiveParticipantStatusResResponseMetadata struct {
 }
 
 type QueryLiveParticipantStatusResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3416,13 +3311,11 @@ type QueryLiveParticipantStatusResResponseMetadataError struct {
 }
 
 type QueryLiveParticipantStatusResResult struct {
-
 	// REQUIRED; 成员在直播群的状态
 	Status []QueryLiveParticipantStatusResResultStatusItem `json:"Status"`
 }
 
 type QueryLiveParticipantStatusResResultStatusItem struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3437,10 +3330,12 @@ type QueryLiveParticipantStatusResResultStatusItem struct {
 
 	// REQUIRED; 该成员 UserId
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// 与 ParticipantUserIDs 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 }
 
 type QueryOnlineStatusBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3449,7 +3344,6 @@ type QueryOnlineStatusBody struct {
 }
 
 type QueryOnlineStatusRes struct {
-
 	// REQUIRED
 	ResponseMetadata QueryOnlineStatusResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3458,7 +3352,6 @@ type QueryOnlineStatusRes struct {
 }
 
 type QueryOnlineStatusResResponseMetadata struct {
-
 	// REQUIRED
 	Action string `json:"Action"`
 
@@ -3477,7 +3370,6 @@ type QueryOnlineStatusResResponseMetadata struct {
 }
 
 type QueryOnlineStatusResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3486,7 +3378,6 @@ type QueryOnlineStatusResResponseMetadataError struct {
 }
 
 type QueryOnlineStatusResResult struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3503,7 +3394,6 @@ type QueryOnlineStatusResultItems struct {
 }
 
 type RecallMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3524,7 +3414,6 @@ type RecallMessageBody struct {
 }
 
 type RecallMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata RecallMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3533,7 +3422,6 @@ type RecallMessageRes struct {
 }
 
 type RecallMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3552,7 +3440,6 @@ type RecallMessageResResponseMetadata struct {
 }
 
 type RecallMessageResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3561,7 +3448,6 @@ type RecallMessageResResponseMetadataError struct {
 }
 
 type RegisterUsersBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3570,7 +3456,6 @@ type RegisterUsersBody struct {
 }
 
 type RegisterUsersBodyUsersItem struct {
-
 	// REQUIRED; 注册用户的 UserId
 	UserID int64 `json:"UserId"`
 
@@ -3587,10 +3472,12 @@ type RegisterUsersBodyUsersItem struct {
 
 	// 用于全员广播
 	Tags []string `json:"Tags,omitempty"`
+
+	// 是否将用户注册为机器人，默认为 false
+	IsRobot bool `json:"IsRobot,omitempty"`
 }
 
 type RegisterUsersRes struct {
-
 	// REQUIRED
 	ResponseMetadata RegisterUsersResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3599,7 +3486,6 @@ type RegisterUsersRes struct {
 }
 
 type RegisterUsersResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3618,7 +3504,6 @@ type RegisterUsersResResponseMetadata struct {
 }
 
 type RegisterUsersResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3628,13 +3513,11 @@ type RegisterUsersResResponseMetadataError struct {
 
 // RegisterUsersResResult - 空。此接口无需关注。
 type RegisterUsersResResult struct {
-
 	// REQUIRED; 注册失败的用户信息
 	FailedInfos []RegisterUsersResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type RegisterUsersResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码。参错误码 [412253]
 	Code string `json:"Code"`
 
@@ -3646,7 +3529,6 @@ type RegisterUsersResResultFailedInfosItem struct {
 }
 
 type RemoveBlackListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3661,7 +3543,6 @@ type RemoveBlackListBody struct {
 }
 
 type RemoveBlackListRes struct {
-
 	// REQUIRED
 	ResponseMetadata RemoveBlackListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3670,7 +3551,6 @@ type RemoveBlackListRes struct {
 }
 
 type RemoveBlackListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3689,7 +3569,6 @@ type RemoveBlackListResResponseMetadata struct {
 }
 
 type RemoveBlackListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3698,7 +3577,6 @@ type RemoveBlackListResResponseMetadataError struct {
 }
 
 type ScanConversationParticipantListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3735,7 +3613,6 @@ type ScanConversationParticipantListBody struct {
 }
 
 type ScanConversationParticipantListRes struct {
-
 	// REQUIRED
 	ResponseMetadata ScanConversationParticipantListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3744,7 +3621,6 @@ type ScanConversationParticipantListRes struct {
 }
 
 type ScanConversationParticipantListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3763,7 +3639,6 @@ type ScanConversationParticipantListResResponseMetadata struct {
 }
 
 type ScanConversationParticipantListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3772,7 +3647,6 @@ type ScanConversationParticipantListResResponseMetadataError struct {
 }
 
 type ScanConversationParticipantListResResult struct {
-
 	// REQUIRED; 是否还有下一页
 	HasMore bool `json:"HasMore"`
 
@@ -3784,7 +3658,6 @@ type ScanConversationParticipantListResResult struct {
 }
 
 type ScanConversationParticipantListResResultParticipantsItem struct {
-
 	// REQUIRED; 群成员头像
 	AvatarURL string `json:"AvatarUrl"`
 
@@ -3794,8 +3667,14 @@ type ScanConversationParticipantListResResultParticipantsItem struct {
 	// REQUIRED; 操作人对应的 UserId
 	Operator int64 `json:"Operator"`
 
+	// 与 Operator 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	OperatorStr *string `json:"OperatorStr,omitempty"`
+
 	// REQUIRED; 群成员 ID
 	ParticipantUserID int64 `json:"ParticipantUserId"`
+
+	// 与 ParticipantUserID 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	ParticipantUserIDStr *string `json:"ParticipantUserIdStr,omitempty"`
 
 	// REQUIRED; 成员身份。
 	// * 0：普通成员。
@@ -3828,7 +3707,6 @@ type ScanConversationParticipantListResResultParticipantsItem struct {
 }
 
 type SendMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3844,6 +3722,9 @@ type SendMessageBody struct {
 	// REQUIRED; 消息发送人 UserId
 	Sender int64 `json:"Sender"`
 
+	// 与 Sender 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	SenderStr *string `json:"SenderStr,omitempty"`
+
 	// 幂等id，如果创建时指定了此字段，并且数据库中存在此 id 对应的消息，不会重复发送。如果不指定，会随机生成一个。
 	ClientMsgID *string `json:"ClientMsgId,omitempty"`
 
@@ -3856,8 +3737,14 @@ type SendMessageBody struct {
 	// 消息不可见会话成员列表。VisibleUsers和InvisibleUsers均为空时，代表对所有人可见。
 	InvisibleUsers []*int64 `json:"InvisibleUsers,omitempty"`
 
+	// 与 InvisibleUsers 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	InvisibleUsersStr []string `json:"InvisibleUsersStr,omitempty"`
+
 	// 会话中@的人
 	MentionedUsers []*int64 `json:"MentionedUsers,omitempty"`
+
+	// 与 MentionedUsers 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	MentionedUsersStr []string `json:"MentionedUsersStr,omitempty"`
 
 	// 消息优先级。
 	// * 0：低优先级。
@@ -3871,11 +3758,13 @@ type SendMessageBody struct {
 
 	// 消息可见会话成员列表
 	VisibleUsers []*int64 `json:"VisibleUsers,omitempty"`
+
+	// 与 VisibleUsers 字段含义相同，若用户 ID 为字符串类型，使用该字段
+	VisibleUsersStr []string `json:"VisibleUsersStr,omitempty"`
 }
 
 // SendMessageBodyRefMsgInfo - 引用消息
 type SendMessageBodyRefMsgInfo struct {
-
 	// REQUIRED; 消息引用时展示的文本内容
 	Hint string `json:"Hint"`
 
@@ -3884,7 +3773,6 @@ type SendMessageBodyRefMsgInfo struct {
 }
 
 type SendMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata SendMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3893,7 +3781,6 @@ type SendMessageRes struct {
 }
 
 type SendMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3912,7 +3799,6 @@ type SendMessageResResponseMetadata struct {
 }
 
 type SendMessageResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -3921,13 +3807,11 @@ type SendMessageResResponseMetadataError struct {
 }
 
 type SendMessageResResult struct {
-
 	// REQUIRED; 消息Id
 	MessageID int64 `json:"MessageId"`
 }
 
 type BatchSendMessageBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -3951,7 +3835,6 @@ type BatchSendMessageBody struct {
 }
 
 type BatchSendMessageRes struct {
-
 	// REQUIRED
 	ResponseMetadata BatchSendMessageResResponseMetadata `json:"ResponseMetadata"`
 
@@ -3960,7 +3843,6 @@ type BatchSendMessageRes struct {
 }
 
 type BatchSendMessageResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -3979,7 +3861,6 @@ type BatchSendMessageResResponseMetadata struct {
 }
 
 type BatchSendMessageResResponseMetadataError struct {
-
 	// REQUIRED
 	Code string `json:"Code"`
 
@@ -3988,13 +3869,11 @@ type BatchSendMessageResResponseMetadataError struct {
 }
 
 type BatchSendMessageResResult struct {
-
 	// REQUIRED; 消息Id列表，key为用户UserId，value为消息Id
 	UserMessageID map[string]int64 `json:"UserMessageId"`
 }
 
 type UnRegisterUsersBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -4003,7 +3882,6 @@ type UnRegisterUsersBody struct {
 }
 
 type UnRegisterUsersRes struct {
-
 	// REQUIRED
 	ResponseMetadata UnRegisterUsersResResponseMetadata `json:"ResponseMetadata"`
 
@@ -4012,7 +3890,6 @@ type UnRegisterUsersRes struct {
 }
 
 type UnRegisterUsersResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -4031,7 +3908,6 @@ type UnRegisterUsersResResponseMetadata struct {
 }
 
 type UnRegisterUsersResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -4041,13 +3917,11 @@ type UnRegisterUsersResResponseMetadataError struct {
 
 // UnRegisterUsersResResult - 空。此接口无需关注
 type UnRegisterUsersResResult struct {
-
 	// REQUIRED; 注销失败的用户信息
 	FailedInfos []UnRegisterUsersResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type UnRegisterUsersResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -4059,7 +3933,6 @@ type UnRegisterUsersResResultFailedInfosItem struct {
 }
 
 type UpdateBlackListBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -4074,7 +3947,6 @@ type UpdateBlackListBody struct {
 }
 
 type UpdateBlackListBodyBlackListInfosItem struct {
-
 	// REQUIRED; 黑名单用户 ID
 	BlackListUserID int64 `json:"BlackListUserId"`
 
@@ -4086,7 +3958,6 @@ type UpdateBlackListBodyBlackListInfosItem struct {
 }
 
 type UpdateBlackListRes struct {
-
 	// REQUIRED
 	ResponseMetadata UpdateBlackListResResponseMetadata `json:"ResponseMetadata"`
 
@@ -4095,7 +3966,6 @@ type UpdateBlackListRes struct {
 }
 
 type UpdateBlackListResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -4114,7 +3984,6 @@ type UpdateBlackListResResponseMetadata struct {
 }
 
 type UpdateBlackListResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -4123,13 +3992,11 @@ type UpdateBlackListResResponseMetadataError struct {
 }
 
 type UpdateBlackListResResult struct {
-
 	// REQUIRED; 更新失败的黑名单用户信息
 	FailedInfos []UpdateBlackListResResultFailedInfosItem `json:"FailedInfos"`
 }
 
 type UpdateBlackListResResultFailedInfosItem struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -4141,7 +4008,6 @@ type UpdateBlackListResResultFailedInfosItem struct {
 }
 
 type UpdateFriendBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -4156,7 +4022,6 @@ type UpdateFriendBody struct {
 }
 
 type UpdateFriendBodyFriendInfosItem struct {
-
 	// REQUIRED; 好友扩展字段。Ext与Alias为非必填字段，但是至少需要填一个，否则服务端会报错。
 	Ext map[string]string `json:"Ext"`
 
@@ -4168,14 +4033,12 @@ type UpdateFriendBodyFriendInfosItem struct {
 }
 
 type UpdateFriendRes struct {
-
 	// REQUIRED
 	ResponseMetadata UpdateFriendResResponseMetadata `json:"ResponseMetadata"`
 	Result           *UpdateFriendResResult          `json:"Result,omitempty"`
 }
 
 type UpdateFriendResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -4194,7 +4057,6 @@ type UpdateFriendResResponseMetadata struct {
 }
 
 type UpdateFriendResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
@@ -4203,14 +4065,12 @@ type UpdateFriendResResponseMetadataError struct {
 }
 
 type UpdateFriendResResult struct {
-
 	// 更新失败的好友信息
 	FailedInfos []UpdateFriendResResultFailedInfos `json:"FailedInfos,omitempty"`
 }
 
 // UpdateFriendResResultFailedInfos - 更新失败的好友信息
 type UpdateFriendResResultFailedInfos struct {
-
 	// REQUIRED; 错误码 [https://www.volcengine.com/docs/6348/412253]
 	Code string `json:"Code"`
 
@@ -4222,7 +4082,6 @@ type UpdateFriendResResultFailedInfos struct {
 }
 
 type UserBroadcastBody struct {
-
 	// REQUIRED; 应用的唯一标志
 	AppID int32 `json:"AppId"`
 
@@ -4252,7 +4111,6 @@ type UserBroadcastBody struct {
 }
 
 type UserBroadcastRes struct {
-
 	// REQUIRED
 	ResponseMetadata UserBroadcastResResponseMetadata `json:"ResponseMetadata"`
 
@@ -4261,7 +4119,6 @@ type UserBroadcastRes struct {
 }
 
 type UserBroadcastResResponseMetadata struct {
-
 	// REQUIRED; 请求的接口名，属于请求的公共参数。
 	Action string `json:"Action"`
 
@@ -4280,123 +4137,125 @@ type UserBroadcastResResponseMetadata struct {
 }
 
 type UserBroadcastResResponseMetadataError struct {
-
 	// REQUIRED; 错误码。参考:https://www.volcengine.com/docs/6348/412253
 	Code string `json:"Code"`
 
 	// REQUIRED; 错误信息。参考：https://www.volcengine.com/docs/6348/412253
 	Message string `json:"Message"`
 }
-type GetConversationSetting struct{}
-type GetUserConversations struct{}
-type SendMessage struct{}
-type BatchRemoveManagerQuery struct{}
-type CreateConversation struct{}
-type RemoveBlackListQuery struct{}
-type ScanConversationParticipantListQuery struct{}
-type GetBlackList struct{}
-type AddFriendQuery struct{}
-type BatchAddWhitelistParticipantQuery struct{}
-type BatchSendMessage struct{}
-type BatchSendMessageQuery struct{}
-type RecallMessage struct{}
-type UserBroadcast struct{}
-type BatchRemoveWhitelistParticipant struct{}
-type BatchUpdateUserQuery struct{}
-type IsUserInConversationQuery struct{}
-type QueryOnlineStatus struct{}
-type GetAppTokenQuery struct{}
-type GetParticipantReadIndexQuery struct{}
-type ListFriend struct{}
-type QueryOnlineStatusQuery struct{}
-type BatchDeleteBlockParticipantsQuery struct{}
-type BatchGetConversationParticipant struct{}
-type IsInBlackList struct{}
-type GetConversationMarksQuery struct{}
-type BatchGetBlockParticipantsQuery struct{}
-type CreateConversationQuery struct{}
-type IsFriendQuery struct{}
-type BatchDeleteConversationParticipantQuery struct{}
-type GetUserConversationsQuery struct{}
-type GetConversationMessages struct{}
-type BatchAddConversationParticipantQuery struct{}
-type AddBlackListQuery struct{}
-type GetAppToken struct{}
-type MarkConversation struct{}
-type BatchGetConversationParticipantQuery struct{}
-type RemoveBlackList struct{}
-type BatchAddManagerQuery struct{}
-type GetConversationSettingQuery struct{}
-type BatchUpdateUserTagsQuery struct{}
-type RegisterUsers struct{}
-type ModifyParticipantReadIndexQuery struct{}
-type ModifyParticipantReadIndex struct{}
-type BatchAddWhitelistParticipant struct{}
-type UpdateFriendQuery struct{}
-type ModifyConversationSetting struct{}
-type QueryLiveParticipantStatus struct{}
-type IsInBlackListQuery struct{}
-type IsUserInConversation struct{}
-type DestroyConversation struct{}
-type RecallMessageQuery struct{}
-type UnRegisterUsersQuery struct{}
-type BatchUpdateUser struct{}
-type GetConversationUserCountQuery struct{}
-type BatchGetConversationsQuery struct{}
-type ModifyMessage struct{}
-type ModifyConversationSettingQuery struct{}
-type SendMessageQuery struct{}
-type DeleteFriendQuery struct{}
-type GetBlackListQuery struct{}
-type BatchAddConversationParticipant struct{}
-type DestroyConversationQuery struct{}
-type GetConversationMessagesQuery struct{}
-type DeleteConversationMessage struct{}
-type ScanConversationParticipantList struct{}
-type ListFriendQuery struct{}
-type GetMessagesQuery struct{}
-type UpdateFriend struct{}
-type BatchUpdateLiveParticipants struct{}
-type UnRegisterUsers struct{}
-type GetMessagesReadReceiptQuery struct{}
-type BatchGetBlockParticipants struct{}
-type BatchGetConversations struct{}
-type DeleteMessage struct{}
-type GetMessages struct{}
-type MarkConversationQuery struct{}
-type GetParticipantReadIndex struct{}
-type QueryLiveParticipantStatusQuery struct{}
-type UpdateBlackListQuery struct{}
-type BatchGetUser struct{}
-type BatchRemoveWhitelistParticipantQuery struct{}
-type GetConversationUserCount struct{}
-type BatchGetWhitelistParticipant struct{}
-type BatchAddManager struct{}
-type ModifyConversation struct{}
-type BatchAddBlockParticipants struct{}
-type UpdateBlackList struct{}
-type GetConversationMarks struct{}
-type BatchAddBlockParticipantsQuery struct{}
-type BatchRemoveManager struct{}
-type IsFriend struct{}
-type BatchUpdateLiveParticipantsQuery struct{}
-type BatchGetUserQuery struct{}
-type BatchDeleteConversationParticipant struct{}
-type RegisterUsersQuery struct{}
-type BatchGetWhitelistParticipantQuery struct{}
-type DeleteConversationMessageQuery struct{}
-type BatchUpdateUserTags struct{}
-type BatchModifyConversationParticipant struct{}
-type BatchDeleteBlockParticipants struct{}
-type ModifyMessageQuery struct{}
-type UserBroadcastQuery struct{}
-type BatchModifyConversationParticipantQuery struct{}
-type ModifyConversationQuery struct{}
-type AddBlackList struct{}
-type DeleteMessageQuery struct{}
-type DeleteFriend struct{}
-type AddFriend struct{}
-type GetMessagesReadReceipt struct{}
+type (
+	GetConversationSetting                  struct{}
+	GetUserConversations                    struct{}
+	SendMessage                             struct{}
+	BatchRemoveManagerQuery                 struct{}
+	CreateConversation                      struct{}
+	RemoveBlackListQuery                    struct{}
+	ScanConversationParticipantListQuery    struct{}
+	GetBlackList                            struct{}
+	AddFriendQuery                          struct{}
+	BatchAddWhitelistParticipantQuery       struct{}
+	BatchSendMessage                        struct{}
+	BatchSendMessageQuery                   struct{}
+	RecallMessage                           struct{}
+	UserBroadcast                           struct{}
+	BatchRemoveWhitelistParticipant         struct{}
+	BatchUpdateUserQuery                    struct{}
+	IsUserInConversationQuery               struct{}
+	QueryOnlineStatus                       struct{}
+	GetAppTokenQuery                        struct{}
+	GetParticipantReadIndexQuery            struct{}
+	ListFriend                              struct{}
+	QueryOnlineStatusQuery                  struct{}
+	BatchDeleteBlockParticipantsQuery       struct{}
+	BatchGetConversationParticipant         struct{}
+	IsInBlackList                           struct{}
+	GetConversationMarksQuery               struct{}
+	BatchGetBlockParticipantsQuery          struct{}
+	CreateConversationQuery                 struct{}
+	IsFriendQuery                           struct{}
+	BatchDeleteConversationParticipantQuery struct{}
+	GetUserConversationsQuery               struct{}
+	GetConversationMessages                 struct{}
+	BatchAddConversationParticipantQuery    struct{}
+	AddBlackListQuery                       struct{}
+	GetAppToken                             struct{}
+	MarkConversation                        struct{}
+	BatchGetConversationParticipantQuery    struct{}
+	RemoveBlackList                         struct{}
+	BatchAddManagerQuery                    struct{}
+	GetConversationSettingQuery             struct{}
+	BatchUpdateUserTagsQuery                struct{}
+	RegisterUsers                           struct{}
+	ModifyParticipantReadIndexQuery         struct{}
+	ModifyParticipantReadIndex              struct{}
+	BatchAddWhitelistParticipant            struct{}
+	UpdateFriendQuery                       struct{}
+	ModifyConversationSetting               struct{}
+	QueryLiveParticipantStatus              struct{}
+	IsInBlackListQuery                      struct{}
+	IsUserInConversation                    struct{}
+	DestroyConversation                     struct{}
+	RecallMessageQuery                      struct{}
+	UnRegisterUsersQuery                    struct{}
+	BatchUpdateUser                         struct{}
+	GetConversationUserCountQuery           struct{}
+	BatchGetConversationsQuery              struct{}
+	ModifyMessage                           struct{}
+	ModifyConversationSettingQuery          struct{}
+	SendMessageQuery                        struct{}
+	DeleteFriendQuery                       struct{}
+	GetBlackListQuery                       struct{}
+	BatchAddConversationParticipant         struct{}
+	DestroyConversationQuery                struct{}
+	GetConversationMessagesQuery            struct{}
+	DeleteConversationMessage               struct{}
+	ScanConversationParticipantList         struct{}
+	ListFriendQuery                         struct{}
+	GetMessagesQuery                        struct{}
+	UpdateFriend                            struct{}
+	BatchUpdateLiveParticipants             struct{}
+	UnRegisterUsers                         struct{}
+	GetMessagesReadReceiptQuery             struct{}
+	BatchGetBlockParticipants               struct{}
+	BatchGetConversations                   struct{}
+	DeleteMessage                           struct{}
+	GetMessages                             struct{}
+	MarkConversationQuery                   struct{}
+	GetParticipantReadIndex                 struct{}
+	QueryLiveParticipantStatusQuery         struct{}
+	UpdateBlackListQuery                    struct{}
+	BatchGetUser                            struct{}
+	BatchRemoveWhitelistParticipantQuery    struct{}
+	GetConversationUserCount                struct{}
+	BatchGetWhitelistParticipant            struct{}
+	BatchAddManager                         struct{}
+	ModifyConversation                      struct{}
+	BatchAddBlockParticipants               struct{}
+	UpdateBlackList                         struct{}
+	GetConversationMarks                    struct{}
+	BatchAddBlockParticipantsQuery          struct{}
+	BatchRemoveManager                      struct{}
+	IsFriend                                struct{}
+	BatchUpdateLiveParticipantsQuery        struct{}
+	BatchGetUserQuery                       struct{}
+	BatchDeleteConversationParticipant      struct{}
+	RegisterUsersQuery                      struct{}
+	BatchGetWhitelistParticipantQuery       struct{}
+	DeleteConversationMessageQuery          struct{}
+	BatchUpdateUserTags                     struct{}
+	BatchModifyConversationParticipant      struct{}
+	BatchDeleteBlockParticipants            struct{}
+	ModifyMessageQuery                      struct{}
+	UserBroadcastQuery                      struct{}
+	BatchModifyConversationParticipantQuery struct{}
+	ModifyConversationQuery                 struct{}
+	AddBlackList                            struct{}
+	DeleteMessageQuery                      struct{}
+	DeleteFriend                            struct{}
+	AddFriend                               struct{}
+	GetMessagesReadReceipt                  struct{}
+)
+
 type BatchDeleteConversationParticipantReq struct {
 	*BatchDeleteConversationParticipantQuery
 	*BatchDeleteConversationParticipantBody
