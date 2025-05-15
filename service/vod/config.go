@@ -113,6 +113,14 @@ var (
 				"Version": []string{"2020-08-01"},
 			},
 		},
+		"CreateHlsDecryptionKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateHlsDecryptionKey"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"GetHlsDecryptionKey": {
 			Method: http.MethodGet,
 			Path:   "/",
