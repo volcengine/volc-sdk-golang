@@ -425,6 +425,31 @@ func (c *Imagex) DescribeImageVolcCdnAccessLog(ctx context.Context, arg *Describ
 	return result, nil
 }
 
+func (c *Imagex) VerifyDomainOwner(ctx context.Context, arg *VerifyDomainOwnerReq) (*VerifyDomainOwnerRes, error) {
+	query, err := marshalToQuery(arg.VerifyDomainOwnerQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.VerifyDomainOwnerBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "VerifyDomainOwner", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(VerifyDomainOwnerRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) GetResponseHeaderValidateKeys(ctx context.Context) (*GetResponseHeaderValidateKeysRes, error) {
 
 	data, _, err := c.CtxQuery(ctx, "GetResponseHeaderValidateKeys", url.Values{})
@@ -453,6 +478,26 @@ func (c *Imagex) GetDomainConfig(ctx context.Context, arg *GetDomainConfigQuery)
 	}
 
 	result := new(GetDomainConfigRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetDomainOwnerVerifyContent(ctx context.Context, arg *GetDomainOwnerVerifyContentQuery) (*GetDomainOwnerVerifyContentRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetDomainOwnerVerifyContent", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetDomainOwnerVerifyContentRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
@@ -4061,6 +4106,31 @@ func (c *Imagex) CreateHiddenWatermarkImage(ctx context.Context, arg *CreateHidd
 	return result, nil
 }
 
+func (c *Imagex) CreateHmExtractTask(ctx context.Context, arg *CreateHmExtractTaskReq) (*CreateHmExtractTaskRes, error) {
+	query, err := marshalToQuery(arg.CreateHmExtractTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateHmExtractTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateHmExtractTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateHmExtractTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) UpdateImageExifData(ctx context.Context, arg *UpdateImageExifDataReq) (*UpdateImageExifDataRes, error) {
 	query, err := marshalToQuery(arg.UpdateImageExifDataQuery)
 	if err != nil {
@@ -4348,6 +4418,31 @@ func (c *Imagex) GetDedupTaskStatus(ctx context.Context, arg *GetDedupTaskStatus
 	}
 
 	result := new(GetDedupTaskStatusRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageHmExtractTaskInfo(ctx context.Context, arg *GetImageHmExtractTaskInfoReq) (*GetImageHmExtractTaskInfoRes, error) {
+	query, err := marshalToQuery(arg.GetImageHmExtractTaskInfoQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.GetImageHmExtractTaskInfoBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetImageHmExtractTaskInfo", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageHmExtractTaskInfoRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
