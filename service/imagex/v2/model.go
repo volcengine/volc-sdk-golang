@@ -1019,6 +1019,15 @@ type CreateHiddenWatermarkImageBody struct {
 	// * tracev2：前景图层水印模型（彩色背景通用）
 	//
 	// 该模型可以生成含水印的透明图像，主要应用在前端页面截图泄露溯源场景。该模型生成的水印纹理密集，在正常界面添加后肉眼基本不可见（截图放大后存在肉眼可见的水印纹理），可抵抗常见的社交软件传播。
+	//
+	// :::tip 此模型建议在 PC 端使用，移动端使用视觉效果较差。 :::
+	//
+	//
+	// * tracev2-app：前景图层水印模型（移动端）
+	//
+	// 该模型可以生成含水印的透明图像，主要应用在前端页面截图泄露溯源场景。该模型生成的水印纹理密集，在正常界面添加后肉眼基本不可见（截图放大后存在肉眼可见的水印纹理），可抵抗常见的社交软件传播。
+	//
+	// :::tip 此模型建议在移动端使用，PC 端使用视觉效果较差。 :::
 	Algorithm string `json:"Algorithm"`
 
 	// REQUIRED; 自定义盲水印文本信息，最多支持 128 个字符。
@@ -1071,6 +1080,66 @@ type CreateHiddenWatermarkImageResResult struct {
 
 	// REQUIRED; 盲水印图片 Uri，当前仅支持输出 png 格式。
 	StoreURI string `json:"StoreUri"`
+}
+
+type CreateHmExtractTaskBody struct {
+
+	// REQUIRED; 取值支持tracev2-app, tracev2
+	Algorithm string `json:"Algorithm"`
+
+	// REQUIRED; 水印强度取值low，medium，strong。推荐取值strong
+	Strength string `json:"Strength"`
+
+	// 任务回调地址，回调内容详见盲水印提取回调 [https://www.volcengine.com/docs/508/1554763]。
+	Callback string `json:"Callback,omitempty"`
+
+	// 资源key
+	ImageURI string `json:"ImageUri,omitempty"`
+
+	// 资源URL，与ImageUri必填其中一个。两者都填以ImageUri为准
+	ImageURL string `json:"ImageUrl,omitempty"`
+}
+
+type CreateHmExtractTaskQuery struct {
+
+	// REQUIRED; 待提取水印图对应的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type CreateHmExtractTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateHmExtractTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateHmExtractTaskResResult `json:"Result,omitempty"`
+}
+
+type CreateHmExtractTaskResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// CreateHmExtractTaskResResult - 视请求的接口而定
+type CreateHmExtractTaskResResult struct {
+
+	// REQUIRED; 异步任务ID
+	TaskID string `json:"TaskId"`
 }
 
 type CreateImageAITaskBody struct {
@@ -1655,7 +1724,8 @@ type CreateImageHmExtractQuery struct {
 	// * natural：文本嵌入基础模型（彩色图片通用）
 	// * tracev1：前景图层水印模型（纯色背景适用）
 	// * tracev2：前景图层水印模型（彩色背景通用）
-	// :::warning 指定tracev1 或 tracev2模型时，请传入已添加对应模型水印的背景网页的截图。若模型错误，则无法提取水印。 :::
+	// * tracev2-app：前景图层水印模型（移动端）
+	// :::warning 指定tracev1、tracev2、tracev2-app模型时，请传入已添加对应模型水印的背景网页的截图。若图片错误，则无法提取水印。 :::
 	Algorithm string `json:"Algorithm" query:"Algorithm"`
 
 	// REQUIRED; 待提取盲水印图片的 URL。StoreUri和ImageUrl都不为空时，以StoreUri为准。
@@ -14265,6 +14335,62 @@ type GetDomainConfigResResultRespHdrsItem struct {
 	Value string `json:"value"`
 }
 
+type GetDomainOwnerVerifyContentQuery struct {
+
+	// REQUIRED; 待校验的域名。仅支持单域名校验。
+	Domain string `json:"Domain" query:"Domain"`
+}
+
+type GetDomainOwnerVerifyContentRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetDomainOwnerVerifyContentResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetDomainOwnerVerifyContentResResult `json:"Result,omitempty"`
+}
+
+type GetDomainOwnerVerifyContentResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetDomainOwnerVerifyContentResResult - 视请求的接口而定
+type GetDomainOwnerVerifyContentResResult struct {
+
+	// REQUIRED; DNS 解析校验信息，仅当 NeedVerify 为 true 时返回。
+	DNSVerifyInfo *GetDomainOwnerVerifyContentResResultDNSVerifyInfo `json:"DNSVerifyInfo"`
+
+	// REQUIRED; 域名是否需要归属权校验： true: 需要校验 false: 无需校验
+	NeedVerify bool `json:"NeedVerify"`
+}
+
+// GetDomainOwnerVerifyContentResResultDNSVerifyInfo - DNS 解析校验信息，仅当 NeedVerify 为 true 时返回。
+type GetDomainOwnerVerifyContentResResultDNSVerifyInfo struct {
+
+	// REQUIRED; 主机记录。
+	Host string `json:"Host"`
+
+	// REQUIRED; 记录类型。
+	RecordType string `json:"RecordType"`
+
+	// REQUIRED; 记录值。
+	RecordValue string `json:"RecordValue"`
+}
+
 type GetImageAIDetailsQuery struct {
 
 	// REQUIRED; 查询的结束 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
@@ -16145,6 +16271,60 @@ type GetImageFontsResResultFontsItem struct {
 
 	// REQUIRED; 字体资源 URI。
 	URI string `json:"Uri"`
+}
+
+type GetImageHmExtractTaskInfoBody struct {
+
+	// REQUIRED; 任务id
+	TaskID string `json:"TaskId"`
+}
+
+type GetImageHmExtractTaskInfoQuery struct {
+
+	// REQUIRED; 提取水印图任务对应的服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type GetImageHmExtractTaskInfoRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageHmExtractTaskInfoResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *GetImageHmExtractTaskInfoResResult `json:"Result,omitempty"`
+}
+
+type GetImageHmExtractTaskInfoResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetImageHmExtractTaskInfoResResult - 视请求的接口而定
+type GetImageHmExtractTaskInfoResResult struct {
+
+	// 错误信息
+	ErrMsg string `json:"ErrMsg,omitempty"`
+
+	// 水印信息
+	HmInfo string `json:"HmInfo,omitempty"`
+
+	// 任务状态
+	TaskStatus string `json:"TaskStatus,omitempty"`
 }
 
 type GetImageMigrateTasksQuery struct {
@@ -23543,6 +23723,53 @@ type UpdateStorageRulesV2ResResponseMetadata struct {
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
 	Version string `json:"Version"`
 }
+
+type VerifyDomainOwnerBody struct {
+
+	// REQUIRED; 待校验的域名。仅支持单域名校验。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 校验方式，取值如下： dns: DNS 解析验证。
+	VerifyType string `json:"VerifyType"`
+}
+
+type VerifyDomainOwnerRes struct {
+
+	// REQUIRED
+	ResponseMetadata *VerifyDomainOwnerResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *VerifyDomainOwnerResResult `json:"Result,omitempty"`
+}
+
+type VerifyDomainOwnerResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// VerifyDomainOwnerResResult - 视请求的接口而定
+type VerifyDomainOwnerResResult struct {
+
+	// REQUIRED; 校验失败的原因，当 VerifyResult 为 false 时返回。 verify domain owner by dns error: 域名归属权 DNS 验证错误，DNS 解析失败。 verify domain
+	// owner by dns failed, record value not match: 域名归属权 DNS 验证错误，TXT 记录值不匹配。
+	ErrorMessage string `json:"ErrorMessage"`
+
+	// REQUIRED; 校验是否成功： true: 校验成功 false: 校验失败
+	VerifyResult bool `json:"VerifyResult"`
+}
 type AIProcess struct{}
 type AIProcessQuery struct{}
 type AddDomainV1 struct{}
@@ -23559,6 +23786,7 @@ type CreateBatchProcessTask struct{}
 type CreateCVImageGenerateTask struct{}
 type CreateFileRestore struct{}
 type CreateHiddenWatermarkImage struct{}
+type CreateHmExtractTask struct{}
 type CreateImageAITask struct{}
 type CreateImageAITaskQuery struct{}
 type CreateImageAnalyzeTask struct{}
@@ -23821,6 +24049,8 @@ type GetDedupTaskStatusBody struct{}
 type GetDenoisingImage struct{}
 type GetDomainConfig struct{}
 type GetDomainConfigBody struct{}
+type GetDomainOwnerVerifyContent struct{}
+type GetDomainOwnerVerifyContentBody struct{}
 type GetImageAIDetails struct{}
 type GetImageAIDetailsBody struct{}
 type GetImageAITasks struct{}
@@ -23868,6 +24098,7 @@ type GetImageEraseResultQuery struct{}
 type GetImageFonts struct{}
 type GetImageFontsBody struct{}
 type GetImageFontsQuery struct{}
+type GetImageHmExtractTaskInfo struct{}
 type GetImageMigrateTasks struct{}
 type GetImageMigrateTasksBody struct{}
 type GetImageMonitorRules struct{}
@@ -24003,6 +24234,8 @@ type UpdateServiceName struct{}
 type UpdateSlimConfig struct{}
 type UpdateStorageRules struct{}
 type UpdateStorageRulesV2 struct{}
+type VerifyDomainOwner struct{}
+type VerifyDomainOwnerQuery struct{}
 type AIProcessReq struct {
 	*AIProcessQuery
 	*AIProcessBody
@@ -24046,6 +24279,10 @@ type CreateFileRestoreReq struct {
 type CreateHiddenWatermarkImageReq struct {
 	*CreateHiddenWatermarkImageQuery
 	*CreateHiddenWatermarkImageBody
+}
+type CreateHmExtractTaskReq struct {
+	*CreateHmExtractTaskQuery
+	*CreateHmExtractTaskBody
 }
 type CreateImageAITaskReq struct {
 	*CreateImageAITaskQuery
@@ -24599,6 +24836,10 @@ type GetDomainConfigReq struct {
 	*GetDomainConfigQuery
 	*GetDomainConfigBody
 }
+type GetDomainOwnerVerifyContentReq struct {
+	*GetDomainOwnerVerifyContentQuery
+	*GetDomainOwnerVerifyContentBody
+}
 type GetImageAIDetailsReq struct {
 	*GetImageAIDetailsQuery
 	*GetImageAIDetailsBody
@@ -24690,6 +24931,10 @@ type GetImageEraseResultReq struct {
 type GetImageFontsReq struct {
 	*GetImageFontsQuery
 	*GetImageFontsBody
+}
+type GetImageHmExtractTaskInfoReq struct {
+	*GetImageHmExtractTaskInfoQuery
+	*GetImageHmExtractTaskInfoBody
 }
 type GetImageMigrateTasksReq struct {
 	*GetImageMigrateTasksQuery
@@ -25026,4 +25271,8 @@ type UpdateStorageRulesReq struct {
 type UpdateStorageRulesV2Req struct {
 	*UpdateStorageRulesV2Query
 	*UpdateStorageRulesV2Body
+}
+type VerifyDomainOwnerReq struct {
+	*VerifyDomainOwnerQuery
+	*VerifyDomainOwnerBody
 }

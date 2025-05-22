@@ -190,6 +190,14 @@ var (
 				"Version": []string{"2018-08-01"},
 			},
 		},
+		"VerifyDomainOwner": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"VerifyDomainOwner"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"GetResponseHeaderValidateKeys": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -204,6 +212,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetDomainConfig"},
 				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetDomainOwnerVerifyContent": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetDomainOwnerVerifyContent"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"GetServiceDomains": {
@@ -1558,6 +1574,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"CreateHmExtractTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateHmExtractTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"UpdateImageExifData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1660,6 +1684,14 @@ var (
 			Query: url.Values{
 				"Action":  []string{"GetDedupTaskStatus"},
 				"Version": []string{"2018-08-01"},
+			},
+		},
+		"GetImageHmExtractTaskInfo": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageHmExtractTaskInfo"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"CreateImageService": {
