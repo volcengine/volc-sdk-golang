@@ -21,6 +21,7 @@ var (
 
 type logConsumer struct {
 	ctx    context.Context
+	wg     *sync.WaitGroup
 	client tls.Client
 	logger log.Logger
 
@@ -50,7 +51,11 @@ func (lc *logConsumer) run() {
 	case fetching:
 	case readyToConsume:
 		lc.setStatus(consuming)
-		go lc.runWithStatus(lc.consume, readyToFetch, readyToConsume, readyToConsume, nop)
+		lc.wg.Add(1)
+		tls.GoWithRecovery(func() {
+			defer lc.wg.Done()
+			lc.runWithStatus(lc.consume, readyToFetch, readyToConsume, readyToConsume, nop)
+		})
 	case consuming:
 	case backoff:
 		go lc.runWithStatus(lc.backoff, readyToFetch, nop, backoff, backoff)
