@@ -19,10 +19,11 @@ type checkpointManager struct {
 	mapLock       *sync.RWMutex
 	checkpointMap map[string]*checkpointInfo
 	commitCh      <-chan struct{}
+	stopCh        chan struct{}
 }
 
 func (c *checkpointManager) run(ctx context.Context, wg *sync.WaitGroup) {
-	level.Info(c.logger).Log("msg", "checkpoint manager start")
+	_ = level.Info(c.logger).Log("msg", "checkpoint manager start")
 	defer wg.Done()
 
 	uploadCheckpointTicker := time.NewTicker(time.Duration(c.conf.FlushCheckpointIntervalSecond) * time.Second)
@@ -30,9 +31,9 @@ func (c *checkpointManager) run(ctx context.Context, wg *sync.WaitGroup) {
 
 	for {
 		select {
-		case <-ctx.Done():
+		case <-c.stopCh:
 			c.uploadCheckpoint()
-
+			_ = level.Info(c.logger).Log("msg", "checkpoint manager quit")
 			return
 		case <-c.commitCh:
 			c.uploadCheckpoint()
@@ -65,15 +66,17 @@ func (c *checkpointManager) uploadCheckpoint() {
 			ShardID:           checkpoint.shardInfo.ShardID,
 			Checkpoint:        checkpoint.checkpoint,
 		}); err != nil {
-			level.Error(c.logger).Log("error", "upload checkpoint failed, err: "+err.Error())
+			_ = level.Error(c.logger).Log("error", "upload checkpoint failed, err: "+err.Error())
 			delete(checkpointSnapshot, k)
 		}
 	}
 
 	c.mapLock.Lock()
 	for k, checkpoint := range checkpointSnapshot {
-		if checkpoint.checkpoint == c.checkpointMap[k].checkpoint {
-			delete(c.checkpointMap, k)
+		if checkPointMapK, ok := c.checkpointMap[k]; ok {
+			if checkpoint.checkpoint == checkPointMapK.checkpoint {
+				delete(c.checkpointMap, k)
+			}
 		}
 	}
 	c.mapLock.Unlock()
@@ -92,5 +95,6 @@ func newCheckpointManager(logger log.Logger, conf *Config, client tls.Client, co
 		mapLock:       &sync.RWMutex{},
 		checkpointMap: make(map[string]*checkpointInfo),
 		commitCh:      commitCh,
+		stopCh:        make(chan struct{}),
 	}
 }

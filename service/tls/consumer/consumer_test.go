@@ -174,3 +174,84 @@ func (suite *SdkConsumerTestSuite) TestConsumer() {
 	// 停止消费
 	consumer.Stop()
 }
+
+func (suite *SdkConsumerTestSuite) TestStopConsumer() {
+	consumerGroup := "test-consumer-group-name"
+	consumerCfg := &Config{
+		ClientConfig: common.ClientConfig{
+			Endpoint:        os.Getenv("LOG_SERVICE_ENDPOINT"),
+			Region:          os.Getenv("LOG_SERVICE_REGION"),
+			AccessKeyID:     os.Getenv("LOG_SERVICE_AK"),
+			AccessKeySecret: os.Getenv("LOG_SERVICE_SK"),
+		},
+		LoggerConfig: common.LoggerConfig{
+			LogLevel:      "info",
+			LogFileName:   "",
+			IsJsonType:    false,
+			LogMaxSize:    10,
+			LogMaxBackups: 10,
+			LogCompress:   false,
+		},
+		ConsumeFrom:                    strconv.FormatInt(suite.timestamp, 10),
+		HeartbeatIntervalInSecond:      20,
+		DataFetchIntervalInMillisecond: 200,
+		MaxFetchLogGroupCount:          100,
+		FlushCheckpointIntervalSecond:  5,
+		OrderedConsume:                 false,
+		ProjectID:                      suite.projectId,
+		TopicIDList:                    []string{suite.topicId},
+		ConsumerGroupName:              consumerGroup,
+	}
+
+	_, err := suite.cli.CreateConsumerGroup(&tls.CreateConsumerGroupRequest{
+		ProjectID:         suite.projectId,
+		TopicIDList:       []string{suite.topicId},
+		ConsumerGroupName: consumerGroup,
+		HeartbeatTTL:      60,
+		OrderedConsume:    true,
+	})
+	suite.NoError(err)
+
+	checkPointInfo, err := suite.cli.DescribeCheckPoint(&tls.DescribeCheckPointRequest{
+		ProjectID:         suite.projectId,
+		TopicID:           suite.topicId,
+		ConsumerGroupName: consumerGroup,
+		ShardID:           0,
+	})
+	suite.NoError(err)
+	suite.Equal(int32(0), checkPointInfo.ShardID)
+	suite.Equal("", checkPointInfo.Checkpoint)
+
+	stopFlag := make(chan struct{})
+
+	var handleLogs = func(topicID string, shardID int, l *pb.LogGroupList) {
+		stopFlag <- struct{}{}
+
+		fmt.Printf("mock user handle logs")
+
+		time.Sleep(10 * time.Second)
+	}
+	// 创建消费者
+	consumer, err := NewConsumer(context.TODO(), consumerCfg, handleLogs)
+	suite.NoError(err)
+
+	// 启动消费者消费
+	err = consumer.Start()
+	suite.NoError(err)
+
+	<-stopFlag
+
+	consumer.Stop()
+
+	checkPointInfo, err = suite.cli.DescribeCheckPoint(&tls.DescribeCheckPointRequest{
+		ProjectID:         suite.projectId,
+		TopicID:           suite.topicId,
+		ConsumerGroupName: consumerGroup,
+		ShardID:           0,
+	})
+	suite.NoError(err)
+	suite.Equal(int32(0), checkPointInfo.ShardID)
+	suite.NotEqual("", checkPointInfo.Checkpoint)
+	fmt.Printf("consumer after: Checkpoint: %s, UpdateTime: %d, Consumer: %s\n",
+		checkPointInfo.Checkpoint, checkPointInfo.UpdateTime, checkPointInfo.Consumer)
+}

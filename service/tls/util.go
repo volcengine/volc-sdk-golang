@@ -2,7 +2,9 @@ package tls
 
 import (
 	"encoding/json"
+	"fmt"
 	"runtime"
+	"runtime/debug"
 	"strings"
 
 	"github.com/gogo/protobuf/proto"
@@ -131,4 +133,15 @@ func ReplaceWhiteSpaceCharacter(str string) string {
 		str = strings.ReplaceAll(str, origin, new)
 	}
 	return str
+}
+
+func GoWithRecovery(f func()) {
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				fmt.Printf("panic happens: %v, stack: %s", r, string(debug.Stack()))
+			}
+		}()
+		f()
+	}()
 }

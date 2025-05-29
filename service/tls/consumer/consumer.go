@@ -86,7 +86,7 @@ func (c *consumer) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityTok
 }
 
 func (c *consumer) run(ctx context.Context, wg *sync.WaitGroup) {
-	level.Info(c.logger).Log("msg", "consumer start")
+	_ = level.Info(c.logger).Log("msg", "consumer start")
 	defer wg.Done()
 
 	fetchDataTicker := time.NewTicker(time.Duration(c.conf.DataFetchIntervalInMillisecond) * time.Millisecond)
@@ -97,9 +97,36 @@ func (c *consumer) run(ctx context.Context, wg *sync.WaitGroup) {
 		case <-fetchDataTicker.C:
 			c.handleShards(c.heartbeat.getShards())
 		case <-ctx.Done():
+			c.consumerStop()
 			return
 		}
 	}
+}
+
+func (c *consumer) consumerStop() {
+	_ = level.Info(c.logger).Log("msg", "consumer stopping")
+
+	timeout := time.After(30 * time.Second)
+	doneCh := make(chan struct{})
+
+	tls.GoWithRecovery(func() {
+		for _, lc := range c.workerMap {
+			lc.wg.Wait()
+		}
+
+		doneCh <- struct{}{}
+	})
+
+	select {
+	case <-doneCh:
+		_ = level.Info(c.logger).Log("msg", "all workers stopped")
+	case <-timeout:
+		_ = level.Error(c.logger).Log("msg", "consumer stop timeout")
+	}
+
+	c.checkpoint.stopCh <- struct{}{}
+
+	_ = level.Info(c.logger).Log("msg", "consumer stopped")
 }
 
 func (c *consumer) handleShards(shards []*tls.ConsumeShard) {
@@ -129,6 +156,7 @@ func (c *consumer) handleShards(shards []*tls.ConsumeShard) {
 func (c *consumer) newLogConsumer(consumeShard *tls.ConsumeShard) *logConsumer {
 	return &logConsumer{
 		ctx:                c.ctx,
+		wg:                 &sync.WaitGroup{},
 		client:             c.client,
 		logger:             c.logger,
 		conf:               c.conf,
@@ -181,8 +209,8 @@ func (c *consumer) init() error {
 }
 
 func (c *consumer) Stop() {
-	c.workerMap = make(map[string]*logConsumer)
-
 	c.cancel()
 	c.wg.Wait()
+
+	c.workerMap = make(map[string]*logConsumer)
 }
