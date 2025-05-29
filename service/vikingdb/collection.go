@@ -18,6 +18,7 @@ type Collection struct {
 	CreateTime      string
 	UpdateTime      string
 	UpdatePerson    string
+	isClient        bool
 }
 
 func (collection *Collection) UpsertData(data interface{}, opts ...ParamOption) error {
@@ -222,6 +223,9 @@ func (collection *Collection) FetchData(id interface{}) ([]*Data, error) {
 		params := map[string]interface{}{
 			"collection_name": collection.CollectionName,
 			"primary_keys":    id,
+		}
+		if collection.isClient {
+			params["replace_primay"] = true
 		}
 		res, err := collection.VikingDBService.retryRequest(context.Background(), "FetchData", nil, collection.VikingDBService.convertMapToJson(params), MAX_RETRIES)
 		if err != nil {

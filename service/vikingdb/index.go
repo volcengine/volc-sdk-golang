@@ -24,6 +24,7 @@ type Index struct {
 	ShardCount      int64
 	ShardPolicy     string
 	primaryKey      string
+	isClient        bool
 }
 
 type SearchOptions struct {
@@ -232,6 +233,9 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		if searchOptions.postProcessInputLimit != nil {
 			search["post_process_input_limit"] = searchOptions.postProcessInputLimit
 		}
+		if index.isClient {
+			search["replace_primay"] = true
+		}
 		params := map[string]interface{}{
 			"collection_name": index.CollectionName,
 			"index_name":      index.IndexName,
@@ -270,6 +274,9 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		}
 		if searchOptions.postProcessInputLimit != nil {
 			search["post_process_input_limit"] = searchOptions.postProcessInputLimit
+		}
+		if index.isClient {
+			search["replace_primay"] = true
 		}
 		params := map[string]interface{}{
 			"collection_name": index.CollectionName,
@@ -318,6 +325,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 	}
 	if searchOptions.postProcessInputLimit != nil {
 		search["post_process_input_limit"] = searchOptions.postProcessInputLimit
+	}
+	if index.isClient {
+		search["replace_primay"] = true
 	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
@@ -368,6 +378,10 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	if searchOptions.postProcessInputLimit != nil {
 		search["post_process_input_limit"] = searchOptions.postProcessInputLimit
 	}
+	if index.isClient {
+		search["replace_primay"] = true
+	}
+	fmt.Println(index.isClient)
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -426,6 +440,9 @@ func (index *Index) SearchWithMultiModal(searchOptions *SearchOptions) ([]*Data,
 	if searchOptions.postProcessInputLimit != nil {
 		search["post_process_input_limit"] = searchOptions.postProcessInputLimit
 	}
+	if index.isClient {
+		search["replace_primay"] = true
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -475,6 +492,9 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 	}
 	if searchOptions.postProcessInputLimit != nil {
 		search["post_process_input_limit"] = searchOptions.postProcessInputLimit
+	}
+	if index.isClient {
+		search["replace_primay"] = true
 	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
@@ -589,6 +609,9 @@ func (index *Index) FetchData(id interface{}, searchOptions *SearchOptions) ([]*
 			"index_name":      index.IndexName,
 			"primary_keys":    id,
 			"partition":       searchOptions.partition,
+		}
+		if index.isClient {
+			params["replace_primay"] = true
 		}
 		if searchOptions.outputFields != nil {
 			params["output_fields"] = searchOptions.outputFields
