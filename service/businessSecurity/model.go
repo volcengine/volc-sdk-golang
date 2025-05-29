@@ -125,19 +125,29 @@ type VideoLiveResultResponse struct {
 }
 
 type VideoResp struct {
-	DataId       string        `json:"DataId"`
-	VideoResult  VideoResult   `json:"VideoResults"`
-	AudioResults AudioResultV2 `json:"AudioResults"`
-	PassThrough  string        `json:"PassThrough"`
+	DataId        string             `json:"DataId"`
+	VideoResult   VideoResult        `json:"VideoResults"`
+	AudioResults  AudioResultV2Basic `json:"AudioResults"`
+	PassThrough   string             `json:"PassThrough"`
+	FinalLabel    string             `json:"FinalLabel"`
+	DecisionLabel string             `json:"DecisionLabel"`
 }
 type VideoLiveResp struct {
-	DataId       string          `json:"DataId"`
-	VideoResult  VideoLiveResult `json:"VideoResults"`
-	AudioResults AudioLiveResult `json:"AudioResults"`
-	PassThrough  string          `json:"PassThrough"`
+	DataId        string               `json:"DataId"`
+	VideoResult   VideoLiveResult      `json:"VideoResults"`
+	AudioResults  AudioLiveResultBasic `json:"AudioResults"`
+	PassThrough   string               `json:"PassThrough"`
+	FinalLabel    string               `json:"FinalLabel"`
+	DecisionLabel string               `json:"DecisionLabel"`
 }
 
 type AudioResultV2 struct {
+	AudioResultV2Basic
+	FinalLabel    string `json:"FinalLabel"`
+	DecisionLabel string `json:"DecisionLabel"`
+}
+
+type AudioResultV2Basic struct {
 	Decision       string           `json:"Decision"`
 	DecisionDetail string           `json:"DecisionDetail"`
 	DataId         string           `json:"DataId"`
@@ -147,22 +157,31 @@ type AudioResultV2 struct {
 }
 
 type AudioLiveResult struct {
+	AudioLiveResultBasic
+	FinalLabel    string `json:"FinalLabel"`
+	DecisionLabel string `json:"DecisionLabel"`
+}
+
+type AudioLiveResultBasic struct {
 	Decision    string               `json:"Decision"`
 	DataId      string               `json:"DataId"`
 	AudioText   string               `json:"AudioText"`
 	Details     []*AudioLiveDetailV2 `json:"Details"`
 	PassThrough string               `json:"PassThrough"`
 }
+
 type AudioDetailV2 struct {
-	StartTime      int              `json:"StartTime"`
-	EndTime        int              `json:"EndTime"`
-	FrameUrl       string           `json:"FrameUrl"`
-	AudioText      string           `json:"AudioText"`
-	SliceId        string           `json:"SliceId"`
-	UserId         string           `json:"UserId"`
-	Decision       string           `json:"Decision"`
-	DecisionDetail string           `json:"DecisionDetail"`
-	FrameResults   []*FrameResultV2 `json:"FrameResults"`
+	StartTime        int              `json:"StartTime"`
+	EndTime          int              `json:"EndTime"`
+	FrameUrl         string           `json:"FrameUrl"`
+	AudioText        string           `json:"AudioText"`
+	SliceId          string           `json:"SliceId"`
+	UserId           string           `json:"UserId"`
+	Decision         string           `json:"Decision"`
+	DecisionDetail   string           `json:"DecisionDetail"`
+	FrameResults     []*FrameResultV2 `json:"FrameResults"`
+	FinalSubLabel    string           `json:"FinalSubLabel"`
+	DecisionSubLabel string           `json:"DecisionSubLabel"`
 }
 type AudioLiveDetailV2 struct {
 	StartTime              int              `json:"StartTime"`
@@ -176,6 +195,8 @@ type AudioLiveDetailV2 struct {
 	Decision               string           `json:"Decision"`
 	FrameResults           []*FrameResultV2 `json:"FrameResults"`
 	LiveFirstGetStreamTime int64            `json:"LiveFirstGetStreamTime"`
+	FinalSubLabel          string           `json:"FinalSubLabel"`
+	DecisionSubLabel       string           `json:"DecisionSubLabel"`
 }
 type FrameResultV2 struct {
 	Label    string     `json:"Label"`
@@ -196,23 +217,27 @@ type VideoLiveResult struct {
 	Frames          []LiveFrame `json:"Frames"`
 }
 type Frame struct {
-	Url            string   `json:"Url"`
-	Offset         float64  `json:"Offset"`
-	SliceId        string   `json:"SliceId"`
-	UserId         string   `json:"UserId"`
-	Decision       string   `json:"Decision"`
-	DecisionDetail string   `json:"DecisionDetail"`
-	Text           string   `json:"Text"`
-	Results        []Result `json:"Results"`
+	Url              string   `json:"Url"`
+	Offset           float64  `json:"Offset"`
+	SliceId          string   `json:"SliceId"`
+	UserId           string   `json:"UserId"`
+	Decision         string   `json:"Decision"`
+	DecisionDetail   string   `json:"DecisionDetail"`
+	Text             string   `json:"Text"`
+	Results          []Result `json:"Results"`
+	FinalSubLabel    string   `json:"FinalSubLabel"`
+	DecisionSubLabel string   `json:"DecisionSubLabel"`
 }
 type LiveFrame struct {
-	Url      string       `json:"Url"`
-	Offset   float64      `json:"Offset"`
-	SliceId  string       `json:"SliceId"`
-	UserId   string       `json:"UserId"`
-	Decision string       `json:"Decision"`
-	Text     string       `json:"Text"`
-	Results  []LiveResult `json:"Results"`
+	Url              string       `json:"Url"`
+	Offset           float64      `json:"Offset"`
+	SliceId          string       `json:"SliceId"`
+	UserId           string       `json:"UserId"`
+	Decision         string       `json:"Decision"`
+	Text             string       `json:"Text"`
+	Results          []LiveResult `json:"Results"`
+	FinalSubLabel    string       `json:"FinalSubLabel"`
+	DecisionSubLabel string       `json:"DecisionSubLabel"`
 }
 
 type Result struct {
@@ -241,6 +266,8 @@ type ImageContentRiskResp struct {
 	OcrText        string                     `json:"OcrText"`
 	DecisionDetail string                     `json:"DecisionDetail"`
 	Results        []*ImageContentRiskTag     `json:"Results"`
+	FinalLabel     string                     `json:"FinalLabel"`
+	DecisionLabel  string                     `json:"DecisionLabel"`
 	Scores         map[string]float64         `json:"Scores"`
 	OcrDetails     []*ImageContentFrameDetail `json:"OcrDetails"`
 	QrcodeDetails  []*QrcodeData              `json:"QrcodeDetails"`
@@ -352,15 +379,18 @@ type TextRiskRespV3 struct {
 	Decision       string        `json:"Decision"`
 	DecisionDetail string        `json:"DecisionDetail"`
 	FinalLabel     string        `json:"FinalLabel"`
+	DecisionLabel  string        `json:"DecisionLabel"`
 	TextCount      int           `json:"TextCount"`
 	Results        []*TextResult `json:"Results"`
 }
 
 type TextResult struct {
-	RiskText   string   `json:"RiskText"`
-	RTStartPos int      `json:"RTStartPos"`
-	RTEndPos   int      `json:"RTEndPos"`
-	Labels     []*Label `json:"Labels"`
+	RiskText         string   `json:"RiskText"`
+	RTStartPos       int      `json:"RTStartPos"`
+	RTEndPos         int      `json:"RTEndPos"`
+	Labels           []*Label `json:"Labels"`
+	FinalSubLabel    string   `json:"FinalSubLabel"`
+	DecisionSubLabel string   `json:"DecisionSubLabel"`
 }
 
 func (resp *TextSliceResultResponse) String() string {
