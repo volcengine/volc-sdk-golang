@@ -20,6 +20,10 @@ type SDKLogTestSuite struct {
 	topic   string
 }
 
+func TestSDKLogTestSuite(t *testing.T) {
+	suite.Run(t, new(SDKLogTestSuite))
+}
+
 func (suite *SDKLogTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 
@@ -147,10 +151,6 @@ func putLogs(cli Client, topicID string, source string, filename string, num int
 	return err
 }
 
-func TestSDKLogTestSuite(t *testing.T) {
-	suite.Run(t, new(SDKLogTestSuite))
-}
-
 func (suite *SDKLogTestSuite) TestPutLogsNormally() {
 	req := &PutLogsRequest{
 		TopicID:      suite.topic,
@@ -191,6 +191,80 @@ func (suite *SDKLogTestSuite) TestPutLogsNormally() {
 
 	_, err := suite.cli.PutLogs(req)
 	suite.NoError(err)
+}
+
+func (suite *SDKLogTestSuite) TestPutLogsWithTimeAndCountCheck() {
+	var (
+		num       int   = 100
+		timeStart int64 = time.Now().Unix()
+		logs      []Log
+	)
+
+	// 构建日志数据
+	for i := 0; i < num; i++ {
+		log := Log{
+			Contents: []LogContent{
+				{
+					Key:   "key-" + strconv.Itoa(i),
+					Value: "test-message-" + strconv.Itoa(i),
+				},
+			},
+			Time: timeStart + int64(i),
+		}
+		logs = append(logs, log)
+	}
+
+	logs = append(logs, Log{
+		Contents: []LogContent{
+			{
+				Key:   "key-" + strconv.Itoa(num),
+				Value: "test-message-" + strconv.Itoa(num),
+			},
+		},
+		Time: 0,
+	})
+
+	putLogsResponse, err := suite.cli.PutLogsV2(&PutLogsV2Request{
+		TopicID:  suite.topic,
+		Source:   "go-sdk-test",
+		FileName: "test-filename",
+		Logs:     logs,
+	})
+	suite.NoError(err)
+	suite.NotEmpty(putLogsResponse.RequestID)
+
+	describeCursorResponse, err := suite.cli.DescribeCursor(&DescribeCursorRequest{
+		TopicID: suite.topic,
+		ShardID: 0,
+		From:    "begin",
+	})
+	suite.NoError(err)
+	suite.NotEmpty(describeCursorResponse.Cursor)
+
+	consumeLogsResponse, err := suite.cli.ConsumeLogs(&ConsumeLogsRequest{
+		TopicID: suite.topic,
+		ShardID: 0,
+		Cursor:  describeCursorResponse.Cursor,
+	})
+	suite.NoError(err)
+	suite.Equal(1, consumeLogsResponse.Count)
+	logGroupList := consumeLogsResponse.Logs
+	count := 0
+	for _, logGroup := range logGroupList.LogGroups {
+		for _, log := range logGroup.Logs {
+
+			if log.Time < int64(1e10) {
+				suite.LessOrEqual(timeStart, log.Time)
+				suite.GreaterOrEqual(timeStart+int64(num-1), log.Time)
+			} else {
+				suite.LessOrEqual(timeStart*1000, log.Time)
+				suite.GreaterOrEqual((timeStart+int64(num-1))*1000, log.Time)
+			}
+
+			count++
+		}
+	}
+	suite.Equal(num+1, count)
 }
 
 func (suite *SDKLogTestSuite) TestPutLogsV2Normally() {
@@ -310,9 +384,10 @@ func (suite *SDKLogTestSuite) TestConsumeLogsAbnormally() {
 func (suite *SDKLogTestSuite) TestSearchLogsV2Normally() {
 	startTime := time.Now().Unix()
 
-	time.Sleep(60 * time.Second)
 	err := putLogs(suite.cli, suite.topic, "192.168.1.1", "sys.log", 100)
 	suite.NoError(err)
+
+	time.Sleep(60 * time.Second)
 
 	testcases := map[*SearchLogsRequest]*SearchLogsResponse{
 		{
