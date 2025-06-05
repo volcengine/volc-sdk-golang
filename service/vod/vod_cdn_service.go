@@ -1943,7 +1943,7 @@ func (p *Vod) CreateDomain(req *request.VodCreateDomainV2Request) (*response.Vod
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("CreateDomain", query)
+	respBody, status, err := p.Json("CreateDomain", url.Values{}, jsonData)
 
 	output := &response.VodCreateDomainV2Response{}
 	unmarshaler := protojson.UnmarshalOptions{
@@ -2594,7 +2594,7 @@ func (p *Vod) UpdateDomainConfig(req *request.VodUpdateDomainConfigRequest) (*re
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("UpdateDomainConfig", query)
+	respBody, status, err := p.Json("UpdateDomainConfig", url.Values{}, jsonData)
 
 	output := &response.VodUpdateDomainConfigResponse{}
 	unmarshaler := protojson.UnmarshalOptions{

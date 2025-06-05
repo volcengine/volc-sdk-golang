@@ -6,6 +6,7 @@ package vod
 
 import (
 	"fmt"
+	"github.com/volcengine/volc-sdk-golang/service/vod/models/business"
 	"testing"
 
 	"github.com/volcengine/volc-sdk-golang/service/vod"
@@ -487,6 +488,7 @@ func Test_ListCdnPvData(t *testing.T) {
 		EndTimestamp:   0,
 		DataType:       "your DataType",
 		NeedDetail:     false,
+		Protocol:       "your Protocol",
 	}
 
 	resp, status, err := instance.ListCdnPvData(query)
@@ -559,20 +561,19 @@ func Test_CreateDomain(t *testing.T) {
 	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
 	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
 	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
-	// instance.SetCredential(base.Credentials{
-	// AccessKeyID:     "your ak",
-	// SecretAccessKey: "your sk",
+	//instance.SetCredential(base.Credentials{
+	//	AccessKeyID:     "ak",
+	//	SecretAccessKey: "sk",
 	//})
 
 	query := &request.VodCreateDomainV2Request{
 		SpaceName:                "your SpaceName",
-		DomainType:               "your DomainType",
-		Domain:                   "your Domain",
-		SourceStationType:        0,
-		SourceStationAddressType: 0,
-		Origins:                  "your Origins",
-		Area:                     "your Area",
-		BucketName:               "your BucketName",
+		DomainType:               "play",
+		Domain:                   "domain.com",
+		SourceStationType:        1,
+		SourceStationAddressType: 1,
+		Origins:                  "your origins",
+		Area:                     "cn",
 	}
 
 	resp, status, err := instance.CreateDomain(query)
@@ -745,16 +746,27 @@ func Test_UpdateDomainConfig(t *testing.T) {
 	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
 	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
 	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
-	// instance.SetCredential(base.Credentials{
-	// AccessKeyID:     "your ak",
-	// SecretAccessKey: "your sk",
+	//instance.SetCredential(base.Credentials{
+	//	AccessKeyID:     "ak",
+	//	SecretAccessKey: "sk",
 	//})
 
 	query := &request.VodUpdateDomainConfigRequest{
 		SpaceName:  "your SpaceName",
-		DomainType: "your DomainType",
-		Domain:     "your Domain",
-		Config:     nil,
+		DomainType: "play",
+		Domain:     "domain.com",
+		Config: &business.VodDomainConfig{
+			OriginalControl: &business.VodOriginalControl{
+				Host: "host.origin.com",
+				Origins: []*business.VodOriginalConfig{
+					{
+						Origins:                  "1.1.1.1,2.2.2.2",
+						SourceStationAddressType: 2,
+						Host:                     "ip.origin.com",
+					},
+				},
+			},
+		},
 	}
 
 	resp, status, err := instance.UpdateDomainConfig(query)
