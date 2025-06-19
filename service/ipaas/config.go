@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	ServiceName    = "IPaaS"
+	ServiceName    = "iPaaS"
 	DefaultTimeout = 10 * time.Second
 )
 
@@ -30,51 +30,99 @@ var (
 	}
 	ApiListInfo = map[string]*common.ApiInfo{
 
-		"ListInstance": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListInstance"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"ExportInstance": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ExportInstance"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"ListInstanceMetricData": {
+		"UpdateHostUniversalInfo": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListInstanceMetricData"},
+				"Action":  []string{"UpdateHostUniversalInfo"},
 				"Version": []string{"2023-08-01"},
 			},
 		},
-		"ListPortMapping": {
-			Method: http.MethodGet,
+		"UpdateInstanceUniversalInfo": {
+			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListPortMapping"},
+				"Action":  []string{"UpdateInstanceUniversalInfo"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListAsyncAction": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAsyncAction"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"DetailInstance": {
+		"DetailProduct": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DetailInstance"},
+				"Action":  []string{"DetailProduct"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"LatestMetricInstance": {
+		"ListInstancePackageBrief": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListInstancePackageBrief"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListProductIDCData": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"LatestMetricInstance"},
+				"Action":  []string{"ListProductIDCData"},
+				"Version": []string{"2022-06-30"},
+			},
+		},
+		"GetSecurityGroupVisibleConfig": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSecurityGroupVisibleConfig"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"CreateSecurityGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSecurityGroup"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"CreateSecurityRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSecurityRule"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"UpdateSecurityRule": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSecurityRule"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"BindInstanceSecurityGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindInstanceSecurityGroup"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"UnbindInstanceSecurityGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindInstanceSecurityGroup"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
@@ -246,38 +294,6 @@ var (
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"ImportContainerImage": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ImportContainerImage"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"ListContainerImages": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListContainerImages"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"DeleteContainerImages": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DeleteContainerImages"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"UpdateContainerImage": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"UpdateContainerImage"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
 		"GetJobDetails": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -286,75 +302,59 @@ var (
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"ListAdbKey": {
+		"ListTaskInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"ListAdbKey"},
+				"Action":  []string{"ListTaskInfo"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"BindInstancesAdbKey": {
+		"UpgradeImage": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"BindInstancesAdbKey"},
+				"Action":  []string{"UpgradeImage"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"UnbindInstancesAdbKey": {
+		"ListAOSPRepoAclEntries": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UnbindInstancesAdbKey"},
+				"Action":  []string{"ListAOSPRepoAclEntries"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"BindInstanceAdbKey": {
+		"AddAOSPRepoAclEntries": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"BindInstanceAdbKey"},
+				"Action":  []string{"AddAOSPRepoAclEntries"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"UnbindInstanceAdbKey": {
+		"GrantGitRepoPermission": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"UnbindInstanceAdbKey"},
+				"Action":  []string{"GrantGitRepoPermission"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"DistributeFile": {
+		"RemoveAOSPRepoAclEntries": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"DistributeFile"},
+				"Action":  []string{"RemoveAOSPRepoAclEntries"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
-		"DistributeFileToInstances": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"DistributeFileToInstances"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"GetFileDistributionJobDetail": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"GetFileDistributionJobDetail"},
-				"Version": []string{"2020-10-25"},
-			},
-		},
-		"GetFileDistributionResult": {
+		"GetGitRepoUserInfo": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"GetFileDistributionResult"},
+				"Action":  []string{"GetGitRepoUserInfo"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
@@ -390,11 +390,51 @@ var (
 				"Version": []string{"2023-08-01"},
 			},
 		},
+		"ReconfigureDevicesPackage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ReconfigureDevicesPackage"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
 		"RebootHost": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"RebootHost"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"DistributeFile": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DistributeFile"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"DistributeFileToInstances": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DistributeFileToInstances"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"GetFileDistributionJobDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetFileDistributionJobDetail"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"GetFileDistributionResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetFileDistributionResult"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
@@ -454,6 +494,246 @@ var (
 				"Version": []string{"2023-08-01"},
 			},
 		},
+		"TosPreSignUrl": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"TosPreSignUrl"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"GetResourceNetworkCurveConsole": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetResourceNetworkCurveConsole"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"GetResourcePodCurrentConsole": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetResourcePodCurrentConsole"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"GetResourcePodCurveConsole": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetResourcePodCurveConsole"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListInstance": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListInstance"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ExportInstance": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ExportInstance"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListInstanceMetricData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListInstanceMetricData"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListPortMapping": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListPortMapping"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"DetailInstance": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DetailInstance"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"LatestMetricInstance": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"LatestMetricInstance"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListContainerImagesInner": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListContainerImagesInner"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ImportContainerImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ImportContainerImage"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListContainerImages": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListContainerImages"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"DeleteContainerImages": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteContainerImages"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"UpdateContainerImage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateContainerImage"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListAdbKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"BindInstancesAdbKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindInstancesAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"UnbindInstancesAdbKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindInstancesAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"BindInstanceAdbKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindInstanceAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"UnbindInstanceAdbKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindInstanceAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"GenerateAdbKey": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GenerateAdbKey"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListGitRepoWhiteIP": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListGitRepoWhiteIP"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"DeleteGitRepoWhiteIP": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteGitRepoWhiteIP"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"OperateGitRepoWhiteIP": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OperateGitRepoWhiteIP"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"AddGitRepoWhiteIP": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddGitRepoWhiteIP"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"ListGitRepoSSHKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListGitRepoSSHKey"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"DeleteGitRepoSSHKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteGitRepoSSHKey"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"OperateGitRepoSSHKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"OperateGitRepoSSHKey"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"AddGitRepoSSHKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddGitRepoSSHKey"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
+		"GenerateGitRepoSSHKey": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GenerateGitRepoSSHKey"},
+				"Version": []string{"2023-08-01"},
+			},
+		},
 		"AcquireIdempotentToken": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -467,6 +747,46 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListProduct"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"AddEventCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddEventCallback"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"DelEventCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DelEventCallback"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"SetEventCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SetEventCallback"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ListEventCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListEventCallback"},
+				"Version": []string{"2020-10-25"},
+			},
+		},
+		"ValidateEventCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ValidateEventCallback"},
 				"Version": []string{"2020-10-25"},
 			},
 		},
@@ -484,22 +804,6 @@ var (
 			Query: url.Values{
 				"Action":  []string{"ListDcCapacity"},
 				"Version": []string{"2023-08-01"},
-			},
-		},
-		"ReconfigureDevicesPackage": {
-			Method: http.MethodPost,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ReconfigureDevicesPackage"},
-				"Version": []string{"2023-08-01"},
-			},
-		},
-		"ListTaskInfo": {
-			Method: http.MethodGet,
-			Path:   "/",
-			Query: url.Values{
-				"Action":  []string{"ListTaskInfo"},
-				"Version": []string{"2020-10-25"},
 			},
 		},
 	}
