@@ -1351,18 +1351,18 @@ func (c *Live) DeletePullToPushGroup(ctx context.Context, arg *DeletePullToPushG
 	return result, nil
 }
 
-func (c *Live) RestartPullToPushTask(ctx context.Context, arg *RestartPullToPushTaskBody) (*RestartPullToPushTaskRes, error) {
+func (c *Live) ContinuePullToPushTask(ctx context.Context, arg *ContinuePullToPushTaskBody) (*ContinuePullToPushTaskRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
 		return nil, err
 	}
 
-	data, _, err := c.Client.CtxJson(ctx, "RestartPullToPushTask", url.Values{}, string(body))
+	data, _, err := c.Client.CtxJson(ctx, "ContinuePullToPushTask", url.Values{}, string(body))
 	if err != nil {
 		return nil, err
 	}
 
-	result := new(RestartPullToPushTaskRes)
+	result := new(ContinuePullToPushTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -1463,6 +1463,26 @@ func (c *Live) ListPullToPushTaskV2(ctx context.Context, arg *ListPullToPushTask
 	}
 
 	result := new(ListPullToPushTaskV2Res)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) RelaunchPullToPushTask(ctx context.Context, arg *RelaunchPullToPushTaskBody) (*RelaunchPullToPushTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "RelaunchPullToPushTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(RelaunchPullToPushTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -2027,6 +2047,26 @@ func (c *Live) DescribeLivePushStreamMetrics(ctx context.Context, arg *DescribeL
 	return result, nil
 }
 
+func (c *Live) DescribeLiveCallbackData(ctx context.Context, arg *DescribeLiveCallbackDataBody) (*DescribeLiveCallbackDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveCallbackData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveCallbackDataRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) DescribeLiveBatchStreamSessionData(ctx context.Context, arg *DescribeLiveBatchStreamSessionDataBody) (*DescribeLiveBatchStreamSessionDataRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -2159,6 +2199,26 @@ func (c *Live) DescribeLiveBatchPushStreamAvgMetrics(ctx context.Context, arg *D
 	}
 
 	result := new(DescribeLiveBatchPushStreamAvgMetricsRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeLiveBatchStreamTranscodeData(ctx context.Context, arg *DescribeLiveBatchStreamTranscodeDataBody) (*DescribeLiveBatchStreamTranscodeDataRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveBatchStreamTranscodeData", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveBatchStreamTranscodeDataRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -3467,6 +3527,46 @@ func (c *Live) DeleteTaskByAccountID(ctx context.Context, arg *DeleteTaskByAccou
 	}
 
 	result := new(DeleteTaskByAccountIDRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeHighLightTaskByAccountID(ctx context.Context, arg *DescribeHighLightTaskByAccountIDBody) (*DescribeHighLightTaskByAccountIDRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeHighLightTaskByAccountID", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeHighLightTaskByAccountIDRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListHighLightTask(ctx context.Context, arg *ListHighLightTaskBody) (*ListHighLightTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListHighLightTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListHighLightTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
