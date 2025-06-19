@@ -362,7 +362,7 @@ type ApplyVpcUploadInfoQuery struct {
 	// 需确保指定值在服务维度的白名单内，否则无法成功上传，参看上传 Content-Type 限制 [https://www.volcengine.com/docs/508/1319948]。
 	ContentType string `json:"ContentType,omitempty" query:"ContentType"`
 
-	// 文件扩展名，最大长度限制为 8 个字节。
+	// 文件扩展名，最大长度限制为 20 个字节。
 	// :::tip 仅当未指定 StoreKeys 时生效。 :::
 	FileExtension string `json:"FileExtension,omitempty" query:"FileExtension"`
 
@@ -1144,7 +1144,7 @@ type CreateHmExtractTaskResResult struct {
 
 type CreateImageAITaskBody struct {
 
-	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。传入图片的短边不小于 256 px，长边不大于 2048 px，大小不超过 10 MB。
+	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。传入图片的宽高、大小等要求请参看对应的附加组件使用限制 [https://www.volcengine.com/docs/508/1270839]。
 	// :::warning 若 DataType 取值 uri，则待转码图片 URI 必须为指定服务 ID 下的存储 URI。您可通过调用GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]获取指定服务下全部的上传文件存储
 	// URI。 :::
 	DataList []string `json:"DataList"`
@@ -7932,6 +7932,11 @@ type DescribeImageXEdgeRequestRegionsQuery struct {
 	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm。例如2019-06-02T00:00:00+08:00。
 	// 起始时间与结束时间间隔小于等于 90 天。
 	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
 }
 
 type DescribeImageXEdgeRequestRegionsRes struct {
@@ -13812,11 +13817,8 @@ type GetDomainConfigResResultAccessControl struct {
 	// REQUIRED; IP 访问控制配置
 	IPAuth *GetDomainConfigResResultAccessControlIPAuth `json:"ip_auth"`
 
-	// REQUIRED
-	ReferLink string `json:"refer_link"`
-
 	// REQUIRED; Referer 防盗链配置
-	RefererLink *GetDomainConfigResResultAccessControlRefererLink `json:"referer_link"`
+	ReferLink *GetDomainConfigResResultAccessControlReferLink `json:"refer_link"`
 
 	// REQUIRED; 远程鉴权设置
 	RemoteAuth *GetDomainConfigResResultAccessControlRemoteAuth `json:"remote_auth"`
@@ -13845,8 +13847,8 @@ type GetDomainConfigResResultAccessControlIPAuth struct {
 	Values []string `json:"values"`
 }
 
-// GetDomainConfigResResultAccessControlRefererLink - Referer 防盗链配置
-type GetDomainConfigResResultAccessControlRefererLink struct {
+// GetDomainConfigResResultAccessControlReferLink - Referer 防盗链配置
+type GetDomainConfigResResultAccessControlReferLink struct {
 
 	// REQUIRED; 是否允许空 Refer，取值如下所示：
 	// * true：允许空 Refer
@@ -14465,6 +14467,9 @@ type GetImageAIDetailsResResult struct {
 
 type GetImageAIDetailsResResultExecInfoItem struct {
 
+	// REQUIRED; 使用的 AI 图像处理模板 ID，参看AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 对应的模板信息。
+	WorkflowTemplateID string `json:"WorkflowTemplateId"`
+
 	// 结束时间。
 	EndAt string `json:"EndAt,omitempty"`
 
@@ -14493,6 +14498,11 @@ type GetImageAIDetailsResResultExecInfoItem struct {
 
 // GetImageAIDetailsResResultExecInfoItemExecInput - 执行输入。
 type GetImageAIDetailsResResultExecInfoItemExecInput struct {
+
+	// REQUIRED; 数据类型，取值如下所示：
+	// * uri：指定 ServiceId 下存储 URI。
+	// * url：公网可访问的 URL。
+	DataType string `json:"DataType"`
 
 	// REQUIRED; 图片 URL 或 URI。
 	ObjectKey string `json:"ObjectKey"`
@@ -14594,6 +14604,11 @@ type GetImageAITasksResResult struct {
 
 type GetImageAITasksResResultTaskInfoItem struct {
 
+	// REQUIRED; 数据类型，取值如下所示：
+	// * uri：指定 ServiceId 下存储 URI。
+	// * url：公网可访问的 URL。
+	DataType string `json:"DataType"`
+
 	// REQUIRED; 任务的结束执行时间。
 	EndAt string `json:"EndAt"`
 
@@ -14626,6 +14641,12 @@ type GetImageAITasksResResultTaskInfoItem struct {
 
 	// REQUIRED; 任务中包含的条目数。
 	Total int `json:"Total"`
+
+	// REQUIRED; AI 图像处理模板参数，参看AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取参数信息。
+	WorkflowParameter string `json:"WorkflowParameter"`
+
+	// REQUIRED; 使用的 AI 图像处理模板 ID，参看AI 图像处理模板 [https://www.volcengine.com/docs/508/1515840]页面获取模板 ID 对应的模板信息。
+	WorkflowTemplateID string `json:"WorkflowTemplateId"`
 }
 
 type GetImageAddOnTagQuery struct {
@@ -19208,6 +19229,9 @@ type GetImageUploadFilesResResultFileObjectsItem struct {
 
 type GetImageXQueryAppsQuery struct {
 
+	// 项目名。仅子用户使用。
+	Project string `json:"Project,omitempty" query:"Project"`
+
 	// 数据来源，账号下近 60 天内有数据上报的应用 ID，缺省情况下返回账号对应的全部应用 ID。取值如下所示：
 	// * upload：上传 1.0 数据。
 	// * cdn：下行网络数据。
@@ -19281,7 +19305,8 @@ type GetImageXQueryDimsQuery struct {
 	// * exceed_all：大图分布数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
+	// 应用 ID。传入多个用英文逗号分割。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的应用 ID。
+	// :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要匹配的系统类型。取值如下所示：
@@ -19336,7 +19361,8 @@ type GetImageXQueryRegionsQuery struct {
 	// * uploadv2：上传 2.0 数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的应用 ID。 :::
+	// 应用 ID。传入多个用英文逗号分割。默认为空，匹配账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的应用 ID。
+	// :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要匹配的系统类型。取值如下所示：
@@ -19400,7 +19426,8 @@ type GetImageXQueryValsQuery struct {
 	// * exceed_all：大图分布数据。
 	Source string `json:"Source" query:"Source"`
 
-	// 应用 ID。默认为空，匹配中账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。 :::
+	// 应用 ID。传入多个用英文逗号分割。默认为空，匹配中账号下所有的 AppID。 :::tip 您可以通过调用获取应用列表 [https://www.volcengine.com/docs/508/1213042]的方式获取所需的 AppID。
+	// :::
 	Appid string `json:"Appid,omitempty" query:"Appid"`
 
 	// 需要过滤的关键词（包含），不传则不过滤关键词。
