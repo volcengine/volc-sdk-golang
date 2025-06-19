@@ -574,6 +574,10 @@ func Test_CreateDomain(t *testing.T) {
 		SourceStationAddressType: 1,
 		Origins:                  "your origins",
 		Area:                     "cn",
+		OriginProtocol:           "http",
+		HttpPort:                 "80",
+		HttpsPort:                "443",
+		Weight:                   "1",
 	}
 
 	resp, status, err := instance.CreateDomain(query)
@@ -763,8 +767,12 @@ func Test_UpdateDomainConfig(t *testing.T) {
 						Origins:                  "1.1.1.1,2.2.2.2",
 						SourceStationAddressType: 2,
 						Host:                     "ip.origin.com",
+						Weight:                   "1",
+						HttpPort:                 "11",
+						HttpsPort:                "111",
 					},
 				},
+				OriginProtocol: "http",
 			},
 		},
 	}
