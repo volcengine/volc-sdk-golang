@@ -5,25 +5,42 @@ import "github.com/volcengine/volc-sdk-golang/base"
 type DocType = int
 
 const (
-	DocTypeThreeInOne                  DocType = 0 // 三证合一
-	DocTypeBusinessLicense             DocType = 1 // 企业营业执照
-	DocTypeOrganizationCodeCertificate DocType = 2 // 组织机构代码证
-	DocTypeTaxRegistrationCertificate  DocType = 3 // 税务登记证
-	DocTypeSocialCreditCodeCertificate DocType = 4 // 社会信用代码证书
-	DocTypePowerOfAttorney             DocType = 5 // 授权委托书
-	DocTypeOthers                      DocType = 6 // 其他/更多
-
+	DocTypeThreeInOne                        DocType = 0  // 三证合一
+	DocTypeBusinessLicense                   DocType = 1  // 企业营业执照
+	DocTypeOrganizationCodeCertificate       DocType = 2  // 组织机构代码证
+	DocTypeTaxRegistrationCertificate        DocType = 3  // 税务登记证
+	DocTypeSocialCreditCodeCertificate       DocType = 4  // 社会信用代码证书
+	DocTypePowerOfAttorney                   DocType = 5  // 授权委托书
+	DocTypeOthers                            DocType = 6  // 其他/更多
+	DocTypeInstitutionLegalPersonCertificate DocType = 7  // 事业单位法人证书
+	DocTypeRepresentativeIDCardFront         DocType = 8  // 经办人身份证人像面
+	DocTypeRepresentativeIDCardBack          DocType = 9  // 经办人身份证国徽面
+	DocTypeResponsiblePersonIDCardFront      DocType = 10 // 责任人身份证人像面
+	DocTypeResponsiblePersonIDCardBack       DocType = 11 // 责任人身份证国徽面
+	DocTypePassportCard                      DocType = 12 // 护照照片
+	DocTypeHKMPassportCard                   DocType = 13 // 港澳居民来往内地通行证照片
+	DocTypeTWPassportCard                    DocType = 14 // 台湾居民来往大陆通行证照片
+	DocTypeHMTResidenceCard                  DocType = 15 // 港澳台居民居住证照片
+	DocTypeAppIcpCertificate                 DocType = 16 // APPICP证书
+	DocTypeTrademarkCertificate              DocType = 17 // 商标证书
 )
 
 type SignSourceType = string
 
 const (
 	SignSourceTypeCompany          SignSourceType = "公司全称/简称"
-	SignSourceTypeSite             SignSourceType = "工信部备案网站全称/简称"
+	SignSourceTypeSite             SignSourceType = "工信部备案网站全称/简称" // deprecated
 	SignSourceTypeApp              SignSourceType = "APP全称/简称"
-	SignSourceTypeOfficialAccounts SignSourceType = "公众号、小程序全称/简称"
+	SignSourceTypeOfficialAccounts SignSourceType = "公众号、小程序全称/简称" // deprecated
 	SignSourceTypeBrand            SignSourceType = "商标全称/简称"
-	SignSourceTypeStore            SignSourceType = "电商平台店铺名的全称/简称"
+	SignSourceTypeStore            SignSourceType = "电商平台店铺名的全称/简称" // deprecated
+)
+
+// 签名来源类型
+const (
+	SignSourceCompany = 1 // 公司全称/简称
+	SignSourceApp     = 2 // APP全称
+	SignSourceBrand   = 3 // 商标全称
 )
 
 type SignPurpose = int
