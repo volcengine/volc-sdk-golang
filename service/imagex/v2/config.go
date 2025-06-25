@@ -2075,7 +2075,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetSyncAuditResult"},
-				"Version": []string{"2018-08-01"},
+				"Version": []string{"2023-05-01"},
 			},
 		},
 		"UpdateImageAuditTaskStatus": {
