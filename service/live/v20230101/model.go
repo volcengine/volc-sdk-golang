@@ -119,6 +119,11 @@ type BindEncryptDRMResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+// Components130L268SchemasCreatehighlighttaskbodyPropertiesSellpointparamPropertiesEcommerceinfoAdditionalproperties - 对应输入视频的商家卖点信息
+type Components130L268SchemasCreatehighlighttaskbodyPropertiesSellpointparamPropertiesEcommerceinfoAdditionalproperties struct {
+	ProductInfo []*CreateHighLightTaskBodySellPointParamECommerceInfoPropertiesItemsItem `json:"ProductInfo,omitempty"`
+}
+
 // Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesTosparam
 // - TOS 存储相关配置
 // 说明
@@ -147,6 +152,12 @@ type Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResult
 	Language string `json:"Language"`
 }
 
+type Components1B7Y2U1SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItems struct {
+	HLClips []ComponentsHqpv97SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItemsPropertiesHlclipsItems `json:"HLClips"`
+
+	SourceURL string `json:"SourceUrl"`
+}
+
 type Components1C398ShSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesTargetlanguageItems struct {
 	Border ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBorder `json:"Border"`
 
@@ -173,12 +184,30 @@ type Components1O8E0AlSchemasListvhostsubtitletranscodepresetresPropertiesResult
 	Width int32 `json:"Width"`
 }
 
+type Components1Pvao98SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutput struct {
+	HLSourceClips []Components1B7Y2U1SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItems `json:"HLSourceClips"`
+}
+
 type Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam struct {
 	Bucket          *string `json:"Bucket,omitempty"`
 	Enable          *bool   `json:"Enable,omitempty"`
 	ExactObject     *string `json:"ExactObject,omitempty"`
 	OverwriteObject *string `json:"OverwriteObject,omitempty"`
 	StorageDir      *string `json:"StorageDir,omitempty"`
+}
+
+type Components1UtnxifSchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItemsPropertiesHlclipsItemsPropertiesSellpointsresItems struct {
+	EndTime int64 `json:"EndTime"`
+
+	Message string `json:"Message"`
+
+	SellPoints string `json:"SellPoints"`
+
+	StartTime int64 `json:"StartTime"`
+
+	Status string `json:"Status"`
+
+	EffectType *string `json:"EffectType,omitempty"`
 }
 
 type Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam struct {
@@ -270,6 +299,34 @@ type ComponentsGg7M1TSchemasListpulltopushtaskresPropertiesResultPropertiesListI
 	EndOffset *float32 `json:"EndOffset,omitempty"`
 
 	StartOffset *float32 `json:"StartOffset,omitempty"`
+}
+
+type ComponentsHqpv97SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItemsPropertiesHlclipsItems struct {
+	Confidence float32 `json:"Confidence"`
+
+	Description string `json:"Description"`
+
+	Duration int64 `json:"Duration"`
+
+	HLEnd int64 `json:"HLEnd"`
+
+	HLStart int64 `json:"HLStart"`
+
+	Index int32 `json:"Index"`
+
+	Label int32 `json:"Label"`
+
+	SEnd int64 `json:"SEnd"`
+
+	SStart int64 `json:"SStart"`
+
+	Score float32 `json:"Score"`
+
+	SellPointsRes []Components1UtnxifSchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItemsPropertiesHlclipsItemsPropertiesSellpointsresItems `json:"SellPointsRes"`
+
+	SourceURL string `json:"SourceUrl"`
+
+	ClipURL *string `json:"ClipUrl,omitempty"`
 }
 
 // ComponentsJ1MbxoSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesPosition
@@ -369,6 +426,51 @@ type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultProperti
 	Enable      *bool                                                                                                                                                                                      `json:"Enable,omitempty"`
 	ImageXParam *Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
 	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
+}
+
+type ContinuePullToPushTaskBody struct {
+
+	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取状态为停用的任务 ID。
+	TaskID string `json:"TaskId"`
+
+	// 任务所属的群组名称，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取。 :::tip
+	// * 使用主账号调用时，为非必填。
+	// * 使用子账号调用时，为必填。 :::
+	GroupName *string `json:"GroupName,omitempty"`
+}
+
+type ContinuePullToPushTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata ContinuePullToPushTaskResResponseMetadata `json:"ResponseMetadata"`
+}
+
+type ContinuePullToPushTaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string                                          `json:"Version"`
+	Error   *ContinuePullToPushTaskResResponseMetadataError `json:"Error,omitempty"`
+}
+
+type ContinuePullToPushTaskResResponseMetadataError struct {
+
+	// 错误码
+	Code *string `json:"Code,omitempty"`
+
+	// 错误信息
+	Message *string `json:"Message,omitempty"`
 }
 
 type CreateCarouselTaskBody struct {
@@ -945,10 +1047,7 @@ type CreateDomainV2ResResponseMetadataError struct {
 
 type CreateHighLightTaskBody struct {
 
-	// REQUIRED; 输出高光信息回调参数。
-	CallbackParam CreateHighLightTaskBodyCallbackParam `json:"CallbackParam"`
-
-	// REQUIRED; 算法模型类型。0:足球体育
+	// REQUIRED; 算法模型类型。0:足球体育；1：文娱短剧，仅适用于视频源类型为点播视频的场景，即 "Type":1；2:电商，仅适用于视频源类型为点播视频的场景，即 "Type":1。
 	Model int32 `json:"Model"`
 
 	// REQUIRED; 任务名称。
@@ -960,6 +1059,9 @@ type CreateHighLightTaskBody struct {
 	// REQUIRED; 任务类型。0:直播
 	Type int32 `json:"Type"`
 
+	// 输出高光信息回调参数。
+	CallbackParam *CreateHighLightTaskBodyCallbackParam `json:"CallbackParam,omitempty"`
+
 	// 是否需要输出【高光片段】以及相关配置参数设置
 	HLClipsParam *CreateHighLightTaskBodyHLClipsParam `json:"HLClipsParam,omitempty"`
 
@@ -969,6 +1071,15 @@ type CreateHighLightTaskBody struct {
 	// 直播高光剪辑任务配置参数设置，仅当“数据源类型”选择为【直播】时可设置生效。
 	LiveParam *CreateHighLightTaskBodyLiveParam `json:"LiveParam,omitempty"`
 
+	// 电商场景生效，填写后会加卖点效果，不填写则不加
+	SellPointParam *CreateHighLightTaskBodySellPointParam `json:"SellPointParam,omitempty"`
+
+	// 算法模型子类型。足球体育：0表示默认类型剪辑；文娱短剧：0表示默认类型剪辑；电商：0表示默认类型剪辑，1表示电商视频提取分镜转场素材。
+	SubModel *int32 `json:"SubModel,omitempty"`
+
+	// 音频生成字幕配置
+	SubtitleParam *CreateHighLightTaskBodySubtitleParam `json:"SubtitleParam,omitempty"`
+
 	// 输出高光视频上传VOD系统参数
 	VodParam *CreateHighLightTaskBodyVodParam `json:"VodParam,omitempty"`
 }
@@ -976,14 +1087,14 @@ type CreateHighLightTaskBody struct {
 // CreateHighLightTaskBodyCallbackParam - 输出高光信息回调参数。
 type CreateHighLightTaskBodyCallbackParam struct {
 
-	// REQUIRED; 回调类型。需要填1:表示http回调。
-	CallbackType int32 `json:"CallbackType"`
-
-	// REQUIRED; HTTP回调参数。
-	HTTPParams CreateHighLightTaskBodyCallbackParamHTTPParams `json:"HttpParams"`
-
 	// 业务自定义设置的参数信息，通过回调直接透传，便于业务自定义标识，默认为空
 	CallbackExtra *string `json:"CallbackExtra,omitempty"`
+
+	// 回调类型。0:表示http回调，200:表示不需要回调
+	CallbackType *int32 `json:"CallbackType,omitempty"`
+
+	// HTTP回调参数。
+	HTTPParams *CreateHighLightTaskBodyCallbackParamHTTPParams `json:"HttpParams,omitempty"`
 }
 
 // CreateHighLightTaskBodyCallbackParamHTTPParams - HTTP回调参数。
@@ -996,11 +1107,26 @@ type CreateHighLightTaskBodyCallbackParamHTTPParams struct {
 // CreateHighLightTaskBodyHLClipsParam - 是否需要输出【高光片段】以及相关配置参数设置
 type CreateHighLightTaskBodyHLClipsParam struct {
 
+	// 针对算法检测出的高光片段前后分别增加的冗余时间，精确到s。默认为0，取值范围为[0,60]。主要适用场景：对算法检出的高光片段内容信任度不高，期望获取更多冗余素材，以便自行剪辑
+	BufferDuration *int32 `json:"BufferDuration,omitempty"`
+
+	// 是否禁止高光片段时间戳返回，默认为【否】
+	DisableTimestamp *bool `json:"DisableTimestamp,omitempty"`
+
 	// 启用状态。
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 是否生产高光片段视频素材
+	// 输出高光片段的编码格式，取值范围如下：0. H264（默认）, 1. H265。
+	EncCodec *int32 `json:"EncCodec,omitempty"`
+
+	// 累计生成高光片段数量上限，仅针对数据源类型为【视频】时生效。默认值为0，表示不限制数量。
+	NumLimit *int32 `json:"NumLimit,omitempty"`
+
+	// 是否返回高光片段视频素材，默认为【否】
 	OutputHLClips *bool `json:"OutputHLClips,omitempty"`
+
+	// 输出高光片段的视频封装格式，取值范围如下：0. MP4（默认）, 1. HLS（M3U8 + TS）, 2. FLV
+	VideoFormat *int32 `json:"VideoFormat,omitempty"`
 }
 
 // CreateHighLightTaskBodyHLMixParam - 是否需要输出【高光混剪】以及相关配置参数设置
@@ -1018,8 +1144,20 @@ type CreateHighLightTaskBodyHLMixParam struct {
 	// 启用状态。
 	Enable *bool `json:"Enable,omitempty"`
 
+	// 输出高光片段的编码格式，取值范围如下：0. H264（默认）, 1. H265。
+	EncCodec *int32 `json:"EncCodec,omitempty"`
+
 	// 累计生成高光混剪数量上限。默认值为1，取值范围[1,100]。
 	NumLimit *int32 `json:"NumLimit,omitempty"`
+
+	// 是否开启卖点贴纸
+	SellPointSticker *bool `json:"SellPointSticker,omitempty"`
+
+	// 是否开启声音生成字幕
+	Subtitle *bool `json:"Subtitle,omitempty"`
+
+	// 输出高光片段的视频封装格式，取值范围如下：0. MP4（默认）, 1. HLS（M3U8 + TS）, 2. FLV
+	VideoFormat *int32 `json:"VideoFormat,omitempty"`
 }
 
 // CreateHighLightTaskBodyLiveParam - 直播高光剪辑任务配置参数设置，仅当“数据源类型”选择为【直播】时可设置生效。
@@ -1038,13 +1176,94 @@ type CreateHighLightTaskBodyLiveParam struct {
 	TaskStartTime *string `json:"TaskStartTime,omitempty"`
 }
 
+// CreateHighLightTaskBodySellPointParam - 电商场景生效，填写后会加卖点效果，不填写则不加
+type CreateHighLightTaskBodySellPointParam struct {
+
+	// REQUIRED; 电商场景下使用的卖点效果配置，为 JSON Map 格式。
+	// * Key：输入视频的链接或索引
+	// * Value：对应视频的商家卖点信息 ProductInfo
+	ECommerceInfo CreateHighLightTaskBodySellPointParamECommerceInfo `json:"ECommerceInfo"`
+
+	// 使用的卖点效果模版，默认为default，非必填。当前仅支持default
+	EffectType *string `json:"EffectType,omitempty"`
+}
+
+// CreateHighLightTaskBodySellPointParamECommerceInfo - 电商场景下使用的卖点效果配置，为 JSON Map 格式。
+// * Key：输入视频的链接或索引
+// * Value：对应视频的商家卖点信息 ProductInfo
+type CreateHighLightTaskBodySellPointParamECommerceInfo struct {
+
+	// REQUIRED
+	Field124 string `json:"Field124"`
+
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]*Components130L268SchemasCreatehighlighttaskbodyPropertiesSellpointparamPropertiesEcommerceinfoAdditionalproperties
+}
+
+type CreateHighLightTaskBodySellPointParamECommerceInfoPropertiesItemsItem struct {
+
+	// REQUIRED; 商家卖点信息
+	Desc string `json:"Desc"`
+}
+
 type CreateHighLightTaskBodySourcesItem struct {
 
 	// REQUIRED; 视频源路径。直播：拉流地址支持：FLV、HLS、RTMP 、RTM
 	Path string `json:"Path"`
 
-	// REQUIRED; 视频源类型。0:表示网络源
+	// REQUIRED; 视频源类型。0:表示网络源。
 	SourceType int32 `json:"SourceType"`
+}
+
+// CreateHighLightTaskBodySubtitleParam - 音频生成字幕配置
+type CreateHighLightTaskBodySubtitleParam struct {
+
+	// 字幕描边参数
+	Border *CreateHighLightTaskBodySubtitleParamBorder `json:"Border,omitempty"`
+
+	// 字幕字体参数
+	Font *CreateHighLightTaskBodySubtitleParamFont `json:"Font,omitempty"`
+
+	// 字幕位置参数
+	Position *CreateHighLightTaskBodySubtitleParamPosition `json:"Position,omitempty"`
+}
+
+// CreateHighLightTaskBodySubtitleParamBorder - 字幕描边参数
+type CreateHighLightTaskBodySubtitleParamBorder struct {
+
+	// 描边颜色：定义方式和【字体颜色】一致，默认为【黑色】
+	Color *string `json:"Color,omitempty"`
+
+	// 描边宽度：单位为 px，默认为2
+	W *int32 `json:"W,omitempty"`
+}
+
+// CreateHighLightTaskBodySubtitleParamFont - 字幕字体参数
+type CreateHighLightTaskBodySubtitleParamFont struct {
+
+	// 字幕字体，支持以下字体取值。 songticu: 宋体粗;（默认值）;songtixi: 宋体细; arial: Arial; heitifan: 黑体繁; inter: Inter; kaiti: 楷体; montserrat: Montserrat;
+	// notosans: Noto Sans; notosansar: Noto Sans 阿拉伯文; notosansja: Noto Sans
+	// 日文; notosansko: Noto Sans 韩文; notosansth: Noto Sans 泰文; opposans: Opposans; roboto: Roboto; simhei: 黑体; siyuanheiti: 思源黑体;
+	// siyuansongti: 思源宋体
+	Font *string `json:"Font,omitempty"`
+
+	// 字体颜色，支持以下几种方法进行定义。默认为【白色】。支持以 0x 或 # 开头，后面跟着十六进制颜色 RGB 值，再跟着 @+十六进制/百分比来表示的透明度值，来定义字幕的字体颜色。例如，设置 RGB 值为 FF0000，透明度为 5%的颜色时，您可以传入
+	// 0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80 或 #FF0000@0.5。支持使用前端框架 FFmpeg
+	// 规定的颜色关键字，来定义字幕的字体颜色。例如，AliceBlue 表示 0xF0F8FF、AntiqueWhite 表示 0xFAEBD7、Black 表示 0x000000 等。
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 字号，默认为55px，推荐取值范围[40,60]
+	FontSize *int32 `json:"FontSize,omitempty"`
+}
+
+// CreateHighLightTaskBodySubtitleParamPosition - 字幕位置参数
+type CreateHighLightTaskBodySubtitleParamPosition struct {
+
+	// 水平边距：字幕距离画面两侧的边距与画面宽度的占比，使用归一化百分表示，取值范围为 [0,0.2]
+	MarginLr *float32 `json:"MarginLr,omitempty"`
+
+	// 垂直边距：字幕距离画面底部的边距与画面高度的占比，使用归一化百分表示，取值范围为 [0,0.5]
+	MarginTb *float32 `json:"MarginTb,omitempty"`
 }
 
 // CreateHighLightTaskBodyVodParam - 输出高光视频上传VOD系统参数
@@ -1052,6 +1271,9 @@ type CreateHighLightTaskBodyVodParam struct {
 
 	// REQUIRED; VOD空间名称。
 	Space string `json:"Space"`
+
+	// VOD空间工作流
+	WorkflowID *string `json:"WorkflowID,omitempty"`
 }
 
 type CreateHighLightTaskRes struct {
@@ -4827,6 +5049,212 @@ type DescribeHTTPHeaderConfigResResultHeaderConfigListPropertiesItemsItem struct
 	HeaderValue string `json:"HeaderValue"`
 }
 
+type DescribeHighLightTaskByAccountIDBody struct {
+
+	// REQUIRED; 创建高光剪辑任务时返回的taskid
+	TaskID string `json:"TaskID"`
+
+	// 是否返回高光剪辑生产结果
+	NeedResult *bool `json:"NeedResult,omitempty"`
+}
+
+type DescribeHighLightTaskByAccountIDRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeHighLightTaskByAccountIDResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *DescribeHighLightTaskByAccountIDResResult `json:"Result,omitempty"`
+}
+
+type DescribeHighLightTaskByAccountIDResResponseMetadata struct {
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestID"`
+
+	// 请求的接口名，属于请求的公共参数。
+	Action *string `json:"Action,omitempty"`
+
+	// 请求的Region，例如：cn-north-1
+	Region *string `json:"Region,omitempty"`
+
+	// 请求的服务，属于请求的公共参数。
+	Service *string `json:"Service,omitempty"`
+
+	// 请求的版本号，属于请求的公共参数。
+	Version *string `json:"Version,omitempty"`
+}
+
+// DescribeHighLightTaskByAccountIDResResult - 视请求的接口而定
+type DescribeHighLightTaskByAccountIDResResult struct {
+
+	// 高光剪辑任务的详情数据，包含任务所属账号、任务参数配置、任务状态、任务唯一标识符以及生产结果列表等信息。
+	Data *DescribeHighLightTaskByAccountIDResResultData `json:"Data,omitempty"`
+}
+
+// DescribeHighLightTaskByAccountIDResResultData - 高光剪辑任务的详情数据，包含任务所属账号、任务参数配置、任务状态、任务唯一标识符以及生产结果列表等信息。
+type DescribeHighLightTaskByAccountIDResResultData struct {
+
+	// 高光剪辑任务所属的账号
+	AccountID *string `json:"AccountID,omitempty"`
+
+	// 高光剪辑任务的生产结果列表，包含多个生产回调结果。每个结果包含以下信息：
+	// * code：生产回调的状态码；
+	// * status：生产状态码；
+	// * message：生产描述信息；
+	// * exception：异常信息；
+	// * TaskID：高光剪辑任务的唯一标识符；
+	// * Output：高光剪辑生产结果的详细信息；
+	// * ExtraData：自定义的其他信息。
+	ProducedResults []*DescribeHighLightTaskByAccountIDResResultDataProducedResultsItem `json:"ProducedResults,omitempty"`
+
+	// 创建高光剪辑任务的body参数，为json字符串
+	Rule *string `json:"Rule,omitempty"`
+
+	// 高光剪辑任务状态，init：任务初始化状态，pending：任务等待启动阶段，prepare：任务启动状态，running：任务生产状态，prestop：任务准备结束状态，done：任务完成状态，error：任务报错状态
+	Status *string `json:"Status,omitempty"`
+
+	// 创建高光剪辑任务时返回的taskid
+	TaskID *string `json:"TaskID,omitempty"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsItem struct {
+
+	// REQUIRED; 高光剪辑任务生产回调的状态码，用于标识生产过程的当前状态。
+	// * 100：表示生产成功，任务将持续生产；
+	// * 200：表示生产完成，任务退出；
+	// * 500：表示当前生产回调失败，但任务仍会持续生产；
+	// * 1000：表示高光剪辑生产失败，任务停止。
+	Code int64 `json:"code"`
+
+	// REQUIRED; 高光剪辑任务生产过程中的异常信息，用于描述生产失败的具体原因。
+	Exception string `json:"exception"`
+
+	// REQUIRED; 高光剪辑任务创建时的自定义其他信息，用于传递额外的任务相关数据。
+	ExtraData string `json:"ExtraData"`
+
+	// REQUIRED; 高光剪辑任务生产过程中的描述信息。
+	Message string `json:"message"`
+
+	// REQUIRED
+	Output DescribeHighLightTaskByAccountIDResResultDataProducedResultsItemOutput `json:"Output"`
+
+	// REQUIRED; 高光剪辑任务生产状态码，可能的取值如下所示。
+	// * Continue：表示生产成功，持续生产；
+	// * OK：表示生产完成，任务退出；
+	// * Error：表示当前生产回调失败，并且任务还会持续生产；
+	// * Fatal：表示高光剪辑生产失败，任务停止。
+	Status string `json:"status"`
+
+	// REQUIRED; 高光剪辑任务的唯一标识符，用于标识特定的高光剪辑生产任务。
+	TaskID string `json:"TaskID"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsItemOutput struct {
+
+	// REQUIRED
+	HLClipsOutput Components1Pvao98SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutput `json:"HLClipsOutput"`
+
+	// REQUIRED
+	HLMixOutput DescribeHighLightTaskByAccountIDResResultDataProducedResultsProperties `json:"HLMixOutput"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsProperties struct {
+
+	// REQUIRED; 高光混剪结果信息，包含从多个高光片段中混剪生成的最终视频的详细信息。
+	HLMixCuts []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsItem `json:"HLMixCuts"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsItem struct {
+
+	// REQUIRED; 高光片段类型标识（即 Label）的置信度，用于表示该类型标识的可靠程度。仅适用于体育足球场景，取值范围为 [0,1]，数值越大表示置信度越高。
+	Confidence float32 `json:"Confidence"`
+
+	// REQUIRED; 高光片段内容描述。仅适用于体育足球。
+	Description string `json:"Description"`
+
+	// REQUIRED; 高光剪辑片段时长，单位为毫秒。
+	Duration int64 `json:"Duration"`
+
+	// REQUIRED; 高光剪辑片段相对高光片段或者高光混剪的截止时间位置，单位为毫秒。
+	HLEnd int64 `json:"HLEnd"`
+
+	// REQUIRED; 高光剪辑片段相对高光片段或者高光混剪的起始时间位置，单位为毫秒。
+	HLStart int64 `json:"HLStart"`
+
+	// REQUIRED; 高光剪辑片段所属原始视频的序号，用于标识该片段在原始视频中的顺序位置。
+	Index int32 `json:"Index"`
+
+	// REQUIRED; 高光片段的类型标识。当前仅用于体育足球场景，可能的取值如下所示。
+	// * 0：无标签；
+	// * 1：背景；
+	// * 2：进球；
+	// * 3：角球；
+	// * 4：点球；
+	// * 5：黄牌；
+	// * 6：红牌；
+	// * 7：犯规；
+	// * 8：射门；
+	// * 9：任意球。
+	Label int32 `json:"Label"`
+
+	// REQUIRED; 高光剪辑片段相对所属原始视频的截止时间位置，单位为毫秒。
+	SEnd int64 `json:"SEnd"`
+
+	// REQUIRED; 高光剪辑片段相对所属原始视频的起始时间位置，单位为毫秒。
+	SStart int64 `json:"SStart"`
+
+	// REQUIRED; 高光剪辑片段的高光分数，用于评估该片段在原始视频中的精彩程度。分数越高表示该片段越精彩，分数区间范围为 [0, 10]。
+	Score float32 `json:"Score"`
+
+	// REQUIRED; 高光剪辑片段的卖点信息结果。
+	SellPointsRes []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsPropertiesItemsItem `json:"SellPointsRes"`
+
+	// REQUIRED; 高光剪辑片段所属的原始视频 URL 地址，用于标识该片段是从哪个原始视频中提取的。
+	SourceURL string `json:"SourceUrl"`
+
+	// 高光剪辑片段上传至视频点播（VOD）服务后的视频唯一标识符 vid（Video ID），用于唯一标识该视频文件。
+	ClipURL *string `json:"ClipUrl,omitempty"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsPropertiesItemsItem struct {
+
+	// REQUIRED; 卖点相对于混剪结果的结束时间，单位为毫秒。
+	EndTime int64 `json:"EndTime"`
+
+	// REQUIRED; 卖点添加过程中的错误信息，用于描述添加卖点失败的具体原因。
+	Message string `json:"Message"`
+
+	// REQUIRED; 视频卖点信息，用于描述高光剪辑片段中的关键亮点内容。
+	SellPoints string `json:"SellPoints"`
+
+	// REQUIRED; 卖点相对于混剪结果的开始时间，单位为毫秒。
+	StartTime int64 `json:"StartTime"`
+
+	// REQUIRED; 卖点添加的状态，取值如下所示。
+	// * ok：卖点添加成功；
+	// * fail：卖点添加失败。
+	Status string `json:"Status"`
+
+	// 使用的卖点效果模版，当前仅支持 default 值。
+	EffectType *string `json:"EffectType,omitempty"`
+}
+
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsItem struct {
+
+	// REQUIRED; 高光剪辑混剪结果视频的时长，单位为毫秒。
+	Duration int64 `json:"Duration"`
+
+	// REQUIRED; 高光剪辑混剪结果视频对应的片段详情信息，包含从原始视频中提取的高光片段信息。
+	HLClips []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsItem `json:"HLClips"`
+
+	// REQUIRED; 高光剪辑混剪结果上传至视频点播（VOD）服务后的视频唯一标识符 vid（Video ID），用于唯一标识该视频文件。
+	HighlightURL string `json:"HighlightUrl"`
+
+	// REQUIRED; 高光剪辑混剪结果序号，用于标识混剪结果在结果列表中的顺序位置。
+	Index int32 `json:"Index"`
+}
+
 type DescribeIPAccessRuleBody struct {
 
 	// REQUIRED; 推流域名或拉流域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取需要查询
@@ -6309,6 +6737,260 @@ type DescribeLiveBatchStreamTrafficDataResResultUserRegionListItem struct {
 	Province *string `json:"Province,omitempty"`
 }
 
+type DescribeLiveBatchStreamTranscodeDataBody struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。 :::tip 查询历史数据的时间范围为 366 天。 :::
+	StartTime string `json:"StartTime"`
+
+	// 域名列表，默认为空表示全部域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，获取直播流使用的域名信息。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 查询数据的页码，默认值为 1，表示查询第一页的数据。
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页显示的数据条数，默认值为 1000，取值范围为 [100,1000]。
+	PageSize *int32 `json:"PageSize,omitempty"`
+}
+
+type DescribeLiveBatchStreamTranscodeDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveBatchStreamTranscodeDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeLiveBatchStreamTranscodeDataResResult `json:"Result"`
+}
+
+type DescribeLiveBatchStreamTranscodeDataResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeLiveBatchStreamTranscodeDataResResult struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 数据分页的信息。
+	Pagination DescribeLiveBatchStreamTranscodeDataResResultPagination `json:"Pagination"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的时间戳，精度为秒。
+	StartTime string `json:"StartTime"`
+
+	// REQUIRED; 流维度的转码用量信息详情。
+	StreamInfoList []DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem `json:"StreamInfoList"`
+
+	// REQUIRED; 当前查询条件下，所有流的转码总时长，单位为分钟。
+	TotalDuration float32 `json:"TotalDuration"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+}
+
+// DescribeLiveBatchStreamTranscodeDataResResultPagination - 数据分页的信息。
+type DescribeLiveBatchStreamTranscodeDataResResultPagination struct {
+
+	// REQUIRED; 当前所在分页的页码。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页展示的数据条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果的数据总条数。
+	TotalCount int32 `json:"TotalCount"`
+}
+
+type DescribeLiveBatchStreamTranscodeDataResResultStreamInfoListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 当前流的转码码率，单位为 kbps。
+	Coderate int32 `json:"Coderate"`
+
+	// REQUIRED; 域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 当前流在查询时间内的转码总时长，单位为分钟。
+	Duration float32 `json:"Duration"`
+
+	// REQUIRED; 分辨率。- 480P：640 × 480； - 720P：1280 × 720； - 1080P：1920 × 1088； - 2K：2560 × 1440； - 4K：4096 × 2160；- 8K：大于4K； -
+	// 0：纯音频流；
+	Resolution string `json:"Resolution"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+
+	// REQUIRED; 视频编码格式，支持的取值和含义如下所示。- NormalH264：H.264 标准转码； - NormalH265：H.265 标准转码； - NormalH266：H.266 标准转码； - ByteHDH264：H.264
+	// 极智超清； - ByteHDH265：H.265 极智超清； - ByteHDH266：H.266 极智超清；- ByteQE：画质增强；- Audio：纯音频流；
+	VCodec string `json:"VCodec"`
+}
+
+type DescribeLiveCallbackDataBody struct {
+
+	// REQUIRED; 结束时间，单次查询31天，历史366天
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 开始时间
+	StartTime string `json:"StartTime"`
+
+	// 应用名称。
+	App *string `json:"App,omitempty"`
+
+	// 回调事件类型 推流开始-push_start 推流结束-push_end 截图回调-snapshot_event 录制回调-record_event
+	CallbackEventType []*string `json:"CallbackEventType,omitempty"`
+
+	// 回调状态 成功-success 失败-fail
+	CallbackStatus []*string `json:"CallbackStatus,omitempty"`
+
+	// 需查询的域名列表，缺省情况下表示当前账号下的所有域名。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 分页页码，默认是1，取值范围[1，10000]
+	PageNum *int32 `json:"PageNum,omitempty"`
+
+	// 每页的大小，默认100，取值范围[1, 1000]
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 流名称，用于精确定位某一路直播流。
+	Stream *string `json:"Stream,omitempty"`
+}
+
+type DescribeLiveCallbackDataRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeLiveCallbackDataResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *DescribeLiveCallbackDataResResult `json:"Result,omitempty"`
+}
+
+type DescribeLiveCallbackDataResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// DescribeLiveCallbackDataResResult - 视请求的接口而定
+type DescribeLiveCallbackDataResResult struct {
+
+	// REQUIRED; 查询的结束时间，RFC3339 格式的 UTC 时间，精度为秒。
+	EndTime string `json:"EndTime"`
+
+	// REQUIRED; 查询的开始时间，RFC3339 格式的 UTC 时间，精度为秒。
+	StartTime string `json:"StartTime"`
+
+	// 应用名称。
+	App *string `json:"App,omitempty"`
+
+	// 回调事件类型
+	CallbackEventType []*string `json:"CallbackEventType,omitempty"`
+
+	// 回调事件详情
+	CallbackInfoList []*DescribeLiveCallbackDataResResultCallbackInfoListItem `json:"CallbackInfoList,omitempty"`
+
+	// 回调状态
+	CallbackStatus []*string `json:"CallbackStatus,omitempty"`
+
+	// 域名列表。
+	DomainList []*string `json:"DomainList,omitempty"`
+
+	// 查询结果的分页信息。
+	Pagination *DescribeLiveCallbackDataResResultPagination `json:"Pagination,omitempty"`
+
+	// 流名称。
+	Stream *string `json:"Stream,omitempty"`
+}
+
+type DescribeLiveCallbackDataResResultCallbackInfoListItem struct {
+
+	// REQUIRED; 应用名称。
+	App string `json:"App"`
+
+	// REQUIRED; 回调地址。
+	CallbackAddress string `json:"CallbackAddress"`
+
+	// REQUIRED; 回调请求体。
+	CallbackBody string `json:"CallbackBody"`
+
+	// REQUIRED; 回调错误说明。
+	CallbackErrorCode string `json:"CallbackErrorCode"`
+
+	// REQUIRED; 错误信息，当回调失败时返回。
+	CallbackErrorMessage string `json:"CallbackErrorMessage"`
+
+	// REQUIRED; 回调事件类型。
+	CallbackEventType string `json:"CallbackEventType"`
+
+	// REQUIRED; 回调请求方式。
+	CallbackMethod string `json:"CallbackMethod"`
+
+	// REQUIRED; 回调响应体。
+	CallbackResponseBody string `json:"CallbackResponseBody"`
+
+	// REQUIRED; 回调响应码。
+	CallbackResponseCode string `json:"CallbackResponseCode"`
+
+	// REQUIRED; 回调响应头信息。
+	CallbackResponseHeader string `json:"CallbackResponseHeader"`
+
+	// REQUIRED; 回调响应时间。
+	CallbackResponseTime string `json:"CallbackResponseTime"`
+
+	// REQUIRED; 回调状态
+	CallbackStatus string `json:"CallbackStatus"`
+
+	// REQUIRED; 回调发生时间。
+	CallbackTime string `json:"CallbackTime"`
+
+	// REQUIRED; 域名。
+	Domain string `json:"Domain"`
+
+	// REQUIRED; 流名称。
+	Stream string `json:"Stream"`
+}
+
+// DescribeLiveCallbackDataResResultPagination - 查询结果的分页信息。
+type DescribeLiveCallbackDataResResultPagination struct {
+
+	// REQUIRED; 当前所在分页的页码。
+	PageNum int32 `json:"PageNum"`
+
+	// REQUIRED; 每页显示的数据条数。
+	PageSize int32 `json:"PageSize"`
+
+	// REQUIRED; 查询结果的数据总条数。
+	TotalCount int32 `json:"TotalCount"`
+}
+
 type DescribeLiveEdgeStatDataBody struct {
 
 	// REQUIRED; 查询的结束时间，RFC3339 格式的时间戳，精度为秒。
@@ -7513,7 +8195,7 @@ type DescribeLivePadStreamListResResultStreamListItem struct {
 	// REQUIRED; 流名称。
 	Stream string `json:"Stream"`
 
-	// REQUIRED
+	// REQUIRED; 域名空间。
 	Vhost string `json:"Vhost"`
 }
 
@@ -12386,6 +13068,95 @@ type ListDomainDetailResResultDomainListPropertiesItemsItem struct {
 	Value string `json:"Value"`
 }
 
+type ListHighLightTaskBody struct {
+
+	// REQUIRED; 遍历任务分页数
+	Page int32 `json:"Page"`
+
+	// REQUIRED; 遍历任务单页任务数
+	PageSize int32 `json:"PageSize"`
+
+	// 遍历在某个时间范围内创建的高光剪辑任务，时间范围的截止时间，RFC3339 格式的时间戳，精度为秒
+	CreateTimeEd *string `json:"CreateTimeEd,omitempty"`
+
+	// 遍历在某个时间范围内创建的高光剪辑任务，时间范围的起始时间，RFC3339 格式的时间戳，精度为秒
+	CreateTimeSt *string `json:"CreateTimeSt,omitempty"`
+
+	// 便利结果任务排序，asc：升序, desc：降序。默认为desc
+	Order *string `json:"Order,omitempty"`
+
+	// 遍历在某个时间范围内停止的高光剪辑任务，时间范围的截止时间，RFC3339 格式的时间戳，精度为秒
+	StopTimeEd *string `json:"StopTimeEd,omitempty"`
+
+	// 遍历在某个时间范围内停止的高光剪辑任务，时间范围的起始时间，RFC3339 格式的时间戳，精度为秒
+	StopTimeSt *string `json:"StopTimeSt,omitempty"`
+
+	// 若干高光剪辑任务taskid
+	TaskIDs []*string `json:"TaskIds,omitempty"`
+
+	// 若干高光剪辑任务状态，init：任务初始化状态，pending：任务等待启动阶段，prepare：任务启动状态，running：任务生产状态，prestop：任务准备结束状态，done：任务完成状态，error：任务报错状态。默认则查询所有状态的任务
+	TaskStatus []*string `json:"TaskStatus,omitempty"`
+}
+
+type ListHighLightTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListHighLightTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *ListHighLightTaskResResult `json:"Result,omitempty"`
+}
+
+type ListHighLightTaskResResponseMetadata struct {
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestID"`
+
+	// 请求的接口名，属于请求的公共参数。
+	Action *string `json:"Action,omitempty"`
+
+	// 请求的Region，例如：cn-north-1
+	Region *string `json:"Region,omitempty"`
+
+	// 请求的服务，属于请求的公共参数。
+	Service *string `json:"Service,omitempty"`
+
+	// 请求的版本号，属于请求的公共参数。
+	Version *string `json:"Version,omitempty"`
+}
+
+// ListHighLightTaskResResult - 视请求的接口而定
+type ListHighLightTaskResResult struct {
+
+	// REQUIRED; 返回的高光剪辑任务数据，包含任务总数和任务详情列表。
+	Data ListHighLightTaskResResultData `json:"Data"`
+}
+
+// ListHighLightTaskResResultData - 返回的高光剪辑任务数据，包含任务总数和任务详情列表。
+type ListHighLightTaskResResultData struct {
+
+	// REQUIRED; 遍历任务总数
+	Count int32 `json:"Count"`
+
+	// 高光剪辑任务的详情列表，包含每个任务的基本信息和状态。
+	Result []*ListHighLightTaskResResultDataResultItem `json:"Result,omitempty"`
+}
+
+type ListHighLightTaskResResultDataResultItem struct {
+
+	// 高光剪辑任务所属的账号
+	AccountID *string `json:"AccountID,omitempty"`
+
+	// 任务名称
+	Name *string `json:"Name,omitempty"`
+
+	// 高光剪辑任务状态，init：任务初始化状态，pending：任务等待启动阶段，prepare：任务启动状态，running：任务生产状态，prestop：任务准备结束状态，done：任务完成状态，error：任务报错状态
+	Status *string `json:"Status,omitempty"`
+
+	// 创建高光剪辑任务时返回的taskid
+	TaskID *string `json:"TaskID,omitempty"`
+}
+
 type ListLiveVideoQualityAnalysisTasksBody struct {
 
 	// REQUIRED; 分页参数
@@ -14272,7 +15043,7 @@ type ListWatermarkPresetResResultPreset struct {
 	Vhost *string `json:"Vhost,omitempty"`
 }
 
-type RestartPullToPushTaskBody struct {
+type RelaunchPullToPushTaskBody struct {
 
 	// REQUIRED; 任务 ID，任务的唯一标识，您可以通过获取拉流转推任务列表 [https://www.volcengine.com/docs/6469/1126896]接口获取状态为停用的任务 ID。
 	TaskID string `json:"TaskId"`
@@ -14283,13 +15054,13 @@ type RestartPullToPushTaskBody struct {
 	GroupName *string `json:"GroupName,omitempty"`
 }
 
-type RestartPullToPushTaskRes struct {
+type RelaunchPullToPushTaskRes struct {
 
 	// REQUIRED
-	ResponseMetadata RestartPullToPushTaskResResponseMetadata `json:"ResponseMetadata"`
+	ResponseMetadata RelaunchPullToPushTaskResResponseMetadata `json:"ResponseMetadata"`
 }
 
-type RestartPullToPushTaskResResponseMetadata struct {
+type RelaunchPullToPushTaskResResponseMetadata struct {
 
 	// REQUIRED
 	Action string `json:"Action"`
@@ -14304,11 +15075,11 @@ type RestartPullToPushTaskResResponseMetadata struct {
 	Service string `json:"Service"`
 
 	// REQUIRED
-	Version string                                         `json:"Version"`
-	Error   *RestartPullToPushTaskResResponseMetadataError `json:"Error,omitempty"`
+	Version string                                          `json:"Version"`
+	Error   *RelaunchPullToPushTaskResResponseMetadataError `json:"Error,omitempty"`
 }
 
-type RestartPullToPushTaskResResponseMetadataError struct {
+type RelaunchPullToPushTaskResResponseMetadataError struct {
 
 	// 错误码
 	Code *string `json:"Code,omitempty"`
@@ -14328,13 +15099,13 @@ type RestartTranscodingJobQuery struct {
 	// REQUIRED; 转码配置的后缀，需去除转码后缀前的下划线（_）。如您配置的转码后缀为_hd，此处应传入hd。
 	TranscodingTemplate string `json:"TranscodingTemplate" query:"TranscodingTemplate"`
 
-	// 推流域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的推理域名。
+	// 推流域名。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的推理域名。
 	// :::tip Vhost 和 PushDomain 二选一必填。 :::
 	PushDomain *string `json:"PushDomain,omitempty" query:"PushDomain"`
 
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
-	// :::tip Vhost
-	// 和 PushDomain 二选一必填。 :::
+	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用 ListDomainDetail [https://www.volcengine.com/docs/6469/1126815] 接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
+	// :::tip
+	// Vhost 和 PushDomain 二选一必填。 :::
 	Vhost *string `json:"Vhost,omitempty" query:"Vhost"`
 }
 
@@ -14688,9 +15459,6 @@ type UpdateAuthKeyBody struct {
 	// * pull：拉流鉴权。
 	SceneType string `json:"SceneType"`
 
-	// 应用名称，取值与直播流地址中 AppName 字段取值相同，默认为空，表示所有应用名称。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
-	App *string `json:"App,omitempty"`
-
 	// 直播流使用的域名。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名。
 	// :::tip 参数 Domain 和 Vhost 传且仅传一个。 :::
 	Domain *string `json:"Domain,omitempty"`
@@ -14702,11 +15470,6 @@ type UpdateAuthKeyBody struct {
 
 	// 鉴权生效时长，单位为秒，默认值为 604800，取值范围为 [60,2592000]，超出生效时长后 URL 无法使用。
 	ValidDuration *int32 `json:"ValidDuration,omitempty"`
-
-	// 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要查询的直播流使用的域名所属的域名空间。
-	// :::tip 参数
-	// Domain 和 Vhost 传且仅传一个。 :::
-	Vhost *string `json:"Vhost,omitempty"`
 }
 
 type UpdateAuthKeyBodyAuthDetailListItem struct {
@@ -16112,9 +16875,7 @@ type UpdateRelaySourceV3BodyGroupDetailsPropertiesItemsItem struct {
 	// * 最多支持添加 10 个回源地址，回源失败时，将按照您添加的地址顺序轮循尝试。 :::
 	RelaySourceDomain string `json:"RelaySourceDomain"`
 
-	// REQUIRED; 回源协议，支持两种回源协议。
-	// * rtmp：RTMP 回源协议；
-	// * flv：FLV 回源协议。
+	// REQUIRED; volcengine可以传入rtmp/flv, byteplus可以传入rtmp\flv\dash\hls
 	RelaySourceProtocol string `json:"RelaySourceProtocol"`
 
 	// 自定义回源参数，缺省情况下为空。格式为"Key":"Value"，例如，"domain":"live.push.net"。
@@ -17141,6 +17902,8 @@ type BindCert struct{}
 type BindCertQuery struct{}
 type BindEncryptDRM struct{}
 type BindEncryptDRMQuery struct{}
+type ContinuePullToPushTask struct{}
+type ContinuePullToPushTaskQuery struct{}
 type CreateCarouselTask struct{}
 type CreateCarouselTaskQuery struct{}
 type CreateCert struct{}
@@ -17255,6 +18018,8 @@ type DescribeForbiddenStreamInfoByPage struct{}
 type DescribeForbiddenStreamInfoByPageBody struct{}
 type DescribeHTTPHeaderConfig struct{}
 type DescribeHTTPHeaderConfigQuery struct{}
+type DescribeHighLightTaskByAccountID struct{}
+type DescribeHighLightTaskByAccountIDQuery struct{}
 type DescribeIPAccessRule struct{}
 type DescribeIPAccessRuleQuery struct{}
 type DescribeIPInfo struct{}
@@ -17277,6 +18042,10 @@ type DescribeLiveBatchStreamSessionData struct{}
 type DescribeLiveBatchStreamSessionDataQuery struct{}
 type DescribeLiveBatchStreamTrafficData struct{}
 type DescribeLiveBatchStreamTrafficDataQuery struct{}
+type DescribeLiveBatchStreamTranscodeData struct{}
+type DescribeLiveBatchStreamTranscodeDataQuery struct{}
+type DescribeLiveCallbackData struct{}
+type DescribeLiveCallbackDataQuery struct{}
 type DescribeLiveEdgeStatData struct{}
 type DescribeLiveEdgeStatDataQuery struct{}
 type DescribeLiveISPData struct{}
@@ -17381,6 +18150,8 @@ type ListCommonTransPresetDetail struct{}
 type ListCommonTransPresetDetailQuery struct{}
 type ListDomainDetail struct{}
 type ListDomainDetailQuery struct{}
+type ListHighLightTask struct{}
+type ListHighLightTaskQuery struct{}
 type ListLiveVideoQualityAnalysisTasks struct{}
 type ListLiveVideoQualityAnalysisTasksQuery struct{}
 type ListPullRecordTask struct{}
@@ -17411,8 +18182,8 @@ type ListWatermarkPreset struct{}
 type ListWatermarkPresetDetail struct{}
 type ListWatermarkPresetDetailQuery struct{}
 type ListWatermarkPresetQuery struct{}
-type RestartPullToPushTask struct{}
-type RestartPullToPushTaskQuery struct{}
+type RelaunchPullToPushTask struct{}
+type RelaunchPullToPushTaskQuery struct{}
 type RestartTranscodingJob struct{}
 type RestartTranscodingJobBody struct{}
 type ResumeStream struct{}
@@ -17484,6 +18255,10 @@ type BindCertReq struct {
 type BindEncryptDRMReq struct {
 	*BindEncryptDRMQuery
 	*BindEncryptDRMBody
+}
+type ContinuePullToPushTaskReq struct {
+	*ContinuePullToPushTaskQuery
+	*ContinuePullToPushTaskBody
 }
 type CreateCarouselTaskReq struct {
 	*CreateCarouselTaskQuery
@@ -17709,6 +18484,10 @@ type DescribeHTTPHeaderConfigReq struct {
 	*DescribeHTTPHeaderConfigQuery
 	*DescribeHTTPHeaderConfigBody
 }
+type DescribeHighLightTaskByAccountIDReq struct {
+	*DescribeHighLightTaskByAccountIDQuery
+	*DescribeHighLightTaskByAccountIDBody
+}
 type DescribeIPAccessRuleReq struct {
 	*DescribeIPAccessRuleQuery
 	*DescribeIPAccessRuleBody
@@ -17752,6 +18531,14 @@ type DescribeLiveBatchStreamSessionDataReq struct {
 type DescribeLiveBatchStreamTrafficDataReq struct {
 	*DescribeLiveBatchStreamTrafficDataQuery
 	*DescribeLiveBatchStreamTrafficDataBody
+}
+type DescribeLiveBatchStreamTranscodeDataReq struct {
+	*DescribeLiveBatchStreamTranscodeDataQuery
+	*DescribeLiveBatchStreamTranscodeDataBody
+}
+type DescribeLiveCallbackDataReq struct {
+	*DescribeLiveCallbackDataQuery
+	*DescribeLiveCallbackDataBody
 }
 type DescribeLiveEdgeStatDataReq struct {
 	*DescribeLiveEdgeStatDataQuery
@@ -17957,6 +18744,10 @@ type ListDomainDetailReq struct {
 	*ListDomainDetailQuery
 	*ListDomainDetailBody
 }
+type ListHighLightTaskReq struct {
+	*ListHighLightTaskQuery
+	*ListHighLightTaskBody
+}
 type ListLiveVideoQualityAnalysisTasksReq struct {
 	*ListLiveVideoQualityAnalysisTasksQuery
 	*ListLiveVideoQualityAnalysisTasksBody
@@ -18017,9 +18808,9 @@ type ListWatermarkPresetDetailReq struct {
 	*ListWatermarkPresetDetailQuery
 	*ListWatermarkPresetDetailBody
 }
-type RestartPullToPushTaskReq struct {
-	*RestartPullToPushTaskQuery
-	*RestartPullToPushTaskBody
+type RelaunchPullToPushTaskReq struct {
+	*RelaunchPullToPushTaskQuery
+	*RelaunchPullToPushTaskBody
 }
 type RestartTranscodingJobReq struct {
 	*RestartTranscodingJobQuery

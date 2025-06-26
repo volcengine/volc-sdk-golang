@@ -518,11 +518,11 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
-		"RestartPullToPushTask": {
+		"ContinuePullToPushTask": {
 			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
-				"Action":  []string{"RestartPullToPushTask"},
+				"Action":  []string{"ContinuePullToPushTask"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -563,6 +563,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListPullToPushTaskV2"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"RelaunchPullToPushTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RelaunchPullToPushTask"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -790,6 +798,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveCallbackData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveCallbackData"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"DescribeLiveBatchStreamSessionData": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -843,6 +859,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DescribeLiveBatchPushStreamAvgMetrics"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeLiveBatchStreamTranscodeData": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveBatchStreamTranscodeData"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -1371,6 +1395,22 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteTaskByAccountID"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeHighLightTaskByAccountID": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeHighLightTaskByAccountID"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListHighLightTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListHighLightTask"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
