@@ -30,7 +30,7 @@ func TestApplySmsSignature(t *testing.T) {
 		Desc:       "测试 SDK",
 		SubAccount: "smsAccount",
 		Content:    "sign",
-		Domain:     "http://www.xxx.com",
+		Domain:     "http链接",
 		Source:     sms.SignSourceTypeBrand,
 		UploadFileList: []sms.SignAuthFile{
 			{
@@ -70,15 +70,17 @@ func TestApplySmsSignatureV2(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.ApplySmsSignatureRequestV2{
-		Desc:       "测试 SDK",
-		SubAccount: "smsAccount",
-		Content:    "sign",
-		Source:     1,
+		Desc:                      "测试 SDK",
+		SubAccount:                "smsAccount",
+		Content:                   "sign",
+		Source:                    sms.SignSourceCompany,
+		SignatureIdentificationID: 123,
+		Purpose:                   sms.SignPurposeForOwn,
 		AppIcp: sms.AppIcp{
 			AppIcpFilling: "appName",
 			AppIcpFileList: []sms.SignAuthFile{
 				{
-					FileType:    16,
+					FileType:    sms.DocTypeAppIcpCertificate,
 					FileContent: fileBase64String,
 					FileSuffix:  "jpg",
 				},
@@ -90,7 +92,7 @@ func TestApplySmsSignatureV2(t *testing.T) {
 			TrademarkNumber: "商标编号",
 			TrademarkFileList: []sms.SignAuthFile{
 				{
-					FileType:    17,
+					FileType:    sms.DocTypeTrademarkCertificate,
 					FileContent: fileBase64String,
 					FileSuffix:  "jpg",
 				},
@@ -99,6 +101,46 @@ func TestApplySmsSignatureV2(t *testing.T) {
 		Scene: "scene",
 	}
 	result, statusCode, err := sms.DefaultInstance.ApplySmsSignatureV2(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestUpdateSmsSignature(t *testing.T) {
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testAk)
+	req := &sms.ApplySmsSignatureRequestV2{
+		Desc:                      "测试 SDK",
+		SubAccount:                "smsAccount",
+		Content:                   "sign",
+		Source:                    sms.SignSourceApp,
+		SignatureIdentificationID: 123,
+		Purpose:                   sms.SignPurposeForOwn,
+		AppIcp: sms.AppIcp{
+			AppIcpFilling: "appName",
+			AppIcpFileList: []sms.SignAuthFile{
+				{
+					FileType:   sms.DocTypeAppIcpCertificate,
+					FileUrl:    "公网http链接地址",
+					FileSuffix: "jpg",
+				},
+			},
+		},
+		Trademark: sms.Trademark{
+			TrademarkCn:     "商标中文名",
+			TrademarkEn:     "商标英文名",
+			TrademarkNumber: "商标编号",
+			TrademarkFileList: []sms.SignAuthFile{
+				{
+					FileType:   sms.DocTypeTrademarkCertificate,
+					FileUrl:    "公网http链接地址",
+					FileSuffix: "jpg",
+				},
+			},
+		},
+		Scene: "test",
+	}
+	result, statusCode, err := sms.DefaultInstance.UpdateSmsSignature(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)

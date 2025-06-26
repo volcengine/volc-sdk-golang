@@ -10,7 +10,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/live/v20230101"
 )
 
-func Test_RestartPullToPushTask(t *testing.T) {
+func Test_ContinuePullToPushTask(t *testing.T) {
 	instance := live_v20230101.NewInstance()
 
 	instance.SetCredential(base.Credentials{
@@ -18,9 +18,9 @@ func Test_RestartPullToPushTask(t *testing.T) {
 		SecretAccessKey: "sk",
 	})
 
-	param := &live_v20230101.RestartPullToPushTaskBody{}
+	param := &live_v20230101.ContinuePullToPushTaskBody{}
 
-	resp, err := instance.RestartPullToPushTask(context.Background(), param)
+	resp, err := instance.ContinuePullToPushTask(context.Background(), param)
 
 	if err != nil {
 		fmt.Printf("error %v", err)
