@@ -36,3 +36,39 @@ _testmain.go
 /venv
 .idea
 .devcontainer
+
+# OS
+Thumbs.db
+
+# IDE
+.project
+.classpath
+.sts4-cache/
+.history/
+.settings
+
+# Local environment variables
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Log files
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+pytestdebug.log
+
+# Temporary files & Caches
+.tmp/
+.cache/
+*.cache
+.php_cs.cache
+.swp
+
+# Go
+vendor/
+
+## Profiling data
+*.prof
