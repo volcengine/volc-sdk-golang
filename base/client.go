@@ -313,7 +313,6 @@ func (client *Client) makeRequest(inputContext context.Context, api string, req 
 	ctx, cancel := context.WithTimeout(ctx, timeout)
 	defer cancel()
 	req = req.WithContext(ctx)
-
 	resp, err := client.Client.Do(req)
 	if err != nil {
 		// should retry when client sends request error.
@@ -368,7 +367,6 @@ func (client *Client) requestThumb(ctx context.Context, api string, apiInfo *Api
 	if ct != "" {
 		req.Header.Set("Content-Type", ct)
 	}
-
 	// Because service info could be changed by SetRegion, so set UA header for every request here.
 	req.Header.Set("User-Agent", strings.Join([]string{SDKName, SDKVersion}, "/"))
 

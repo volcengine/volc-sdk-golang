@@ -955,6 +955,134 @@ func (p *BusinessSecurity) ListApps(req *ListAppsReq) (*ListAppsResponse, error)
 	return result, nil
 }
 
+// OpenProduct
+// 开通产品
+func (p *BusinessSecurity) OpenProduct(req *OpenProductReq) (*OpenProductRes, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("OpenProduct: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("OpenProduct", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("OpenProduct", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("OpenProduct: fail to do request, %v", err)
+			}
+			result := new(OpenProductRes)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CreateCustomContents: fail to do request, %v", err)
+	}
+	result := new(OpenProductRes)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// CheckProductStatus
+// 检查产品状态
+func (p *BusinessSecurity) CheckProductStatus(req *CheckProductStatusReq) (*CheckProductStatusRes, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CheckProductStatus: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CheckProductStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("CheckProductStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CheckProductStatus: fail to do request, %v", err)
+			}
+			result := new(CheckProductStatusRes)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CheckProductStatus: fail to do request, %v", err)
+	}
+	result := new(CheckProductStatusRes)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// EnableService
+// 开通服务
+func (p *BusinessSecurity) EnableService(req *EnableServiceReq) (*EnableServiceRes, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("EnableService: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("EnableService", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("EnableService", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("EnableService: fail to do request, %v", err)
+			}
+			result := new(EnableServiceRes)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CreateCustomContents: fail to do request, %v", err)
+	}
+	result := new(EnableServiceRes)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+// CheckServiceStatus
+// 检查服务状态
+func (p *BusinessSecurity) CheckServiceStatus(req *CheckServiceStatusReq) (*CheckServiceStatusRes, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CheckServiceStatus: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CheckServiceStatus", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err := p.Client.Json("CheckServiceStatus", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CheckServiceStatus: fail to do request, %v", err)
+			}
+			result := new(CheckServiceStatusRes)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("CreateCustomContents: fail to do request, %v", err)
+	}
+	result := new(CheckServiceStatusRes)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 // CreateCustomContents 创建自定义库
 func (p *BusinessSecurity) CreateCustomContents(req *NewCustomContentsReq) (*CustomContentResponse, error) {
 	reqData, err := json.Marshal(req)
