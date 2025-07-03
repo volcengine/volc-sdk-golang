@@ -451,6 +451,7 @@ type CreateNumberPoolRequest struct {
 	Name           string
 	ServiceType    string
 	SubServiceType string
+	Scene          int32
 }
 
 type CreateNumberPoolData struct {
@@ -470,6 +471,7 @@ type UpdateNumberPoolRequest struct {
 	Name           string
 	ServiceType    string
 	SubServiceType string
+	Scene          int32
 }
 
 type UpdateNumberPoolResponse struct {
@@ -495,6 +497,7 @@ type NumberPoolData struct {
 	SubServiceType     int32
 	SubServiceTypeName string
 	NumberCount        int32
+	Scene              int32
 }
 
 type NumberPoolListPagedResponse struct {
@@ -1055,6 +1058,32 @@ type RiskControlReq struct {
 type RiskControlResponse struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           []NumberStatus
+}
+
+type AddBlackListReq struct {
+	CustomerNumber string
+	ServiceType    int32
+	SubServiceType int32
+	Type           int32
+	FreezeTime     int32
+	Remark         string
+}
+
+type AddBlackListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
+}
+
+type DeleteBlackListReq struct {
+	CustomerNumber string
+	ServiceType    int32
+	SubServiceType int32
+	Type           int32
+}
+
+type DeleteBlackListResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           string
 }
 
 type NumberStatus struct {

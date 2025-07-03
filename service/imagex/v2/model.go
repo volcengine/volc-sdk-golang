@@ -479,7 +479,7 @@ type ApplyVpcUploadInfoResResultPutURLHeadersItem struct {
 
 type CommitImageUploadBody struct {
 
-	// REQUIRED; 一次上传会话 Key。 :::tip 请参考获取文件上传地址 [https://www.volcengine.com/docs/508/9397]获取。 :::
+	// REQUIRED; 一次上传会话 Key。您可参考获取文件上传地址 [https://www.volcengine.com/docs/508/9397]获取。
 	SessionKey  string   `json:"SessionKey"`
 	DecryptKeys []string `json:"DecryptKeys,omitempty"`
 
@@ -494,11 +494,12 @@ type CommitImageUploadQuery struct {
 	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
 	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
-	// 是否返回图片meta信息。默认 false。
+	// 是否返回图片 meta 信息。
 	// * true：不返回图片 meta 信息。
-	// * false：获取图片 meta 信息并返回对应 meta 信息。
+	// * false：（默认）获取图片 meta 信息并返回对应 meta 信息。
+	// :::tip
 	// * 其中若 meta 获取超时或失败，接口返回成功，但对应 meta 信息将为空。
-	// * 如果强依赖 meta 请参考图片Meta信息 [https://www.volcengine.com/docs/508/64085]获取。
+	// * 如果您的业务要求必须获取 meta 信息，请您参考图片Meta信息 [https://www.volcengine.com/docs/508/64085]获取。 :::
 	SkipMeta bool `json:"SkipMeta,omitempty" query:"SkipMeta"`
 }
 
@@ -537,7 +538,7 @@ type CommitImageUploadResResult struct {
 	// REQUIRED; 运行结果，数组长度对应上传的数量。
 	Results []*CommitImageUploadResResultResultsItem `json:"Results"`
 
-	// JSON 序列化之后的图片信息，结构体请参考 ImageInfo 的 Array。
+	// JSON 序列化之后的图片信息。
 	PluginResult []*CommitImageUploadResResultPluginResultItem `json:"PluginResult,omitempty"`
 }
 
@@ -546,26 +547,32 @@ type CommitImageUploadResResultPluginResultItem struct {
 	// REQUIRED; 图片 Uri。
 	ImageURI string `json:"ImageUri"`
 
+	// 图片时长，单位为 ms。仅当图片为动图时有值
+	Duration int `json:"Duration,omitempty"`
+
 	// 图片文件名。
 	FileName string `json:"FileName,omitempty"`
 
-	// 图片帧数量
+	// 图片的帧数量。
 	FrameCnt int `json:"FrameCnt,omitempty"`
 
-	// 图片格式
+	// 图片格式。
 	ImageFormat string `json:"ImageFormat,omitempty"`
 
 	// 图片的高。
 	ImageHeight int `json:"ImageHeight,omitempty"`
 
-	// 图片的 MD5
+	// 图片的 MD5 哈希值。
 	ImageMD5 string `json:"ImageMd5,omitempty"`
 
-	// 图片大小
+	// 图片的大小。
 	ImageSize int `json:"ImageSize,omitempty"`
 
 	// 图片的宽。
 	ImageWidth int `json:"ImageWidth,omitempty"`
+
+	// 源文件 URI
+	SourceURI string `json:"SourceUri,omitempty"`
 }
 
 type CommitImageUploadResResultResultsItem struct {
@@ -573,9 +580,9 @@ type CommitImageUploadResResultResultsItem struct {
 	// REQUIRED; 源图片的 Uri。
 	URI string `json:"Uri"`
 
-	// REQUIRED; 图片上传结果。
-	// * 返回值为 2000，表示上传成功；
-	// * 返回值为 2001，表示上传失败。 :::tip 需要传 SuccessOids 才会返回值。 :::
+	// REQUIRED; 上传结果。
+	// * 传入 SuccessOids 时，无论上传图片/非图片，成功返回 2000，失败返回 2001；
+	// * 未传入 SuccessOids 时，对于非图片返回 0；对于图片，成功返回 2000，失败返回 2001。
 	URIStatus int `json:"UriStatus"`
 
 	// 加密结果。 :::tip 指定了 Encryption Function 时有值 。 :::
@@ -2303,14 +2310,14 @@ type CreateImageRetryAuditTaskResResult struct {
 
 type CreateImageServiceBody struct {
 
-	// REQUIRED; 创建服务时绑定的域名列表
-	Domains []*CreateImageServiceBodyDomainsItem `json:"Domains"`
-
 	// REQUIRED; 服务名称，最多不超过32个字符
 	ServiceName string `json:"ServiceName"`
 
 	// REQUIRED; 服务所在区域，cn或va或sg
 	ServiceRegion string `json:"ServiceRegion"`
+
+	// 创建服务时绑定的域名列表
+	Domains []*CreateImageServiceBodyDomainsItem `json:"Domains,omitempty"`
 
 	// 服务绑定的项目。仅对ToB账号请求生效，默认default
 	ProjectName string `json:"ProjectName,omitempty"`
@@ -20106,6 +20113,12 @@ type GetSyncAuditResultBody struct {
 	ImageURI string `json:"ImageUri"`
 }
 
+type GetSyncAuditResultQuery struct {
+
+	// REQUIRED; 服务唯一id
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
 type GetSyncAuditResultRes struct {
 
 	// REQUIRED
@@ -24186,7 +24199,6 @@ type GetSegmentImage struct{}
 type GetServiceDomains struct{}
 type GetServiceDomainsBody struct{}
 type GetSyncAuditResult struct{}
-type GetSyncAuditResultQuery struct{}
 type GetTemplatesFromBin struct{}
 type GetTemplatesFromBinBody struct{}
 type GetURLFetchTask struct{}
