@@ -6,17 +6,62 @@ import (
 )
 
 const (
-	Ak = "AK" // fill in your access key
-	Sk = "SK" // fill in your secret key
+	Ak = "" // fill in your access key
+	Sk = "" // fill in your secret key
 )
 
 func init() {
 	DefaultInstance.Client.SetAccessKey(Ak)
 	DefaultInstance.Client.SetSecretKey(Sk)
+
 	SecuritySourceInstance.Client.SetAccessKey(Ak)
 	SecuritySourceInstance.Client.SetSecretKey(Sk)
-}
 
+}
+func TestOpenProduct(t *testing.T) {
+	resp, err := DefaultInstance.OpenProduct(&OpenProductReq{
+		PRDContentRisk,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+func TestCheckProduct(t *testing.T) {
+	resp, err := DefaultInstance.CheckProductStatus(&CheckProductStatusReq{
+		PRDContentRisk,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+func TestOpenService(t *testing.T) {
+	resp, err := DefaultInstance.EnableService(&EnableServiceReq{
+		Service: ServiceContentTextRisk,
+		AppID:   0,
+		Product: PRDContentRisk,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
+func TestCheckServiceStatus(t *testing.T) {
+	resp, err := DefaultInstance.CheckServiceStatus(&CheckServiceStatusReq{
+		Service: ServiceContentTextRisk,
+		AppID:   0,
+		Product: PRDContentRisk,
+	})
+	if err != nil {
+		t.Errorf("%v", err)
+		return
+	}
+	t.Logf("%v", *resp)
+}
 func TestBusinessSecurity_ActivateRiskBasePackage(t *testing.T) {
 	req := &ActivateRiskBasePackageReq{
 		PackageId:       "Ab123456",

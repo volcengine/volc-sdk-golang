@@ -625,5 +625,41 @@ var (
 				"Version": []string{"2022-12-23"},
 			},
 		},
+		"OpenProduct": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"OpenProduct"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"CheckProductStatus": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CheckProductStatus"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"EnableService": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"EnableService"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
+		"CheckServiceStatus": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/",
+			Query: url.Values{
+				"Action":  []string{"CheckServiceStatus"},
+				"Version": []string{"2022-12-23"},
+			},
+		},
 	}
 )

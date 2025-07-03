@@ -623,7 +623,43 @@ type ListAppsReq struct {
 	Limit  int `json:"Limit" form:"Limit" query:"Limit"`
 	Offset int `json:"Offset" form:"Offset" query:"Offset"`
 }
+type OpenProductReq struct {
+	Product string `json:"Product" form:"Product" query:"Product"`
+}
+type OpenProductRes struct {
+	OpenResult
+}
+type CheckProductStatusReq struct {
+	Product string `json:"Product" form:"Product" query:"Product"`
+}
+type CheckProductStatusRes struct {
+	OpenResult
+	Data CheckProductStatusResult `json:"Data"`
+}
+type CheckProductStatusResult struct {
+	Status int `json:"Status"`
+}
 
+type EnableServiceReq struct {
+	Service string `json:"Service" form:"Service" query:"Service"`
+	AppID   int64  `json:"AppId" form:"AppId" query:"AppId"`
+	Product string `json:"Product" form:"Product" query:"Product"`
+}
+type EnableServiceRes struct {
+	OpenResult
+}
+type CheckServiceStatusReq struct {
+	Service string `json:"Service" form:"Service" query:"Service"`
+	AppID   int64  `json:"AppId" form:"AppId" query:"AppId"`
+	Product string `json:"Product" form:"Product" query:"Product"`
+}
+type CheckServiceStatusRes struct {
+	OpenResult
+	Data CheckServiceStatusResult `json:"Data"`
+}
+type CheckServiceStatusResult struct {
+	Status int `json:"Status"`
+}
 type CreateAppResponse struct {
 	OpenResult
 	Data CreateAppResult `json:"Data"`
