@@ -572,6 +572,24 @@ func (p *Vms) QueryCanCall(req *RiskControlReq) (*RiskControlResponse, int, erro
 	}
 }
 
+func (p *Vms) AddBlackList(req *AddBlackListReq) (*AddBlackListResponse, int, error) {
+	resp := new(AddBlackListResponse)
+	if statusCode, err := p.Handler("AddBlackList", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) DeleteBlackList(req *DeleteBlackListReq) (*DeleteBlackListResponse, int, error) {
+	resp := new(DeleteBlackListResponse)
+	if statusCode, err := p.Handler("DeleteBlackList", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *Vms) Handler(api string, req interface{}, resp interface{}) (int, error) {
 	form := base.ToUrlValues(req)
 	respBody, statusCode, err := p.Client.Post(api, nil, form)

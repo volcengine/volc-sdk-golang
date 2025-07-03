@@ -496,6 +496,34 @@ func TestRisk_CanCall(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestRisk_AddBlackList(t *testing.T) {
+	req := &AddBlackListReq{
+		CustomerNumber: "188xxxxxxxx",
+		ServiceType:    100,
+		SubServiceType: 101,
+		Type:           1,
+		FreezeTime:     12,
+		Remark:         "测试api加黑",
+	}
+	result, statusCode, err := DefaultInstance.AddBlackList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestRisk_DeleteBlackList(t *testing.T) {
+	req := &DeleteBlackListReq{
+		CustomerNumber: "188xxxxxxxx",
+		ServiceType:    100,
+		SubServiceType: 101,
+		Type:           1,
+	}
+	result, statusCode, err := DefaultInstance.DeleteBlackList(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestRouteAAuth(t *testing.T) {
 	req := &RouteAAuthRequest{
 		RequestId:   "sadasdasewr",

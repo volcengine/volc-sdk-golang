@@ -523,5 +523,21 @@ var (
 				"Version": []string{DefaultVersion},
 			},
 		},
+		"AddBlackList": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AddBlackList"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"DeleteBlackList": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteBlackList"},
+				"Version": []string{DefaultVersion},
+			},
+		},
 	}
 )
