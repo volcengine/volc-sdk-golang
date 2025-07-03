@@ -362,7 +362,7 @@ func (client *Client) requestThumb(ctx context.Context, api string, apiInfo *Api
 	requestBody := bytes.NewReader(body)
 	req, err := http.NewRequest(strings.ToUpper(apiInfo.Method), u.String(), nil)
 	if err != nil {
-		return []byte(""), 500, errors.New("Failed to build request")
+		return []byte(""), 500, fmt.Errorf("Failed to build request, err %w", err)
 	}
 	req.Header = header
 	if ct != "" {
