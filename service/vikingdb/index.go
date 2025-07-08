@@ -42,6 +42,7 @@ type SearchOptions struct {
 	text                  *string
 	image                 *string
 	retry                 bool
+	needReturnVector      bool
 }
 
 func NewSearchOptions() *SearchOptions {
@@ -115,6 +116,10 @@ func (s *SearchOptions) SetImage(image string) *SearchOptions {
 }
 func (s *SearchOptions) SetRetry(retry bool) *SearchOptions {
 	s.retry = retry
+	return s
+}
+func (s *SearchOptions) SetNeedReturnVector(needReturnVector bool) *SearchOptions {
+	s.needReturnVector = needReturnVector
 	return s
 }
 
@@ -236,6 +241,9 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		if index.isClient {
 			search["replace_primay"] = true
 		}
+		if searchOptions.needReturnVector {
+			search["need_return_vector"] = true
+		}
 		params := map[string]interface{}{
 			"collection_name": index.CollectionName,
 			"index_name":      index.IndexName,
@@ -277,6 +285,9 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		}
 		if index.isClient {
 			search["replace_primay"] = true
+		}
+		if searchOptions.needReturnVector {
+			search["need_return_vector"] = true
 		}
 		params := map[string]interface{}{
 			"collection_name": index.CollectionName,
@@ -329,6 +340,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 	if index.isClient {
 		search["replace_primay"] = true
 	}
+	if searchOptions.needReturnVector {
+		search["need_return_vector"] = true
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -380,6 +394,9 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	}
 	if index.isClient {
 		search["replace_primay"] = true
+	}
+	if searchOptions.needReturnVector {
+		search["need_return_vector"] = true
 	}
 	fmt.Println(index.isClient)
 	params := map[string]interface{}{
@@ -443,6 +460,9 @@ func (index *Index) SearchWithMultiModal(searchOptions *SearchOptions) ([]*Data,
 	if index.isClient {
 		search["replace_primay"] = true
 	}
+	if searchOptions.needReturnVector {
+		search["need_return_vector"] = true
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -495,6 +515,9 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 	}
 	if index.isClient {
 		search["replace_primay"] = true
+	}
+	if searchOptions.needReturnVector {
+		search["need_return_vector"] = true
 	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
@@ -689,7 +712,7 @@ func (index *Index) getData(resData map[string]interface{}, outputField interfac
 				return nil, fmt.Errorf("invalid response, data is not list[list[map]]: %v", resData)
 			}
 			fields := map[string]interface{}{}
-			if outputField == nil || len(outputField.([]string)) != 0 {
+			if outputField == nil || len(outputField.([]string)) != 0 || item["fields"] != nil {
 				if f, ok := item["fields"]; !ok {
 					return nil, fmt.Errorf("invalid response, fields does not exist: %v", resData)
 				} else if fields, ok = f.(map[string]interface{}); !ok {
