@@ -8,6 +8,7 @@ import (
 )
 
 func UpdateCdnConfig(t *testing.T) {
+	on := bool(true)
 	resp, err := DefaultInstance.UpdateCdnConfig(&cdn.UpdateCdnConfigRequest{
 		Domain: &exampleDomain,
 		Origin: []cdn.OriginRule{
@@ -23,6 +24,15 @@ func UpdateCdnConfig(t *testing.T) {
 					},
 				},
 			}},
+		},
+		RuleEngine: &cdn.RuleEngine{
+			Rules: []cdn.RERule{
+				{
+					Name: cdn.GetStrPtr("rule2"),
+					Rule: cdn.GetStrPtr("{\"IfBlock\":{\"Condition\":{\"IsGroup\":false,\"Connective\":\"and\",\"Condition\":{\"Object\":\"path\",\"Operator\":\"suffix_match\",\"IgnoreCase\":true,\"Value\":[\"txt\"]}},\"Actions\":[{\"Action\":\"response_header\",\"Stage\":\"client_response\",\"Phase\":6,\"Module\":1,\"Groups\":[{\"Dimension\":\"response_header\",\"GroupParameters\":[{\"Parameters\":[{\"Name\":\"action\",\"Values\":[\"set\"]},{\"Name\":\"header_name\",\"Values\":[\"animal\"]},{\"Name\":\"header_value\",\"Values\":[\"dog\"]}]}]}]}]}}"),
+				},
+			},
+			Switch: &on,
 		},
 	})
 	assert.NoError(t, err)
