@@ -9,8 +9,9 @@ import (
 )
 
 func BatchUpdateCdnConfig(t *testing.T) {
+	on := bool(true)
 	resp, err := DefaultInstance.BatchUpdateCdnConfig(&cdn.BatchUpdateCdnConfigRequest{
-		Domains: []string{"xx1.com", "xx2.com"},
+		Domains: []string{operateDomain, "xxx.com"},
 		Origin: []cdn.OriginRule{
 			{OriginAction: &cdn.OriginAction{
 				OriginLines: []cdn.OriginLine{
@@ -24,6 +25,15 @@ func BatchUpdateCdnConfig(t *testing.T) {
 					},
 				},
 			}},
+		},
+		RuleEngine: &cdn.RuleEngine{
+			Rules: []cdn.RERule{
+				{
+					Name: cdn.GetStrPtr("rule2"),
+					Rule: cdn.GetStrPtr("{\"IfBlock\":{\"Condition\":{\"IsGroup\":false,\"Connective\":\"and\",\"Condition\":{\"Object\":\"path\",\"Operator\":\"suffix_match\",\"IgnoreCase\":true,\"Value\":[\"txt\"]}},\"Actions\":[{\"Action\":\"response_header\",\"Stage\":\"client_response\",\"Phase\":6,\"Module\":1,\"Groups\":[{\"Dimension\":\"response_header\",\"GroupParameters\":[{\"Parameters\":[{\"Name\":\"action\",\"Values\":[\"set\"]},{\"Name\":\"header_name\",\"Values\":[\"batch-animal\"]},{\"Name\":\"header_value\",\"Values\":[\"batch-dog\"]}]}]}]}]}}"),
+				},
+			},
+			Switch: &on,
 		},
 	})
 	assert.NoError(t, err)

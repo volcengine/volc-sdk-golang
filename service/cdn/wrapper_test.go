@@ -60,7 +60,7 @@ func TestCDN_AddCdnDomain(t *testing.T) {
 				},
 			}},
 		},
-		OriginProtocol: "http",
+		OriginProtocol: GetStrPtr("http"),
 	})
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
