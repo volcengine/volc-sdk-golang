@@ -735,14 +735,11 @@ func (vikingDBService *VikingDBService) CreateCollection(collectionName string,
 
 	var vectorize []*VectorizeTuple
 	for i := range opts {
-		if i == 0 {
-			if val, ok := opts[i].([]*VectorizeTuple); !ok {
-				return nil, fmt.Errorf("type of opts[%d] should be []*VectorizeTuple, actual type is %v",
-					i, reflect.TypeOf(opts[i]))
-			} else {
-				vectorize = val
-				params["vectorize"] = vectorize
-			}
+		if val, ok := opts[i].([]*VectorizeTuple); ok {
+			vectorize = val
+			params["vectorize"] = vectorize
+		} else if project, ok := opts[i].(Project); ok {
+			params["project"] = project.ProjectName
 		}
 	}
 
@@ -788,8 +785,14 @@ func (vikingDBService *VikingDBService) DropCollection(collectionName string) er
 	return nil
 
 }
-func (vikingDBService *VikingDBService) ListCollections() ([]*Collection, error) {
-	resData, err := vikingDBService.DoRequest(context.Background(), "ListCollections", nil, vikingDBService.convertMapToJson(make(map[string]interface{})))
+func (vikingDBService *VikingDBService) ListCollections(opts ...interface{}) ([]*Collection, error) {
+	params := make(map[string]interface{})
+	for i := range opts {
+		if project, ok := opts[i].(Project); ok {
+			params["project"] = project.ProjectName
+		}
+	}
+	resData, err := vikingDBService.DoRequest(context.Background(), "ListCollections", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
 		return nil, err
 	}

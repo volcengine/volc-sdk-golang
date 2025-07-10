@@ -61,6 +61,10 @@ const (
 	Confirmed = "confirmed"
 )
 
+type Project struct {
+	ProjectName string `json:"project_name"`
+}
+
 type VectorizeTuple struct {
 	Dense  *VectorizeModelConf `json:"dense"`
 	Sparse *VectorizeModelConf `json:"sparse,omitempty"`
