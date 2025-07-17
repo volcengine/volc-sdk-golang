@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -23,14 +24,42 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		return nil, NewClientError(err)
 	}
 
-	var logGroups []*pb.LogGroup
+	var (
+		logCnt     int
+		maxLogTime int64 = math.MinInt64
+		minLogTime int64 = math.MaxInt64
+		logGroups  []*pb.LogGroup
+	)
+
 	for _, logGroup := range request.LogBody.LogGroups {
-		if len(logGroup.Logs) > 0 {
-			logGroups = append(logGroups, logGroup)
-			for _, log := range logGroup.Logs {
-				if log.Time == 0 {
-					log.Time = time.Now().Unix()
-				}
+		logGroupCount := len(logGroup.Logs)
+		if logGroupCount == 0 {
+			continue
+		}
+
+		logGroups = append(logGroups, logGroup)
+		logCnt += logGroupCount
+
+		var normalizedTime int64
+
+		for _, log := range logGroup.Logs {
+			if log.Time <= 0 {
+				log.Time = time.Now().UnixNano() / int64(1e6)
+				normalizedTime = log.Time
+			} else if log.Time < int64(1e10) { // s
+				normalizedTime = log.Time * 1000
+			} else if log.Time < int64(1e15) { // ms
+				normalizedTime = log.Time
+			} else { // ns
+				normalizedTime = log.Time / int64(1e6)
+			}
+
+			if normalizedTime >= maxLogTime {
+				maxLogTime = normalizedTime
+			}
+
+			if normalizedTime <= minLogTime {
+				minLogTime = normalizedTime
 			}
 		}
 	}
@@ -57,6 +86,9 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		"Content-Type":       "application/x-protobuf",
 		"x-tls-hashkey":      request.HashKey,
 		"x-tls-compresstype": request.CompressType,
+		"log-count":          strconv.Itoa(logCnt),
+		"earliest-log-time":  strconv.FormatInt(minLogTime, 10),
+		"latest-log-time":    strconv.FormatInt(maxLogTime, 10),
 	}
 
 	rawResponse, err := c.Request(http.MethodPost, PathPutLogs, params, c.assembleHeader(request.CommonRequest, headers), bodyBytes)
@@ -88,11 +120,6 @@ func (c *LsClient) PutLogsV2(request *PutLogsV2Request) (r *CommonResponse, e er
 		TopicID:      request.TopicID,
 		HashKey:      request.HashKey,
 		CompressType: request.CompressType,
-	}
-	for idx := range request.Logs {
-		if request.Logs[idx].Time <= 0 {
-			request.Logs[idx].Time = time.Now().UnixNano() / 1e6
-		}
 	}
 	realRequest.LogBody = &pb.LogGroupList{
 		LogGroups: []*pb.LogGroup{
