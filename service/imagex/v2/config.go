@@ -462,6 +462,14 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"DescribeImageXAddOnQPSUsage": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeImageXAddOnQPSUsage"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DescribeImageXAIRequestCntUsage": {
 			Method: http.MethodGet,
 			Path:   "/",
@@ -1131,6 +1139,62 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateImageAITask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"CreateImageAIProcessQueue": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageAIProcessQueue"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DeleteImageAIProcessQueue": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageAIProcessQueue"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"CreateImageAIProcessCallback": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateImageAIProcessCallback"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"UpdateImageAIProcessQueue": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAIProcessQueue"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"UpdateImageAIProcessQueueStatus": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateImageAIProcessQueueStatus"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"DeleteImageAIProcessDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteImageAIProcessDetail"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetImageAIProcessQueues": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAIProcessQueues"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
