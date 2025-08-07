@@ -3,6 +3,7 @@ package consumer
 import (
 	"errors"
 	"github.com/go-kit/kit/log"
+	"github.com/volcengine/volc-sdk-golang/service/tls"
 	"regexp"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
@@ -16,11 +17,13 @@ type Config struct {
 	ConsumerGroupName              string
 	ConsumerName                   string
 	ConsumeFrom                    string
+	CompressType                   string
 	HeartbeatIntervalInSecond      int
 	DataFetchIntervalInMillisecond int64
 	FlushCheckpointIntervalSecond  int
 	MaxFetchLogGroupCount          int
 	OrderedConsume                 bool
+	Original                       bool
 	Logger                         *log.Logger
 }
 
@@ -40,10 +43,16 @@ func GetDefaultConsumerConfig() *Config {
 		MaxFetchLogGroupCount:          100,
 		FlushCheckpointIntervalSecond:  5,
 		OrderedConsume:                 false,
+		CompressType:                   tls.CompressLz4,
+		Original:                       true,
 	}
 }
 
 func validateConsumerConfig(c *Config) error {
+	if len(c.CompressType) == 0 {
+		c.CompressType = tls.CompressLz4
+	}
+
 	if len(c.ProjectID) == 0 {
 		return errors.New("empty ProjectID")
 	}

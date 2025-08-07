@@ -79,7 +79,6 @@ type Log struct {
 	Time     int64         `protobuf:"varint,1,opt,name=Time,proto3" json:"Time,omitempty"`
 	Contents []*LogContent `protobuf:"bytes,2,rep,name=Contents,proto3" json:"Contents,omitempty"`
 	// Types that are valid to be assigned to OptionalTimeNs:
-	//
 	//	*Log_TimeNs
 	OptionalTimeNs isLog_OptionalTimeNs `protobuf_oneof:"OptionalTimeNs"`
 }
@@ -336,39 +335,168 @@ func (m *LogGroupList) GetLogGroups() []*LogGroup {
 	return nil
 }
 
+type RawLogGroupList struct {
+	OriginLen     int32  `protobuf:"varint,1,opt,name=OriginLen,proto3" json:"OriginLen,omitempty"`
+	LogArriveTime int64  `protobuf:"varint,2,opt,name=LogArriveTime,proto3" json:"LogArriveTime,omitempty"`
+	CompressType  string `protobuf:"bytes,3,opt,name=CompressType,proto3" json:"CompressType,omitempty"`
+	Cursor        string `protobuf:"bytes,4,opt,name=Cursor,proto3" json:"Cursor,omitempty"`
+	Data          []byte `protobuf:"bytes,5,opt,name=Data,proto3" json:"Data,omitempty"`
+}
+
+func (m *RawLogGroupList) Reset()         { *m = RawLogGroupList{} }
+func (m *RawLogGroupList) String() string { return proto.CompactTextString(m) }
+func (*RawLogGroupList) ProtoMessage()    {}
+func (*RawLogGroupList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a153da538f858886, []int{5}
+}
+func (m *RawLogGroupList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RawLogGroupList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RawLogGroupList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RawLogGroupList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RawLogGroupList.Merge(m, src)
+}
+func (m *RawLogGroupList) XXX_Size() int {
+	return m.Size()
+}
+func (m *RawLogGroupList) XXX_DiscardUnknown() {
+	xxx_messageInfo_RawLogGroupList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RawLogGroupList proto.InternalMessageInfo
+
+func (m *RawLogGroupList) GetOriginLen() int32 {
+	if m != nil {
+		return m.OriginLen
+	}
+	return 0
+}
+
+func (m *RawLogGroupList) GetLogArriveTime() int64 {
+	if m != nil {
+		return m.LogArriveTime
+	}
+	return 0
+}
+
+func (m *RawLogGroupList) GetCompressType() string {
+	if m != nil {
+		return m.CompressType
+	}
+	return ""
+}
+
+func (m *RawLogGroupList) GetCursor() string {
+	if m != nil {
+		return m.Cursor
+	}
+	return ""
+}
+
+func (m *RawLogGroupList) GetData() []byte {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
+type RawLogGroupListList struct {
+	RawLogGroupLists []*RawLogGroupList `protobuf:"bytes,1,rep,name=RawLogGroupLists,proto3" json:"RawLogGroupLists,omitempty"`
+}
+
+func (m *RawLogGroupListList) Reset()         { *m = RawLogGroupListList{} }
+func (m *RawLogGroupListList) String() string { return proto.CompactTextString(m) }
+func (*RawLogGroupListList) ProtoMessage()    {}
+func (*RawLogGroupListList) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a153da538f858886, []int{6}
+}
+func (m *RawLogGroupListList) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *RawLogGroupListList) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_RawLogGroupListList.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *RawLogGroupListList) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RawLogGroupListList.Merge(m, src)
+}
+func (m *RawLogGroupListList) XXX_Size() int {
+	return m.Size()
+}
+func (m *RawLogGroupListList) XXX_DiscardUnknown() {
+	xxx_messageInfo_RawLogGroupListList.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RawLogGroupListList proto.InternalMessageInfo
+
+func (m *RawLogGroupListList) GetRawLogGroupLists() []*RawLogGroupList {
+	if m != nil {
+		return m.RawLogGroupLists
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*LogContent)(nil), "pb.LogContent")
 	proto.RegisterType((*Log)(nil), "pb.Log")
 	proto.RegisterType((*LogTag)(nil), "pb.LogTag")
 	proto.RegisterType((*LogGroup)(nil), "pb.LogGroup")
 	proto.RegisterType((*LogGroupList)(nil), "pb.LogGroupList")
+	proto.RegisterType((*RawLogGroupList)(nil), "pb.RawLogGroupList")
+	proto.RegisterType((*RawLogGroupListList)(nil), "pb.RawLogGroupListList")
 }
 
 func init() { proto.RegisterFile("log.proto", fileDescriptor_a153da538f858886) }
 
 var fileDescriptor_a153da538f858886 = []byte{
-	// 330 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x91, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0x86, 0xb3, 0x4d, 0x9b, 0xb6, 0xd3, 0x52, 0xca, 0x20, 0xb2, 0x28, 0xc4, 0x10, 0x3c, 0x94,
-	0x1e, 0xa2, 0xa8, 0x27, 0xbd, 0x55, 0xa8, 0x82, 0xa1, 0xc2, 0x5a, 0x3c, 0x78, 0x4b, 0x24, 0x2c,
-	0x81, 0xb4, 0x13, 0x9b, 0x14, 0xf5, 0x2d, 0x7c, 0x07, 0x5f, 0xc6, 0x63, 0x8f, 0x1e, 0xa5, 0x7d,
-	0x11, 0xc9, 0x66, 0xd3, 0x7a, 0xf4, 0x36, 0xff, 0xff, 0xe7, 0x9f, 0xf9, 0xc2, 0x42, 0x3b, 0x21,
-	0xe9, 0xa5, 0x0b, 0xca, 0x09, 0x6b, 0x69, 0xe8, 0x5e, 0x00, 0xf8, 0x24, 0xaf, 0x69, 0x9e, 0x47,
-	0xf3, 0x1c, 0xfb, 0x60, 0xde, 0x45, 0xef, 0x9c, 0x39, 0x6c, 0xd0, 0x16, 0xc5, 0x88, 0x7b, 0xd0,
-	0x78, 0x0c, 0x92, 0x65, 0xc4, 0x6b, 0xca, 0x2b, 0x85, 0xfb, 0x02, 0xa6, 0x4f, 0x12, 0x11, 0xea,
-	0xd3, 0x78, 0x16, 0xa9, 0xef, 0x4d, 0xa1, 0x66, 0x1c, 0x42, 0x4b, 0x6f, 0xcb, 0x78, 0xcd, 0x31,
-	0x07, 0x9d, 0xb3, 0x9e, 0x97, 0x86, 0xde, 0xee, 0x88, 0xd8, 0xe6, 0xc8, 0xc1, 0x2a, 0x3a, 0x93,
-	0x8c, 0x9b, 0x0e, 0x1b, 0x34, 0x6f, 0x0d, 0xa1, 0xf5, 0xa8, 0x0f, 0xbd, 0xfb, 0x34, 0x8f, 0x69,
-	0x1e, 0x24, 0xa5, 0xe3, 0x9e, 0x82, 0xe5, 0x93, 0x9c, 0x06, 0xf2, 0xdf, 0x90, 0x9f, 0x0c, 0x5a,
-	0x3e, 0xc9, 0x9b, 0x05, 0x2d, 0x53, 0x3c, 0x84, 0xba, 0x4f, 0x32, 0xe3, 0x4c, 0x21, 0x35, 0x35,
-	0x92, 0x50, 0x26, 0xee, 0x83, 0xf5, 0x40, 0xcb, 0xc5, 0x73, 0xb5, 0x40, 0x2b, 0x3c, 0x86, 0x66,
-	0x79, 0xb3, 0x00, 0x2c, 0x7a, 0xa0, 0x7b, 0xd3, 0x40, 0x8a, 0x2a, 0xc2, 0x03, 0x68, 0x8d, 0xe3,
-	0x24, 0x9a, 0x04, 0xb3, 0x88, 0xd7, 0x55, 0x7f, 0xab, 0xd1, 0x81, 0x8e, 0xfa, 0xdb, 0xb7, 0x7c,
-	0x9c, 0xd0, 0x2b, 0x6f, 0xa8, 0xf8, 0xaf, 0xe5, 0x5e, 0x42, 0xb7, 0x82, 0xf4, 0xe3, 0x2c, 0xc7,
-	0x21, 0xb4, 0x2b, 0x5d, 0xd1, 0x76, 0xf5, 0x55, 0x65, 0x8a, 0x5d, 0x3c, 0x3a, 0xfa, 0x5a, 0xdb,
-	0x6c, 0xb5, 0xb6, 0xd9, 0xcf, 0xda, 0x66, 0x1f, 0x1b, 0xdb, 0x58, 0x6d, 0x6c, 0xe3, 0x7b, 0x63,
-	0x1b, 0x4f, 0x0d, 0xef, 0xe4, 0x2a, 0x0d, 0x43, 0x4b, 0x3d, 0xf4, 0xf9, 0x6f, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0x96, 0xe6, 0xb7, 0xdc, 0xf5, 0x01, 0x00, 0x00,
+	// 437 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4d, 0x6f, 0x13, 0x31,
+	0x10, 0x8d, 0xb3, 0xf9, 0xda, 0x69, 0x28, 0x91, 0x8b, 0xd0, 0x0a, 0xd0, 0x12, 0xad, 0x7a, 0x88,
+	0x7a, 0x08, 0x08, 0x38, 0xc1, 0x01, 0xd1, 0xa0, 0x82, 0x84, 0xd5, 0x4a, 0x26, 0xea, 0x81, 0x9b,
+	0x83, 0x2c, 0x6b, 0xa5, 0xcd, 0x8e, 0xf1, 0x6e, 0x28, 0xfd, 0x17, 0xfc, 0x07, 0xc4, 0x7f, 0xe1,
+	0xd8, 0x23, 0x47, 0x94, 0xfc, 0x11, 0xb4, 0x13, 0x6f, 0x42, 0xc2, 0xa5, 0xb7, 0x79, 0x6f, 0xfc,
+	0x3c, 0xef, 0x79, 0x0c, 0x61, 0x86, 0x66, 0x6c, 0x1d, 0x96, 0xc8, 0x9b, 0x76, 0x96, 0xbc, 0x00,
+	0x10, 0x68, 0x26, 0x98, 0x97, 0x3a, 0x2f, 0xf9, 0x00, 0x82, 0x0f, 0xfa, 0x3a, 0x62, 0x43, 0x36,
+	0x0a, 0x65, 0x55, 0xf2, 0x7b, 0xd0, 0xbe, 0x54, 0xd9, 0x42, 0x47, 0x4d, 0xe2, 0xd6, 0x20, 0xf9,
+	0x02, 0x81, 0x40, 0xc3, 0x39, 0xb4, 0xa6, 0xe9, 0x5c, 0xd3, 0xf9, 0x40, 0x52, 0xcd, 0x4f, 0xa0,
+	0xe7, 0x6f, 0x2b, 0xa2, 0xe6, 0x30, 0x18, 0x1d, 0x3c, 0x3b, 0x1c, 0xdb, 0xd9, 0x78, 0x3b, 0x44,
+	0x6e, 0xfa, 0x3c, 0x82, 0x4e, 0xa5, 0x39, 0x2f, 0xa2, 0x60, 0xc8, 0x46, 0xdd, 0xf7, 0x0d, 0xe9,
+	0xf1, 0xe9, 0x00, 0x0e, 0x2f, 0x6c, 0x99, 0x62, 0xae, 0xb2, 0x35, 0x93, 0x3c, 0x85, 0x8e, 0x40,
+	0x33, 0x55, 0xe6, 0xd6, 0x26, 0x7f, 0x30, 0xe8, 0x09, 0x34, 0xef, 0x1c, 0x2e, 0x2c, 0x7f, 0x08,
+	0x2d, 0x81, 0xa6, 0x88, 0x18, 0x59, 0xea, 0x7a, 0x4b, 0x92, 0x48, 0x7e, 0x1f, 0x3a, 0x1f, 0x71,
+	0xe1, 0x3e, 0xd7, 0x17, 0x78, 0xc4, 0x8f, 0xa1, 0xbb, 0x9e, 0x59, 0x19, 0xac, 0x74, 0xe0, 0x75,
+	0x53, 0x65, 0x64, 0xdd, 0xe2, 0x0f, 0xa0, 0x77, 0x96, 0x66, 0xfa, 0x5c, 0xcd, 0x75, 0xd4, 0x22,
+	0xfd, 0x06, 0xf3, 0x21, 0x1c, 0x50, 0xda, 0x6f, 0xe5, 0x59, 0x86, 0x57, 0x51, 0x9b, 0xda, 0xff,
+	0x52, 0xc9, 0x4b, 0xe8, 0xd7, 0x26, 0x45, 0x5a, 0x94, 0xfc, 0x04, 0xc2, 0x1a, 0xd7, 0x6e, 0xfb,
+	0x7e, 0x2a, 0x91, 0x72, 0xdb, 0x4e, 0x7e, 0x32, 0xb8, 0x2b, 0xd5, 0xd5, 0x8e, 0xfe, 0x11, 0x84,
+	0x17, 0x2e, 0x35, 0x69, 0x2e, 0x74, 0x4e, 0x6f, 0xd4, 0x96, 0x5b, 0x82, 0x1f, 0xc3, 0x1d, 0x81,
+	0xe6, 0x8d, 0x73, 0xe9, 0x57, 0x4d, 0xab, 0x6b, 0xd2, 0xea, 0x76, 0x49, 0x9e, 0x40, 0x7f, 0x82,
+	0x73, 0xeb, 0x74, 0x51, 0x4c, 0xaf, 0xad, 0xa6, 0xed, 0x84, 0x72, 0x87, 0xab, 0xde, 0x6c, 0xb2,
+	0x70, 0x05, 0x3a, 0x9f, 0xd9, 0xa3, 0xea, 0x4f, 0xbc, 0x55, 0xa5, 0xa2, 0xa8, 0x7d, 0x49, 0x75,
+	0x72, 0x09, 0x47, 0x7b, 0x36, 0xc9, 0xea, 0x6b, 0x18, 0xec, 0xd1, 0x75, 0xe2, 0xa3, 0x2a, 0xf1,
+	0x5e, 0x4f, 0xfe, 0x77, 0xf8, 0xf4, 0xf1, 0xaf, 0x65, 0xcc, 0x6e, 0x96, 0x31, 0xfb, 0xb3, 0x8c,
+	0xd9, 0xf7, 0x55, 0xdc, 0xb8, 0x59, 0xc5, 0x8d, 0xdf, 0xab, 0xb8, 0xf1, 0xa9, 0x3d, 0x7e, 0xf2,
+	0xca, 0xce, 0x66, 0x1d, 0xfa, 0xe8, 0xcf, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff, 0x1c, 0xb8, 0x81,
+	0xf9, 0xf5, 0x02, 0x00, 0x00,
 }
 
 func (m *LogContent) Marshal() (dAtA []byte, err error) {
@@ -618,6 +746,97 @@ func (m *LogGroupList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *RawLogGroupList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RawLogGroupList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RawLogGroupList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Data) > 0 {
+		i -= len(m.Data)
+		copy(dAtA[i:], m.Data)
+		i = encodeVarintLog(dAtA, i, uint64(len(m.Data)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.Cursor) > 0 {
+		i -= len(m.Cursor)
+		copy(dAtA[i:], m.Cursor)
+		i = encodeVarintLog(dAtA, i, uint64(len(m.Cursor)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.CompressType) > 0 {
+		i -= len(m.CompressType)
+		copy(dAtA[i:], m.CompressType)
+		i = encodeVarintLog(dAtA, i, uint64(len(m.CompressType)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.LogArriveTime != 0 {
+		i = encodeVarintLog(dAtA, i, uint64(m.LogArriveTime))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.OriginLen != 0 {
+		i = encodeVarintLog(dAtA, i, uint64(m.OriginLen))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *RawLogGroupListList) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *RawLogGroupListList) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *RawLogGroupListList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.RawLogGroupLists) > 0 {
+		for iNdEx := len(m.RawLogGroupLists) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.RawLogGroupLists[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintLog(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintLog(dAtA []byte, offset int, v uint64) int {
 	offset -= sovLog(v)
 	base := offset
@@ -734,6 +953,48 @@ func (m *LogGroupList) Size() (n int) {
 	_ = l
 	if len(m.LogGroups) > 0 {
 		for _, e := range m.LogGroups {
+			l = e.Size()
+			n += 1 + l + sovLog(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *RawLogGroupList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.OriginLen != 0 {
+		n += 1 + sovLog(uint64(m.OriginLen))
+	}
+	if m.LogArriveTime != 0 {
+		n += 1 + sovLog(uint64(m.LogArriveTime))
+	}
+	l = len(m.CompressType)
+	if l > 0 {
+		n += 1 + l + sovLog(uint64(l))
+	}
+	l = len(m.Cursor)
+	if l > 0 {
+		n += 1 + l + sovLog(uint64(l))
+	}
+	l = len(m.Data)
+	if l > 0 {
+		n += 1 + l + sovLog(uint64(l))
+	}
+	return n
+}
+
+func (m *RawLogGroupListList) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.RawLogGroupLists) > 0 {
+		for _, e := range m.RawLogGroupLists {
 			l = e.Size()
 			n += 1 + l + sovLog(uint64(l))
 		}
@@ -1363,6 +1624,276 @@ func (m *LogGroupList) Unmarshal(dAtA []byte) error {
 			}
 			m.LogGroups = append(m.LogGroups, &LogGroup{})
 			if err := m.LogGroups[len(m.LogGroups)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLog(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLog
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RawLogGroupList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLog
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RawLogGroupList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RawLogGroupList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OriginLen", wireType)
+			}
+			m.OriginLen = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OriginLen |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LogArriveTime", wireType)
+			}
+			m.LogArriveTime = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.LogArriveTime |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CompressType", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthLog
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLog
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.CompressType = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Cursor", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthLog
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLog
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Cursor = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthLog
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthLog
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipLog(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthLog
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *RawLogGroupListList) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowLog
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: RawLogGroupListList: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: RawLogGroupListList: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RawLogGroupLists", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowLog
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthLog
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthLog
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RawLogGroupLists = append(m.RawLogGroupLists, &RawLogGroupList{})
+			if err := m.RawLogGroupLists[len(m.RawLogGroupLists)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

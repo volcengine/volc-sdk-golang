@@ -500,6 +500,7 @@ type ConsumeLogsRequest struct {
 	TopicID       string
 	ShardID       int
 	Cursor        string
+	Original      bool
 	EndCursor     *string `json:",omitempty"`
 	LogGroupCount *int    `json:",omitempty"`
 	Compression   *string `json:",omitempty"`

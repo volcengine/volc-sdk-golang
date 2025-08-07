@@ -9,6 +9,9 @@ import (
 
 const delimiter = "|"
 
+var MaxBatchSize int64 = 8 * 1024 * 1024
+var MaxBatchCount = 10000
+
 type Config struct {
 	TotalSizeLnBytes      int64
 	MaxSenderCount        int64

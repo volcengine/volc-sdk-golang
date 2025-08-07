@@ -6,6 +6,10 @@ type CreateImageStyleBodyUnit string
 
 type DeleteImageElementsBodyType string
 
+type Enum0 string
+
+type Enum1 string
+
 type Enum2 string
 
 type Enum4 string
@@ -1149,9 +1153,113 @@ type CreateHmExtractTaskResResult struct {
 	TaskID string `json:"TaskId"`
 }
 
+type CreateImageAIProcessCallbackBody struct {
+
+	// REQUIRED; 条目id
+	EntryID string `json:"EntryId"`
+}
+
+type CreateImageAIProcessCallbackRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateImageAIProcessCallbackResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type CreateImageAIProcessCallbackResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type CreateImageAIProcessQueueBody struct {
+
+	// REQUIRED; 队列属性
+	Attribute string `json:"Attribute"`
+
+	// REQUIRED; 队列名
+	Name string `json:"Name"`
+
+	// 任务队列回调设置。
+	CallbackConf *CreateImageAIProcessQueueBodyCallbackConf `json:"CallbackConf,omitempty"`
+
+	// 队列描述
+	Desc string `json:"Desc,omitempty"`
+
+	// 是否开启队列
+	IsStart bool `json:"IsStart,omitempty"`
+}
+
+// CreateImageAIProcessQueueBodyCallbackConf - 任务队列回调设置。
+type CreateImageAIProcessQueueBodyCallbackConf struct {
+
+	// REQUIRED; 回调数据格式，JSON或者XML
+	DataFormat string `json:"DataFormat"`
+
+	// REQUIRED; 回调url
+	Endpoint string `json:"Endpoint"`
+
+	// REQUIRED; 回到url协议，默认http
+	Method string `json:"Method"`
+
+	// REQUIRED; 回调类型，支持task 或entry
+	Type string `json:"Type"`
+
+	// 参数
+	Args string `json:"Args,omitempty"`
+}
+
+type CreateImageAIProcessQueueRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateImageAIProcessQueueResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *CreateImageAIProcessQueueResResult `json:"Result,omitempty"`
+}
+
+type CreateImageAIProcessQueueResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// CreateImageAIProcessQueueResResult - 视请求的接口而定
+type CreateImageAIProcessQueueResResult struct {
+
+	// REQUIRED; 队列id
+	QueueID string `json:"QueueId"`
+}
+
 type CreateImageAITaskBody struct {
 
-	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀。传入图片的宽高、大小等要求请参看对应的附加组件使用限制 [https://www.volcengine.com/docs/508/1270839]。
+	// REQUIRED; 待进行 AI 处理的图片 URI 或 URL 列表，其中 URI 不需要带 tos-cn-i-*** 前缀，最多传入 10,000 张图片。传入图片的宽高、大小等要求请参看对应的附加组件使用限制 [https://www.volcengine.com/docs/508/1270839]。
 	// :::warning 若 DataType 取值 uri，则待转码图片 URI 必须为指定服务 ID 下的存储 URI。您可通过调用GetImageUploadFiles [https://www.volcengine.com/docs/508/9392]获取指定服务下全部的上传文件存储
 	// URI。 :::
 	DataList []string `json:"DataList"`
@@ -1160,6 +1268,9 @@ type CreateImageAITaskBody struct {
 	// * uri：指定 ServiceId 下存储 URI。
 	// * url：公网可访问的 URL。
 	DataType string `json:"DataType"`
+
+	// REQUIRED
+	QueueID string `json:"QueueId"`
 
 	// REQUIRED; 服务 ID。若 DataType 取值 uri，则提交的图片 URI 列表需在该服务内。
 	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
@@ -3167,6 +3278,75 @@ type DelDomainResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+type DeleteImageAIProcessDetailBody struct {
+
+	// 批量删除的条目id
+	Entries []string `json:"Entries,omitempty"`
+
+	// 条目id
+	EntryID string `json:"EntryId,omitempty"`
+}
+
+type DeleteImageAIProcessDetailRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DeleteImageAIProcessDetailResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DeleteImageAIProcessDetailResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type DeleteImageAIProcessQueueBody struct {
+
+	// REQUIRED; 队列id
+	QueueID string `json:"QueueId"`
+}
+
+type DeleteImageAIProcessQueueRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DeleteImageAIProcessQueueResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type DeleteImageAIProcessQueueResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type DeleteImageAnalyzeTaskBody struct {
 
 	// REQUIRED; 待删除的任务 ID，您可以通过调用 GetImageAnalyzeTasks [https://www.volcengine.com/docs/508/1160417] 获取指定地区全部离线评估任务 ID。
@@ -3936,9 +4116,10 @@ type DescribeImageXAIRequestCntUsageQuery struct {
 	// 是否叠加计费倍率。默认为false。
 	EnableBillingRate bool `json:"EnableBillingRate,omitempty" query:"EnableBillingRate"`
 
-	// 维度拆分的维度值。不传表示不拆分维度，只能传入单个参数。支持取值如下：
+	// 维度拆分的维度值。不传表示不拆分维度，传入多个时用英文逗号“,”分割。支持取值如下：
 	// * ServiceId：服务
 	// * AdvFeat：组件
+	// * Model：模型
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
 	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
@@ -3998,6 +4179,9 @@ type DescribeImageXAIRequestCntUsageResResultRequestCntDataItem struct {
 	// REQUIRED; 具体数据
 	Data []*DescribeImageXAIRequestCntUsageResResultRequestCntDataPropertiesItemsItem `json:"Data"`
 
+	// REQUIRED; 附加组件模型，GroupBy包含Model时有返回值。
+	Model string `json:"Model"`
+
 	// 附加组件类型，GroupBy包含AdvFeat时有返回值。如：enhance，smartcut。取值为total，表示包含所选AdvFeat总请求次数。
 	AdvFeat string `json:"AdvFeat,omitempty"`
 
@@ -4011,6 +4195,91 @@ type DescribeImageXAIRequestCntUsageResResultRequestCntDataPropertiesItemsItem s
 	TimeStamp string `json:"TimeStamp"`
 
 	// REQUIRED; 请求次
+	Value int `json:"Value"`
+}
+
+type DescribeImageXAddOnQPSUsageQuery struct {
+
+	// REQUIRED; 附加组件名称。仅传单个。您可通过调用 GetImageAddOnConf [https://www.volcengine.com/docs/508/66145] 查看Key返回值。
+	AdvFeat string `json:"AdvFeat" query:"AdvFeat"`
+
+	// REQUIRED; 获取数据结束时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	EndTime string `json:"EndTime" query:"EndTime"`
+
+	// REQUIRED; 获取数据起始时间点。日期格式按照 ISO8601 表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。 :::tip 由于仅支持查询近 93 天的历史数据，则若此刻时间为2011-11-21T16:14:00+08:00，那么您可输入最早的开始时间为2011-08-21T00:00:00+08:00。
+	// :::
+	StartTime string `json:"StartTime" query:"StartTime"`
+
+	// 查询数据的时间粒度。单位为秒。缺省时查询StartTime和EndTime时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
+	// * 1: 单次查询最大时间跨度为 6 小时
+	// * 60：单次查询最大时间跨度为 6 小时
+	// * 120：单次查询最大时间跨度为 6 小时
+	// * 300：单次查询最大时间跨度为 31 天
+	// * 600：单次查询最大时间跨度为 31 天
+	// * 1200：单次查询最大时间跨度为 31 天
+	// * 1800：单次查询最大时间跨度为 31 天
+	// * 3600：单次查询最大时间跨度为 93 天
+	// * 86400：单次查询最大时间跨度为 93 天
+	// * 604800：单次查询最大时间跨度为 93 天
+	Interval string `json:"Interval,omitempty" query:"Interval"`
+
+	// 服务 ID。支持查询多个服务，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有服务。您可以在 veImageX 控制台的服务管理 [https://console.volcengine.com/imagex/service_manage/]模块或者调用GetAllImageServices
+	// [https://www.volcengine.com/docs/508/9360]接口获取服务
+	// ID。
+	ServiceIDs string `json:"ServiceIds,omitempty" query:"ServiceIds"`
+}
+
+type DescribeImageXAddOnQPSUsageRes struct {
+
+	// REQUIRED
+	ResponseMetadata *DescribeImageXAddOnQPSUsageResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result *DescribeImageXAddOnQPSUsageResResult `json:"Result"`
+}
+
+type DescribeImageXAddOnQPSUsageResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// DescribeImageXAddOnQPSUsageResResult - 视请求的接口而定
+type DescribeImageXAddOnQPSUsageResResult struct {
+
+	// REQUIRED; QPS 用量
+	QPSData []*DescribeImageXAddOnQPSUsageResResultQPSDataItem `json:"QPSData"`
+}
+
+type DescribeImageXAddOnQPSUsageResResultQPSDataItem struct {
+
+	// REQUIRED; 时序数据。
+	Data []*DescribeImageXAddOnQPSUsageResResultQPSDataPropertiesItemsItem `json:"Data"`
+
+	// REQUIRED; 附加组件模型。
+	// * 取值为total：表示总请求QPS。
+	// * 取值不为total：表示附加组件使用模型的请求QPS。
+	Model string `json:"Model"`
+}
+
+type DescribeImageXAddOnQPSUsageResResultQPSDataPropertiesItemsItem struct {
+
+	// REQUIRED; 统计时间点，时间片开始时刻。日期格式按照ISO8601表示法，格式为：YYYY-MM-DDThh:mm:ss±hh:mm，比如2019-06-02T00:00:00+08:00。
+	TimeStamp string `json:"TimeStamp"`
+
+	// REQUIRED; 请求QPS
 	Value int `json:"Value"`
 }
 
@@ -9622,9 +9891,10 @@ type DescribeImageXRequestCntUsageQuery struct {
 	// 组件名称。支持查询多个组件，传入多个时用英文逗号“,”分割，缺省情况下表示查询所有组件。您可通过调用 GetImageAddOnConf [https://www.volcengine.com/docs/508/66145] 查看Key返回值。
 	AdvFeats string `json:"AdvFeats,omitempty" query:"AdvFeats"`
 
-	// 维度拆分的维度值。不传表示不拆分维度，只能传入单个参数。支持取值如下：
+	// 维度拆分的维度值。不传表示不拆分维度，传入多个时用英文逗号“,”分割。支持取值如下：
 	// * ServiceId：服务
 	// * AdvFeat：组件
+	// * Model：模型
 	GroupBy string `json:"GroupBy,omitempty" query:"GroupBy"`
 
 	// 查询数据的时间粒度。单位为秒。缺省时查询 StartTime 和 EndTime 时间段全部数据，此时单次查询最大时间跨度为 93 天。取值如下所示：
@@ -9686,6 +9956,9 @@ type DescribeImageXRequestCntUsageResResultRequestCntDataItem struct {
 
 	// 附加组件类型，GroupBy包含AdvFeat时有返回值。如：enhance，smartcut。取值为total，表示包含所选AdvFeat实际请求次数。
 	AdvFeat string `json:"AdvFeat,omitempty"`
+
+	// 模型名称，GroupBy包含Model时有返回值。
+	Model string `json:"Model,omitempty"`
 
 	// 服务 ID，GroupBy包含ServiceId时有返回值。
 	ServiceID string `json:"ServiceId,omitempty"`
@@ -14430,7 +14703,7 @@ type GetImageAIDetailsQuery struct {
 
 	// 执行状态，填入多个时使用英文逗号分隔。取值如下所示：
 	// * Pending：排队中
-	// * Running：执行中
+	// * Dispatched：执行中
 	// * Success：执行成功
 	// * Fail：执行失败
 	Status string `json:"Status,omitempty" query:"Status"`
@@ -14494,7 +14767,7 @@ type GetImageAIDetailsResResultExecInfoItem struct {
 
 	// 执行状态。取值如下所示：
 	// * Pending：排队中
-	// * Running：执行中
+	// * Dispatched：执行中
 	// * Success：执行成功
 	// * Fail：执行失败
 	Status string `json:"Status,omitempty"`
@@ -14530,6 +14803,104 @@ type GetImageAIDetailsResResultExecInfoItemExecOutput struct {
 	Output string `json:"Output"`
 }
 
+type GetImageAIProcessQueuesQuery struct {
+
+	// REQUIRED; 分页条数，取值范围为 (0, 100]。
+	Limit int `json:"Limit" query:"Limit"`
+
+	// 分页偏移量，默认为 0。取值为 1 时，表示跳过第一条数据，从第二条数据取值。
+	Offset int `json:"Offset,omitempty" query:"Offset"`
+
+	// 返回队列名称或队列描述中包含该值的队列。
+	SearchPtn string `json:"SearchPtn,omitempty" query:"SearchPtn"`
+}
+
+type GetImageAIProcessQueuesRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageAIProcessQueuesResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; 视请求的接口而定
+	Result *GetImageAIProcessQueuesResResult `json:"Result"`
+}
+
+type GetImageAIProcessQueuesResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// GetImageAIProcessQueuesResResult - 视请求的接口而定
+type GetImageAIProcessQueuesResResult struct {
+
+	// REQUIRED; 当前分页队列详细信息。
+	Queues []*GetImageAIProcessQueuesResResultQueuesItem `json:"Queues"`
+
+	// REQUIRED; 总数
+	Total int `json:"Total"`
+}
+
+type GetImageAIProcessQueuesResResultQueuesItem struct {
+
+	// REQUIRED; 队列ID
+	ID string `json:"Id"`
+
+	// REQUIRED; 队列名称
+	Name string `json:"Name"`
+
+	// 队列属性
+	Attribute string `json:"Attribute,omitempty"`
+
+	// 任务队列回调设置。
+	CallbackConf *GetImageAIProcessQueuesResResultQueuesItemCallbackConf `json:"CallbackConf,omitempty"`
+
+	// 队列创建时间
+	CreateAt string `json:"CreateAt,omitempty"`
+
+	// 队列描述
+	Desc string `json:"Desc,omitempty"`
+
+	// 队列是否开启回调配置
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+
+	// 队列状态
+	Status string `json:"Status,omitempty"`
+
+	// 队列类型
+	Type string `json:"Type,omitempty"`
+}
+
+// GetImageAIProcessQueuesResResultQueuesItemCallbackConf - 任务队列回调设置。
+type GetImageAIProcessQueuesResResultQueuesItemCallbackConf struct {
+
+	// REQUIRED; 回调地址
+	Endpoint string `json:"Endpoint"`
+
+	// REQUIRED; 回调协议
+	Method string `json:"Method"`
+
+	// 回调附带参数
+	Args string `json:"Args,omitempty"`
+
+	// 回调数据类型，JSON或者XML
+	DataFormat string `json:"DataFormat,omitempty"`
+
+	// 回调触发类型，整个任务回调或者单个条目回调
+	Type string `json:"Type,omitempty"`
+}
+
 type GetImageAITasksQuery struct {
 
 	// REQUIRED; 查询的结束 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
@@ -14537,11 +14908,6 @@ type GetImageAITasksQuery struct {
 
 	// REQUIRED; 队列 ID，通过 CreateImageAITask 接口返回。
 	QueueID string `json:"QueueId" query:"QueueId"`
-
-	// REQUIRED; 服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
-	ServiceID string `json:"ServiceId" query:"ServiceId"`
 
 	// REQUIRED; 查询的起始 Unix 时间戳，StartTime 与 EndTime 时间间隔最大不超过 7 天。
 	StartTime int `json:"StartTime" query:"StartTime"`
@@ -14551,6 +14917,14 @@ type GetImageAITasksQuery struct {
 
 	// 上一次查询返回的位置标记，作为本次查询的起点信息，默认值为空。
 	Marker string `json:"Marker,omitempty" query:"Marker"`
+
+	// 搜索url、uri
+	SearchPtn string `json:"SearchPtn,omitempty" query:"SearchPtn"`
+
+	// 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId,omitempty" query:"ServiceId"`
 
 	// 指定查询的任务状态，缺省时将查询全部状态的任务。取值如下所示：
 	// * Running：任务运行中
@@ -15542,8 +15916,9 @@ type GetImageBackgroundColorsResResult struct {
 type GetImageBgFillResultBody struct {
 
 	// REQUIRED; 填充模型，取值如下所示：
-	// * 0：国漫风格模型；
-	// * 1：通用模型。
+	// * 0：国漫风格模型
+	// * 1：通用模型
+	// *
 	Model int `json:"Model"`
 
 	// REQUIRED; 服务ID。
@@ -20907,6 +21282,109 @@ type UpdateHTTPSResResponseMetadata struct {
 	Version   string `json:"Version,omitempty"`
 }
 
+type UpdateImageAIProcessQueueBody struct {
+
+	// REQUIRED; aisuperresolution、bgfill、super_resolution、InfiniteCreations
+	Attribute string `json:"Attribute"`
+
+	// REQUIRED; 队列ID
+	ID string `json:"Id"`
+
+	// REQUIRED; 队列名
+	Name string `json:"Name"`
+
+	// 任务队列回调设置。
+	CallbackConf *UpdateImageAIProcessQueueBodyCallbackConf `json:"CallbackConf,omitempty"`
+
+	// 队列描述
+	Desc string `json:"Desc,omitempty"`
+
+	// 是否开启回调配置
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+}
+
+// UpdateImageAIProcessQueueBodyCallbackConf - 任务队列回调设置。
+type UpdateImageAIProcessQueueBodyCallbackConf struct {
+
+	// 回调附带参数
+	Args string `json:"Args,omitempty"`
+
+	// 回调参数类型，JSON或者XML
+	DataFormat string `json:"DataFormat,omitempty"`
+
+	// 回调地址
+	Endpoint string `json:"Endpoint,omitempty"`
+
+	// 回调请求协议
+	Method string `json:"Method,omitempty"`
+
+	// 回调触发类型，任务级别或者单个条目
+	Type string `json:"Type,omitempty"`
+}
+
+type UpdateImageAIProcessQueueRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateImageAIProcessQueueResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateImageAIProcessQueueResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type UpdateImageAIProcessQueueStatusBody struct {
+
+	// REQUIRED; 队列id
+	ID string `json:"Id"`
+
+	// REQUIRED; 状态Pending,Running
+	Status string `json:"Status"`
+}
+
+type UpdateImageAIProcessQueueStatusRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateImageAIProcessQueueStatusResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result interface{} `json:"Result,omitempty"`
+}
+
+type UpdateImageAIProcessQueueStatusResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
 type UpdateImageAnalyzeTaskBody struct {
 
 	// REQUIRED; 任务名称
@@ -23827,6 +24305,10 @@ type CreateCVImageGenerateTask struct{}
 type CreateFileRestore struct{}
 type CreateHiddenWatermarkImage struct{}
 type CreateHmExtractTask struct{}
+type CreateImageAIProcessCallback struct{}
+type CreateImageAIProcessCallbackQuery struct{}
+type CreateImageAIProcessQueue struct{}
+type CreateImageAIProcessQueueQuery struct{}
 type CreateImageAITask struct{}
 type CreateImageAITaskQuery struct{}
 type CreateImageAnalyzeTask struct{}
@@ -23864,6 +24346,10 @@ type CreateImageTranscodeTask struct{}
 type CreateImageTranscodeTaskQuery struct{}
 type CreateTemplatesFromBin struct{}
 type DelDomain struct{}
+type DeleteImageAIProcessDetail struct{}
+type DeleteImageAIProcessDetailQuery struct{}
+type DeleteImageAIProcessQueue struct{}
+type DeleteImageAIProcessQueueQuery struct{}
 type DeleteImageAnalyzeTask struct{}
 type DeleteImageAnalyzeTaskQuery struct{}
 type DeleteImageAnalyzeTaskRun struct{}
@@ -23896,6 +24382,8 @@ type DeleteTemplatesFromBin struct{}
 type DescribeImageVolcCdnAccessLog struct{}
 type DescribeImageXAIRequestCntUsage struct{}
 type DescribeImageXAIRequestCntUsageBody struct{}
+type DescribeImageXAddOnQPSUsage struct{}
+type DescribeImageXAddOnQPSUsageBody struct{}
 type DescribeImageXBaseOpUsage struct{}
 type DescribeImageXBaseOpUsageBody struct{}
 type DescribeImageXBillingRequestCntUsage struct{}
@@ -24093,6 +24581,8 @@ type GetDomainOwnerVerifyContent struct{}
 type GetDomainOwnerVerifyContentBody struct{}
 type GetImageAIDetails struct{}
 type GetImageAIDetailsBody struct{}
+type GetImageAIProcessQueues struct{}
+type GetImageAIProcessQueuesBody struct{}
 type GetImageAITasks struct{}
 type GetImageAITasksBody struct{}
 type GetImageAddOnTag struct{}
@@ -24222,6 +24712,10 @@ type UpdateAuditImageStatusQuery struct{}
 type UpdateDomainAdaptiveFmt struct{}
 type UpdateFileStorageClass struct{}
 type UpdateHTTPS struct{}
+type UpdateImageAIProcessQueue struct{}
+type UpdateImageAIProcessQueueQuery struct{}
+type UpdateImageAIProcessQueueStatus struct{}
+type UpdateImageAIProcessQueueStatusQuery struct{}
 type UpdateImageAnalyzeTask struct{}
 type UpdateImageAnalyzeTaskQuery struct{}
 type UpdateImageAnalyzeTaskStatus struct{}
@@ -24323,6 +24817,14 @@ type CreateHmExtractTaskReq struct {
 	*CreateHmExtractTaskQuery
 	*CreateHmExtractTaskBody
 }
+type CreateImageAIProcessCallbackReq struct {
+	*CreateImageAIProcessCallbackQuery
+	*CreateImageAIProcessCallbackBody
+}
+type CreateImageAIProcessQueueReq struct {
+	*CreateImageAIProcessQueueQuery
+	*CreateImageAIProcessQueueBody
+}
 type CreateImageAITaskReq struct {
 	*CreateImageAITaskQuery
 	*CreateImageAITaskBody
@@ -24407,6 +24909,14 @@ type DelDomainReq struct {
 	*DelDomainQuery
 	*DelDomainBody
 }
+type DeleteImageAIProcessDetailReq struct {
+	*DeleteImageAIProcessDetailQuery
+	*DeleteImageAIProcessDetailBody
+}
+type DeleteImageAIProcessQueueReq struct {
+	*DeleteImageAIProcessQueueQuery
+	*DeleteImageAIProcessQueueBody
+}
 type DeleteImageAnalyzeTaskReq struct {
 	*DeleteImageAnalyzeTaskQuery
 	*DeleteImageAnalyzeTaskBody
@@ -24478,6 +24988,10 @@ type DescribeImageVolcCdnAccessLogReq struct {
 type DescribeImageXAIRequestCntUsageReq struct {
 	*DescribeImageXAIRequestCntUsageQuery
 	*DescribeImageXAIRequestCntUsageBody
+}
+type DescribeImageXAddOnQPSUsageReq struct {
+	*DescribeImageXAddOnQPSUsageQuery
+	*DescribeImageXAddOnQPSUsageBody
 }
 type DescribeImageXBaseOpUsageReq struct {
 	*DescribeImageXBaseOpUsageQuery
@@ -24883,6 +25397,10 @@ type GetImageAIDetailsReq struct {
 	*GetImageAIDetailsQuery
 	*GetImageAIDetailsBody
 }
+type GetImageAIProcessQueuesReq struct {
+	*GetImageAIProcessQueuesQuery
+	*GetImageAIProcessQueuesBody
+}
 type GetImageAITasksReq struct {
 	*GetImageAITasksQuery
 	*GetImageAITasksBody
@@ -25162,6 +25680,14 @@ type UpdateFileStorageClassReq struct {
 type UpdateHTTPSReq struct {
 	*UpdateHTTPSQuery
 	*UpdateHTTPSBody
+}
+type UpdateImageAIProcessQueueReq struct {
+	*UpdateImageAIProcessQueueQuery
+	*UpdateImageAIProcessQueueBody
+}
+type UpdateImageAIProcessQueueStatusReq struct {
+	*UpdateImageAIProcessQueueStatusQuery
+	*UpdateImageAIProcessQueueStatusBody
 }
 type UpdateImageAnalyzeTaskReq struct {
 	*UpdateImageAnalyzeTaskQuery

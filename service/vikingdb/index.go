@@ -30,6 +30,7 @@ type Index struct {
 type SearchOptions struct {
 	filter                map[string]interface{}
 	limit                 int64
+	offset                int64
 	outputFields          []string
 	partition             string
 	denseWeight           *float64
@@ -244,6 +245,9 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		if searchOptions.needReturnVector {
 			search["need_return_vector"] = true
 		}
+    if searchOptions.offset > 0 {
+			search["offset"] = searchOptions.offset
+		}
 		params := map[string]interface{}{
 			"collection_name": index.CollectionName,
 			"index_name":      index.IndexName,
@@ -343,6 +347,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
+  if searchOptions.offset > 0 {
+    search["offset"] = searchOptions.offset
+  }
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -398,6 +405,9 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
+  if searchOptions.offset > 0 {
+    search["offset"] = searchOptions.offset
+  }
 	fmt.Println(index.isClient)
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
@@ -463,6 +473,9 @@ func (index *Index) SearchWithMultiModal(searchOptions *SearchOptions) ([]*Data,
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
+  if searchOptions.offset > 0 {
+    search["offset"] = searchOptions.offset
+  }
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -519,6 +532,9 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
+  if searchOptions.offset > 0 {
+    search["offset"] = searchOptions.offset
+  }
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
