@@ -7,8 +7,11 @@ const (
 	ServiceName      = "TLS"
 
 	CompressLz4  = "lz4"
+	CompressZlib = "zlib"
 	CompressGz   = "gzip"
 	CompressNone = "none"
+
+	ErrInvalidContent = "InvalidContent"
 
 	FullTextIndexKey = "__content__"
 
@@ -32,10 +35,11 @@ const (
 
 	PathDescribeShards = "/DescribeShards"
 
-	PathPutLogs            = "/PutLogs"
-	PathDescribeCursor     = "/DescribeCursor"
-	PathConsumeLogs        = "/ConsumeLogs"
-	PathDescribeLogContext = "/DescribeLogContext"
+	PathPutLogs             = "/PutLogs"
+	PathDescribeCursor      = "/DescribeCursor"
+	PathConsumeLogs         = "/ConsumeLogs"
+	PathConsumeOriginalLogs = "/ConsumeOriginalLogs"
+	PathDescribeLogContext  = "/DescribeLogContext"
 
 	PathCreateRule               = "/CreateRule"
 	PathDeleteRule               = "/DeleteRule"

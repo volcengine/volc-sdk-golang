@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
@@ -11,6 +12,7 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/tls/producer"
 	"os"
 	"strconv"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -23,6 +25,7 @@ type SdkConsumerTestSuite struct {
 	topicId   string
 	producer  producer.Producer
 	timestamp int64
+	logCnt    int
 }
 
 func TestSdkConsumerTestSuite(t *testing.T) {
@@ -32,7 +35,7 @@ func TestSdkConsumerTestSuite(t *testing.T) {
 func (suite *SdkConsumerTestSuite) SetupTest() {
 
 	suite.timestamp = time.Now().Unix()
-
+	suite.logCnt = 23673
 	suite.cli = NewClientWithEnv()
 
 	// 创建project
@@ -80,31 +83,30 @@ func (suite *SdkConsumerTestSuite) SetupTest() {
 		FileName: "test-sdk.log",
 	}
 
-	var logContents []*pb.LogContent
-
-	for i := 0; i < 10; i++ {
-
-		idx := strconv.Itoa(i)
-
-		logContent := &pb.LogContent{
-			Key:   "key-" + idx,
-			Value: "test-message" + idx,
+	for i := 0; i < suite.logCnt; i++ {
+		err = suite.producer.SendLog("", suite.topicId, logGroup.Source, logGroup.FileName, &pb.Log{
+			Time: time.Now().Unix(),
+			Contents: []*pb.LogContent{
+				{
+					Key:   "id",
+					Value: strconv.Itoa(i),
+				},
+				{
+					Key:   "msg",
+					Value: "收到回复拒收到付开始的 time=" + time.Now().String(),
+				},
+				{
+					Key:   "topicName",
+					Value: "auto-" + strconv.Itoa(i%2),
+				},
+			},
+		}, nil)
+		if i%5000 == 0 {
+			fmt.Println(i)
+			time.Sleep(500 * time.Millisecond)
 		}
-
-		logContents = append(logContents, logContent)
+		suite.NoError(err)
 	}
-
-	logs := []*pb.Log{
-		{
-			Contents: logContents,
-			Time:     time.Now().Unix(),
-		},
-	}
-
-	logGroup.Logs = logs
-
-	err = suite.producer.SendLogs("", suite.topicId, logGroup.Source, logGroup.FileName, logGroup, nil)
-	suite.NoError(err)
 
 	// 关闭Producer
 	suite.producer.Close()
@@ -113,6 +115,11 @@ func (suite *SdkConsumerTestSuite) SetupTest() {
 }
 
 func (suite *SdkConsumerTestSuite) TearDownTest() {
+	_, deleteGroupErr := suite.cli.DeleteConsumerGroup(&tls.DeleteConsumerGroupRequest{
+		ProjectID:         suite.projectId,
+		ConsumerGroupName: "test-consumer-group-name",
+	})
+	suite.NoError(deleteGroupErr)
 	_, deleteTopicErr := suite.cli.DeleteTopic(&tls.DeleteTopicRequest{TopicID: suite.topicId})
 	suite.NoError(deleteTopicErr)
 	_, deleteProjectErr := suite.cli.DeleteProject(&tls.DeleteProjectRequest{ProjectID: suite.projectId})
@@ -144,20 +151,25 @@ func (suite *SdkConsumerTestSuite) TestConsumer() {
 		ProjectID:                      suite.projectId,
 		TopicIDList:                    []string{suite.topicId},
 		ConsumerGroupName:              "test-consumer-group-name",
+		Original:                       true,
 	}
 
+	var logCnt int32 = 0
+
 	var handleLogs = func(topicID string, shardID int, l *pb.LogGroupList) {
-		fmt.Printf("received new logs from topic: %s, shard: %d\n", topicID, shardID)
-		logCount := len(l.LogGroups)
-		fmt.Printf("logCount: %d\n", logCount)
+		cnt := 0
 		for _, logGroup := range l.LogGroups {
-			for _, log := range logGroup.Logs {
-				fmt.Printf("time: %s\n", time.Unix(log.Time, 0).Format("2006-01-02 15:04:05"))
-				for _, content := range log.Contents {
-					fmt.Printf("%s: %s\n", content.Key, content.Value)
-				}
-			}
+			cnt += len(logGroup.Logs)
+			//for _, log := range logGroup.Logs {
+			//	fmt.Printf("time: %s\n", time.Unix(log.Time, 0).Format("2006-01-02 15:04:05"))
+			//	for _, content := range log.Contents {
+			//		fmt.Printf("%s: %s\n", content.Key, content.Value)
+			//	}
+			//}
 		}
+		fmt.Printf("received new logs from topic: %s, shard: %d, logCount: %d\n", topicID, shardID, cnt)
+
+		atomic.AddInt32(&logCnt, (int32)(cnt))
 	}
 
 	// 创建消费者
@@ -169,10 +181,16 @@ func (suite *SdkConsumerTestSuite) TestConsumer() {
 	suite.NoError(err)
 
 	// 等待消费
-	time.Sleep(300 * time.Second)
+	time.Sleep(60 * time.Second)
 
 	// 停止消费
 	consumer.Stop()
+	if int(logCnt) == suite.logCnt {
+		fmt.Println("consumer success")
+	} else {
+		fmt.Printf("consumer fail, expect logCnt: %d, actual logCnt: %d\n", suite.logCnt, logCnt)
+		suite.NoError(errors.New("not match"))
+	}
 }
 
 func (suite *SdkConsumerTestSuite) TestStopConsumer() {

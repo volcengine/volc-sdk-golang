@@ -139,9 +139,8 @@ func (lc *logConsumer) init() error {
 }
 
 func (lc *logConsumer) fetchData() error {
-	compressType := tls.CompressLz4
-
-	fetchResp, err := lc.client.ConsumeLogs(&tls.ConsumeLogsRequest{
+	compressType := lc.conf.CompressType
+	consumeReq := tls.ConsumeLogsRequest{
 		TopicID:           lc.shard.TopicID,
 		ShardID:           lc.shard.ShardID,
 		Cursor:            lc.nextCheckpoint,
@@ -149,7 +148,10 @@ func (lc *logConsumer) fetchData() error {
 		Compression:       &compressType,
 		ConsumerGroupName: &lc.conf.ConsumerGroupName,
 		ConsumerName:      &lc.conf.ConsumerName,
-	})
+		Original:          lc.conf.Original,
+	}
+
+	fetchResp, err := lc.client.ConsumeLogs(&consumeReq)
 	if err != nil {
 		clientErr := tls.NewClientError(err)
 		if clientErr.HTTPCode == http.StatusTooManyRequests {
@@ -160,6 +162,13 @@ func (lc *logConsumer) fetchData() error {
 			lc.heartbeatRestartCh <- struct{}{}
 			lc.commitCh <- struct{}{}
 			return errHeartbeatExpired
+		}
+
+		if clientErr.Code == tls.ErrInvalidContent {
+			level.Error(lc.logger).Log(lc.ctx, "fetch invalid data, err: %v", err)
+			lc.currLogGroupList = fetchResp.Logs
+			lc.nextCheckpoint = fetchResp.Cursor
+			return nil
 		}
 
 		level.Error(lc.logger).Log("error", "fetch data failed, err: "+err.Error())
