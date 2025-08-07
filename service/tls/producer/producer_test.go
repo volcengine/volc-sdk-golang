@@ -123,11 +123,11 @@ func (suite *SDKProducerTestSuite) SetupTest() {
 }
 
 func (suite *SDKProducerTestSuite) TearDownTest() {
+	suite.producer.Close()
 	_, deleteTopicErr := suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic})
 	suite.NoError(deleteTopicErr)
 	_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
 	suite.NoError(deleteProjectErr)
-	suite.producer.Close()
 }
 
 func TestSDKProducerTestSuite(t *testing.T) {

@@ -1,6 +1,8 @@
 package tls
 
 import (
+	"bytes"
+	"compress/zlib"
 	"encoding/json"
 	"fmt"
 	"runtime"
@@ -74,6 +76,12 @@ func GetPutLogsBody(compressType string, logGroupList *pb.LogGroupList) ([]byte,
 		}
 		outLen = n
 		break
+	case CompressZlib:
+		out, outLen, err = ZLibCompress(body)
+		if err != nil {
+			return nil, -1, err
+		}
+		return out, rawLength, nil
 	default:
 		out = body
 		outLen = len(out)
@@ -133,6 +141,21 @@ func ReplaceWhiteSpaceCharacter(str string) string {
 		str = strings.ReplaceAll(str, origin, new)
 	}
 	return str
+}
+
+func ZLibCompress(input []byte) ([]byte, int, error) {
+	var in bytes.Buffer
+
+	w := zlib.NewWriter(&in)
+
+	n, err := w.Write(input)
+	if err != nil {
+		return nil, -1, err
+	}
+
+	_ = w.Close()
+
+	return in.Bytes(), n, nil
 }
 
 func GoWithRecovery(f func()) {

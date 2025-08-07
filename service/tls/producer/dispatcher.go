@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	batchQueueSize = 100
+	batchQueueSize = 1000000
 )
 
 type BatchKey struct {
@@ -65,26 +65,6 @@ func (dispatcher *Dispatcher) IsShutDown() bool {
 		return true
 	default:
 		return false
-	}
-}
-
-func (dispatcher *Dispatcher) addOrSendProducerBatch(key string, batchLog *BatchLog, producerBatch *Batch) {
-	totalDataCount := producerBatch.getLogCount() + 1
-
-	if producerBatch.totalDataSize > dispatcher.producerConfig.MaxBatchSize && producerBatch.totalDataSize < 5*1024*1024 && totalDataCount <= dispatcher.producerConfig.MaxBatchCount {
-		producerBatch.addLogToLogGroup(batchLog.Log)
-		if batchLog.Key.CallBackFun != nil {
-			producerBatch.addProducerBatchCallBack(batchLog.Key.CallBackFun)
-		}
-		dispatcher.innerSendToServer(key, producerBatch)
-	} else if producerBatch.totalDataSize <= dispatcher.producerConfig.MaxBatchSize && totalDataCount <= dispatcher.producerConfig.MaxBatchCount {
-		producerBatch.addLogToLogGroup(batchLog.Log)
-		if batchLog.Key.CallBackFun != nil {
-			producerBatch.addProducerBatchCallBack(batchLog.Key.CallBackFun)
-		}
-	} else {
-		dispatcher.innerSendToServer(key, producerBatch)
-		dispatcher.createNewProducerBatch(batchLog, key)
 	}
 }
 
@@ -191,28 +171,35 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 
 	key := dispatcher.getKeyString(batchLog.Key)
 	logSize := int64(GetLogSize(batchLog.Log))
+	atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
 
 	dispatcher.lock.Lock()
+	defer dispatcher.lock.Unlock()
+	producerBatch := dispatcher.getOrCreateProducerBatch(batchLog, key)
+	addSuccess := producerBatch.tryAddLog(batchLog.Log, logSize, batchLog.Key.CallBackFun)
+	if addSuccess {
+		if producerBatch.meetSendCondition(dispatcher.producerConfig) {
+			dispatcher.innerSendToServer(key, producerBatch)
 
-	if producerBatch, ok := dispatcher.logGroupData[key]; ok {
-		atomic.AddInt64(&producerBatch.totalDataSize, logSize)
-		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
-		dispatcher.addOrSendProducerBatch(key, batchLog, producerBatch)
-	} else {
-		dispatcher.createNewProducerBatch(batchLog, key)
-		atomic.AddInt64(&dispatcher.logGroupData[key].totalDataSize, logSize)
-		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
+		}
+		return
 	}
-
-	dispatcher.lock.Unlock()
+	dispatcher.innerSendToServer(key, producerBatch)
+	newBatch := newProducerBatch(batchLog, dispatcher.producerConfig)
+	dispatcher.logGroupData[key] = newBatch
+	newBatch.tryAddLog(batchLog.Log, logSize, batchLog.Key.CallBackFun)
+	if newBatch.meetSendCondition(dispatcher.producerConfig) {
+		dispatcher.innerSendToServer(key, newBatch)
+	}
 }
 
-func (dispatcher *Dispatcher) createNewProducerBatch(batchLog *BatchLog, key string) {
-	level.Debug(dispatcher.logger).Log("msg", "Create a new ProducerBatch")
-
-	newProducerBatch := initProducerBatch(batchLog, dispatcher.producerConfig)
-
-	dispatcher.logGroupData[key] = newProducerBatch
+func (dispatcher *Dispatcher) getOrCreateProducerBatch(batchLog *BatchLog, key string) *Batch {
+	if producerBatch, ok := dispatcher.logGroupData[key]; ok && producerBatch != nil {
+		return producerBatch
+	}
+	newBatch := newProducerBatch(batchLog, dispatcher.producerConfig)
+	dispatcher.logGroupData[key] = newBatch
+	return newBatch
 }
 
 func (dispatcher *Dispatcher) innerSendToServer(key string, producerBatch *Batch) {

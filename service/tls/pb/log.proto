@@ -34,3 +34,17 @@ message LogGroupList
 {
   repeated LogGroup LogGroups = 1;
 }
+
+message RawLogGroupList
+{
+  int32 OriginLen = 1;
+  int64 LogArriveTime = 2;
+  string CompressType = 3;
+  string Cursor = 4;
+  bytes Data = 5;
+}
+
+message RawLogGroupListList
+{
+  repeated RawLogGroupList RawLogGroupLists = 1;
+}

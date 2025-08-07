@@ -1,8 +1,12 @@
 package tls
 
 import (
+	"bytes"
+	"compress/zlib"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"math"
 	"net/http"
@@ -17,6 +21,9 @@ import (
 
 const (
 	rawBodySizeHeader = "x-tls-bodyrawsize"
+	tlsCountHeader    = "x-tls-count"
+	tlsOriginalHeader = "x-tls-original"
+	tlsCursorHeader   = "x-tls-cursor"
 )
 
 func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error) {
@@ -156,24 +163,88 @@ func lz4Decompress(input []byte, rawLength int64) ([]byte, error) {
 	return decompressedBuffer, nil
 }
 
-func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroupList, error) {
-	var (
-		decompressed []byte
-		err          error
-	)
+func ZLibDecompress(input []byte, rawLength int64) ([]byte, error) {
+	outputBuffer := make([]byte, rawLength)
 
-	switch strings.ToLower(compression) {
-	case "lz4":
-		decompressed, err = lz4Decompress(input, rawSize)
-		if err != nil {
-			return nil, err
-		}
-	default:
-		decompressed = input
+	zlibReader, err := zlib.NewReader(bytes.NewReader(input))
+	if err != nil {
+		return nil, err
 	}
 
+	_, err = io.ReadFull(zlibReader, outputBuffer)
+	if err != nil && !errors.Is(err, io.EOF) {
+		return nil, err
+	}
+
+	return outputBuffer, nil
+}
+
+func parseOriginalLogList(input []byte, compression string, rawSize int64) (*pb.LogGroupList, error) {
+	ret := &pb.LogGroupList{LogGroups: make([]*pb.LogGroup, 0)}
+	list := &pb.RawLogGroupListList{}
+	if err := proto.Unmarshal(input, list); err != nil {
+		invalidContentErr := NewClientError(err)
+		invalidContentErr.Code = ErrInvalidContent
+		return nil, invalidContentErr
+	}
+	var err error
+	for _, rawList := range list.RawLogGroupLists {
+		lgList, errInner := GetLogGroupList(strings.ToLower(rawList.CompressType),
+			int64(rawList.OriginLen), rawList.Data)
+		if errInner != nil {
+			invalidContentErr := NewClientError(errInner)
+			invalidContentErr.Code = ErrInvalidContent
+			err = invalidContentErr
+			continue
+		}
+		ret.LogGroups = append(ret.LogGroups, lgList.LogGroups...)
+	}
+	return ret, err
+}
+
+func Decompress(compress string, originLen int64, logData []byte) (bodyBytes []byte, err error) {
+	switch compress {
+	case CompressLz4:
+		bodyBytes, err = lz4Decompress(logData, originLen)
+		if err != nil {
+			return nil, fmt.Errorf("decompress lz4 log error, originSize %v, %v", originLen, err)
+		}
+	case CompressZlib:
+		bodyBytes, err = ZLibDecompress(logData, originLen)
+		if err != nil {
+			return nil, fmt.Errorf("decompress zlib log error, originSize %v, %v", originLen, err)
+		}
+	default:
+		bodyBytes = logData
+	}
+	return
+}
+
+func Deserialize(input []byte) (*pb.LogGroupList, error) {
+	logs := &pb.LogGroupList{}
+	if err := proto.Unmarshal(input, logs); err != nil {
+		return nil, err
+	}
+	return logs, nil
+}
+
+func GetLogGroupList(compress string, originLen int64, logData []byte) (*pb.LogGroupList, error) {
+	bodyBytes, err := Decompress(compress, originLen, logData)
+	if err != nil {
+		return nil, err
+	}
+
+	return Deserialize(bodyBytes)
+}
+
+func parseLogList(input []byte, compression string, rawSize int64) (*pb.LogGroupList, error) {
+
+	decompressed, err := Decompress(compression, rawSize, input)
+	if err != nil {
+		return nil, err
+	}
 	list := &pb.LogGroupList{}
-	if err := proto.Unmarshal(decompressed, list); err != nil {
+	if err = proto.Unmarshal(decompressed, list); err != nil {
 		return nil, err
 	}
 
@@ -223,7 +294,12 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathConsumeLogs, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
+	path := PathConsumeLogs
+	if request.Original {
+		path = PathConsumeOriginalLogs
+	}
+
+	rawResponse, err := c.Request(http.MethodGet, path, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
 	if err != nil {
 		return nil, err
 	}
@@ -254,24 +330,45 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		}
 	}
 
-	parsedCount, err := strconv.ParseInt(rawResponse.Header.Get("x-tls-count"), 10, 64)
+	parsedCount, err := strconv.ParseInt(rawResponse.Header.Get(tlsCountHeader), 10, 64)
 	if err != nil {
 		return nil, err
+	}
+
+	var original bool
+	if request.Original {
+		original, err = strconv.ParseBool(rawResponse.Header.Get(tlsOriginalHeader))
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if parsedCount == 0 {
 		response.Logs = nil
 	} else {
-		list, err := parseLogList(responseBody, compression, rawSize)
+		var list *pb.LogGroupList
+		if original {
+			list, err = parseOriginalLogList(responseBody, compression, rawSize)
+		} else {
+			list, err = parseLogList(responseBody, compression, rawSize)
+		}
 		if err != nil {
-			return nil, err
+			var clientError *Error
+			if errors.As(err, &clientError) && clientError.Code == ErrInvalidContent {
+				response.Logs = list
+				clientError.RequestID = response.RequestID
+				return response, err
+			}
+			clientError = NewClientError(err)
+			clientError.RequestID = response.RequestID
+			return nil, clientError
 		}
 
 		response.Logs = list
 	}
 
 	response.Count = int(parsedCount)
-	response.Cursor = rawResponse.Header.Get("x-tls-cursor")
+	response.Cursor = rawResponse.Header.Get(tlsCursorHeader)
 
 	return response, nil
 }

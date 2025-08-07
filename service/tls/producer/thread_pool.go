@@ -20,7 +20,7 @@ func initThreadPool(sender *Sender, logger log.Logger) *ThreadPool {
 	return &ThreadPool{
 		stopCh:      make(chan struct{}),
 		forceQuitCh: make(chan struct{}),
-		taskChan:    make(chan *Batch, 100),
+		taskChan:    make(chan *Batch, 100000),
 		sender:      sender,
 		logger:      logger,
 	}

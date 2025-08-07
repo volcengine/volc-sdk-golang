@@ -3,6 +3,7 @@ package producer
 import (
 	"errors"
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -32,6 +33,7 @@ type producer struct {
 	shardCount           int
 	logger               log.Logger
 	producerLogGroupSize int64
+	once                 sync.Once
 }
 
 func newProducer(producerConfig *Config) *producer {
@@ -45,13 +47,13 @@ func newProducer(producerConfig *Config) *producer {
 		producerConfig.SecurityToken, producerConfig.Region)
 
 	producerConfig = validateProducerConfig(producerConfig)
-	if producerConfig.MaxBatchCount > 10000 {
-		level.Warn(logger).Log("msg", "MaxBatchCount is adjusted to 10000 (the maximum allowed value)")
-		producerConfig.MaxBatchCount = 10000
+	if producerConfig.MaxBatchCount > MaxBatchCount {
+		level.Warn(logger).Log("msg", "MaxBatchCount is adjusted to "+strconv.FormatInt(int64(MaxBatchCount), 10))
+		producerConfig.MaxBatchCount = MaxBatchCount
 	}
-	if producerConfig.MaxBatchSize > 5*1024*1024 {
-		level.Warn(logger).Log("msg", "MaxBatchSize is adjusted to 5 MB (the maximum allowed value)")
-		producerConfig.MaxBatchSize = 5 * 1024 * 1024
+	if producerConfig.MaxBatchSize > MaxBatchSize {
+		level.Warn(logger).Log("msg", "MaxBatchSize is adjusted to "+strconv.FormatInt(MaxBatchSize, 10))
+		producerConfig.MaxBatchSize = MaxBatchSize
 	}
 
 	errorStatusMap := func() map[int]struct{} {
@@ -176,6 +178,9 @@ func (producer *producer) waitTime() error {
 	if producer.config.MaxBlockSec > 0 {
 		for i := 0; i < producer.config.MaxBlockSec; i++ {
 			if atomic.LoadInt64(&producer.producerLogGroupSize) <= producer.config.TotalSizeLnBytes {
+				if i > 0 {
+					level.Warn(producer.logger).Log("msg", "wait for produce memory")
+				}
 				return nil
 			}
 
@@ -213,6 +218,17 @@ func (producer *producer) putToDispatcher(batchLog *BatchLog) (err error) {
 		}
 	}()
 
+	logSize := int64(GetLogSize(batchLog.Log))
+	if logSize > MaxBatchSize {
+		err = errors.New("the log size " + strconv.FormatInt(logSize, 10) + " is larger than the max batch size " + strconv.FormatInt(MaxBatchSize, 10))
+		return err
+	}
+
+	if logSize > producer.config.TotalSizeLnBytes {
+		err = errors.New("the log size " + strconv.FormatInt(logSize, 10) + "is larger than the total size " + strconv.FormatInt(producer.config.TotalSizeLnBytes, 10))
+		return err
+	}
+
 	select {
 	case <-producer.closeCh:
 		err = errors.New("the producer is closed")
@@ -246,31 +262,35 @@ func (producer *producer) Start() {
 }
 
 func (producer *producer) Close() {
-	close(producer.closeCh)
-	close(producer.threadPool.sender.stopCh)
+	producer.once.Do(func() {
+		close(producer.closeCh)
+		close(producer.threadPool.sender.stopCh)
 
-	close(producer.dispatcher.stopCh)
-	producer.dispatcherWaitGroup.Wait()
+		close(producer.dispatcher.stopCh)
+		producer.dispatcherWaitGroup.Wait()
 
-	close(producer.threadPool.stopCh)
-	producer.threadPoolWaitGroup.Wait()
-	producer.senderWaitGroup.Wait()
+		close(producer.threadPool.stopCh)
+		producer.threadPoolWaitGroup.Wait()
+		producer.senderWaitGroup.Wait()
 
-	level.Info(producer.logger).Log("msg", "producer close finish")
+		level.Info(producer.logger).Log("msg", "producer close finish")
+	})
 }
 
 func (producer *producer) ForceClose() {
-	close(producer.closeCh)
-	close(producer.threadPool.sender.stopCh)
+	producer.once.Do(func() {
+		close(producer.closeCh)
+		close(producer.threadPool.sender.stopCh)
 
-	close(producer.dispatcher.forceQuitCh)
-	producer.dispatcherWaitGroup.Wait()
+		close(producer.dispatcher.forceQuitCh)
+		producer.dispatcherWaitGroup.Wait()
 
-	close(producer.threadPool.forceQuitCh)
-	producer.threadPoolWaitGroup.Wait()
-	producer.senderWaitGroup.Wait()
+		close(producer.threadPool.forceQuitCh)
+		producer.threadPoolWaitGroup.Wait()
+		producer.senderWaitGroup.Wait()
 
-	level.Info(producer.logger).Log("msg", "producer close finish")
+		level.Info(producer.logger).Log("msg", "producer force close finish")
+	})
 }
 
 func (producer *producer) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string) {
