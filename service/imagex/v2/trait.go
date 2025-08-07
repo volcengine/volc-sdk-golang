@@ -1156,6 +1156,26 @@ func (c *Imagex) DescribeImageXBucketRetrievalUsage(ctx context.Context, arg *De
 	return result, nil
 }
 
+func (c *Imagex) DescribeImageXAddOnQPSUsage(ctx context.Context, arg *DescribeImageXAddOnQPSUsageQuery) (*DescribeImageXAddOnQPSUsageRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "DescribeImageXAddOnQPSUsage", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeImageXAddOnQPSUsageRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DescribeImageXAIRequestCntUsage(ctx context.Context, arg *DescribeImageXAIRequestCntUsageQuery) (*DescribeImageXAIRequestCntUsageRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -2893,6 +2913,176 @@ func (c *Imagex) CreateImageAITask(ctx context.Context, arg *CreateImageAITaskRe
 	}
 
 	result := new(CreateImageAITaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateImageAIProcessQueue(ctx context.Context, arg *CreateImageAIProcessQueueReq) (*CreateImageAIProcessQueueRes, error) {
+	query, err := marshalToQuery(arg.CreateImageAIProcessQueueQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateImageAIProcessQueueBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateImageAIProcessQueue", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateImageAIProcessQueueRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DeleteImageAIProcessQueue(ctx context.Context, arg *DeleteImageAIProcessQueueReq) (*DeleteImageAIProcessQueueRes, error) {
+	query, err := marshalToQuery(arg.DeleteImageAIProcessQueueQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.DeleteImageAIProcessQueueBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteImageAIProcessQueue", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteImageAIProcessQueueRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateImageAIProcessCallback(ctx context.Context, arg *CreateImageAIProcessCallbackReq) (*CreateImageAIProcessCallbackRes, error) {
+	query, err := marshalToQuery(arg.CreateImageAIProcessCallbackQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateImageAIProcessCallbackBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateImageAIProcessCallback", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateImageAIProcessCallbackRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) UpdateImageAIProcessQueue(ctx context.Context, arg *UpdateImageAIProcessQueueReq) (*UpdateImageAIProcessQueueRes, error) {
+	query, err := marshalToQuery(arg.UpdateImageAIProcessQueueQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateImageAIProcessQueueBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateImageAIProcessQueue", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateImageAIProcessQueueRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) UpdateImageAIProcessQueueStatus(ctx context.Context, arg *UpdateImageAIProcessQueueStatusReq) (*UpdateImageAIProcessQueueStatusRes, error) {
+	query, err := marshalToQuery(arg.UpdateImageAIProcessQueueStatusQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateImageAIProcessQueueStatusBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateImageAIProcessQueueStatus", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateImageAIProcessQueueStatusRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) DeleteImageAIProcessDetail(ctx context.Context, arg *DeleteImageAIProcessDetailReq) (*DeleteImageAIProcessDetailRes, error) {
+	query, err := marshalToQuery(arg.DeleteImageAIProcessDetailQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.DeleteImageAIProcessDetailBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteImageAIProcessDetail", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteImageAIProcessDetailRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageAIProcessQueues(ctx context.Context, arg *GetImageAIProcessQueuesQuery) (*GetImageAIProcessQueuesRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetImageAIProcessQueues", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageAIProcessQueuesRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
