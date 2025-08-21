@@ -5671,6 +5671,56 @@ func (c *Imagex) CreateImageAuditTask(ctx context.Context, arg *CreateImageAudit
 	return result, nil
 }
 
+func (c *Imagex) CreateVideoAuditTask(ctx context.Context, arg *CreateVideoAuditTaskReq) (*CreateVideoAuditTaskRes, error) {
+	query, err := marshalToQuery(arg.CreateVideoAuditTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateVideoAuditTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateVideoAuditTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateVideoAuditTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) CreateAudioAuditTask(ctx context.Context, arg *CreateAudioAuditTaskReq) (*CreateAudioAuditTaskRes, error) {
+	query, err := marshalToQuery(arg.CreateAudioAuditTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.CreateAudioAuditTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateAudioAuditTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateAudioAuditTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) DeleteImageAuditResult(ctx context.Context, arg *DeleteImageAuditResultBody) (*DeleteImageAuditResultRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -5708,6 +5758,56 @@ func (c *Imagex) GetSyncAuditResult(ctx context.Context, arg *GetSyncAuditResult
 	}
 
 	result := new(GetSyncAuditResultRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) SingleImageAudit(ctx context.Context, arg *SingleImageAuditReq) (*SingleImageAuditRes, error) {
+	query, err := marshalToQuery(arg.SingleImageAuditQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.SingleImageAuditBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "SingleImageAudit", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(SingleImageAuditRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) BatchImageAudit(ctx context.Context, arg *BatchImageAuditReq) (*BatchImageAuditRes, error) {
+	query, err := marshalToQuery(arg.BatchImageAuditQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.BatchImageAuditBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "BatchImageAudit", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(BatchImageAuditRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
@@ -5776,6 +5876,56 @@ func (c *Imagex) UpdateAuditImageStatus(ctx context.Context, arg *UpdateAuditIma
 	return result, nil
 }
 
+func (c *Imagex) UpdateVideoAuditTask(ctx context.Context, arg *UpdateVideoAuditTaskReq) (*UpdateVideoAuditTaskRes, error) {
+	query, err := marshalToQuery(arg.UpdateVideoAuditTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateVideoAuditTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateVideoAuditTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateVideoAuditTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) UpdateAudioAuditTask(ctx context.Context, arg *UpdateAudioAuditTaskReq) (*UpdateAudioAuditTaskRes, error) {
+	query, err := marshalToQuery(arg.UpdateAudioAuditTaskQuery)
+	if err != nil {
+		return nil, err
+	}
+
+	body, err := marshalToJson(arg.UpdateAudioAuditTaskBody)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateAudioAuditTask", query, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateAudioAuditTaskRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Imagex) GetImageAuditTasks(ctx context.Context, arg *GetImageAuditTasksQuery) (*GetImageAuditTasksRes, error) {
 	query, err := marshalToQuery(arg)
 	if err != nil {
@@ -5788,6 +5938,26 @@ func (c *Imagex) GetImageAuditTasks(ctx context.Context, arg *GetImageAuditTasks
 	}
 
 	result := new(GetImageAuditTasksRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetImageAuditTaskResult(ctx context.Context, arg *GetImageAuditTaskResultQuery) (*GetImageAuditTaskResultRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetImageAuditTaskResult", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetImageAuditTaskResultRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
@@ -5828,6 +5998,46 @@ func (c *Imagex) GetAuditEntrysCount(ctx context.Context, arg *GetAuditEntrysCou
 	}
 
 	result := new(GetAuditEntrysCountRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetVideoAuditResult(ctx context.Context, arg *GetVideoAuditResultQuery) (*GetVideoAuditResultRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetVideoAuditResult", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetVideoAuditResultRes)
+	err = unmarshalInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Imagex) GetAudioAuditResult(ctx context.Context, arg *GetAudioAuditResultQuery) (*GetAudioAuditResultRes, error) {
+	query, err := marshalToQuery(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.CtxQuery(ctx, "GetAudioAuditResult", query)
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetAudioAuditResultRes)
 	err = unmarshalInto(data, result)
 	if err != nil {
 		return nil, err
