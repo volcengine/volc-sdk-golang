@@ -481,6 +481,109 @@ type ApplyVpcUploadInfoResResultPutURLHeadersItem struct {
 	Value string `json:"Value"`
 }
 
+type BatchImageAuditBody struct {
+
+	// REQUIRED; 审核类型
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; 审核维度
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 文本审核维度
+	AuditTextDimensions []string `json:"AuditTextDimensions"`
+
+	// REQUIRED; 待审核的图片信息列表，包含每张图片的 URI、唯一标识及是否启用大图检测的开关。
+	Inputs []*BatchImageAuditBodyInputsItem `json:"Inputs"`
+
+	// 是否异步进行审核，取值 0：同步返回结果，1：异步进行审核，默认为0。
+	Async int `json:"Async,omitempty"`
+
+	// 审核结果（Detail版本）以回调形式发送至您的回调地址，异步审核时生效，支持以 http:// 或者 https:// 开头的地址，例如： http://www.callback.com。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+}
+
+type BatchImageAuditBodyInputsItem struct {
+
+	// REQUIRED; 唯一id
+	DataID string `json:"DataId"`
+
+	// REQUIRED; 是否开启大图审核功能。默认值为 false。支持的取值如下所示。
+	// * true：开启大图审核，系统会对 5MB~32MB 的图片进行压缩后再审核；
+	// * false：不开启大图审核。
+	// :::tip
+	// * 未开启时若图片大小 ≥ 5 MB，可能导致系统超时报错；
+	// * 已开启时若图片大小 ≥ 32 MB，可能导致系统超时报错；
+	// * 开启后将对压缩能力按照基础图片处理 [https://www.volcengine.com/docs/508/65935#%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1]进行计费（每月有
+	// 20TB 免费额度）。 :::
+	EnableLargeImageDetect bool `json:"EnableLargeImageDetect"`
+
+	// REQUIRED; 公网可访问url或火山tos唯一key
+	ImageURI string `json:"ImageUri"`
+}
+
+type BatchImageAuditQuery struct {
+
+	// REQUIRED; 用于存储结果图和计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type BatchImageAuditRes struct {
+
+	// REQUIRED
+	ResponseMetadata *BatchImageAuditResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *BatchImageAuditResResult `json:"Result,omitempty"`
+}
+
+type BatchImageAuditResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// BatchImageAuditResResult - 视请求的接口而定
+type BatchImageAuditResResult struct {
+
+	// REQUIRED; 包含图片批量审核的结果数组，每个元素代表一张图片的审核结果。
+	Outputs []*BatchImageAuditResResultOutputsItem `json:"Outputs"`
+}
+
+type BatchImageAuditResResultOutputsItem struct {
+
+	// REQUIRED; 审核建议
+	Advice string `json:"Advice"`
+
+	// REQUIRED; 唯一id
+	DataID string `json:"DataId"`
+
+	// REQUIRED; 审核判断图片类型
+	ImageType string `json:"ImageType"`
+
+	// REQUIRED; 公网可访问url
+	ImageURI string `json:"ImageUri"`
+
+	// 一级标签
+	Label []string `json:"Label,omitempty"`
+
+	// 二级标签
+	SubLabel []string `json:"SubLabel,omitempty"`
+}
+
 type CommitImageUploadBody struct {
 
 	// REQUIRED; 一次上传会话 Key。您可参考获取文件上传地址 [https://www.volcengine.com/docs/508/9397]获取。
@@ -825,6 +928,131 @@ type ComponentsQpab6RSchemasUpdatestoragerulesv2BodyPropertiesStoragerulesItemsP
 	NonCurrentDate string `json:"NonCurrentDate,omitempty"`
 
 	NonCurrentDays int `json:"NonCurrentDays,omitempty"`
+}
+
+type CreateAudioAuditTaskBody struct {
+
+	// REQUIRED; 审核能力类型，用于指定审核任务所使用的审核模型。支持的取值如下所示。
+	// * 0：基础审核能力；
+	// * 1：智能审核能力。
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; "audioporn" // 涉黄 "audiogovern" // 涉政 "audioterror" // 涉恐 "audioillegal" // 违法违规 "audiosensitive1" // 涉敏1 "audiosensitive2"
+	// // 涉敏2 "audioforbidden" // 违禁 "audiouncomfortable" // 引人不适 "audioqrcode" //
+	// 二维码 "audiobadpicture" // 不良画面 "audiosexy" // 性感低俗 "audioage" // 年龄 "audiounderage" // 未成年 "audioquality" // 图片质量
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 指定审核任务所属的地区。当前仅支持国内地区，取值为 cn。
+	Region string `json:"Region"`
+
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; 审核任务类型,支持取值为audit_audio。
+	// * audit: 图片审核
+	// * audit_audio 音频审核
+	// * audit_video 视频审核
+	TaskType string `json:"TaskType"`
+
+	// REQUIRED; 审核任务场景。取值如下所示：
+	// * UrlFile：存量文件处理，针对已有存储内的文件请求获取审核结果。传入方式是 ResUri 方式，即在 TXT 文件（审核文件）内填写了待审核文件 URL，并将该 TXT 文件上传至指定服务后获取并传入该文件的 StoreUri。
+	// * Upload：上传场景，针对上传文件到指定服务下的场景。可通过 EnableAuditRange 参数指定审核的范围，例如对指定上传到某目录下的文件进行审核。
+	Type string `json:"Type"`
+
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
+	AuditPrefix []string `json:"AuditPrefix,omitempty"`
+
+	// "audioad" // 广告 "defraud" // 诈骗 "audiocharillegal" // 文字违规
+	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	Auditwildcard []string `json:"Auditwildcard,omitempty"`
+
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
+	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
+
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
+
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+
+	// 默认0
+	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
+
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
+	EnableFreeze bool `json:"EnableFreeze,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeDimensions []string `json:"FreezeDimensions,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeStrategy int `json:"FreezeStrategy,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeType []string `json:"FreezeType,omitempty"`
+
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
+	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditwildcard []string `json:"NoAuditwildcard,omitempty"`
+
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核文件的 URL 列表，每行一个 URL，最多支持 10000 行。
+	ResURI []string `json:"ResUri,omitempty"`
+}
+
+type CreateAudioAuditTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateAudioAuditTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *CreateAudioAuditTaskResResult `json:"Result"`
+}
+
+type CreateAudioAuditTaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type CreateAudioAuditTaskResResult struct {
+
+	// REQUIRED; 异步任务的唯一标识符，用于后续查询任务状态或结果。
+	TaskID string `json:"TaskId"`
 }
 
 type CreateBatchProcessTaskBody struct {
@@ -1412,9 +1640,9 @@ type CreateImageAnalyzeTaskResResult struct {
 
 type CreateImageAuditTaskBody struct {
 
-	// REQUIRED; 审核能力，取值如下所示：
-	// * 0：基础审核能力
-	// * 1：智能审核能力
+	// REQUIRED; 审核能力类型，用于指定审核任务所使用的审核模型。支持的取值如下所示。
+	// * 0：基础审核能力；
+	// * 1：智能审核能力。
 	AuditAbility int `json:"AuditAbility"`
 
 	// REQUIRED; "porn" // 涉黄 "govern" // 涉政 "terror" // 涉恐 "illegal" // 违法违规 "sensitive1" // 涉敏1 "sensitive2" // 涉敏2 "forbidden"
@@ -1422,71 +1650,80 @@ type CreateImageAuditTaskBody struct {
 	// // 年龄 "underage" // 未成年 "quality" // 图片质量
 	AuditDimensions []string `json:"AuditDimensions"`
 
-	// REQUIRED; 任务地区。当前仅支持取值 cn，表示国内。
+	// REQUIRED; 指定审核任务所属的地区。当前仅支持国内地区，取值为 cn。
 	Region string `json:"Region"`
 
-	// REQUIRED; 服务 ID。
-	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
-	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	// REQUIRED; 指定审核任务所属的服务 ID。
+	// * 可在 veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/] 页面获取；
+	// * 也可通过 获取所有服务信息 [https://www.volcengine.com/docs/508/9360] OpenAPI 获取。
 	ServiceID string `json:"ServiceId"`
 
-	// REQUIRED; 任务类型，当前仅支持取值为 audit。
+	// REQUIRED; 审核任务类型,支持取值为 audit。
+	// * audit: 图片审核
 	TaskType string `json:"TaskType"`
 
-	// REQUIRED; 图片审核任务场景。取值如下所示：
-	// * UrlFile：存量图片处理，进针对已有存储内的图片请求获取审核结果。传入方式是 ResUri方式，即在.txt 文件（审核文件）内填写了待审核图片文件 URL，并将该 txt 文件上传至指定服务后获取并传入该文件的 StoreUri。
-	// * Url：URL 直传场景。传入方式为 ImageInfos 方式，即可直接传入待审核图片的 URL 及区分标识。
-	// * Upload：图片上传场景，针对上传图片到指定服务下的场景。可在 EnableAuditRange下指定审核的范围，例如对指定上传到某目录下的图片进行审核。
+	// REQUIRED; 审核任务场景。取值如下所示：
+	// * UrlFile：存量文件处理，针对已有存储内的文件请求获取审核结果。传入方式是 ResUri 方式，即在 TXT 文件（审核文件）内填写了待审核文件 URL，并将该 TXT 文件上传至指定服务后获取并传入该文件的 StoreUri。
+	// * Url：URL 直传场景。传入方式为 ImageInfos 方式，即可直接传入待审核文件的 URL 及区分标识。
+	// * Upload：上传场景，针对上传文件到指定服务下的场景。可通过 EnableAuditRange 参数指定审核的范围，例如对指定上传到某目录下的文件进行审核。
 	Type string `json:"Type"`
 
-	// 仅当 EnableAuditRange 取值 1 时，配置生效。 指定前缀审核，若你希望对某个目录进行审核，请设置路径为对应的目录名，以/结尾。例如123/test/
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
 	AuditPrefix []string `json:"AuditPrefix,omitempty"`
 
 	// "ad" // 广告 "defraud" // 诈骗 "charillegal" // 文字违规
 	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
 
-	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。
-	// 例如，AuditDimensions 取值 ["pron","sexy"]，AuditTextDimensions 取值 ["ad"]，支持您将 FreezeDimensions 取值 ["pron","sexy","ad"] 、 ["pron","sexy"]、["pron","ad"]
-	// 和 ["sexy","ad"] 任意一种。
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	AuditWildCard []string `json:"AuditWildCard,omitempty"`
+
+	// 指定审核任务关联的存储桶名称，用于标识审核任务对应的存储位置。
+	BktName string `json:"BktName,omitempty"`
+
+	// 底层存储类型，用于标识审核任务关联的存储桶的底层存储服务类型。支持的取值为 volc_tos（火山 TOS）
+	BktType string `json:"BktType,omitempty"`
+
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
 	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
 
-	// 回调图片类型，取值如下所示：
-	// * normal：正常图片
-	//
-	//
-	// * problem：问题图片
-	//
-	//
-	// * frozen：冻结图片
-	//
-	//
-	// * fail：审核失败图片
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
 	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
 
-	// 回调 URL，veImageX 以 Post 方式向业务服务器发送 JSON 格式回调数据。具体回调参数请参考回调内容 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
 	CallbackURL string `json:"CallbackUrl,omitempty"`
 
 	// 默认0
 	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
 
-	// 是否开启回调，取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
 	EnableCallback bool `json:"EnableCallback,omitempty"`
 
-	// 是否开启冻结，取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
 	EnableFreeze bool `json:"EnableFreeze,omitempty"`
 
-	// 图片审核仅支持审核 5MB 以下的图片，若您的图片大小在 5MB~32MB，您可以开启大图审核功能，veImageX 会对图片压缩后再进行审核。开启后，将对压缩能力按照基础图片处理
-	// [https://www.volcengine.com/docs/508/65935#%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1]进行计费。（您每月可使用
-	// 20TB 的免费额度） 取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启大图审核功能。默认值为 false。支持的取值如下所示。
+	// * true：开启大图审核，系统会对 5MB~32MB 的图片进行压缩后再审核；
+	// * false：不开启大图审核。
 	// :::tip
-	// * 若未开启大图审核且图片大小 ≥ 5 MB，可能会导致系统超时报错；
-	// * 若已开启大图审核但图片大小 ≥ 32 MB，可能会导致系统超时报错。 :::
+	// * 未开启时若图片大小 ≥ 5 MB，可能导致系统超时报错；
+	// * 已开启时若图片大小 ≥ 32 MB，可能导致系统超时报错；
+	// * 开启后将对压缩能力按照基础图片处理 [https://www.volcengine.com/docs/508/65935#%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1]进行计费（每月有
+	// 20TB 免费额度）。 :::
 	EnableLargeImageDetect bool `json:"EnableLargeImageDetect,omitempty"`
 
 	// 若开启冻结，则不可为空
@@ -1498,24 +1735,25 @@ type CreateImageAuditTaskBody struct {
 	// 若开启冻结，则不可为空
 	FreezeType []string `json:"FreezeType,omitempty"`
 
-	// 仅当 Type 为 Url 时，配置生效。
-	// 批量提交图片 URL 列表
+	// 当Type为Url时，用于批量提交待审核文件的 URL 列表。每个元素包含文件 URL 和自定义标识。
 	ImageInfos []*CreateImageAuditTaskBodyImageInfosItem `json:"ImageInfos,omitempty"`
 
-	// 仅当 EnableAuditRange 取值 1 时，配置生效。 指定前缀不审核，若你希望对某个目录不进行审核，请设置路径为对应的目录名，以/结尾。例如123/test/
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
 	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
 
-	// 仅当 Type 为 UrlFile 时，配置生效。
-	// 审核文件的 StoreUri，为 .txt 文件，该文件需上传至指定服务对应存储中。该 txt 文件内需填写待审核图片文件的 URL，每行填写一个，最多可填写 10000 行。
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditWildCard []string `json:"NoAuditWildCard,omitempty"`
+
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核文件的 URL 列表，每行一个 URL，最多支持 10000 行。
 	ResURI []string `json:"ResUri,omitempty"`
 }
 
 type CreateImageAuditTaskBodyImageInfosItem struct {
 
-	// 建议您根据实际业务情况，将该参数作为可区分审核图片 ImageUri 的自定义标识。
+	// 自定义标识，用于区分待审核图片 ImageUri 的唯一标识，建议根据实际业务需求设置。
 	DataID string `json:"DataId,omitempty"`
 
-	// 待审核图片 URL，需满足公网可访问。
+	// 待审核图片的 URL 地址，需满足公网可访问。当 Type 为 Url 时，通过该字段批量提交待审核图片的 URL 列表。
 	ImageURI string `json:"ImageUri,omitempty"`
 }
 
@@ -1548,7 +1786,7 @@ type CreateImageAuditTaskResResponseMetadata struct {
 
 type CreateImageAuditTaskResResult struct {
 
-	// REQUIRED; 任务 ID
+	// REQUIRED; 审核任务的唯一标识符，用于后续查询或管理该任务。
 	TaskID string `json:"TaskId"`
 }
 
@@ -3235,6 +3473,132 @@ type CreateTemplatesFromBinResResultResultsItem struct {
 	// * true：恢复成功
 	// * false：恢复不成功
 	Success bool `json:"Success"`
+}
+
+type CreateVideoAuditTaskBody struct {
+
+	// REQUIRED; 审核能力类型，用于指定审核任务所使用的审核模型。支持的取值如下所示。
+	// * 0：基础审核能力；
+	// * 1：智能审核能力。
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; "porn" // 涉黄 "govern" // 涉政 "terror" // 涉恐 "illegal" // 违法违规 "sensitive1" // 涉敏1 "sensitive2" // 涉敏2 "forbidden"
+	// // 违禁 "uncomfortable" // 引人不适 "qrcode" // 二维码 "badpicture" // 不良画面 "sexy" // 性感低俗 "age"
+	// // 年龄 "underage" // 未成年 "quality" // 图片质量
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 视频截帧频率
+	Interval int `json:"Interval"`
+
+	// REQUIRED; 指定审核任务所属的地区。当前仅支持国内地区，取值为 cn。
+	Region string `json:"Region"`
+
+	// REQUIRED; 服务 ID。
+	// * 您可以在 veImageX 控制台服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; 审核任务类型,支持取值为 audit_video。
+	// * audit_video 视频审核
+	TaskType string `json:"TaskType"`
+
+	// REQUIRED; 审核任务场景。取值如下所示：
+	// * UrlFile：存量文件处理，针对已有存储内的文件请求获取审核结果。传入方式是 ResUri 方式，即在 TXT 文件（审核文件）内填写了待审核文件 URL，并将该 TXT 文件上传至指定服务后获取并传入该文件的 StoreUri。
+	// * Upload：上传场景，针对上传文件到指定服务下的场景。可通过 EnableAuditRange 参数指定审核的范围，例如对指定上传到某目录下的文件进行审核。
+	Type string `json:"Type"`
+
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
+	AuditPrefix []string `json:"AuditPrefix,omitempty"`
+
+	// "ad" // 广告 "defraud" // 诈骗 "charillegal" // 文字违规
+	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	Auditwildcard []string `json:"Auditwildcard,omitempty"`
+
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
+	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
+
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
+
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+
+	// 默认0
+	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
+
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
+	EnableFreeze bool `json:"EnableFreeze,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeDimensions []string `json:"FreezeDimensions,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeStrategy int `json:"FreezeStrategy,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeType []string `json:"FreezeType,omitempty"`
+
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
+	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditwildcard []string `json:"NoAuditwildcard,omitempty"`
+
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核文件的 URL 列表，每行一个 URL，最多支持 10000 行。
+	ResURI []string `json:"ResUri,omitempty"`
+}
+
+type CreateVideoAuditTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *CreateVideoAuditTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *CreateVideoAuditTaskResResult `json:"Result"`
+}
+
+type CreateVideoAuditTaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type CreateVideoAuditTaskResResult struct {
+
+	// REQUIRED; 任务 ID
+	TaskID string `json:"TaskId"`
 }
 
 type DelDomainBody struct {
@@ -13125,6 +13489,144 @@ type GetAllImageTemplatesResResultTemplatesItem struct {
 	WithSig bool `json:"WithSig"`
 }
 
+type GetAudioAuditResultQuery struct {
+
+	// REQUIRED; 任务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1160409]获取所需的任务 ID。
+	TaskID string `json:"TaskId" query:"TaskId"`
+
+	// 审核建议，缺省情况下返回全部任务。支持的取值如下所示。
+	// * nopass：建议不通过；
+	// * recheck：建议复审。
+	AuditSuggestion string `json:"AuditSuggestion,omitempty" query:"AuditSuggestion"`
+
+	// 图片类型，缺省情况下返回全部类型任务。支持的取值如下所示。
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	ImageType string `json:"ImageType,omitempty" query:"ImageType"`
+
+	// 分页条数。取值范围为 (0,100]，默认值为 10。
+	Limit string `json:"Limit,omitempty" query:"Limit"`
+
+	// 上一次查询返回的位置标记，作为本次列举的起点信息。默认值为 0。
+	Marker string `json:"Marker,omitempty" query:"Marker"`
+
+	// 问题类型，取值根据审核类型的不同其取值不同。缺省情况下返回全部类型任务。
+	// * 基础安全审核 * govern：涉政
+	// * porn：涉黄
+	// * illegal：违法违规
+	// * terror：涉暴
+	//
+	//
+	// * 智能安全审核 * 图像风险识别 * porn：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * sensitive1：涉敏1，具体指涉及暴恐风险
+	// * sensitive2：涉敏2，具体值涉及政治内容风险
+	// * forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * age：年龄，主要适用于图中人物对应的年龄段识别
+	// * underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别 * ad：广告，综合图像及文字内容智能识别广告
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗
+	// * charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字
+	Problem string `json:"Problem,omitempty" query:"Problem"`
+
+	// 审核场景，缺省情况下查询全部场景的任务。取值如下所示：
+	// * UrlFile：上传 txt 审核文件处理场景
+	// * Url：上传审核图片 URL 处理场景
+	// * Upload：图片上传场景
+	Type string `json:"Type,omitempty" query:"Type"`
+}
+
+type GetAudioAuditResultRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetAudioAuditResultResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *GetAudioAuditResultResResult `json:"Result"`
+}
+
+type GetAudioAuditResultResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type GetAudioAuditResultResResult struct {
+
+	// REQUIRED; 是否还有更多任务，取值如下所示：
+	// * true：是，还有其他任务未列举
+	// * false：否，已列举所有任务
+	HaveMore bool `json:"HaveMore"`
+
+	// REQUIRED; 任务结果
+	Results []*GetAudioAuditResultResResultResultsItem `json:"Results"`
+}
+
+type GetAudioAuditResultResResultResultsItem struct {
+
+	// 该任务的审核能力。取值如下所示：
+	// * 0：基础审核能力
+	// * 1：智能审核能力
+	Ability int `json:"Ability,omitempty"`
+
+	// 审核结果，取值如下所示：
+	// * problem：问题图片
+	// * frozen：冻结图片
+	// * fail：审核失败图片
+	AuditResultType string `json:"AuditResultType,omitempty"`
+
+	// 审核建议，取值如下所示：
+	// * nopass：建议不通过
+	// * recheck：建议复审
+	AuditSuggestion string `json:"AuditSuggestion,omitempty"`
+
+	// 审核结束时间
+	EndAt string `json:"EndAt,omitempty"`
+
+	// 条目 ID
+	EntryID string `json:"EntryId,omitempty"`
+
+	// 错误信息
+	ErrMsg string `json:"ErrMsg,omitempty"`
+
+	// HaveMore取值true时，即本次查询还有未列举到的任务时。Marker作为起始条目位置标记，您需要在下一次查询时传入该值。
+	Marker string `json:"Marker,omitempty"`
+
+	// 审核发现图片问题类型
+	Problems []string `json:"Problems,omitempty"`
+
+	// 任务 ID
+	TaskID string `json:"TaskId,omitempty"`
+
+	// 该任务被指定的审核场景，取值如下所示：
+	// * UrlFile：上传 txt 审核文件处理场景
+	// * Url：上传审核图片 URL 处理场景
+	// * Upload：图片上传场景
+	Type string `json:"Type,omitempty"`
+
+	// 表示 txt 审核文件的存储 URI。
+	URI string `json:"Uri,omitempty"`
+}
+
 type GetAuditEntrysCountQuery struct {
 
 	// 任务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1160409]获取所需的任务 ID。
@@ -15644,6 +16146,144 @@ type GetImageAuditResultResResultResultsItem struct {
 	// * Url：上传审核图片 URL 处理场景
 	// * Upload：图片上传场景
 	Type string `json:"Type,omitempty"`
+}
+
+type GetImageAuditTaskResultQuery struct {
+
+	// REQUIRED; 任务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1160409]获取所需的任务 ID。
+	TaskID string `json:"TaskId" query:"TaskId"`
+
+	// 审核建议，缺省情况下返回全部任务。支持的取值如下所示。
+	// * nopass：建议不通过；
+	// * recheck：建议复审。
+	AuditSuggestion string `json:"AuditSuggestion,omitempty" query:"AuditSuggestion"`
+
+	// 图片类型，缺省情况下返回全部类型任务。支持的取值如下所示。
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	ImageType string `json:"ImageType,omitempty" query:"ImageType"`
+
+	// 分页条数。取值范围为 (0,100]，默认值为 10。
+	Limit string `json:"Limit,omitempty" query:"Limit"`
+
+	// 上一次查询返回的位置标记，作为本次列举的起点信息。默认值为 0。
+	Marker string `json:"Marker,omitempty" query:"Marker"`
+
+	// 问题类型，取值根据审核类型的不同其取值不同。缺省情况下返回全部类型任务。
+	// * 基础安全审核 * govern：涉政
+	// * porn：涉黄
+	// * illegal：违法违规
+	// * terror：涉暴
+	//
+	//
+	// * 智能安全审核 * 图像风险识别 * porn：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * sensitive1：涉敏1，具体指涉及暴恐风险
+	// * sensitive2：涉敏2，具体值涉及政治内容风险
+	// * forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * age：年龄，主要适用于图中人物对应的年龄段识别
+	// * underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别 * ad：广告，综合图像及文字内容智能识别广告
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗
+	// * charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字
+	Problem string `json:"Problem,omitempty" query:"Problem"`
+
+	// 审核场景，缺省情况下查询全部场景的任务。支持的取值如下所示。
+	// * UrlFile：上传 txt 审核文件处理场景；
+	// * Url：上传审核图片 URL 处理场景；
+	// * Upload：图片上传场景。
+	Type string `json:"Type,omitempty" query:"Type"`
+}
+
+type GetImageAuditTaskResultRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetImageAuditTaskResultResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *GetImageAuditTaskResultResResult `json:"Result"`
+}
+
+type GetImageAuditTaskResultResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type GetImageAuditTaskResultResResult struct {
+
+	// REQUIRED; 是否还有更多任务，取值如下所示：
+	// * true：是，还有其他任务未列举
+	// * false：否，已列举所有任务
+	HaveMore bool `json:"HaveMore"`
+
+	// REQUIRED; 任务结果
+	Results []*GetImageAuditTaskResultResResultResultsItem `json:"Results"`
+}
+
+type GetImageAuditTaskResultResResultResultsItem struct {
+
+	// 该任务的审核能力。取值如下所示：
+	// * 0：基础审核能力
+	// * 1：智能审核能力
+	Ability int `json:"Ability,omitempty"`
+
+	// 审核结果，取值如下所示：
+	// * problem：问题图片
+	// * frozen：冻结图片
+	// * fail：审核失败图片
+	AuditStatus string `json:"AuditStatus,omitempty"`
+
+	// 审核建议，取值如下所示：
+	// * nopass：建议不通过
+	// * recheck：建议复审
+	AuditSuggestion string `json:"AuditSuggestion,omitempty"`
+
+	// 审核结束时间
+	EndAt string `json:"EndAt,omitempty"`
+
+	// 条目 ID
+	EntryID string `json:"EntryId,omitempty"`
+
+	// 错误信息
+	ErrMsg string `json:"ErrMsg,omitempty"`
+
+	// HaveMore取值true时，即本次查询还有未列举到的任务时。Marker作为起始条目位置标记，您需要在下一次查询时传入该值。
+	Marker string `json:"Marker,omitempty"`
+
+	// 审核发现图片问题类型
+	Problems []string `json:"Problems,omitempty"`
+
+	// 任务 ID
+	TaskID string `json:"TaskId,omitempty"`
+
+	// 该任务被指定的审核场景，取值如下所示：
+	// * UrlFile：上传 txt 审核文件处理场景
+	// * Url：上传审核图片 URL 处理场景
+	// * Upload：图片上传场景
+	Type string `json:"Type,omitempty"`
+
+	// 表示 txt 审核文件的存储 URI。
+	URI string `json:"Uri,omitempty"`
 }
 
 type GetImageAuditTasksQuery struct {
@@ -20469,22 +21109,53 @@ type GetServiceDomainsResResultItemLockStatus struct {
 
 type GetSyncAuditResultBody struct {
 
-	// REQUIRED
+	// REQUIRED; 审核能力，缺省情况下查询全部审核类型的任务。取值如下所示：
+	// * 0：基础审核能力
+	// * 1：智能审核能力
 	AuditAbility int `json:"AuditAbility"`
 
-	// REQUIRED
+	// REQUIRED; 审核维度，根据审核能力的不同，其具体取值不同。基础审核与智能审核之间不支持混用。
+	// * 基础安全审核，仅当AuditAbility取值为0时，配置生效。
+	//
+	// * govern：涉政
+	// * porn：涉黄
+	// * illegal：违法违规
+	// * terror：涉暴
+	//
+	//
+	// * 智能安全审核，仅当AuditAbility取值为1时，配置生效。
+	//
+	// * 图像风险识别 * porn：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * sensitive1：涉敏1，具体指涉及暴恐风险
+	// * sensitive2：涉敏2，具体值涉及政治内容风险
+	// * forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * age：年龄，主要适用于图中人物对应的年龄段识别
+	// * underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别，您可在AuditTextDimensions配置文字审核的维度。
 	AuditDimensions []string `json:"AuditDimensions"`
 
-	// REQUIRED
+	// REQUIRED; 智能安全审核类型下图文风险审核的具体维度，取值如下所示：
+	// * ad：广告，综合图像及文字内容智能识别广告
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗
+	// * charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字
 	AuditTextDimensions []string `json:"AuditTextDimensions"`
 
-	// REQUIRED
+	// REQUIRED; 建议您根据实际业务情况，将该参数作为可区分审核图片 ImageUri 的自定义标识。
 	DataID string `json:"DataId"`
 
-	// REQUIRED
+	// REQUIRED; 是否开启大图审核，取值如下所示：
+	// * true：开启
+	// * false：不开启
 	EnableLargeImageDetect bool `json:"EnableLargeImageDetect"`
 
-	// REQUIRED
+	// REQUIRED; 待审核图片的 URI 地址，用于指定需要审核的图片资源。
 	ImageURI string `json:"ImageUri"`
 }
 
@@ -20524,18 +21195,28 @@ type GetSyncAuditResultResResponseMetadata struct {
 // GetSyncAuditResultResResult - 视请求的接口而定
 type GetSyncAuditResultResResult struct {
 
-	// REQUIRED
+	// REQUIRED; 图片审核的建议结果，表示系统对图片内容的审核意见。支持的取值如下所示。
+	// * pass：审核通过；
+	// * block：审核不通过；
+	// * review：需要人工复核。
 	Advice string `json:"Advice"`
 
-	// REQUIRED
+	// REQUIRED; 建议您根据实际业务情况，将该参数作为可区分审核图片ImageUri的自定义标识。
 	DataID string `json:"DataId"`
 
-	// REQUIRED
+	// REQUIRED; 审核结果，取值如下所示：
+	// * problem：问题图片
+	// * frozen：冻结图片
+	// * normal：正常图片
 	ImageType string `json:"ImageType"`
 
-	// REQUIRED
-	ImageURI string   `json:"ImageUri"`
-	Label    []string `json:"Label,omitempty"`
+	// REQUIRED; 图片的 URI 地址，用于标识审核的图片资源。
+	ImageURI string `json:"ImageUri"`
+
+	// 图片内容的一级审核标签，用于标识图片内容的主要分类。
+	Label []string `json:"Label,omitempty"`
+
+	// 图片内容的二级审核标签，用于进一步细化LABEL的分类，提供更具体的审核结果。
 	SubLabel []string `json:"SubLabel,omitempty"`
 }
 
@@ -20792,6 +21473,144 @@ type GetVendorBucketsResResult struct {
 	Buckets []string `json:"Buckets"`
 }
 
+type GetVideoAuditResultQuery struct {
+
+	// REQUIRED; 任务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1160409]获取所需的任务 ID。
+	TaskID string `json:"TaskId" query:"TaskId"`
+
+	// 审核建议，缺省情况下返回全部任务。支持的取值如下所示。
+	// * nopass：建议不通过；
+	// * recheck：建议复审。
+	AuditSuggestion string `json:"AuditSuggestion,omitempty" query:"AuditSuggestion"`
+
+	// 图片类型，缺省情况下返回全部类型任务。支持的取值如下所示。
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	ImageType string `json:"ImageType,omitempty" query:"ImageType"`
+
+	// 分页条数。取值范围为 (0,100]，默认值为 10。
+	Limit string `json:"Limit,omitempty" query:"Limit"`
+
+	// 上一次查询返回的位置标记，作为本次列举的起点信息。默认值为 0。
+	Marker string `json:"Marker,omitempty" query:"Marker"`
+
+	// 问题类型，取值根据审核类型的不同其取值不同。缺省情况下返回全部类型任务。
+	// * 基础安全审核 * video_govern：涉政
+	// * video_porn：涉黄
+	// * video_illegal：违法违规
+	// * video_terror：涉暴
+	//
+	//
+	// * 智能安全审核 * 视频风险识别 * video_porn：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * video_sensitive1：涉敏1，具体指涉及暴恐风险
+	// * video_sensitive2：涉敏2，具体值涉及政治内容风险
+	// * video_forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * video_uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * video_qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * video_badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * video_sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * video_age：年龄，主要适用于图中人物对应的年龄段识别
+	// * video_underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * video_quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别 * video_ad：广告，综合图像及文字内容智能识别广告
+	// * video_defraud：诈骗，综合图像及文字内容智能识别诈骗
+	// * video_charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字
+	Problem string `json:"Problem,omitempty" query:"Problem"`
+
+	// 审核场景，缺省情况下查询全部场景的任务。取值如下所示：
+	// * UrlFile：上传 txt 审核文件处理场景
+	// * Url：上传审核图片 URL 处理场景
+	// * Upload：图片上传场景
+	Type string `json:"Type,omitempty" query:"Type"`
+}
+
+type GetVideoAuditResultRes struct {
+
+	// REQUIRED
+	ResponseMetadata *GetVideoAuditResultResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result *GetVideoAuditResultResResult `json:"Result"`
+}
+
+type GetVideoAuditResultResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type GetVideoAuditResultResResult struct {
+
+	// REQUIRED; 是否还有更多任务，取值如下所示：
+	// * true：是，还有其他任务未列举
+	// * false：否，已列举所有任务
+	HaveMore bool `json:"HaveMore"`
+
+	// REQUIRED; 任务结果
+	Results []*GetVideoAuditResultResResultResultsItem `json:"Results"`
+}
+
+type GetVideoAuditResultResResultResultsItem struct {
+
+	// 该任务的审核能力。取值如下所示：
+	// * 0：基础审核能力
+	// * 1：智能审核能力
+	Ability int `json:"Ability,omitempty"`
+
+	// 审核结果，取值如下所示：
+	// * problem：问题图片
+	// * frozen：冻结图片
+	// * fail：审核失败图片
+	AuditResultType string `json:"AuditResultType,omitempty"`
+
+	// 审核建议，取值如下所示：
+	// * nopass：建议不通过
+	// * recheck：建议复审
+	AuditSuggestion string `json:"AuditSuggestion,omitempty"`
+
+	// 审核结束时间
+	EndAt string `json:"EndAt,omitempty"`
+
+	// 条目 ID
+	EntryID string `json:"EntryId,omitempty"`
+
+	// 错误信息
+	ErrMsg string `json:"ErrMsg,omitempty"`
+
+	// HaveMore取值true时，即本次查询还有未列举到的任务时。Marker作为起始条目位置标记，您需要在下一次查询时传入该值。
+	Marker string `json:"Marker,omitempty"`
+
+	// 审核发现图片问题类型
+	Problems []string `json:"Problems,omitempty"`
+
+	// 任务 ID
+	TaskID string `json:"TaskId,omitempty"`
+
+	// 该任务被指定的审核场景，取值如下所示：
+	// * UrlFile：上传 txt 审核文件处理场景
+	// * Url：上传审核图片 URL 处理场景
+	// * Upload：图片上传场景
+	Type string `json:"Type,omitempty"`
+
+	// 表示 txt 审核文件的存储 URI。
+	URI string `json:"Uri,omitempty"`
+}
+
 type PreviewImageUploadFileQuery struct {
 
 	// REQUIRED; 服务 ID。
@@ -20961,6 +21780,90 @@ type SetDefaultDomainResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+type SingleImageAuditBody struct {
+
+	// REQUIRED; 审核能力类型
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; 审核维度
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 文本审核维度
+	AuditTextDimensions []string `json:"AuditTextDimensions"`
+
+	// REQUIRED; 唯一id
+	DataID string `json:"DataId"`
+
+	// REQUIRED; 是否开启大图审核
+	EnableLargeImageDetect bool `json:"EnableLargeImageDetect"`
+
+	// REQUIRED; 公网可访问url
+	ImageURI string `json:"ImageUri"`
+
+	// 是否异步进行审核，取值 0：同步返回结果，1：异步进行审核，默认为0。
+	Async int `json:"Async,omitempty"`
+
+	// 审核结果（Detail版本）以回调形式发送至您的回调地址，异步审核时生效，支持以 http:// 或者 https:// 开头的地址，例如： http://www.callback.com。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+}
+
+type SingleImageAuditQuery struct {
+
+	// REQUIRED; 用于存储结果图和计量计费的服务 ID。
+	// * 您可以在 veImageX 控制台 服务管理 [https://console.volcengine.com/imagex/service_manage/]页面，在创建好的图片服务中获取服务 ID。
+	// * 您也可以通过 OpenAPI 的方式获取服务 ID，具体请参考获取所有服务信息 [https://www.volcengine.com/docs/508/9360]。
+	ServiceID string `json:"ServiceId" query:"ServiceId"`
+}
+
+type SingleImageAuditRes struct {
+
+	// REQUIRED
+	ResponseMetadata *SingleImageAuditResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *SingleImageAuditResResult `json:"Result,omitempty"`
+}
+
+type SingleImageAuditResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestID为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// SingleImageAuditResResult - 视请求的接口而定
+type SingleImageAuditResResult struct {
+
+	// REQUIRED; 审核建议
+	Advice string `json:"Advice"`
+
+	// REQUIRED; 唯一id
+	DataID string `json:"DataId"`
+
+	// REQUIRED; 审核判断图片类型
+	ImageType string `json:"ImageType"`
+
+	// REQUIRED; 公网可访问url
+	ImageURI string `json:"ImageUri"`
+
+	// 一级标签
+	Label []string `json:"Label,omitempty"`
+
+	// 二级标签
+	SubLabel []string `json:"SubLabel,omitempty"`
+}
+
 type TerminateImageMigrateTaskQuery struct {
 
 	// REQUIRED; 任务 ID，请参考GetImageMigrateTasks [https://www.volcengine.com/docs/508/1108670]获取返回的任务 ID。
@@ -21059,6 +21962,139 @@ type UpdateAdvanceResResponseMetadata struct {
 	Service string `json:"Service"`
 
 	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+type UpdateAudioAuditTaskBody struct {
+
+	// REQUIRED; 审核能力类型，用于指定审核任务的审核能力类型。支持的取值如下所示。
+	// * 0：基础审核；
+	// * 1：智能安全审核。
+	// :::tip 智能安全审核支持更丰富的审核维度和更精准的风险识别能力，适用于复杂场景的审核需求。 :::
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; 审核维度，根据审核能力的不同，其具体取值不同。基础审核与智能审核之间不支持混用。
+	// * 智能安全审核，仅当 AuditAbility 取值为 1 时，配置生效。
+	//
+	// * 图像风险识别 * audio_porn ：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * audio_sensitive1 ：涉敏1，具体指涉及暴恐风险
+	// * audio_sensitive2：涉敏2，具体值涉及政治内容风险
+	// * audio_forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * audio_uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * audio_qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * audio_badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * audio_sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * audio_age：年龄，主要适用于图中人物对应的年龄段识别
+	// * audio_underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * audio_quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别，您可在 AuditTextDimensions 配置文字审核的维度。
+	//
+	// :::tip 您可将智能安全审核的图像风险识别和图文风险识别搭配使用。 :::
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 指定待更新审核任务所在的服务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1158717]获取待更新任务对应的服务 ID。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; 任务 ID，您可通过调用 查询所有审核任务 [https://www.volcengine.com/docs/508/1158717] 获取所需的任务 ID。
+	TaskID string `json:"TaskId"`
+
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
+	AuditPrefix []string `json:"AuditPrefix,omitempty"`
+
+	// 智能安全审核类型下图文风险审核的具体维度，仅当 AuditAbility 取值为 1 时生效。支持的取值如下所示。
+	// * ad：广告，综合图像及文字内容智能识别广告；
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗；
+	// * charillegal：文字违规，存在涉黄、涉敏、违禁等违规文字。
+	// :::tip 您可将 AuditTextDimensions 与 AuditDimensions 搭配使用，实现图像和图文内容的综合审核。 :::
+	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	Auditwildcard []string `json:"Auditwildcard,omitempty"`
+
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
+	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
+
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
+
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+
+	// 是否开启审核范围配置，仅当 Type 取值为 Upload 时生效。默认值为 0。支持的取值如下所示。
+	// * 0：不限范围；
+	// * 1：指定前缀匹配（需配合 AuditPrefix 或 NoAuditPrefix 使用）；
+	// * 2：指定通配符匹配（需配合 AuditPrefix 或 NoAuditPrefix 使用）。
+	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
+
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
+	EnableFreeze bool `json:"EnableFreeze,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeDimensions []string `json:"FreezeDimensions,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeStrategy int `json:"FreezeStrategy,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeType []string `json:"FreezeType,omitempty"`
+
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
+	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditwildcard []string `json:"NoAuditwildcard,omitempty"`
+
+	// 任务地区。当前仅支持取值 cn，表示国内。
+	Region string `json:"Region,omitempty"`
+
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核文件的 URL 列表，每行一个 URL，最多支持 10000 行。
+	ResURI []string `json:"ResUri,omitempty"`
+}
+
+type UpdateAudioAuditTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateAudioAuditTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; Anything
+	Result interface{} `json:"Result"`
+}
+
+type UpdateAudioAuditTaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
 	Version string `json:"Version"`
 }
 
@@ -21481,6 +22517,12 @@ type UpdateImageAnalyzeTaskStatusResResponseMetadata struct {
 
 type UpdateImageAuditTaskBody struct {
 
+	// REQUIRED; 审核能力类型，用于指定审核任务的审核能力类型。支持的取值如下所示。
+	// * 0：基础审核；
+	// * 1：智能安全审核。
+	// :::tip 智能安全审核支持更丰富的审核维度和更精准的风险识别能力，适用于复杂场景的审核需求。 :::
+	AuditAbility int `json:"AuditAbility"`
+
 	// REQUIRED; 审核维度，根据审核能力的不同，其具体取值不同。基础审核与智能审核之间不支持混用。
 	// * 基础安全审核，仅当 AuditAbility 取值为 0 时，配置生效。
 	//
@@ -21510,66 +22552,71 @@ type UpdateImageAuditTaskBody struct {
 	// :::tip 您可将智能安全审核的图像风险识别和图文风险识别搭配使用。 :::
 	AuditDimensions []string `json:"AuditDimensions"`
 
+	// REQUIRED; 当前支持的通配符为* ?不同通配符请用“，”隔开
+	AuditWildCard []string `json:"AuditWildCard"`
+
+	// REQUIRED; 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditWildCard []string `json:"NoAuditWildCard"`
+
 	// REQUIRED; 指定待更新审核任务所在的服务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1158717]获取待更新任务对应的服务 ID。
 	ServiceID string `json:"ServiceId"`
 
 	// REQUIRED; 任务 ID，您可通过调用 查询所有审核任务 [https://www.volcengine.com/docs/508/1158717] 获取所需的任务 ID。
 	TaskID string `json:"TaskId"`
 
-	// 仅当EnableAuditRange取值1时，配置生效。 指定前缀审核，若你希望对某个目录进行审核，请设置路径为对应的目录名，以/结尾。例如123/
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
 	AuditPrefix []string `json:"AuditPrefix,omitempty"`
 
-	// 智能安全审核类型下图片文本审核的具体维度，取值如下所示：
-	// * ad：广告，综合图像及文字内容智能识别广告
-	// * defraud：诈骗，综合图像及文字内容智能识别诈骗
-	// * charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字
-	// :::tip 仅当 AuditDimensions 取值为智能安全审核模型时，您可将 AuditTextDimensions 与 AuditDimensions 搭配使用。 :::
+	// 智能安全审核类型下图文风险审核的具体维度，仅当 AuditAbility 取值为 1 时生效。支持的取值如下所示。
+	// * ad：广告，综合图像及文字内容智能识别广告；
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗；
+	// * charillegal：文字违规，图片上存在涉黄、涉敏、违禁等违规文字。
+	// :::tip 您可将 AuditTextDimensions 与 AuditDimensions 搭配使用，实现图像和图文内容的综合审核。 :::
 	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
 
-	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。
-	// 例如，AuditDimensions 取值 ["pron","sexy"]，AuditTextDimensions 取值 ["ad"]，支持您将 FreezeDimensions 取值 ["pron","sexy","ad"] 、 ["pron","sexy"]、["pron","ad"]
-	// 和 ["sexy","ad"] 任意一种。
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
 	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
 
-	// 回调图片类型，取值如下所示：
-	// * normal：正常图片
-	//
-	//
-	// * problem：问题图片
-	//
-	//
-	// * frozen：冻结图片
-	//
-	//
-	// * fail：审核失败图片
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
 	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
 
-	// 回调 URL，veImageX 以 Post 方式向业务服务器发送 JSON 格式回调数据。具体回调参数请参考回调内容 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
 	CallbackURL string `json:"CallbackUrl,omitempty"`
 
-	// 仅当Type取值Upload时，配置生效。 审核范围，取值如下所示：
-	// * 0：（默认）不限范围
-	// * 1：指定范围
+	// 是否开启审核范围配置，仅当 Type 取值为 Upload 时生效。支持的取值如下所示。
+	// * 0：不限范围（默认）；
+	// * 1：指定范围（需配合 AuditPrefix 或 NoAuditPrefix 使用）。
 	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
 
-	// 是否开启回调，取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
 	EnableCallback bool `json:"EnableCallback,omitempty"`
 
-	// 是否开启冻结，取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
 	EnableFreeze bool `json:"EnableFreeze,omitempty"`
 
-	// 图片审核仅支持审核 5MB 以下的图片，若您的图片大小在 5MB~32MB，您可以开启大图审核功能，veImageX 会对图片压缩后再进行审核。开启后，将对压缩能力按照基础图片处理
-	// [https://www.volcengine.com/docs/508/65935#%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1]进行计费。（您每月可使用
-	// 20TB 的免费额度） 取值如下所示：
-	// * true：开启
-	// * false：（默认）不开启
+	// 是否开启大图审核功能。默认值为 false。支持的取值如下所示。
+	// * true：开启大图审核，系统会对 5MB~32MB 的图片进行压缩后再审核；
+	// * false：不开启大图审核。
 	// :::tip
-	// * 若未开启大图审核且图片大小 ≥ 5 MB，可能会导致系统超时报错；
-	// * 若已开启大图审核但图片大小 ≥ 32 MB，可能会导致系统超时报错。 :::
+	// * 未开启时若图片大小 ≥ 5 MB，可能导致系统超时报错；
+	// * 已开启时若图片大小 ≥ 32 MB，可能导致系统超时报错；
+	// * 开启后将对压缩能力按照基础图片处理 [https://www.volcengine.com/docs/508/65935#%E5%9F%BA%E7%A1%80%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%E6%9C%8D%E5%8A%A1]进行计费（每月有
+	// 20TB 免费额度）。 :::
 	EnableLargeImageDetect bool `json:"EnableLargeImageDetect,omitempty"`
 
 	// 若开启冻结，则不可为空
@@ -21581,14 +22628,13 @@ type UpdateImageAuditTaskBody struct {
 	// 若开启冻结，则不可为空
 	FreezeType []string `json:"FreezeType,omitempty"`
 
-	// 仅当 EnableAuditRange 取值 1 时，配置生效。 指定前缀不审核，若你希望对某个目录不进行审核，请设置路径为对应的目录名，以/结尾。例如123/
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
 	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
 
-	// 任务地区。当前仅支持取值 cn，表示国内。
+	// 指定审核任务所属的地区。当前仅支持国内地区，取值为 cn。
 	Region string `json:"Region,omitempty"`
 
-	// 仅当 Type 为 UrlFile 时，配置生效。
-	// 审核文件的 StoreUri，为 .txt 文件，该文件需上传至指定服务对应存储中。该 txt 文件内需填写待审核图片文件的 URL，每行填写一个，最多可填写 10000 行。
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核图片的 URL 列表，每行一个 URL，最多支持 10000 行。
 	ResURI []string `json:"ResUri,omitempty"`
 }
 
@@ -24242,6 +25288,139 @@ type UpdateStorageRulesV2ResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+type UpdateVideoAuditTaskBody struct {
+
+	// REQUIRED; 审核能力类型，用于指定审核任务的审核能力类型。支持的取值如下所示。
+	// * 0：基础审核；
+	// * 1：智能安全审核。
+	// :::tip 智能安全审核支持更丰富的审核维度和更精准的风险识别能力，适用于复杂场景的审核需求。 :::
+	AuditAbility int `json:"AuditAbility"`
+
+	// REQUIRED; 审核维度，根据审核能力的不同，其具体取值不同。基础审核与智能审核之间不支持混用。
+	// * 智能安全审核，仅当 AuditAbility 取值为 1 时，配置生效。
+	//
+	// * 图像风险识别 * video_porn ：涉黄，主要适用于通用色情、色情动作、性行为、性暗示、性分泌物、色情动漫、色情裸露等涉黄场景的风险识别
+	// * video_sensitive1 ：涉敏1，具体指涉及暴恐风险
+	// * video_sensitive2：涉敏2，具体值涉及政治内容风险
+	// * video_forbidden：违禁，主要适用于打架斗殴、爆炸、劣迹艺人等场景的风险识别
+	// * video_uncomfortable：引人不适，主要适用于恶心、恐怖、尸体、血腥等引人不适场景的风险识别
+	// * video_qrcode：二维码，主要适用于识别常见二维码（QQ、微信、其他二维码等）
+	// * video_badpicture：不良画面，主要适用于自我伤害、丧葬、不当车播、吸烟/纹身/竖中指等不良社会风气的风险识别
+	// * video_sexy：性感低俗，主要适用于舌吻、穿衣性行为、擦边裸露等多种性感低俗场景的风险识别
+	// * video_age：年龄，主要适用于图中人物对应的年龄段识别
+	// * video_underage：未成年相关，主要适用于儿童色情、儿童邪典等风险识别
+	// * video_quality：图片质量，主要适用于图片模糊、纯色边框、纯色屏等风险识别
+	//
+	//
+	// * 图文风险识别，您可在 AuditTextDimensions 配置文字审核的维度。
+	//
+	// :::tip 您可将智能安全审核的图像风险识别和图文风险识别搭配使用。 :::
+	AuditDimensions []string `json:"AuditDimensions"`
+
+	// REQUIRED; 指定待更新审核任务所在的服务 ID，您可通过调用查询所有审核任务 [https://www.volcengine.com/docs/508/1158717]获取待更新任务对应的服务 ID。
+	ServiceID string `json:"ServiceId"`
+
+	// REQUIRED; 任务 ID，您可通过调用 查询所有审核任务 [https://www.volcengine.com/docs/508/1158717] 获取所需的任务 ID。
+	TaskID string `json:"TaskId"`
+
+	// 指定需要审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录进行审核，请设置路径为对应的目录名并以 / 结尾，例如 123/test/。
+	AuditPrefix []string `json:"AuditPrefix,omitempty"`
+
+	// 智能安全审核类型下图文风险审核的具体维度，仅当 AuditAbility 取值为 1 时生效。支持的取值如下所示。
+	// * ad：广告，综合图像及文字内容智能识别广告；
+	// * defraud：诈骗，综合图像及文字内容智能识别诈骗；
+	// * charillegal：文字违规，存在涉黄、涉敏、违禁等违规文字。
+	// :::tip 您可将 AuditTextDimensions 与 AuditDimensions 搭配使用，实现图像和图文内容的综合审核。 :::
+	AuditTextDimensions []string `json:"AuditTextDimensions,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	Auditwildcard []string `json:"Auditwildcard,omitempty"`
+
+	// 回调类型，取值需要与 AuditDimensions 审核维度保持一致或少于 AuditDimensions。例如，若 AuditDimensions 取值为 ["porn","sexy"]，AuditTextDimensions 取值为
+	// ["ad"]，则支持以下任意一种组合：
+	// * ["porn","sexy","ad"]
+	// * ["porn","sexy"]
+	// * ["porn","ad"]
+	// * ["sexy","ad"]
+	CallbackDimensions []string `json:"CallbackDimensions,omitempty"`
+
+	// 指定需要回调的图片类型，需配合 EnableCallback 使用。支持的取值如下所示。
+	// * normal：正常图片；
+	// * problem：问题图片；
+	// * frozen：冻结图片；
+	// * fail：审核失败图片。
+	CallbackImageTypes []string `json:"CallbackImageTypes,omitempty"`
+
+	// 接收审核结果回调的 URL，veImageX 将以 POST 方式向该地址发送 JSON 格式的回调数据。需配合 EnableCallback 参数开启回调功能使用。回调数据格式请参考回调内容文档 [https://www.volcengine.com/docs/508/134676#%E5%9B%9E%E8%B0%83%E5%86%85%E5%AE%B9]。
+	CallbackURL string `json:"CallbackUrl,omitempty"`
+
+	// 是否开启审核范围配置，仅当 Type 取值为 Upload 时生效。默认值为 0。支持的取值如下所示。
+	// * 0：不限范围；
+	// * 1：指定前缀匹配（需配合 AuditPrefix 或 NoAuditPrefix 使用）；
+	// * 2：指定通配符匹配（需配合 AuditPrefix 或 NoAuditPrefix 使用）。
+	EnableAuditRange int `json:"EnableAuditRange,omitempty"`
+
+	// 是否开启审核结果回调功能，默认值为 false。支持的取值如下所示。
+	// * true：开启回调；
+	// * false：不开启回调。
+	// :::tip 开启回调功能后，需配合 CallbackUrl、CallbackDimensions 和 CallbackImageTypes 使用。 :::
+	EnableCallback bool `json:"EnableCallback,omitempty"`
+
+	// 是否开启冻结功能，默认值为 false。支持的取值如下所示。
+	// * true：开启；
+	// * false：不开启。
+	// :::tip 开启冻结功能后，需配合 FreezeType、FreezeDimensions 和 FreezeStrategy 使用。 :::
+	EnableFreeze bool `json:"EnableFreeze,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeDimensions []string `json:"FreezeDimensions,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeStrategy int `json:"FreezeStrategy,omitempty"`
+
+	// 若开启冻结，则不可为空
+	FreezeType []string `json:"FreezeType,omitempty"`
+
+	// 指定不进行审核的文件前缀列表，仅当 EnableAuditRange 取值为 1 时生效。若需要对某个目录不进行审核，请设置路径为对应的目录名并以 / 结尾，例如123/test/。
+	NoAuditPrefix []string `json:"NoAuditPrefix,omitempty"`
+
+	// 当前支持的通配符为* ?不同通配符请用“，”隔开
+	NoAuditwildcard []string `json:"NoAuditwildcard,omitempty"`
+
+	// 任务地区。当前仅支持取值 cn，表示国内。
+	Region string `json:"Region,omitempty"`
+
+	// 审核文件的 StoreUri，仅当 Type 为 UrlFile 时生效。该文件为 .txt 格式，需上传至指定服务对应存储中，文件内容为待审核文件的 URL 列表，每行一个 URL，最多支持 10000 行。
+	ResURI []string `json:"ResUri,omitempty"`
+}
+
+type UpdateVideoAuditTaskRes struct {
+
+	// REQUIRED
+	ResponseMetadata *UpdateVideoAuditTaskResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED; Anything
+	Result interface{} `json:"Result"`
+}
+
+type UpdateVideoAuditTaskResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
 type VerifyDomainOwnerBody struct {
 
 	// REQUIRED; 待校验的域名。仅支持单域名校验。
@@ -24299,7 +25478,10 @@ type ApplyImageUpload struct{}
 type ApplyImageUploadBody struct{}
 type ApplyVpcUploadInfo struct{}
 type ApplyVpcUploadInfoBody struct{}
+type BatchImageAudit struct{}
 type CommitImageUpload struct{}
+type CreateAudioAuditTask struct{}
+type CreateAudioAuditTaskQuery struct{}
 type CreateBatchProcessTask struct{}
 type CreateCVImageGenerateTask struct{}
 type CreateFileRestore struct{}
@@ -24345,6 +25527,8 @@ type CreateImageTranscodeQueueQuery struct{}
 type CreateImageTranscodeTask struct{}
 type CreateImageTranscodeTaskQuery struct{}
 type CreateTemplatesFromBin struct{}
+type CreateVideoAuditTask struct{}
+type CreateVideoAuditTaskQuery struct{}
 type DelDomain struct{}
 type DeleteImageAIProcessDetail struct{}
 type DeleteImageAIProcessDetailQuery struct{}
@@ -24557,6 +25741,8 @@ type GetAllImageServices struct{}
 type GetAllImageServicesBody struct{}
 type GetAllImageTemplates struct{}
 type GetAllImageTemplatesBody struct{}
+type GetAudioAuditResult struct{}
+type GetAudioAuditResultBody struct{}
 type GetAuditEntrysCount struct{}
 type GetAuditEntrysCountBody struct{}
 type GetBatchProcessResult struct{}
@@ -24600,6 +25786,8 @@ type GetImageAnalyzeTasks struct{}
 type GetImageAnalyzeTasksBody struct{}
 type GetImageAuditResult struct{}
 type GetImageAuditResultBody struct{}
+type GetImageAuditTaskResult struct{}
+type GetImageAuditTaskResultBody struct{}
 type GetImageAuditTasks struct{}
 type GetImageAuditTasksBody struct{}
 type GetImageAuthKey struct{}
@@ -24695,6 +25883,8 @@ type GetURLFetchTask struct{}
 type GetURLFetchTaskBody struct{}
 type GetVendorBuckets struct{}
 type GetVendorBucketsQuery struct{}
+type GetVideoAuditResult struct{}
+type GetVideoAuditResultBody struct{}
 type PreviewImageUploadFile struct{}
 type PreviewImageUploadFileBody struct{}
 type ReportEvent struct{}
@@ -24704,9 +25894,12 @@ type RerunImageMigrateTask struct{}
 type RerunImageMigrateTaskBody struct{}
 type SetDefaultDomain struct{}
 type SetDefaultDomainQuery struct{}
+type SingleImageAudit struct{}
 type TerminateImageMigrateTask struct{}
 type TerminateImageMigrateTaskBody struct{}
 type UpdateAdvance struct{}
+type UpdateAudioAuditTask struct{}
+type UpdateAudioAuditTaskQuery struct{}
 type UpdateAuditImageStatus struct{}
 type UpdateAuditImageStatusQuery struct{}
 type UpdateDomainAdaptiveFmt struct{}
@@ -24767,6 +25960,8 @@ type UpdateServiceName struct{}
 type UpdateSlimConfig struct{}
 type UpdateStorageRules struct{}
 type UpdateStorageRulesV2 struct{}
+type UpdateVideoAuditTask struct{}
+type UpdateVideoAuditTaskQuery struct{}
 type VerifyDomainOwner struct{}
 type VerifyDomainOwnerQuery struct{}
 type AIProcessReq struct {
@@ -24793,9 +25988,17 @@ type ApplyVpcUploadInfoReq struct {
 	*ApplyVpcUploadInfoQuery
 	*ApplyVpcUploadInfoBody
 }
+type BatchImageAuditReq struct {
+	*BatchImageAuditQuery
+	*BatchImageAuditBody
+}
 type CommitImageUploadReq struct {
 	*CommitImageUploadQuery
 	*CommitImageUploadBody
+}
+type CreateAudioAuditTaskReq struct {
+	*CreateAudioAuditTaskQuery
+	*CreateAudioAuditTaskBody
 }
 type CreateBatchProcessTaskReq struct {
 	*CreateBatchProcessTaskQuery
@@ -24904,6 +26107,10 @@ type CreateImageTranscodeTaskReq struct {
 type CreateTemplatesFromBinReq struct {
 	*CreateTemplatesFromBinQuery
 	*CreateTemplatesFromBinBody
+}
+type CreateVideoAuditTaskReq struct {
+	*CreateVideoAuditTaskQuery
+	*CreateVideoAuditTaskBody
 }
 type DelDomainReq struct {
 	*DelDomainQuery
@@ -25337,6 +26544,10 @@ type GetAllImageTemplatesReq struct {
 	*GetAllImageTemplatesQuery
 	*GetAllImageTemplatesBody
 }
+type GetAudioAuditResultReq struct {
+	*GetAudioAuditResultQuery
+	*GetAudioAuditResultBody
+}
 type GetAuditEntrysCountReq struct {
 	*GetAuditEntrysCountQuery
 	*GetAuditEntrysCountBody
@@ -25432,6 +26643,10 @@ type GetImageAnalyzeTasksReq struct {
 type GetImageAuditResultReq struct {
 	*GetImageAuditResultQuery
 	*GetImageAuditResultBody
+}
+type GetImageAuditTaskResultReq struct {
+	*GetImageAuditTaskResultQuery
+	*GetImageAuditTaskResultBody
 }
 type GetImageAuditTasksReq struct {
 	*GetImageAuditTasksQuery
@@ -25641,6 +26856,10 @@ type GetVendorBucketsReq struct {
 	*GetVendorBucketsQuery
 	*GetVendorBucketsBody
 }
+type GetVideoAuditResultReq struct {
+	*GetVideoAuditResultQuery
+	*GetVideoAuditResultBody
+}
 type PreviewImageUploadFileReq struct {
 	*PreviewImageUploadFileQuery
 	*PreviewImageUploadFileBody
@@ -25657,6 +26876,10 @@ type SetDefaultDomainReq struct {
 	*SetDefaultDomainQuery
 	*SetDefaultDomainBody
 }
+type SingleImageAuditReq struct {
+	*SingleImageAuditQuery
+	*SingleImageAuditBody
+}
 type TerminateImageMigrateTaskReq struct {
 	*TerminateImageMigrateTaskQuery
 	*TerminateImageMigrateTaskBody
@@ -25664,6 +26887,10 @@ type TerminateImageMigrateTaskReq struct {
 type UpdateAdvanceReq struct {
 	*UpdateAdvanceQuery
 	*UpdateAdvanceBody
+}
+type UpdateAudioAuditTaskReq struct {
+	*UpdateAudioAuditTaskQuery
+	*UpdateAudioAuditTaskBody
 }
 type UpdateAuditImageStatusReq struct {
 	*UpdateAuditImageStatusQuery
@@ -25836,6 +27063,10 @@ type UpdateStorageRulesReq struct {
 type UpdateStorageRulesV2Req struct {
 	*UpdateStorageRulesV2Query
 	*UpdateStorageRulesV2Body
+}
+type UpdateVideoAuditTaskReq struct {
+	*UpdateVideoAuditTaskQuery
+	*UpdateVideoAuditTaskBody
 }
 type VerifyDomainOwnerReq struct {
 	*VerifyDomainOwnerQuery

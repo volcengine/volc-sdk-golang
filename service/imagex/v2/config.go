@@ -2126,6 +2126,22 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"CreateVideoAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateVideoAuditTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"CreateAudioAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateAudioAuditTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"DeleteImageAuditResult": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -2139,6 +2155,22 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetSyncAuditResult"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"SingleImageAudit": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SingleImageAudit"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"BatchImageAudit": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BatchImageAudit"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
@@ -2166,11 +2198,35 @@ var (
 				"Version": []string{"2023-05-01"},
 			},
 		},
+		"UpdateVideoAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateVideoAuditTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"UpdateAudioAuditTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAudioAuditTask"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
 		"GetImageAuditTasks": {
 			Method: http.MethodGet,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetImageAuditTasks"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetImageAuditTaskResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetImageAuditTaskResult"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
@@ -2187,6 +2243,22 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetAuditEntrysCount"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetVideoAuditResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetVideoAuditResult"},
+				"Version": []string{"2023-05-01"},
+			},
+		},
+		"GetAudioAuditResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetAudioAuditResult"},
 				"Version": []string{"2023-05-01"},
 			},
 		},
