@@ -133,6 +133,14 @@ var (
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
+		"ApplySmsSignatureV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplySmsSignatureV2"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
 		"DeleteSignature": {
 			Method: http.MethodPost,
 			Path:   "/",
