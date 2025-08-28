@@ -35,6 +35,10 @@ import (
 func main() {
     // 初始化客户端，推荐通过环境变量动态获取火山引擎密钥等身份认证信息，以免 AccessKey 硬编码引发数据安全风险。详细说明请参考https://www.volcengine.com/docs/6470/1166455
     // 使用 STS 时，ak 和 sk 均使用临时密钥，且设置 VOLCENGINE_TOKEN；不使用 STS 时，VOLCENGINE_TOKEN 部分传空
+	//endpoint = "https://tls-cn-beijing.volces.com"
+	//access_key_id = "AKLxxxxxxxx"
+	//access_key_secret = "TUxxxxxxxxxx=="
+	//region = "cn-beijing"
     client := tls.NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCESS_KEY_ID"),
        os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 
