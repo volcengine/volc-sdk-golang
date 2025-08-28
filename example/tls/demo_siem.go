@@ -17,6 +17,10 @@ func ConsumerLogsToSyslogClient() error {
 	// 获取消费组的默认配置
 	consumerCfg := tlsConsumer.GetDefaultConsumerConfig()
 	// 请配置您的Endpoint、Region、AccessKeyID、AccessKeySecret等基本信息
+	//endpoint = "https://tls-cn-beijing.volces.com"
+	//access_key_id = "AKLxxxxxxxx"
+	//access_key_secret = "TUxxxxxxxxxx=="
+	//region = "cn-beijing"
 	consumerCfg.Endpoint = os.Getenv("VOLCENGINE_ENDPOINT")
 	consumerCfg.Region = os.Getenv("VOLCENGINE_REGION")
 	consumerCfg.AccessKeyID = os.Getenv("VOLCENGINE_ACCESS_KEY_ID")
