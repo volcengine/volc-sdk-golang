@@ -94,7 +94,7 @@ type RouteAAuthResult struct {
 }
 
 type AuthQueryRequest struct {
-	Phone   string
+	Phone string
 }
 
 type AuthQueryResponse struct {
@@ -305,6 +305,8 @@ type Click2CallRequest struct {
 	LastVoiceTo                 string
 	UserData                    string
 	CityCodeByPhoneNo           string
+	IvrId                       int64
+	TtsContentMap               map[string]interface{}
 }
 
 type Click2CallResponse struct {
