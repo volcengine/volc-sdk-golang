@@ -5317,17 +5317,36 @@ type DescribeIPAccessRuleResResultAccessRuleListsItem struct {
 // DescribeIPAccessRuleResResultAccessRuleListsItemIPAccessRule - IP 访问限制规则。
 type DescribeIPAccessRuleResResultAccessRuleListsItemIPAccessRule struct {
 
-	// REQUIRED; 是否开启当前限制，取值及含义如下所示。
-	// * true: 开启；
+	// REQUIRED; 对于黑名单中或非白名单中的 IP 地址，系统返回的 HTTP 状态码。
+	DenyHTTPStatusCode int32 `json:"DenyHTTPStatusCode"`
+
+	// REQUIRED; 是否开启当前限制。取值如下：
+	// * true: 开启。
 	// * false: 关闭。
 	Enable bool `json:"Enable"`
 
-	// REQUIRED; 名单中的 IP 信息。
+	// REQUIRED; 校验是否包含 TS 文件。取值如下：
+	// * true: 包含。
+	// * false: 不包含。
+	// 使用 HLS 协议拉流时，直播服务器会将完整的直播流切割成小的 TS（Transport Stream）文件。观众观看直播时，播放器会不断请求 TS 文件并拼接成连续的画面。参数取值为true时，直播服务器会严格验证请求 TS 文件的 IP
+	// 地址，防止黑名单中或不在白名单中的 IP 地址访问 TS 文件。 :::tip 该配置仅对拉流域名生效。 :::
+	EnableTS bool `json:"EnableTS"`
+
+	// REQUIRED; 名单中的 IP 信息。 例如，Type取值为deny、Domain为推流域名、该参数取值为 ["192.168.1.100","192.168.1.0/24","2001:db8:85a3::8a2e:370:7334","2001:db8::/32"]
+	// 时，则表示不允许以下 IP 地址推流：
+	// * IP 地址192.168.1.100
+	// * IP 地址2001:db8:85a3::8a2e:370:7334
+	// * 192.168.1.0- 192.168.1.255范围内的所有 IP 地址
+	// * 2001:db8:0000:0000:0000:0000:0000:0000-2001:db8:ffff:ffff:ffff:ffff:ffff:ffff范围内的所有 IP 地址
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; IP 访问限制的类型，取值及含义如下所示。
-	// * allow: 白名单；
-	// * deny: 黑名单。
+	// REQUIRED; IP 访问限制的类型。取值如下：
+	// * allow: 白名单。 * 如果 Domain 为推流域名，则只有符合规则的 IP 地址才可以推流。
+	// * 如果 Domain 为拉流域名，则只有符合规则的 IP 地址才可以拉流。
+	//
+	//
+	// * deny: 黑名单。 * 如果 Domain 为推流域名，则符合规则的 IP 地址无法推流。
+	// * 如果 Domain 为拉流域名，则符合规则的 IP 地址无法拉流。
 	Type string `json:"Type"`
 }
 
@@ -16123,18 +16142,40 @@ type UpdateIPAccessRuleBody struct {
 // UpdateIPAccessRuleBodyIPAccessRule - IP 访问限制规则。
 type UpdateIPAccessRuleBodyIPAccessRule struct {
 
-	// REQUIRED; 是否开启当前限制，取值及含义如下所示。
-	// * true: 开启；
+	// REQUIRED; 是否开启当前限制。取值如下：
+	// * true: 开启。
 	// * false: 关闭。
 	Enable bool `json:"Enable"`
 
-	// REQUIRED; 名单中的 IP 信息。
+	// REQUIRED; 名单中的 IP 信息。支持 IPv4 和 IPv6 格式的 IP 地址和 IP 网段。最多支持配置 500 个 IP 地址和网段。 例如，Type 取值为 deny、Domain 传入的是推流域名、该参数取值为 ["192.168.1.100","192.168.1.0/24","2001:db8:85a3::8a2e:370:7334","2001:db8::/32"]
+	// 时，则表示不允许以下
+	// IP 地址推流：
+	// * IP 地址 192.168.1.100
+	// * IP 地址 2001:db8:85a3::8a2e:370:7334
+	// * 192.168.1.0 - 192.168.1.255范围内的所有 IP 地址
+	// * 2001:db8:0000:0000:0000:0000:0000:0000- 2001:db8:ffff:ffff:ffff:ffff:ffff:ffff 范围内的所有 IP 地址
 	IPList []string `json:"IPList"`
 
-	// REQUIRED; IP 访问限制的类型，取值及含义如下所示。
-	// * allow: 白名单；
-	// * deny: 黑名单。
+	// REQUIRED; IP 访问限制的类型。取值如下：
+	// * allow: 白名单。 * 如果 Domain 传入的是推流域名，则只有符合规则的 IP 地址才可以推流。
+	// * 如果 Domain 传入的是拉流域名，则只有符合规则的 IP 地址才可以拉流。
+	//
+	//
+	// * deny: 黑名单。 * 如果 Domain 传入的是推流域名，则符合规则的 IP 地址无法推流。
+	// * 如果 Domain 传入的是拉流域名，则符合规则的 IP 地址无法拉流。
 	Type string `json:"Type"`
+
+	// 对于黑名单中或非白名单中的 IP 地址，系统默认返回 403 错误，表示禁止访问。 通过该参数，您可以自定义返回状态码，以便在查看日志时能快速区分禁止访问的原因，方便定位问题。 参数取值范围为 [200,999]。
+	DenyHTTPStatusCode *int32 `json:"DenyHTTPStatusCode,omitempty"`
+
+	// 校验是否包含 TS 文件。默认值为 false。取值如下：
+	// * true: 包含。
+	// * false: 不包含。
+	// 使用 HLS 协议拉流时，直播服务器会将完整的直播流切割成小的 TS（Transport Stream）文件。观众观看直播时，播放器会不断请求 TS 文件并拼接成连续的画面。参数取值为 true 时，直播服务器会严格验证请求 TS 文件的
+	// IP 地址，防止黑名单中或不在白名单中的 IP 地址访问 TS 文件。 :::tip
+	// * 该配置仅对拉流域名生效。
+	// * 如果无法确保能获取所有客户端请求 TS 文件的出口 IP 地址，建议将参数取值设置为 false，以免误拦截观众。 :::
+	EnableTS *bool `json:"EnableTS,omitempty"`
 }
 
 type UpdateIPAccessRuleRes struct {
