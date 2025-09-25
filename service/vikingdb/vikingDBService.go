@@ -846,11 +846,14 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 	if indexOptions.shardPolicy != "" {
 		params["shard_policy"] = indexOptions.shardPolicy
 	}
-	res, err := vikingDBService.DoRequest(context.Background(), "CreateIndex", nil, vikingDBService.convertMapToJson(params))
+	_, err := vikingDBService.DoRequest(context.Background(), "CreateIndex", nil, vikingDBService.convertMapToJson(params))
 	if err != nil {
 		return nil, err
 	}
-	_ = res
+	if indexOptions.shardCount == nil {
+		var defaultShardCount int64 = 1
+		indexOptions.shardCount = &defaultShardCount
+	}
 	index := &Index{
 		CollectionName:  collectionName,
 		IndexName:       indexName,
