@@ -1035,6 +1035,22 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"DescribeCdnEdgeIp": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnEdgeIp"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DescribeCdnRegionAndIsp": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeCdnRegionAndIsp"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		// **********************************************************************
 		// 回调管理
 		// **********************************************************************
