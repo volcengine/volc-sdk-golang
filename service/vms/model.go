@@ -306,7 +306,7 @@ type Click2CallRequest struct {
 	UserData                    string
 	CityCodeByPhoneNo           string
 	IvrId                       int64
-	TtsContentMap               map[string]interface{}
+	TtsContentMap               string
 }
 
 type Click2CallResponse struct {
