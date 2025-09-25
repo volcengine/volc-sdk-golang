@@ -6182,6 +6182,116 @@ func (x *VodDescribeDomainConfigResponse) GetResult() *business.VodDescribeDomai
 	return nil
 }
 
+type VodDescribeCdnEdgeIpResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata               `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"` //响应通用信息
+	Result           *business.VodDescribeCdnEdgeIpResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`                     //响应结果
+}
+
+func (x *VodDescribeCdnEdgeIpResponse) Reset() {
+	*x = VodDescribeCdnEdgeIpResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[116]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodDescribeCdnEdgeIpResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodDescribeCdnEdgeIpResponse) ProtoMessage() {}
+
+func (x *VodDescribeCdnEdgeIpResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[116]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodDescribeCdnEdgeIpResponse.ProtoReflect.Descriptor instead.
+func (*VodDescribeCdnEdgeIpResponse) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{116}
+}
+
+func (x *VodDescribeCdnEdgeIpResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodDescribeCdnEdgeIpResponse) GetResult() *business.VodDescribeCdnEdgeIpResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type VodDescribeCdnRegionAndIspResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ResponseMetadata *base.ResponseMetadata                     `protobuf:"bytes,1,opt,name=ResponseMetadata,proto3" json:"ResponseMetadata,omitempty"` //响应通用信息
+	Result           *business.VodDescribeCdnRegionAndIspResult `protobuf:"bytes,2,opt,name=Result,proto3" json:"Result,omitempty"`                     //响应结果
+}
+
+func (x *VodDescribeCdnRegionAndIspResponse) Reset() {
+	*x = VodDescribeCdnRegionAndIspResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[117]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *VodDescribeCdnRegionAndIspResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VodDescribeCdnRegionAndIspResponse) ProtoMessage() {}
+
+func (x *VodDescribeCdnRegionAndIspResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[117]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VodDescribeCdnRegionAndIspResponse.ProtoReflect.Descriptor instead.
+func (*VodDescribeCdnRegionAndIspResponse) Descriptor() ([]byte, []int) {
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{117}
+}
+
+func (x *VodDescribeCdnRegionAndIspResponse) GetResponseMetadata() *base.ResponseMetadata {
+	if x != nil {
+		return x.ResponseMetadata
+	}
+	return nil
+}
+
+func (x *VodDescribeCdnRegionAndIspResponse) GetResult() *business.VodDescribeCdnRegionAndIspResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
 type AddOrUpdateCertificateV2Response struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -6193,7 +6303,7 @@ type AddOrUpdateCertificateV2Response struct {
 func (x *AddOrUpdateCertificateV2Response) Reset() {
 	*x = AddOrUpdateCertificateV2Response{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[116]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[118]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6206,7 +6316,7 @@ func (x *AddOrUpdateCertificateV2Response) String() string {
 func (*AddOrUpdateCertificateV2Response) ProtoMessage() {}
 
 func (x *AddOrUpdateCertificateV2Response) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[116]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[118]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6219,7 +6329,7 @@ func (x *AddOrUpdateCertificateV2Response) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddOrUpdateCertificateV2Response.ProtoReflect.Descriptor instead.
 func (*AddOrUpdateCertificateV2Response) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{116}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{118}
 }
 
 func (x *AddOrUpdateCertificateV2Response) GetResponseMetadata() *base.ResponseMetadata {
@@ -6240,7 +6350,7 @@ type UpdateDomainAreaResponse struct {
 func (x *UpdateDomainAreaResponse) Reset() {
 	*x = UpdateDomainAreaResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[117]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[119]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6253,7 +6363,7 @@ func (x *UpdateDomainAreaResponse) String() string {
 func (*UpdateDomainAreaResponse) ProtoMessage() {}
 
 func (x *UpdateDomainAreaResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[117]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[119]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6266,7 +6376,7 @@ func (x *UpdateDomainAreaResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateDomainAreaResponse.ProtoReflect.Descriptor instead.
 func (*UpdateDomainAreaResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{117}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{119}
 }
 
 func (x *UpdateDomainAreaResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6290,7 +6400,7 @@ type VodAddCallbackSubscriptionResponse struct {
 func (x *VodAddCallbackSubscriptionResponse) Reset() {
 	*x = VodAddCallbackSubscriptionResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[118]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[120]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6303,7 +6413,7 @@ func (x *VodAddCallbackSubscriptionResponse) String() string {
 func (*VodAddCallbackSubscriptionResponse) ProtoMessage() {}
 
 func (x *VodAddCallbackSubscriptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[118]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[120]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6316,7 +6426,7 @@ func (x *VodAddCallbackSubscriptionResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use VodAddCallbackSubscriptionResponse.ProtoReflect.Descriptor instead.
 func (*VodAddCallbackSubscriptionResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{118}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{120}
 }
 
 func (x *VodAddCallbackSubscriptionResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6337,7 +6447,7 @@ type VodSetCallbackEventResponse struct {
 func (x *VodSetCallbackEventResponse) Reset() {
 	*x = VodSetCallbackEventResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[119]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[121]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6350,7 +6460,7 @@ func (x *VodSetCallbackEventResponse) String() string {
 func (*VodSetCallbackEventResponse) ProtoMessage() {}
 
 func (x *VodSetCallbackEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[119]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[121]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6363,7 +6473,7 @@ func (x *VodSetCallbackEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSetCallbackEventResponse.ProtoReflect.Descriptor instead.
 func (*VodSetCallbackEventResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{119}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{121}
 }
 
 func (x *VodSetCallbackEventResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6385,7 +6495,7 @@ type GetCallbackRecordResponse struct {
 func (x *GetCallbackRecordResponse) Reset() {
 	*x = GetCallbackRecordResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[120]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[122]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6398,7 +6508,7 @@ func (x *GetCallbackRecordResponse) String() string {
 func (*GetCallbackRecordResponse) ProtoMessage() {}
 
 func (x *GetCallbackRecordResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[120]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[122]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6411,7 +6521,7 @@ func (x *GetCallbackRecordResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCallbackRecordResponse.ProtoReflect.Descriptor instead.
 func (*GetCallbackRecordResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{120}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{122}
 }
 
 func (x *GetCallbackRecordResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6443,7 +6553,7 @@ type VodGetSmartStrategyLitePlayInfoResponse struct {
 func (x *VodGetSmartStrategyLitePlayInfoResponse) Reset() {
 	*x = VodGetSmartStrategyLitePlayInfoResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[121]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[123]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6456,7 +6566,7 @@ func (x *VodGetSmartStrategyLitePlayInfoResponse) String() string {
 func (*VodGetSmartStrategyLitePlayInfoResponse) ProtoMessage() {}
 
 func (x *VodGetSmartStrategyLitePlayInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[121]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[123]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6469,7 +6579,7 @@ func (x *VodGetSmartStrategyLitePlayInfoResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use VodGetSmartStrategyLitePlayInfoResponse.ProtoReflect.Descriptor instead.
 func (*VodGetSmartStrategyLitePlayInfoResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{121}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{123}
 }
 
 func (x *VodGetSmartStrategyLitePlayInfoResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6501,7 +6611,7 @@ type VodGetAppInfoResponse struct {
 func (x *VodGetAppInfoResponse) Reset() {
 	*x = VodGetAppInfoResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[122]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[124]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6514,7 +6624,7 @@ func (x *VodGetAppInfoResponse) String() string {
 func (*VodGetAppInfoResponse) ProtoMessage() {}
 
 func (x *VodGetAppInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[122]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[124]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6527,7 +6637,7 @@ func (x *VodGetAppInfoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetAppInfoResponse.ProtoReflect.Descriptor instead.
 func (*VodGetAppInfoResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{122}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{124}
 }
 
 func (x *VodGetAppInfoResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6560,7 +6670,7 @@ type DescribeVodSpaceTranscodeDataResponse struct {
 func (x *DescribeVodSpaceTranscodeDataResponse) Reset() {
 	*x = DescribeVodSpaceTranscodeDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[123]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[125]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6573,7 +6683,7 @@ func (x *DescribeVodSpaceTranscodeDataResponse) String() string {
 func (*DescribeVodSpaceTranscodeDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceTranscodeDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[123]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[125]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6586,7 +6696,7 @@ func (x *DescribeVodSpaceTranscodeDataResponse) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use DescribeVodSpaceTranscodeDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceTranscodeDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{123}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{125}
 }
 
 func (x *DescribeVodSpaceTranscodeDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6616,7 +6726,7 @@ type DescribeVodSpaceAIStatisDataResponse struct {
 func (x *DescribeVodSpaceAIStatisDataResponse) Reset() {
 	*x = DescribeVodSpaceAIStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[124]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[126]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6629,7 +6739,7 @@ func (x *DescribeVodSpaceAIStatisDataResponse) String() string {
 func (*DescribeVodSpaceAIStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceAIStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[124]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[126]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6642,7 +6752,7 @@ func (x *DescribeVodSpaceAIStatisDataResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use DescribeVodSpaceAIStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceAIStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{124}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{126}
 }
 
 func (x *DescribeVodSpaceAIStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6672,7 +6782,7 @@ type DescribeVodSpaceSubtitleStatisDataResponse struct {
 func (x *DescribeVodSpaceSubtitleStatisDataResponse) Reset() {
 	*x = DescribeVodSpaceSubtitleStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[125]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[127]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6685,7 +6795,7 @@ func (x *DescribeVodSpaceSubtitleStatisDataResponse) String() string {
 func (*DescribeVodSpaceSubtitleStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceSubtitleStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[125]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[127]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6698,7 +6808,7 @@ func (x *DescribeVodSpaceSubtitleStatisDataResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use DescribeVodSpaceSubtitleStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceSubtitleStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{125}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{127}
 }
 
 func (x *DescribeVodSpaceSubtitleStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6728,7 +6838,7 @@ type DescribeVodSpaceDetectStatisDataResponse struct {
 func (x *DescribeVodSpaceDetectStatisDataResponse) Reset() {
 	*x = DescribeVodSpaceDetectStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[126]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[128]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6741,7 +6851,7 @@ func (x *DescribeVodSpaceDetectStatisDataResponse) String() string {
 func (*DescribeVodSpaceDetectStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceDetectStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[126]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[128]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6754,7 +6864,7 @@ func (x *DescribeVodSpaceDetectStatisDataResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use DescribeVodSpaceDetectStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceDetectStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{126}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{128}
 }
 
 func (x *DescribeVodSpaceDetectStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6784,7 +6894,7 @@ type DescribeVodSnapshotDataResponse struct {
 func (x *DescribeVodSnapshotDataResponse) Reset() {
 	*x = DescribeVodSnapshotDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[127]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[129]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6797,7 +6907,7 @@ func (x *DescribeVodSnapshotDataResponse) String() string {
 func (*DescribeVodSnapshotDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSnapshotDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[127]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[129]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6810,7 +6920,7 @@ func (x *DescribeVodSnapshotDataResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DescribeVodSnapshotDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSnapshotDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{127}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{129}
 }
 
 func (x *DescribeVodSnapshotDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6840,7 +6950,7 @@ type DescribeVodSpaceWorkflowDetailDataResponse struct {
 func (x *DescribeVodSpaceWorkflowDetailDataResponse) Reset() {
 	*x = DescribeVodSpaceWorkflowDetailDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[128]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[130]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6853,7 +6963,7 @@ func (x *DescribeVodSpaceWorkflowDetailDataResponse) String() string {
 func (*DescribeVodSpaceWorkflowDetailDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceWorkflowDetailDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[128]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[130]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6866,7 +6976,7 @@ func (x *DescribeVodSpaceWorkflowDetailDataResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use DescribeVodSpaceWorkflowDetailDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceWorkflowDetailDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{128}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{130}
 }
 
 func (x *DescribeVodSpaceWorkflowDetailDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6896,7 +7006,7 @@ type DescribeVodSpaceEditDetailDataResponse struct {
 func (x *DescribeVodSpaceEditDetailDataResponse) Reset() {
 	*x = DescribeVodSpaceEditDetailDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[129]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[131]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6909,7 +7019,7 @@ func (x *DescribeVodSpaceEditDetailDataResponse) String() string {
 func (*DescribeVodSpaceEditDetailDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceEditDetailDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[129]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[131]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6922,7 +7032,7 @@ func (x *DescribeVodSpaceEditDetailDataResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use DescribeVodSpaceEditDetailDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceEditDetailDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{129}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{131}
 }
 
 func (x *DescribeVodSpaceEditDetailDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -6952,7 +7062,7 @@ type DescribeVodRealtimeMediaDataResponse struct {
 func (x *DescribeVodRealtimeMediaDataResponse) Reset() {
 	*x = DescribeVodRealtimeMediaDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[130]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[132]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6965,7 +7075,7 @@ func (x *DescribeVodRealtimeMediaDataResponse) String() string {
 func (*DescribeVodRealtimeMediaDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodRealtimeMediaDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[130]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[132]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6978,7 +7088,7 @@ func (x *DescribeVodRealtimeMediaDataResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use DescribeVodRealtimeMediaDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodRealtimeMediaDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{130}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{132}
 }
 
 func (x *DescribeVodRealtimeMediaDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7008,7 +7118,7 @@ type DescribeVodRealtimeMediaDetailDataResponse struct {
 func (x *DescribeVodRealtimeMediaDetailDataResponse) Reset() {
 	*x = DescribeVodRealtimeMediaDetailDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[131]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[133]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7021,7 +7131,7 @@ func (x *DescribeVodRealtimeMediaDetailDataResponse) String() string {
 func (*DescribeVodRealtimeMediaDetailDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodRealtimeMediaDetailDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[131]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[133]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7034,7 +7144,7 @@ func (x *DescribeVodRealtimeMediaDetailDataResponse) ProtoReflect() protoreflect
 
 // Deprecated: Use DescribeVodRealtimeMediaDetailDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodRealtimeMediaDetailDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{131}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{133}
 }
 
 func (x *DescribeVodRealtimeMediaDetailDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7064,7 +7174,7 @@ type DescribeVodPlayFileLogByDomainResponse struct {
 func (x *DescribeVodPlayFileLogByDomainResponse) Reset() {
 	*x = DescribeVodPlayFileLogByDomainResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[132]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[134]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7077,7 +7187,7 @@ func (x *DescribeVodPlayFileLogByDomainResponse) String() string {
 func (*DescribeVodPlayFileLogByDomainResponse) ProtoMessage() {}
 
 func (x *DescribeVodPlayFileLogByDomainResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[132]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[134]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7090,7 +7200,7 @@ func (x *DescribeVodPlayFileLogByDomainResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use DescribeVodPlayFileLogByDomainResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodPlayFileLogByDomainResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{132}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{134}
 }
 
 func (x *DescribeVodPlayFileLogByDomainResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7120,7 +7230,7 @@ type DescribeVodEnhanceImageDataResponse struct {
 func (x *DescribeVodEnhanceImageDataResponse) Reset() {
 	*x = DescribeVodEnhanceImageDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[133]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[135]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7133,7 +7243,7 @@ func (x *DescribeVodEnhanceImageDataResponse) String() string {
 func (*DescribeVodEnhanceImageDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodEnhanceImageDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[133]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[135]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7146,7 +7256,7 @@ func (x *DescribeVodEnhanceImageDataResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use DescribeVodEnhanceImageDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodEnhanceImageDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{133}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{135}
 }
 
 func (x *DescribeVodEnhanceImageDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7176,7 +7286,7 @@ type DescribeVodSpaceEditStatisDataResponse struct {
 func (x *DescribeVodSpaceEditStatisDataResponse) Reset() {
 	*x = DescribeVodSpaceEditStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[134]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[136]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7189,7 +7299,7 @@ func (x *DescribeVodSpaceEditStatisDataResponse) String() string {
 func (*DescribeVodSpaceEditStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodSpaceEditStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[134]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[136]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7202,7 +7312,7 @@ func (x *DescribeVodSpaceEditStatisDataResponse) ProtoReflect() protoreflect.Mes
 
 // Deprecated: Use DescribeVodSpaceEditStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodSpaceEditStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{134}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{136}
 }
 
 func (x *DescribeVodSpaceEditStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7232,7 +7342,7 @@ type DescribeVodPlayedStatisDataResponse struct {
 func (x *DescribeVodPlayedStatisDataResponse) Reset() {
 	*x = DescribeVodPlayedStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[135]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[137]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7245,7 +7355,7 @@ func (x *DescribeVodPlayedStatisDataResponse) String() string {
 func (*DescribeVodPlayedStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodPlayedStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[135]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[137]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7258,7 +7368,7 @@ func (x *DescribeVodPlayedStatisDataResponse) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use DescribeVodPlayedStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodPlayedStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{135}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{137}
 }
 
 func (x *DescribeVodPlayedStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7288,7 +7398,7 @@ type DescribeVodMostPlayedStatisDataResponse struct {
 func (x *DescribeVodMostPlayedStatisDataResponse) Reset() {
 	*x = DescribeVodMostPlayedStatisDataResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[136]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[138]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7301,7 +7411,7 @@ func (x *DescribeVodMostPlayedStatisDataResponse) String() string {
 func (*DescribeVodMostPlayedStatisDataResponse) ProtoMessage() {}
 
 func (x *DescribeVodMostPlayedStatisDataResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[136]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[138]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7314,7 +7424,7 @@ func (x *DescribeVodMostPlayedStatisDataResponse) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use DescribeVodMostPlayedStatisDataResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodMostPlayedStatisDataResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{136}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{138}
 }
 
 func (x *DescribeVodMostPlayedStatisDataResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7344,7 +7454,7 @@ type DescribeVodVidTrafficFileLogResponse struct {
 func (x *DescribeVodVidTrafficFileLogResponse) Reset() {
 	*x = DescribeVodVidTrafficFileLogResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[137]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[139]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7357,7 +7467,7 @@ func (x *DescribeVodVidTrafficFileLogResponse) String() string {
 func (*DescribeVodVidTrafficFileLogResponse) ProtoMessage() {}
 
 func (x *DescribeVodVidTrafficFileLogResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[137]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[139]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7370,7 +7480,7 @@ func (x *DescribeVodVidTrafficFileLogResponse) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use DescribeVodVidTrafficFileLogResponse.ProtoReflect.Descriptor instead.
 func (*DescribeVodVidTrafficFileLogResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{137}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{139}
 }
 
 func (x *DescribeVodVidTrafficFileLogResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7400,7 +7510,7 @@ type VodSubmitBlockMediaTaskResponse struct {
 func (x *VodSubmitBlockMediaTaskResponse) Reset() {
 	*x = VodSubmitBlockMediaTaskResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[138]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[140]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7413,7 +7523,7 @@ func (x *VodSubmitBlockMediaTaskResponse) String() string {
 func (*VodSubmitBlockMediaTaskResponse) ProtoMessage() {}
 
 func (x *VodSubmitBlockMediaTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[138]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[140]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7426,7 +7536,7 @@ func (x *VodSubmitBlockMediaTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSubmitBlockMediaTaskResponse.ProtoReflect.Descriptor instead.
 func (*VodSubmitBlockMediaTaskResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{138}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{140}
 }
 
 func (x *VodSubmitBlockMediaTaskResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7455,7 +7565,7 @@ type VodSubmitUnblockMediaTaskResponse struct {
 func (x *VodSubmitUnblockMediaTaskResponse) Reset() {
 	*x = VodSubmitUnblockMediaTaskResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[139]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[141]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7468,7 +7578,7 @@ func (x *VodSubmitUnblockMediaTaskResponse) String() string {
 func (*VodSubmitUnblockMediaTaskResponse) ProtoMessage() {}
 
 func (x *VodSubmitUnblockMediaTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[139]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[141]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7481,7 +7591,7 @@ func (x *VodSubmitUnblockMediaTaskResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use VodSubmitUnblockMediaTaskResponse.ProtoReflect.Descriptor instead.
 func (*VodSubmitUnblockMediaTaskResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{139}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{141}
 }
 
 func (x *VodSubmitUnblockMediaTaskResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7510,7 +7620,7 @@ type VodQueryMediaBlockStatusResponse struct {
 func (x *VodQueryMediaBlockStatusResponse) Reset() {
 	*x = VodQueryMediaBlockStatusResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[140]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[142]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7523,7 +7633,7 @@ func (x *VodQueryMediaBlockStatusResponse) String() string {
 func (*VodQueryMediaBlockStatusResponse) ProtoMessage() {}
 
 func (x *VodQueryMediaBlockStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[140]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[142]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7536,7 +7646,7 @@ func (x *VodQueryMediaBlockStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodQueryMediaBlockStatusResponse.ProtoReflect.Descriptor instead.
 func (*VodQueryMediaBlockStatusResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{140}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{142}
 }
 
 func (x *VodQueryMediaBlockStatusResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7568,7 +7678,7 @@ type VodListProjectsResponse struct {
 func (x *VodListProjectsResponse) Reset() {
 	*x = VodListProjectsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[141]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[143]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7581,7 +7691,7 @@ func (x *VodListProjectsResponse) String() string {
 func (*VodListProjectsResponse) ProtoMessage() {}
 
 func (x *VodListProjectsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[141]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[143]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7594,7 +7704,7 @@ func (x *VodListProjectsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodListProjectsResponse.ProtoReflect.Descriptor instead.
 func (*VodListProjectsResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{141}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{143}
 }
 
 func (x *VodListProjectsResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7626,7 +7736,7 @@ type VodGetTradeConfigurationResponse struct {
 func (x *VodGetTradeConfigurationResponse) Reset() {
 	*x = VodGetTradeConfigurationResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[142]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[144]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7639,7 +7749,7 @@ func (x *VodGetTradeConfigurationResponse) String() string {
 func (*VodGetTradeConfigurationResponse) ProtoMessage() {}
 
 func (x *VodGetTradeConfigurationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[142]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[144]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7652,7 +7762,7 @@ func (x *VodGetTradeConfigurationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetTradeConfigurationResponse.ProtoReflect.Descriptor instead.
 func (*VodGetTradeConfigurationResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{142}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{144}
 }
 
 func (x *VodGetTradeConfigurationResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7684,7 +7794,7 @@ type VodSetCloudMigrateJobResponse struct {
 func (x *VodSetCloudMigrateJobResponse) Reset() {
 	*x = VodSetCloudMigrateJobResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[143]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[145]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7697,7 +7807,7 @@ func (x *VodSetCloudMigrateJobResponse) String() string {
 func (*VodSetCloudMigrateJobResponse) ProtoMessage() {}
 
 func (x *VodSetCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[143]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[145]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7710,7 +7820,7 @@ func (x *VodSetCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSetCloudMigrateJobResponse.ProtoReflect.Descriptor instead.
 func (*VodSetCloudMigrateJobResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{143}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{145}
 }
 
 func (x *VodSetCloudMigrateJobResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7738,7 +7848,7 @@ type VodSubmitCloudMigrateJobResponse struct {
 func (x *VodSubmitCloudMigrateJobResponse) Reset() {
 	*x = VodSubmitCloudMigrateJobResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[144]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[146]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7751,7 +7861,7 @@ func (x *VodSubmitCloudMigrateJobResponse) String() string {
 func (*VodSubmitCloudMigrateJobResponse) ProtoMessage() {}
 
 func (x *VodSubmitCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[144]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[146]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7764,7 +7874,7 @@ func (x *VodSubmitCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodSubmitCloudMigrateJobResponse.ProtoReflect.Descriptor instead.
 func (*VodSubmitCloudMigrateJobResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{144}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{146}
 }
 
 func (x *VodSubmitCloudMigrateJobResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7786,7 +7896,7 @@ type VodGetCloudMigrateJobResponse struct {
 func (x *VodGetCloudMigrateJobResponse) Reset() {
 	*x = VodGetCloudMigrateJobResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[145]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[147]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7799,7 +7909,7 @@ func (x *VodGetCloudMigrateJobResponse) String() string {
 func (*VodGetCloudMigrateJobResponse) ProtoMessage() {}
 
 func (x *VodGetCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[145]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[147]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7812,7 +7922,7 @@ func (x *VodGetCloudMigrateJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodGetCloudMigrateJobResponse.ProtoReflect.Descriptor instead.
 func (*VodGetCloudMigrateJobResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{145}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{147}
 }
 
 func (x *VodGetCloudMigrateJobResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -7844,7 +7954,7 @@ type VodReportEventResponse struct {
 func (x *VodReportEventResponse) Reset() {
 	*x = VodReportEventResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[146]
+		mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[148]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7857,7 +7967,7 @@ func (x *VodReportEventResponse) String() string {
 func (*VodReportEventResponse) ProtoMessage() {}
 
 func (x *VodReportEventResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[146]
+	mi := &file_volcengine_vod_response_response_vod_proto_msgTypes[148]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7870,7 +7980,7 @@ func (x *VodReportEventResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VodReportEventResponse.ProtoReflect.Descriptor instead.
 func (*VodReportEventResponse) Descriptor() ([]byte, []int) {
-	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{146}
+	return file_volcengine_vod_response_response_vod_proto_rawDescGZIP(), []int{148}
 }
 
 func (x *VodReportEventResponse) GetResponseMetadata() *base.ResponseMetadata {
@@ -9287,291 +9397,162 @@ var file_volcengine_vod_response_response_vod_proto_rawDesc = []byte{
 	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64,
 	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x43, 0x6f,
 	0x6e, 0x66, 0x69, 0x67, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x22, 0x7d, 0x0a, 0x20, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x43, 0x65, 0x72, 0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x56, 0x32, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61,
-	0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52,
-	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x22, 0x75, 0x0a, 0x18, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69,
-	0x6e, 0x41, 0x72, 0x65, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
-	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
-	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
-	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x7f, 0x0a, 0x22, 0x56, 0x6f, 0x64, 0x41,
-	0x64, 0x64, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72,
-	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
-	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
-	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x78, 0x0a, 0x1b, 0x56, 0x6f, 0x64,
-	0x53, 0x65, 0x74, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x45, 0x76, 0x65, 0x6e, 0x74,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x22, 0xbf, 0x01, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x43, 0x61, 0x6c, 0x6c, 0x62,
-	0x61, 0x63, 0x6b, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x47, 0x0a, 0x06,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x61,
-	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe3, 0x01, 0x0a, 0x27, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74,
-	0x53, 0x6d, 0x61, 0x72, 0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x4c, 0x69, 0x74,
-	0x65, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5d, 0x0a, 0x06,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x45, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
-	0x64, 0x47, 0x65, 0x74, 0x53, 0x6d, 0x61, 0x72, 0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67,
-	0x79, 0x4c, 0x69, 0x74, 0x65, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xbf, 0x01, 0x0a, 0x15,
-	0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73,
-	0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x12, 0x4b, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x33, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f,
-	0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0x2e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x41, 0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdf, 0x01,
-	0x0a, 0x25, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61,
-	0x63, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42,
-	0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x12, 0x5b, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x43, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e,
-	0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
-	0xdd, 0x01, 0x0a, 0x24, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x41, 0x49, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x12, 0x5a, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x42, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
-	0x53, 0x70, 0x61, 0x63, 0x65, 0x41, 0x49, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
-	0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
-	0xe9, 0x01, 0x0a, 0x2a, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
-	0x70, 0x61, 0x63, 0x65, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53, 0x74, 0x61, 0x74,
-	0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
-	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
-	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x60, 0x0a, 0x06, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
-	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72,
-	0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53, 0x75, 0x62, 0x74, 0x69,
-	0x74, 0x6c, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe5, 0x01, 0x0a, 0x28,
-	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65,
-	0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x12, 0x5e, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x46, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
-	0x53, 0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69,
-	0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x22, 0xd3, 0x01, 0x0a, 0x1f, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65,
-	0x56, 0x6f, 0x64, 0x53, 0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42,
-	0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x12, 0x55, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x3d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e,
-	0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
-	0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01, 0x0a, 0x2a, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x57, 0x6f,
-	0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x12, 0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
-	0x53, 0x70, 0x61, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74,
-	0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
-	0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x44, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c,
-	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73,
-	0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69,
-	0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdd, 0x01, 0x0a, 0x24, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d,
-	0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5a, 0x0a,
-	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x42, 0x2e,
-	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69,
-	0x6d, 0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01, 0x0a, 0x2a, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d,
-	0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x12, 0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
-	0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x44, 0x65, 0x74,
-	0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
-	0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67,
-	0x42, 0x79, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c,
-	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64,
-	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73,
-	0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x46, 0x69, 0x6c, 0x65,
-	0x4c, 0x6f, 0x67, 0x42, 0x79, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdb, 0x01, 0x0a, 0x23, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x45, 0x6e, 0x68, 0x61, 0x6e, 0x63, 0x65,
-	0x49, 0x6d, 0x61, 0x67, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x59, 0x0a, 0x06,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x41, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x45, 0x6e, 0x68, 0x61, 0x6e, 0x63, 0x65,
-	0x49, 0x6d, 0x61, 0x67, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
-	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63,
-	0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74,
-	0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a,
-	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e,
-	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44,
-	0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45,
-	0x64, 0x69, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdb, 0x01, 0x0a, 0x23,
-	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x65,
-	0x64, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6c, 0x74, 0x22, 0xcd, 0x01, 0x0a, 0x1c, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x43, 0x64, 0x6e, 0x45, 0x64, 0x67, 0x65, 0x49, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
 	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e,
 	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
 	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x59,
-	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x41,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x52,
+	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3a,
 	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e,
 	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
-	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x65,
-	0x64, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe3, 0x01, 0x0a, 0x27, 0x44, 0x65,
-	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x4d, 0x6f, 0x73, 0x74, 0x50, 0x6c, 0x61,
-	0x79, 0x65, 0x64, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73,
-	0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x12, 0x5d, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x45, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f,
-	0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x4d, 0x6f, 0x73,
-	0x74, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x64, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
+	0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x43, 0x64, 0x6e, 0x45, 0x64,
+	0x67, 0x65, 0x49, 0x70, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x22, 0xd9, 0x01, 0x0a, 0x22, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x43, 0x64, 0x6e, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x41, 0x6e, 0x64, 0x49, 0x73,
+	0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73,
+	0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x12, 0x58, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x40, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e,
+	0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73,
+	0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x65, 0x43, 0x64, 0x6e, 0x52, 0x65, 0x67, 0x69, 0x6f, 0x6e, 0x41, 0x6e, 0x64, 0x49, 0x73, 0x70,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x7d,
+	0x0a, 0x20, 0x41, 0x64, 0x64, 0x4f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x43, 0x65, 0x72,
+	0x74, 0x69, 0x66, 0x69, 0x63, 0x61, 0x74, 0x65, 0x56, 0x32, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x75, 0x0a,
+	0x18, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x41, 0x72, 0x65,
+	0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73,
+	0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x22, 0x7f, 0x0a, 0x22, 0x56, 0x6f, 0x64, 0x41, 0x64, 0x64, 0x43, 0x61,
+	0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e,
+	0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61,
+	0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x22, 0x78, 0x0a, 0x1b, 0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43,
+	0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x22,
+	0xbf, 0x01, 0x0a, 0x19, 0x47, 0x65, 0x74, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61, 0x63, 0x6b, 0x52,
+	0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
+	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x47, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2f, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x43, 0x61, 0x6c, 0x6c, 0x62, 0x61,
+	0x63, 0x6b, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x73, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0xe3, 0x01, 0x0a, 0x27, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x53, 0x6d, 0x61, 0x72,
+	0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x4c, 0x69, 0x74, 0x65, 0x50, 0x6c, 0x61,
+	0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
+	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5d, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x45, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74,
+	0x53, 0x6d, 0x61, 0x72, 0x74, 0x53, 0x74, 0x72, 0x61, 0x74, 0x65, 0x67, 0x79, 0x4c, 0x69, 0x74,
+	0x65, 0x50, 0x6c, 0x61, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
+	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xbf, 0x01, 0x0a, 0x15, 0x56, 0x6f, 0x64, 0x47,
+	0x65, 0x74, 0x41, 0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4b, 0x0a, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x33, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
+	0x64, 0x47, 0x65, 0x74, 0x41, 0x70, 0x70, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdf, 0x01, 0x0a, 0x25, 0x44, 0x65,
+	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e,
+	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
+	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5b,
+	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x43,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e,
+	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x6f, 0x64, 0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdd, 0x01, 0x0a, 0x24,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x41, 0x49, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12,
+	0x5a, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x42, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x41, 0x49, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01, 0x0a, 0x2a,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65,
+	0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61,
+	0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e,
+	0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61,
+	0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69,
+	0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75,
+	0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56,
+	0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x53, 0x75, 0x62, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x53,
+	0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
+	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe5, 0x01, 0x0a, 0x28, 0x44, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x44, 0x65, 0x74, 0x65,
+	0x63, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12,
+	0x5e, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x46, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74,
 	0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
-	0xdd, 0x01, 0x0a, 0x24, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x56,
-	0x69, 0x64, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
-	0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65,
-	0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
-	0x61, 0x74, 0x61, 0x12, 0x5a, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x42, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69,
-	0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64,
-	0x56, 0x69, 0x64, 0x54, 0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f,
-	0x67, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
-	0xd3, 0x01, 0x0a, 0x1f, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f,
-	0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0xd3, 0x01, 0x0a, 0x1f, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53,
+	0x6e, 0x61, 0x70, 0x73, 0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
 	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e,
 	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
@@ -9581,62 +9562,231 @@ var file_volcengine_vod_response_response_vod_proto_rawDesc = []byte{
 	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3d,
 	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e,
 	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
-	0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65,
-	0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd7, 0x01, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62,
-	0x6d, 0x69, 0x74, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54,
-	0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69,
-	0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
-	0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x57, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
-	0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42,
-	0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69,
-	0x74, 0x55, 0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73,
-	0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
-	0xd5, 0x01, 0x0a, 0x20, 0x56, 0x6f, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69,
-	0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x6e, 0x61, 0x70, 0x73,
+	0x68, 0x6f, 0x74, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01, 0x0a, 0x2a, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c,
+	0x6f, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
 	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
 	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
 	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12,
-	0x56, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x3e, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
 	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
-	0x2e, 0x56, 0x6f, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c,
-	0x6f, 0x63, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
-	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xc3, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x4c,
-	0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e,
-	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
-	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4d,
-	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x35,
-	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e,
-	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
-	0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd3, 0x01,
-	0x0a, 0x20, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e,
-	0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
-	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x54, 0x0a,
-	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e,
-	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d,
-	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x54,
-	0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x22, 0xcf, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43, 0x6c,
+	0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63,
+	0x65, 0x57, 0x6f, 0x72, 0x6b, 0x66, 0x6c, 0x6f, 0x77, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44,
+	0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f,
+	0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c,
+	0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x44, 0x65, 0x74,
+	0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdd, 0x01, 0x0a, 0x24, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x4d, 0x65, 0x64,
+	0x69, 0x61, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
+	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5a, 0x0a, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x42, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x4d, 0x65,
+	0x64, 0x69, 0x61, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe9, 0x01, 0x0a, 0x2a, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c, 0x74, 0x69, 0x6d, 0x65, 0x4d, 0x65, 0x64,
+	0x69, 0x61, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12,
+	0x60, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x48, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x61, 0x6c,
+	0x74, 0x69, 0x6d, 0x65, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x44,
+	0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f,
+	0x64, 0x50, 0x6c, 0x61, 0x79, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67, 0x42, 0x79, 0x44, 0x6f,
+	0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67,
+	0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e,
+	0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67, 0x42,
+	0x79, 0x44, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdb, 0x01, 0x0a, 0x23, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x45, 0x6e, 0x68, 0x61, 0x6e, 0x63, 0x65, 0x49, 0x6d, 0x61, 0x67,
+	0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
+	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x59, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x41, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x45, 0x6e, 0x68, 0x61, 0x6e, 0x63, 0x65, 0x49, 0x6d, 0x61, 0x67,
+	0x65, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x22, 0xe1, 0x01, 0x0a, 0x26, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65,
+	0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x53, 0x74, 0x61, 0x74,
+	0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
+	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5c, 0x0a, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x44, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x53, 0x70, 0x61, 0x63, 0x65, 0x45, 0x64, 0x69, 0x74, 0x53,
+	0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
+	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdb, 0x01, 0x0a, 0x23, 0x44, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x64, 0x53, 0x74, 0x61,
+	0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x59, 0x0a, 0x06, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x41, 0x2e, 0x56, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x64, 0x53, 0x74, 0x61,
+	0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xe3, 0x01, 0x0a, 0x27, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x56, 0x6f, 0x64, 0x4d, 0x6f, 0x73, 0x74, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x64, 0x53,
+	0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x5d, 0x0a, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x45, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x44, 0x65,
+	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x4d, 0x6f, 0x73, 0x74, 0x50, 0x6c, 0x61,
+	0x79, 0x65, 0x64, 0x53, 0x74, 0x61, 0x74, 0x69, 0x73, 0x44, 0x61, 0x74, 0x61, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xdd, 0x01, 0x0a, 0x24,
+	0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x56, 0x69, 0x64, 0x54, 0x72,
+	0x61, 0x66, 0x66, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d,
+	0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12,
+	0x5a, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x42, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64,
+	0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73,
+	0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x56, 0x6f, 0x64, 0x56, 0x69, 0x64, 0x54,
+	0x72, 0x61, 0x66, 0x66, 0x69, 0x63, 0x46, 0x69, 0x6c, 0x65, 0x4c, 0x6f, 0x67, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd3, 0x01, 0x0a, 0x1f,
+	0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65,
+	0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x55, 0x0a, 0x06, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3d, 0x2e, 0x56, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53,
+	0x75, 0x62, 0x6d, 0x69, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54,
+	0x61, 0x73, 0x6b, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0xd7, 0x01, 0x0a, 0x21, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x55,
+	0x6e, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42,
+	0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
+	0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x12, 0x57, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x3f, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e,
+	0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e,
+	0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x55, 0x6e, 0x62,
+	0x6c, 0x6f, 0x63, 0x6b, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x54, 0x61, 0x73, 0x6b, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd5, 0x01, 0x0a, 0x20,
+	0x56, 0x6f, 0x64, 0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f,
+	0x63, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64,
+	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x56, 0x0a, 0x06, 0x52,
+	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3e, 0x2e, 0x56, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64,
+	0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x22, 0xc3, 0x01, 0x0a, 0x17, 0x56, 0x6f, 0x64, 0x4c, 0x69, 0x73, 0x74, 0x50,
+	0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64,
+	0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4d, 0x0a, 0x06, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x35, 0x2e, 0x56, 0x6f, 0x6c,
+	0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x4c,
+	0x69, 0x73, 0x74, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x73, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xd3, 0x01, 0x0a, 0x20, 0x56, 0x6f,
+	0x64, 0x47, 0x65, 0x74, 0x54, 0x72, 0x61, 0x64, 0x65, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59,
+	0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
+	0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d,
+	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x54, 0x0a, 0x06, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3c, 0x2e, 0x56, 0x6f, 0x6c, 0x63,
+	0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c,
+	0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x54, 0x72, 0x61, 0x64, 0x65,
+	0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x49, 0x6e, 0x66,
+	0x6f, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22,
+	0xcf, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d,
+	0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
+	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x53, 0x0a, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3b, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
+	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
+	0x64, 0x53, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65,
+	0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x22, 0x7d, 0x0a, 0x20, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d, 0x69, 0x74, 0x43, 0x6c,
 	0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73,
 	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
@@ -9644,59 +9794,45 @@ var file_volcengine_vod_response_response_vod_proto_rawDesc = []byte{
 	0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10,
 	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61,
-	0x12, 0x53, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x3b, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f,
-	0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73,
-	0x73, 0x2e, 0x56, 0x6f, 0x64, 0x53, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67,
-	0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x7d, 0x0a, 0x20, 0x56, 0x6f, 0x64, 0x53, 0x75, 0x62, 0x6d,
-	0x69, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f,
-	0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65,
-	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73,
-	0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61,
-	0x64, 0x61, 0x74, 0x61, 0x22, 0xcf, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x43,
-	0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61,
-	0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52,
+	0x22, 0xcf, 0x01, 0x0a, 0x1d, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64,
+	0x4d, 0x69, 0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x53, 0x0a,
+	0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x3b, 0x2e,
+	0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d,
+	0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56,
+	0x6f, 0x64, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69, 0x67, 0x72, 0x61, 0x74,
+	0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x22, 0xc1, 0x01, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74,
+	0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x59, 0x0a,
 	0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x12, 0x53, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x3b, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56,
-	0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65,
-	0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x6f, 0x75, 0x64, 0x4d, 0x69,
-	0x67, 0x72, 0x61, 0x74, 0x65, 0x4a, 0x6f, 0x62, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0xc1, 0x01, 0x0a, 0x16, 0x56, 0x6f, 0x64, 0x52, 0x65,
-	0x70, 0x6f, 0x72, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x12, 0x59, 0x0a, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74,
-	0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f,
-	0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4c, 0x0a, 0x06,
-	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x34, 0x2e, 0x56,
-	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f,
-	0x64, 0x65, 0x6c, 0x73, 0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f,
-	0x64, 0x52, 0x65, 0x70, 0x6f, 0x72, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x52, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42, 0xcc, 0x01, 0x0a, 0x29, 0x63,
-	0x6f, 0x6d, 0x2e, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e,
-	0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0b, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x50, 0x01, 0x5a, 0x41, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
-	0x63, 0x6f, 0x6d, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76,
-	0x6f, 0x6c, 0x63, 0x2d, 0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73,
-	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c,
-	0x73, 0x2f, 0x72, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01,
-	0xca, 0x02, 0x20, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c,
-	0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0xe2, 0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50,
-	0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x2d, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65, 0x6e,
+	0x67, 0x69, 0x6e, 0x65, 0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x61, 0x73, 0x65, 0x2e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x4d, 0x65,
+	0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x52, 0x10, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x12, 0x4c, 0x0a, 0x06, 0x52, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x34, 0x2e, 0x56, 0x6f, 0x6c, 0x63, 0x65,
+	0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x56, 0x6f, 0x64, 0x2e, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73,
+	0x2e, 0x42, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x70,
+	0x6f, 0x72, 0x74, 0x45, 0x76, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x42, 0xcc, 0x01, 0x0a, 0x29, 0x63, 0x6f, 0x6d, 0x2e, 0x76,
+	0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2e, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x76, 0x6f, 0x64, 0x2e, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x72, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0b, 0x56, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x50, 0x01, 0x5a, 0x41, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x76, 0x6f, 0x6c, 0x63, 0x65, 0x6e, 0x67, 0x69, 0x6e, 0x65, 0x2f, 0x76, 0x6f, 0x6c, 0x63, 0x2d,
+	0x73, 0x64, 0x6b, 0x2d, 0x67, 0x6f, 0x6c, 0x61, 0x6e, 0x67, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69,
+	0x63, 0x65, 0x2f, 0x76, 0x6f, 0x64, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x2f, 0x72, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xa0, 0x01, 0x01, 0xd8, 0x01, 0x01, 0xca, 0x02, 0x20, 0x56,
+	0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56, 0x6f, 0x64, 0x5c,
+	0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0xe2,
+	0x02, 0x23, 0x56, 0x6f, 0x6c, 0x63, 0x5c, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x5c, 0x56,
+	0x6f, 0x64, 0x5c, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x73, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74,
+	0x61, 0x64, 0x61, 0x74, 0x61, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -9711,7 +9847,7 @@ func file_volcengine_vod_response_response_vod_proto_rawDescGZIP() []byte {
 	return file_volcengine_vod_response_response_vod_proto_rawDescData
 }
 
-var file_volcengine_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 147)
+var file_volcengine_vod_response_response_vod_proto_msgTypes = make([]protoimpl.MessageInfo, 149)
 var file_volcengine_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodGetAllPlayInfoResponse)(nil),                               // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse
 	(*VodGetPlayInfoResponse)(nil),                                  // 1: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse
@@ -9829,403 +9965,411 @@ var file_volcengine_vod_response_response_vod_proto_goTypes = []interface{}{
 	(*VodDeletePCDNDomainResponse)(nil),                             // 113: Volcengine.Vod.Models.Response.VodDeletePCDNDomainResponse
 	(*VodUpdateDomainConfigResponse)(nil),                           // 114: Volcengine.Vod.Models.Response.VodUpdateDomainConfigResponse
 	(*VodDescribeDomainConfigResponse)(nil),                         // 115: Volcengine.Vod.Models.Response.VodDescribeDomainConfigResponse
-	(*AddOrUpdateCertificateV2Response)(nil),                        // 116: Volcengine.Vod.Models.Response.AddOrUpdateCertificateV2Response
-	(*UpdateDomainAreaResponse)(nil),                                // 117: Volcengine.Vod.Models.Response.UpdateDomainAreaResponse
-	(*VodAddCallbackSubscriptionResponse)(nil),                      // 118: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse
-	(*VodSetCallbackEventResponse)(nil),                             // 119: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse
-	(*GetCallbackRecordResponse)(nil),                               // 120: Volcengine.Vod.Models.Response.GetCallbackRecordResponse
-	(*VodGetSmartStrategyLitePlayInfoResponse)(nil),                 // 121: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse
-	(*VodGetAppInfoResponse)(nil),                                   // 122: Volcengine.Vod.Models.Response.VodGetAppInfoResponse
-	(*DescribeVodSpaceTranscodeDataResponse)(nil),                   // 123: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse
-	(*DescribeVodSpaceAIStatisDataResponse)(nil),                    // 124: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse
-	(*DescribeVodSpaceSubtitleStatisDataResponse)(nil),              // 125: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse
-	(*DescribeVodSpaceDetectStatisDataResponse)(nil),                // 126: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse
-	(*DescribeVodSnapshotDataResponse)(nil),                         // 127: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse
-	(*DescribeVodSpaceWorkflowDetailDataResponse)(nil),              // 128: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse
-	(*DescribeVodSpaceEditDetailDataResponse)(nil),                  // 129: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse
-	(*DescribeVodRealtimeMediaDataResponse)(nil),                    // 130: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse
-	(*DescribeVodRealtimeMediaDetailDataResponse)(nil),              // 131: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse
-	(*DescribeVodPlayFileLogByDomainResponse)(nil),                  // 132: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse
-	(*DescribeVodEnhanceImageDataResponse)(nil),                     // 133: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse
-	(*DescribeVodSpaceEditStatisDataResponse)(nil),                  // 134: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse
-	(*DescribeVodPlayedStatisDataResponse)(nil),                     // 135: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse
-	(*DescribeVodMostPlayedStatisDataResponse)(nil),                 // 136: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse
-	(*DescribeVodVidTrafficFileLogResponse)(nil),                    // 137: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse
-	(*VodSubmitBlockMediaTaskResponse)(nil),                         // 138: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse
-	(*VodSubmitUnblockMediaTaskResponse)(nil),                       // 139: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse
-	(*VodQueryMediaBlockStatusResponse)(nil),                        // 140: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse
-	(*VodListProjectsResponse)(nil),                                 // 141: Volcengine.Vod.Models.Response.VodListProjectsResponse
-	(*VodGetTradeConfigurationResponse)(nil),                        // 142: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse
-	(*VodSetCloudMigrateJobResponse)(nil),                           // 143: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse
-	(*VodSubmitCloudMigrateJobResponse)(nil),                        // 144: Volcengine.Vod.Models.Response.VodSubmitCloudMigrateJobResponse
-	(*VodGetCloudMigrateJobResponse)(nil),                           // 145: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse
-	(*VodReportEventResponse)(nil),                                  // 146: Volcengine.Vod.Models.Response.VodReportEventResponse
-	(*base.ResponseMetadata)(nil),                                   // 147: Volcengine.Base.Models.Base.ResponseMetadata
-	(*business.VodAllPlayInfoResult)(nil),                           // 148: Volcengine.Vod.Models.Business.VodAllPlayInfoResult
-	(*business.VodPlayInfoModel)(nil),                               // 149: Volcengine.Vod.Models.Business.VodPlayInfoModel
-	(*business.VodGetOriginalPlayInfoResult)(nil),                   // 150: Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
-	(*business.VodGetPrivateDrmPlayAuthResult)(nil),                 // 151: Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
-	(*business.VodGetHlsDecryptionKeyResult)(nil),                   // 152: Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
-	(*business.VodCreateHlsDecryptionKeyResult)(nil),                // 153: Volcengine.Vod.Models.Business.VodCreateHlsDecryptionKeyResult
-	(*business.VodGetPlayInfoWithLiveTimeShiftSceneResult)(nil),     // 154: Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
-	(*business.VodDescribeDrmDataKeyResult)(nil),                    // 155: Volcengine.Vod.Models.Business.VodDescribeDrmDataKeyResult
-	(*business.VodSubmitMoveObjectTaskRespData)(nil),                // 156: Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData
-	(*business.VodQueryMoveObjectTaskInfoResData)(nil),              // 157: Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData
-	(*business.VodSubmitBlockObjectTasksResult)(nil),                // 158: Volcengine.Vod.Models.Business.VodSubmitBlockObjectTasksResult
-	(*business.VodListBlockObjectTasksResult)(nil),                  // 159: Volcengine.Vod.Models.Business.VodListBlockObjectTasksResult
-	(*business.VodCommitData)(nil),                                  // 160: Volcengine.Vod.Models.Business.VodCommitData
-	(*business.VodQueryData)(nil),                                   // 161: Volcengine.Vod.Models.Business.VodQueryData
-	(*business.VodUrlResponseData)(nil),                             // 162: Volcengine.Vod.Models.Business.VodUrlResponseData
-	(*business.VodApplyUploadInfoResult)(nil),                       // 163: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
-	(*business.VodCommitUploadInfoResult)(nil),                      // 164: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
-	(*business.VodListFileMetaInfosByFileNamesResult)(nil),          // 165: Volcengine.Vod.Models.Business.VodListFileMetaInfosByFileNamesResult
-	(*business.VodGetMediaInfosData)(nil),                           // 166: Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	(*business.VodGetRecPosterData)(nil),                            // 167: Volcengine.Vod.Models.Business.VodGetRecPosterData
-	(*business.VodUpdateMediaStorageClassData)(nil),                 // 168: Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
-	(*business.VodDeleteMediaData)(nil),                             // 169: Volcengine.Vod.Models.Business.VodDeleteMediaData
-	(*business.VodDeleteTranscodesData)(nil),                        // 170: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
-	(*business.VodDeleteMediaTosFileData)(nil),                      // 171: Volcengine.Vod.Models.Business.VodDeleteMediaTosFileData
-	(*business.VodGetMediaListData)(nil),                            // 172: Volcengine.Vod.Models.Business.VodGetMediaListData
-	(*business.VodGetSubtitleInfoListData)(nil),                     // 173: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
-	(*business.VodUpdateSubtitleStatusData)(nil),                    // 174: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
-	(*business.VodGetFramesForAuditResult)(nil),                     // 175: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	(*business.VodGetBetterFramesForAuditResult)(nil),               // 176: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
-	(*business.VodGetAudioInfoForAuditResult)(nil),                  // 177: Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
-	(*business.VodGetAutomaticSpeechRecognitionForAuditResult)(nil), // 178: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
-	(*business.VodGetAudioEventDetectionForAuditResult)(nil),        // 179: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
-	(*business.VodCreateVideoClassificationData)(nil),               // 180: Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
-	(*business.VodVideoClassificationsData)(nil),                    // 181: Volcengine.Vod.Models.Business.VodVideoClassificationsData
-	(*business.VodSnapshotData)(nil),                                // 182: Volcengine.Vod.Models.Business.VodSnapshotData
-	(*business.VodGetFileInfosData)(nil),                            // 183: Volcengine.Vod.Models.Business.VodGetFileInfosData
-	(*business.VodUpdateFileStorageClassData)(nil),                  // 184: Volcengine.Vod.Models.Business.VodUpdateFileStorageClassData
-	(*business.VodGetInnerAuditURLsData)(nil),                       // 185: Volcengine.Vod.Models.Business.VodGetInnerAuditURLsData
-	(*business.VodGetAdAuditResultByVidData)(nil),                   // 186: Volcengine.Vod.Models.Business.VodGetAdAuditResultByVidData
-	(*business.VodStartWorkflowResult)(nil),                         // 187: Volcengine.Vod.Models.Business.VodStartWorkflowResult
-	(*business.TranscodeResult)(nil),                                // 188: Volcengine.Vod.Models.Business.TranscodeResult
-	(*business.VodListWorkflowExecutionResult)(nil),                 // 189: Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
-	(*business.VodGetWorkflowExecutionDetailResult)(nil),            // 190: Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
-	(*business.WorkflowExecution)(nil),                              // 191: Volcengine.Vod.Models.Business.WorkflowExecution
-	(*business.VodWorkflowResult)(nil),                              // 192: Volcengine.Vod.Models.Business.VodWorkflowResult
-	(*business.VodTaskTemplateResult)(nil),                          // 193: Volcengine.Vod.Models.Business.VodTaskTemplateResult
-	(*business.VodListTaskTemplateResult)(nil),                      // 194: Volcengine.Vod.Models.Business.VodListTaskTemplateResult
-	(*business.VodWorkflowTemplateResult)(nil),                      // 195: Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
-	(*business.VodListWorkflowTemplateResult)(nil),                  // 196: Volcengine.Vod.Models.Business.VodListWorkflowTemplateResult
-	(*business.LogoTemplate)(nil),                                   // 197: Volcengine.Vod.Models.Business.LogoTemplate
-	(*business.VodListWatermarkResponseResult)(nil),                 // 198: Volcengine.Vod.Models.Business.VodListWatermarkResponseResult
-	(*business.SubmitDirectEditTaskAsyncResult)(nil),                // 199: Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
-	(*business.SubmitDirectEditTaskSyncResult)(nil),                 // 200: Volcengine.Vod.Models.Business.SubmitDirectEditTaskSyncResult
-	(*business.GetDirectEditProgress)(nil),                          // 201: Volcengine.Vod.Models.Business.GetDirectEditProgress
-	(*business.GetDirectEditResult)(nil),                            // 202: Volcengine.Vod.Models.Business.GetDirectEditResult
-	(*business.CancelDirectEditTask)(nil),                           // 203: Volcengine.Vod.Models.Business.CancelDirectEditTask
-	(*business.VodSpaceInfo)(nil),                                   // 204: Volcengine.Vod.Models.Business.VodSpaceInfo
-	(*business.VodUploadSpaceConfig)(nil),                           // 205: Volcengine.Vod.Models.Business.VodUploadSpaceConfig
-	(*business.VodDescribeVodSpaceStorageDataResult)(nil),           // 206: Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
-	(*business.VodDomainConfigInfo)(nil),                            // 207: Volcengine.Vod.Models.Business.VodDomainConfigInfo
-	(*business.VodCreateCdnTaskResult)(nil),                         // 208: Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	(*business.VodCdnTaskResult)(nil),                               // 209: Volcengine.Vod.Models.Business.VodCdnTaskResult
-	(*business.VodListCdnAccessLogResult)(nil),                      // 210: Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
-	(*business.VodListCdnTopAccessUrlResult)(nil),                   // 211: Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
-	(*business.VodListCdnTopAccessResult)(nil),                      // 212: Volcengine.Vod.Models.Business.VodListCdnTopAccessResult
-	(*business.VodDescribeVodDomainBandwidthDataResult)(nil),        // 213: Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
-	(*business.VodCdnStatisticsCommonResult)(nil),                   // 214: Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
-	(*business.VodCdnIpInfo)(nil),                                   // 215: Volcengine.Vod.Models.Business.VodCdnIpInfo
-	(*business.VodDescribeVodDomainTrafficDataResult)(nil),          // 216: Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
-	(*business.VodSubmitBlockTasksResult)(nil),                      // 217: Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
-	(*business.VodGetContentBlockTasksResult)(nil),                  // 218: Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
-	(*business.VodVerifyDomainOwnerResult)(nil),                     // 219: Volcengine.Vod.Models.Business.VodVerifyDomainOwnerResult
-	(*business.VodDescribeDomainVerifyContentResult)(nil),           // 220: Volcengine.Vod.Models.Business.VodDescribeDomainVerifyContentResult
-	(*business.VodPCDNDomainConfigInfo)(nil),                        // 221: Volcengine.Vod.Models.Business.VodPCDNDomainConfigInfo
-	(*business.VodDescribeDomainConfigResult)(nil),                  // 222: Volcengine.Vod.Models.Business.VodDescribeDomainConfigResult
-	(*business.CallbackRecords)(nil),                                // 223: Volcengine.Vod.Models.Business.CallbackRecords
-	(*business.VodGetSmartStrategyLitePlayInfoResult)(nil),          // 224: Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
-	(*business.VodGetAppInfoResult)(nil),                            // 225: Volcengine.Vod.Models.Business.VodGetAppInfoResult
-	(*business.DescribeVodSpaceTranscodeDataResult)(nil),            // 226: Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
-	(*business.DescribeVodSpaceAIStatisDataResult)(nil),             // 227: Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
-	(*business.DescribeVodSpaceSubtitleStatisDataResult)(nil),       // 228: Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
-	(*business.DescribeVodSpaceDetectStatisDataResult)(nil),         // 229: Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
-	(*business.DescribeVodSnapshotDataResult)(nil),                  // 230: Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
-	(*business.DescribeVodSpaceWorkflowDetailDataResult)(nil),       // 231: Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
-	(*business.DescribeVodSpaceEditDetailDataResult)(nil),           // 232: Volcengine.Vod.Models.Business.DescribeVodSpaceEditDetailDataResult
-	(*business.DescribeVodRealtimeMediaDataResult)(nil),             // 233: Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDataResult
-	(*business.DescribeVodRealtimeMediaDetailDataResult)(nil),       // 234: Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDetailDataResult
-	(*business.DescribeVodPlayFileLogByDomainResult)(nil),           // 235: Volcengine.Vod.Models.Business.DescribeVodPlayFileLogByDomainResult
-	(*business.DescribeVodEnhanceImageDataResult)(nil),              // 236: Volcengine.Vod.Models.Business.DescribeVodEnhanceImageDataResult
-	(*business.DescribeVodSpaceEditStatisDataResult)(nil),           // 237: Volcengine.Vod.Models.Business.DescribeVodSpaceEditStatisDataResult
-	(*business.DescribeVodPlayedStatisDataResult)(nil),              // 238: Volcengine.Vod.Models.Business.DescribeVodPlayedStatisDataResult
-	(*business.DescribeVodMostPlayedStatisDataResult)(nil),          // 239: Volcengine.Vod.Models.Business.DescribeVodMostPlayedStatisDataResult
-	(*business.DescribeVodVidTrafficFileLogResult)(nil),             // 240: Volcengine.Vod.Models.Business.DescribeVodVidTrafficFileLogResult
-	(*business.VodSubmitBlockMediaTaskResult)(nil),                  // 241: Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
-	(*business.VodSubmitUnblockMediaTaskResult)(nil),                // 242: Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
-	(*business.VodQueryMediaBlockStatusResult)(nil),                 // 243: Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
-	(*business.VodListProjectsResult)(nil),                          // 244: Volcengine.Vod.Models.Business.VodListProjectsResult
-	(*business.TradeConfigurationInfoResult)(nil),                   // 245: Volcengine.Vod.Models.Business.TradeConfigurationInfoResult
-	(*business.VodSetCloudMigrateJobResult)(nil),                    // 246: Volcengine.Vod.Models.Business.VodSetCloudMigrateJobResult
-	(*business.VodGetCloudMigrateJobResult)(nil),                    // 247: Volcengine.Vod.Models.Business.VodGetCloudMigrateJobResult
-	(*business.VodReportEventResult)(nil),                           // 248: Volcengine.Vod.Models.Business.VodReportEventResult
+	(*VodDescribeCdnEdgeIpResponse)(nil),                            // 116: Volcengine.Vod.Models.Response.VodDescribeCdnEdgeIpResponse
+	(*VodDescribeCdnRegionAndIspResponse)(nil),                      // 117: Volcengine.Vod.Models.Response.VodDescribeCdnRegionAndIspResponse
+	(*AddOrUpdateCertificateV2Response)(nil),                        // 118: Volcengine.Vod.Models.Response.AddOrUpdateCertificateV2Response
+	(*UpdateDomainAreaResponse)(nil),                                // 119: Volcengine.Vod.Models.Response.UpdateDomainAreaResponse
+	(*VodAddCallbackSubscriptionResponse)(nil),                      // 120: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse
+	(*VodSetCallbackEventResponse)(nil),                             // 121: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse
+	(*GetCallbackRecordResponse)(nil),                               // 122: Volcengine.Vod.Models.Response.GetCallbackRecordResponse
+	(*VodGetSmartStrategyLitePlayInfoResponse)(nil),                 // 123: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse
+	(*VodGetAppInfoResponse)(nil),                                   // 124: Volcengine.Vod.Models.Response.VodGetAppInfoResponse
+	(*DescribeVodSpaceTranscodeDataResponse)(nil),                   // 125: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse
+	(*DescribeVodSpaceAIStatisDataResponse)(nil),                    // 126: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse
+	(*DescribeVodSpaceSubtitleStatisDataResponse)(nil),              // 127: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse
+	(*DescribeVodSpaceDetectStatisDataResponse)(nil),                // 128: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse
+	(*DescribeVodSnapshotDataResponse)(nil),                         // 129: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse
+	(*DescribeVodSpaceWorkflowDetailDataResponse)(nil),              // 130: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse
+	(*DescribeVodSpaceEditDetailDataResponse)(nil),                  // 131: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse
+	(*DescribeVodRealtimeMediaDataResponse)(nil),                    // 132: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse
+	(*DescribeVodRealtimeMediaDetailDataResponse)(nil),              // 133: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse
+	(*DescribeVodPlayFileLogByDomainResponse)(nil),                  // 134: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse
+	(*DescribeVodEnhanceImageDataResponse)(nil),                     // 135: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse
+	(*DescribeVodSpaceEditStatisDataResponse)(nil),                  // 136: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse
+	(*DescribeVodPlayedStatisDataResponse)(nil),                     // 137: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse
+	(*DescribeVodMostPlayedStatisDataResponse)(nil),                 // 138: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse
+	(*DescribeVodVidTrafficFileLogResponse)(nil),                    // 139: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse
+	(*VodSubmitBlockMediaTaskResponse)(nil),                         // 140: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse
+	(*VodSubmitUnblockMediaTaskResponse)(nil),                       // 141: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse
+	(*VodQueryMediaBlockStatusResponse)(nil),                        // 142: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse
+	(*VodListProjectsResponse)(nil),                                 // 143: Volcengine.Vod.Models.Response.VodListProjectsResponse
+	(*VodGetTradeConfigurationResponse)(nil),                        // 144: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse
+	(*VodSetCloudMigrateJobResponse)(nil),                           // 145: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse
+	(*VodSubmitCloudMigrateJobResponse)(nil),                        // 146: Volcengine.Vod.Models.Response.VodSubmitCloudMigrateJobResponse
+	(*VodGetCloudMigrateJobResponse)(nil),                           // 147: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse
+	(*VodReportEventResponse)(nil),                                  // 148: Volcengine.Vod.Models.Response.VodReportEventResponse
+	(*base.ResponseMetadata)(nil),                                   // 149: Volcengine.Base.Models.Base.ResponseMetadata
+	(*business.VodAllPlayInfoResult)(nil),                           // 150: Volcengine.Vod.Models.Business.VodAllPlayInfoResult
+	(*business.VodPlayInfoModel)(nil),                               // 151: Volcengine.Vod.Models.Business.VodPlayInfoModel
+	(*business.VodGetOriginalPlayInfoResult)(nil),                   // 152: Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
+	(*business.VodGetPrivateDrmPlayAuthResult)(nil),                 // 153: Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
+	(*business.VodGetHlsDecryptionKeyResult)(nil),                   // 154: Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
+	(*business.VodCreateHlsDecryptionKeyResult)(nil),                // 155: Volcengine.Vod.Models.Business.VodCreateHlsDecryptionKeyResult
+	(*business.VodGetPlayInfoWithLiveTimeShiftSceneResult)(nil),     // 156: Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
+	(*business.VodDescribeDrmDataKeyResult)(nil),                    // 157: Volcengine.Vod.Models.Business.VodDescribeDrmDataKeyResult
+	(*business.VodSubmitMoveObjectTaskRespData)(nil),                // 158: Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData
+	(*business.VodQueryMoveObjectTaskInfoResData)(nil),              // 159: Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData
+	(*business.VodSubmitBlockObjectTasksResult)(nil),                // 160: Volcengine.Vod.Models.Business.VodSubmitBlockObjectTasksResult
+	(*business.VodListBlockObjectTasksResult)(nil),                  // 161: Volcengine.Vod.Models.Business.VodListBlockObjectTasksResult
+	(*business.VodCommitData)(nil),                                  // 162: Volcengine.Vod.Models.Business.VodCommitData
+	(*business.VodQueryData)(nil),                                   // 163: Volcengine.Vod.Models.Business.VodQueryData
+	(*business.VodUrlResponseData)(nil),                             // 164: Volcengine.Vod.Models.Business.VodUrlResponseData
+	(*business.VodApplyUploadInfoResult)(nil),                       // 165: Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
+	(*business.VodCommitUploadInfoResult)(nil),                      // 166: Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
+	(*business.VodListFileMetaInfosByFileNamesResult)(nil),          // 167: Volcengine.Vod.Models.Business.VodListFileMetaInfosByFileNamesResult
+	(*business.VodGetMediaInfosData)(nil),                           // 168: Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	(*business.VodGetRecPosterData)(nil),                            // 169: Volcengine.Vod.Models.Business.VodGetRecPosterData
+	(*business.VodUpdateMediaStorageClassData)(nil),                 // 170: Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
+	(*business.VodDeleteMediaData)(nil),                             // 171: Volcengine.Vod.Models.Business.VodDeleteMediaData
+	(*business.VodDeleteTranscodesData)(nil),                        // 172: Volcengine.Vod.Models.Business.VodDeleteTranscodesData
+	(*business.VodDeleteMediaTosFileData)(nil),                      // 173: Volcengine.Vod.Models.Business.VodDeleteMediaTosFileData
+	(*business.VodGetMediaListData)(nil),                            // 174: Volcengine.Vod.Models.Business.VodGetMediaListData
+	(*business.VodGetSubtitleInfoListData)(nil),                     // 175: Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
+	(*business.VodUpdateSubtitleStatusData)(nil),                    // 176: Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
+	(*business.VodGetFramesForAuditResult)(nil),                     // 177: Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	(*business.VodGetBetterFramesForAuditResult)(nil),               // 178: Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
+	(*business.VodGetAudioInfoForAuditResult)(nil),                  // 179: Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
+	(*business.VodGetAutomaticSpeechRecognitionForAuditResult)(nil), // 180: Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
+	(*business.VodGetAudioEventDetectionForAuditResult)(nil),        // 181: Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
+	(*business.VodCreateVideoClassificationData)(nil),               // 182: Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
+	(*business.VodVideoClassificationsData)(nil),                    // 183: Volcengine.Vod.Models.Business.VodVideoClassificationsData
+	(*business.VodSnapshotData)(nil),                                // 184: Volcengine.Vod.Models.Business.VodSnapshotData
+	(*business.VodGetFileInfosData)(nil),                            // 185: Volcengine.Vod.Models.Business.VodGetFileInfosData
+	(*business.VodUpdateFileStorageClassData)(nil),                  // 186: Volcengine.Vod.Models.Business.VodUpdateFileStorageClassData
+	(*business.VodGetInnerAuditURLsData)(nil),                       // 187: Volcengine.Vod.Models.Business.VodGetInnerAuditURLsData
+	(*business.VodGetAdAuditResultByVidData)(nil),                   // 188: Volcengine.Vod.Models.Business.VodGetAdAuditResultByVidData
+	(*business.VodStartWorkflowResult)(nil),                         // 189: Volcengine.Vod.Models.Business.VodStartWorkflowResult
+	(*business.TranscodeResult)(nil),                                // 190: Volcengine.Vod.Models.Business.TranscodeResult
+	(*business.VodListWorkflowExecutionResult)(nil),                 // 191: Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
+	(*business.VodGetWorkflowExecutionDetailResult)(nil),            // 192: Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
+	(*business.WorkflowExecution)(nil),                              // 193: Volcengine.Vod.Models.Business.WorkflowExecution
+	(*business.VodWorkflowResult)(nil),                              // 194: Volcengine.Vod.Models.Business.VodWorkflowResult
+	(*business.VodTaskTemplateResult)(nil),                          // 195: Volcengine.Vod.Models.Business.VodTaskTemplateResult
+	(*business.VodListTaskTemplateResult)(nil),                      // 196: Volcengine.Vod.Models.Business.VodListTaskTemplateResult
+	(*business.VodWorkflowTemplateResult)(nil),                      // 197: Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
+	(*business.VodListWorkflowTemplateResult)(nil),                  // 198: Volcengine.Vod.Models.Business.VodListWorkflowTemplateResult
+	(*business.LogoTemplate)(nil),                                   // 199: Volcengine.Vod.Models.Business.LogoTemplate
+	(*business.VodListWatermarkResponseResult)(nil),                 // 200: Volcengine.Vod.Models.Business.VodListWatermarkResponseResult
+	(*business.SubmitDirectEditTaskAsyncResult)(nil),                // 201: Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
+	(*business.SubmitDirectEditTaskSyncResult)(nil),                 // 202: Volcengine.Vod.Models.Business.SubmitDirectEditTaskSyncResult
+	(*business.GetDirectEditProgress)(nil),                          // 203: Volcengine.Vod.Models.Business.GetDirectEditProgress
+	(*business.GetDirectEditResult)(nil),                            // 204: Volcengine.Vod.Models.Business.GetDirectEditResult
+	(*business.CancelDirectEditTask)(nil),                           // 205: Volcengine.Vod.Models.Business.CancelDirectEditTask
+	(*business.VodSpaceInfo)(nil),                                   // 206: Volcengine.Vod.Models.Business.VodSpaceInfo
+	(*business.VodUploadSpaceConfig)(nil),                           // 207: Volcengine.Vod.Models.Business.VodUploadSpaceConfig
+	(*business.VodDescribeVodSpaceStorageDataResult)(nil),           // 208: Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
+	(*business.VodDomainConfigInfo)(nil),                            // 209: Volcengine.Vod.Models.Business.VodDomainConfigInfo
+	(*business.VodCreateCdnTaskResult)(nil),                         // 210: Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	(*business.VodCdnTaskResult)(nil),                               // 211: Volcengine.Vod.Models.Business.VodCdnTaskResult
+	(*business.VodListCdnAccessLogResult)(nil),                      // 212: Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
+	(*business.VodListCdnTopAccessUrlResult)(nil),                   // 213: Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
+	(*business.VodListCdnTopAccessResult)(nil),                      // 214: Volcengine.Vod.Models.Business.VodListCdnTopAccessResult
+	(*business.VodDescribeVodDomainBandwidthDataResult)(nil),        // 215: Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
+	(*business.VodCdnStatisticsCommonResult)(nil),                   // 216: Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
+	(*business.VodCdnIpInfo)(nil),                                   // 217: Volcengine.Vod.Models.Business.VodCdnIpInfo
+	(*business.VodDescribeVodDomainTrafficDataResult)(nil),          // 218: Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
+	(*business.VodSubmitBlockTasksResult)(nil),                      // 219: Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
+	(*business.VodGetContentBlockTasksResult)(nil),                  // 220: Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
+	(*business.VodVerifyDomainOwnerResult)(nil),                     // 221: Volcengine.Vod.Models.Business.VodVerifyDomainOwnerResult
+	(*business.VodDescribeDomainVerifyContentResult)(nil),           // 222: Volcengine.Vod.Models.Business.VodDescribeDomainVerifyContentResult
+	(*business.VodPCDNDomainConfigInfo)(nil),                        // 223: Volcengine.Vod.Models.Business.VodPCDNDomainConfigInfo
+	(*business.VodDescribeDomainConfigResult)(nil),                  // 224: Volcengine.Vod.Models.Business.VodDescribeDomainConfigResult
+	(*business.VodDescribeCdnEdgeIpResult)(nil),                     // 225: Volcengine.Vod.Models.Business.VodDescribeCdnEdgeIpResult
+	(*business.VodDescribeCdnRegionAndIspResult)(nil),               // 226: Volcengine.Vod.Models.Business.VodDescribeCdnRegionAndIspResult
+	(*business.CallbackRecords)(nil),                                // 227: Volcengine.Vod.Models.Business.CallbackRecords
+	(*business.VodGetSmartStrategyLitePlayInfoResult)(nil),          // 228: Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
+	(*business.VodGetAppInfoResult)(nil),                            // 229: Volcengine.Vod.Models.Business.VodGetAppInfoResult
+	(*business.DescribeVodSpaceTranscodeDataResult)(nil),            // 230: Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
+	(*business.DescribeVodSpaceAIStatisDataResult)(nil),             // 231: Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
+	(*business.DescribeVodSpaceSubtitleStatisDataResult)(nil),       // 232: Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
+	(*business.DescribeVodSpaceDetectStatisDataResult)(nil),         // 233: Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
+	(*business.DescribeVodSnapshotDataResult)(nil),                  // 234: Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
+	(*business.DescribeVodSpaceWorkflowDetailDataResult)(nil),       // 235: Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
+	(*business.DescribeVodSpaceEditDetailDataResult)(nil),           // 236: Volcengine.Vod.Models.Business.DescribeVodSpaceEditDetailDataResult
+	(*business.DescribeVodRealtimeMediaDataResult)(nil),             // 237: Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDataResult
+	(*business.DescribeVodRealtimeMediaDetailDataResult)(nil),       // 238: Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDetailDataResult
+	(*business.DescribeVodPlayFileLogByDomainResult)(nil),           // 239: Volcengine.Vod.Models.Business.DescribeVodPlayFileLogByDomainResult
+	(*business.DescribeVodEnhanceImageDataResult)(nil),              // 240: Volcengine.Vod.Models.Business.DescribeVodEnhanceImageDataResult
+	(*business.DescribeVodSpaceEditStatisDataResult)(nil),           // 241: Volcengine.Vod.Models.Business.DescribeVodSpaceEditStatisDataResult
+	(*business.DescribeVodPlayedStatisDataResult)(nil),              // 242: Volcengine.Vod.Models.Business.DescribeVodPlayedStatisDataResult
+	(*business.DescribeVodMostPlayedStatisDataResult)(nil),          // 243: Volcengine.Vod.Models.Business.DescribeVodMostPlayedStatisDataResult
+	(*business.DescribeVodVidTrafficFileLogResult)(nil),             // 244: Volcengine.Vod.Models.Business.DescribeVodVidTrafficFileLogResult
+	(*business.VodSubmitBlockMediaTaskResult)(nil),                  // 245: Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
+	(*business.VodSubmitUnblockMediaTaskResult)(nil),                // 246: Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
+	(*business.VodQueryMediaBlockStatusResult)(nil),                 // 247: Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
+	(*business.VodListProjectsResult)(nil),                          // 248: Volcengine.Vod.Models.Business.VodListProjectsResult
+	(*business.TradeConfigurationInfoResult)(nil),                   // 249: Volcengine.Vod.Models.Business.TradeConfigurationInfoResult
+	(*business.VodSetCloudMigrateJobResult)(nil),                    // 250: Volcengine.Vod.Models.Business.VodSetCloudMigrateJobResult
+	(*business.VodGetCloudMigrateJobResult)(nil),                    // 251: Volcengine.Vod.Models.Business.VodGetCloudMigrateJobResult
+	(*business.VodReportEventResult)(nil),                           // 252: Volcengine.Vod.Models.Business.VodReportEventResult
 }
 var file_volcengine_vod_response_response_vod_proto_depIdxs = []int32{
-	147, // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	148, // 1: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodAllPlayInfoResult
-	147, // 2: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	149, // 3: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPlayInfoModel
-	147, // 4: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	150, // 5: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
-	147, // 6: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	151, // 7: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
-	147, // 8: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	152, // 9: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
-	147, // 10: Volcengine.Vod.Models.Response.VodCreateHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	153, // 11: Volcengine.Vod.Models.Response.VodCreateHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateHlsDecryptionKeyResult
-	147, // 12: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	154, // 13: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
-	147, // 14: Volcengine.Vod.Models.Response.VodDescribeDrmDataKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	155, // 15: Volcengine.Vod.Models.Response.VodDescribeDrmDataKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDrmDataKeyResult
-	147, // 16: Volcengine.Vod.Models.Response.VodSubmitMoveObjectTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	156, // 17: Volcengine.Vod.Models.Response.VodSubmitMoveObjectTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData
-	147, // 18: Volcengine.Vod.Models.Response.VodQueryMoveObjectTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	157, // 19: Volcengine.Vod.Models.Response.VodQueryMoveObjectTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData
-	147, // 20: Volcengine.Vod.Models.Response.VodSubmitBlockObjectTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	158, // 21: Volcengine.Vod.Models.Response.VodSubmitBlockObjectTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockObjectTasksResult
-	147, // 22: Volcengine.Vod.Models.Response.VodListBlockObjectTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	159, // 23: Volcengine.Vod.Models.Response.VodListBlockObjectTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListBlockObjectTasksResult
-	147, // 24: Volcengine.Vod.Models.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	160, // 25: Volcengine.Vod.Models.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitData
-	147, // 26: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	161, // 27: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryData
-	147, // 28: Volcengine.Vod.Models.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	162, // 29: Volcengine.Vod.Models.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUrlResponseData
-	147, // 30: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	163, // 31: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
-	147, // 32: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	164, // 33: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
-	147, // 34: Volcengine.Vod.Models.Response.VodListFileMetaInfosByFileNamesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	165, // 35: Volcengine.Vod.Models.Response.VodListFileMetaInfosByFileNamesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListFileMetaInfosByFileNamesResult
-	147, // 36: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	166, // 37: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	147, // 38: Volcengine.Vod.Models.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 39: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	167, // 40: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetRecPosterData
-	147, // 41: Volcengine.Vod.Models.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 42: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	168, // 43: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
-	147, // 44: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	169, // 45: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaData
-	147, // 46: Volcengine.Vod.Models.Response.VodDeleteMaterialResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 47: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	170, // 48: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteTranscodesData
-	147, // 49: Volcengine.Vod.Models.Response.VodDeleteMediaTosFileResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	171, // 50: Volcengine.Vod.Models.Response.VodDeleteMediaTosFileResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaTosFileData
-	147, // 51: Volcengine.Vod.Models.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	172, // 52: Volcengine.Vod.Models.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaListData
-	147, // 53: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	173, // 54: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
-	147, // 55: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	174, // 56: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
-	147, // 57: Volcengine.Vod.Models.Response.VodUpdateSubtitleInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 58: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	175, // 59: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	147, // 60: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	175, // 61: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
-	147, // 62: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	176, // 63: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
-	147, // 64: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	177, // 65: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
-	147, // 66: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	178, // 67: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
-	147, // 68: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	179, // 69: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
-	147, // 70: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	180, // 71: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
-	147, // 72: Volcengine.Vod.Models.Response.VodUpdateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 73: Volcengine.Vod.Models.Response.VodDeleteVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 74: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	181, // 75: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVideoClassificationsData
-	147, // 76: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	182, // 77: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSnapshotData
-	147, // 78: Volcengine.Vod.Models.Response.VodGetFileListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	166, // 79: Volcengine.Vod.Models.Response.VodGetFileListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
-	147, // 80: Volcengine.Vod.Models.Response.VodGetFileInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	183, // 81: Volcengine.Vod.Models.Response.VodGetFileInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFileInfosData
-	147, // 82: Volcengine.Vod.Models.Response.VodUpdateFileStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	184, // 83: Volcengine.Vod.Models.Response.VodUpdateFileStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateFileStorageClassData
-	147, // 84: Volcengine.Vod.Models.Response.VodGetInnerAuditURLsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	185, // 85: Volcengine.Vod.Models.Response.VodGetInnerAuditURLsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetInnerAuditURLsData
-	147, // 86: Volcengine.Vod.Models.Response.VodGetAdAuditResultByVidResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	186, // 87: Volcengine.Vod.Models.Response.VodGetAdAuditResultByVidResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAdAuditResultByVidData
-	147, // 88: Volcengine.Vod.Models.Response.VodExtractMediaMetaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 89: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	187, // 90: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodStartWorkflowResult
-	147, // 91: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	188, // 92: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.TranscodeResult
-	147, // 93: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	189, // 94: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
-	147, // 95: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	190, // 96: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
-	147, // 97: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	191, // 98: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.WorkflowExecution
-	147, // 99: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	192, // 100: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowResult
-	147, // 101: Volcengine.Vod.Models.Response.VodCreateTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	193, // 102: Volcengine.Vod.Models.Response.VodCreateTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
-	147, // 103: Volcengine.Vod.Models.Response.VodUpdateTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	193, // 104: Volcengine.Vod.Models.Response.VodUpdateTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
-	147, // 105: Volcengine.Vod.Models.Response.VodDeleteTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	193, // 106: Volcengine.Vod.Models.Response.VodDeleteTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
-	147, // 107: Volcengine.Vod.Models.Response.VodGetTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	193, // 108: Volcengine.Vod.Models.Response.VodGetTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
-	147, // 109: Volcengine.Vod.Models.Response.VodListTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	194, // 110: Volcengine.Vod.Models.Response.VodListTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListTaskTemplateResult
-	147, // 111: Volcengine.Vod.Models.Response.VodCreateWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	195, // 112: Volcengine.Vod.Models.Response.VodCreateWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
-	147, // 113: Volcengine.Vod.Models.Response.VodUpdateWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 114: Volcengine.Vod.Models.Response.VodDeleteWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 115: Volcengine.Vod.Models.Response.VodGetWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	195, // 116: Volcengine.Vod.Models.Response.VodGetWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
-	147, // 117: Volcengine.Vod.Models.Response.VodListWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	196, // 118: Volcengine.Vod.Models.Response.VodListWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowTemplateResult
-	147, // 119: Volcengine.Vod.Models.Response.VodCreateWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	197, // 120: Volcengine.Vod.Models.Response.VodCreateWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.LogoTemplate
-	147, // 121: Volcengine.Vod.Models.Response.VodUpdateWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 122: Volcengine.Vod.Models.Response.VodDeleteWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 123: Volcengine.Vod.Models.Response.VodGetWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	197, // 124: Volcengine.Vod.Models.Response.VodGetWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.LogoTemplate
-	147, // 125: Volcengine.Vod.Models.Response.VodListWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	198, // 126: Volcengine.Vod.Models.Response.VodListWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWatermarkResponseResult
-	147, // 127: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	199, // 128: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
-	147, // 129: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskSyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	200, // 130: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskSyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskSyncResult
-	147, // 131: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	201, // 132: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditProgress
-	147, // 133: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	202, // 134: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditResult
-	147, // 135: Volcengine.Vod.Models.Response.VodCancelDirectEditTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	203, // 136: Volcengine.Vod.Models.Response.VodCancelDirectEditTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.CancelDirectEditTask
-	147, // 137: Volcengine.Vod.Models.Response.VodCreateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 138: Volcengine.Vod.Models.Response.VodDeleteSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 139: Volcengine.Vod.Models.Response.VodListSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	204, // 140: Volcengine.Vod.Models.Response.VodListSpaceResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
-	147, // 141: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	204, // 142: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
-	147, // 143: Volcengine.Vod.Models.Response.VodUpdateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 144: Volcengine.Vod.Models.Response.VodUpdateSpaceUploadConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 145: Volcengine.Vod.Models.Response.VodDescribeUploadSpaceConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	205, // 146: Volcengine.Vod.Models.Response.VodDescribeUploadSpaceConfigResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUploadSpaceConfig
-	147, // 147: Volcengine.Vod.Models.Response.VodUpdateUploadSpaceConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 148: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	206, // 149: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
-	147, // 150: Volcengine.Vod.Models.Response.VodUpdateDomainPlayRuleResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 151: Volcengine.Vod.Models.Response.VodAddDomainToSchedulerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 152: Volcengine.Vod.Models.Response.VodRemoveDomainFromSchedulerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 153: Volcengine.Vod.Models.Response.VodDeleteDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 154: Volcengine.Vod.Models.Response.VodStartDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 155: Volcengine.Vod.Models.Response.VodStopDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 156: Volcengine.Vod.Models.Response.VodListDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	207, // 157: Volcengine.Vod.Models.Response.VodListDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDomainConfigInfo
-	147, // 158: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	208, // 159: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	147, // 160: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	208, // 161: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
-	147, // 162: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	209, // 163: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnTaskResult
-	147, // 164: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	210, // 165: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
-	147, // 166: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	211, // 167: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
-	147, // 168: Volcengine.Vod.Models.Response.VodListCdnTopAccessResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	212, // 169: Volcengine.Vod.Models.Response.VodListCdnTopAccessResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessResult
-	147, // 170: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	213, // 171: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
-	147, // 172: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	214, // 173: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
-	147, // 174: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	215, // 175: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnIpInfo
-	147, // 176: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	216, // 177: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
-	147, // 178: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	217, // 179: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
-	147, // 180: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	218, // 181: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
-	147, // 182: Volcengine.Vod.Models.Response.VodCreateDomainV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 183: Volcengine.Vod.Models.Response.VodCreateDomainV3Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 184: Volcengine.Vod.Models.Response.VodUpdateDomainExpireV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 185: Volcengine.Vod.Models.Response.VodUpdateDomainAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 186: Volcengine.Vod.Models.Response.VodUpdateDomainUrlAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 187: Volcengine.Vod.Models.Response.VodVerifyDomainOwnerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	219, // 188: Volcengine.Vod.Models.Response.VodVerifyDomainOwnerResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVerifyDomainOwnerResult
-	147, // 189: Volcengine.Vod.Models.Response.VodDescribeDomainVerifyContentResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	220, // 190: Volcengine.Vod.Models.Response.VodDescribeDomainVerifyContentResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDomainVerifyContentResult
-	147, // 191: Volcengine.Vod.Models.Response.VodListPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	221, // 192: Volcengine.Vod.Models.Response.VodListPCDNDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPCDNDomainConfigInfo
-	147, // 193: Volcengine.Vod.Models.Response.VodCreatePCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 194: Volcengine.Vod.Models.Response.VodStartPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 195: Volcengine.Vod.Models.Response.VodStopPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 196: Volcengine.Vod.Models.Response.VodDeletePCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 197: Volcengine.Vod.Models.Response.VodUpdateDomainConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 198: Volcengine.Vod.Models.Response.VodDescribeDomainConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	222, // 199: Volcengine.Vod.Models.Response.VodDescribeDomainConfigResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDomainConfigResult
-	147, // 200: Volcengine.Vod.Models.Response.AddOrUpdateCertificateV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 201: Volcengine.Vod.Models.Response.UpdateDomainAreaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 202: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 203: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 204: Volcengine.Vod.Models.Response.GetCallbackRecordResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	223, // 205: Volcengine.Vod.Models.Response.GetCallbackRecordResponse.Result:type_name -> Volcengine.Vod.Models.Business.CallbackRecords
-	147, // 206: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	224, // 207: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
-	147, // 208: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	225, // 209: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAppInfoResult
-	147, // 210: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	226, // 211: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
-	147, // 212: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	227, // 213: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
-	147, // 214: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	228, // 215: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
-	147, // 216: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	229, // 217: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
-	147, // 218: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	230, // 219: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
-	147, // 220: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	231, // 221: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
-	147, // 222: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	232, // 223: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceEditDetailDataResult
-	147, // 224: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	233, // 225: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDataResult
-	147, // 226: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	234, // 227: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDetailDataResult
-	147, // 228: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	235, // 229: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodPlayFileLogByDomainResult
-	147, // 230: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	236, // 231: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodEnhanceImageDataResult
-	147, // 232: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	237, // 233: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceEditStatisDataResult
-	147, // 234: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	238, // 235: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodPlayedStatisDataResult
-	147, // 236: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	239, // 237: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodMostPlayedStatisDataResult
-	147, // 238: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	240, // 239: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodVidTrafficFileLogResult
-	147, // 240: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	241, // 241: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
-	147, // 242: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	242, // 243: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
-	147, // 244: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	243, // 245: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
-	147, // 246: Volcengine.Vod.Models.Response.VodListProjectsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	244, // 247: Volcengine.Vod.Models.Response.VodListProjectsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListProjectsResult
-	147, // 248: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	245, // 249: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse.Result:type_name -> Volcengine.Vod.Models.Business.TradeConfigurationInfoResult
-	147, // 250: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	246, // 251: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSetCloudMigrateJobResult
-	147, // 252: Volcengine.Vod.Models.Response.VodSubmitCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	147, // 253: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	247, // 254: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetCloudMigrateJobResult
-	147, // 255: Volcengine.Vod.Models.Response.VodReportEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
-	248, // 256: Volcengine.Vod.Models.Response.VodReportEventResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodReportEventResult
-	257, // [257:257] is the sub-list for method output_type
-	257, // [257:257] is the sub-list for method input_type
-	257, // [257:257] is the sub-list for extension type_name
-	257, // [257:257] is the sub-list for extension extendee
-	0,   // [0:257] is the sub-list for field type_name
+	149, // 0: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	150, // 1: Volcengine.Vod.Models.Response.VodGetAllPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodAllPlayInfoResult
+	149, // 2: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	151, // 3: Volcengine.Vod.Models.Response.VodGetPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPlayInfoModel
+	149, // 4: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	152, // 5: Volcengine.Vod.Models.Response.VodGetOriginalPlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetOriginalPlayInfoResult
+	149, // 6: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	153, // 7: Volcengine.Vod.Models.Response.VodGetPrivateDrmPlayAuthResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPrivateDrmPlayAuthResult
+	149, // 8: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	154, // 9: Volcengine.Vod.Models.Response.VodGetHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetHlsDecryptionKeyResult
+	149, // 10: Volcengine.Vod.Models.Response.VodCreateHlsDecryptionKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	155, // 11: Volcengine.Vod.Models.Response.VodCreateHlsDecryptionKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateHlsDecryptionKeyResult
+	149, // 12: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	156, // 13: Volcengine.Vod.Models.Response.VodGetPlayInfoWithLiveTimeShiftSceneResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetPlayInfoWithLiveTimeShiftSceneResult
+	149, // 14: Volcengine.Vod.Models.Response.VodDescribeDrmDataKeyResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	157, // 15: Volcengine.Vod.Models.Response.VodDescribeDrmDataKeyResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDrmDataKeyResult
+	149, // 16: Volcengine.Vod.Models.Response.VodSubmitMoveObjectTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	158, // 17: Volcengine.Vod.Models.Response.VodSubmitMoveObjectTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitMoveObjectTaskRespData
+	149, // 18: Volcengine.Vod.Models.Response.VodQueryMoveObjectTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	159, // 19: Volcengine.Vod.Models.Response.VodQueryMoveObjectTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryMoveObjectTaskInfoResData
+	149, // 20: Volcengine.Vod.Models.Response.VodSubmitBlockObjectTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	160, // 21: Volcengine.Vod.Models.Response.VodSubmitBlockObjectTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockObjectTasksResult
+	149, // 22: Volcengine.Vod.Models.Response.VodListBlockObjectTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	161, // 23: Volcengine.Vod.Models.Response.VodListBlockObjectTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListBlockObjectTasksResult
+	149, // 24: Volcengine.Vod.Models.Response.VodUploadMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	162, // 25: Volcengine.Vod.Models.Response.VodUploadMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitData
+	149, // 26: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	163, // 27: Volcengine.Vod.Models.Response.VodQueryUploadTaskInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryData
+	149, // 28: Volcengine.Vod.Models.Response.VodUrlUploadResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	164, // 29: Volcengine.Vod.Models.Response.VodUrlUploadResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUrlResponseData
+	149, // 30: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	165, // 31: Volcengine.Vod.Models.Response.VodApplyUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodApplyUploadInfoResult
+	149, // 32: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	166, // 33: Volcengine.Vod.Models.Response.VodCommitUploadInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCommitUploadInfoResult
+	149, // 34: Volcengine.Vod.Models.Response.VodListFileMetaInfosByFileNamesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	167, // 35: Volcengine.Vod.Models.Response.VodListFileMetaInfosByFileNamesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListFileMetaInfosByFileNamesResult
+	149, // 36: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	168, // 37: Volcengine.Vod.Models.Response.VodGetMediaInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	149, // 38: Volcengine.Vod.Models.Response.VodUpdateMediaInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 39: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	169, // 40: Volcengine.Vod.Models.Response.VodGetRecommendedPosterResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetRecPosterData
+	149, // 41: Volcengine.Vod.Models.Response.VodUpdateMediaPublishStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 42: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	170, // 43: Volcengine.Vod.Models.Response.VodUpdateMediaStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateMediaStorageClassData
+	149, // 44: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	171, // 45: Volcengine.Vod.Models.Response.VodDeleteMediaResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaData
+	149, // 46: Volcengine.Vod.Models.Response.VodDeleteMaterialResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 47: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	172, // 48: Volcengine.Vod.Models.Response.VodDeleteTranscodesResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteTranscodesData
+	149, // 49: Volcengine.Vod.Models.Response.VodDeleteMediaTosFileResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	173, // 50: Volcengine.Vod.Models.Response.VodDeleteMediaTosFileResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDeleteMediaTosFileData
+	149, // 51: Volcengine.Vod.Models.Response.VodGetMediaListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	174, // 52: Volcengine.Vod.Models.Response.VodGetMediaListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaListData
+	149, // 53: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	175, // 54: Volcengine.Vod.Models.Response.VodGetSubtitleInfoListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSubtitleInfoListData
+	149, // 55: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	176, // 56: Volcengine.Vod.Models.Response.VodUpdateSubtitleStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateSubtitleStatusData
+	149, // 57: Volcengine.Vod.Models.Response.VodUpdateSubtitleInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 58: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	177, // 59: Volcengine.Vod.Models.Response.VodGetAuditFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	149, // 60: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	177, // 61: Volcengine.Vod.Models.Response.VodGetMLFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFramesForAuditResult
+	149, // 62: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	178, // 63: Volcengine.Vod.Models.Response.VodGetBetterFramesForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetBetterFramesForAuditResult
+	149, // 64: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	179, // 65: Volcengine.Vod.Models.Response.VodGetAudioInfoForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioInfoForAuditResult
+	149, // 66: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	180, // 67: Volcengine.Vod.Models.Response.VodGetAutomaticSpeechRecognitionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAutomaticSpeechRecognitionForAuditResult
+	149, // 68: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	181, // 69: Volcengine.Vod.Models.Response.VodGetAudioEventDetectionForAuditResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAudioEventDetectionForAuditResult
+	149, // 70: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	182, // 71: Volcengine.Vod.Models.Response.VodCreateVideoClassificationResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateVideoClassificationData
+	149, // 72: Volcengine.Vod.Models.Response.VodUpdateVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 73: Volcengine.Vod.Models.Response.VodDeleteVideoClassificationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 74: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	183, // 75: Volcengine.Vod.Models.Response.VodListVideoClassificationsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVideoClassificationsData
+	149, // 76: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	184, // 77: Volcengine.Vod.Models.Response.VodListSnapshotsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSnapshotData
+	149, // 78: Volcengine.Vod.Models.Response.VodGetFileListResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	168, // 79: Volcengine.Vod.Models.Response.VodGetFileListResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetMediaInfosData
+	149, // 80: Volcengine.Vod.Models.Response.VodGetFileInfosResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	185, // 81: Volcengine.Vod.Models.Response.VodGetFileInfosResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetFileInfosData
+	149, // 82: Volcengine.Vod.Models.Response.VodUpdateFileStorageClassResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	186, // 83: Volcengine.Vod.Models.Response.VodUpdateFileStorageClassResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUpdateFileStorageClassData
+	149, // 84: Volcengine.Vod.Models.Response.VodGetInnerAuditURLsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	187, // 85: Volcengine.Vod.Models.Response.VodGetInnerAuditURLsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetInnerAuditURLsData
+	149, // 86: Volcengine.Vod.Models.Response.VodGetAdAuditResultByVidResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	188, // 87: Volcengine.Vod.Models.Response.VodGetAdAuditResultByVidResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAdAuditResultByVidData
+	149, // 88: Volcengine.Vod.Models.Response.VodExtractMediaMetaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 89: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	189, // 90: Volcengine.Vod.Models.Response.VodStartWorkflowResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodStartWorkflowResult
+	149, // 91: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	190, // 92: Volcengine.Vod.Models.Response.VodRetrieveTranscodeResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.TranscodeResult
+	149, // 93: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	191, // 94: Volcengine.Vod.Models.Response.VodListWorkflowExecutionResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowExecutionResult
+	149, // 95: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	192, // 96: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetWorkflowExecutionDetailResult
+	149, // 97: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	193, // 98: Volcengine.Vod.Models.Response.VodGetWorkflowExecutionStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.WorkflowExecution
+	149, // 99: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	194, // 100: Volcengine.Vod.Models.Response.VodGetWorkflowResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowResult
+	149, // 101: Volcengine.Vod.Models.Response.VodCreateTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	195, // 102: Volcengine.Vod.Models.Response.VodCreateTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
+	149, // 103: Volcengine.Vod.Models.Response.VodUpdateTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	195, // 104: Volcengine.Vod.Models.Response.VodUpdateTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
+	149, // 105: Volcengine.Vod.Models.Response.VodDeleteTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	195, // 106: Volcengine.Vod.Models.Response.VodDeleteTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
+	149, // 107: Volcengine.Vod.Models.Response.VodGetTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	195, // 108: Volcengine.Vod.Models.Response.VodGetTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodTaskTemplateResult
+	149, // 109: Volcengine.Vod.Models.Response.VodListTaskTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	196, // 110: Volcengine.Vod.Models.Response.VodListTaskTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListTaskTemplateResult
+	149, // 111: Volcengine.Vod.Models.Response.VodCreateWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	197, // 112: Volcengine.Vod.Models.Response.VodCreateWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
+	149, // 113: Volcengine.Vod.Models.Response.VodUpdateWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 114: Volcengine.Vod.Models.Response.VodDeleteWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 115: Volcengine.Vod.Models.Response.VodGetWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	197, // 116: Volcengine.Vod.Models.Response.VodGetWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodWorkflowTemplateResult
+	149, // 117: Volcengine.Vod.Models.Response.VodListWorkflowTemplateResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	198, // 118: Volcengine.Vod.Models.Response.VodListWorkflowTemplateResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWorkflowTemplateResult
+	149, // 119: Volcengine.Vod.Models.Response.VodCreateWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	199, // 120: Volcengine.Vod.Models.Response.VodCreateWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.LogoTemplate
+	149, // 121: Volcengine.Vod.Models.Response.VodUpdateWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 122: Volcengine.Vod.Models.Response.VodDeleteWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 123: Volcengine.Vod.Models.Response.VodGetWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	199, // 124: Volcengine.Vod.Models.Response.VodGetWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.LogoTemplate
+	149, // 125: Volcengine.Vod.Models.Response.VodListWatermarkResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	200, // 126: Volcengine.Vod.Models.Response.VodListWatermarkResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListWatermarkResponseResult
+	149, // 127: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	201, // 128: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskAsyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskAsyncResult
+	149, // 129: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskSyncResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	202, // 130: Volcengine.Vod.Models.Response.VodSubmitDirectEditTaskSyncResponse.Result:type_name -> Volcengine.Vod.Models.Business.SubmitDirectEditTaskSyncResult
+	149, // 131: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	203, // 132: Volcengine.Vod.Models.Response.VodGetDirectEditProgressResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditProgress
+	149, // 133: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	204, // 134: Volcengine.Vod.Models.Response.VodGetDirectEditResultResponse.Result:type_name -> Volcengine.Vod.Models.Business.GetDirectEditResult
+	149, // 135: Volcengine.Vod.Models.Response.VodCancelDirectEditTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	205, // 136: Volcengine.Vod.Models.Response.VodCancelDirectEditTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.CancelDirectEditTask
+	149, // 137: Volcengine.Vod.Models.Response.VodCreateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 138: Volcengine.Vod.Models.Response.VodDeleteSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 139: Volcengine.Vod.Models.Response.VodListSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	206, // 140: Volcengine.Vod.Models.Response.VodListSpaceResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
+	149, // 141: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	206, // 142: Volcengine.Vod.Models.Response.VodGetSpaceDetailResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSpaceInfo
+	149, // 143: Volcengine.Vod.Models.Response.VodUpdateSpaceResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 144: Volcengine.Vod.Models.Response.VodUpdateSpaceUploadConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 145: Volcengine.Vod.Models.Response.VodDescribeUploadSpaceConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	207, // 146: Volcengine.Vod.Models.Response.VodDescribeUploadSpaceConfigResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodUploadSpaceConfig
+	149, // 147: Volcengine.Vod.Models.Response.VodUpdateUploadSpaceConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 148: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	208, // 149: Volcengine.Vod.Models.Response.VodDescribeVodSpaceStorageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodSpaceStorageDataResult
+	149, // 150: Volcengine.Vod.Models.Response.VodUpdateDomainPlayRuleResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 151: Volcengine.Vod.Models.Response.VodAddDomainToSchedulerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 152: Volcengine.Vod.Models.Response.VodRemoveDomainFromSchedulerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 153: Volcengine.Vod.Models.Response.VodDeleteDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 154: Volcengine.Vod.Models.Response.VodStartDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 155: Volcengine.Vod.Models.Response.VodStopDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 156: Volcengine.Vod.Models.Response.VodListDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	209, // 157: Volcengine.Vod.Models.Response.VodListDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDomainConfigInfo
+	149, // 158: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	210, // 159: Volcengine.Vod.Models.Response.VodCreateCdnRefreshTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	149, // 160: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	210, // 161: Volcengine.Vod.Models.Response.VodCreateCdnPreloadTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCreateCdnTaskResult
+	149, // 162: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	211, // 163: Volcengine.Vod.Models.Response.VodListCdnTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnTaskResult
+	149, // 164: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	212, // 165: Volcengine.Vod.Models.Response.VodListCdnAccessLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnAccessLogResult
+	149, // 166: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	213, // 167: Volcengine.Vod.Models.Response.VodListCdnTopAccessUrlResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessUrlResult
+	149, // 168: Volcengine.Vod.Models.Response.VodListCdnTopAccessResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	214, // 169: Volcengine.Vod.Models.Response.VodListCdnTopAccessResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListCdnTopAccessResult
+	149, // 170: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	215, // 171: Volcengine.Vod.Models.Response.VodDescribeVodDomainBandwidthDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainBandwidthDataResult
+	149, // 172: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	216, // 173: Volcengine.Vod.Models.Response.VodCdnStatisticsCommonResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnStatisticsCommonResult
+	149, // 174: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	217, // 175: Volcengine.Vod.Models.Response.VodDescribeIPInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodCdnIpInfo
+	149, // 176: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	218, // 177: Volcengine.Vod.Models.Response.VodDescribeVodDomainTrafficDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeVodDomainTrafficDataResult
+	149, // 178: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	219, // 179: Volcengine.Vod.Models.Response.VodSubmitBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockTasksResult
+	149, // 180: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	220, // 181: Volcengine.Vod.Models.Response.VodGetContentBlockTasksResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetContentBlockTasksResult
+	149, // 182: Volcengine.Vod.Models.Response.VodCreateDomainV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 183: Volcengine.Vod.Models.Response.VodCreateDomainV3Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 184: Volcengine.Vod.Models.Response.VodUpdateDomainExpireV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 185: Volcengine.Vod.Models.Response.VodUpdateDomainAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 186: Volcengine.Vod.Models.Response.VodUpdateDomainUrlAuthConfigV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 187: Volcengine.Vod.Models.Response.VodVerifyDomainOwnerResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	221, // 188: Volcengine.Vod.Models.Response.VodVerifyDomainOwnerResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodVerifyDomainOwnerResult
+	149, // 189: Volcengine.Vod.Models.Response.VodDescribeDomainVerifyContentResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	222, // 190: Volcengine.Vod.Models.Response.VodDescribeDomainVerifyContentResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDomainVerifyContentResult
+	149, // 191: Volcengine.Vod.Models.Response.VodListPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	223, // 192: Volcengine.Vod.Models.Response.VodListPCDNDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodPCDNDomainConfigInfo
+	149, // 193: Volcengine.Vod.Models.Response.VodCreatePCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 194: Volcengine.Vod.Models.Response.VodStartPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 195: Volcengine.Vod.Models.Response.VodStopPCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 196: Volcengine.Vod.Models.Response.VodDeletePCDNDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 197: Volcengine.Vod.Models.Response.VodUpdateDomainConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 198: Volcengine.Vod.Models.Response.VodDescribeDomainConfigResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	224, // 199: Volcengine.Vod.Models.Response.VodDescribeDomainConfigResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeDomainConfigResult
+	149, // 200: Volcengine.Vod.Models.Response.VodDescribeCdnEdgeIpResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	225, // 201: Volcengine.Vod.Models.Response.VodDescribeCdnEdgeIpResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeCdnEdgeIpResult
+	149, // 202: Volcengine.Vod.Models.Response.VodDescribeCdnRegionAndIspResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	226, // 203: Volcengine.Vod.Models.Response.VodDescribeCdnRegionAndIspResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodDescribeCdnRegionAndIspResult
+	149, // 204: Volcengine.Vod.Models.Response.AddOrUpdateCertificateV2Response.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 205: Volcengine.Vod.Models.Response.UpdateDomainAreaResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 206: Volcengine.Vod.Models.Response.VodAddCallbackSubscriptionResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 207: Volcengine.Vod.Models.Response.VodSetCallbackEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 208: Volcengine.Vod.Models.Response.GetCallbackRecordResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	227, // 209: Volcengine.Vod.Models.Response.GetCallbackRecordResponse.Result:type_name -> Volcengine.Vod.Models.Business.CallbackRecords
+	149, // 210: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	228, // 211: Volcengine.Vod.Models.Response.VodGetSmartStrategyLitePlayInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetSmartStrategyLitePlayInfoResult
+	149, // 212: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	229, // 213: Volcengine.Vod.Models.Response.VodGetAppInfoResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetAppInfoResult
+	149, // 214: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	230, // 215: Volcengine.Vod.Models.Response.DescribeVodSpaceTranscodeDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceTranscodeDataResult
+	149, // 216: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	231, // 217: Volcengine.Vod.Models.Response.DescribeVodSpaceAIStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceAIStatisDataResult
+	149, // 218: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	232, // 219: Volcengine.Vod.Models.Response.DescribeVodSpaceSubtitleStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceSubtitleStatisDataResult
+	149, // 220: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	233, // 221: Volcengine.Vod.Models.Response.DescribeVodSpaceDetectStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceDetectStatisDataResult
+	149, // 222: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	234, // 223: Volcengine.Vod.Models.Response.DescribeVodSnapshotDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSnapshotDataResult
+	149, // 224: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	235, // 225: Volcengine.Vod.Models.Response.DescribeVodSpaceWorkflowDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceWorkflowDetailDataResult
+	149, // 226: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	236, // 227: Volcengine.Vod.Models.Response.DescribeVodSpaceEditDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceEditDetailDataResult
+	149, // 228: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	237, // 229: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDataResult
+	149, // 230: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	238, // 231: Volcengine.Vod.Models.Response.DescribeVodRealtimeMediaDetailDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodRealtimeMediaDetailDataResult
+	149, // 232: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	239, // 233: Volcengine.Vod.Models.Response.DescribeVodPlayFileLogByDomainResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodPlayFileLogByDomainResult
+	149, // 234: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	240, // 235: Volcengine.Vod.Models.Response.DescribeVodEnhanceImageDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodEnhanceImageDataResult
+	149, // 236: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	241, // 237: Volcengine.Vod.Models.Response.DescribeVodSpaceEditStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodSpaceEditStatisDataResult
+	149, // 238: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	242, // 239: Volcengine.Vod.Models.Response.DescribeVodPlayedStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodPlayedStatisDataResult
+	149, // 240: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	243, // 241: Volcengine.Vod.Models.Response.DescribeVodMostPlayedStatisDataResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodMostPlayedStatisDataResult
+	149, // 242: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	244, // 243: Volcengine.Vod.Models.Response.DescribeVodVidTrafficFileLogResponse.Result:type_name -> Volcengine.Vod.Models.Business.DescribeVodVidTrafficFileLogResult
+	149, // 244: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	245, // 245: Volcengine.Vod.Models.Response.VodSubmitBlockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitBlockMediaTaskResult
+	149, // 246: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	246, // 247: Volcengine.Vod.Models.Response.VodSubmitUnblockMediaTaskResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSubmitUnblockMediaTaskResult
+	149, // 248: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	247, // 249: Volcengine.Vod.Models.Response.VodQueryMediaBlockStatusResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodQueryMediaBlockStatusResult
+	149, // 250: Volcengine.Vod.Models.Response.VodListProjectsResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	248, // 251: Volcengine.Vod.Models.Response.VodListProjectsResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodListProjectsResult
+	149, // 252: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	249, // 253: Volcengine.Vod.Models.Response.VodGetTradeConfigurationResponse.Result:type_name -> Volcengine.Vod.Models.Business.TradeConfigurationInfoResult
+	149, // 254: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	250, // 255: Volcengine.Vod.Models.Response.VodSetCloudMigrateJobResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodSetCloudMigrateJobResult
+	149, // 256: Volcengine.Vod.Models.Response.VodSubmitCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	149, // 257: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	251, // 258: Volcengine.Vod.Models.Response.VodGetCloudMigrateJobResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodGetCloudMigrateJobResult
+	149, // 259: Volcengine.Vod.Models.Response.VodReportEventResponse.ResponseMetadata:type_name -> Volcengine.Base.Models.Base.ResponseMetadata
+	252, // 260: Volcengine.Vod.Models.Response.VodReportEventResponse.Result:type_name -> Volcengine.Vod.Models.Business.VodReportEventResult
+	261, // [261:261] is the sub-list for method output_type
+	261, // [261:261] is the sub-list for method input_type
+	261, // [261:261] is the sub-list for extension type_name
+	261, // [261:261] is the sub-list for extension extendee
+	0,   // [0:261] is the sub-list for field type_name
 }
 
 func init() { file_volcengine_vod_response_response_vod_proto_init() }
@@ -11627,7 +11771,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[116].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddOrUpdateCertificateV2Response); i {
+			switch v := v.(*VodDescribeCdnEdgeIpResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11639,7 +11783,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[117].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateDomainAreaResponse); i {
+			switch v := v.(*VodDescribeCdnRegionAndIspResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11651,7 +11795,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[118].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodAddCallbackSubscriptionResponse); i {
+			switch v := v.(*AddOrUpdateCertificateV2Response); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11663,7 +11807,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[119].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSetCallbackEventResponse); i {
+			switch v := v.(*UpdateDomainAreaResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11675,7 +11819,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[120].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetCallbackRecordResponse); i {
+			switch v := v.(*VodAddCallbackSubscriptionResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11687,7 +11831,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[121].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetSmartStrategyLitePlayInfoResponse); i {
+			switch v := v.(*VodSetCallbackEventResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11699,7 +11843,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[122].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetAppInfoResponse); i {
+			switch v := v.(*GetCallbackRecordResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11711,7 +11855,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[123].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceTranscodeDataResponse); i {
+			switch v := v.(*VodGetSmartStrategyLitePlayInfoResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11723,7 +11867,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[124].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceAIStatisDataResponse); i {
+			switch v := v.(*VodGetAppInfoResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11735,7 +11879,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[125].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceSubtitleStatisDataResponse); i {
+			switch v := v.(*DescribeVodSpaceTranscodeDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11747,7 +11891,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[126].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceDetectStatisDataResponse); i {
+			switch v := v.(*DescribeVodSpaceAIStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11759,7 +11903,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[127].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSnapshotDataResponse); i {
+			switch v := v.(*DescribeVodSpaceSubtitleStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11771,7 +11915,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[128].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceWorkflowDetailDataResponse); i {
+			switch v := v.(*DescribeVodSpaceDetectStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11783,7 +11927,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[129].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceEditDetailDataResponse); i {
+			switch v := v.(*DescribeVodSnapshotDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11795,7 +11939,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[130].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodRealtimeMediaDataResponse); i {
+			switch v := v.(*DescribeVodSpaceWorkflowDetailDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11807,7 +11951,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[131].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodRealtimeMediaDetailDataResponse); i {
+			switch v := v.(*DescribeVodSpaceEditDetailDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11819,7 +11963,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[132].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodPlayFileLogByDomainResponse); i {
+			switch v := v.(*DescribeVodRealtimeMediaDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11831,7 +11975,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[133].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodEnhanceImageDataResponse); i {
+			switch v := v.(*DescribeVodRealtimeMediaDetailDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11843,7 +11987,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[134].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodSpaceEditStatisDataResponse); i {
+			switch v := v.(*DescribeVodPlayFileLogByDomainResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11855,7 +11999,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[135].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodPlayedStatisDataResponse); i {
+			switch v := v.(*DescribeVodEnhanceImageDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11867,7 +12011,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[136].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodMostPlayedStatisDataResponse); i {
+			switch v := v.(*DescribeVodSpaceEditStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11879,7 +12023,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[137].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DescribeVodVidTrafficFileLogResponse); i {
+			switch v := v.(*DescribeVodPlayedStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11891,7 +12035,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[138].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitBlockMediaTaskResponse); i {
+			switch v := v.(*DescribeVodMostPlayedStatisDataResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11903,7 +12047,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[139].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitUnblockMediaTaskResponse); i {
+			switch v := v.(*DescribeVodVidTrafficFileLogResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11915,7 +12059,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[140].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodQueryMediaBlockStatusResponse); i {
+			switch v := v.(*VodSubmitBlockMediaTaskResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11927,7 +12071,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[141].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodListProjectsResponse); i {
+			switch v := v.(*VodSubmitUnblockMediaTaskResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11939,7 +12083,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[142].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetTradeConfigurationResponse); i {
+			switch v := v.(*VodQueryMediaBlockStatusResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11951,7 +12095,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[143].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSetCloudMigrateJobResponse); i {
+			switch v := v.(*VodListProjectsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11963,7 +12107,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[144].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodSubmitCloudMigrateJobResponse); i {
+			switch v := v.(*VodGetTradeConfigurationResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11975,7 +12119,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[145].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VodGetCloudMigrateJobResponse); i {
+			switch v := v.(*VodSetCloudMigrateJobResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -11987,6 +12131,30 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			}
 		}
 		file_volcengine_vod_response_response_vod_proto_msgTypes[146].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodSubmitCloudMigrateJobResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_response_response_vod_proto_msgTypes[147].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*VodGetCloudMigrateJobResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_volcengine_vod_response_response_vod_proto_msgTypes[148].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VodReportEventResponse); i {
 			case 0:
 				return &v.state
@@ -12005,7 +12173,7 @@ func file_volcengine_vod_response_response_vod_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_volcengine_vod_response_response_vod_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   147,
+			NumMessages:   149,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
