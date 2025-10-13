@@ -819,6 +819,60 @@ type SecuritySourceReferences struct {
 	SiteName string `json:"SiteName"`
 }
 
+type TextModerationResponse struct {
+	RequestId string             `json:"RequestId"`
+	Code      int                `json:"Code"`
+	Message   string             `json:"Message"`
+	Data      TextModerationData `json:"Data"`
+}
+
+type TextModerationData struct {
+	Decision      string `json:"Decision"`
+	DecisionLabel string `json:"DecisionLabel"`
+	PassThrough   string `json:"PassThrough"`
+}
+
+type MultiModerationResponse struct {
+	RequestId string              `json:"RequestId"`
+	Code      int                 `json:"Code"`
+	Message   string              `json:"Message"`
+	Data      MultiModerationData `json:"Data"`
+}
+
+type MultiModerationData struct {
+	Decision      string   `json:"Decision"`
+	DecisionLabel string   `json:"DecisionLabel"`
+	HitLabels     []string `json:"HitLabels"`
+	PassThrough   string   `json:"PassThrough"`
+}
+
+type CustomRiskResponse struct {
+	RequestId string         `json:"RequestId"`
+	Code      int            `json:"Code"`
+	Message   string         `json:"Message"`
+	Data      CustomRiskData `json:"Data"`
+}
+
+type CustomRiskData struct {
+	Decision       string `json:"Decision"`
+	DecisionLabel  string `json:"DecisionLabel"`
+	DecisionReason string `json:"DecisionReason"`
+	PassThrough    string `json:"PassThrough"`
+}
+
+type AsyncRcLlmResponse struct {
+	RequestId string      `json:"RequestId"`
+	Code      int         `json:"Code"`
+	Message   string      `json:"Message"`
+	Data      RequestData `json:"Data"`
+}
+
+type RcLlmResultRequest struct {
+	DataId  string `json:"DataId"`
+	AppId   int64  `json:"AppId"`
+	Service string `json:"Service"`
+}
+
 type CommonResponse struct {
 	RequestId string `json:"RequestId"`
 	Code      int    `json:"Code"`

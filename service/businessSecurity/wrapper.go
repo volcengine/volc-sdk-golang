@@ -1466,6 +1466,255 @@ func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest)
 	return ch, nil
 }
 
+func (p *SecuritySecurityClient) TextModeration(req *RiskDetectionRequest) (*TextModerationResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("TextModeration: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("TextModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("TextModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("TextModeration: fail to do request, %v", err)
+			}
+			result := new(TextModerationResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(TextModerationResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AsyncTextModeration(req *RiskDetectionRequest) (*AsyncRcLlmResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncTextModeration: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("AsyncTextModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncTextModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncTextModeration: fail to do request, %v", err)
+			}
+			result := new(AsyncRcLlmResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(AsyncRcLlmResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) TextModerationResult(req *RcLlmResultRequest) (*TextModerationResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("TextModerationResult: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("TextModerationResult", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("TextModerationResult", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("TextModerationResult: fail to do request, %v", err)
+			}
+			result := new(TextModerationResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(TextModerationResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) MultiModeration(req *RiskDetectionRequest) (*MultiModerationResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MultiModeration: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("MultiModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MultiModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MultiModeration: fail to do request, %v", err)
+			}
+			result := new(MultiModerationResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(MultiModerationResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AsyncMultiModeration(req *RiskDetectionRequest) (*AsyncRcLlmResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncMultiModeration: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("AsyncMultiModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncMultiModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncMultiModeration: fail to do request, %v", err)
+			}
+			result := new(AsyncRcLlmResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(AsyncRcLlmResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) MultiModerationResult(req *RcLlmResultRequest) (*MultiModerationResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("MultiModerationResult: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("MultiModerationResult", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("MultiModerationResult", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("MultiModerationResult: fail to do request, %v", err)
+			}
+			result := new(MultiModerationResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(MultiModerationResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) CustomRisk(req *RiskDetectionRequest) (*CustomRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CustomRisk: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("CustomRisk", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("CustomRisk", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CustomRisk: fail to do request, %v", err)
+			}
+			result := new(CustomRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(CustomRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AsyncCustomRisk(req *RiskDetectionRequest) (*AsyncRcLlmResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncCustomRisk: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("AsyncCustomRisk", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncCustomRisk", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncCustomRisk: fail to do request, %v", err)
+			}
+			result := new(AsyncRcLlmResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(AsyncRcLlmResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*CustomRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("CustomRiskResult: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("CustomRiskResult", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("CustomRiskResult", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("CustomRiskResult: fail to do request, %v", err)
+			}
+			result := new(CustomRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
+	}
+	result := new(CustomRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*CreateCustomLibResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {

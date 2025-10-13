@@ -8,7 +8,7 @@ func TestGetSignatureList(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 	req := &GetSignatureAndOrderListRequest{
-		SubAccount: "smsAccount",
+		SubAccounts: []string{"smsAccount"},
 	}
 	result, statusCode, err := DefaultInstance.GetSignatureAndOrderList(req)
 	t.Logf("result = %+v\n", result)
@@ -35,9 +35,9 @@ func TestDeleteSignature(t *testing.T) {
 	DefaultInstance.Client.SetAccessKey(testAk)
 	DefaultInstance.Client.SetSecretKey(testSk)
 	req := &DeleteSignatureRequest{
-		SubAccount: "smsAccount",
-		Id:         "idOfSignatureToDelete",
-		IsOrder:    true,
+		SubAccounts: []string{"smsAccount"},
+		Id:          1,
+		IsOrder:     true,
 	}
 	result, statusCode, err := DefaultInstance.DeleteSignature(req)
 	t.Logf("result = %+v\n", result)

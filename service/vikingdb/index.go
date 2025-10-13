@@ -71,6 +71,10 @@ func (s *SearchOptions) SetLimit(limit int64) *SearchOptions {
 	s.limit = limit
 	return s
 }
+func (s *SearchOptions) SetOffset(offset int64) *SearchOptions {
+	s.offset = offset
+	return s
+}
 func (s *SearchOptions) SetOutputFields(outputFields []string) *SearchOptions {
 	s.outputFields = outputFields
 	return s
@@ -245,7 +249,7 @@ func (index *Index) Search(order interface{}, searchOptions *SearchOptions) ([]*
 		if searchOptions.needReturnVector {
 			search["need_return_vector"] = true
 		}
-    if searchOptions.offset > 0 {
+		if searchOptions.offset > 0 {
 			search["offset"] = searchOptions.offset
 		}
 		params := map[string]interface{}{
@@ -347,9 +351,9 @@ func (index *Index) SearchById(id interface{}, searchOptions *SearchOptions) ([]
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
-  if searchOptions.offset > 0 {
-    search["offset"] = searchOptions.offset
-  }
+	if searchOptions.offset > 0 {
+		search["offset"] = searchOptions.offset
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -405,9 +409,9 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
-  if searchOptions.offset > 0 {
-    search["offset"] = searchOptions.offset
-  }
+	if searchOptions.offset > 0 {
+		search["offset"] = searchOptions.offset
+	}
 	fmt.Println(index.isClient)
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
@@ -473,9 +477,9 @@ func (index *Index) SearchWithMultiModal(searchOptions *SearchOptions) ([]*Data,
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
-  if searchOptions.offset > 0 {
-    search["offset"] = searchOptions.offset
-  }
+	if searchOptions.offset > 0 {
+		search["offset"] = searchOptions.offset
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,
@@ -532,9 +536,9 @@ func (index *Index) SearchByText(text TextObject, searchOptions *SearchOptions) 
 	if searchOptions.needReturnVector {
 		search["need_return_vector"] = true
 	}
-  if searchOptions.offset > 0 {
-    search["offset"] = searchOptions.offset
-  }
+	if searchOptions.offset > 0 {
+		search["offset"] = searchOptions.offset
+	}
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,

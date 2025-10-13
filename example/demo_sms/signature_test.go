@@ -10,13 +10,15 @@ func TestGetSignatureAndOrderList(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.GetSignatureAndOrderListRequest{
-		SubAccount: "smsAccount",
-		Signature:  "sign",
-		PageIndex:  1,
-		PageSize:   10,
+		SubAccounts: []string{"subAccount1"},
+		Signature:   "sign",
+		PageIndex:   1,
+		PageSize:    10,
+		Status:      0,
 	}
-	result, statusCode, err := sms.DefaultInstance.GetSignatureAndOrderList(req)
-	t.Logf("result = %+v\n", result)
+	resp, statusCode, err := sms.DefaultInstance.GetSignatureAndOrderList(req)
+	t.Logf("resp = %+v\n", resp)
+	t.Logf("result = %+v\n", resp.Result.List[0])
 	t.Logf("statusCode = %+v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
@@ -51,9 +53,9 @@ func TestDeleteSignature(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.DeleteSignatureRequest{
-		SubAccount: "smsAccount",
-		Id:         "idOfSignatureToDelete",
-		IsOrder:    true,
+		SubAccounts: []string{"smsAccount"},
+		Id:          1,
+		IsOrder:     true,
 	}
 	result, statusCode, err := sms.DefaultInstance.DeleteSignature(req)
 	t.Logf("result = %+v\n", result)
@@ -62,16 +64,17 @@ func TestDeleteSignature(t *testing.T) {
 }
 
 func TestApplySmsSignatureV2(t *testing.T) {
-	fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
-	if err != nil {
-		t.Logf("err = %+v\n", err)
-		return
-	}
+	// fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+	// if err != nil {
+	// 	t.Logf("err = %+v\n", err)
+	// 	return
+	// }
+	fileUrl := "http://wechatapppro/image/330.jpg"
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.ApplySmsSignatureRequestV2{
 		Desc:                      "测试 SDK",
-		SubAccount:                "smsAccount",
+		SubAccounts:               []string{"smsAccount1", "smsAccount2"},
 		Content:                   "sign",
 		Source:                    sms.SignSourceCompany,
 		SignatureIdentificationID: 123,
@@ -81,8 +84,9 @@ func TestApplySmsSignatureV2(t *testing.T) {
 			AppIcpFileList: []sms.SignAuthFile{
 				{
 					FileType:    sms.DocTypeAppIcpCertificate,
-					FileContent: fileBase64String,
+					FileContent: "",
 					FileSuffix:  "jpg",
+					FileUrl:     fileUrl,
 				},
 			},
 		},
@@ -93,12 +97,14 @@ func TestApplySmsSignatureV2(t *testing.T) {
 			TrademarkFileList: []sms.SignAuthFile{
 				{
 					FileType:    sms.DocTypeTrademarkCertificate,
-					FileContent: fileBase64String,
+					FileContent: "",
 					FileSuffix:  "jpg",
+					FileUrl:     fileUrl,
 				},
 			},
 		},
-		Scene: "scene",
+		Scene:        "scene",
+		ChannelTypes: []string{"CN_MKT"},
 	}
 	result, statusCode, err := sms.DefaultInstance.ApplySmsSignatureV2(req)
 	t.Logf("result = %+v\n", result)
@@ -108,10 +114,10 @@ func TestApplySmsSignatureV2(t *testing.T) {
 
 func TestUpdateSmsSignature(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
-	sms.DefaultInstance.Client.SetSecretKey(testAk)
-	req := &sms.ApplySmsSignatureRequestV2{
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	req := &sms.UpdateSmsSignatureRequestV2{
 		Desc:                      "测试 SDK",
-		SubAccount:                "smsAccount",
+		SubAccounts:               []string{"smsAccount1", "smsAccount2"},
 		Content:                   "sign",
 		Source:                    sms.SignSourceApp,
 		SignatureIdentificationID: 123,
@@ -138,7 +144,9 @@ func TestUpdateSmsSignature(t *testing.T) {
 				},
 			},
 		},
-		Scene: "test",
+		Scene:        "test",
+		ChannelTypes: []string{"CN_MKT"},
+		UpdateType:   2,
 	}
 	result, statusCode, err := sms.DefaultInstance.UpdateSmsSignature(req)
 	t.Logf("result = %+v\n", result)
@@ -150,9 +158,9 @@ func TestGetSignatureIdentList(t *testing.T) {
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.GetSignatureIdentListRequest{
-		Ids:       nil,
-		PageIndex: 5,
-		PageSize:  1,
+		Ids:       []int64{9160},
+		PageIndex: 1,
+		PageSize:  10,
 	}
 	result, statusCode, err := sms.DefaultInstance.GetSignatureIdentList(req)
 	t.Logf("result = %+v\n", result)
@@ -161,11 +169,12 @@ func TestGetSignatureIdentList(t *testing.T) {
 }
 
 func TestApplySignatureIdent(t *testing.T) {
-	fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
-	if err != nil {
-		t.Logf("err = %+v\n", err)
-		return
-	}
+	// fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+	// if err != nil {
+	// 	t.Logf("err = %+v\n", err)
+	// 	return
+	// }
+	fileUrl := "http://wechatapppro/image/330.jpg"
 	sms.DefaultInstance.Client.SetAccessKey(testAk)
 	sms.DefaultInstance.Client.SetSecretKey(testSk)
 	req := &sms.ApplySignatureIdentRequest{
@@ -175,9 +184,9 @@ func TestApplySignatureIdent(t *testing.T) {
 			BusinessCertificateType: 1,
 			BusinessCertificate: sms.SignAuthFile{
 				FileType:    1,
-				FileContent: fileBase64String,
+				FileContent: "",
 				FileSuffix:  "jpeg",
-				FileUrl:     "",
+				FileUrl:     fileUrl,
 			},
 			BusinessCertificateName:                "xxx有限公司",
 			UnifiedSocialCreditIdentifier:          "1234556",
@@ -187,14 +196,21 @@ func TestApplySignatureIdent(t *testing.T) {
 		},
 		OperatorPersonInfo: sms.PersonInfo{
 			CertificateType:   0,
-			PersonCertificate: []sms.SignAuthFile{{FileType: 8, FileContent: fileBase64String, FileSuffix: "jpeg"}, {FileType: 9, FileContent: fileBase64String, FileSuffix: "jpeg"}},
+			PersonCertificate: []sms.SignAuthFile{{FileType: 8, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 9, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
 			PersonName:        "周xx",
 			PersonIDCard:      "1111111",
 			PersonMobile:      "15000000000",
 		},
 		ResponsiblePersonInfo: sms.PersonInfo{
 			CertificateType:   0,
-			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: fileBase64String, FileSuffix: "jpeg"}, {FileType: 11, FileContent: fileBase64String, FileSuffix: "jpeg"}},
+			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 11, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
+			PersonName:        "周xx",
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+		LegalPersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 11, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
 			PersonName:        "周xx",
 			PersonIDCard:      "1111111",
 			PersonMobile:      "15000000000",
@@ -217,5 +233,45 @@ func TestBatchBindSignatureIdent(t *testing.T) {
 	result, statusCode, err := sms.DefaultInstance.BatchBindSignatureIdent(req)
 	t.Logf("result = %+v\n", result)
 	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestUpdateSignatureIdent(t *testing.T) {
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	// fileBase64String, err := getBase64StringFromFile("/Users//Pictures/IMG_9033.JPG")
+	// if err != nil {
+	// 	t.Logf("err = %+v\n", err)
+	// 	return
+	// }
+	fileUrl := "http://wechatapppro/image/330.jpg"
+
+	req := &sms.UpdateSignatureIdentificationRequest{
+		Id: 1,
+		OperatorPersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 8, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 9, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
+			PersonName:        "周xx",
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+		ResponsiblePersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 11, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
+			PersonName:        "周xx",
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+		LegalPersonInfo: sms.PersonInfo{
+			CertificateType:   0,
+			PersonCertificate: []sms.SignAuthFile{{FileType: 10, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}, {FileType: 11, FileContent: "", FileSuffix: "jpeg", FileUrl: fileUrl}},
+			PersonName:        "", // 法人姓名不允许变更
+			PersonIDCard:      "1111111",
+			PersonMobile:      "15000000000",
+		},
+	}
+	result, statusCode, err := sms.DefaultInstance.UpdateSignatureIdent(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %v\n", statusCode)
 	t.Logf("err = %+v\n", err)
 }
