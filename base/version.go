@@ -2,4 +2,4 @@ package base
 
 const SDKName = "volc-sdk-golang"
 
-const SDKVersion = "v1.0.221"
+const SDKVersion = "v1.0.222"
