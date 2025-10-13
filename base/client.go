@@ -97,12 +97,12 @@ func NewClient(info *ServiceInfo, apiInfoList map[string]*ApiInfo) *Client {
 
 func (serviceInfo *ServiceInfo) Clone() *ServiceInfo {
 	ret := new(ServiceInfo)
-	//base info
+	// base info
 	ret.Timeout = serviceInfo.Timeout
 	ret.Host = serviceInfo.Host
 	ret.Scheme = serviceInfo.Scheme
 
-	//credential
+	// credential
 	ret.Credentials = serviceInfo.Credentials.Clone()
 
 	// header

@@ -37,8 +37,8 @@ func (p *SMS) ApplySmsSignatureV2(req *ApplySmsSignatureRequestV2) (*ApplySmsSig
 	return resp, statusCode, nil
 }
 
-func (p *SMS) UpdateSmsSignature(req *ApplySmsSignatureRequestV2) (*ApplySmsSignatureResponse, int, error) {
-	resp := new(ApplySmsSignatureResponse)
+func (p *SMS) UpdateSmsSignature(req *UpdateSmsSignatureRequestV2) (*UpdateSmsSignatureResponse, int, error) {
+	resp := new(UpdateSmsSignatureResponse)
 	statusCode, err := p.smsHandler("UpdateSmsSignature", req, resp)
 	if err != nil {
 		return nil, statusCode, err
@@ -76,6 +76,15 @@ func (p *SMS) GetSignatureIdentList(req *GetSignatureIdentListRequest) (*GetSign
 func (p *SMS) BatchBindSignatureIdent(req *BatchBindSignatureIdentRequest) (*BatchBindSignatureIdentResponse, int, error) {
 	resp := new(BatchBindSignatureIdentResponse)
 	statusCode, err := p.smsHandler("BatchBindSignatureIdent", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
+func (p *SMS) UpdateSignatureIdent(req *UpdateSignatureIdentificationRequest) (*UpdateSignatureIdentificationResponse, int, error) {
+	resp := new(UpdateSignatureIdentificationResponse)
+	statusCode, err := p.smsHandler("UpdateSignatureIdentification", req, resp)
 	if err != nil {
 		return nil, statusCode, err
 	}

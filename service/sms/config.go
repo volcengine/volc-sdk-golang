@@ -13,6 +13,7 @@ const (
 	ServiceVersion20200101 = "2020-01-01"
 	ServiceVersion20210101 = "2021-01-01"
 	ServiceVersion20210111 = "2021-01-11"
+	ServiceVersion20250101 = "2025-01-01"
 	ServiceName            = "volcSMS"
 )
 
@@ -122,7 +123,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetSignatureAndOrderList"},
-				"Version": []string{ServiceVersion20210111},
+				"Version": []string{ServiceVersion20250101},
 			},
 		},
 		"ApplySmsSignature": {
@@ -138,7 +139,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"DeleteSignature"},
-				"Version": []string{ServiceVersion20210111},
+				"Version": []string{ServiceVersion20250101},
 			},
 		},
 		"ApplyVmsTemplate": {
@@ -194,7 +195,7 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ApplySmsSignatureV2"},
-				"Version": []string{ServiceVersion20210111},
+				"Version": []string{ServiceVersion20250101},
 			},
 		},
 		"UpdateSmsSignature": {
@@ -202,6 +203,126 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UpdateSmsSignature"},
+				"Version": []string{ServiceVersion20250101},
+			},
+		},
+		"UpdateSignatureIdentification": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSignatureIdent"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"BulkCreateTobTrafficDrivingLink": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BulkCreateTobTrafficDrivingLink"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"BulkCreateTobTrafficDrivingPhone": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BulkCreateTobTrafficDrivingPhone"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"DeleteTobTrafficDrivingLink": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTobTrafficDrivingLinkSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"DeleteTobTrafficDrivingPhone": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteTobTrafficDrivingPhoneSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"GetRelationTemplateList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListRelationTemplateSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"GetTobTrafficDrivingLinkList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetTobTrafficDrivingLinkList"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"GetTobTrafficDrivingPhoneList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetTobTrafficDrivingPhoneList"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"UpdateTobTrafficDrivingPhone": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateTobTrafficDrivingPhoneSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"BindTrafficDrivingParams": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindTrafficDrivingParamsSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"ApplySmsTemplateV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplySmsTemplateV2SDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"ListSmsTemplateV2": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSmsTemplateV2SDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"BindSignatures": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindSignaturesSDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"ListSecondTemplate": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSecondTemplate"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
+		"ListSubContent": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSubContent"},
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
