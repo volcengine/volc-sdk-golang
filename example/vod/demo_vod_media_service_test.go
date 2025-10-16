@@ -363,6 +363,7 @@ func Test_GetMediaList(t *testing.T) {
 		ClassificationIds: "your ClassificationIds",
 		TosStorageClasses: "your TosStorageClasses",
 		VodUploadSources:  "your VodUploadSources",
+		Title:             "your Title",
 	}
 
 	resp, status, err := instance.GetMediaList(query)
