@@ -673,6 +673,7 @@ type QualificationMainInfoFormDO struct {
 	CertificateOfOrganizationCodesPhotoFileCode    string
 	CertificateOfTaxationRegistrationPhotoFileCode string
 	QualificationNo                                string
+	ReqSourceType								   int32
 }
 
 type QualificationAdminInfoFormDO struct {
@@ -923,6 +924,7 @@ type CreateTtsResourceRequest struct {
 	Name               string
 	TtsTemplateContent string
 	Remark             string
+	ReqSourceType	   int32
 }
 
 type EditTaskRequest struct {
@@ -941,6 +943,7 @@ type EditTaskRequest struct {
 type FetchVoiceResourceRequest struct {
 	Url  string
 	Name string
+	ReqSourceType int32
 }
 
 type SingleParam struct {
@@ -969,6 +972,7 @@ type SingleAppendRequest struct {
 
 type UploadVoiceResourceRequest struct {
 	FileName string
+	ReqSourceType int32
 }
 
 type BasicResourceResult struct {
