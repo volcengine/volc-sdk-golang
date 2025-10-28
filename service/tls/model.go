@@ -308,6 +308,8 @@ type CreateIndexRequest struct {
 	FullText          *FullTextInfo   `json:",omitempty"`
 	KeyValue          *[]KeyValueInfo `json:",omitempty"`
 	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
+	MaxTextLen        *int32          `json:",omitempty"`
+	EnableAutoIndex   *bool           `json:",omitempty"`
 }
 
 func (v *CreateIndexRequest) CheckValidation() error {
@@ -365,6 +367,8 @@ type DescribeIndexResponse struct {
 	UserInnerKeyValue *[]KeyValueInfo `json:"UserInnerKeyValue"`
 	CreateTime        string          `json:"CreateTime"`
 	ModifyTime        string          `json:"ModifyTime"`
+	MaxTextLen        int32           `json:",omitempty"`
+	EnableAutoIndex   bool            `json:",omitempty"`
 }
 
 type ModifyIndexRequest struct {
@@ -373,6 +377,8 @@ type ModifyIndexRequest struct {
 	FullText          *FullTextInfo   `json:",omitempty"`
 	KeyValue          *[]KeyValueInfo `json:",omitempty"`
 	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
+	MaxTextLen        *int32          `json:",omitempty"`
+	EnableAutoIndex   *bool           `json:",omitempty"`
 }
 
 func (v *ModifyIndexRequest) CheckValidation() error {

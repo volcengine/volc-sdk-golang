@@ -87,6 +87,8 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					},
 				},
 			},
+			MaxTextLen:      Int32Ptr(2048),
+			EnableAutoIndex: BoolPtr(true),
 		}: nil,
 		{
 			TopicID: suite.topic,
@@ -124,6 +126,8 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					},
 				},
 			},
+			MaxTextLen:      Int32Ptr(2048),
+			EnableAutoIndex: BoolPtr(true),
 		}: nil,
 	}
 
@@ -223,6 +227,8 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					},
 				},
 			},
+			MaxTextLen:      Int32Ptr(2048),
+			EnableAutoIndex: BoolPtr(true),
 		}: {
 			TopicID: suite.topic,
 			FullText: &FullTextInfo{
@@ -263,6 +269,8 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					},
 				},
 			},
+			MaxTextLen:      2048,
+			EnableAutoIndex: true,
 		},
 	}
 
@@ -275,7 +283,55 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 		suite.Equal(expectGetIndexResp.TopicID, actualGetIndexResp.TopicID)
 		suite.Equal(expectGetIndexResp.FullText, actualGetIndexResp.FullText)
 		suite.Equal(expectGetIndexResp.KeyValue, actualGetIndexResp.KeyValue)
+		// 验证新增字段
+		suite.Equal(expectGetIndexResp.MaxTextLen, actualGetIndexResp.MaxTextLen)
+		suite.Equal(expectGetIndexResp.EnableAutoIndex, actualGetIndexResp.EnableAutoIndex)
 	}
+
+	_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+}
+
+func (suite *SDKIndexTestSuite) TestModifyIndexNewFields() {
+	// 创建索引
+	createIndexReq := &CreateIndexRequest{
+		TopicID: suite.topic,
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ", ?",
+		},
+		MaxTextLen:      Int32Ptr(1024),
+		EnableAutoIndex: BoolPtr(false),
+	}
+	_, err := suite.cli.CreateIndex(createIndexReq)
+	suite.NoError(err)
+
+	// 验证创建时的字段值
+	getIndexResp, err := suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	suite.Equal(int32(1024), getIndexResp.MaxTextLen)
+	suite.Equal(false, getIndexResp.EnableAutoIndex)
+
+	// 修改索引，更新新字段
+	modifyIndexReq := &ModifyIndexRequest{
+		TopicID: suite.topic,
+		FullText: &FullTextInfo{
+			CaseSensitive:  false,
+			IncludeChinese: false,
+			Delimiter:      ",",
+		},
+		MaxTextLen:      Int32Ptr(2048),
+		EnableAutoIndex: BoolPtr(true),
+	}
+	_, err = suite.cli.ModifyIndex(modifyIndexReq)
+	suite.NoError(err)
+
+	// 验证修改后的字段值
+	getIndexResp, err = suite.cli.DescribeIndex(&DescribeIndexRequest{TopicID: suite.topic})
+	suite.NoError(err)
+	suite.Equal(int32(2048), getIndexResp.MaxTextLen)
+	suite.Equal(true, getIndexResp.EnableAutoIndex)
 
 	_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 	suite.NoError(err)
@@ -423,6 +479,9 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 		} else {
 			suite.Equal(0, len(*actualGetIndexResp.UserInnerKeyValue))
 		}
+		// 验证新增字段
+		suite.Equal(expectGetIndexResp.MaxTextLen, actualGetIndexResp.MaxTextLen)
+		suite.Equal(expectGetIndexResp.EnableAutoIndex, actualGetIndexResp.EnableAutoIndex)
 
 		_, err = suite.cli.DeleteIndex(&DeleteIndexRequest{TopicID: suite.topic})
 		suite.NoError(err)
