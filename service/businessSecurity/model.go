@@ -819,45 +819,81 @@ type SecuritySourceReferences struct {
 	SiteName string `json:"SiteName"`
 }
 
-type TextModerationResponse struct {
-	RequestId string             `json:"RequestId"`
-	Code      int                `json:"Code"`
-	Message   string             `json:"Message"`
-	Data      TextModerationData `json:"Data"`
+type TextModerationAsyncResponse struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      TextModerationAsyncData `json:"Data"`
+}
+type TextModerationSyncResponse struct {
+	RequestId string                 `json:"RequestId"`
+	Code      int                    `json:"Code"`
+	Message   string                 `json:"Message"`
+	Data      TextModerationSyncData `json:"Data"`
 }
 
-type TextModerationData struct {
+type TextModerationAsyncData struct {
 	Decision      string `json:"Decision"`
 	DecisionLabel string `json:"DecisionLabel"`
 	PassThrough   string `json:"PassThrough"`
+	DataId        string `json:"DataId"`
+}
+type TextModerationSyncData struct {
+	Decision      string `json:"Decision"`
+	DecisionLabel string `json:"DecisionLabel"`
 }
 
-type MultiModerationResponse struct {
-	RequestId string              `json:"RequestId"`
-	Code      int                 `json:"Code"`
-	Message   string              `json:"Message"`
-	Data      MultiModerationData `json:"Data"`
+type MultiModerationSyncResponse struct {
+	RequestId string                  `json:"RequestId"`
+	Code      int                     `json:"Code"`
+	Message   string                  `json:"Message"`
+	Data      MultiModerationSyncData `json:"Data"`
+}
+type MultiModerationAsyncResponse struct {
+	RequestId string                   `json:"RequestId"`
+	Code      int                      `json:"Code"`
+	Message   string                   `json:"Message"`
+	Data      MultiModerationAsyncData `json:"Data"`
 }
 
-type MultiModerationData struct {
+type MultiModerationAsyncData struct {
 	Decision      string   `json:"Decision"`
 	DecisionLabel string   `json:"DecisionLabel"`
 	HitLabels     []string `json:"HitLabels"`
+	DataId        string   `json:"DataId"`
 	PassThrough   string   `json:"PassThrough"`
 }
-
-type CustomRiskResponse struct {
-	RequestId string         `json:"RequestId"`
-	Code      int            `json:"Code"`
-	Message   string         `json:"Message"`
-	Data      CustomRiskData `json:"Data"`
+type MultiModerationSyncData struct {
+	Decision      string   `json:"Decision"`
+	DecisionLabel string   `json:"DecisionLabel"`
+	HitLabels     []string `json:"HitLabels"`
+}
+type CustomRiskAsyncResponse struct {
+	RequestId string              `json:"RequestId"`
+	Code      int                 `json:"Code"`
+	Message   string              `json:"Message"`
+	Data      CustomRiskAsyncData `json:"Data"`
+}
+type CustomRiskSyncResponse struct {
+	RequestId string             `json:"RequestId"`
+	Code      int                `json:"Code"`
+	Message   string             `json:"Message"`
+	Data      CustomRiskSyncData `json:"Data"`
 }
 
-type CustomRiskData struct {
-	Decision       string `json:"Decision"`
-	DecisionLabel  string `json:"DecisionLabel"`
-	DecisionReason string `json:"DecisionReason"`
-	PassThrough    string `json:"PassThrough"`
+type CustomRiskAsyncData struct {
+	Decision       string  `json:"Decision"`
+	DecisionLabel  string  `json:"DecisionLabel"`
+	DataId         string  `json:"DataId"`
+	DecisionRate   float64 `json:"DecisionRate"`
+	DecisionReason string  `json:"DecisionReason"`
+	PassThrough    string  `json:"PassThrough"`
+}
+type CustomRiskSyncData struct {
+	Decision       string  `json:"Decision"`
+	DecisionLabel  string  `json:"DecisionLabel"`
+	DecisionRate   float64 `json:"DecisionRate"`
+	DecisionReason string  `json:"DecisionReason"`
 }
 
 type AsyncRcLlmResponse struct {
