@@ -596,6 +596,60 @@ func (p *Vms) DeleteBlackList(req *DeleteBlackListReq) (*DeleteBlackListResponse
 	}
 }
 
+func (p *Vms) BindAXG(req *BindAXGRequest) (*SecretBindResponse, int, error) {
+	resp := new(SecretBindResponse)
+	if statusCode, err := p.doJson("BindAXG", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) UpdateAXG(req *UpdateAXGRequest) (*OperateResponse, int, error) {
+	resp := new(OperateResponse)
+	if statusCode, err := p.doJson("UpdateAXG", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) UnbindAXG(req *UnbindAXGRequest) (*OperateResponse, int, error) {
+	resp := new(OperateResponse)
+	if statusCode, err := p.doJson("UnbindAXG", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) CreateAXGGroup(req *CreateAXGGroupRequest) (*CreateAXGGroupResponse, int, error) {
+	resp := new(CreateAXGGroupResponse)
+	if statusCode, err := p.doJson("CreateAXGGroup", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) UpdateAXGGroup(req *UpdateAXGGroupRequest) (*OperateResponse, int, error) {
+	resp := new(OperateResponse)
+	if statusCode, err := p.doJson("UpdateAXGGroup", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) DeleteAXGGroup(req *DeleteAXGGroupRequest) (*OperateResponse, int, error) {
+	resp := new(OperateResponse)
+	if statusCode, err := p.doJson("DeleteAXGGroup", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
 func (p *Vms) Handler(api string, req interface{}, resp interface{}) (int, error) {
 	form := base.ToUrlValues(req)
 	respBody, statusCode, err := p.Client.Post(api, nil, form)
