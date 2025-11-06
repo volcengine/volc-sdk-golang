@@ -42,6 +42,8 @@ type BindAXBRequest struct {
 	CallDisplayType int32
 	UserData        string
 	OutId           string
+	OrderId         string
+	IndustrialId    string
 	VerifyFlag      int32
 }
 
@@ -60,6 +62,8 @@ type SelectNumberAndBindAXBRequest struct {
 	RandomFlag        int32
 	IdempotentId      string
 	OutId             string
+	OrderId           string
+	IndustrialId      string
 	VerifyFlag        int32
 }
 
@@ -81,6 +85,7 @@ type SecretBindResult struct {
 	PhoneNoY         string
 	YbSubId          string
 	YbStatus         int32
+	GroupId          string
 }
 
 type RouteAAuthResponse struct {
@@ -112,9 +117,24 @@ type OperationResponse struct {
 	Result           bool
 }
 
+type OperateResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           BaseOperateResponseData
+}
+
+type BaseOperateResponseData struct {
+	Success bool
+}
+
 type SpecificSubIdRequest struct {
 	NumberPoolNo string
 	SubId        string
+}
+
+type UnbindAXGRequest struct {
+	NumberPoolNo string
+	SubId        string
+	DelGroup     bool
 }
 
 type QuerySubscriptionResponse struct {
@@ -163,6 +183,7 @@ type Subscription struct {
 	UserData            string
 	OutId               string
 	PhoneNoE            string
+	GroupId             string
 }
 
 type UpgradeAXToAXBRequest struct {
@@ -185,6 +206,8 @@ type UpdateAXBRequest struct {
 	UserData       string
 	AutoCreateFlag int32
 	OutId          string
+	OrderId        string
+	IndustrialId   string
 }
 
 type BindAXNRequest struct {
@@ -275,6 +298,75 @@ type UpdateAXNERequest struct {
 	UserData       string
 	OutId          string
 	AutoCreateFlag int32
+}
+
+type BindAXGRequest struct {
+	PhoneNoA          string
+	PhoneNoB          string
+	PhoneNoX          string
+	NumberPoolNo      string
+	ExpireTime        int64
+	AudioRecordFlag   int32
+	UserData          string
+	OutId             string
+	GroupId           string
+	GroupName         string
+	GroupNumbers      []string
+	IdempotentId      string
+	CityCode          string
+	CityCodeByPhoneNo string
+	DegradeCityList   []string
+	RandomFlag        int32
+	OrderId           string
+	IndustrialId      string
+}
+
+type UpdateAXGRequest struct {
+	UpdateType   string
+	NumberPoolNo string
+	SubId        string
+	PhoneNoA     string
+	PhoneNoB     string
+	PhoneNoX     string
+	ExpireTime   int64
+	UserData     string
+	OutId        string
+	GroupId      string
+	OrderId      string
+	IndustrialId string
+	IdempotentId string
+}
+
+type CreateAXGGroupRequest struct {
+	NumberPoolNo string
+	GroupName    string
+	Numbers      []string
+	ExpireTime   int64
+}
+
+type CreateAXGGroupResponse struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           CreateAXGGroupData
+}
+
+type CreateAXGGroupData struct {
+	GroupId string
+}
+
+type UpdateAXGGroupRequest struct {
+	NumberPoolNo     string
+	GroupId          string
+	SubId            string
+	UpdateType       string
+	OverflowStrategy string
+	ExpireTime       int64
+	GroupName        string
+	Numbers          []string
+}
+
+type DeleteAXGGroupRequest struct {
+	NumberPoolNo string
+	GroupId      string
 }
 
 type RouteAAuthRequest struct {
@@ -442,6 +534,7 @@ type QueryCallRecordMsgNew struct {
 	CallerCallingTime      int64
 	CallerRingingTime      int64
 	CallerDuration         int32
+	SubscriptionId         string
 }
 
 type QueryCallRecordMsgNewResponse struct {
@@ -828,6 +921,8 @@ type BindAxybRequest struct {
 	YCityCodeByPhoneNo string
 	YDegradeCityList   string
 	RandomFlagY        int32
+	OrderId            string
+	IndustrialId       string
 }
 
 type BindYbForAxybRequest struct {
@@ -854,6 +949,8 @@ type UpdateAxybRequest struct {
 	UserData       string
 	AutoCreateFlag int32
 	OutId          string
+	OrderId        string
+	IndustrialId   string
 }
 
 type PhoneParam struct {

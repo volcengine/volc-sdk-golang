@@ -170,6 +170,54 @@ var (
 				"Version": []string{DefaultVersion},
 			},
 		},
+		"BindAXG": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"BindAXG"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"UnbindAXG": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UnbindAXG"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"UpdateAXG": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAXG"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"CreateAXGGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateAXGGroup"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"UpdateAXGGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateAXGGroup"},
+				"Version": []string{DefaultVersion},
+			},
+		},
+		"DeleteAXGGroup": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteAXGGroup"},
+				"Version": []string{DefaultVersion},
+			},
+		},
 		"Click2Call": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -234,14 +282,14 @@ var (
 				"Version": []string{DefaultVersion},
 			},
 		},
-        "QueryAuth": {
-            Method: http.MethodPost,
-            Path:   "/",
-            Query: url.Values{
-                "Action":  []string{"QueryAuth"},
-                "Version": []string{DefaultVersion},
-            },
-        },
+		"QueryAuth": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"QueryAuth"},
+				"Version": []string{DefaultVersion},
+			},
+		},
 		"CreateNumberPool": {
 			Method: http.MethodPost,
 			Path:   "/",
