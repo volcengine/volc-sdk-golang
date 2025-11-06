@@ -155,6 +155,106 @@ func TestUnbindAXN(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestBindAXG(t *testing.T) {
+	req := &BindAXGRequest{
+		NumberPoolNo:      "NP1760xxxxx0904269",
+		PhoneNoA:          "19200486749",
+		PhoneNoB:          "19200486751",
+		ExpireTime:        1761908994,
+		UserData:          "userdata",
+		OutId:             "outId",
+		GroupName:         "ces123",
+		GroupNumbers:      []string{"19200486752", "19200486753"},
+		CityCode:          "010",
+		CityCodeByPhoneNo: "A",
+		DegradeCityList:   []string{"010", "020"},
+		RandomFlag:        1,
+		OrderId:           "orderId",
+		IndustrialId:      "industrial",
+	}
+	result, statusCode, err := DefaultInstance.BindAXG(req)
+	t.Logf("result = %+v\n %+v\n %+v\n", result, statusCode, err)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestUnbindAXG(t *testing.T) {
+	req := &UnbindAXGRequest{
+		NumberPoolNo: "NP176xxxx010904269",
+		SubId:        "SS1760945125168448b6w66orfqsi0",
+		DelGroup:     true,
+	}
+	result, statusCode, err := DefaultInstance.UnbindAXG(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestUpdateAXG(t *testing.T) {
+	req := &UpdateAXGRequest{
+		NumberPoolNo: "NP1760xxxx2010904269",
+		SubId:        "SS17618226141a981806w66orfqze0",
+		UpdateType:   "updateIndustrialId",
+		GroupId:      "G1760945070085e79fe95c-f4a9-47e4-a337-d72f86b9f494",
+		PhoneNoA:     "13596013572",
+		ExpireTime:   1761290038,
+		UserData:     "updagte",
+		OutId:        "oute123",
+		OrderId:      "order123",
+		IndustrialId: "industrial123",
+	}
+	result, statusCode, err := DefaultInstance.UpdateAXG(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestCreateAXGGroup(t *testing.T) {
+	req := &CreateAXGGroupRequest{
+		NumberPoolNo: "NP176xxxx52010904269",
+		GroupName:    "测试G组名称",
+		Numbers:      []string{"19200486752", "19200486753"},
+		ExpireTime:   1761030837,
+	}
+	result, statusCode, err := DefaultInstance.CreateAXGGroup(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestUpdateAXGGroup(t *testing.T) {
+	req := &UpdateAXGGroupRequest{
+		NumberPoolNo:     "NP17601xxxx010904269",
+		SubId:            "",
+		GroupId:          "G17609444514630dd22ce5-f51c-4689-9225-1952678aaabe",
+		UpdateType:       "addNumbers",
+		GroupName:        "测试G组名称123",
+		Numbers:          []string{"19200486755", "19200486753", "19200486754", "19200486755", "19200486756", "19200486757", "19200486758", "19200486759", "19200486760", "19200486761", "19200486762", "19200486763"},
+		OverflowStrategy: "fifo",
+		ExpireTime:       1761030838,
+	}
+	result, statusCode, err := DefaultInstance.UpdateAXGGroup(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
+func TestDeleteAXGGroup(t *testing.T) {
+	req := &DeleteAXGGroupRequest{
+		NumberPoolNo: "NP1760xxxx2010904269",
+		GroupId:      "G17609444514630dd22ce5-f51c-4689-9225-1952678aaabe",
+	}
+	result, statusCode, err := DefaultInstance.DeleteAXGGroup(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestClick2Call(t *testing.T) {
 	req := &Click2CallRequest{
 		Caller:             "137XXXX8257",

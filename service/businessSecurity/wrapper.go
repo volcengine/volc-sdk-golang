@@ -1466,7 +1466,7 @@ func (p *SecuritySecurityClient) SecuritySourceStream(req *RiskDetectionRequest)
 	return ch, nil
 }
 
-func (p *SecuritySecurityClient) TextModeration(req *RiskDetectionRequest) (*TextModerationResponse, error) {
+func (p *SecuritySecurityClient) TextModeration(req *RiskDetectionRequest) (*TextModerationSyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("TextModeration: fail to marshal request, %v", err)
@@ -1478,7 +1478,7 @@ func (p *SecuritySecurityClient) TextModeration(req *RiskDetectionRequest) (*Tex
 			if err != nil {
 				return nil, fmt.Errorf("TextModeration: fail to do request, %v", err)
 			}
-			result := new(TextModerationResponse)
+			result := new(TextModerationSyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1486,7 +1486,7 @@ func (p *SecuritySecurityClient) TextModeration(req *RiskDetectionRequest) (*Tex
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(TextModerationResponse)
+	result := new(TextModerationSyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -1521,7 +1521,7 @@ func (p *SecuritySecurityClient) AsyncTextModeration(req *RiskDetectionRequest) 
 	return result, nil
 }
 
-func (p *SecuritySecurityClient) TextModerationResult(req *RcLlmResultRequest) (*TextModerationResponse, error) {
+func (p *SecuritySecurityClient) TextModerationResult(req *RcLlmResultRequest) (*TextModerationAsyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("TextModerationResult: fail to marshal request, %v", err)
@@ -1534,7 +1534,7 @@ func (p *SecuritySecurityClient) TextModerationResult(req *RcLlmResultRequest) (
 			if err != nil {
 				return nil, fmt.Errorf("TextModerationResult: fail to do request, %v", err)
 			}
-			result := new(TextModerationResponse)
+			result := new(TextModerationAsyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1542,14 +1542,14 @@ func (p *SecuritySecurityClient) TextModerationResult(req *RcLlmResultRequest) (
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(TextModerationResponse)
+	result := new(TextModerationAsyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-func (p *SecuritySecurityClient) MultiModeration(req *RiskDetectionRequest) (*MultiModerationResponse, error) {
+func (p *SecuritySecurityClient) MultiModeration(req *RiskDetectionRequest) (*MultiModerationSyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("MultiModeration: fail to marshal request, %v", err)
@@ -1561,7 +1561,7 @@ func (p *SecuritySecurityClient) MultiModeration(req *RiskDetectionRequest) (*Mu
 			if err != nil {
 				return nil, fmt.Errorf("MultiModeration: fail to do request, %v", err)
 			}
-			result := new(MultiModerationResponse)
+			result := new(MultiModerationSyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1569,7 +1569,7 @@ func (p *SecuritySecurityClient) MultiModeration(req *RiskDetectionRequest) (*Mu
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(MultiModerationResponse)
+	result := new(MultiModerationSyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -1604,7 +1604,7 @@ func (p *SecuritySecurityClient) AsyncMultiModeration(req *RiskDetectionRequest)
 	return result, nil
 }
 
-func (p *SecuritySecurityClient) MultiModerationResult(req *RcLlmResultRequest) (*MultiModerationResponse, error) {
+func (p *SecuritySecurityClient) MultiModerationResult(req *RcLlmResultRequest) (*MultiModerationAsyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("MultiModerationResult: fail to marshal request, %v", err)
@@ -1617,7 +1617,7 @@ func (p *SecuritySecurityClient) MultiModerationResult(req *RcLlmResultRequest) 
 			if err != nil {
 				return nil, fmt.Errorf("MultiModerationResult: fail to do request, %v", err)
 			}
-			result := new(MultiModerationResponse)
+			result := new(MultiModerationAsyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1625,14 +1625,14 @@ func (p *SecuritySecurityClient) MultiModerationResult(req *RcLlmResultRequest) 
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(MultiModerationResponse)
+	result := new(MultiModerationAsyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
 	return result, nil
 }
 
-func (p *SecuritySecurityClient) CustomRisk(req *RiskDetectionRequest) (*CustomRiskResponse, error) {
+func (p *SecuritySecurityClient) CustomRisk(req *RiskDetectionRequest) (*CustomRiskSyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("CustomRisk: fail to marshal request, %v", err)
@@ -1644,7 +1644,7 @@ func (p *SecuritySecurityClient) CustomRisk(req *RiskDetectionRequest) (*CustomR
 			if err != nil {
 				return nil, fmt.Errorf("CustomRisk: fail to do request, %v", err)
 			}
-			result := new(CustomRiskResponse)
+			result := new(CustomRiskSyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1652,7 +1652,7 @@ func (p *SecuritySecurityClient) CustomRisk(req *RiskDetectionRequest) (*CustomR
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(CustomRiskResponse)
+	result := new(CustomRiskSyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}
@@ -1687,7 +1687,7 @@ func (p *SecuritySecurityClient) AsyncCustomRisk(req *RiskDetectionRequest) (*As
 	return result, nil
 }
 
-func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*CustomRiskResponse, error) {
+func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*CustomRiskAsyncResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {
 		return nil, fmt.Errorf("CustomRiskResult: fail to marshal request, %v", err)
@@ -1700,7 +1700,7 @@ func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*Cus
 			if err != nil {
 				return nil, fmt.Errorf("CustomRiskResult: fail to do request, %v", err)
 			}
-			result := new(CustomRiskResponse)
+			result := new(CustomRiskAsyncResponse)
 			if err := UnmarshalResultInto(respBody, result); err != nil {
 				return nil, err
 			}
@@ -1708,7 +1708,7 @@ func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*Cus
 		}
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
-	result := new(CustomRiskResponse)
+	result := new(CustomRiskAsyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

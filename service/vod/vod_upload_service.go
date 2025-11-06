@@ -83,7 +83,7 @@ func (p *Vod) UploadMediaByUrl(req *request.VodUrlUploadRequest) (*response.VodU
 		form.Add(k, sv)
 	}
 
-	respBody, status, err := p.Query("UploadMediaByUrl", query)
+	respBody, status, err := p.Post("UploadMediaByUrl", url.Values{}, form)
 
 	output := &response.VodUrlUploadResponse{}
 	unmarshaler := protojson.UnmarshalOptions{
