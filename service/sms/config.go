@@ -294,6 +294,14 @@ var (
 				"Version": []string{ServiceVersion20210111},
 			},
 		},
+		"ApplySmsSubContentTemplateV2": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ApplySmsSubContentTemplateV2SDK"},
+				"Version": []string{ServiceVersion20210111},
+			},
+		},
 		"ListSmsTemplateV2": {
 			Method: http.MethodGet,
 			Path:   "/",
