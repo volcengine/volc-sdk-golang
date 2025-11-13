@@ -498,6 +498,17 @@ type ApplyTemplateV2Request struct {
 	TemplateTrafficDriving [][]TemplateParamWithTrafficDriving `json:"templateTrafficDriving"`
 }
 
+type CreateSubContentTemplate struct {
+	SecondTemplateId       string                              `json:"secondTemplateId" vd:"len($)>0"`
+	TemplateParamsReq      []TemplateParamsV2                  `json:"templateParams"`
+	Content                string                              `json:"content" vd:"len($)>0"`
+	TemplateTrafficDriving [][]TemplateParamWithTrafficDriving `json:"templateTrafficDriving"`
+	FixTemplateParams      []TemplateParamWithTrafficDriving   `form:"fixTrafficDriving" json:"fixTrafficDriving"`
+	TemplateId             string                              `form:"templateId" json:"templateId"` // 一级模版ID
+	Signature              string                              `form:"signature" json:"signature"`   // 签名
+	Industry               string                              `form:"industry" json:"industry"`     // 行业
+}
+
 type TemplateParamWithTrafficDriving struct {
 	Name      string `query:"name" json:"name"`
 	ParamType int    `query:"paramType" json:"paramType"`
@@ -507,6 +518,14 @@ type TemplateParamWithTrafficDriving struct {
 type ApplyTemplateV2Response struct {
 	ResponseMetadata base.ResponseMetadata
 	Result           BindSignaturesResp `json:"Result"`
+}
+type ApplySmsSubContentTemplateV2Response struct {
+	ResponseMetadata base.ResponseMetadata
+	Result           ApplySmsSubContentTemplateV2SDKResult `json:"Result"`
+}
+
+type ApplySmsSubContentTemplateV2SDKResult struct {
+	SubContentId string `json:"subContentId"` // 子文案模版ID
 }
 
 type BindSignaturesResp struct {
