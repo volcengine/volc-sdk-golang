@@ -46,6 +46,15 @@ func (p *SMS) ApplySmsTemplateV2(req *ApplyTemplateV2Request) (*ApplyTemplateV2R
 	return resp, statusCode, nil
 }
 
+func (p *SMS) ApplySmsSubContentTemplateV2(req *CreateSubContentTemplate) (*ApplySmsSubContentTemplateV2Response, int, error) {
+	resp := new(ApplySmsSubContentTemplateV2Response)
+	statusCode, err := p.smsHandler("ApplySmsSubContentTemplateV2", req, resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *SMS) ListSmsTemplateV2(req *ListSmsTemplateV2Request) (*ListSmsTemplateV2Response, int, error) {
 	resp := new(ListSmsTemplateV2Response)
 	statusCode, err := p.smsHandler("ListSmsTemplateV2", req, resp)

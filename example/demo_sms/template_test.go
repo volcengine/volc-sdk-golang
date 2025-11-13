@@ -224,3 +224,66 @@ func TestListSubContent(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 	t.Logf("error = %v\n", result.ResponseMetadata.Error)
 }
+
+func TestCreateSubContentTemplate(t *testing.T) {
+	// 这个有依赖该账号的其它数据，实际测试时，需要将AKSK替换成正确的
+	sms.DefaultInstance.Client.SetAccessKey(testAk)
+	sms.DefaultInstance.Client.SetSecretKey(testSk)
+	templateParamsReq := make([]sms.TemplateParamsV2, 0)
+	templateParamsReq = append(templateParamsReq, sms.TemplateParamsV2{
+		Name:      "code",
+		ParamType: 1,
+	})
+	templateParamsReq = append(templateParamsReq, sms.TemplateParamsV2{
+		Name:      "phone",
+		ParamType: 3,
+	})
+	templateParamsReq = append(templateParamsReq, sms.TemplateParamsV2{
+		Name:      "link",
+		ParamType: 2,
+	})
+
+	phoneList := make([]sms.TemplateParamWithTrafficDriving, 0)
+	phoneList = append(phoneList, sms.TemplateParamWithTrafficDriving{
+		Name:      "phone",
+		ParamType: 3,
+		Content:   "***",
+	})
+	phoneList = append(phoneList, sms.TemplateParamWithTrafficDriving{
+		Name:      "phone",
+		ParamType: 3,
+		Content:   "***",
+	})
+	linkList := make([]sms.TemplateParamWithTrafficDriving, 0)
+	linkList = append(linkList, sms.TemplateParamWithTrafficDriving{
+		Name:      "link",
+		ParamType: 2,
+		Content:   "***.com/",
+	})
+	linkList = append(linkList, sms.TemplateParamWithTrafficDriving{
+		Name:      "link",
+		ParamType: 2,
+		Content:   "https://***.com",
+	})
+	templateTrafficDriving := make([][]sms.TemplateParamWithTrafficDriving, 0)
+	for _, phone := range phoneList {
+		for _, link := range linkList {
+			templateTrafficDriving = append(templateTrafficDriving, []sms.TemplateParamWithTrafficDriving{phone, link})
+		}
+	}
+	req := &sms.CreateSubContentTemplate{
+		TemplateId:             "S1T_85e6721w",                      // 一级模版ID
+		Signature:              "huoshan测试",                         // 签名
+		SecondTemplateId:       "S2T_8615313e",                      // 二级模版ID
+		Industry:               "universal",                         // 行业
+		Content:                "test-${code}-${phone}-${link}-***", // 模版内容
+		TemplateParamsReq:      templateParamsReq,
+		TemplateTrafficDriving: templateTrafficDriving,
+	}
+
+	result, statusCode, err := sms.DefaultInstance.ApplySmsSubContentTemplateV2(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("statusCode = %v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+	t.Logf("error = %v\n", result.ResponseMetadata.Error)
+}
