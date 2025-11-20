@@ -198,7 +198,7 @@ var (
 		// 上传
 		// **********************************************************************
 		"UploadMediaByUrl": {
-			Method: http.MethodGet,
+			Method: http.MethodPost,
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"UploadMediaByUrl"},
