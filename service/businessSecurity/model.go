@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/url"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 type RiskDetectionRequest struct {
@@ -882,18 +883,20 @@ type CustomRiskSyncResponse struct {
 }
 
 type CustomRiskAsyncData struct {
-	Decision       string  `json:"Decision"`
-	DecisionLabel  string  `json:"DecisionLabel"`
-	DataId         string  `json:"DataId"`
-	DecisionRate   float64 `json:"DecisionRate"`
-	DecisionReason string  `json:"DecisionReason"`
-	PassThrough    string  `json:"PassThrough"`
+	Decision       string                 `json:"Decision"`
+	DecisionLabel  string                 `json:"DecisionLabel"`
+	DataId         string                 `json:"DataId"`
+	DecisionRate   float64                `json:"DecisionRate"`
+	DecisionReason string                 `json:"DecisionReason"`
+	Detail         map[string]interface{} `json:"Detail"`
+	PassThrough    string                 `json:"PassThrough"`
 }
 type CustomRiskSyncData struct {
-	Decision       string  `json:"Decision"`
-	DecisionLabel  string  `json:"DecisionLabel"`
-	DecisionRate   float64 `json:"DecisionRate"`
-	DecisionReason string  `json:"DecisionReason"`
+	Decision       string                 `json:"Decision"`
+	DecisionLabel  string                 `json:"DecisionLabel"`
+	DecisionRate   float64                `json:"DecisionRate"`
+	DecisionReason string                 `json:"DecisionReason"`
+	Detail         map[string]interface{} `json:"Detail"`
 }
 
 type AsyncRcLlmResponse struct {
