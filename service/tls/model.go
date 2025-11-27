@@ -122,24 +122,37 @@ func (v *ModifyProjectRequest) CheckValidation() error {
 	return nil
 }
 
+type EncryptUserCmkConf struct {
+	UserCmkID string `json:"user_cmk_id"`
+	Trn       string `json:"trn"`
+	RegionID  string `json:"region_id"`
+}
+
+type EncryptConf struct {
+	Enable             bool                `json:"enable"`
+	EncryptType        string              `json:"encrypt_type"`
+	EncryptUserCmkConf *EncryptUserCmkConf `json:"user_cmk_info"`
+}
+
 type CreateTopicRequest struct {
 	CommonRequest
-	ProjectID      string    `json:"ProjectId"`
-	TopicName      string    `json:","`
-	Ttl            uint16    `json:","`
-	Description    string    `json:","`
-	ShardCount     int       `json:","`
-	MaxSplitShard  *int32    `json:",omitempty"`
-	AutoSplit      bool      `json:","`
-	EnableTracking *bool     `json:",omitempty"`
-	TimeKey        *string   `json:",omitempty"`
-	TimeFormat     *string   `json:",omitempty"`
-	Tags           []TagInfo `json:",omitempty"`
-	LogPublicIP    *bool     `json:",omitempty"`
-	EnableHotTtl   *bool     `json:",omitempty"`
-	HotTtl         *int32    `json:",omitempty"`
-	ColdTtl        *int32    `json:",omitempty"`
-	ArchiveTtl     *int32    `json:",omitempty"`
+	ProjectID      string       `json:"ProjectId"`
+	TopicName      string       `json:","`
+	Ttl            uint16       `json:","`
+	Description    string       `json:","`
+	ShardCount     int          `json:","`
+	MaxSplitShard  *int32       `json:",omitempty"`
+	AutoSplit      bool         `json:","`
+	EnableTracking *bool        `json:",omitempty"`
+	TimeKey        *string      `json:",omitempty"`
+	TimeFormat     *string      `json:",omitempty"`
+	Tags           []TagInfo    `json:",omitempty"`
+	LogPublicIP    *bool        `json:",omitempty"`
+	EnableHotTtl   *bool        `json:",omitempty"`
+	HotTtl         *int32       `json:",omitempty"`
+	ColdTtl        *int32       `json:",omitempty"`
+	ArchiveTtl     *int32       `json:",omitempty"`
+	EncryptConf    *EncryptConf `json:",omitempty"`
 }
 
 func (v *CreateTopicRequest) CheckValidation() error {
@@ -177,20 +190,21 @@ func (v *DeleteTopicRequest) CheckValidation() error {
 
 type ModifyTopicRequest struct {
 	CommonRequest
-	TopicID        string  `json:"TopicId"`
-	TopicName      *string `json:",omitempty"`
-	Ttl            *uint16 `json:",omitempty"`
-	Description    *string `json:",omitempty"`
-	MaxSplitShard  *int32  `json:",omitempty"`
-	AutoSplit      *bool   `json:",omitempty"`
-	EnableTracking *bool   `json:",omitempty"`
-	TimeKey        *string `json:",omitempty"`
-	TimeFormat     *string `json:",omitempty"`
-	LogPublicIP    *bool   `json:",omitempty"`
-	EnableHotTtl   *bool   `json:",omitempty"`
-	HotTtl         *int32  `json:",omitempty"`
-	ColdTtl        *int32  `json:",omitempty"`
-	ArchiveTtl     *int32  `json:",omitempty"`
+	TopicID        string       `json:"TopicId"`
+	TopicName      *string      `json:",omitempty"`
+	Ttl            *uint16      `json:",omitempty"`
+	Description    *string      `json:",omitempty"`
+	MaxSplitShard  *int32       `json:",omitempty"`
+	AutoSplit      *bool        `json:",omitempty"`
+	EnableTracking *bool        `json:",omitempty"`
+	TimeKey        *string      `json:",omitempty"`
+	TimeFormat     *string      `json:",omitempty"`
+	LogPublicIP    *bool        `json:",omitempty"`
+	EnableHotTtl   *bool        `json:",omitempty"`
+	HotTtl         *int32       `json:",omitempty"`
+	ColdTtl        *int32       `json:",omitempty"`
+	ArchiveTtl     *int32       `json:",omitempty"`
+	EncryptConf    *EncryptConf `json:",omitempty"`
 }
 
 func (v *ModifyTopicRequest) CheckValidation() error {
@@ -214,25 +228,26 @@ func (v *DescribeTopicRequest) CheckValidation() error {
 
 type DescribeTopicResponse struct {
 	CommonResponse
-	TopicName       string    `json:"TopicName"`
-	ProjectID       string    `json:"ProjectId"`
-	TopicID         string    `json:"TopicId"`
-	Ttl             uint16    `json:"Ttl"`
-	CreateTimestamp string    `json:"CreateTime"`
-	ModifyTimestamp string    `json:"ModifyTime"`
-	ShardCount      int32     `json:"ShardCount"`
-	Description     string    `json:"Description"`
-	MaxSplitShard   int32     `json:"MaxSplitShard"`
-	AutoSplit       bool      `json:"AutoSplit"`
-	EnableTracking  bool      `json:"EnableTracking"`
-	TimeKey         string    `json:"TimeKey"`
-	TimeFormat      string    `json:"TimeFormat"`
-	Tags            []TagInfo `json:"Tags"`
-	LogPublicIP     bool      `json:"LogPublicIP"`
-	EnableHotTtl    bool      `json:"EnableHotTtl"`
-	HotTtl          int32     `json:"HotTtl"`
-	ColdTtl         int32     `json:"ColdTtl"`
-	ArchiveTtl      int32     `json:"ArchiveTtl"`
+	TopicName       string      `json:"TopicName"`
+	ProjectID       string      `json:"ProjectId"`
+	TopicID         string      `json:"TopicId"`
+	Ttl             uint16      `json:"Ttl"`
+	CreateTimestamp string      `json:"CreateTime"`
+	ModifyTimestamp string      `json:"ModifyTime"`
+	ShardCount      int32       `json:"ShardCount"`
+	Description     string      `json:"Description"`
+	MaxSplitShard   int32       `json:"MaxSplitShard"`
+	AutoSplit       bool        `json:"AutoSplit"`
+	EnableTracking  bool        `json:"EnableTracking"`
+	TimeKey         string      `json:"TimeKey"`
+	TimeFormat      string      `json:"TimeFormat"`
+	Tags            []TagInfo   `json:"Tags"`
+	LogPublicIP     bool        `json:"LogPublicIP"`
+	EnableHotTtl    bool        `json:"EnableHotTtl"`
+	HotTtl          int32       `json:"HotTtl"`
+	ColdTtl         int32       `json:"ColdTtl"`
+	ArchiveTtl      int32       `json:"ArchiveTtl"`
+	EncryptConf     EncryptConf `json:",omitempty"`
 }
 
 type DescribeTopicsRequest struct {
@@ -252,25 +267,26 @@ func (v *DescribeTopicsRequest) CheckValidation() error {
 }
 
 type Topic struct {
-	TopicName       string    `json:"TopicName"`
-	ProjectID       string    `json:"ProjectId"`
-	TopicID         string    `json:"TopicId"`
-	Ttl             uint16    `json:"Ttl"`
-	CreateTimestamp string    `json:"CreateTime"`
-	ModifyTimestamp string    `json:"ModifyTime"`
-	ShardCount      int32     `json:"ShardCount"`
-	Description     string    `json:"Description"`
-	MaxSplitShard   int32     `json:"MaxSplitShard"`
-	AutoSplit       bool      `json:"AutoSplit"`
-	EnableTracking  bool      `json:"EnableTracking"`
-	TimeKey         string    `json:"TimeKey"`
-	TimeFormat      string    `json:"TimeFormat"`
-	Tags            []TagInfo `json:"Tags"`
-	LogPublicIP     bool      `json:"LogPublicIP"`
-	EnableHotTtl    bool      `json:"EnableHotTtl"`
-	HotTtl          int32     `json:"HotTtl"`
-	ColdTtl         int32     `json:"ColdTtl"`
-	ArchiveTtl      int32     `json:"ArchiveTtl"`
+	TopicName       string      `json:"TopicName"`
+	ProjectID       string      `json:"ProjectId"`
+	TopicID         string      `json:"TopicId"`
+	Ttl             uint16      `json:"Ttl"`
+	CreateTimestamp string      `json:"CreateTime"`
+	ModifyTimestamp string      `json:"ModifyTime"`
+	ShardCount      int32       `json:"ShardCount"`
+	Description     string      `json:"Description"`
+	MaxSplitShard   int32       `json:"MaxSplitShard"`
+	AutoSplit       bool        `json:"AutoSplit"`
+	EnableTracking  bool        `json:"EnableTracking"`
+	TimeKey         string      `json:"TimeKey"`
+	TimeFormat      string      `json:"TimeFormat"`
+	Tags            []TagInfo   `json:"Tags"`
+	LogPublicIP     bool        `json:"LogPublicIP"`
+	EnableHotTtl    bool        `json:"EnableHotTtl"`
+	HotTtl          int32       `json:"HotTtl"`
+	ColdTtl         int32       `json:"ColdTtl"`
+	ArchiveTtl      int32       `json:"ArchiveTtl"`
+	EncryptConf     EncryptConf `json:",omitempty"`
 }
 
 type DescribeTopicsResponse struct {

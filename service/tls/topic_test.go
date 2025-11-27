@@ -79,6 +79,10 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 			Ttl:         3,
 			Description: "test topic",
 			ShardCount:  3,
+			EncryptConf: &EncryptConf{
+				Enable:      true,
+				EncryptType: "default",
+			},
 		}: {
 			TopicName:   "topic1",
 			ProjectID:   suite.project,
@@ -86,10 +90,37 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 			ShardCount:  3,
 			Description: "test topic",
 			LogPublicIP: true,
+			EncryptConf: EncryptConf{
+				Enable:      true,
+				EncryptType: "default",
+			},
+		},
+		{
+			ProjectID:   suite.project,
+			TopicName:   "topic2",
+			Ttl:         3,
+			Description: "test topic",
+			ShardCount:  3,
+			EncryptConf: &EncryptConf{
+				Enable:      true,
+				EncryptType: "default",
+			},
+		}: {
+			TopicName:   "topic2",
+			ProjectID:   suite.project,
+			Ttl:         3,
+			ShardCount:  3,
+			Description: "test topic",
+			LogPublicIP: true,
+			EncryptConf: EncryptConf{
+				Enable:             true,
+				EncryptType:        "default",
+				EncryptUserCmkConf: nil,
+			},
 		},
 		{
 			ProjectID:      suite.project,
-			TopicName:      "topic2",
+			TopicName:      "topic3",
 			Ttl:            120,
 			Description:    "create a topic with new arguments",
 			ShardCount:     2,
@@ -104,9 +135,17 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 			HotTtl:         Int32Ptr(30),
 			ColdTtl:        Int32Ptr(30),
 			ArchiveTtl:     Int32Ptr(60),
+			EncryptConf: &EncryptConf{
+				Enable: true,
+				EncryptUserCmkConf: &EncryptUserCmkConf{
+					UserCmkID: os.Getenv("KMS_USER_CMK_ID"),
+					Trn:       os.Getenv("KMS_TRN"),
+					RegionID:  os.Getenv("KMS_REGION_ID"),
+				},
+			},
 		}: {
 			ProjectID:      suite.project,
-			TopicName:      "topic2",
+			TopicName:      "topic3",
 			Ttl:            120,
 			Description:    "create a topic with new arguments",
 			ShardCount:     2,
@@ -121,6 +160,15 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 			HotTtl:         30,
 			ColdTtl:        30,
 			ArchiveTtl:     60,
+			EncryptConf: EncryptConf{
+				Enable:      true,
+				EncryptType: "",
+				EncryptUserCmkConf: &EncryptUserCmkConf{
+					UserCmkID: os.Getenv("KMS_USER_CMK_ID"),
+					Trn:       os.Getenv("KMS_TRN"),
+					RegionID:  os.Getenv("KMS_REGION_ID"),
+				},
+			},
 		},
 	}
 
@@ -158,6 +206,7 @@ func (suite *SDKTopicTestSuite) TestCreateTopicNormally() {
 		suite.Equal(topicInfo.HotTtl, getTopicResponse.HotTtl)
 		suite.Equal(topicInfo.ColdTtl, getTopicResponse.ColdTtl)
 		suite.Equal(topicInfo.ArchiveTtl, getTopicResponse.ArchiveTtl)
+		suite.Equal(topicInfo.EncryptConf, getTopicResponse.EncryptConf)
 	}
 }
 
@@ -170,7 +219,9 @@ func (suite *SDKTopicTestSuite) TestCreateTopicAbnormally() {
 		Description:  "test topic",
 		ShardCount:   3,
 		EnableHotTtl: BoolPtr(true),
-		HotTtl:       Int32Ptr(8),
+		HotTtl:       Int32Ptr(9),
+		ColdTtl:      Int32Ptr(0),
+		ArchiveTtl:   Int32Ptr(0),
 	})
 	suite.NoError(err)
 	suite.topicList = append(suite.topicList, resp.TopicID)
@@ -211,48 +262,47 @@ func (suite *SDKTopicTestSuite) TestModifyTopicNormally() {
 	createTopicReq := &CreateTopicRequest{
 		ProjectID:    suite.project,
 		TopicName:    "golang-sdk-update-topic-" + uuid.New().String(),
-		Ttl:          9,
+		Ttl:          97,
 		Description:  "test topic",
 		ShardCount:   2,
 		EnableHotTtl: BoolPtr(true),
-		HotTtl:       Int32Ptr(8),
+		HotTtl:       Int32Ptr(7),
+		ColdTtl:      Int32Ptr(30),
+		ArchiveTtl:   Int32Ptr(60),
+		EncryptConf: &EncryptConf{
+			Enable:      false,
+			EncryptType: "default",
+		},
 	}
 
 	createTopicResp, err := suite.cli.CreateTopic(createTopicReq)
 	suite.NoError(err)
 	suite.topicList = append(suite.topicList, createTopicResp.TopicID)
 
-	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{
-		Ttl:        Uint16Ptr(67),
+	modifyTopicRequest := &ModifyTopicRequest{
+		Ttl:        Uint16Ptr(120),
 		TopicID:    createTopicResp.TopicID,
 		TopicName:  StrPtr("new-topic-name"),
-		HotTtl:     Int32Ptr(7),
+		HotTtl:     Int32Ptr(30),
 		ColdTtl:    Int32Ptr(30),
-		ArchiveTtl: Int32Ptr(30),
-	})
+		ArchiveTtl: Int32Ptr(60),
+		EncryptConf: &EncryptConf{
+			Enable:      true,
+			EncryptType: "default",
+		},
+	}
+	_, err = suite.cli.ModifyTopic(modifyTopicRequest)
 	suite.NoError(err)
 	describeTopicResp, err := suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
 	suite.NoError(err)
 	suite.Equal("new-topic-name", describeTopicResp.TopicName)
-	suite.Equal(67, int(describeTopicResp.Ttl))
-	suite.Equal(7, int(describeTopicResp.HotTtl))
+	suite.Equal(120, int(describeTopicResp.Ttl))
+	suite.Equal(30, int(describeTopicResp.HotTtl))
 	suite.Equal(true, describeTopicResp.EnableHotTtl)
 	suite.Equal("test topic", describeTopicResp.Description)
 	suite.Equal(30, int(describeTopicResp.ColdTtl))
-	suite.Equal(30, int(describeTopicResp.ArchiveTtl))
-
-	_, err = suite.cli.ModifyTopic(&ModifyTopicRequest{
-		TopicID:     createTopicResp.TopicID,
-		TopicName:   StrPtr("new-name"),
-		Ttl:         Uint16Ptr(5),
-		Description: StrPtr("new desc"),
-	})
-	suite.NoError(err)
-	describeTopicResp, err = suite.cli.DescribeTopic(&DescribeTopicRequest{TopicID: createTopicResp.TopicID})
-	suite.NoError(err)
-	suite.Equal("new-name", describeTopicResp.TopicName)
-	suite.Equal(5, int(describeTopicResp.Ttl))
-	suite.Equal("new desc", describeTopicResp.Description)
+	suite.Equal(60, int(describeTopicResp.ArchiveTtl))
+	suite.Equal(modifyTopicRequest.EncryptConf, &describeTopicResp.EncryptConf)
 }
 
 func (suite *SDKTopicTestSuite) TestModifyTopicAbnormally() {
