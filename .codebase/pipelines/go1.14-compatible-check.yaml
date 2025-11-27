@@ -1,0 +1,28 @@
+name: go1.14_compatible_check
+trigger:
+  change:
+      branches: [ master ]
+      paths:
+      - "base/**"
+      - "service/**"
+      - "go.mod"
+      - "go.sum"
+      types: [ create, push ]
+jobs:
+  check:
+    name: generate and build
+    image: hub.byted.org/codebase/ci_go_1_14
+    steps:
+        - name: fetch master
+          commands:
+            - git checkout master && git checkout -
+        - name: download program
+          commands:
+            - wget 'https://tosv.byted.org/obj/cam-sdkgen/check_diff_compatible' && chmod +x check_diff_compatible
+        - name: generate code
+          commands:
+            - ./check_diff_compatible
+        - name: build to test
+          commands:
+            - go version && cat main.go && go build main.go
+
