@@ -255,6 +255,18 @@ func TestDeleteAXGGroup(t *testing.T) {
 	t.Logf("err = %+v\n", err)
 }
 
+func TestRegisterIndustrialId(t *testing.T) {
+	req := &RegisterIndustrialIdRequest{
+		NumberPoolNo: "NP176xxx10901798",
+		OrderId:      "order123",
+	}
+	result, statusCode, err := DefaultInstance.registerIndustrialId(req)
+	t.Logf("result = %+v\n", result)
+	t.Logf("resultError = %+v\n", result.ResponseMetadata.Error)
+	t.Logf("statusCode = %+v\n", statusCode)
+	t.Logf("err = %+v\n", err)
+}
+
 func TestClick2Call(t *testing.T) {
 	req := &Click2CallRequest{
 		Caller:             "137XXXX8257",

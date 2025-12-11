@@ -218,6 +218,14 @@ var (
 				"Version": []string{DefaultVersion},
 			},
 		},
+		"RegisterIndustrialId": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RegisterIndustrialId"},
+				"Version": []string{DefaultVersion},
+			},
+		},
 		"Click2Call": {
 			Method: http.MethodPost,
 			Path:   "/",

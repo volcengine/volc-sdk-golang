@@ -184,6 +184,8 @@ type Subscription struct {
 	OutId               string
 	PhoneNoE            string
 	GroupId             string
+	OrderId             string
+	IndustrialId        string
 }
 
 type UpgradeAXToAXBRequest struct {
@@ -367,6 +369,11 @@ type UpdateAXGGroupRequest struct {
 type DeleteAXGGroupRequest struct {
 	NumberPoolNo string
 	GroupId      string
+}
+
+type RegisterIndustrialIdRequest struct {
+	NumberPoolNo string
+	OrderId      string
 }
 
 type RouteAAuthRequest struct {
@@ -766,7 +773,7 @@ type QualificationMainInfoFormDO struct {
 	CertificateOfOrganizationCodesPhotoFileCode    string
 	CertificateOfTaxationRegistrationPhotoFileCode string
 	QualificationNo                                string
-	ReqSourceType								   int32
+	ReqSourceType                                  int32
 }
 
 type QualificationAdminInfoFormDO struct {
@@ -1021,7 +1028,7 @@ type CreateTtsResourceRequest struct {
 	Name               string
 	TtsTemplateContent string
 	Remark             string
-	ReqSourceType	   int32
+	ReqSourceType      int32
 }
 
 type EditTaskRequest struct {
@@ -1038,8 +1045,8 @@ type EditTaskRequest struct {
 }
 
 type FetchVoiceResourceRequest struct {
-	Url  string
-	Name string
+	Url           string
+	Name          string
 	ReqSourceType int32
 }
 
@@ -1068,7 +1075,7 @@ type SingleAppendRequest struct {
 }
 
 type UploadVoiceResourceRequest struct {
-	FileName string
+	FileName      string
 	ReqSourceType int32
 }
 

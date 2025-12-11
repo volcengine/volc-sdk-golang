@@ -707,6 +707,25 @@ var (
 				"Version": []string{"2018-01-01"},
 			},
 		},
+		// **********************************************************************
+		// 视频剪辑云创
+		// **********************************************************************
+		"AsyncVCreativeTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"AsyncVCreativeTask"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
+		"GetVCreativeTaskResult": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetVCreativeTaskResult"},
+				"Version": []string{"2018-01-01"},
+			},
+		},
 
 		// **********************************************************************
 		// 空间管理

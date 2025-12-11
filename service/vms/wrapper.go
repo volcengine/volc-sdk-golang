@@ -430,7 +430,7 @@ func (p *Vms) SingleCancel(taskOpenId string) (*CommonResponse, int, error) {
 
 func (p *Vms) FetchVoiceResourceByUrl(req *FetchVoiceResourceRequest) (*BasicResourceResponse, int, error) {
 	resp := new(BasicResourceResponse)
-	req.ReqSourceType=3
+	req.ReqSourceType = 3
 	statusCode, err := p.doJson("FetchResource", req, resp)
 
 	if err != nil {
@@ -441,7 +441,7 @@ func (p *Vms) FetchVoiceResourceByUrl(req *FetchVoiceResourceRequest) (*BasicRes
 
 func (p *Vms) CreateTtsResource(req *CreateTtsResourceRequest) (*BasicResourceResponse, int, error) {
 	resp := new(BasicResourceResponse)
-	req.ReqSourceType=3
+	req.ReqSourceType = 3
 	statusCode, err := p.doJson("OpenCreateTts", req, resp)
 
 	if err != nil {
@@ -465,7 +465,7 @@ func (p *Vms) DeleteResourceByResourceKey(resourceKey string) (*CommonResponse, 
 
 func (p *Vms) GenerateVoiceResourceUploadUrl(req *UploadVoiceResourceRequest) (*BasicResourceResponse, int, error) {
 	resp := new(BasicResourceResponse)
-	req.ReqSourceType=3
+	req.ReqSourceType = 3
 	statusCode, err := p.doJson("GetResourceUploadUrl", req, resp)
 
 	if err != nil {
@@ -476,7 +476,7 @@ func (p *Vms) GenerateVoiceResourceUploadUrl(req *UploadVoiceResourceRequest) (*
 
 func (p *Vms) CommitVoiceResourceUpload(req *UploadVoiceResourceRequest) (*BasicResourceResponse, int, error) {
 	resp := new(BasicResourceResponse)
-	req.ReqSourceType=3
+	req.ReqSourceType = 3
 	statusCode, err := p.doJson("CommitResourceUpload", req, resp)
 
 	if err != nil {
@@ -524,7 +524,7 @@ func (p *Vms) QueryOpenGetResource(req *QueryOpenGetResourceRequest) (*QueryOpen
 
 func (p *Vms) AddQualification(req *AddQualificationRequest) (*AddQualificationResponse, int, error) {
 	resp := new(AddQualificationResponse)
-	req.QualificationMainInfoFormDO.ReqSourceType=3
+	req.QualificationMainInfoFormDO.ReqSourceType = 3
 	if statusCode, err := HandlerJson("AddQualification", req, resp, *p.Client); err != nil {
 		return nil, statusCode, err
 	} else {
@@ -534,7 +534,7 @@ func (p *Vms) AddQualification(req *AddQualificationRequest) (*AddQualificationR
 
 func (p *Vms) UpdateQualification(req *UpdateQualificationRequest) (*UpdateQualificationResponse, int, error) {
 	resp := new(UpdateQualificationResponse)
-	req.QualificationMainInfoFormDO.ReqSourceType=3
+	req.QualificationMainInfoFormDO.ReqSourceType = 3
 	if statusCode, err := HandlerJson("UpdateQualification", req, resp, *p.Client); err != nil {
 		return nil, statusCode, err
 	} else {
@@ -644,6 +644,15 @@ func (p *Vms) UpdateAXGGroup(req *UpdateAXGGroupRequest) (*OperateResponse, int,
 func (p *Vms) DeleteAXGGroup(req *DeleteAXGGroupRequest) (*OperateResponse, int, error) {
 	resp := new(OperateResponse)
 	if statusCode, err := p.doJson("DeleteAXGGroup", req, resp); err != nil {
+		return nil, statusCode, err
+	} else {
+		return resp, statusCode, nil
+	}
+}
+
+func (p *Vms) registerIndustrialId(req *RegisterIndustrialIdRequest) (*OperateResponse, int, error) {
+	resp := new(OperateResponse)
+	if statusCode, err := p.doJson("RegisterIndustrialId", req, resp); err != nil {
 		return nil, statusCode, err
 	} else {
 		return resp, statusCode, nil
