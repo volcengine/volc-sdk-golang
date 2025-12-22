@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"context"
 	"net/http"
 	"sync"
 	"time"
@@ -54,6 +55,7 @@ type Client interface {
 	SearchLogsV2(request *SearchLogsRequest) (*SearchLogsResponse, error)
 
 	DescribeShards(request *DescribeShardsRequest) (*DescribeShardsResponse, error)
+	ManualShardSplit(ctx context.Context, request *ManualShardSplitRequest) (*ManualShardSplitResponse, error)
 
 	CreateRule(request *CreateRuleRequest) (*CreateRuleResponse, error)
 	DeleteRule(request *DeleteRuleRequest) (*CommonResponse, error)
@@ -86,6 +88,7 @@ type Client interface {
 	CreateDownloadTask(request *CreateDownloadTaskRequest) (*CreateDownloadTaskResponse, error)
 	DescribeDownloadTasks(request *DescribeDownloadTasksRequest) (*DescribeDownloadTasksResponse, error)
 	DescribeDownloadUrl(request *DescribeDownloadUrlRequest) (*DescribeDownloadUrlResponse, error)
+	CancelDownloadTask(request *CancelDownloadTaskRequest) (*CancelDownloadTaskResponse, error)
 
 	WebTracks(request *WebTracksRequest) (*WebTracksResponse, error)
 
@@ -142,4 +145,14 @@ type Client interface {
 
 	// AI对话接口
 	DescribeSessionAnswer(request *DescribeSessionAnswerReq) (reader *CopilotSSEReader, err error)
+
+	// Trace 相关接口
+	DeleteTraceInstance(request *DeleteTraceInstanceRequest) (*DeleteTraceInstanceResponse, error)
+	DescribeTraceInstance(request *DescribeTraceInstanceRequest) (*DescribeTraceInstanceResponse, error)
+	DescribeTraceInstances(request *DescribeTraceInstancesRequest) (*DescribeTraceInstancesResponse, error)
+	CreateTraceInstance(request *CreateTraceInstanceRequest) (*CreateTraceInstanceResponse, error)
+
+	// 账号管理相关接口
+	GetAccountStatus(request *GetAccountStatusRequest) (*GetAccountStatusResponse, error)
+	ActiveTlsAccount(request *ActiveTlsAccountRequest) (*ActiveTlsAccountResponse, error)
 }

@@ -37,7 +37,7 @@ func (suite *SDKDownloadTaskTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "text",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -47,7 +47,7 @@ func (suite *SDKDownloadTaskTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "long",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -223,6 +223,36 @@ func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadUrlAbnormally() {
 
 	for req, expectedErr := range testcases {
 		_, err := suite.cli.DescribeDownloadUrl(req)
+		suite.validateError(err, expectedErr)
+	}
+}
+
+func (suite *SDKDownloadTaskTestSuite) TestCancelDownloadTaskNormally() {
+	testcases := map[*CancelDownloadTaskRequest]*Error{
+		{
+			TaskId: "test-download-task-" + uuid.New().String(),
+		}: nil,
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CancelDownloadTask(req)
+		suite.validateError(err, expectedErr)
+	}
+}
+
+func (suite *SDKDownloadTaskTestSuite) TestCancelDownloadTaskAbnormally() {
+	testcases := map[*CancelDownloadTaskRequest]*Error{
+		{
+			TaskId: "",
+		}: {
+			HTTPCode: http.StatusBadRequest,
+			Code:     "InvalidArgument",
+			Message:  "Invalid argument, empty TaskId",
+		},
+	}
+
+	for req, expectedErr := range testcases {
+		_, err := suite.cli.CancelDownloadTask(req)
 		suite.validateError(err, expectedErr)
 	}
 }

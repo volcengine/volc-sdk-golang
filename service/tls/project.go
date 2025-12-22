@@ -26,6 +26,9 @@ func (c *LsClient) CreateProject(request *CreateProjectRequest) (r *CreateProjec
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
@@ -64,6 +67,9 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonRespon
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
+	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
@@ -75,6 +81,43 @@ func (c *LsClient) DeleteProject(request *DeleteProjectRequest) (r *CommonRespon
 	}
 
 	response := &CommonResponse{}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
+}
+
+func (c *LsClient) DeleteTraceInstance(request *DeleteTraceInstanceRequest) (r *DeleteTraceInstanceResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	jsonBody, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodDelete, PathDeleteTraceInstance, nil, c.assembleHeader(request.CommonRequest, reqHeaders), jsonBody)
+	if err != nil {
+		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, NewClientError(errors.New("nil http response"))
+	}
+	defer rawResponse.Body.Close()
+
+	if rawResponse.StatusCode != http.StatusOK {
+		errorMessage, err := ioutil.ReadAll(rawResponse.Body)
+		if err != nil {
+			return nil, err
+		}
+		return nil, errors.New(string(errorMessage))
+	}
+
+	response := &DeleteTraceInstanceResponse{}
 	response.FillRequestId(rawResponse)
 
 	return response, nil
@@ -99,6 +142,9 @@ func (c *LsClient) DescribeProject(request *DescribeProjectRequest) (r *Describe
 	rawResponse, err := c.Request(http.MethodGet, PathDescribeProject, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
 	}
 	defer rawResponse.Body.Close()
 
@@ -143,7 +189,9 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *Descri
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
-	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+	if request.IsFullName {
+		params["IsFullName"] = strconv.FormatBool(request.IsFullName)
+	}
 
 	if request.IamProjectName != nil {
 		params["IamProjectName"] = *request.IamProjectName
@@ -163,6 +211,9 @@ func (c *LsClient) DescribeProjects(request *DescribeProjectsRequest) (r *Descri
 	rawResponse, err := c.Request(http.MethodGet, PathDescribeProjects, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
 	}
 	defer rawResponse.Body.Close()
 
@@ -211,6 +262,9 @@ func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (r *CommonRespon
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
+	}
 	defer rawResponse.Body.Close()
 
 	if rawResponse.StatusCode != http.StatusOK {
@@ -222,6 +276,44 @@ func (c *LsClient) ModifyProject(request *ModifyProjectRequest) (r *CommonRespon
 	}
 	response := &CommonResponse{}
 	response.FillRequestId(rawResponse)
+
+	return response, nil
+}
+
+func (c *LsClient) GetAccountStatus(request *GetAccountStatusRequest) (r *GetAccountStatusResponse, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	body := map[string]string{}
+	bytesBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodGet, PathGetAccountStatus, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, errors.New("request failed: empty response")
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &GetAccountStatusResponse{}
+	response.FillRequestId(rawResponse)
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
 
 	return response, nil
 }

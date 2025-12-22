@@ -43,7 +43,7 @@ func (suite *SDKRuleTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "text",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -53,7 +53,7 @@ func (suite *SDKRuleTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "long",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -925,7 +925,7 @@ func (suite *SDKRuleTestSuite) TestModifyContainerRuleNormally() {
 		RuleName: StrPtr("modified-rule-name"),
 		ContainerRule: &ContainerRule{
 			Stream: "all",
-			KubernetesRule: KubernetesRule{
+			KubernetesRule: &KubernetesRule{
 				IncludePodAnnotationRegex: map[string]string{
 					"Key1": "modify-value1",
 					"Key2": "modify-value2",

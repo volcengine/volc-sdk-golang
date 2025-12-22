@@ -94,7 +94,7 @@ func (suite *SDKProducerTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "text",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -104,7 +104,7 @@ func (suite *SDKProducerTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "long",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},

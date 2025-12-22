@@ -71,7 +71,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -81,7 +81,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -98,7 +98,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   true,
+						CaseSensitive:  true,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -108,7 +108,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        true,
 					},
@@ -120,7 +120,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",:-/ ",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -200,7 +200,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -210,7 +210,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -220,7 +220,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "json",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        true,
 						IndexAll:       true,
@@ -242,7 +242,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -252,7 +252,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -262,7 +262,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 					Value: Value{
 						ValueType:      "json",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        true,
 						IndexAll:       true,
@@ -384,7 +384,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -394,7 +394,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -413,7 +413,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -423,7 +423,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "long",
 						Delimiter:      "",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -438,7 +438,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",:-/ ",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},
@@ -452,7 +452,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 					Value: Value{
 						ValueType:      "text",
 						Delimiter:      ",:-/ ",
-						CasSensitive:   false,
+						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
 					},

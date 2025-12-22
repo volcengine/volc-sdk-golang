@@ -37,7 +37,7 @@ func (suite *SDKHostGroupTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "text",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -47,7 +47,7 @@ func (suite *SDKHostGroupTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "long",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},

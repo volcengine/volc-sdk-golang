@@ -33,7 +33,8 @@ const (
 	PathModifyIndex   = "/ModifyIndex"
 	PathSearchLogs    = "/SearchLogs"
 
-	PathDescribeShards = "/DescribeShards"
+	PathDescribeShards   = "/DescribeShards"
+	PathManualSplitShard = "/ManualShardSplit"
 
 	PathPutLogs             = "/PutLogs"
 	PathDescribeCursor      = "/DescribeCursor"
@@ -73,6 +74,7 @@ const (
 	PathCreateDownloadTask    = "/CreateDownloadTask"
 	PathDescribeDownloadTasks = "/DescribeDownloadTasks"
 	PathDescribeDownloadUrl   = "/DescribeDownloadUrl"
+	PathCancelDownloadTask    = "/CancelDownloadTask"
 
 	PathWebTracks = "/WebTracks"
 
@@ -128,4 +130,13 @@ const (
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"
 	APIVersion3      = "0.3.0"
+
+	PathDeleteTraceInstance    = "/DeleteTraceInstance"
+	PathDescribeTraceInstance  = "/DescribeTraceInstance"
+	PathModifyTraceInstance    = "/ModifyTraceInstance"
+	PathCreateTraceInstance    = "/CreateTraceInstance"
+	PathDescribeTraceInstances = "/DescribeTraceInstances"
+
+	PathGetAccountStatus = "/GetAccountStatus"
+	PathActiveTlsAccount = "/ActiveTlsAccount"
 )

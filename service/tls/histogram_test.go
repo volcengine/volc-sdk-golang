@@ -38,7 +38,7 @@ func (suite *SDKHistogramTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "text",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},
@@ -48,7 +48,7 @@ func (suite *SDKHistogramTestSuite) SetupTest() {
 		Value: Value{
 			ValueType:      "long",
 			Delimiter:      "",
-			CasSensitive:   false,
+			CaseSensitive:  false,
 			IncludeChinese: false,
 			SQLFlag:        true,
 		},

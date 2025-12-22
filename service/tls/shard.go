@@ -1,7 +1,9 @@
 package tls
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -50,4 +52,39 @@ func (c *LsClient) DescribeShards(request *DescribeShardsRequest) (r *DescribeSh
 	}
 
 	return response, nil
+}
+
+func (c *LsClient) ManualShardSplit(ctx context.Context, request *ManualShardSplitRequest) (*ManualShardSplitResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, err
+	}
+
+	headers := c.assembleHeader(request.CommonRequest, map[string]string{})
+
+	body, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.Request(http.MethodPost, PathManualSplitShard, nil, headers, body)
+	if err != nil {
+		return nil, err
+	}
+	if resp == nil {
+		return nil, errors.New("nil http response")
+	}
+	defer resp.Body.Close()
+
+	respBody, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response ManualShardSplitResponse
+	if err := json.Unmarshal(respBody, &response); err != nil {
+		return nil, err
+	}
+
+	response.FillRequestId(resp)
+	return &response, nil
 }

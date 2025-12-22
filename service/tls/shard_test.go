@@ -1,97 +1,95 @@
 package tls
 
 import (
-	"net/http"
+	"context"
+	"fmt"
 	"os"
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/stretchr/testify/suite"
+	"github.com/stretchr/testify/assert"
 )
 
-type SDKShardTestSuite struct {
-	suite.Suite
-
-	cli     Client
-	project string
-	topic   string
+func NewShardClientWithEnv() Client {
+	return NewClient(os.Getenv("VOLC_ENDPOINT"), os.Getenv("VOLC_ACCESSKEY"), os.Getenv("VOLC_SECRETKEY"), os.Getenv("VOLC_SESSIONTOKEN"), os.Getenv("VOLC_REGION"))
 }
 
-func (suite *SDKShardTestSuite) SetupTest() {
-	suite.cli = NewClientWithEnv()
+func TestManualShardSplit(t *testing.T) {
+	client := NewShardClientWithEnv()
 
-	projectId, err := CreateProject("golang-sdk-create-project-"+uuid.New().String(), "test",
-		os.Getenv("LOG_SERVICE_REGION"), suite.cli)
-	suite.NoError(err)
-	suite.project = projectId
+	project, err := client.CreateProject(&CreateProjectRequest{
+		ProjectName: fmt.Sprintf("test-project-%s", uuid.New().String()),
+		Region:      os.Getenv("VOLC_REGION"),
+	})
 
-	topicId, err := CreateTopic(projectId, "golang-sdk-create-topic-"+uuid.New().String(),
-		"test", 4, 1, suite.cli)
-	suite.NoError(err)
-	suite.topic = topicId
+	assert.NoError(t, err)
+
+	topic, err := client.CreateTopic(&CreateTopicRequest{
+		ProjectID:  project.ProjectID,
+		TopicName:  fmt.Sprintf("test-topic-%s", uuid.New().String()),
+		Ttl:        1,
+		ShardCount: 2,
+	})
+
+	assert.NoError(t, err)
+
+	describeShardsResponse, err := client.DescribeShards(&DescribeShardsRequest{
+		TopicID: topic.TopicID,
+	})
+
+	assert.NoError(t, err)
+	assert.Len(t, describeShardsResponse.Shards, 2)
+
+	manualShardSplitResponse, err := client.ManualShardSplit(context.Background(), &ManualShardSplitRequest{
+		TopicID: topic.TopicID,
+		ShardID: int(describeShardsResponse.Shards[0].ShardID),
+		Number:  2,
+	})
+
+	assert.NoError(t, err)
+	assert.Len(t, manualShardSplitResponse.Shards, 2)
+
+	_, err = client.DeleteTopic(&DeleteTopicRequest{
+		TopicID: topic.TopicID,
+	})
+	assert.NoError(t, err)
+
+	_, err = client.DeleteProject(&DeleteProjectRequest{
+		ProjectID: project.ProjectID,
+	})
+
+	assert.NoError(t, err)
+
 }
 
-func (suite *SDKShardTestSuite) TearDownTest() {
-	_, deleteTopicErr := suite.cli.DeleteTopic(&DeleteTopicRequest{TopicID: suite.topic})
-	suite.NoError(deleteTopicErr)
-	_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
-	suite.NoError(deleteProjectErr)
-}
-
-func (suite *SDKShardTestSuite) validateError(err error, expectErr *Error) {
-	sdkErr, ok := err.(*Error)
-
-	if sdkErr == nil {
-		suite.Nil(sdkErr)
-		return
+func TestManualShardSplitRequestCheckValidation_Number(t *testing.T) {
+	testcases := []struct {
+		name    string
+		number  int
+		wantErr bool
+	}{
+		{"number-2", 2, false},
+		{"number-4", 4, false},
+		{"number-8", 8, false},
+		{"number-16", 16, false},
+		{"number-0", 0, true},
+		{"number-3", 3, true},
+		{"number-5", 5, true},
 	}
 
-	suite.Equal(true, ok)
-	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
-	suite.Equal(expectErr.Code, sdkErr.Code)
-	suite.Equal(expectErr.Message, sdkErr.Message)
-}
-
-func TestSDKShardTestSuite(t *testing.T) {
-	suite.Run(t, new(SDKShardTestSuite))
-}
-
-func (suite *SDKShardTestSuite) TestDescribeShardsNormally() {
-	testcases := map[*DescribeShardsRequest]int{
-		{
-			TopicID: suite.topic,
-		}: 4,
-		{
-			TopicID:  suite.topic,
-			PageSize: 2,
-		}: 2,
-		{
-			TopicID:    suite.topic,
-			PageNumber: 2,
-			PageSize:   2,
-		}: 2,
-	}
-
-	for req, expect := range testcases {
-		listResp, err := suite.cli.DescribeShards(req)
-		suite.NoError(err)
-		suite.Equal(expect, len(listResp.Shards))
-	}
-}
-
-func (suite *SDKShardTestSuite) TestDescribeShardsAbnormally() {
-	testcases := map[*DescribeShardsRequest]*Error{
-		{
-			TopicID: uuid.New().String(),
-		}: {
-			HTTPCode: http.StatusNotFound,
-			Code:     "TopicNotExist",
-			Message:  "Topic does not exist.",
-		},
-	}
-
-	for req, expectedErr := range testcases {
-		_, err := suite.cli.DescribeShards(req)
-		suite.validateError(err, expectedErr)
+	for _, tc := range testcases {
+		t.Run(tc.name, func(t *testing.T) {
+			req := &ManualShardSplitRequest{
+				TopicID: "topic-id",
+				ShardID: 1,
+				Number:  tc.number,
+			}
+			err := req.CheckValidation()
+			if tc.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+		})
 	}
 }

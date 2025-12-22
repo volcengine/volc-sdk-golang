@@ -19,8 +19,8 @@ type CommonRequest struct {
 }
 
 type TagInfo struct {
-	Key   string `json:","`
-	Value string `json:","`
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
 }
 
 type CreateProjectRequest struct {
@@ -269,6 +269,7 @@ func (v *DescribeTopicsRequest) CheckValidation() error {
 type Topic struct {
 	TopicName       string      `json:"TopicName"`
 	ProjectID       string      `json:"ProjectId"`
+	ProjectName     string      `json:"ProjectName"`
 	TopicID         string      `json:"TopicId"`
 	Ttl             uint16      `json:"Ttl"`
 	CreateTimestamp string      `json:"CreateTime"`
@@ -298,11 +299,15 @@ type DescribeTopicsResponse struct {
 type Value struct {
 	ValueType      string         `json:"ValueType"`
 	Delimiter      string         `json:"Delimiter"`
-	CasSensitive   bool           `json:"CaseSensitive"`
+	CaseSensitive  bool           `json:"CaseSensitive"`
 	IncludeChinese bool           `json:"IncludeChinese"`
 	SQLFlag        bool           `json:"SqlFlag"`
 	JsonKeys       []KeyValueInfo `json:"JsonKeys"`
 	IndexAll       bool           `json:"IndexAll"`
+	// 该索引是否是自动索引添加
+	AutoIndexFlag *bool `json:"AutoIndexFlag,omitempty"`
+	// 是否为JSON字段开启自动索引+统计功能
+	IndexSQLAll *bool `json:"IndexSQLAll,omitempty"`
 }
 
 type KeyValueParam struct {
@@ -342,8 +347,8 @@ type FullTextInfo struct {
 }
 
 type KeyValueInfo struct {
-	Key   string
-	Value Value
+	Key   string `json:"Key"`
+	Value Value  `json:"Value"`
 }
 
 type CreateIndexResponse struct {
@@ -383,8 +388,8 @@ type DescribeIndexResponse struct {
 	UserInnerKeyValue *[]KeyValueInfo `json:"UserInnerKeyValue"`
 	CreateTime        string          `json:"CreateTime"`
 	ModifyTime        string          `json:"ModifyTime"`
-	MaxTextLen        int32           `json:",omitempty"`
-	EnableAutoIndex   bool            `json:",omitempty"`
+	MaxTextLen        int32           `json:"MaxTextLen,omitempty"`
+	EnableAutoIndex   bool            `json:"EnableAutoIndex,omitempty"`
 }
 
 type ModifyIndexRequest struct {
@@ -460,19 +465,46 @@ func (v *DescribeShardsRequest) CheckValidation() error {
 	return nil
 }
 
+type ShardInfo struct {
+	TopicID           string `json:"TopicId"`
+	ShardID           int32  `json:"ShardId"`
+	InclusiveBeginKey string `json:"InclusiveBeginKey"`
+	ExclusiveEndKey   string `json:"ExclusiveEndKey"`
+	Status            string `json:"Status"`
+	ModifyTimestamp   string `json:"ModifyTime"`
+	StopWriteTime     string `json:"StopWriteTime"`
+}
+
 type DescribeShardsResponse struct {
 	CommonResponse
-	Shards []*struct {
-		TopicID           string `json:"TopicId"`
-		ShardID           int32  `json:"ShardId"`
-		InclusiveBeginKey string `json:"InclusiveBeginKey"`
-		ExclusiveEndKey   string `json:"ExclusiveEndKey"`
-		Status            string `json:"Status"`
-		ModifyTimestamp   string `json:"ModifyTime"`
-		StopWriteTime     string `json:"StopWriteTime"`
-	} `json:"Shards"`
+	Shards []*ShardInfo `json:"Shards"`
+	Total  int          `json:"Total"`
+}
 
-	Total int `json:"Total"`
+type ManualShardSplitRequest struct {
+	CommonRequest
+	TopicID string `json:"TopicId"`
+	ShardID int    `json:"ShardId"`
+	Number  int    `json:"Number"`
+}
+
+func (v *ManualShardSplitRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+
+	switch v.Number {
+	case 2, 4, 8, 16:
+		// valid
+	default:
+		return errors.New("Invalid argument, Number must be one of 2, 4, 8, 16")
+	}
+	return nil
+}
+
+type ManualShardSplitResponse struct {
+	CommonResponse
+	Shards []*ShardInfo `json:"Shards"`
 }
 
 type PutLogsRequest struct {
@@ -605,10 +637,13 @@ type ExtractRule struct {
 	TimeKey             string           `json:"TimeKey,omitempty"`
 	TimeFormat          string           `json:"TimeFormat,omitempty"`
 	FilterKeyRegex      []FilterKeyRegex `json:"FilterKeyRegex,omitempty"`
-	UnMatchUpLoadSwitch bool             `json:"UnMatchUpLoadSwitch"`
+	UnMatchUpLoadSwitch *bool            `json:"UnMatchUpLoadSwitch"`
 	UnMatchLogKey       string           `json:"UnMatchLogKey,omitempty"`
-	LogTemplate         LogTemplate      `json:"LogTemplate,omitempty"`
+	LogTemplate         *LogTemplate     `json:"LogTemplate,omitempty"`
 	Quote               string           `json:"Quote,omitempty"`
+	TimeZone            string           `json:"TimeZone,omitempty"`
+	TimeExtractRegex    string           `json:"TimeExtractRegex,omitempty"`
+	EnableNanosecond    *bool            `json:"EnableNanosecond,omitempty"`
 }
 
 type FilterKeyRegex struct {
@@ -627,13 +662,21 @@ type ExcludePath struct {
 }
 
 type UserDefineRule struct {
-	ParsePathRule *ParsePathRule    `json:"ParsePathRule,omitempty"`
-	ShardHashKey  *ShardHashKey     `json:"ShardHashKey,omitempty"`
-	EnableRawLog  bool              `json:"EnableRawLog,omitempty"`
-	Fields        map[string]string `json:"Fields,omitempty"`
-	Plugin        *Plugin           `json:"Plugin,omitempty"`
-	Advanced      *Advanced         `json:"Advanced,omitempty"`
-	TailFiles     bool              `json:"TailFiles,omitempty"`
+	ParsePathRule        *ParsePathRule    `json:"ParsePathRule,omitempty"`
+	ShardHashKey         *ShardHashKey     `json:"ShardHashKey,omitempty"`
+	EnableRawLog         *bool             `json:"EnableRawLog,omitempty"`
+	Fields               map[string]string `json:"Fields,omitempty"`
+	Plugin               *Plugin           `json:"Plugin,omitempty"`
+	Advanced             *Advanced         `json:"Advanced,omitempty"`
+	TailFiles            *bool             `json:"TailFiles,omitempty"`
+	RawLogKey            string            `json:"RawLogKey,omitempty"`
+	HostnameKey          string            `json:"HostnameKey,omitempty"`
+	EnableHostname       *bool             `json:"EnableHostname,omitempty"`
+	HostGroupLabelKey    string            `json:"HostGroupLabelKey,omitempty"`
+	EnableHostGroupLabel *bool             `json:"EnableHostGroupLabel,omitempty"`
+	TailSizeKb           *int64            `json:"TailSizeKb,omitempty"`
+	IgnoreOlder          *int64            `json:"IgnoreOlder,omitempty"`
+	MultiCollectsType    string            `json:"MultiCollectsType,omitempty"`
 }
 
 type ShardHashKey struct {
@@ -651,11 +694,12 @@ type Plugin struct {
 }
 
 type Advanced struct {
-	CloseInactive int  `json:","`
-	CloseRemoved  bool `json:","`
-	CloseRenamed  bool `json:","`
-	CloseEOF      bool `json:","`
-	CloseTimeout  int  `json:","`
+	CloseInactive              *int  `json:"CloseInactive,omitempty"`
+	CloseRemoved               *bool `json:"CloseRemoved,omitempty"`
+	CloseRenamed               *bool `json:"CloseRenamed,omitempty"`
+	CloseEOF                   *bool `json:"CloseEOF,omitempty"`
+	CloseTimeout               *int  `json:"CloseTimeout,omitempty"`
+	NoLineTerminatorEOFMaxTime *int  `json:"NoLineTerminatorEOFMaxTime,omitempty"`
 }
 
 type ContainerRule struct {
@@ -666,7 +710,7 @@ type ContainerRule struct {
 	IncludeContainerEnvRegex   map[string]string `json:"IncludeContainerEnvRegex,omitempty"`
 	ExcludeContainerEnvRegex   map[string]string `json:"ExcludeContainerEnvRegex,omitempty"`
 	EnvTag                     map[string]string `json:"EnvTag,omitempty"`
-	KubernetesRule             KubernetesRule    `json:"KubernetesRule,omitempty"`
+	KubernetesRule             *KubernetesRule   `json:"KubernetesRule,omitempty"`
 }
 
 type KubernetesRule struct {
@@ -680,6 +724,7 @@ type KubernetesRule struct {
 	AnnotationTag             map[string]string `json:"AnnotationTag,omitempty"`
 	IncludePodAnnotationRegex map[string]string `json:"IncludePodAnnotationRegex,omitempty"`
 	ExcludePodAnnotationRegex map[string]string `json:"ExcludePodAnnotationRegex,omitempty"`
+	EnableAllLabelTag         *bool             `json:"EnableAllLabelTag,omitempty"`
 }
 
 type CreateRuleResponse struct {
@@ -743,20 +788,21 @@ type DescribeRuleResponse struct {
 }
 
 type RuleInfo struct {
-	TopicID        string         `json:"TopicId"`
-	TopicName      string         `json:"TopicName"`
-	RuleID         string         `json:"RuleId"`
-	RuleName       string         `json:"RuleName"`
-	Paths          []string       `json:"Paths"`
-	LogType        string         `json:"LogType"`
-	ExtractRule    ExtractRule    `json:"ExtractRule"`
-	ExcludePaths   []ExcludePath  `json:"ExcludePaths"`
-	UserDefineRule UserDefineRule `json:"UserDefineRule"`
-	LogSample      string         `json:"LogSample"`
-	InputType      int            `json:"InputType"`
-	ContainerRule  ContainerRule  `json:"ContainerRule"`
-	CreateTime     string         `json:"CreateTime"`
-	ModifyTime     string         `json:"ModifyTime"`
+	TopicID        string          `json:"TopicId"`
+	TopicName      string          `json:"TopicName"`
+	RuleID         string          `json:"RuleId"`
+	RuleName       string          `json:"RuleName"`
+	Paths          []string        `json:"Paths"`
+	LogType        string          `json:"LogType"`
+	ExtractRule    *ExtractRule    `json:"ExtractRule"`
+	ExcludePaths   []ExcludePath   `json:"ExcludePaths"`
+	UserDefineRule *UserDefineRule `json:"UserDefineRule"`
+	LogSample      string          `json:"LogSample"`
+	InputType      *int            `json:"InputType"`
+	ContainerRule  *ContainerRule  `json:"ContainerRule"`
+	CreateTime     string          `json:"CreateTime"`
+	ModifyTime     string          `json:"ModifyTime"`
+	Pause          *bool           `json:"Pause,omitempty"`
 }
 
 type HostGroupInfo struct {
@@ -1005,10 +1051,10 @@ type DescribeHostGroupRulesResponse struct {
 
 type ModifyHostGroupsAutoUpdateRequest struct {
 	CommonRequest
-	HostGroupIds    []string
-	AutoUpdate      *bool   `json:",omitempty"`
-	UpdateStartTime *string `json:",omitempty"`
-	UpdateEndTime   *string `json:",omitempty"`
+	HostGroupIds    []string `json:"HostGroupIds"`
+	AutoUpdate      *bool    `json:",omitempty"`
+	UpdateStartTime *string  `json:",omitempty"`
+	UpdateEndTime   *string  `json:",omitempty"`
 }
 
 func (v *ModifyHostGroupsAutoUpdateRequest) CheckValidation() error {
@@ -1406,6 +1452,22 @@ type DescribeDownloadUrlResponse struct {
 	DownloadUrl string
 }
 
+type CancelDownloadTaskRequest struct {
+	CommonRequest
+	TaskId string `json:"TaskId"`
+}
+
+func (v *CancelDownloadTaskRequest) CheckValidation() error {
+	if len(v.TaskId) <= 0 {
+		return errors.New("Invalid argument, empty TaskId")
+	}
+	return nil
+}
+
+type CancelDownloadTaskResponse struct {
+	CommonResponse
+}
+
 type WebTracksRequest struct {
 	CommonRequest
 	TopicID      string `json:"-"`
@@ -1740,9 +1802,32 @@ type PutLogsV2Request struct {
 	Logs         []Log
 }
 
+type TraceInsModifyReq struct {
+	Description     *string `json:",omitempty"`
+	TraceInstanceId string  `json:","`
+}
+
+type ModifyTraceInstanceRequest struct {
+	CommonRequest
+	Data TraceInsModifyReq `json:","`
+}
+
+func (v *ModifyTraceInstanceRequest) CheckValidation() error {
+	if len(v.Data.TraceInstanceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceId")
+	}
+	return nil
+}
+
+type ModifyTraceInstanceResponse struct {
+	CommonResponse
+}
+
 type TargetResource struct {
-	Alias   string
-	TopicID string `json:"TopicId"`
+	Alias   string  `json:"Alias"`
+	TopicID string  `json:"TopicId"`
+	Region  string  `json:"Region"`
+	RoleTrn *string `json:"RoleTrn,omitempty"`
 }
 
 type CreateETLTaskRequest struct {
@@ -1771,11 +1856,11 @@ type DeleteETLTaskRequest struct {
 
 type ModifyETLTaskRequest struct {
 	CommonRequest
-	TaskID          string  `json:"TaskId"`
-	Description     *string `json:",omitempty"`
-	Name            *string `json:",omitempty"`
-	Script          *string `json:",omitempty"`
-	TargetResources []TargetResource
+	TaskID          string           `json:"TaskId"`
+	Description     *string          `json:",omitempty"`
+	Name            *string          `json:",omitempty"`
+	Script          *string          `json:",omitempty"`
+	TargetResources []TargetResource `json:"TargetResources,omitempty"`
 }
 
 type DescribeETLTaskRequest struct {
@@ -1789,6 +1874,8 @@ type TargetResourcesResp struct {
 	TopicName   string
 	ProjectName string
 	ProjectID   string `json:"ProjectId"`
+	Region      string
+	RoleTrn     string
 }
 
 type ETLTaskResponse struct {
@@ -1840,7 +1927,7 @@ type DescribeETLTasksResponse struct {
 type ModifyETLTaskStatusRequest struct {
 	CommonRequest
 	TaskID string `json:"TaskId"`
-	Enable bool
+	Enable bool   `json:"Enable"`
 }
 
 type TosSourceInfo struct {
@@ -1989,6 +2076,46 @@ type DescribeImportTasksResponse struct {
 	Total    int               `json:"Total"`
 }
 
+type ActiveTlsAccountRequest struct {
+	CommonRequest
+}
+
+func (v *ActiveTlsAccountRequest) CheckValidation() error {
+	return nil
+}
+
+type ActiveTlsAccountResponse struct {
+	CommonResponse
+}
+
+type DescribeTraceInstanceRequest struct {
+	CommonRequest
+	TraceInstanceId string `json:"TraceInstanceId"`
+}
+
+func (v *DescribeTraceInstanceRequest) CheckValidation() error {
+	if len(v.TraceInstanceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceId")
+	}
+	return nil
+}
+
+type DescribeTraceInstanceResponse struct {
+	CommonResponse
+	CreateTime               string              `json:"CreateTime"`
+	DependencyTopicId        string              `json:"DependencyTopicId"`
+	DependencyTopicTopicName string              `json:"DependencyTopicTopicName"`
+	Description              string              `json:"Description"`
+	ModifyTime               string              `json:"ModifyTime"`
+	ProjectId                string              `json:"ProjectId"`
+	ProjectName              string              `json:"ProjectName"`
+	TraceInstanceId          string              `json:"TraceInstanceId"`
+	TraceInstanceName        string              `json:"TraceInstanceName"`
+	TraceInstanceStatus      TraceInstanceStatus `json:"TraceInstanceStatus"`
+	TraceTopicId             string              `json:"TraceTopicId"`
+	TraceTopicName           string              `json:"TraceTopicName"`
+}
+
 type CsvInfo struct {
 	Keys            []string `json:"Keys"`
 	Delimiter       string   `json:"Delimiter"`
@@ -2033,6 +2160,7 @@ type CreateShipperRequest struct {
 	ShipperType      string            `json:"ShipperType"`
 	ShipperStartTime int               `json:"ShipperStartTime,omitempty"`
 	ShipperEndTime   int               `json:"ShipperEndTime,omitempty"`
+	RoleTrn          string            `json:"RoleTrn,omitempty"`
 	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
 	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
 	ContentInfo      *ContentInfo      `json:"ContentInfo"`
@@ -2062,6 +2190,7 @@ type ModifyShipperRequest struct {
 	ShipperName      string            `json:"ShipperName,omitempty"`
 	ShipperType      string            `json:"ShipperType"`
 	Status           *bool             `json:"Status,omitempty"`
+	RoleTrn          string            `json:"RoleTrn,omitempty"`
 	ContentInfo      *ContentInfo      `json:"ContentInfo,omitempty"`
 	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
 	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
@@ -2095,6 +2224,7 @@ type DescribeShipperResponse struct {
 	ShipperStartTime int               `json:"ShipperStartTime,omitempty"`
 	ShipperEndTime   int               `json:"ShipperEndTime,omitempty"`
 	Status           bool              `json:"Status,omitempty"`
+	RoleTrn          string            `json:"RoleTrn,omitempty"`
 	ContentInfo      *ContentInfo      `json:"ContentInfo,omitempty"`
 	TosShipperInfo   *TosShipperInfo   `json:"TosShipperInfo,omitempty"`
 	KafkaShipperInfo *KafkaShipperInfo `json:"KafkaShipperInfo,omitempty"`
@@ -2547,6 +2677,113 @@ type FeedBackMeta struct {
 	AiAssistantFeature Feature `json:"AiAssistantFeature"`
 }
 
+type GetAccountStatusRequest struct {
+	CommonRequest
+}
+
+func (v *GetAccountStatusRequest) CheckValidation() error {
+	return nil
+}
+
+type GetAccountStatusResponse struct {
+	CommonResponse
+	ArchVersion string `json:"ArchVersion"`
+	Status      string `json:"Status"`
+}
+
 type ModifyAppSceneMetaResp struct {
+	CommonResponse
+}
+
+// Trace 相关结构体定义
+type TraceInstanceStatus string
+
+const (
+	TraceInstanceStatusCreating TraceInstanceStatus = "CREATING"
+	TraceInstanceStatusCreated  TraceInstanceStatus = "CREATED"
+	TraceInstanceStatusDeleting TraceInstanceStatus = "DELETING"
+)
+
+type DescribeTraceInstancesRequest struct {
+	CommonRequest
+	PageNumber        *int    `json:",omitempty"`
+	PageSize          *int    `json:",omitempty"`
+	TraceInstanceName *string `json:",omitempty"`
+	TraceInstanceID   *string `json:",omitempty"`
+	ProjectID         *string `json:",omitempty"`
+	ProjectName       *string `json:",omitempty"`
+	Status            *string `json:",omitempty"`
+	IamProjectName    *string `json:",omitempty"`
+}
+
+func (v *DescribeTraceInstancesRequest) CheckValidation() error {
+	return nil
+}
+
+type DescribeTraceInstancesResponse struct {
+	CommonResponse
+	Total          int64            `json:"Total"`
+	TraceInstances []*TraceInstance `json:"TraceInstances"`
+}
+
+type TraceInstance struct {
+	CreateTime               string              `json:"CreateTime"`
+	DependencyTopicID        string              `json:"DependencyTopicId"`
+	DependencyTopicTopicName string              `json:"DependencyTopicTopicName"`
+	Description              string              `json:"Description"`
+	ModifyTime               string              `json:"ModifyTime"`
+	ProjectID                string              `json:"ProjectId"`
+	ProjectName              string              `json:"ProjectName"`
+	TraceInstanceID          string              `json:"TraceInstanceId"`
+	TraceInstanceName        string              `json:"TraceInstanceName"`
+	TraceInstanceStatus      TraceInstanceStatus `json:"TraceInstanceStatus"`
+	TraceTopicID             string              `json:"TraceTopicId"`
+	TraceTopicName           string              `json:"TraceTopicName"`
+}
+
+// Trace 相关结构体
+type TraceInsCreateReq struct {
+	Description       string `json:",omitempty"`
+	ProjectID         string `json:"ProjectId"`
+	TraceInstanceName string `json:"TraceInstanceName"`
+}
+
+type CreateTraceInstanceRequest struct {
+	CommonRequest
+	Data TraceInsCreateReq `json:"data"`
+}
+
+func (v *CreateTraceInstanceRequest) CheckValidation() error {
+	if len(v.Data.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.Data.TraceInstanceName) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceName")
+	}
+	return nil
+}
+
+type CreateTraceInstanceResponse struct {
+	CommonResponse
+	TraceInstanceID string `json:"TraceInstanceId"`
+}
+
+type TraceInsDeleteReq struct {
+	TraceInstanceId string `json:"TraceInstanceId"`
+}
+
+type DeleteTraceInstanceRequest struct {
+	CommonRequest
+	Data TraceInsDeleteReq `json:"data"`
+}
+
+func (v *DeleteTraceInstanceRequest) CheckValidation() error {
+	if len(v.Data.TraceInstanceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceId")
+	}
+	return nil
+}
+
+type DeleteTraceInstanceResponse struct {
 	CommonResponse
 }
