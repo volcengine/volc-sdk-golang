@@ -133,7 +133,7 @@ type VectorIndexParams struct {
 
 func (vectorIndexParams *VectorIndexParams) dict(vectorIndex *VectorIndexParams) map[string]interface{} {
 	res := map[string]interface{}{
-		"distance":   IP,
+		// "distance":   IP, 强感知distance参数
 		"index_type": HNSW,
 		"quant":      Int8,
 		"hnsw_m":     20,

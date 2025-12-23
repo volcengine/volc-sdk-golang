@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"math"
 	"math/rand"
@@ -835,7 +836,11 @@ func (vikingDBService *VikingDBService) CreateIndex(collectionName string, index
 		"partition_by":    indexOptions.partitionBy,
 	}
 	if indexOptions.vectorIndex != nil {
-		params["vector_index"] = indexOptions.vectorIndex.dict(indexOptions.vectorIndex)
+		vectorIndex := indexOptions.vectorIndex.dict(indexOptions.vectorIndex)
+		if _, ok := vectorIndex["distance"]; !ok {
+			return nil, errors.New("param distance is required")
+		}
+		params["vector_index"] = vectorIndex
 	}
 	if indexOptions.scalarIndex != nil {
 		params["scalar_index"] = indexOptions.scalarIndex

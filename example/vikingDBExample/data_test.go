@@ -44,3 +44,25 @@ func Test_Data_Fetch_By_Collection(t *testing.T) {
 		fmt.Println(data.Id, data.Fields)
 	}
 }
+
+func Test_Data_Delete_Async(t *testing.T) {
+	collection, err := service.GetCollection("test_coll_for_sdk_2")
+	if err != nil {
+		panic(err)
+	}
+	err = collection.DeleteData([]int64{9}, vikingdb.WithAsyncUpsert(true))
+	if err != nil {
+		panic(err)
+	}
+}
+
+func Test_Data_Delete(t *testing.T) {
+	collection, err := service.GetCollection("test_coll_for_sdk_2")
+	if err != nil {
+		panic(err)
+	}
+	err = collection.DeleteData([]int64{10})
+	if err != nil {
+		panic(err)
+	}
+}

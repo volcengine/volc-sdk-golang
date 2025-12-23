@@ -169,10 +169,19 @@ func (collection *Collection) AsyncUpsertData(data interface{}) error {
 
 }
 
-func (collection *Collection) DeleteData(id interface{}) error {
+func (collection *Collection) DeleteData(id interface{}, opts ...ParamOption) error {
 	params := map[string]interface{}{
 		"collection_name": collection.CollectionName,
 		"primary_keys":    id,
+	}
+	options := ParamOptions{
+		AsyncUpsert: false,
+	}
+	for _, opt := range opts {
+		opt(&options)
+	}
+	if options.AsyncUpsert {
+		params["async"] = true
 	}
 	_, err := collection.VikingDBService.DoRequest(context.Background(), "DeleteData", nil, collection.VikingDBService.convertMapToJson(params))
 	return err
