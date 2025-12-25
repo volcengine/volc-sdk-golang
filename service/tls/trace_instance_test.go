@@ -9,9 +9,7 @@ func TestModifyTraceInstance(t *testing.T) {
 	// 测试参数验证
 	t.Run("EmptyTraceInstanceId", func(t *testing.T) {
 		request := &ModifyTraceInstanceRequest{
-			Data: TraceInsModifyReq{
-				TraceInstanceId: "",
-			},
+			TraceInstanceId: "",
 		}
 		err := request.CheckValidation()
 		if err == nil {
@@ -21,10 +19,8 @@ func TestModifyTraceInstance(t *testing.T) {
 
 	t.Run("ValidRequest", func(t *testing.T) {
 		request := &ModifyTraceInstanceRequest{
-			Data: TraceInsModifyReq{
-				TraceInstanceId: "test-trace-instance-id",
-				Description:     stringPtr("test description"),
-			},
+			TraceInstanceId: "test-trace-instance-id",
+			Description:     stringPtr("test description"),
 		}
 		err := request.CheckValidation()
 		if err != nil {
@@ -34,9 +30,7 @@ func TestModifyTraceInstance(t *testing.T) {
 
 	t.Run("ValidRequestWithoutDescription", func(t *testing.T) {
 		request := &ModifyTraceInstanceRequest{
-			Data: TraceInsModifyReq{
-				TraceInstanceId: "test-trace-instance-id",
-			},
+			TraceInstanceId: "test-trace-instance-id",
 		}
 		err := request.CheckValidation()
 		if err != nil {

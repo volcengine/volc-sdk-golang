@@ -2982,7 +2982,7 @@ type CreateWatermarkPresetResResponseMetadataError struct {
 type CreateWatermarkPresetResResult struct {
 
 	// REQUIRED; id
-	ID int32 `json:"ID"`
+	ID int64 `json:"ID"`
 
 	// REQUIRED; 模板名称
 	PresetName string `json:"PresetName"`
@@ -3052,7 +3052,7 @@ type CreateWatermarkPresetV2ResResponseMetadata struct {
 type CreateWatermarkPresetV2ResResult struct {
 
 	// REQUIRED; 水印模板的 ID。
-	ID int32 `json:"ID"`
+	ID int64 `json:"ID"`
 
 	// REQUIRED; 水印模板的名称标识。
 	PresetName string `json:"PresetName"`
@@ -4051,7 +4051,7 @@ type DeleteWatermarkPresetV2Body struct {
 
 	// 水印模板的 ID，您可以调用 ListWatermarkPresetDetail [https://www.volcengine.com/docs/6469/1323353] 接口获取。 :::tip PresetName 和 ID 二选一必填。
 	// :::
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 水印模板的名称，您可以调用 ListWatermarkPresetDetail [https://www.volcengine.com/docs/6469/1323353] 接口获取。 :::tip PresetName 和 ID 二选一必填。
 	// :::
@@ -14016,7 +14016,7 @@ type ListVhostRecordPresetV2ResResultPresetListItem struct {
 type ListVhostRecordPresetV2ResResultPresetListItemSlicePresetV2 struct {
 
 	// 录制配置 ID。
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 录制配置名称。
 	Name *string `json:"Name,omitempty"`
@@ -14837,7 +14837,7 @@ type ListVhostWatermarkPresetResResultWatermarkPresetListItem struct {
 	App *string `json:"App,omitempty"`
 
 	// 水印模版 ID。
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 需要添加水印的直播画面方向。
 	// * vertical：竖屏；
@@ -14947,7 +14947,7 @@ type ListWatermarkPresetDetailResResultWatermarkErrMsgListItem struct {
 	ErrMsg *string `json:"ErrMsg,omitempty"`
 
 	// 水印模板的 ID。
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 水印模板的名称。
 	PresetName *string `json:"PresetName,omitempty"`
@@ -14956,7 +14956,7 @@ type ListWatermarkPresetDetailResResultWatermarkErrMsgListItem struct {
 type ListWatermarkPresetDetailResResultWatermarkPresetListItem struct {
 
 	// 水印模板的 ID。
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 水印模板的名称。
 	Name *string `json:"Name,omitempty"`
@@ -15038,7 +15038,7 @@ type ListWatermarkPresetResResultPreset struct {
 	App *string `json:"App,omitempty"`
 
 	// 水印配置的 ID。
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 需要添加水印的直播画面方向。
 	// * vertical：竖屏；
@@ -17906,7 +17906,7 @@ type UpdateWatermarkPresetV2Body struct {
 
 	// 水印模板的 ID，您可以调用 ListWatermarkPresetDetail [https://www.volcengine.com/docs/6469/1323353] 接口获取。 :::tip PresetName 和 ID 二选一必填。
 	// :::
-	ID *int32 `json:"ID,omitempty"`
+	ID *int64 `json:"ID,omitempty"`
 
 	// 水印图片字符串，图片最大 2MB，最小 100Bytes，最大分辨率为 1080×1080。图片 Data URL 格式为：data:image/[<mediatype>];[base64],<data>。
 	// * mediatype：图片类型，支持 png、jpg、jpeg 格式；

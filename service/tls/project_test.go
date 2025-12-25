@@ -142,17 +142,15 @@ func (suite *SDKProjectTestSuite) TestDeleteTraceInstanceNormally() {
 	// Note: This test requires a valid trace instance to be created first
 	// Since trace instance creation is not part of the current implementation,
 	// this test will validate the request structure and error handling
-	
+
 	req := &DeleteTraceInstanceRequest{
-		Data: TraceInsDeleteReq{
-			TraceInstanceId: uuid.New().String(),
-		},
+		TraceInstanceId: uuid.New().String(),
 	}
-	
+
 	// This will likely fail with "TraceInstanceNotExists" since we're using a random UUID
 	// but it validates the request structure and method implementation
 	_, err := suite.cli.DeleteTraceInstance(req)
-	
+
 	// We expect this to fail since the trace instance doesn't exist
 	suite.Error(err)
 }
@@ -160,11 +158,9 @@ func (suite *SDKProjectTestSuite) TestDeleteTraceInstanceNormally() {
 func (suite *SDKProjectTestSuite) TestDeleteTraceInstanceAbnormally() {
 	// Test with empty trace instance ID
 	_, err := suite.cli.DeleteTraceInstance(&DeleteTraceInstanceRequest{
-		Data: TraceInsDeleteReq{
-			TraceInstanceId: "",
-		},
+		TraceInstanceId: "",
 	})
-	
+
 	// Should fail validation
 	suite.Error(err)
 	suite.Contains(err.Error(), "Invalid argument, empty TraceInstanceId")

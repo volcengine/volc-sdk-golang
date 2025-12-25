@@ -1802,18 +1802,14 @@ type PutLogsV2Request struct {
 	Logs         []Log
 }
 
-type TraceInsModifyReq struct {
-	Description     *string `json:",omitempty"`
-	TraceInstanceId string  `json:","`
-}
-
 type ModifyTraceInstanceRequest struct {
 	CommonRequest
-	Data TraceInsModifyReq `json:","`
+	TraceInstanceId string  `json:"TraceInstanceId"`
+	Description     *string `json:"Description,omitempty"`
 }
 
 func (v *ModifyTraceInstanceRequest) CheckValidation() error {
-	if len(v.Data.TraceInstanceId) <= 0 {
+	if len(v.TraceInstanceId) <= 0 {
 		return errors.New("Invalid argument, empty TraceInstanceId")
 	}
 	return nil
@@ -2742,22 +2738,18 @@ type TraceInstance struct {
 }
 
 // Trace 相关结构体
-type TraceInsCreateReq struct {
-	Description       string `json:",omitempty"`
-	ProjectID         string `json:"ProjectId"`
-	TraceInstanceName string `json:"TraceInstanceName"`
-}
-
 type CreateTraceInstanceRequest struct {
 	CommonRequest
-	Data TraceInsCreateReq `json:"data"`
+	ProjectID         string `json:"ProjectId"`
+	TraceInstanceName string `json:"TraceInstanceName"`
+	Description       string `json:"Description,omitempty"`
 }
 
 func (v *CreateTraceInstanceRequest) CheckValidation() error {
-	if len(v.Data.ProjectID) <= 0 {
+	if len(v.ProjectID) <= 0 {
 		return errors.New("Invalid argument, empty ProjectID")
 	}
-	if len(v.Data.TraceInstanceName) <= 0 {
+	if len(v.TraceInstanceName) <= 0 {
 		return errors.New("Invalid argument, empty TraceInstanceName")
 	}
 	return nil
@@ -2768,17 +2760,13 @@ type CreateTraceInstanceResponse struct {
 	TraceInstanceID string `json:"TraceInstanceId"`
 }
 
-type TraceInsDeleteReq struct {
+type DeleteTraceInstanceRequest struct {
+	CommonRequest
 	TraceInstanceId string `json:"TraceInstanceId"`
 }
 
-type DeleteTraceInstanceRequest struct {
-	CommonRequest
-	Data TraceInsDeleteReq `json:"data"`
-}
-
 func (v *DeleteTraceInstanceRequest) CheckValidation() error {
-	if len(v.Data.TraceInstanceId) <= 0 {
+	if len(v.TraceInstanceId) <= 0 {
 		return errors.New("Invalid argument, empty TraceInstanceId")
 	}
 	return nil

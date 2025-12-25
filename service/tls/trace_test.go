@@ -94,11 +94,9 @@ func (suite *SDKTraceTestSuite) TestCreateTraceInstanceNormally() {
 	traceName := "单元测试" + uuid.New().String()[:8]
 
 	request := &CreateTraceInstanceRequest{
-		CommonRequest: CommonRequest{},
-		Data: TraceInsCreateReq{
-			ProjectID:         suite.project,
-			TraceInstanceName: traceName,
-		},
+		CommonRequest:     CommonRequest{},
+		ProjectID:         suite.project,
+		TraceInstanceName: traceName,
 	}
 
 	response, err := suite.cli.CreateTraceInstance(request)
@@ -112,22 +110,18 @@ func (suite *SDKTraceTestSuite) TestCreateTraceInstanceNormally() {
 func (suite *SDKTraceTestSuite) TestCreateTraceInstanceAbnormally() {
 	testcases := map[*CreateTraceInstanceRequest]*Error{
 		{
-			CommonRequest: CommonRequest{},
-			Data: TraceInsCreateReq{
-				ProjectID:         "",
-				TraceInstanceName: "test-trace",
-			},
+			CommonRequest:     CommonRequest{},
+			ProjectID:         "",
+			TraceInstanceName: "test-trace",
 		}: {
 			HTTPCode: 400,
 			Code:     "InvalidArgument",
 			Message:  "Invalid argument, empty ProjectID",
 		},
 		{
-			CommonRequest: CommonRequest{},
-			Data: TraceInsCreateReq{
-				ProjectID:         suite.project,
-				TraceInstanceName: "",
-			},
+			CommonRequest:     CommonRequest{},
+			ProjectID:         suite.project,
+			TraceInstanceName: "",
 		}: {
 			HTTPCode: 400,
 			Code:     "InvalidArgument",

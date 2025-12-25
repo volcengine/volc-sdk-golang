@@ -59,7 +59,9 @@ func (c *LsClient) ManualShardSplit(ctx context.Context, request *ManualShardSpl
 		return nil, err
 	}
 
-	headers := c.assembleHeader(request.CommonRequest, map[string]string{})
+	headers := c.assembleHeader(request.CommonRequest, map[string]string{
+		"Content-Type": "application/json",
+	})
 
 	body, err := json.Marshal(request)
 	if err != nil {
