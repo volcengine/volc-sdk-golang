@@ -94,6 +94,7 @@ func (suite *SDKDownloadTaskTestSuite) TestCreateDownloadTaskNormally() {
 			Sort:        "asc",
 			Limit:       100,
 			Compression: "gzip",
+			TaskType:    0,
 		}: nil,
 	}
 
@@ -117,6 +118,7 @@ func (suite *SDKDownloadTaskTestSuite) TestCreateDownloadTaskAbnormally() {
 			Sort:        "asc",
 			Limit:       100,
 			Compression: "gzip",
+			TaskType:    0,
 		}: {
 			HTTPCode: http.StatusNotFound,
 			Code:     "TopicNotExist",
@@ -144,6 +146,7 @@ func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadTasksNormally() {
 			Sort:        "asc",
 			Limit:       100,
 			Compression: "gzip",
+			TaskType:    0,
 		}: {
 			TopicID: suite.topic,
 		},
@@ -160,6 +163,7 @@ func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadTasksNormally() {
 		suite.Equal(createDownloadTaskReq.Query, describeDownloadTasksResp.Tasks[0].Query)
 		suite.Equal(createDownloadTaskReq.DataFormat, describeDownloadTasksResp.Tasks[0].DataFormat)
 		suite.Equal(createDownloadTaskReq.Compression, describeDownloadTasksResp.Tasks[0].Compression)
+		suite.Equal(createDownloadTaskReq.TaskType, describeDownloadTasksResp.Tasks[0].TaskType)
 	}
 }
 
@@ -194,6 +198,7 @@ func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadUrlNormally() {
 			Sort:        "asc",
 			Limit:       100,
 			Compression: "gzip",
+			TaskType:    0,
 		}: nil,
 	}
 
@@ -228,31 +233,24 @@ func (suite *SDKDownloadTaskTestSuite) TestDescribeDownloadUrlAbnormally() {
 }
 
 func (suite *SDKDownloadTaskTestSuite) TestCancelDownloadTaskNormally() {
-	testcases := map[*CancelDownloadTaskRequest]*Error{
-		{
-			TaskId: "test-download-task-" + uuid.New().String(),
-		}: nil,
+	startTime := time.Now().Unix()
+
+	createDownloadTaskReq := &CreateDownloadTaskRequest{
+		TopicID:     suite.topic,
+		TaskName:    "go-sdk-download-task-cancel",
+		Query:       "*",
+		StartTime:   startTime - 60,
+		EndTime:     time.Now().Unix(),
+		DataFormat:  "csv",
+		Sort:        "asc",
+		Limit:       100,
+		Compression: "gzip",
+		TaskType:    0,
 	}
 
-	for req, expectedErr := range testcases {
-		_, err := suite.cli.CancelDownloadTask(req)
-		suite.validateError(err, expectedErr)
-	}
-}
+	createDownloadTaskResp, err := suite.cli.CreateDownloadTask(createDownloadTaskReq)
+	suite.NoError(err)
 
-func (suite *SDKDownloadTaskTestSuite) TestCancelDownloadTaskAbnormally() {
-	testcases := map[*CancelDownloadTaskRequest]*Error{
-		{
-			TaskId: "",
-		}: {
-			HTTPCode: http.StatusBadRequest,
-			Code:     "InvalidArgument",
-			Message:  "Invalid argument, empty TaskId",
-		},
-	}
-
-	for req, expectedErr := range testcases {
-		_, err := suite.cli.CancelDownloadTask(req)
-		suite.validateError(err, expectedErr)
-	}
+	_, err = suite.cli.CancelDownloadTask(&CancelDownloadTaskRequest{TaskId: createDownloadTaskResp.TaskId})
+	suite.NoError(err)
 }

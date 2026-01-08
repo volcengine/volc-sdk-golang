@@ -2,6 +2,7 @@ package tls
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -26,6 +27,9 @@ func (c *LsClient) DescribeHistogram(request *DescribeHistogramRequest) (r *Desc
 	rawResponse, err := c.Request(http.MethodPost, PathDescribeHistogram, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -60,6 +64,9 @@ func (c *LsClient) DescribeHistogramV1(request *DescribeHistogramV1Request) (r *
 	rawResponse, err := c.Request(http.MethodPost, PathDescribeHistogramV1, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

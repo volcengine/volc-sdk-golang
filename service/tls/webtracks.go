@@ -1,6 +1,7 @@
 package tls
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -33,6 +34,9 @@ func (c *LsClient) WebTracks(request *WebTracksRequest) (r *WebTracksResponse, e
 	rawResponse, err := c.Request(http.MethodPost, PathWebTracks, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

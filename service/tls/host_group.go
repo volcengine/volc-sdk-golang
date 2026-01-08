@@ -2,6 +2,7 @@ package tls
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -24,6 +25,9 @@ func (c *LsClient) CreateHostGroup(request *CreateHostGroupRequest) (r *CreateHo
 	rawResponse, err := c.Request(http.MethodPost, PathCreateHostGroup, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -153,6 +157,52 @@ func (c *LsClient) DescribeHostGroup(request *DescribeHostGroupRequest) (r *Desc
 	return response, nil
 }
 
+func (c *LsClient) DescribeHostGroupV2(request *DescribeHostGroupRequestV2) (r *DescribeHostGroupResponseV2, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{
+		"HostGroupId": request.HostGroupID,
+	}
+
+	body := map[string]string{}
+	bytesBody, err := json.Marshal(body)
+
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroupV2, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
+
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &DescribeHostGroupResponseV2{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
 func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *DescribeHostGroupsResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -211,6 +261,77 @@ func (c *LsClient) DescribeHostGroups(request *DescribeHostGroupsRequest) (r *De
 	}
 
 	var response = &DescribeHostGroupsResponse{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (c *LsClient) DescribeHostGroupsV2(request *DescribeHostGroupsRequestV2) (r *DescribeHostGroupsResponseV2, e error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{}
+
+	if request.HostGroupID != nil {
+		params["HostGroupId"] = *request.HostGroupID
+	}
+
+	if request.HostGroupName != nil {
+		params["HostGroupName"] = *request.HostGroupName
+	}
+
+	if request.HostIdentifier != nil {
+		params["HostIdentifier"] = *request.HostIdentifier
+	}
+
+	if request.PageNumber != 0 {
+		params["PageNumber"] = strconv.Itoa(request.PageNumber)
+	}
+
+	if request.PageSize != 0 {
+		params["PageSize"] = strconv.Itoa(request.PageSize)
+	}
+
+	if request.AutoUpdate != nil {
+		params["AutoUpdate"] = strconv.FormatBool(*request.AutoUpdate)
+	}
+
+	if request.ServiceLogging != nil {
+		params["ServiceLogging"] = strconv.FormatBool(*request.ServiceLogging)
+	}
+
+	if request.IamProjectName != nil {
+		params["IamProjectName"] = *request.IamProjectName
+	}
+
+	body := map[string]string{}
+	bytesBody, err := json.Marshal(body)
+
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeHostGroupsV2, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &DescribeHostGroupsResponseV2{}
 	response.FillRequestId(rawResponse)
 
 	if err := json.Unmarshal(responseBody, response); err != nil {

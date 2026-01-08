@@ -23,17 +23,19 @@ func main() {
 
 	// 创建下载任务
 	// 请根据您的需要，填写TopicId、TaskName、Query、StartTime、EndTime、Compression、DataFormat、Limit、Sort等参数
+	// StartTime/EndTime 为秒级 Unix 时间戳
 	// CreateDownloadTask API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/142119
 	createDownloadTaskResp, _ := client.CreateDownloadTask(&tls.CreateDownloadTaskRequest{
 		TopicID:     topicID,
 		TaskName:    uuid.NewString(),
 		Query:       "*",
-		StartTime:   1672502400000,
-		EndTime:     1688140800000,
+		StartTime:   1672502400,
+		EndTime:     1688140800,
 		Compression: "gzip",
 		DataFormat:  "json",
 		Limit:       100,
 		Sort:        "asc",
+		TaskType:    0,
 	})
 	fmt.Printf("%v\n", createDownloadTaskResp)
 

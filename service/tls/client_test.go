@@ -1,12 +1,13 @@
 package tls
 
 import (
-	"github.com/stretchr/testify/suite"
 	"net"
 	"net/http"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/suite"
 )
 
 type SDKClientTestSuite struct {

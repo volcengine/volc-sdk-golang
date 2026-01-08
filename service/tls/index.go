@@ -3,6 +3,7 @@ package tls
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -25,6 +26,9 @@ func (c *LsClient) CreateIndex(request *CreateIndexRequest) (r *CreateIndexRespo
 	rawResponse, err := c.Request(http.MethodPost, PathCreateIndex, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

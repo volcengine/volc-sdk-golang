@@ -102,6 +102,9 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)

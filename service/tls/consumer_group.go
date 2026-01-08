@@ -3,6 +3,7 @@ package tls
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -33,6 +34,9 @@ func (c *LsClient) CreateConsumerGroup(request *CreateConsumerGroupRequest) (*Cr
 	rawResponse, err := c.Request(http.MethodPost, PathCreateConsumerGroup, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -113,6 +117,14 @@ func (c *LsClient) DescribeConsumerGroups(request *DescribeConsumerGroupsRequest
 
 	if request.PageSize != 0 {
 		params["PageSize"] = strconv.Itoa(request.PageSize)
+	}
+
+	if request.TopicName != nil && len(*request.TopicName) != 0 {
+		params["TopicName"] = *request.TopicName
+	}
+
+	if request.IamProjectName != nil && len(*request.IamProjectName) != 0 {
+		params["IamProjectName"] = *request.IamProjectName
 	}
 
 	body := map[string]string{}

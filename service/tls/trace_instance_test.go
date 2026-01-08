@@ -1,47 +1,10 @@
 package tls
 
 import (
-	"github.com/stretchr/testify/suite"
 	"testing"
+
+	"github.com/stretchr/testify/suite"
 )
-
-func TestModifyTraceInstance(t *testing.T) {
-	// 测试参数验证
-	t.Run("EmptyTraceInstanceId", func(t *testing.T) {
-		request := &ModifyTraceInstanceRequest{
-			TraceInstanceId: "",
-		}
-		err := request.CheckValidation()
-		if err == nil {
-			t.Error("Expected validation error for empty TraceInstanceId")
-		}
-	})
-
-	t.Run("ValidRequest", func(t *testing.T) {
-		request := &ModifyTraceInstanceRequest{
-			TraceInstanceId: "test-trace-instance-id",
-			Description:     stringPtr("test description"),
-		}
-		err := request.CheckValidation()
-		if err != nil {
-			t.Errorf("Expected no validation error, got: %v", err)
-		}
-	})
-
-	t.Run("ValidRequestWithoutDescription", func(t *testing.T) {
-		request := &ModifyTraceInstanceRequest{
-			TraceInstanceId: "test-trace-instance-id",
-		}
-		err := request.CheckValidation()
-		if err != nil {
-			t.Errorf("Expected no validation error, got: %v", err)
-		}
-	})
-}
-
-func stringPtr(s string) *string {
-	return &s
-}
 
 type SDKTraceInstanceTestSuite struct {
 	suite.Suite
@@ -66,6 +29,29 @@ func (suite *SDKTraceInstanceTestSuite) validateError(err error, expectErr *Erro
 	suite.Equal(expectErr.HTTPCode, sdkErr.HTTPCode)
 	suite.Equal(expectErr.Code, sdkErr.Code)
 	suite.Equal(expectErr.Message, sdkErr.Message)
+}
+
+func (suite *SDKTraceInstanceTestSuite) TestModifyTraceInstanceValidation() {
+	suite.T().Run("EmptyTraceInstanceId", func(t *testing.T) {
+		request := &ModifyTraceInstanceRequest{TraceInstanceId: ""}
+		err := request.CheckValidation()
+		suite.Error(err)
+	})
+
+	suite.T().Run("ValidRequest", func(t *testing.T) {
+		request := &ModifyTraceInstanceRequest{
+			TraceInstanceId: "test-trace-instance-id",
+			Description:     StrPtr("test description"),
+		}
+		err := request.CheckValidation()
+		suite.NoError(err)
+	})
+
+	suite.T().Run("ValidRequestWithoutDescription", func(t *testing.T) {
+		request := &ModifyTraceInstanceRequest{TraceInstanceId: "test-trace-instance-id"}
+		err := request.CheckValidation()
+		suite.NoError(err)
+	})
 }
 
 func (suite *SDKTraceInstanceTestSuite) TestDescribeTraceInstance() {

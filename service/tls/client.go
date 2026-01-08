@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -279,4 +280,75 @@ func (c *LsClient) Close() error {
 
 func (c *LsClient) String() string {
 	return c.Endpoint + " " + c.Region
+}
+
+func (c *LsClient) DescribeScheduleSqlTasks(request *DescribeScheduleSqlTasksRequest) (*DescribeScheduleSqlTasksResponse, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := make(map[string]string)
+	if request.ProjectId != nil {
+		params["ProjectId"] = *request.ProjectId
+	}
+	if request.ProjectName != nil {
+		params["ProjectName"] = *request.ProjectName
+	}
+	if request.IamProjectName != nil {
+		params["IamProjectName"] = *request.IamProjectName
+	}
+	if request.TopicId != nil {
+		params["TopicId"] = *request.TopicId
+	}
+	if request.SourceTopicName != nil {
+		params["SourceTopicName"] = *request.SourceTopicName
+	}
+	if request.TaskId != nil {
+		params["TaskId"] = *request.TaskId
+	}
+	if request.TaskName != nil {
+		params["TaskName"] = *request.TaskName
+	}
+	if request.Status != nil {
+		params["Status"] = *request.Status
+	}
+	if request.PageNumber != nil {
+		params["PageNumber"] = strconv.Itoa(*request.PageNumber)
+	}
+	if request.PageSize != nil {
+		params["PageSize"] = strconv.Itoa(*request.PageSize)
+	}
+
+	body := map[string]string{}
+	bytesBody, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeScheduleSqlTasks, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &DescribeScheduleSqlTasksResponse{}
+	response.FillRequestId(rawResponse)
+
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
 }

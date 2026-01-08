@@ -60,30 +60,46 @@ type Client interface {
 	CreateRule(request *CreateRuleRequest) (*CreateRuleResponse, error)
 	DeleteRule(request *DeleteRuleRequest) (*CommonResponse, error)
 	ModifyRule(request *ModifyRuleRequest) (*CommonResponse, error)
+	// Deprecated: Please use DescribeRuleV2 instead.
 	DescribeRule(request *DescribeRuleRequest) (*DescribeRuleResponse, error)
 	DescribeRules(request *DescribeRulesRequest) (*DescribeRulesResponse, error)
 	ApplyRuleToHostGroups(request *ApplyRuleToHostGroupsRequest) (*CommonResponse, error)
 	DeleteRuleFromHostGroups(request *DeleteRuleFromHostGroupsRequest) (*CommonResponse, error)
+	DescribeRuleV2(request *DescribeRuleRequestV2) (*DescribeRuleResponseV2, error)
+	DescribeBoundHostGroups(request *DescribeBoundHostGroupsRequest) (*DescribeBoundHostGroupsResponse, error)
 
 	CreateHostGroup(request *CreateHostGroupRequest) (*CreateHostGroupResponse, error)
 	DeleteHostGroup(request *DeleteHostGroupRequest) (*CommonResponse, error)
 	ModifyHostGroup(request *ModifyHostGroupRequest) (*CommonResponse, error)
+	// Deprecated: Please use DescribeHostGroupV2 instead.
 	DescribeHostGroup(request *DescribeHostGroupRequest) (*DescribeHostGroupResponse, error)
+	// Deprecated: Please use DescribeHostGroupsV2 instead.
 	DescribeHostGroups(request *DescribeHostGroupsRequest) (*DescribeHostGroupsResponse, error)
 	DescribeHosts(request *DescribeHostsRequest) (*DescribeHostsResponse, error)
 	DeleteHost(request *DeleteHostRequest) (*CommonResponse, error)
 	DescribeHostGroupRules(request *DescribeHostGroupRulesRequest) (*DescribeHostGroupRulesResponse, error)
 	ModifyHostGroupsAutoUpdate(request *ModifyHostGroupsAutoUpdateRequest) (*ModifyHostGroupsAutoUpdateResponse, error)
 	DeleteAbnormalHosts(request *DeleteAbnormalHostsRequest) (*CommonResponse, error)
+	DescribeHostGroupV2(request *DescribeHostGroupRequestV2) (*DescribeHostGroupResponseV2, error)
+	DescribeHostGroupsV2(request *DescribeHostGroupsRequestV2) (*DescribeHostGroupsResponseV2, error)
 
 	CreateAlarm(request *CreateAlarmRequest) (*CreateAlarmResponse, error)
 	DeleteAlarm(request *DeleteAlarmRequest) (*CommonResponse, error)
+	DeleteAlarmContentTemplate(request *DeleteAlarmContentTemplateRequest) (*CommonResponse, error)
 	ModifyAlarm(request *ModifyAlarmRequest) (*CommonResponse, error)
+	ModifyAlarmWebhookIntegration(request *ModifyAlarmWebhookIntegrationReq) (*CommonResponse, error)
 	DescribeAlarms(request *DescribeAlarmsRequest) (*DescribeAlarmsResponse, error)
+	DescribeAlarmWebhookIntegrations(request *DescribeAlarmWebhookIntegrationsRequest) (*DescribeAlarmWebhookIntegrationsResponse, error)
+	DescribeAlarmContentTemplates(request *DescribeAlarmContentTemplatesRequest) (*DescribeAlarmContentTemplatesResponse, error)
+	CreateAlarmWebhookIntegration(request *CreateAlarmWebhookIntegrationRequest) (*CreateAlarmWebhookIntegrationResponse, error)
 	CreateAlarmNotifyGroup(request *CreateAlarmNotifyGroupRequest) (*CreateAlarmNotifyGroupResponse, error)
 	DeleteAlarmNotifyGroup(request *DeleteAlarmNotifyGroupRequest) (*CommonResponse, error)
 	ModifyAlarmNotifyGroup(request *ModifyAlarmNotifyGroupRequest) (*CommonResponse, error)
 	DescribeAlarmNotifyGroups(request *DescribeAlarmNotifyGroupsRequest) (*DescribeAlarmNotifyGroupsResponse, error)
+	CreateAlarmContentTemplate(request *CreateAlarmContentTemplateRequest) (*CreateAlarmContentTemplateResponse, error)
+
+	DeleteAlarmWebhookIntegration(request *DeleteAlarmWebhookIntegrationRequest) (*CommonResponse, error)
+	ModifyAlarmContentTemplate(request *ModifyAlarmContentTemplateRequest) (*ModifyAlarmContentTemplateResponse, error)
 
 	CreateDownloadTask(request *CreateDownloadTaskRequest) (*CreateDownloadTaskResponse, error)
 	DescribeDownloadTasks(request *DescribeDownloadTasksRequest) (*DescribeDownloadTasksResponse, error)
@@ -112,6 +128,9 @@ type Client interface {
 
 	AddTagsToResource(request *AddTagsToResourceRequest) (*CommonResponse, error)
 	RemoveTagsFromResource(request *RemoveTagsFromResourceRequest) (*CommonResponse, error)
+	TagResources(request *TagResourcesRequest) (*TagResourcesResponse, error)
+	ListTagsForResources(request *ListTagsForResourcesRequest) (*ListTagsForResourcesResponse, error)
+	UntagResources(request *UntagResourcesRequest) (*CommonResponse, error)
 
 	CreateETLTask(request *CreateETLTaskRequest) (*CreateETLTaskResponse, error)
 	DeleteETLTask(request *DeleteETLTaskRequest) (*CommonResponse, error)
@@ -149,10 +168,18 @@ type Client interface {
 	// Trace 相关接口
 	DeleteTraceInstance(request *DeleteTraceInstanceRequest) (*DeleteTraceInstanceResponse, error)
 	DescribeTraceInstance(request *DescribeTraceInstanceRequest) (*DescribeTraceInstanceResponse, error)
+	DescribeTrace(request *DescribeTraceRequest) (*DescribeTraceResponse, error)
 	DescribeTraceInstances(request *DescribeTraceInstancesRequest) (*DescribeTraceInstancesResponse, error)
 	CreateTraceInstance(request *CreateTraceInstanceRequest) (*CreateTraceInstanceResponse, error)
+	SearchTraces(request *SearchTracesRequest) (*SearchTracesResponse, error)
 
 	// 账号管理相关接口
 	GetAccountStatus(request *GetAccountStatusRequest) (*GetAccountStatusResponse, error)
 	ActiveTlsAccount(request *ActiveTlsAccountRequest) (*ActiveTlsAccountResponse, error)
+	// 定时SQL任务接口
+	CreateScheduleSqlTask(request *CreateScheduleSqlTaskRequest) (*CreateScheduleSqlTaskResponse, error)
+	DeleteScheduleSqlTask(request *DeleteScheduleSqlTaskRequest) (*DeleteScheduleSqlTaskResponse, error)
+	DescribeScheduleSqlTask(request *DescribeScheduleSqlTaskRequest) (*DescribeScheduleSqlTaskResponse, error)
+	DescribeScheduleSqlTasks(request *DescribeScheduleSqlTasksRequest) (*DescribeScheduleSqlTasksResponse, error)
+	ModifyScheduleSqlTask(request *ModifyScheduleSqlTaskRequest) (*ModifyScheduleSqlTaskResponse, error)
 }

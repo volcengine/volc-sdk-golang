@@ -143,6 +143,16 @@ func main() {
 	})
 	fmt.Println(describeRuleResp.RuleInfo.RuleName)
 
+	// 查询指定采集配置 V2
+	// 请根据您的需要，填写待查询的RuleId
+	// DescribeRule API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/2121515
+	describeRuleRespV2, err := client.DescribeRuleV2(&tls.DescribeRuleRequestV2{
+		RuleID: ruleID,
+	})
+	if err == nil && describeRuleRespV2 != nil && describeRuleRespV2.RuleInfo != nil {
+		fmt.Println(describeRuleRespV2.RuleInfo.RuleName)
+	}
+
 	// 查询日志项目所有采集配置
 	// 请根据您的需要，填写待查询的ProjectId
 	// DescribeRules API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112203
@@ -159,6 +169,16 @@ func main() {
 	_, _ = client.DeleteRule(&tls.DeleteRuleRequest{
 		RuleID: ruleID,
 	})
+
+	// 获取采集配置绑定的机器组信息
+	// 请根据您的需要，填写待删除的RuleId
+	// describeBoundHostGroupsResp API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/2121516
+	describeBoundHostGroupsResp, err := client.DescribeBoundHostGroups(&tls.DescribeBoundHostGroupsRequest{
+		RuleID: ruleID,
+	})
+	if err == nil && describeBoundHostGroupsResp != nil {
+		fmt.Println(describeBoundHostGroupsResp.Total)
+	}
 }
 
 func GenExtractRuleWithLogType(logType LogType) *tls.ExtractRule {

@@ -7,7 +7,8 @@ import (
 	"net/http"
 )
 
-func (c *LsClient) CancelDownloadTask(request *CancelDownloadTaskRequest) (r *CancelDownloadTaskResponse, e error) {
+// ModifyAlarmContentTemplate API
+func (c *LsClient) ModifyAlarmContentTemplate(request *ModifyAlarmContentTemplateRequest) (r *ModifyAlarmContentTemplateResponse, e error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
 	}
@@ -16,19 +17,17 @@ func (c *LsClient) CancelDownloadTask(request *CancelDownloadTaskRequest) (r *Ca
 		"Content-Type": "application/json",
 	}
 
-	params := map[string]string{}
-
 	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodPost, PathCancelDownloadTask, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	rawResponse, err := c.Request(http.MethodPut, PathModifyAlarmContentTemplate, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
 	}
 	if rawResponse == nil {
-		return nil, errors.New("nil http response")
+		return nil, NewClientError(errors.New("nil http response"))
 	}
 	defer rawResponse.Body.Close()
 
@@ -37,11 +36,12 @@ func (c *LsClient) CancelDownloadTask(request *CancelDownloadTaskRequest) (r *Ca
 		return nil, err
 	}
 
-	var response = &CancelDownloadTaskResponse{}
+	var response = &ModifyAlarmContentTemplateResponse{}
+	response.FillRequestId(rawResponse)
+
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
-	response.FillRequestId(rawResponse)
 
 	return response, nil
 }

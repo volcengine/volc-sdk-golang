@@ -3,6 +3,7 @@ package tls
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -30,6 +31,9 @@ func (c *LsClient) DescribeCheckPoint(request *DescribeCheckPointRequest) (*Desc
 	rawResponse, err := c.Request(http.MethodGet, PathDescribeCheckPoint, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -36,6 +37,9 @@ func (c *LsClient) DescribeShards(request *DescribeShardsRequest) (r *DescribeSh
 	rawResponse, err := c.Request(http.MethodGet, PathDescribeShards, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -73,7 +77,7 @@ func (c *LsClient) ManualShardSplit(ctx context.Context, request *ManualShardSpl
 		return nil, err
 	}
 	if resp == nil {
-		return nil, errors.New("nil http response")
+		return nil, NewClientError(errors.New("nil http response"))
 	}
 	defer resp.Body.Close()
 

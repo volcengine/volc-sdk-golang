@@ -74,6 +74,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -84,6 +85,7 @@ func (suite *SDKIndexTestSuite) TestCreateIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 			},
@@ -203,6 +205,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -213,6 +216,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -224,6 +228,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						IncludeChinese: false,
 						SQLFlag:        true,
 						IndexAll:       true,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 			},
@@ -245,6 +250,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -255,6 +261,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -266,6 +273,7 @@ func (suite *SDKIndexTestSuite) TestModifyIndexNormally() {
 						IncludeChinese: false,
 						SQLFlag:        true,
 						IndexAll:       true,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 			},
@@ -416,6 +424,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 				{
@@ -426,6 +435,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 			},
@@ -455,6 +465,7 @@ func (suite *SDKIndexTestSuite) TestDescribeIndexNormally() {
 						CaseSensitive:  false,
 						IncludeChinese: false,
 						SQLFlag:        false,
+						AutoIndexFlag:  BoolPtr(false),
 					},
 				},
 			},

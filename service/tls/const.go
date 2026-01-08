@@ -49,6 +49,8 @@ const (
 	PathDescribeRules            = "/DescribeRules"
 	PathApplyRuleToHostGroups    = "/ApplyRuleToHostGroups"
 	PathDeleteRuleFromHostGroups = "/DeleteRuleFromHostGroups"
+	PathDescribeRuleV2           = "/DescribeRuleV2"
+	PathDescribeBoundHostGroups  = "/DescribeBoundHostGroups"
 
 	PathCreateHostGroup            = "/CreateHostGroup"
 	PathDeleteHostGroup            = "/DeleteHostGroup"
@@ -57,24 +59,33 @@ const (
 	PathDescribeHostGroups         = "/DescribeHostGroups"
 	PathDescribeHostGroupRules     = "/DescribeHostGroupRules"
 	PathModifyHostGroupsAutoUpdate = "/ModifyHostGroupsAutoUpdate"
+	PathDescribeHostGroupsV2       = "/DescribeHostGroupsV2"
+	PathDescribeHostGroupV2        = "/DescribeHostGroupV2"
 
 	PathDeleteHost          = "/DeleteHost"
 	PathDescribeHosts       = "/DescribeHosts"
 	PathDeleteAbnormalHosts = "/DeleteAbnormalHosts"
 
-	PathCreateAlarmNotifyGroup    = "/CreateAlarmNotifyGroup"
-	PathDeleteAlarmNotifyGroup    = "/DeleteAlarmNotifyGroup"
-	PathDescribeAlarmNotifyGroups = "/DescribeAlarmNotifyGroups"
-	PathModifyAlarmNotifyGroup    = "/ModifyAlarmNotifyGroup"
-	PathCreateAlarm               = "/CreateAlarm"
-	PathDeleteAlarm               = "/DeleteAlarm"
-	PathModifyAlarm               = "/ModifyAlarm"
-	PathDescribeAlarms            = "/DescribeAlarms"
-
-	PathCreateDownloadTask    = "/CreateDownloadTask"
-	PathDescribeDownloadTasks = "/DescribeDownloadTasks"
-	PathDescribeDownloadUrl   = "/DescribeDownloadUrl"
-	PathCancelDownloadTask    = "/CancelDownloadTask"
+	PathCreateAlarmNotifyGroup           = "/CreateAlarmNotifyGroup"
+	PathDeleteAlarmNotifyGroup           = "/DeleteAlarmNotifyGroup"
+	PathDescribeAlarmNotifyGroups        = "/DescribeAlarmNotifyGroups"
+	PathDescribeAlarmContentTemplates    = "/DescribeAlarmContentTemplates"
+	PathModifyAlarmNotifyGroup           = "/ModifyAlarmNotifyGroup"
+	PathCreateAlarm                      = "/CreateAlarm"
+	PathDeleteAlarm                      = "/DeleteAlarm"
+	PathModifyAlarm                      = "/ModifyAlarm"
+	PathDescribeAlarms                   = "/DescribeAlarms"
+	PathCreateAlarmContentTemplate       = "/CreateAlarmContentTemplate"
+	PathDeleteAlarmContentTemplate       = "/DeleteAlarmContentTemplate"
+	PathModifyAlarmContentTemplate       = "/ModifyAlarmContentTemplate"
+	PathDeleteAlarmWebhookIntegration    = "/DeleteAlarmWebhookIntegration"
+	PathDescribeAlarmWebhookIntegrations = "/DescribeAlarmWebhookIntegrations"
+	PathModifyAlarmWebhookIntegration    = "/ModifyAlarmWebhookIntegration"
+	PathCreateAlarmWebhookIntegration    = "/CreateAlarmWebhookIntegration"
+	PathCreateDownloadTask               = "/CreateDownloadTask"
+	PathDescribeDownloadTasks            = "/DescribeDownloadTasks"
+	PathDescribeDownloadUrl              = "/DescribeDownloadUrl"
+	PathCancelDownloadTask               = "/CancelDownloadTask"
 
 	PathWebTracks = "/WebTracks"
 
@@ -98,6 +109,9 @@ const (
 
 	PathAddTagsToResource      = "/AddTagsToResource"
 	PathRemoveTagsFromResource = "/RemoveTagsFromResource"
+	PathTagResources           = "/TagResources"
+	PathListTagsForResources   = "/ListTagsForResources"
+	PathUntagResources         = "/UntagResources"
 
 	PathCreateETLTask       = "/CreateETLTask"
 	PathDeleteETLTask       = "/DeleteETLTask"
@@ -105,6 +119,9 @@ const (
 	PathModifyETLTask       = "/ModifyETLTask"
 	PathDescribeETLTasks    = "/DescribeETLTasks"
 	PathModifyETLTaskStatus = "/ModifyETLTaskStatus"
+
+	PathCreateScheduleSqlTask = "/CreateScheduleSqlTask"
+	PathDeleteScheduleSqlTask = "/DeleteScheduleSqlTask"
 
 	PathCreateImportTask    = "/CreateImportTask"
 	PathDeleteImportTask    = "/DeleteImportTask"
@@ -127,6 +144,10 @@ const (
 	PathModifyAppSceneMeta    = "/ModifyAppSceneMeta"
 	PathDeleteAppSceneMeta    = "/DeleteAppSceneMeta"
 
+	PathDescribeScheduleSqlTask  = "/DescribeScheduleSqlTask"
+	PathDescribeScheduleSqlTasks = "/DescribeScheduleSqlTasks"
+	PathModifyScheduleSqlTask    = "/ModifyScheduleSqlTask"
+
 	HeaderAPIVersion = "x-tls-apiversion"
 	APIVersion2      = "0.2.0"
 	APIVersion3      = "0.3.0"
@@ -136,7 +157,14 @@ const (
 	PathModifyTraceInstance    = "/ModifyTraceInstance"
 	PathCreateTraceInstance    = "/CreateTraceInstance"
 	PathDescribeTraceInstances = "/DescribeTraceInstances"
+	PathSearchTraces           = "/SearchTraces"
 
 	PathGetAccountStatus = "/GetAccountStatus"
 	PathActiveTlsAccount = "/ActiveTlsAccount"
+	PathDescribeTrace    = "/DescribeTrace"
+
+	WebhookTypeGeneralWebhook = "GeneralWebhook"
+	WebhookTypeLark           = "Lark"
+	WebhookTypeDingTalk       = "DingTalk"
+	WebhookTypeWeChat         = "WeChat"
 )

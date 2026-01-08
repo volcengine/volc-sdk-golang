@@ -104,6 +104,25 @@ func createAlarmNotifyGroup(cli Client, groupName string) (string, error) {
 				EndTime:          "23:59:59",
 			},
 		},
+		NoticeRules: &[]NoticeRule{
+			{
+				HasNext:    BoolPtr(false),
+				HasEndNode: BoolPtr(true),
+				RuleNode: &RuleNode{
+					Type:  "NotifyType",
+					Value: []string{"Recovery", "Trigger"},
+				},
+				ReceiverInfos: &Receivers{
+					{
+						ReceiverType:     "User",
+						ReceiverNames:    []string{"zhengyu1"},
+						ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
+						StartTime:        "00:00:00",
+						EndTime:          "23:59:59",
+					},
+				},
+			},
+		},
 	})
 
 	return createAlarmNotifyGroupResp.NotifyGroupID, err
@@ -252,6 +271,25 @@ func (suite *SDKAlarmTaskTestSuite) TestCreateAlarmNotifyGroupNormally() {
 					EndTime:          "23:59:59",
 				},
 			},
+			NoticeRules: &[]NoticeRule{
+				{
+					HasNext:    BoolPtr(false),
+					HasEndNode: BoolPtr(true),
+					RuleNode: &RuleNode{
+						Type:  "NotifyType",
+						Value: []string{"Recovery", "Trigger"},
+					},
+					ReceiverInfos: &Receivers{
+						{
+							ReceiverType:     "User",
+							ReceiverNames:    []string{"zhengyu1"},
+							ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
+							StartTime:        "00:00:00",
+							EndTime:          "23:59:59",
+						},
+					},
+				},
+			},
 		}: nil,
 		{
 			GroupName: uuid.New().String(),
@@ -266,6 +304,25 @@ func (suite *SDKAlarmTaskTestSuite) TestCreateAlarmNotifyGroupNormally() {
 					ReceiverChannels: []ReceiverChannel{"Phone"},
 					StartTime:        "00:00:00",
 					EndTime:          "23:59:59",
+				},
+			},
+			NoticeRules: &[]NoticeRule{
+				{
+					HasNext:    BoolPtr(false),
+					HasEndNode: BoolPtr(true),
+					RuleNode: &RuleNode{
+						Type:  "NotifyType",
+						Value: []string{"Recovery", "Trigger"},
+					},
+					ReceiverInfos: &Receivers{
+						{
+							ReceiverType:     "User",
+							ReceiverNames:    []string{"zhengyu1"},
+							ReceiverChannels: []ReceiverChannel{"Phone"},
+							StartTime:        "00:00:00",
+							EndTime:          "23:59:59",
+						},
+					},
 				},
 			},
 			IamProjectName: StrPtr("default"),
@@ -296,6 +353,25 @@ func (suite *SDKAlarmTaskTestSuite) TestCreateAlarmNotifyGroupAbnormally() {
 					ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
 					StartTime:        "00:00:00",
 					EndTime:          "23:59:59",
+				},
+			},
+			NoticeRules: &[]NoticeRule{
+				{
+					HasNext:    BoolPtr(false),
+					HasEndNode: BoolPtr(true),
+					RuleNode: &RuleNode{
+						Type:  "NotifyType",
+						Value: []string{"Recovery", "Trigger"},
+					},
+					ReceiverInfos: &Receivers{
+						{
+							ReceiverType:     "User",
+							ReceiverNames:    []string{"liangrubo"},
+							ReceiverChannels: []ReceiverChannel{"Sms", "Phone", "Email"},
+							StartTime:        "00:00:00",
+							EndTime:          "23:59:59",
+						},
+					},
 				},
 			},
 		}: {
@@ -600,4 +676,11 @@ func (suite *SDKAlarmTaskTestSuite) TestDescribeAlarmsAbnormally() {
 		Message:  "Project does not exist.",
 	}
 	suite.validateError(err, expectedErr)
+}
+
+func TestDeleteAlarmWebhookIntegration(t *testing.T) {
+	cli := NewClientWithEnv()
+	_, _ = cli.DeleteAlarmWebhookIntegration(&DeleteAlarmWebhookIntegrationRequest{
+		WebhookID: "test-webhook-id-12345",
+	})
 }

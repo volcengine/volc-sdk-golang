@@ -238,6 +238,16 @@ func (suite *SDKHostGroupTestSuite) TestDescribeHostGroupNormally() {
 		suite.Equal(expectedHostGroupInfo.UpdateEndTime, resp.HostGroupHostsRulesInfo.HostGroupInfo.UpdateEndTime)
 		suite.Equal(expectedHostGroupInfo.ServiceLogging, resp.HostGroupHostsRulesInfo.HostGroupInfo.ServiceLogging)
 		suite.Equal(expectedHostGroupInfo.IamProjectName, resp.HostGroupHostsRulesInfo.HostGroupInfo.IamProjectName)
+
+		respV2, err := suite.cli.DescribeHostGroupV2(&DescribeHostGroupRequestV2{HostGroupID: createHostGroupResp.HostGroupID})
+		suite.NoError(err)
+		suite.Equal(expectedHostGroupInfo.HostGroupName, respV2.HostGroupHostsRulesInfo.HostGroupInfo.HostGroupName)
+		suite.Equal(expectedHostGroupInfo.HostGroupType, respV2.HostGroupHostsRulesInfo.HostGroupInfo.HostGroupType)
+		suite.Equal(expectedHostGroupInfo.AutoUpdate, respV2.HostGroupHostsRulesInfo.HostGroupInfo.AutoUpdate)
+		suite.Equal(expectedHostGroupInfo.UpdateStartTime, respV2.HostGroupHostsRulesInfo.HostGroupInfo.UpdateStartTime)
+		suite.Equal(expectedHostGroupInfo.UpdateEndTime, respV2.HostGroupHostsRulesInfo.HostGroupInfo.UpdateEndTime)
+		suite.Equal(expectedHostGroupInfo.ServiceLogging, respV2.HostGroupHostsRulesInfo.HostGroupInfo.ServiceLogging)
+		suite.Equal(expectedHostGroupInfo.IamProjectName, respV2.HostGroupHostsRulesInfo.HostGroupInfo.IamProjectName)
 	}
 }
 
@@ -254,6 +264,12 @@ func (suite *SDKHostGroupTestSuite) TestDescribeHostGroupAbnormally() {
 
 func (suite *SDKHostGroupTestSuite) TestDescribeHostGroupsNormally() {
 	resp, err := suite.cli.DescribeHostGroups(&DescribeHostGroupsRequest{})
+	suite.NoError(err)
+	suite.GreaterOrEqual(int(resp.Total), 0)
+}
+
+func (suite *SDKHostGroupTestSuite) TestDescribeHostGroupsV2Normally() {
+	resp, err := suite.cli.DescribeHostGroupsV2(&DescribeHostGroupsRequestV2{})
 	suite.NoError(err)
 	suite.GreaterOrEqual(int(resp.Total), 0)
 }

@@ -3,6 +3,7 @@ package tls
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -36,6 +37,9 @@ func (c *LsClient) CreateTopic(request *CreateTopicRequest) (r *CreateTopicRespo
 	rawResponse, err := c.Request(http.MethodPost, PathCreateTopic, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

@@ -51,7 +51,7 @@ func main() {
 				Value: tls.Value{
 					ValueType:      "text",
 					Delimiter:      ", ?",
-					CasSensitive:   false,
+					CaseSensitive:  false,
 					IncludeChinese: false,
 					SQLFlag:        false,
 				},

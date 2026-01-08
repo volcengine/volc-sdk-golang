@@ -2,6 +2,7 @@ package tls
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -25,6 +26,9 @@ func (c *LsClient) ConsumerHeartbeat(request *ConsumerHeartbeatRequest) (*Consum
 	rawResponse, err := c.Request(http.MethodPost, PathConsumerHeartbeat, nil, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

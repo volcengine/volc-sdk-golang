@@ -925,7 +925,7 @@ func (suite *SDKRuleTestSuite) TestModifyContainerRuleNormally() {
 		RuleName: StrPtr("modified-rule-name"),
 		ContainerRule: &ContainerRule{
 			Stream: "all",
-			KubernetesRule: &KubernetesRule{
+			KubernetesRule: KubernetesRule{
 				IncludePodAnnotationRegex: map[string]string{
 					"Key1": "modify-value1",
 					"Key2": "modify-value2",
@@ -949,6 +949,10 @@ func (suite *SDKRuleTestSuite) TestModifyContainerRuleNormally() {
 		"Key1": "modify-value1",
 		"Key2": "modify-value2",
 	}, resp.RuleInfo.ContainerRule.KubernetesRule.IncludePodAnnotationRegex)
+
+	respV2, err := suite.cli.DescribeRuleV2(&DescribeRuleRequestV2{RuleID: ruleID})
+	suite.NoError(err)
+	suite.Equal("modified-rule-name", respV2.RuleInfo.RuleName)
 }
 
 func (suite *SDKRuleTestSuite) TestModifyRuleAbnormally() {

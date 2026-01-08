@@ -304,10 +304,8 @@ type Value struct {
 	SQLFlag        bool           `json:"SqlFlag"`
 	JsonKeys       []KeyValueInfo `json:"JsonKeys"`
 	IndexAll       bool           `json:"IndexAll"`
-	// 该索引是否是自动索引添加
-	AutoIndexFlag *bool `json:"AutoIndexFlag,omitempty"`
-	// 是否为JSON字段开启自动索引+统计功能
-	IndexSQLAll *bool `json:"IndexSQLAll,omitempty"`
+	AutoIndexFlag  *bool          `json:"AutoIndexFlag,omitempty"`
+	IndexSQLAll    *bool          `json:"IndexSQLAll,omitempty"`
 }
 
 type KeyValueParam struct {
@@ -637,12 +635,13 @@ type ExtractRule struct {
 	TimeKey             string           `json:"TimeKey,omitempty"`
 	TimeFormat          string           `json:"TimeFormat,omitempty"`
 	FilterKeyRegex      []FilterKeyRegex `json:"FilterKeyRegex,omitempty"`
-	UnMatchUpLoadSwitch *bool            `json:"UnMatchUpLoadSwitch"`
+	UnMatchUpLoadSwitch bool             `json:"UnMatchUpLoadSwitch"`
 	UnMatchLogKey       string           `json:"UnMatchLogKey,omitempty"`
-	LogTemplate         *LogTemplate     `json:"LogTemplate,omitempty"`
+	LogTemplate         LogTemplate      `json:"LogTemplate,omitempty"`
 	Quote               string           `json:"Quote,omitempty"`
 	TimeZone            string           `json:"TimeZone,omitempty"`
 	TimeExtractRegex    string           `json:"TimeExtractRegex,omitempty"`
+	TimeSample          string           `json:"TimeSample,omitempty"`
 	EnableNanosecond    *bool            `json:"EnableNanosecond,omitempty"`
 }
 
@@ -664,11 +663,11 @@ type ExcludePath struct {
 type UserDefineRule struct {
 	ParsePathRule        *ParsePathRule    `json:"ParsePathRule,omitempty"`
 	ShardHashKey         *ShardHashKey     `json:"ShardHashKey,omitempty"`
-	EnableRawLog         *bool             `json:"EnableRawLog,omitempty"`
+	EnableRawLog         bool              `json:"EnableRawLog,omitempty"`
 	Fields               map[string]string `json:"Fields,omitempty"`
 	Plugin               *Plugin           `json:"Plugin,omitempty"`
 	Advanced             *Advanced         `json:"Advanced,omitempty"`
-	TailFiles            *bool             `json:"TailFiles,omitempty"`
+	TailFiles            bool              `json:"TailFiles,omitempty"`
 	RawLogKey            string            `json:"RawLogKey,omitempty"`
 	HostnameKey          string            `json:"HostnameKey,omitempty"`
 	EnableHostname       *bool             `json:"EnableHostname,omitempty"`
@@ -710,7 +709,7 @@ type ContainerRule struct {
 	IncludeContainerEnvRegex   map[string]string `json:"IncludeContainerEnvRegex,omitempty"`
 	ExcludeContainerEnvRegex   map[string]string `json:"ExcludeContainerEnvRegex,omitempty"`
 	EnvTag                     map[string]string `json:"EnvTag,omitempty"`
-	KubernetesRule             *KubernetesRule   `json:"KubernetesRule,omitempty"`
+	KubernetesRule             KubernetesRule    `json:"KubernetesRule,omitempty"`
 }
 
 type KubernetesRule struct {
@@ -756,6 +755,7 @@ type ModifyRuleRequest struct {
 	LogSample      *string         `json:"LogSample,omitempty"`
 	InputType      *int            `json:"InputType,omitempty"`
 	ContainerRule  *ContainerRule  `json:"ContainerRule,omitempty"`
+	Pause          *int            `json:"Pause,omitempty"`
 }
 
 func (v *ModifyRuleRequest) CheckValidation() error {
@@ -787,22 +787,63 @@ type DescribeRuleResponse struct {
 	HostGroupInfos []*HostGroupInfo `json:"HostGroupInfos"`
 }
 
+type DescribeRuleRequestV2 struct {
+	CommonRequest
+	RuleID string `json:"RuleId"`
+}
+
+func (v *DescribeRuleRequestV2) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	return nil
+}
+
+type DescribeRuleResponseV2 struct {
+	CommonResponse
+	ProjectID   string    `json:"ProjectId"`
+	ProjectName string    `json:"ProjectName"`
+	TopicID     string    `json:"TopicId"`
+	TopicName   string    `json:"TopicName"`
+	RuleInfo    *RuleInfo `json:"RuleInfo"`
+}
+
+type DescribeBoundHostGroupsRequest struct {
+	CommonRequest
+	RuleID     string
+	PageNumber int
+	PageSize   int
+}
+
+func (v *DescribeBoundHostGroupsRequest) CheckValidation() error {
+	if len(v.RuleID) <= 0 {
+		return errors.New("Invalid argument, empty RuleID")
+	}
+	return nil
+}
+
+type DescribeBoundHostGroupsResponse struct {
+	CommonResponse
+	Total          int64            `json:"Total"`
+	HostGroupInfos []*HostGroupInfo `json:"HostGroupInfos"`
+}
+
 type RuleInfo struct {
-	TopicID        string          `json:"TopicId"`
-	TopicName      string          `json:"TopicName"`
-	RuleID         string          `json:"RuleId"`
-	RuleName       string          `json:"RuleName"`
-	Paths          []string        `json:"Paths"`
-	LogType        string          `json:"LogType"`
-	ExtractRule    *ExtractRule    `json:"ExtractRule"`
-	ExcludePaths   []ExcludePath   `json:"ExcludePaths"`
-	UserDefineRule *UserDefineRule `json:"UserDefineRule"`
-	LogSample      string          `json:"LogSample"`
-	InputType      *int            `json:"InputType"`
-	ContainerRule  *ContainerRule  `json:"ContainerRule"`
-	CreateTime     string          `json:"CreateTime"`
-	ModifyTime     string          `json:"ModifyTime"`
-	Pause          *bool           `json:"Pause,omitempty"`
+	TopicID        string         `json:"TopicId"`
+	TopicName      string         `json:"TopicName"`
+	RuleID         string         `json:"RuleId"`
+	RuleName       string         `json:"RuleName"`
+	Paths          []string       `json:"Paths"`
+	LogType        string         `json:"LogType"`
+	ExtractRule    ExtractRule    `json:"ExtractRule"`
+	ExcludePaths   []ExcludePath  `json:"ExcludePaths"`
+	UserDefineRule UserDefineRule `json:"UserDefineRule"`
+	LogSample      string         `json:"LogSample"`
+	InputType      int            `json:"InputType"`
+	ContainerRule  ContainerRule  `json:"ContainerRule"`
+	CreateTime     string         `json:"CreateTime"`
+	ModifyTime     string         `json:"ModifyTime"`
+	Pause          int            `json:"Pause"`
 }
 
 type HostGroupInfo struct {
@@ -826,13 +867,17 @@ type HostGroupInfo struct {
 
 type DescribeRulesRequest struct {
 	CommonRequest
-	ProjectID  string  `json:"ProjectId"`
-	PageNumber int     `json:"PageNumber"`
-	PageSize   int     `json:"PageSize"`
-	TopicID    *string `json:"TopicId,omitempty"`
-	TopicName  *string `json:"TopicName,omitempty"`
-	RuleID     *string `json:"RuleId,omitempty"`
-	RuleName   *string `json:"RuleName,omitempty"`
+	ProjectID      string  `json:"ProjectId"`
+	PageNumber     int     `json:"PageNumber"`
+	PageSize       int     `json:"PageSize"`
+	TopicID        *string `json:"TopicId,omitempty"`
+	TopicName      *string `json:"TopicName,omitempty"`
+	RuleID         *string `json:"RuleId,omitempty"`
+	RuleName       *string `json:"RuleName,omitempty"`
+	ProjectName    *string `json:"ProjectName,omitempty"`
+	IamProjectName *string `json:"IamProjectName,omitempty"`
+	LogType        *string `json:"LogType,omitempty"`
+	Pause          *int    `json:"Pause,omitempty"`
 }
 
 func (v *DescribeRulesRequest) CheckValidation() error {
@@ -957,6 +1002,23 @@ type DescribeHostGroupResponse struct {
 	HostGroupHostsRulesInfo *HostGroupHostsRulesInfo `json:"HostGroupHostsRulesInfo"`
 }
 
+type DescribeHostGroupRequestV2 struct {
+	CommonRequest
+	HostGroupID string
+}
+
+func (v *DescribeHostGroupRequestV2) CheckValidation() error {
+	if len(v.HostGroupID) <= 0 {
+		return errors.New("Invalid argument, empty HostGroupID")
+	}
+	return nil
+}
+
+type DescribeHostGroupResponseV2 struct {
+	CommonResponse
+	HostGroupHostsRulesInfo *HostGroupHostsRulesInfoV2 `json:"HostGroupHostsRulesInfo"`
+}
+
 type HostGroupHostsRulesInfo struct {
 	HostGroupInfo *HostGroupInfo `json:"HostGroupInfo"`
 	HostInfos     []*HostInfo    `json:"HostInfos"`
@@ -989,6 +1051,33 @@ type DescribeHostGroupsResponse struct {
 	CommonResponse
 	Total                    int64                      `json:"Total"`
 	HostGroupHostsRulesInfos []*HostGroupHostsRulesInfo `json:"HostGroupHostsRulesInfos"`
+}
+
+type DescribeHostGroupsRequestV2 struct {
+	CommonRequest
+	PageNumber     int
+	PageSize       int
+	HostGroupID    *string `json:",omitempty"`
+	HostGroupName  *string `json:",omitempty"`
+	HostIdentifier *string `json:",omitempty"`
+	AutoUpdate     *bool   `json:",omitempty"`
+	ServiceLogging *bool   `json:",omitempty"`
+	IamProjectName *string `json:",omitempty"`
+}
+
+func (v *DescribeHostGroupsRequestV2) CheckValidation() error {
+	return nil
+}
+
+type DescribeHostGroupsResponseV2 struct {
+	CommonResponse
+	Total                    int64                        `json:"Total"`
+	HostGroupHostsRulesInfos []*HostGroupHostsRulesInfoV2 `json:"HostGroupHostsRulesInfos"`
+}
+
+// HostGroupHostsRulesInfoV2 展示层对象
+type HostGroupHostsRulesInfoV2 struct {
+	HostGroupInfo *HostGroupInfo `json:"HostGroupInfo"`
 }
 
 type DescribeHostsRequest struct {
@@ -1051,10 +1140,10 @@ type DescribeHostGroupRulesResponse struct {
 
 type ModifyHostGroupsAutoUpdateRequest struct {
 	CommonRequest
-	HostGroupIds    []string `json:"HostGroupIds"`
-	AutoUpdate      *bool    `json:",omitempty"`
-	UpdateStartTime *string  `json:",omitempty"`
-	UpdateEndTime   *string  `json:",omitempty"`
+	HostGroupIds    []string
+	AutoUpdate      *bool   `json:",omitempty"`
+	UpdateStartTime *string `json:",omitempty"`
+	UpdateEndTime   *string `json:",omitempty"`
 }
 
 func (v *ModifyHostGroupsAutoUpdateRequest) CheckValidation() error {
@@ -1097,6 +1186,7 @@ type TriggerCondition struct {
 	Severity       string `json:"Severity"`
 	Condition      string `json:"Condition"`
 	CountCondition string `json:"CountCondition"`
+	NoData         *bool  `json:"NoData,omitempty"`
 }
 
 type CreateAlarmRequest struct {
@@ -1115,6 +1205,7 @@ type CreateAlarmRequest struct {
 	AlarmPeriodDetail  *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
 	JoinConfigurations []JoinConfig        `json:"JoinConfigurations,omitempty"`
 	TriggerConditions  []TriggerCondition  `json:"TriggerConditions,omitempty"`
+	SendResolved       *bool               `json:"SendResolved,omitempty"`
 }
 
 func (v *CreateAlarmRequest) CheckValidation() error {
@@ -1148,21 +1239,24 @@ func (v *CreateAlarmRequest) CheckValidation() error {
 type QueryRequests []QueryRequest
 
 type RequestCycle struct {
-	Type    string `json:"Type"`
-	Time    int    `json:"Time"`
-	CronTab string `json:"CronTab"`
+	Type         string  `json:"Type"`
+	Time         int     `json:"Time"`
+	CronTab      string  `json:"CronTab"`
+	CronTimeZone *string `json:"CronTimeZone,omitempty"`
 }
 
 type QueryRequest struct {
 	CommonRequest
-	Query           string `json:"Query"`
-	Number          uint8  `json:"Number"`
-	TopicID         string `json:"TopicId"`
-	TopicName       string `json:"TopicName,omitempty"`
-	StartTimeOffset int    `json:"StartTimeOffset"`
-	EndTimeOffset   int    `json:"EndTimeOffset"`
-	TimeSpanType    string `json:"TimeSpanType,omitempty"`
-	TruncatedTime   string `json:"TruncatedTime,omitempty"`
+	Query               string `json:"Query"`
+	Number              uint8  `json:"Number"`
+	TopicID             string `json:"TopicId"`
+	TopicName           string `json:"TopicName,omitempty"`
+	StartTimeOffset     int    `json:"StartTimeOffset"`
+	EndTimeOffset       int    `json:"EndTimeOffset"`
+	TimeSpanType        string `json:"TimeSpanType,omitempty"`
+	TruncatedTime       string `json:"TruncatedTime,omitempty"`
+	EndTimeOffsetUnit   string `json:"EndTimeOffsetUnit,omitempty"`
+	StartTimeOffsetUnit string `json:"StartTimeOffsetUnit,omitempty"`
 }
 
 type CreateAlarmResponse struct {
@@ -1178,6 +1272,30 @@ type DeleteAlarmRequest struct {
 func (v *DeleteAlarmRequest) CheckValidation() error {
 	if len(v.AlarmID) <= 0 {
 		return errors.New("Invalid argument, empty AlarmID")
+	}
+	return nil
+}
+
+type DeleteAlarmWebhookIntegrationRequest struct {
+	CommonRequest
+	WebhookID string `json:"WebhookID"`
+}
+
+func (v *DeleteAlarmWebhookIntegrationRequest) CheckValidation() error {
+	if len(v.WebhookID) <= 0 {
+		return errors.New("Invalid argument, empty WebhookID")
+	}
+	return nil
+}
+
+type DeleteAlarmContentTemplateRequest struct {
+	CommonRequest
+	AlarmContentTemplateID string `json:"AlarmContentTemplateId"`
+}
+
+func (v *DeleteAlarmContentTemplateRequest) CheckValidation() error {
+	if len(v.AlarmContentTemplateID) <= 0 {
+		return errors.New("Invalid argument, empty AlarmContentTemplateID")
 	}
 	return nil
 }
@@ -1198,6 +1316,7 @@ type ModifyAlarmRequest struct {
 	AlarmPeriodDetail  *AlarmPeriodSetting `json:"AlarmPeriodDetail,omitempty"`
 	JoinConfigurations []JoinConfig        `json:"JoinConfigurations,omitempty"`
 	TriggerConditions  []TriggerCondition  `json:"TriggerConditions,omitempty"`
+	SendResolved       *bool               `json:"SendResolved,omitempty"`
 }
 
 func (v *ModifyAlarmRequest) CheckValidation() error {
@@ -1207,16 +1326,47 @@ func (v *ModifyAlarmRequest) CheckValidation() error {
 	return nil
 }
 
+type ModifyAlarmWebhookIntegrationReq struct {
+	CommonRequest
+	WebhookID      string                   `json:"WebhookID"`
+	WebhookName    string                   `json:"WebhookName"`
+	WebhookType    string                   `json:"WebhookType"`
+	WebhookUrl     string                   `json:"WebhookUrl"`
+	WebhookMethod  *string                  `json:"WebhookMethod,omitempty"`
+	WebhookSecret  *string                  `json:"WebhookSecret,omitempty"`
+	WebhookHeaders []GeneralWebhookHeaderKV `json:"WebhookHeaders,omitempty"`
+}
+
+func (v *ModifyAlarmWebhookIntegrationReq) CheckValidation() error {
+	if len(v.WebhookID) <= 0 {
+		return errors.New("Invalid argument, empty WebhookID")
+	}
+	if len(v.WebhookName) <= 0 {
+		return errors.New("Invalid argument, empty WebhookName")
+	}
+	if len(v.WebhookType) <= 0 {
+		return errors.New("Invalid argument, empty WebhookType")
+	}
+	if len(v.WebhookUrl) <= 0 {
+		return errors.New("Invalid argument, empty WebhookUrl")
+	}
+	return nil
+}
+
 type DescribeAlarmsRequest struct {
 	CommonRequest
-	ProjectID     string
-	TopicID       *string
-	TopicName     *string
-	AlarmName     *string
-	AlarmPolicyID *string
-	Status        *bool
-	PageNumber    int
-	PageSize      int
+	ProjectID      string
+	ProjectName    *string
+	TopicID        *string
+	TopicName      *string
+	AlarmName      *string
+	AlarmPolicyID  *string
+	Status         *bool
+	AlarmDisabled  *bool
+	Severity       *string
+	IamProjectName *string
+	PageNumber     int
+	PageSize       int
 }
 
 func (v *DescribeAlarmsRequest) CheckValidation() error {
@@ -1250,16 +1400,18 @@ type QueryResp struct {
 	AlarmPeriodDetail  AlarmPeriodSetting `json:"AlarmPeriodDetail"`
 	JoinConfigurations []JoinConfig       `json:"JoinConfigurations"`
 	TriggerConditions  []TriggerCondition `json:"TriggerConditions"`
+	SendResolved       *bool              `json:"SendResolved,omitempty"`
 }
 
 type NotifyGroupsInfo struct {
-	GroupName       string      `json:"AlarmNotifyGroupName"`
-	NotifyGroupID   string      `json:"AlarmNotifyGroupId"`
-	NoticeType      NoticeTypes `json:"NotifyType"`
-	Receivers       Receivers   `json:"Receivers"`
-	CreateTimestamp string      `json:"CreateTime"`
-	ModifyTimestamp string      `json:"ModifyTime"`
-	IamProjectName  string      `json:"IamProjectName"`
+	GroupName       string       `json:"AlarmNotifyGroupName"`
+	NotifyGroupID   string       `json:"AlarmNotifyGroupId"`
+	NoticeType      NoticeTypes  `json:"NotifyType"`
+	Receivers       Receivers    `json:"Receivers"`
+	CreateTimestamp string       `json:"CreateTime"`
+	ModifyTimestamp string       `json:"ModifyTime"`
+	IamProjectName  string       `json:"IamProjectName"`
+	NoticeRules     []NoticeRule `json:"NoticeRules,omitempty"`
 }
 
 type NoticeTypes []NoticeType
@@ -1269,35 +1421,108 @@ type NoticeType string
 type Receivers []Receiver
 
 type Receiver struct {
-	ReceiverType     ReveiverType      `json:"ReceiverType"`
-	ReceiverNames    []string          `json:"ReceiverNames"`
-	ReceiverChannels []ReceiverChannel `json:"ReceiverChannels"`
-	StartTime        string            `json:"StartTime"`
-	EndTime          string            `json:"EndTime"`
-	Webhook          string            `json:",omitempty"`
+	ReceiverType                ReveiverType             `json:"ReceiverType"`
+	ReceiverNames               []string                 `json:"ReceiverNames"`
+	ReceiverChannels            []ReceiverChannel        `json:"ReceiverChannels"`
+	StartTime                   string                   `json:"StartTime"`
+	EndTime                     string                   `json:"EndTime"`
+	Webhook                     string                   `json:",omitempty"`
+	GeneralWebhookUrl           *string                  `json:"GeneralWebhookUrl,omitempty"`
+	GeneralWebhookBody          *string                  `json:"GeneralWebhookBody,omitempty"`
+	AlarmWebhookAtUsers         []string                 `json:"AlarmWebhookAtUsers,omitempty"`
+	AlarmWebhookIsAtAll         *bool                    `json:"AlarmWebhookIsAtAll,omitempty"`
+	AlarmWebhookAtGroups        []string                 `json:"AlarmWebhookAtGroups,omitempty"`
+	GeneralWebhookMethod        *string                  `json:"GeneralWebhookMethod,omitempty"`
+	GeneralWebhookHeaders       []GeneralWebhookHeaderKV `json:"GeneralWebhookHeaders,omitempty"`
+	AlarmContentTemplateId      *string                  `json:"AlarmContentTemplateId,omitempty"`
+	AlarmWebhookIntegrationId   *string                  `json:"AlarmWebhookIntegrationId,omitempty"`
+	AlarmWebhookIntegrationName *string                  `json:"AlarmWebhookIntegrationName,omitempty"`
 }
 
 type ReveiverType string
 
 type ReceiverChannel string
 
+type NoticeRules []NoticeRule
+
+type NoticeRule struct {
+	HasNext       *bool      `json:"HasNext,omitempty"`
+	RuleNode      *RuleNode  `json:"RuleNode,omitempty"`
+	HasEndNode    *bool      `json:"HasEndNode,omitempty"`
+	ReceiverInfos *Receivers `json:"ReceiverInfos,omitempty"`
+}
+
+type RuleNode struct {
+	Type     string     `json:"Type,omitempty"`
+	Value    []string   `json:"Value,omitempty"`
+	Children []RuleNode `json:"Children,omitempty"`
+}
+
+type GeneralWebhookHeaderKV struct {
+	Key   *string `json:"key,omitempty"`
+	Value *string `json:"value,omitempty"`
+}
+
+type CreateAlarmWebhookIntegrationRequest struct {
+	CommonRequest
+	WebhookHeaders *[]GeneralWebhookHeaderKV `json:"WebhookHeaders,omitempty"`
+	WebhookMethod  *string                   `json:"WebhookMethod,omitempty"`
+	WebhookName    string                    `json:"WebhookName"`
+	WebhookSecret  *string                   `json:"WebhookSecret,omitempty"`
+	WebhookType    string                    `json:"WebhookType"`
+	WebhookUrl     string                    `json:"WebhookUrl"`
+}
+
+func (v *CreateAlarmWebhookIntegrationRequest) CheckValidation() error {
+	if len(v.WebhookName) <= 0 {
+		return errors.New("Invalid argument, empty WebhookName")
+	}
+	if len(v.WebhookType) <= 0 {
+		return errors.New("Invalid argument, empty WebhookType")
+	}
+	if len(v.WebhookUrl) <= 0 {
+		return errors.New("Invalid argument, empty WebhookUrl")
+	}
+	if v.WebhookType == WebhookTypeGeneralWebhook {
+		if v.WebhookHeaders == nil || len(*v.WebhookHeaders) == 0 {
+			return errors.New("Invalid argument, empty WebhookHeaders")
+		}
+	}
+	return nil
+}
+
+type CreateAlarmWebhookIntegrationResponse struct {
+	CommonResponse
+	AlarmWebhookIntegrationID string `json:"AlarmWebhookIntegrationId"`
+}
+
 type CreateAlarmNotifyGroupRequest struct {
 	CommonRequest
-	GroupName      string      `json:"AlarmNotifyGroupName"`
-	NoticeType     NoticeTypes `json:"NotifyType"`
-	Receivers      Receivers   `json:"Receivers"`
-	IamProjectName *string     `json:"IamProjectName,omitempty"`
+	GroupName      string        `json:"AlarmNotifyGroupName"`
+	NoticeType     NoticeTypes   `json:"NotifyType"`
+	Receivers      Receivers     `json:"Receivers"`
+	IamProjectName *string       `json:"IamProjectName,omitempty"`
+	NoticeRules    *[]NoticeRule `json:"NoticeRules,omitempty"`
 }
 
 func (v *CreateAlarmNotifyGroupRequest) CheckValidation() error {
 	if len(v.GroupName) <= 0 {
 		return errors.New("Invalid argument, empty GroupName")
 	}
-	if len(v.NoticeType) <= 0 {
-		return errors.New("Invalid argument, empty NotifyType")
-	}
-	if len(v.Receivers) <= 0 {
-		return errors.New("Invalid argument, empty Receivers")
+
+	// Check mutual exclusivity: if NoticeRules is configured, NotifyType and Receivers must be empty
+	if v.NoticeRules != nil && len(*v.NoticeRules) > 0 {
+		if len(v.NoticeType) > 0 || len(v.Receivers) > 0 {
+			return errors.New("Invalid argument, if NoticeRules is configured, NotifyType and Receivers must be empty")
+		}
+	} else {
+		// If NoticeRules is empty, NotifyType and Receivers must be configured
+		if len(v.NoticeType) <= 0 {
+			return errors.New("Invalid argument, empty NotifyType")
+		}
+		if len(v.Receivers) <= 0 {
+			return errors.New("Invalid argument, empty Receivers")
+		}
 	}
 	return nil
 }
@@ -1328,6 +1553,7 @@ type ModifyAlarmNotifyGroupRequest struct {
 	AlarmNotifyGroupName *string      `json:"AlarmNotifyGroupName,omitempty"`
 	NoticeType           *NoticeTypes `json:"NotifyType,omitempty"`
 	Receivers            *Receivers   `json:"Receivers,omitempty"`
+	NoticeRules          *NoticeRules `json:"NoticeRules,omitempty"`
 }
 
 func (v *ModifyAlarmNotifyGroupRequest) CheckValidation() error {
@@ -1357,17 +1583,58 @@ type DescribeAlarmNotifyGroupsResponse struct {
 	AlarmNotifyGroups []*NotifyGroupsInfo `json:"AlarmNotifyGroups"`
 }
 
+// DescribeAlarmWebhookIntegrations
+type DescribeAlarmWebhookIntegrationsRequest struct {
+	CommonRequest
+	WebhookID   *string
+	WebhookName *string
+	WebhookType *string
+	PageNumber  int
+	PageSize    int
+}
+
+func (v *DescribeAlarmWebhookIntegrationsRequest) CheckValidation() error {
+	return nil
+}
+
+type WebhookIntegrationInfo struct {
+	WebhookID      string                   `json:"WebhookID"`
+	CreateTime     string                   `json:"CreateTime"`
+	ModifyTime     string                   `json:"ModifyTime"`
+	WebhookUrl     string                   `json:"WebhookUrl"`
+	WebhookName    string                   `json:"WebhookName"`
+	WebhookType    string                   `json:"WebhookType"`
+	WebhookMethod  *string                  `json:"WebhookMethod,omitempty"`
+	WebhookSecret  *string                  `json:"WebhookSecret,omitempty"`
+	WebhookHeaders []GeneralWebhookHeaderKV `json:"WebhookHeaders,omitempty"`
+}
+
+type DescribeAlarmWebhookIntegrationsResponse struct {
+	CommonResponse
+	Total               int                      `json:"Total"`
+	WebhookIntegrations []WebhookIntegrationInfo `json:"WebhookIntegrations"`
+}
+
 type CreateDownloadTaskRequest struct {
 	CommonRequest
-	TopicID     string `json:"TopicId"`
-	TaskName    string
-	Query       string
-	StartTime   int64
-	EndTime     int64
-	Compression string
-	DataFormat  string
-	Limit       int
-	Sort        string
+	TopicID         string `json:"TopicId"`
+	TaskName        string
+	Query           string
+	StartTime       int64
+	EndTime         int64
+	Compression     string
+	DataFormat      string
+	Limit           int
+	Sort            string
+	TaskType        int                          `json:"TaskType"`
+	AllowIncomplete *bool                        `json:"AllowIncomplete,omitempty"`
+	LogContextInfos *DownloadTaskLogContextInfos `json:"LogContextInfos,omitempty"`
+}
+
+type DownloadTaskLogContextInfos struct {
+	Source        *string `json:"Source"`
+	ContextFlow   *string `json:"ContextFlow"`
+	PackageOffset *int64  `json:"PackageOffset"`
 }
 
 func (v *CreateDownloadTaskRequest) CheckValidation() error {
@@ -1416,23 +1683,26 @@ func (v *DescribeDownloadTasksRequest) CheckValidation() error {
 }
 
 type DownloadTaskResp struct {
-	TaskId      string
-	TaskName    string
-	TopicId     string
-	Query       string
-	StartTime   string
-	EndTime     string
-	LogCount    int64
-	LogSize     int64
-	Compression string
-	DataFormat  string
-	TaskStatus  string
-	CreateTime  string
+	TaskId          string                       `json:"TaskId"`
+	TaskName        string                       `json:"TaskName"`
+	TopicId         string                       `json:"TopicId"`
+	Query           string                       `json:"Query"`
+	StartTime       string                       `json:"StartTime"`
+	EndTime         string                       `json:"EndTime"`
+	LogCount        int64                        `json:"LogCount"`
+	LogSize         int64                        `json:"LogSize"`
+	Compression     string                       `json:"Compression"`
+	DataFormat      string                       `json:"DataFormat"`
+	TaskStatus      string                       `json:"TaskStatus"`
+	CreateTime      string                       `json:"CreateTime"`
+	TaskType        int                          `json:"TaskType"`
+	AllowIncomplete bool                         `json:"AllowIncomplete"`
+	LogContextInfos *DownloadTaskLogContextInfos `json:"LogContextInfos,omitempty"`
 }
 type DescribeDownloadTasksResponse struct {
 	CommonResponse
-	Tasks []*DownloadTaskResp
-	Total int64
+	Tasks []*DownloadTaskResp `json:"Tasks"`
+	Total int64               `json:"Total"`
 }
 
 type DescribeDownloadUrlRequest struct {
@@ -1643,24 +1913,30 @@ type DeleteConsumerGroupResponse struct {
 }
 
 type DescribeConsumerGroupsRequest struct {
-	ProjectID         string `json:"ProjectID"`
-	ProjectName       string `json:"ProjectName"`
-	ConsumerGroupName string `json:"ConsumerGroupName"`
-	TopicID           string `json:"TopicID"`
+	ProjectID         string  `json:"ProjectID"`
+	ProjectName       string  `json:"ProjectName"`
+	ConsumerGroupName string  `json:"ConsumerGroupName"`
+	TopicID           string  `json:"TopicID"`
+	TopicName         *string `json:"TopicName,omitempty"`
+	IamProjectName    *string `json:"IamProjectName,omitempty"`
 	PageNumber        int
 	PageSize          int
 }
 
 type ConsumerGroupResp struct {
-	ProjectID         string `json:"ProjectID"`
-	ConsumerGroupName string `json:"ConsumerGroupName"`
-	HeartbeatTTL      int    `json:"HeartbeatTTL"`
-	OrderedConsume    bool   `json:"OrderedConsume"`
+	ProjectID         string   `json:"ProjectID"`
+	ProjectName       string   `json:"ProjectName"`
+	TopicIDList       []string `json:"topic_id"`
+	ConsumerGroupName string   `json:"ConsumerGroupName"`
+	HeartbeatTTL      int      `json:"HeartbeatTTL"`
+	OrderedConsume    bool     `json:"OrderedConsume"`
 }
 
 type DescribeConsumerGroupsResponse struct {
 	CommonResponse
 	ConsumerGroups []*ConsumerGroupResp `json:"ConsumerGroups"`
+	Total          int                  `json:"Total"`
+	DashboardID    string               `json:"DashboardId"`
 }
 
 type ModifyConsumerGroupRequest struct {
@@ -1682,8 +1958,8 @@ type ConsumerHeartbeatRequest struct {
 }
 
 type ConsumeShard struct {
-	TopicID string `yaml:"TopicID"`
-	ShardID int    `yaml:"ShardID"`
+	TopicID string `yaml:"TopicID" json:"TopicID"`
+	ShardID int    `yaml:"ShardID" json:"ShardID"`
 }
 
 type ConsumerHeartbeatResponse struct {
@@ -1719,9 +1995,9 @@ type ModifyCheckPointResponse struct {
 }
 
 type ResetCheckPointRequest struct {
-	ProjectID         string `json:","`
-	ConsumerGroupName string `json:","`
-	Position          string `json:","`
+	ProjectID         string `json:"ProjectID"`
+	ConsumerGroupName string `json:"ConsumerGroupName"`
+	Position          string `json:"Position"`
 }
 
 func (v *ResetCheckPointRequest) CheckValidation() error {
@@ -1740,9 +2016,9 @@ func (v *ResetCheckPointRequest) CheckValidation() error {
 
 type AddTagsToResourceRequest struct {
 	CommonRequest
-	ResourceType  string    `json:","`
-	ResourcesList []string  `json:","`
-	Tags          []TagInfo `json:","`
+	ResourceType  string    `json:"ResourceType"`
+	ResourcesList []string  `json:"ResourcesList"`
+	Tags          []TagInfo `json:"Tags"`
 }
 
 func (v *AddTagsToResourceRequest) CheckValidation() error {
@@ -1761,9 +2037,9 @@ func (v *AddTagsToResourceRequest) CheckValidation() error {
 
 type RemoveTagsFromResourceRequest struct {
 	CommonRequest
-	ResourceType  string   `json:","`
-	ResourcesList []string `json:","`
-	TagKeyList    []string `json:","`
+	ResourceType  string   `json:"ResourceType"`
+	ResourcesList []string `json:"ResourcesList"`
+	TagKeyList    []string `json:"TagKeyList"`
 }
 
 func (v *RemoveTagsFromResourceRequest) CheckValidation() error {
@@ -1780,8 +2056,81 @@ func (v *RemoveTagsFromResourceRequest) CheckValidation() error {
 	return nil
 }
 
+type UntagResourcesRequest struct {
+	CommonRequest
+	ResourceType  string   `json:"ResourceType"`
+	ResourcesList []string `json:"ResourcesIds"`
+	TagKeyList    []string `json:"TagKeys"`
+}
+
+func (v *UntagResourcesRequest) CheckValidation() error {
+	if len(v.ResourceType) <= 0 {
+		return errors.New("Invalid argument, empty ResourceType")
+	}
+	if v.ResourcesList == nil || len(v.ResourcesList) == 0 {
+		return errors.New("Invalid argument, empty ResourceList")
+	}
+	if v.TagKeyList == nil || len(v.TagKeyList) == 0 {
+		return errors.New("Invalid argument, empty TagKeyList")
+	}
+
+	return nil
+}
+
+type TagResourcesRequest struct {
+	CommonRequest
+	ResourceType string    `json:"ResourceType"`
+	ResourcesIds []string  `json:"ResourcesIds"`
+	Tags         []TagInfo `json:"Tags"`
+}
+
+func (v *TagResourcesRequest) CheckValidation() error {
+	if len(v.ResourceType) <= 0 {
+		return errors.New("Invalid argument, empty ResourceType")
+	}
+	if v.ResourcesIds == nil || len(v.ResourcesIds) == 0 {
+		return errors.New("Invalid argument, empty ResourcesIds")
+	}
+	if len(v.ResourcesIds) > 50 {
+		return errors.New("Invalid argument, ResourcesIds count exceeds 50")
+	}
+	if v.Tags == nil || len(v.Tags) == 0 {
+		return errors.New("Invalid argument, empty Tags")
+	}
+	return nil
+}
+
+type TagResourcesResponse struct {
+	CommonResponse
+}
+
 func (response *CommonResponse) FillRequestId(httpResponse *http.Response) {
 	response.RequestID = httpResponse.Header.Get(RequestIDHeader)
+}
+
+type ModifyScheduleSqlTaskRequest struct {
+	CommonRequest
+	TaskId            string        `json:"TaskId"`
+	TaskName          *string       `json:"TaskName,omitempty"`
+	Description       *string       `json:"Description,omitempty"`
+	DestRegion        *string       `json:"DestRegion,omitempty"`
+	DestTopicID       *string       `json:"DestTopicID,omitempty"`
+	Status            *int          `json:"Status,omitempty"`
+	ProcessSqlDelay   *int          `json:"ProcessSqlDelay,omitempty"`
+	ProcessTimeWindow *string       `json:"ProcessTimeWindow,omitempty"`
+	Query             *string       `json:"Query,omitempty"`
+	RequestCycle      *RequestCycle `json:"RequestCycle,omitempty"`
+}
+
+func (v *ModifyScheduleSqlTaskRequest) CheckValidation() error {
+	if len(v.TaskId) <= 0 {
+		return errors.New("Invalid argument, empty TaskId")
+	}
+	return nil
+}
+
+type ModifyScheduleSqlTaskResponse struct {
+	CommonResponse
 }
 
 type LogContent struct {
@@ -1802,10 +2151,21 @@ type PutLogsV2Request struct {
 	Logs         []Log
 }
 
+type BackendConfig struct {
+	TTL                uint16 `json:"Ttl,omitempty"`
+	MaxSplitPartitions int32  `json:"MaxSplitPartitions,omitempty"`
+	AutoSplit          bool   `json:"AutoSplit,omitempty"`
+	EnableHotTTL       bool   `json:"EnableHotTtl,omitempty"`
+	HotTTL             uint16 `json:"HotTtl,omitempty"`
+	ColdTTL            uint16 `json:"ColdTtl,omitempty"`
+	ArchiveTTL         uint16 `json:"ArchiveTtl,omitempty"`
+}
+
 type ModifyTraceInstanceRequest struct {
 	CommonRequest
-	TraceInstanceId string  `json:"TraceInstanceId"`
-	Description     *string `json:"Description,omitempty"`
+	TraceInstanceId string         `json:"TraceInstanceId"`
+	Description     *string        `json:"Description,omitempty"`
+	BackendConfig   *BackendConfig `json:"BackendConfig,omitempty"`
 }
 
 func (v *ModifyTraceInstanceRequest) CheckValidation() error {
@@ -2112,6 +2472,55 @@ type DescribeTraceInstanceResponse struct {
 	TraceTopicName           string              `json:"TraceTopicName"`
 }
 
+// SearchTraces related models translated from NodeJS SDK
+
+type TraceQueryParameters struct {
+	Asc           *bool             `json:"Asc,omitempty"`
+	Kind          *string           `json:"Kind,omitempty"`
+	Limit         *int              `json:"Limit,omitempty"`
+	Order         *string           `json:"Order,omitempty"`
+	Offset        *int              `json:"Offset,omitempty"`
+	TraceId       *string           `json:"TraceId,omitempty"`
+	Attributes    map[string]string `json:"Attributes,omitempty"`
+	StatusCode    *string           `json:"StatusCode,omitempty"`
+	DurationMax   *int              `json:"DurationMax,omitempty"`
+	DurationMin   *int              `json:"DurationMin,omitempty"`
+	ServiceName   *string           `json:"ServiceName,omitempty"`
+	StartTimeMax  *int              `json:"StartTimeMax,omitempty"`
+	StartTimeMin  *int              `json:"StartTimeMin,omitempty"`
+	OperationName *string           `json:"OperationName,omitempty"`
+}
+
+type TraceInfo struct {
+	EndTime       int               `json:"EndTime"`
+	TraceId       string            `json:"TraceId"`
+	Duration      int               `json:"Duration"`
+	StartTime     int               `json:"StartTime"`
+	Attributes    map[string]string `json:"Attributes"`
+	StatusCode    string            `json:"StatusCode"`
+	ServiceName   string            `json:"ServiceName"`
+	OperationName string            `json:"OperationName"`
+}
+
+type SearchTracesRequest struct {
+	CommonRequest
+	Query           TraceQueryParameters `json:"Query"`
+	TraceInstanceId string               `json:"TraceInstanceId"`
+}
+
+func (v *SearchTracesRequest) CheckValidation() error {
+	if len(v.TraceInstanceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceId")
+	}
+	return nil
+}
+
+type SearchTracesResponse struct {
+	CommonResponse
+	Total      int         `json:"Total"`
+	TraceInfos []TraceInfo `json:"TraceInfos"`
+}
+
 type CsvInfo struct {
 	Keys            []string `json:"Keys"`
 	Delimiter       string   `json:"Delimiter"`
@@ -2411,6 +2820,106 @@ type DescribeSessionAnswerResp struct {
 	MessageId string `json:"MessageId"`
 }
 
+// DingTalkContentTemplateInfo 钉钉通知内容模版
+type DingTalkContentTemplateInfo struct {
+	// 告警通知内容的主题
+	Title *string `json:"Title,omitempty"`
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。变量渲染后的通知内容长度最长为 8 KB，超过限制长度后会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// EmailContentTemplateInfo 邮件通知内容模版
+type EmailContentTemplateInfo struct {
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。变量渲染后的通知内容长度最长为 8 KB，超过限制长度后会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+	// 邮件通知的主题
+	Subject *string `json:"Subject,omitempty"`
+}
+
+// LarkContentTemplateInfo 飞书通知内容模版
+type LarkContentTemplateInfo struct {
+	// 告警通知内容的主题
+	Title *string `json:"Title,omitempty"`
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。变量渲染后的通知内容长度最长为 8 KB，超过限制长度后会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// SmsContentTemplateInfo 短信通知内容模版
+type SmsContentTemplateInfo struct {
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。建议将变量渲染后的通知内容长度控制在 256 个字符以内，超过限制长度后可能会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// VmsContentTemplateInfo 语音通知内容模版
+type VmsContentTemplateInfo struct {
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。建议将变量渲染后的通知内容长度控制在 256 个字符以内，超过限制长度后可能会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// WeChatContentTemplateInfo 企业微信通知内容模版
+type WeChatContentTemplateInfo struct {
+	// 告警通知内容的主题
+	Title *string `json:"Title,omitempty"`
+	// 告警通知中固定内容的语言，可选值为 zh-CN、en-US
+	Locale *string `json:"Locale,omitempty"`
+	// 告警通知内容，支持普通文本格式，支持插入内容变量、内容函数等。变量渲染后的通知内容长度最长为 8 KB，超过限制长度后会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// WebhookContentTemplateInfo 自定义的 Webhook 告警通知内容模版
+type WebhookContentTemplateInfo struct {
+	// 告警通知内容，通常为 JSON 格式，支持插入内容变量、内容函数等。变量渲染后的通知内容长度最长为 16 KB，超过限制长度后会被截断。正文留空，表示使用默认内容
+	Content *string `json:"Content,omitempty"`
+}
+
+// CreateAlarmContentTemplateRequest 创建告警内容模版请求
+type CreateAlarmContentTemplateRequest struct {
+	CommonRequest
+	// 告警通知内容模版的名称。命名规则请参考资源命名规则
+	AlarmContentTemplateName string `json:"AlarmContentTemplateName"`
+	// 钉钉通知内容模版
+	DingTalk *DingTalkContentTemplateInfo `json:"DingTalk,omitempty"`
+	// 邮件通知内容模版
+	Email *EmailContentTemplateInfo `json:"Email,omitempty"`
+	// 飞书通知内容模版
+	Lark *LarkContentTemplateInfo `json:"Lark,omitempty"`
+	// 是否需要校验内容模版
+	NeedValidContent *bool `json:"NeedValidContent,omitempty"`
+	// 短信通知内容模版
+	Sms *SmsContentTemplateInfo `json:"Sms,omitempty"`
+	// 语音通知内容模版
+	Vms *VmsContentTemplateInfo `json:"Vms,omitempty"`
+	// 企业微信通知内容模版
+	WeChat *WeChatContentTemplateInfo `json:"WeChat,omitempty"`
+	// 自定义的 Webhook 告警通知内容模版
+	Webhook *WebhookContentTemplateInfo `json:"Webhook,omitempty"`
+}
+
+// CheckValidation 校验创建告警内容模版请求
+func (v *CreateAlarmContentTemplateRequest) CheckValidation() error {
+	if len(v.AlarmContentTemplateName) <= 0 {
+		return errors.New("Invalid argument, empty AlarmContentTemplateName")
+	}
+	return nil
+}
+
+// CreateAlarmContentTemplateResponse 创建告警内容模版响应
+type CreateAlarmContentTemplateResponse struct {
+	CommonResponse
+	// 告警通知模版 ID
+	AlarmContentTemplateID string `json:"AlarmContentTemplateId"`
+}
+
 type CreateAppInstanceReq struct {
 	CommonRequest
 	// 实例类型，如ai助手等
@@ -2687,11 +3196,107 @@ type GetAccountStatusResponse struct {
 	Status      string `json:"Status"`
 }
 
+type CreateScheduleSqlTaskRequest struct {
+	CommonRequest
+	// 定时 SQL 分析任务名称。命名规则请参考资源命名规则
+	TaskName string `json:"TaskName"`
+	// 定时 SQL 分析任务的类型。
+	// 0 表示“日志到日志”分析任务。
+	// 1 表示“日志到指标”分析任务。
+	TaskType int `json:"TaskType"`
+	// 待进行定时 SQL 分析的原始日志所在的日志主题 ID。仅支持当前地域的日志主题
+	TopicID string `json:"TopicID"`
+	// 目标日志主题所属地域。默认为当前地域
+	DestRegion *string `json:"DestRegion,omitempty"`
+	// 用于存储定时 SQL 分析结果数据的目标日志主题ID
+	DestTopicID string `json:"DestTopicID"`
+	// 调度定时 SQL 分析任务的开始时间，即创建第一个实例的时间。格式为秒级时间戳
+	ProcessStartTime int `json:"ProcessStartTime"`
+	// 调度定时 SQL 分析任务的结束时间，格式为秒级时间戳。如果不配置，表示持续运行定时 SQL 分析任务
+	ProcessEndTime *int `json:"ProcessEndTime,omitempty"`
+	// SQL 时间窗口，即定时 SQL 分析任务运行时，日志检索与分析的时间范围，左闭右开格式。最大 24 小时，最小 1 分钟
+	ProcessTimeWindow string `json:"ProcessTimeWindow"`
+	// 定时 SQL 分析任务定期执行的检索与分析语句，应符合日志服务的检索与分析语法
+	Query string `json:"Query"`
+	// 定时 SQL 分析任务的调度周期。调度周期决定每个实例的调度时间
+	RequestCycle RequestCycle `json:"RequestCycle"`
+	// 完成任务配置后是否立即启动定时 SQL 分析任务。0：关闭任务，后续需手动启动任务；1：立即启动
+	Status int `json:"Status"`
+	// 每次调度的延迟时间。取值范围为 0～120，单位为秒。如果不配置，则表示 0，即无延时
+	ProcessSqlDelay *int `json:"ProcessSqlDelay,omitempty"`
+	// 定时 SQL 分析任务的简单描述。不支持 `<>`、`'`、`\`、`\\`；长度范围为 0～64 个字符
+	Description *string `json:"Description,omitempty"`
+}
+
+func (v *CreateScheduleSqlTaskRequest) CheckValidation() error {
+	if len(v.TaskName) <= 0 {
+		return errors.New("Invalid argument, empty TaskName")
+	}
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	if len(v.DestTopicID) <= 0 {
+		return errors.New("Invalid argument, empty DestTopicID")
+	}
+	if v.ProcessStartTime <= 0 {
+		return errors.New("Invalid argument, ProcessStartTime must be greater than 0")
+	}
+	if len(v.ProcessTimeWindow) <= 0 {
+		return errors.New("Invalid argument, empty ProcessTimeWindow")
+	}
+	if len(v.Query) <= 0 {
+		return errors.New("Invalid argument, empty Query")
+	}
+	if v.RequestCycle.Time <= 0 {
+		return errors.New("Invalid argument, RequestCycle.Time must be greater than 0")
+	}
+	if len(v.RequestCycle.Type) <= 0 {
+		return errors.New("Invalid argument, empty RequestCycle.Type")
+	}
+	if v.Status != 0 && v.Status != 1 {
+		return errors.New("Invalid argument, Status must be 0 or 1")
+	}
+	return nil
+}
+
+type CreateScheduleSqlTaskResponse struct {
+	CommonResponse
+	// 定时 SQL 分析任务 ID
+	TaskID string `json:"TaskId"`
+}
+
 type ModifyAppSceneMetaResp struct {
 	CommonResponse
 }
 
-// Trace 相关结构体定义
+type DeleteScheduleSqlTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+}
+
+type DescribeScheduleSqlTaskRequest struct {
+	CommonRequest
+	TaskID string `json:"TaskId"`
+}
+
+func (v *DeleteScheduleSqlTaskRequest) CheckValidation() error {
+	if len(v.TaskID) <= 0 {
+		return errors.New("Invalid argument, empty TaskID")
+	}
+	return nil
+}
+
+func (v *DescribeScheduleSqlTaskRequest) CheckValidation() error {
+	if len(v.TaskID) <= 0 {
+		return errors.New("Invalid argument, empty TaskID")
+	}
+	return nil
+}
+
+type DeleteScheduleSqlTaskResponse struct {
+	CommonResponse
+}
+
 type TraceInstanceStatus string
 
 const (
@@ -2773,5 +3378,250 @@ func (v *DeleteTraceInstanceRequest) CheckValidation() error {
 }
 
 type DeleteTraceInstanceResponse struct {
+	CommonResponse
+}
+
+type DescribeScheduleSqlTaskResponse struct {
+	CommonResponse
+	TaskID            string        `json:"TaskId,omitempty"`
+	TaskName          string        `json:"TaskName,omitempty"`
+	Description       string        `json:"Description,omitempty"`
+	SourceProjectID   string        `json:"SourceProjectID,omitempty"`
+	SourceProjectName string        `json:"SourceProjectName,omitempty"`
+	SourceTopicID     string        `json:"SourceTopicID,omitempty"`
+	SourceTopicName   string        `json:"SourceTopicName,omitempty"`
+	DestRegion        string        `json:"DestRegion,omitempty"`
+	DestProjectID     string        `json:"DestProjectID,omitempty"`
+	DestTopicID       string        `json:"DestTopicID,omitempty"`
+	DestTopicName     string        `json:"DestTopicName,omitempty"`
+	Status            *int          `json:"Status,omitempty"`
+	ProcessStartTime  *int64        `json:"ProcessStartTime,omitempty"`
+	ProcessEndTime    *int64        `json:"ProcessEndTime,omitempty"`
+	ProcessSqlDelay   *int          `json:"ProcessSqlDelay,omitempty"`
+	ProcessTimeWindow string        `json:"ProcessTimeWindow,omitempty"`
+	Query             string        `json:"Query,omitempty"`
+	RequestCycle      *RequestCycle `json:"RequestCycle,omitempty"`
+	CreateTimeStamp   *int64        `json:"CreateTimeStamp,omitempty"`
+	ModifyTimeStamp   *int64        `json:"ModifyTimeStamp,omitempty"`
+}
+
+// DescribeScheduleSqlTasks 相关结构体
+type DescribeScheduleSqlTasksRequest struct {
+	CommonRequest
+	ProjectId       *string `json:"ProjectId,omitempty"`
+	ProjectName     *string `json:"ProjectName,omitempty"`
+	IamProjectName  *string `json:"IamProjectName,omitempty"`
+	TopicId         *string `json:"TopicId,omitempty"`
+	SourceTopicName *string `json:"SourceTopicName,omitempty"`
+	TaskId          *string `json:"TaskId,omitempty"`
+	TaskName        *string `json:"TaskName,omitempty"`
+	Status          *string `json:"Status,omitempty"`
+	PageNumber      *int    `json:"PageNumber,omitempty"`
+	PageSize        *int    `json:"PageSize,omitempty"`
+}
+
+func (v *DescribeScheduleSqlTasksRequest) CheckValidation() error {
+	return nil
+}
+
+type DescribeScheduleSqlTasksResponse struct {
+	CommonResponse
+	Tasks []DescribeScheduleSqlTaskResp `json:"Tasks"`
+	Total int                           `json:"Total"`
+}
+
+type DescribeScheduleSqlTaskResp struct {
+	Query             string       `json:"Query"`
+	Status            int          `json:"Status"`
+	TaskId            string       `json:"TaskId"`
+	TaskName          string       `json:"TaskName"`
+	DestRegion        string       `json:"DestRegion"`
+	Description       string       `json:"Description"`
+	DestTopicID       string       `json:"DestTopicID"`
+	RequestCycle      RequestCycle `json:"RequestCycle"`
+	DestTopicName     string       `json:"DestTopicName"`
+	ProcessEndTime    int          `json:"ProcessEndTime"`
+	CreateTimeStamp   int          `json:"CreateTimeStamp"`
+	ModifyTimeStamp   int          `json:"ModifyTimeStamp"`
+	ProcessSqlDelay   int          `json:"ProcessSqlDelay"`
+	SourceProjectID   string       `json:"SourceProjectID"`
+	SourceProjectName string       `json:"SourceProjectName"`
+	ProcessTimeWindow string       `json:"ProcessTimeWindow"`
+	SourceTopicName   string       `json:"SourceTopicName"`
+	SourceTopicID     string       `json:"SourceTopicID"`
+	ProcessStartTime  int          `json:"ProcessStartTime"`
+}
+type FilterTag struct {
+	Key    string   `json:"Key,omitempty"`
+	Values []string `json:"Values,omitempty"`
+}
+
+type ResourceTag struct {
+	TagKey       string `json:"TagKey"`
+	TagValue     string `json:"TagValue"`
+	ResourceID   string `json:"ResourceId"`
+	ResourceType string `json:"ResourceType"`
+}
+
+type ListTagsForResourcesRequest struct {
+	CommonRequest
+	MaxResults   int          `json:"MaxResults,omitempty"`
+	NextToken    string       `json:"NextToken,omitempty"`
+	ResourceType string       `json:"ResourceType"`
+	ResourcesIds []string     `json:"ResourcesIds,omitempty"`
+	TagFilters   []*FilterTag `json:"TagFilters,omitempty"`
+}
+
+func (v *ListTagsForResourcesRequest) CheckValidation() error {
+	if len(v.ResourceType) <= 0 {
+		return errors.New("Invalid argument, empty ResourceType")
+	}
+	return nil
+}
+
+type ListTagsForResourcesResponse struct {
+	CommonResponse
+	ResourceTags []ResourceTag `json:"ResourceTags"`
+	NextToken    string        `json:"NextToken"`
+}
+
+// DescribeTrace
+type DescribeTraceRequest struct {
+	CommonRequest
+	TraceId         string `json:"TraceId"`
+	TraceInstanceId string `json:"TraceInstanceId"`
+}
+
+func (v *DescribeTraceRequest) CheckValidation() error {
+	if len(v.TraceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceId")
+	}
+	if len(v.TraceInstanceId) <= 0 {
+		return errors.New("Invalid argument, empty TraceInstanceId")
+	}
+	return nil
+}
+
+// Alarm Content Template related structures
+
+type ModifyAlarmContentTemplateRequest struct {
+	CommonRequest
+	AlarmContentTemplateID   string                       `json:"AlarmContentTemplateId"`
+	AlarmContentTemplateName string                       `json:"AlarmContentTemplateName"`
+	DingTalk                 *DingTalkContentTemplateInfo `json:"DingTalk,omitempty"`
+	Email                    *EmailContentTemplateInfo    `json:"Email,omitempty"`
+	Lark                     *LarkContentTemplateInfo     `json:"Lark,omitempty"`
+	NeedValidContent         *bool                        `json:"NeedValidContent,omitempty"`
+	Sms                      *SmsContentTemplateInfo      `json:"Sms,omitempty"`
+	Vms                      *VmsContentTemplateInfo      `json:"Vms,omitempty"`
+	WeChat                   *WeChatContentTemplateInfo   `json:"WeChat,omitempty"`
+	Webhook                  *WebhookContentTemplateInfo  `json:"Webhook,omitempty"`
+}
+
+func (v *ModifyAlarmContentTemplateRequest) CheckValidation() error {
+	if len(v.AlarmContentTemplateID) <= 0 {
+		return errors.New("Invalid argument, empty AlarmContentTemplateID")
+	}
+	if len(v.AlarmContentTemplateName) <= 0 {
+		return errors.New("Invalid argument, empty AlarmContentTemplateName")
+	}
+	return nil
+}
+
+// DescribeAlarmContentTemplates 相关结构体
+type DescribeAlarmContentTemplatesRequest struct {
+	CommonRequest
+	AlarmContentTemplateName *string
+	AlarmContentTemplateID   *string
+	OrderField               *string
+	ASC                      *bool
+	PageNumber               int
+	PageSize                 int
+}
+
+func (v *DescribeAlarmContentTemplatesRequest) CheckValidation() error {
+	return nil
+}
+
+type DescribeAlarmContentTemplatesResponse struct {
+	CommonResponse
+	AlarmContentTemplates []ContentTemplateInfo `json:"AlarmContentTemplates"`
+	Total                 int                   `json:"Total"`
+}
+
+type ContentTemplateInfo struct {
+	Sms                      *SmsContentTemplateInfo      `json:"Sms,omitempty"`
+	Vms                      *VmsContentTemplateInfo      `json:"Vms,omitempty"`
+	Lark                     *LarkContentTemplateInfo     `json:"Lark,omitempty"`
+	Email                    *EmailContentTemplateInfo    `json:"Email,omitempty"`
+	WeChat                   *WeChatContentTemplateInfo   `json:"WeChat,omitempty"`
+	Webhook                  *WebhookContentTemplateInfo  `json:"Webhook,omitempty"`
+	DingTalk                 *DingTalkContentTemplateInfo `json:"DingTalk,omitempty"`
+	IsDefault                bool                         `json:"IsDefault"`
+	CreateTime               string                       `json:"CreateTime"`
+	ModifyTime               string                       `json:"ModifyTime"`
+	AlarmContentTemplateID   string                       `json:"AlarmContentTemplateId"`
+	AlarmContentTemplateName string                       `json:"AlarmContentTemplateName"`
+}
+
+type DescribeTraceResponse struct {
+	CommonResponse
+	Trace Trace `json:"Trace"`
+}
+
+type Trace struct {
+	Spans []Span `json:"Spans"`
+}
+
+type Span struct {
+	Kind                   string                 `json:"Kind"`
+	Name                   string                 `json:"Name"`
+	Links                  []SpanLink             `json:"Links,omitempty"`
+	Events                 []SpanEvent            `json:"Events,omitempty"`
+	SpanId                 string                 `json:"SpanId"`
+	Status                 Status                 `json:"Status"`
+	EndTime                int                    `json:"EndTime"`
+	TraceId                string                 `json:"TraceId"`
+	Resource               Resource               `json:"Resource"`
+	StartTime              int                    `json:"StartTime"`
+	Attributes             []KeyValue             `json:"Attributes,omitempty"`
+	TraceState             string                 `json:"TraceState,omitempty"`
+	ParentSpanId           string                 `json:"ParentSpanId,omitempty"`
+	InstrumentationLibrary InstrumentationLibrary `json:"InstrumentationLibrary,omitempty"`
+}
+
+type SpanLink struct {
+	SpanId     string     `json:"SpanId"`
+	TraceId    string     `json:"TraceId"`
+	Attributes []KeyValue `json:"Attributes,omitempty"`
+	TraceState string     `json:"TraceState,omitempty"`
+}
+
+type SpanEvent struct {
+	Name       string     `json:"Name"`
+	Timestamp  int        `json:"Timestamp"`
+	Attributes []KeyValue `json:"Attributes,omitempty"`
+}
+
+type Status struct {
+	Code    string  `json:"Code"`
+	Message *string `json:"Message,omitempty"`
+}
+
+type Resource struct {
+	Attributes []KeyValue `json:"Attributes"`
+}
+
+type KeyValue struct {
+	Key   string `json:"Key"`
+	Value string `json:"Value"`
+}
+
+type InstrumentationLibrary struct {
+	Name    string  `json:"Name"`
+	Version *string `json:"Version,omitempty"`
+}
+
+type ModifyAlarmContentTemplateResponse struct {
 	CommonResponse
 }

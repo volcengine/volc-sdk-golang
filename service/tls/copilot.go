@@ -35,6 +35,9 @@ func (c *LsClient) CreateAppInstance(request *CreateAppInstanceReq) (*CreateAppI
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
@@ -78,6 +81,9 @@ func (c *LsClient) DescribeAppInstances(request *DescribeAppInstancesReq) (*Desc
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
@@ -113,6 +119,9 @@ func (c *LsClient) DeleteAppInstance(request *DeleteAppInstanceReq) (*DeleteAppI
 	rawResponse, err := c.Request(http.MethodDelete, PathDeleteAppInstance, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

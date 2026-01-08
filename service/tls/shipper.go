@@ -2,6 +2,7 @@ package tls
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -24,6 +25,9 @@ func (c *LsClient) CreateShipper(request *CreateShipperRequest) (*CreateShipperR
 	rawResponse, err := c.Request(http.MethodPost, PathCreateShipper, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 

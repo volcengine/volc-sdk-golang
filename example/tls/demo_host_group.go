@@ -47,6 +47,16 @@ func main() {
 	})
 	fmt.Println(describeHostGroupResp.HostGroupHostsRulesInfo.HostGroupInfo.HostGroupName)
 
+	// 获取指定机器组信息 V2
+	// 请根据您的需要，填写待查询的HostGroupId
+	// DescribeHostGroupV2 API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/2121514
+	describeHostGroupRespV2, err := client.DescribeHostGroupV2(&tls.DescribeHostGroupRequestV2{
+		HostGroupID: hostGroupId,
+	})
+	if err == nil && describeHostGroupRespV2 != nil && describeHostGroupRespV2.HostGroupHostsRulesInfo != nil && describeHostGroupRespV2.HostGroupHostsRulesInfo.HostGroupInfo != nil {
+		fmt.Println(describeHostGroupRespV2.HostGroupHostsRulesInfo.HostGroupInfo.HostGroupName)
+	}
+
 	// 获取全部机器组信息
 	// 请根据您的需要，填写HostGroupName等可选参数
 	// DescribeHostGroups API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/112211
@@ -55,6 +65,17 @@ func main() {
 		PageSize:   10,
 	})
 	fmt.Println(describeHostGroupsResp.Total)
+
+	// 获取全部机器组信息 v2
+	// 请根据您的需要，填写HostGroupName等可选参数
+	// DescribeHostGroupsV2 API的请求参数规范请参阅 https://www.volcengine.com/docs/6470/2121513
+	describeHostGroupsRespV2, err := client.DescribeHostGroupsV2(&tls.DescribeHostGroupsRequestV2{
+		PageNumber: 1,
+		PageSize:   10,
+	})
+	if err == nil && describeHostGroupsRespV2 != nil {
+		fmt.Println(describeHostGroupsRespV2.Total)
+	}
 
 	// 查询机器组所有机器
 	// 请根据您的需要，填写待查询的HostGroupId和其它参数

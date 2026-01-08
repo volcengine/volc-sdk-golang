@@ -2,6 +2,8 @@ package tls
 
 import (
 	"os"
+	"strings"
+	"sync"
 	"testing"
 
 	"github.com/google/uuid"
@@ -15,6 +17,9 @@ type SDKTraceTestSuite struct {
 	traceList []string
 }
 
+var traceTestCleanupOnce sync.Once
+var traceTestCleanupErr error
+
 func (suite *SDKTraceTestSuite) SetupTest() {
 	suite.cli = NewClientWithEnv()
 }
@@ -22,8 +27,8 @@ func (suite *SDKTraceTestSuite) SetupTest() {
 func (suite *SDKTraceTestSuite) TestDescribeTraceInstances() {
 	// 测试基本的 DescribeTraceInstances 调用
 	request := &DescribeTraceInstancesRequest{
-		PageNumber: intPtr(1),
-		PageSize:   intPtr(20),
+		PageNumber: IntPtr(1),
+		PageSize:   IntPtr(20),
 	}
 
 	response, err := suite.cli.DescribeTraceInstances(request)
@@ -38,8 +43,8 @@ func (suite *SDKTraceTestSuite) TestDescribeTraceInstancesWithProjectID() {
 	projectID := "test-project-id"
 	request := &DescribeTraceInstancesRequest{
 		ProjectID:  &projectID,
-		PageNumber: intPtr(1),
-		PageSize:   intPtr(10),
+		PageNumber: IntPtr(1),
+		PageSize:   IntPtr(10),
 	}
 
 	response, err := suite.cli.DescribeTraceInstances(request)
@@ -53,8 +58,8 @@ func (suite *SDKTraceTestSuite) TestDescribeTraceInstancesWithTraceInstanceName(
 	traceInstanceName := "test-trace-instance"
 	request := &DescribeTraceInstancesRequest{
 		TraceInstanceName: &traceInstanceName,
-		PageNumber:        intPtr(1),
-		PageSize:          intPtr(10),
+		PageNumber:        IntPtr(1),
+		PageSize:          IntPtr(10),
 	}
 
 	response, err := suite.cli.DescribeTraceInstances(request)
@@ -69,25 +74,151 @@ func (suite *SDKTraceTestSuite) TestDescribeTraceInstancesWithTraceInstanceName(
 }
 
 func (suite *SDKTraceTestSuite) TearDownTest() {
+	traceIDs := make(map[string]struct{}, len(suite.traceList))
 	for _, traceInstanceID := range suite.traceList {
-		// 清理 Trace 实例（假设有对应的删除接口）
-		// 这里需要根据实际的删除接口来实现
-		_ = traceInstanceID
+		if traceInstanceID == "" {
+			continue
+		}
+		traceIDs[traceInstanceID] = struct{}{}
 	}
 
-	_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
-	suite.NoError(deleteProjectErr)
+	if suite.project != "" {
+		ids, err := suite.listTraceInstanceIDsByProject(suite.project)
+		suite.NoError(err)
+		for _, id := range ids {
+			if id == "" {
+				continue
+			}
+			traceIDs[id] = struct{}{}
+		}
+	}
+
+	for traceInstanceID := range traceIDs {
+		_, _ = suite.cli.DeleteTraceInstance(&DeleteTraceInstanceRequest{TraceInstanceId: traceInstanceID})
+	}
+
+	if suite.project != "" {
+		_, deleteProjectErr := suite.cli.DeleteProject(&DeleteProjectRequest{ProjectID: suite.project})
+		suite.NoError(deleteProjectErr)
+	}
+
+	traceTestCleanupOnce.Do(func() {
+		traceTestCleanupErr = suite.cleanupTestTraceInstances()
+	})
+	suite.NoError(traceTestCleanupErr)
 
 	suite.traceList = nil
 }
 
-func TestSDKTraceTestSuite(t *testing.T) {
-	suite.Run(t, new(SDKTraceTestSuite))
+func (suite *SDKTraceTestSuite) listTraceInstanceIDsByProject(projectID string) ([]string, error) {
+	pageSize := 100
+	pageNumber := 1
+
+	ids := make([]string, 0)
+	for {
+		pid := projectID
+		resp, err := suite.cli.DescribeTraceInstances(&DescribeTraceInstancesRequest{
+			ProjectID:  &pid,
+			PageNumber: IntPtr(pageNumber),
+			PageSize:   IntPtr(pageSize),
+		})
+		if err != nil {
+			return ids, err
+		}
+		if resp == nil || len(resp.TraceInstances) == 0 {
+			return ids, nil
+		}
+
+		for _, instance := range resp.TraceInstances {
+			if instance == nil {
+				continue
+			}
+			ids = append(ids, instance.TraceInstanceID)
+		}
+
+		if resp.Total > 0 && int64(len(ids)) >= resp.Total {
+			return ids, nil
+		}
+
+		pageNumber++
+	}
 }
 
-// 辅助函数
-func intPtr(i int) *int {
-	return &i
+func (suite *SDKTraceTestSuite) cleanupTestTraceInstances() error {
+	const testProjectPrefix = "golang-sdk-create-project-"
+	const testTraceNamePrefix = "单元测试"
+
+	pageSize := 100
+	pageNumber := 1
+	for {
+		resp, err := suite.cli.DescribeProjects(&DescribeProjectsRequest{
+			ProjectName: testProjectPrefix,
+			PageNumber:  pageNumber,
+			PageSize:    pageSize,
+		})
+		if err != nil {
+			return err
+		}
+		if resp == nil || len(resp.Projects) == 0 {
+			return nil
+		}
+
+		for _, project := range resp.Projects {
+			instances, err := suite.listTraceInstancesByProject(project.ProjectID)
+			if err != nil {
+				return err
+			}
+			for _, instance := range instances {
+				if instance == nil {
+					continue
+				}
+				if !strings.HasPrefix(instance.TraceInstanceName, testTraceNamePrefix) {
+					continue
+				}
+				if instance.TraceInstanceID == "" {
+					continue
+				}
+				_, _ = suite.cli.DeleteTraceInstance(&DeleteTraceInstanceRequest{TraceInstanceId: instance.TraceInstanceID})
+			}
+		}
+
+		if resp.Total > 0 && int64(pageNumber*pageSize) >= resp.Total {
+			return nil
+		}
+		pageNumber++
+	}
+}
+
+func (suite *SDKTraceTestSuite) listTraceInstancesByProject(projectID string) ([]*TraceInstance, error) {
+	pageSize := 100
+	pageNumber := 1
+
+	instances := make([]*TraceInstance, 0)
+	for {
+		pid := projectID
+		resp, err := suite.cli.DescribeTraceInstances(&DescribeTraceInstancesRequest{
+			ProjectID:  &pid,
+			PageNumber: IntPtr(pageNumber),
+			PageSize:   IntPtr(pageSize),
+		})
+		if err != nil {
+			return instances, err
+		}
+		if resp == nil || len(resp.TraceInstances) == 0 {
+			return instances, nil
+		}
+
+		instances = append(instances, resp.TraceInstances...)
+
+		if resp.Total > 0 && int64(len(instances)) >= resp.Total {
+			return instances, nil
+		}
+		pageNumber++
+	}
+}
+
+func TestSDKTraceTestSuite(t *testing.T) {
+	suite.Run(t, new(SDKTraceTestSuite))
 }
 
 func (suite *SDKTraceTestSuite) TestCreateTraceInstanceNormally() {
