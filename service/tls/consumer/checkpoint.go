@@ -2,7 +2,7 @@ package consumer
 
 import (
 	"context"
-	"strconv"
+	"fmt"
 	"sync"
 	"time"
 
@@ -47,7 +47,7 @@ func (c *checkpointManager) addCheckpoint(checkpoint *checkpointInfo) {
 	c.mapLock.Lock()
 	defer c.mapLock.Unlock()
 
-	c.checkpointMap[checkpoint.shardInfo.TopicID+strconv.Itoa(checkpoint.shardInfo.ShardID)] = checkpoint
+	c.checkpointMap[fmt.Sprintf("%s%s%d", checkpoint.shardInfo.TopicID, Delimiter, checkpoint.shardInfo.ShardID)] = checkpoint
 }
 
 func (c *checkpointManager) uploadCheckpoint() {
@@ -66,7 +66,7 @@ func (c *checkpointManager) uploadCheckpoint() {
 			ShardID:           checkpoint.shardInfo.ShardID,
 			Checkpoint:        checkpoint.checkpoint,
 		}); err != nil {
-			_ = level.Error(c.logger).Log("error", "upload checkpoint failed, err: "+err.Error())
+			_ = level.Error(c.logger).Log("msg", "upload checkpoint failed", "topic", checkpoint.shardInfo.TopicID, "shard", checkpoint.shardInfo.ShardID, "checkpoint", checkpoint.checkpoint, "error", err.Error())
 			delete(checkpointSnapshot, k)
 		}
 	}

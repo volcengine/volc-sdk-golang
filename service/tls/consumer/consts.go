@@ -3,6 +3,8 @@ package consumer
 const (
 	ConsumeFromBegin = "begin"
 	ConsumeFromEnd   = "end"
+
+	Delimiter = "-"
 )
 
 const (

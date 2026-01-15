@@ -110,7 +110,7 @@ func (lc *logConsumer) init() error {
 		ShardID:           lc.shard.ShardID,
 	})
 	if err != nil {
-		level.Error(lc.logger).Log("error", "init log consumer failed in getting checkpoint, err: "+err.Error())
+		_ = level.Error(lc.logger).Log("msg", "init get checkpoint failed", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "error", err.Error())
 
 		return err
 	}
@@ -127,7 +127,7 @@ func (lc *logConsumer) init() error {
 		From:    lc.conf.ConsumeFrom,
 	})
 	if err != nil {
-		level.Error(lc.logger).Log("error", "init log consumer failed in getting cursor, err: "+err.Error())
+		_ = level.Error(lc.logger).Log("msg", "init get cursor failed", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "from", lc.conf.ConsumeFrom, "error", err.Error())
 
 		return err
 	}
@@ -151,10 +151,13 @@ func (lc *logConsumer) fetchData() error {
 		Original:          lc.conf.Original,
 	}
 
+	_ = level.Debug(lc.logger).Log("msg", "fetch start", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", consumeReq.Cursor, "count_req", lc.conf.MaxFetchLogGroupCount, "compress", compressType, "original", lc.conf.Original)
+
 	fetchResp, err := lc.client.ConsumeLogs(&consumeReq)
 	if err != nil {
 		clientErr := tls.NewClientError(err)
 		if clientErr.HTTPCode == http.StatusTooManyRequests {
+			lc.lastBackoffTime = time.Now()
 			return errBusy
 		}
 
@@ -165,19 +168,28 @@ func (lc *logConsumer) fetchData() error {
 		}
 
 		if clientErr.Code == tls.ErrInvalidContent {
-			level.Error(lc.logger).Log(lc.ctx, "fetch invalid data, err: %v", err)
+			var groups int
+			if fetchResp != nil && fetchResp.Logs != nil {
+				groups = len(fetchResp.Logs.LogGroups)
+			}
+			_ = level.Error(lc.logger).Log("msg", "fetch invalid data", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", lc.nextCheckpoint, "resp_count", fetchResp.Count, "resp_cursor", fetchResp.Cursor, "resp_groups", groups, "request_id", fetchResp.RequestID)
 			lc.currLogGroupList = fetchResp.Logs
-			lc.nextCheckpoint = fetchResp.Cursor
+			if len(fetchResp.Cursor) != 0 {
+				lc.nextCheckpoint = fetchResp.Cursor
+			}
 			return nil
 		}
 
-		level.Error(lc.logger).Log("error", "fetch data failed, err: "+err.Error())
+		_ = level.Error(lc.logger).Log("msg", "fetch failed", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", lc.nextCheckpoint, "compress", compressType, "original", lc.conf.Original, "http_code", clientErr.HTTPCode, "code", clientErr.Code, "error", err.Error())
 
 		return err
 	}
 
 	lc.currLogGroupList = fetchResp.Logs
-	lc.nextCheckpoint = fetchResp.Cursor
+	if len(fetchResp.Cursor) != 0 {
+		lc.nextCheckpoint = fetchResp.Cursor
+	}
+	_ = level.Debug(lc.logger).Log("msg", "fetch ok", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", consumeReq.Cursor, "resp_count", fetchResp.Count, "resp_cursor", fetchResp.Cursor)
 
 	return nil
 }
@@ -192,10 +204,13 @@ func (lc *logConsumer) consume() error {
 	}
 
 	lc.consumeFunc(lc.shard.TopicID, lc.shard.ShardID, lc.currLogGroupList)
-	lc.checkpoint.addCheckpoint(&checkpointInfo{
-		shardInfo:  lc.shard,
-		checkpoint: lc.nextCheckpoint,
-	})
+	if len(lc.nextCheckpoint) != 0 {
+		lc.checkpoint.addCheckpoint(&checkpointInfo{
+			shardInfo:  lc.shard,
+			checkpoint: lc.nextCheckpoint,
+		})
+		_ = level.Debug(lc.logger).Log("msg", "checkpoint enqueue", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "checkpoint", lc.nextCheckpoint, "groups", len(lc.currLogGroupList.LogGroups))
+	}
 
 	return nil
 }

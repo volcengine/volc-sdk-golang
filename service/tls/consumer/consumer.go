@@ -3,7 +3,7 @@ package consumer
 import (
 	"context"
 	"errors"
-	"strconv"
+	"fmt"
 	"sync"
 	"time"
 
@@ -132,7 +132,7 @@ func (c *consumer) consumerStop() {
 func (c *consumer) handleShards(shards []*tls.ConsumeShard) {
 	newShardsSet := make(map[string]*tls.ConsumeShard)
 	for _, shard := range shards {
-		newShardsSet[shard.TopicID+strconv.Itoa(shard.ShardID)] = shard
+		newShardsSet[fmt.Sprintf("%s%s%d", shard.TopicID, Delimiter, shard.ShardID)] = shard
 	}
 
 	for shardName := range c.workerMap {

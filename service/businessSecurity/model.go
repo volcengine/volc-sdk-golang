@@ -851,24 +851,43 @@ type MultiModerationSyncResponse struct {
 	Data      MultiModerationSyncData `json:"Data"`
 }
 type MultiModerationAsyncResponse struct {
-	RequestId string                   `json:"RequestId"`
-	Code      int                      `json:"Code"`
-	Message   string                   `json:"Message"`
-	Data      MultiModerationAsyncData `json:"Data"`
+	RequestId string                    `json:"RequestId"`
+	Code      int                       `json:"Code"`
+	Message   string                    `json:"Message"`
+	Data      *MultiModerationAsyncData `json:"Data"`
 }
-
 type MultiModerationAsyncData struct {
-	Decision      string   `json:"Decision"`
-	DecisionLabel string   `json:"DecisionLabel"`
-	HitLabels     []string `json:"HitLabels"`
-	DataId        string   `json:"DataId"`
-	PassThrough   string   `json:"PassThrough"`
+	MultiModerationData
+	HitLabels      []string                 `json:"HitLabels"`
+	DecisionDetail []*MultiModerationDetail `json:"DecisionDetail"`
+	DataId         string                   `json:"DataId"`
+	PassThrough    string                   `json:"PassThrough"`
 }
 type MultiModerationSyncData struct {
-	Decision      string   `json:"Decision"`
-	DecisionLabel string   `json:"DecisionLabel"`
-	HitLabels     []string `json:"HitLabels"`
+	MultiModerationData
+	HitLabels      []string                 `json:"HitLabels"`
+	DecisionDetail []*MultiModerationDetail `json:"DecisionDetail"`
 }
+type MultiModerationDetail struct {
+	Content MultiModerationContentList `json:"Content"`
+	MultiModerationData
+}
+type MultiModerationContentList []*MultiModerationContent
+type MultiModerationContent struct {
+	Type   string `json:"Type"`
+	Text   string `json:"Text"`
+	Image  string `json:"Image"`
+	Tag    string `json:"Tag"`
+	UniqId string `json:"UniqId"`
+}
+type MultiModerationData struct {
+	Decision          string  `json:"Decision"`
+	DecisionLabel     string  `json:"DecisionLabel"`
+	DecisionLabelName string  `json:"DecisionLabelName"`
+	DecisionReason    string  `json:"DecisionReason"`
+	DecisionRate      float64 `json:"DecisionRate"`
+}
+
 type CustomRiskAsyncResponse struct {
 	RequestId string              `json:"RequestId"`
 	Code      int                 `json:"Code"`

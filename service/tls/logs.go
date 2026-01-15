@@ -346,6 +346,9 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 		}
 	}
 
+	response.Count = int(parsedCount)
+	response.Cursor = rawResponse.Header.Get(tlsCursorHeader)
+
 	if parsedCount == 0 {
 		response.Logs = nil
 	} else {
@@ -369,9 +372,6 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 
 		response.Logs = list
 	}
-
-	response.Count = int(parsedCount)
-	response.Cursor = rawResponse.Header.Get(tlsCursorHeader)
 
 	return response, nil
 }
