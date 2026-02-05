@@ -22,6 +22,7 @@ var (
 				"Accept":       []string{"application/json"},
 				"Content-Type": []string{"application/json"},
 			},
+			Scheme: "https",
 		},
 	}
 )
