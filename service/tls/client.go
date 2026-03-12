@@ -8,25 +8,42 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
+	"github.com/cenkalti/backoff/v4"
 	"github.com/go-kit/kit/log/level"
 	"github.com/volcengine/volc-sdk-golang/base"
 	"github.com/volcengine/volc-sdk-golang/service/tls/innerlogger"
 )
 
+type gzipReadCloser struct {
+	reader *gzip.Reader
+	body   io.Closer
+}
+
+func (r *gzipReadCloser) Read(p []byte) (int, error) {
+	return r.reader.Read(p)
+}
+
+func (r *gzipReadCloser) Close() error {
+	err1 := r.reader.Close()
+	err2 := r.body.Close()
+	if err1 != nil {
+		return err1
+	}
+	return err2
+}
+
 var (
-	defaultHttpClient          *http.Client
-	defaultRetryInterval       time.Duration
-	defaultRetryCounter        int32
-	defaultRetryCounterMaximum int32
-	defaultRequestTimeout      time.Duration
+	defaultHttpClient *http.Client
 
 	defaultUserAgent = fmt.Sprintf("%s/%s", base.SDKName, base.SDKVersion)
 )
@@ -45,10 +62,6 @@ func init() {
 			}).DialContext,
 		},
 	}
-	defaultRetryCounter = 0
-	defaultRetryCounterMaximum = 50
-	defaultRetryInterval = 100 * time.Millisecond
-	defaultRequestTimeout = time.Second * 90
 }
 
 type LsClient struct {
@@ -63,6 +76,28 @@ type LsClient struct {
 	Region          string
 	APIVersion      string
 	CustomUserAgent string
+
+	retryPolicy atomic.Value
+}
+
+const (
+	defaultRetryTimeout = 90 * time.Second
+)
+
+func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
+	apiVersion := APIVersion3
+	client := &LsClient{
+		Client:          defaultHttpClient,
+		Endpoint:        endpoint,
+		accessLock:      &sync.RWMutex{},
+		AccessKeyID:     accessKeyID,
+		AccessKeySecret: accessKeySecret,
+		SecurityToken:   securityToken,
+		Region:          region,
+		APIVersion:      apiVersion,
+	}
+	client.retryPolicy.Store(DefaultRetryPolicy())
+	return client
 }
 
 func (c *LsClient) SetAPIVersion(version string) {
@@ -84,7 +119,6 @@ func (c *LsClient) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityTok
 
 func (c *LsClient) SetTimeout(timeout time.Duration) {
 	c.Client.Timeout = timeout
-	defaultRequestTimeout = timeout
 }
 
 func (c *LsClient) GetHttpClient() *http.Client {
@@ -99,12 +133,16 @@ func (c *LsClient) SetHttpClient(client *http.Client) error {
 	return nil
 }
 
-func (c *LsClient) SetRetryIntervalMs(interval time.Duration) {
-	defaultRetryInterval = interval
+func (c *LsClient) SetRetryPolicy(policy RetryPolicy) {
+	normalized := policy.Normalize()
+	c.retryPolicy.Store(normalized)
 }
 
-func (c *LsClient) SetRetryCounterMaximum(maximum int32) {
-	defaultRetryCounterMaximum = maximum
+func (c *LsClient) GetRetryPolicy() RetryPolicy {
+	if policy, ok := c.retryPolicy.Load().(RetryPolicy); ok {
+		return policy.Normalize()
+	}
+	return DefaultRetryPolicy()
 }
 
 func (c *LsClient) Request(method, uri string, params map[string]string, headers map[string]string, body []byte) (rsp *http.Response, e error) {
@@ -132,7 +170,6 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 
 	var r *http.Response
 	var iErr error
-	var err error
 	var realUri string = uri
 
 	// 检查是否正确配置了 Region/AK/SK/Endpoint
@@ -151,18 +188,46 @@ func (c *LsClient) Request(method, uri string, params map[string]string, headers
 		realUri = uri
 	}
 
-	ctx := context.Background()
-	err = RetryWithCondition(ctx, func() error {
-		r, iErr = c.realRequest(ctx, method, realUri, headers, body)
+	policy := c.GetRetryPolicy()
+
+	// 为当前请求创建独立的上下文，限定重试的最大耗时
+	ctx, cancel := context.WithTimeout(context.Background(), policy.TotalTimeout)
+	defer cancel()
+	attempts := 0
+	retryOp := func() (bool, error) {
+		attempts++
+		// 为单次 HTTP 尝试创建独立的请求上下文，避免重试上下文在成功返回时立即取消导致服务端感知 cancel
+		// 每次尝试的超时时间取 HTTP 客户端的 Timeout（若未设置则由默认客户端提供）
+		perAttemptTimeout := c.Client.Timeout
+		if perAttemptTimeout <= 0 {
+			perAttemptTimeout = time.Second * 60
+		}
+		reqCtx, reqCancel := context.WithTimeout(ctx, perAttemptTimeout)
+		defer reqCancel()
+		r, iErr = c.realRequest(reqCtx, method, realUri, headers, body)
 		if iErr != nil {
 			level.Error(innerlogger.DefaultLogger).Log("msg", "Request failed", "reason", iErr)
 			level.Debug(innerlogger.DefaultLogger).Log("method", method, "uri", realUri, "headers", headers, "body", string(body))
 		}
-		return iErr
-	})
+		if iErr == nil {
+			return false, nil
+		}
+		need := needRetryError(iErr)
+		if need {
+			// 检查是否超过最大重试次数
+			if policy.MaxAttempts <= 0 || attempts < policy.MaxAttempts {
+				return true, iErr
+			}
+		}
+		return false, iErr
+	}
+	// 使用 RetryWithConditionTicker + backoff.ExponentialBackOff
+	exp := policy.ExponentialBackOff()
 
-	if err != nil {
-		return r, err
+	retryErr := RetryWithConditionTicker(ctx, backoff.WithContext(exp, ctx), retryOp)
+
+	if retryErr != nil {
+		return r, retryErr
 	}
 	return r, iErr
 }
@@ -248,12 +313,21 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	// Get ready to do request
 	resp, err := c.Client.Do(req)
 	if err != nil {
+		if resp != nil && resp.Body != nil {
+			_ = resp.Body.Close()
+		}
 		return nil, err
 	}
 	if resp.Header.Get("Content-Encoding") == CompressGz {
-		resp.Body, err = gzip.NewReader(resp.Body)
+		rawBody := resp.Body
+		resp.Body, err = gzip.NewReader(rawBody)
 		if err != nil {
+			_ = rawBody.Close()
 			return nil, err
+		}
+		resp.Body = &gzipReadCloser{
+			reader: resp.Body.(*gzip.Reader),
+			body:   rawBody,
 		}
 	}
 	if resp.StatusCode != http.StatusOK {

@@ -142,6 +142,21 @@ func (p *Visual) CVSync2AsyncGetResult(bodyMap interface{}) (map[string]interfac
 	return resp, statusCode, nil
 }
 
+// CVCancelTask 通用取消任务接口
+// bodyMap: 按照接口文档填写入参
+func (p *Visual) CVCancelTask(bodyMap interface{}) (map[string]interface{}, int, error) {
+	reqByte, err := json.Marshal(bodyMap)
+	if err != nil {
+		return nil, 500, errors.New("request json marshal error" + err.Error())
+	}
+	resp := make(map[string]interface{})
+	statusCode, err := p.commonJsonHandler("CVCancelTask", string(reqByte), &resp)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return resp, statusCode, nil
+}
+
 func (p *Visual) DistortionFree(form url.Values) (*model.DistortionFreeResult, int, error) {
 	resp := new(model.DistortionFreeResult)
 	statusCode, err := p.commonHandler("DistortionFree", form, resp)

@@ -1,16 +1,18 @@
 package producer
 
 import (
-	"github.com/go-kit/kit/log"
 	"time"
+
+	"github.com/go-kit/kit/log"
 
 	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 )
 
 const delimiter = "|"
 
-var MaxBatchSize int64 = 8 * 1024 * 1024
-var MaxBatchCount = 10000
+var MaxBatchSize int64 = 9*1024*1024 + 512*1024
+var MaxBatchCount = 32768
+var MaxLogGroupCount = 10000
 
 type Config struct {
 	TotalSizeLnBytes      int64

@@ -85,6 +85,17 @@ var (
 				"Content-Type": []string{"application/json"},
 			},
 		},
+		"CVCancelTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CVCancelTask"},
+				"Version": []string{"2024-06-06"},
+			},
+			Header: http.Header{
+				"Content-Type": []string{"application/json"},
+			},
+		},
 		"DistortionFree": {
 			Method: http.MethodPost,
 			Path:   "/",

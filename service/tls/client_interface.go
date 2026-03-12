@@ -3,23 +3,8 @@ package tls
 import (
 	"context"
 	"net/http"
-	"sync"
 	"time"
 )
-
-func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
-	apiVersion := APIVersion3
-	return &LsClient{
-		Client:          defaultHttpClient,
-		Endpoint:        endpoint,
-		accessLock:      &sync.RWMutex{},
-		AccessKeyID:     accessKeyID,
-		AccessKeySecret: accessKeySecret,
-		SecurityToken:   securityToken,
-		Region:          region,
-		APIVersion:      apiVersion,
-	}
-}
 
 type Client interface {
 	GetHttpClient() *http.Client
@@ -28,6 +13,8 @@ type Client interface {
 	SetTimeout(timeout time.Duration)
 	SetAPIVersion(version string)
 	SetCustomUserAgent(customUserAgent string)
+	SetRetryPolicy(policy RetryPolicy)
+	GetRetryPolicy() RetryPolicy
 
 	PutLogs(request *PutLogsRequest) (response *CommonResponse, err error)
 	PutLogsV2(request *PutLogsV2Request) (response *CommonResponse, err error)

@@ -1,94 +1,92 @@
 package tls
 
 import (
-	"net"
+	"bytes"
+	"compress/gzip"
+	"context"
+	"io"
 	"net/http"
-	"os"
+	"sync"
 	"testing"
-	"time"
-
-	"github.com/stretchr/testify/suite"
 )
 
-type SDKClientTestSuite struct {
-	suite.Suite
+type rtFunc func(*http.Request) (*http.Response, error)
 
-	cli Client
+func (f rtFunc) RoundTrip(r *http.Request) (*http.Response, error) {
+	return f(r)
 }
 
-func TestSDKClientTestSuite(t *testing.T) {
-	suite.Run(t, new(SDKClientTestSuite))
+type trackingReadCloser struct {
+	r      io.Reader
+	closed int
 }
 
-func (suite *SDKClientTestSuite) SetupTest() {
-	suite.cli = NewClientWithEnv()
+func (t *trackingReadCloser) Read(p []byte) (int, error) {
+	return t.r.Read(p)
 }
 
-func (suite *SDKClientTestSuite) TearDownTest() {
-
+func (t *trackingReadCloser) Close() error {
+	t.closed++
+	return nil
 }
 
-func (suite *SDKClientTestSuite) TestNewClient() {
-	suite.Equal(defaultHttpClient, suite.cli.GetHttpClient())
+func gzipBytes(b []byte) []byte {
+	var buf bytes.Buffer
+	w := gzip.NewWriter(&buf)
+	_, _ = w.Write(b)
+	_ = w.Close()
+	return buf.Bytes()
 }
 
-func (suite *SDKClientTestSuite) TestSetHttpClient() {
-
-	timeout := time.Second * 1
-	transport := &http.Transport{
-		MaxIdleConns:        10,
-		MaxIdleConnsPerHost: 5,
-		IdleConnTimeout:     1 * time.Second,
-		DisableCompression:  false,
-		DialContext: (&net.Dialer{
-			Timeout:   1 * time.Second,
-			KeepAlive: 1 * time.Second,
-		}).DialContext,
+func newTestClient(rt http.RoundTripper) *LsClient {
+	return &LsClient{
+		Client:          &http.Client{Transport: rt},
+		Endpoint:        "http://example.com",
+		accessLock:      &sync.RWMutex{},
+		Region:          "cn-beijing",
+		AccessKeyID:     "ak",
+		AccessKeySecret: "sk",
+		APIVersion:      "0.3.0",
 	}
-
-	suite.cli.SetHttpClient(&http.Client{
-		Timeout:   timeout,
-		Transport: transport,
-	})
-
-	suite.NotEqual(defaultHttpClient, suite.cli.GetHttpClient())
-	suite.Equal(timeout, suite.cli.GetHttpClient().Timeout)
-	suite.Equal(transport, suite.cli.GetHttpClient().Transport)
-
-	suite.cli.SetHttpClient(defaultHttpClient)
-
 }
 
-func (suite *SDKClientTestSuite) TestTlsHttpRequestNormally() {
+func TestRealRequest_GzipCloseClosesUnderlyingBody(t *testing.T) {
+	body := &trackingReadCloser{r: bytes.NewReader(gzipBytes([]byte("ok")))}
+	c := newTestClient(rtFunc(func(r *http.Request) (*http.Response, error) {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{"Content-Encoding": []string{CompressGz}},
+			Body:       body,
+			Request:    r,
+		}, nil
+	}))
 
-	err := suite.cli.SetHttpClient(&http.Client{
-		Timeout: time.Second * 30,
-		Transport: &http.Transport{
-			MaxIdleConns:        1000,
-			MaxIdleConnsPerHost: 50,
-			IdleConnTimeout:     10 * time.Second,
-			DisableCompression:  true,
-			DialContext: (&net.Dialer{
-				Timeout:   10 * time.Second,
-				KeepAlive: 10 * time.Second,
-			}).DialContext,
-		},
-	})
-	suite.NoError(err)
-
-	createProjectResponse, err := suite.cli.CreateProject(&CreateProjectRequest{
-		ProjectName: "go-sdk-test" + time.Now().Format("20060102150405"),
-		Region:      os.Getenv("LOG_SERVICE_REGION"),
-	})
-	suite.NoError(err)
-
-	_, err = suite.cli.DeleteProject(&DeleteProjectRequest{
-		ProjectID: createProjectResponse.ProjectID,
-	})
+	resp, err := c.realRequest(context.Background(), http.MethodGet, "/DescribeTopic", map[string]string{}, nil)
+	if err != nil {
+		t.Fatalf("expected nil err, got %v", err)
+	}
+	_ = resp.Body.Close()
+	if body.closed != 1 {
+		t.Fatalf("expected underlying body close once, got %d", body.closed)
+	}
 }
 
-func (suite *SDKClientTestSuite) TestTlsHttpRequestAbnormally() {
-	err := suite.cli.SetHttpClient(nil)
-	suite.Error(err)
-	suite.Equal("client can not be nil", err.Error())
+func TestRealRequest_GzipNewReaderErrorClosesUnderlyingBody(t *testing.T) {
+	body := &trackingReadCloser{r: bytes.NewReader([]byte("not-gzip"))}
+	c := newTestClient(rtFunc(func(r *http.Request) (*http.Response, error) {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{"Content-Encoding": []string{CompressGz}},
+			Body:       body,
+			Request:    r,
+		}, nil
+	}))
+
+	resp, err := c.realRequest(context.Background(), http.MethodGet, "/DescribeTopic", map[string]string{}, nil)
+	if err == nil || resp != nil {
+		t.Fatalf("expected error and nil resp, got resp=%v err=%v", resp, err)
+	}
+	if body.closed != 1 {
+		t.Fatalf("expected underlying body close once, got %d", body.closed)
+	}
 }

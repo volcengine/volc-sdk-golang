@@ -132,6 +132,7 @@ type VideoResp struct {
 	PassThrough   string             `json:"PassThrough"`
 	FinalLabel    string             `json:"FinalLabel"`
 	DecisionLabel string             `json:"DecisionLabel"`
+	Decision      string             `json:"Decision"`
 }
 type VideoLiveResp struct {
 	DataId        string               `json:"DataId"`
@@ -140,35 +141,36 @@ type VideoLiveResp struct {
 	PassThrough   string               `json:"PassThrough"`
 	FinalLabel    string               `json:"FinalLabel"`
 	DecisionLabel string               `json:"DecisionLabel"`
+	Decision      string               `json:"Decision"`
 }
 
 type AudioResultV2 struct {
 	AudioResultV2Basic
+	DataId        string `json:"DataId"`
 	FinalLabel    string `json:"FinalLabel"`
 	DecisionLabel string `json:"DecisionLabel"`
+	PassThrough   string `json:"PassThrough"`
 }
 
 type AudioResultV2Basic struct {
 	Decision       string           `json:"Decision"`
 	DecisionDetail string           `json:"DecisionDetail"`
-	DataId         string           `json:"DataId"`
 	AudioText      string           `json:"AudioText"`
 	Details        []*AudioDetailV2 `json:"Details"`
-	PassThrough    string           `json:"PassThrough"`
 }
 
 type AudioLiveResult struct {
 	AudioLiveResultBasic
 	FinalLabel    string `json:"FinalLabel"`
 	DecisionLabel string `json:"DecisionLabel"`
+	DataId        string `json:"DataId"`
+	PassThrough   string `json:"PassThrough"`
 }
 
 type AudioLiveResultBasic struct {
-	Decision    string               `json:"Decision"`
-	DataId      string               `json:"DataId"`
-	AudioText   string               `json:"AudioText"`
-	Details     []*AudioLiveDetailV2 `json:"Details"`
-	PassThrough string               `json:"PassThrough"`
+	Decision  string               `json:"Decision"`
+	AudioText string               `json:"AudioText"`
+	Details   []*AudioLiveDetailV2 `json:"Details"`
 }
 
 type AudioDetailV2 struct {
@@ -177,7 +179,6 @@ type AudioDetailV2 struct {
 	FrameUrl         string           `json:"FrameUrl"`
 	AudioText        string           `json:"AudioText"`
 	SliceId          string           `json:"SliceId"`
-	UserId           string           `json:"UserId"`
 	Decision         string           `json:"Decision"`
 	DecisionDetail   string           `json:"DecisionDetail"`
 	FrameResults     []*FrameResultV2 `json:"FrameResults"`
@@ -221,7 +222,6 @@ type Frame struct {
 	Url              string   `json:"Url"`
 	Offset           float64  `json:"Offset"`
 	SliceId          string   `json:"SliceId"`
-	UserId           string   `json:"UserId"`
 	Decision         string   `json:"Decision"`
 	DecisionDetail   string   `json:"DecisionDetail"`
 	Text             string   `json:"Text"`

@@ -201,6 +201,10 @@ func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]stri
 		"Sort":      request.Sort,
 	}
 
+	if request.HighLight {
+		reqHeaders["SourceType"] = "front"
+	}
+
 	bytesBody, err := json.Marshal(reqBody)
 	if err != nil {
 		return nil, err

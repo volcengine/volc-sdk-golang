@@ -2,16 +2,18 @@ package tls
 
 import (
 	"context"
-	"math"
-	"math/rand"
+	"io"
 	"net"
-	"sync/atomic"
-	"time"
+	"syscall"
 
+	"github.com/cenkalti/backoff/v4"
 	"github.com/pkg/errors"
 )
 
 type ConditionOperation func() error
+
+// ConditionOperationBool 返回是否需要重试以及错误
+type ConditionOperationBool func() (bool, error)
 
 func needRetry(err *Error) bool {
 	if err == nil {
@@ -23,63 +25,71 @@ func needRetry(err *Error) bool {
 	return false
 }
 
-func RetryWithCondition(ctx context.Context, o ConditionOperation) error {
-	var tryCount = 0
+func needRetryNetworkError(err error) bool {
+	if err == nil {
+		return false
+	}
+	var nerr net.Error
+	if errors.As(err, &nerr) {
+		if nerr.Timeout() {
+			return true
+		}
+	}
+	if errors.Is(err, io.EOF) {
+		return true
+	}
+	if errors.Is(err, syscall.ECONNRESET) ||
+		errors.Is(err, syscall.EPIPE) ||
+		errors.Is(err, syscall.ETIMEDOUT) ||
+		errors.Is(err, syscall.ECONNREFUSED) ||
+		errors.Is(err, syscall.EHOSTUNREACH) ||
+		errors.Is(err, syscall.ENETUNREACH) {
+		return true
+	}
+	return false
+}
+
+func needRetryError(err error) bool {
+	if err == nil {
+		return false
+	}
+	if clientErr, ok := err.(*Error); ok {
+		return needRetry(clientErr)
+	}
+	if needRetryNetworkError(err) {
+		return true
+	}
+	if badRespErr, ok := err.(*BadResponseError); ok {
+		return badRespErr.HTTPCode == 429 || badRespErr.HTTPCode == 500 || badRespErr.HTTPCode == 502 || badRespErr.HTTPCode == 503
+	}
+	return false
+}
+
+// RetryWithConditionTicker 使用 backoff.NewTicker 驱动的重试实现，
+// 当 backoff 计算完成或 ctx 取消时结束，返回最近一次错误。
+func RetryWithConditionTicker(ctx context.Context, b backoff.BackOff, o ConditionOperationBool) error {
+	ticker := backoff.NewTicker(b)
+	defer ticker.Stop()
+
 	var err error
-	var expectedQuitTime = time.Now().Add(defaultRequestTimeout)
+	var need bool
 	for {
 		select {
 		case <-ctx.Done():
 			return errors.Wrapf(ctx.Err(), "stopped retrying err: %v", err)
 		default:
-			err = o()
-			tryCount += 1
-			Err, ok := err.(*Error)
-			if !ok {
-				if timeoutErr, ok := err.(net.Error); ok && timeoutErr.Timeout() {
-					// 超时错误, 需要重试
-				} else {
-					// 预期之外的错误, 直接返回
+			select {
+			case _, ok := <-ticker.C:
+				if !ok {
+					// backoff 已达到上限
 					return err
 				}
-			} else {
-				if !needRetry(Err) {
-					// 预期之内的请求成功, 不需要重试, 计数减后直接返回
-					for {
-						curr := atomic.LoadInt32(&defaultRetryCounter)
-						if curr <= 0 {
-							break
-						}
-						if atomic.CompareAndSwapInt32(&defaultRetryCounter, curr, curr-1) {
-							break // 操作成功，退出循环
-						}
-					}
+				need, err = o()
+				if !need {
 					return err
 				}
-			}
-
-			// 进入重试逻辑
-			for {
-				// 计数器+1
-				curr := atomic.LoadInt32(&defaultRetryCounter)
-				if curr >= defaultRetryCounterMaximum {
-					break
-				}
-				if atomic.CompareAndSwapInt32(&defaultRetryCounter, curr, curr+1) {
-					break // 操作成功，退出循环
-				}
-			}
-
-			var retrySleepInterval = time.Duration(math.Floor(rand.Float64() * float64(defaultRetryCounter) * float64(defaultRetryInterval)))
-			var maxSleepInterval = time.Until(expectedQuitTime)
-			if retrySleepInterval > maxSleepInterval {
-				retrySleepInterval = maxSleepInterval
-			}
-			time.Sleep(retrySleepInterval)
-
-			if tryCount >= 5 || defaultRetryCounterMaximum <= 0 || time.Now().After(expectedQuitTime) {
-				// 重试超过5次或已经超出预期超时, 直接返回最近一次请求结果
-				return err
+			case <-ctx.Done():
+				return errors.Wrapf(ctx.Err(), "stopped retrying err: %v", err)
 			}
 		}
 	}

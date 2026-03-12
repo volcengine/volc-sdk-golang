@@ -205,6 +205,26 @@ func (c *LsClient) DescribeTopics(request *DescribeTopicsRequest) (r *DescribeTo
 		params["PageSize"] = strconv.Itoa(request.PageSize)
 	}
 
+	if len(request.Cursor) != 0 {
+		params["Cursor"] = request.Cursor
+	}
+
+	if len(request.Region) != 0 {
+		params["Region"] = request.Region
+	}
+
+	if len(request.FuzzySearchKey) != 0 {
+		params["FuzzySearchKey"] = request.FuzzySearchKey
+	}
+
+	if len(request.Description) != 0 {
+		params["Description"] = request.Description
+	}
+
+	if request.OrderByProject != nil {
+		params["OrderByProject"] = strconv.FormatBool(*request.OrderByProject)
+	}
+
 	params["IsFullName"] = strconv.FormatBool(request.IsFullName)
 
 	if request.Tags != nil && len(request.Tags) > 0 {

@@ -15,6 +15,48 @@ client := NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCE
     os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 ```
 
+### 配置请求重试（指数退避）
+
+TLS SDK 对部分可重试错误（例如 429/500/502/503 或网络超时）会进行指数退避重试。你可以通过 `RetryPolicy` 统一配置重试策略的各项参数，避免参数过大/过小导致的异常退避行为。
+
+说明：`SetRetryTimeout` 已废弃（Deprecated），请使用 `RetryPolicy.TotalTimeout`（通过 `SetRetryPolicy` 设置）。
+
+示例代码如下：
+
+```go
+policy := tls.DefaultRetryPolicy()
+policy.TotalTimeout = 90 * time.Second
+policy.InitialInterval = 500 * time.Millisecond
+policy.MaxInterval = 10 * time.Second
+policy.Multiplier = 2.0
+policy.RandomizationFactor = 0.25
+policy.MaxAttempts = 0 // 0 表示不限制次数，仅受 TotalTimeout 限制
+
+client.SetRetryPolicy(policy)
+```
+
+#### 参数含义
+
+- `TotalTimeout`：单次请求（含所有重试）的总截止时间；超过即停止重试并返回最后一次错误。
+- `InitialInterval`：第一次重试前的基础等待间隔；后续间隔在此基础上按指数增长（并叠加扰动）。
+- `MaxInterval`：单次等待间隔的上限；指数增长超过该值时会被截断；同时保证 `MaxInterval >= InitialInterval`。
+- `Multiplier`：指数退避的增长倍数；每次重试的基础间隔大致按 `InitialInterval * Multiplier^(n-1)` 增长（再被 `MaxInterval` 截断）。
+- `RandomizationFactor`：扰动因子；每次等待会在基础间隔上做随机浮动，用于打散重试时间，避免大量客户端同频重试。
+- `MaxAttempts`：最大尝试次数上限（包含第一次请求）；`0` 表示不限制次数，仅受 `TotalTimeout` 截止。
+
+#### 取值范围与默认值
+
+当用户配置越界或无效时，SDK 会进行回退/收敛（Normalize）以保证退避行为可控：
+
+- `TotalTimeout`：范围 `[30s, 15m]`；`<=0` 回退到默认 `90s`
+- `InitialInterval`：范围 `[100ms, 30s]`；`<=0` 回退到默认 `500ms`
+- `MaxInterval`：范围 `[1s, 1m]`；`<=0` 回退到默认 `10s`；并保证 `MaxInterval >= InitialInterval`
+- `Multiplier`：范围 `[1.0, 3.0]`；`<=0/NaN` 回退到默认 `2.0`
+- `RandomizationFactor`：范围 `[0.1, 1.0]`；`<0/NaN` 回退到默认 `0.25`
+- `MaxAttempts`：范围 `[0, 50]`；默认 `0`
+
+默认策略（`DefaultRetryPolicy`）表示：在最多 90s 的时间预算内，从 500ms 的初始重试间隔开始，以 2 倍指数增长，并在单次间隔不超过 10s 的前提下，使用 0.25 的扰动因子打散重试时间。
+
 ### 示例代码
 
 本文档以日志服务的基本日志采集和检索流程为例，介绍如何使用日志服务 Go SDK 管理日志服务基础资源。创建一个 TLSQuickStart.go 文件，并调用接口分别完成创建 Project、创建 Topic、创建索引、写入日志数据、消费日志和查询日志数据。

@@ -126,6 +126,7 @@ type EncryptUserCmkConf struct {
 	UserCmkID string `json:"user_cmk_id"`
 	Trn       string `json:"trn"`
 	RegionID  string `json:"region_id"`
+	FromTLS   *bool  `json:"from_tls,omitempty"`
 }
 
 type EncryptConf struct {
@@ -146,6 +147,7 @@ type CreateTopicRequest struct {
 	EnableTracking *bool        `json:",omitempty"`
 	TimeKey        *string      `json:",omitempty"`
 	TimeFormat     *string      `json:",omitempty"`
+	MeteringMode   *string      `json:",omitempty"`
 	Tags           []TagInfo    `json:",omitempty"`
 	LogPublicIP    *bool        `json:",omitempty"`
 	EnableHotTtl   *bool        `json:",omitempty"`
@@ -204,6 +206,7 @@ type ModifyTopicRequest struct {
 	HotTtl         *int32       `json:",omitempty"`
 	ColdTtl        *int32       `json:",omitempty"`
 	ArchiveTtl     *int32       `json:",omitempty"`
+	MeteringMode   *string      `json:",omitempty"`
 	EncryptConf    *EncryptConf `json:",omitempty"`
 }
 
@@ -228,38 +231,48 @@ func (v *DescribeTopicRequest) CheckValidation() error {
 
 type DescribeTopicResponse struct {
 	CommonResponse
-	TopicName       string      `json:"TopicName"`
-	ProjectID       string      `json:"ProjectId"`
-	TopicID         string      `json:"TopicId"`
-	Ttl             uint16      `json:"Ttl"`
-	CreateTimestamp string      `json:"CreateTime"`
-	ModifyTimestamp string      `json:"ModifyTime"`
-	ShardCount      int32       `json:"ShardCount"`
-	Description     string      `json:"Description"`
-	MaxSplitShard   int32       `json:"MaxSplitShard"`
-	AutoSplit       bool        `json:"AutoSplit"`
-	EnableTracking  bool        `json:"EnableTracking"`
-	TimeKey         string      `json:"TimeKey"`
-	TimeFormat      string      `json:"TimeFormat"`
-	Tags            []TagInfo   `json:"Tags"`
-	LogPublicIP     bool        `json:"LogPublicIP"`
-	EnableHotTtl    bool        `json:"EnableHotTtl"`
-	HotTtl          int32       `json:"HotTtl"`
-	ColdTtl         int32       `json:"ColdTtl"`
-	ArchiveTtl      int32       `json:"ArchiveTtl"`
-	EncryptConf     EncryptConf `json:",omitempty"`
+	BindProcessor   *BindProcessor `json:"BindProcessor,omitempty"`
+	MeteringMode    string         `json:"MeteringMode"`
+	TopicName       string         `json:"TopicName"`
+	ProjectID       string         `json:"ProjectId"`
+	ProjectName     string         `json:"ProjectName"`
+	Region          string         `json:"Region"`
+	TLSVersion      string         `json:"TLSVersion"`
+	TopicID         string         `json:"TopicId"`
+	Ttl             uint16         `json:"Ttl"`
+	CreateTimestamp string         `json:"CreateTime"`
+	ModifyTimestamp string         `json:"ModifyTime"`
+	ShardCount      int32          `json:"ShardCount"`
+	Description     string         `json:"Description"`
+	MaxSplitShard   int32          `json:"MaxSplitShard"`
+	AutoSplit       bool           `json:"AutoSplit"`
+	EnableTracking  bool           `json:"EnableTracking"`
+	TimeKey         string         `json:"TimeKey"`
+	TimeFormat      string         `json:"TimeFormat"`
+	Tags            []TagInfo      `json:"Tags"`
+	LogPublicIP     bool           `json:"LogPublicIP"`
+	EnableHotTtl    bool           `json:"EnableHotTtl"`
+	HotTtl          int32          `json:"HotTtl"`
+	ColdTtl         int32          `json:"ColdTtl"`
+	ArchiveTtl      int32          `json:"ArchiveTtl"`
+	EncryptConf     EncryptConf    `json:",omitempty"`
 }
 
 type DescribeTopicsRequest struct {
 	CommonRequest
-	ProjectID   string
-	ProjectName string
-	PageNumber  int
-	PageSize    int
-	TopicName   string
-	TopicID     string
-	IsFullName  bool
-	Tags        []TagInfo
+	ProjectID      string
+	ProjectName    string
+	PageNumber     int
+	PageSize       int
+	Cursor         string
+	Region         string
+	TopicName      string
+	TopicID        string
+	FuzzySearchKey string
+	Description    string
+	OrderByProject *bool
+	IsFullName     bool
+	Tags           []TagInfo
 }
 
 func (v *DescribeTopicsRequest) CheckValidation() error {
@@ -267,33 +280,44 @@ func (v *DescribeTopicsRequest) CheckValidation() error {
 }
 
 type Topic struct {
-	TopicName       string      `json:"TopicName"`
-	ProjectID       string      `json:"ProjectId"`
-	ProjectName     string      `json:"ProjectName"`
-	TopicID         string      `json:"TopicId"`
-	Ttl             uint16      `json:"Ttl"`
-	CreateTimestamp string      `json:"CreateTime"`
-	ModifyTimestamp string      `json:"ModifyTime"`
-	ShardCount      int32       `json:"ShardCount"`
-	Description     string      `json:"Description"`
-	MaxSplitShard   int32       `json:"MaxSplitShard"`
-	AutoSplit       bool        `json:"AutoSplit"`
-	EnableTracking  bool        `json:"EnableTracking"`
-	TimeKey         string      `json:"TimeKey"`
-	TimeFormat      string      `json:"TimeFormat"`
-	Tags            []TagInfo   `json:"Tags"`
-	LogPublicIP     bool        `json:"LogPublicIP"`
-	EnableHotTtl    bool        `json:"EnableHotTtl"`
-	HotTtl          int32       `json:"HotTtl"`
-	ColdTtl         int32       `json:"ColdTtl"`
-	ArchiveTtl      int32       `json:"ArchiveTtl"`
-	EncryptConf     EncryptConf `json:",omitempty"`
+	BindProcessor   *BindProcessor `json:"BindProcessor,omitempty"`
+	MeteringMode    string         `json:"MeteringMode"`
+	TopicName       string         `json:"TopicName"`
+	ProjectID       string         `json:"ProjectId"`
+	ProjectName     string         `json:"ProjectName"`
+	Region          string         `json:"Region"`
+	TLSVersion      string         `json:"TLSVersion"`
+	TopicID         string         `json:"TopicId"`
+	Ttl             uint16         `json:"Ttl"`
+	CreateTimestamp string         `json:"CreateTime"`
+	ModifyTimestamp string         `json:"ModifyTime"`
+	ShardCount      int32          `json:"ShardCount"`
+	Description     string         `json:"Description"`
+	MaxSplitShard   int32          `json:"MaxSplitShard"`
+	AutoSplit       bool           `json:"AutoSplit"`
+	EnableTracking  bool           `json:"EnableTracking"`
+	TimeKey         string         `json:"TimeKey"`
+	TimeFormat      string         `json:"TimeFormat"`
+	Tags            []TagInfo      `json:"Tags"`
+	LogPublicIP     bool           `json:"LogPublicIP"`
+	EnableHotTtl    bool           `json:"EnableHotTtl"`
+	HotTtl          int32          `json:"HotTtl"`
+	ColdTtl         int32          `json:"ColdTtl"`
+	ArchiveTtl      int32          `json:"ArchiveTtl"`
+	EncryptConf     EncryptConf    `json:",omitempty"`
 }
 
 type DescribeTopicsResponse struct {
 	CommonResponse
-	Topics []*Topic `json:"Topics"`
-	Total  int      `json:"Total"`
+	Cursor  string   `json:"Cursor"`
+	Regions []string `json:"Regions"`
+	Topics  []*Topic `json:"Topics"`
+	Total   int      `json:"Total"`
+}
+
+type BindProcessor struct {
+	ProcessorID   string `json:"ProcessorID"`
+	ProcessorName string `json:"ProcessorName"`
 }
 
 type Value struct {
@@ -446,7 +470,7 @@ type SearchLogsResponse struct {
 	Logs           []map[string]interface{} `json:"Logs"`
 	AnalysisResult *AnalysisResult          `json:"AnalysisResult"`
 	Context        string                   `json:"Context"`
-	HighLight      []string                 `json:"HighLight,omitempty"`
+	HighLight      []map[string]interface{} `json:"HighLight,omitempty"`
 }
 
 type DescribeShardsRequest struct {
@@ -519,6 +543,11 @@ func (v *PutLogsRequest) CheckValidation() error {
 	}
 	if v.LogBody == nil {
 		return errors.New("Invalid argument, empty LogBody")
+	}
+	for _, logGroup := range v.LogBody.GetLogGroups() {
+		if len(logGroup.GetLogs()) > 10000 {
+			return errors.New("Invalid argument, LogGroup has more than 10000 logs")
+		}
 	}
 
 	return nil

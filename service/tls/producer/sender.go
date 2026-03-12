@@ -9,7 +9,6 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	. "github.com/volcengine/volc-sdk-golang/service/tls"
-	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
 type CallBack interface {
@@ -55,11 +54,7 @@ func (sender *Sender) sendToServer(batch *Batch) {
 	putLogsReq := &PutLogsRequest{
 		TopicID:      batch.topic,
 		CompressType: "lz4",
-		LogBody: &pb.LogGroupList{
-			LogGroups: []*pb.LogGroup{
-				batch.logGroup,
-			},
-		},
+		LogBody:      batch.logGroupList,
 	}
 
 	if batch.shardHash != nil {

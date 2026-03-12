@@ -176,7 +176,7 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	dispatcher.lock.Lock()
 	defer dispatcher.lock.Unlock()
 	producerBatch := dispatcher.getOrCreateProducerBatch(batchLog, key)
-	addSuccess := producerBatch.tryAddLog(batchLog.Log, logSize, batchLog.Key.CallBackFun)
+	addSuccess := producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 	if addSuccess {
 		if producerBatch.meetSendCondition(dispatcher.producerConfig) {
 			dispatcher.innerSendToServer(key, producerBatch)
@@ -187,7 +187,7 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	dispatcher.innerSendToServer(key, producerBatch)
 	newBatch := newProducerBatch(batchLog, dispatcher.producerConfig)
 	dispatcher.logGroupData[key] = newBatch
-	newBatch.tryAddLog(batchLog.Log, logSize, batchLog.Key.CallBackFun)
+	newBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 	if newBatch.meetSendCondition(dispatcher.producerConfig) {
 		dispatcher.innerSendToServer(key, newBatch)
 	}
