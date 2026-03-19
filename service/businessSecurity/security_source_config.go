@@ -2,10 +2,11 @@ package businessSecurity
 
 import (
 	"fmt"
-	"github.com/volcengine/volc-sdk-golang/base"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/base"
 )
 
 type SecuritySecurityClient struct {
@@ -145,6 +146,15 @@ var (
 			Path:    "/openapi/v1/rc_llm/custom_risk_result",
 			Query: url.Values{
 				"Action":  []string{"CustomRiskResult"},
+				"Version": []string{"2022-08-26"},
+			},
+		},
+		"ImageTextLiteModeration": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Minute,
+			Path:    "/openapi/v1/rc_llm/image_text_lite_moderation",
+			Query: url.Values{
+				"Action":  []string{"ImageTextLiteModeration"},
 				"Version": []string{"2022-08-26"},
 			},
 		},

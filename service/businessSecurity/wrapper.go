@@ -6,11 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	hi_sse "github.com/volcengine/volc-sdk-golang/service/businessSecurity/sse"
-	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 	"io"
 	"io/ioutil"
 	"net/url"
+
+	hi_sse "github.com/volcengine/volc-sdk-golang/service/businessSecurity/sse"
+	"github.com/volcengine/volc-sdk-golang/service/maas/models/api"
 )
 
 // Synchronous risk detection
@@ -1709,6 +1710,33 @@ func (p *SecuritySecurityClient) CustomRiskResult(req *RcLlmResultRequest) (*Cus
 		return nil, fmt.Errorf("AsyncRiskDetection: fail to do request, %v", err)
 	}
 	result := new(CustomRiskAsyncResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) ImageTextLiteModeration(req *RiskDetectionRequest) (*ImageTextLiteModerationSyncResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("ImageTextLiteModeration: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("ImageTextLiteModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("ImageTextLiteModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("ImageTextLiteModeration: fail to do request, %v", err)
+			}
+			result := new(ImageTextLiteModerationSyncResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("ImageTextLiteModeration: fail to do request, %v", err)
+	}
+	result := new(ImageTextLiteModerationSyncResponse)
 	if err := UnmarshalResultInto(respBody, result); err != nil {
 		return nil, err
 	}

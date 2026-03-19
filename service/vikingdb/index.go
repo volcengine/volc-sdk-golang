@@ -412,7 +412,6 @@ func (index *Index) SearchByVector(vector []float64, searchOptions *SearchOption
 	if searchOptions.offset > 0 {
 		search["offset"] = searchOptions.offset
 	}
-	fmt.Println(index.isClient)
 	params := map[string]interface{}{
 		"collection_name": index.CollectionName,
 		"index_name":      index.IndexName,

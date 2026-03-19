@@ -918,6 +918,22 @@ type CustomRiskSyncData struct {
 	Detail         map[string]interface{} `json:"Detail"`
 }
 
+type ImageTextLiteModerationSyncResponse struct {
+	RequestId string                         `json:"RequestId"`
+	Code      int                            `json:"Code"`
+	Message   string                         `json:"Message"`
+	Data      ImageTextLiteModerationSynData `json:"Data"`
+}
+
+type ImageTextLiteModerationSynData struct {
+	Decision          string   `json:"Decision"`
+	DecisionLabel     string   `json:"DecisionLabel"`
+	DecisionLabelName string   `json:"DecisionLabelName"`
+	HitLabels         []string `json:"HitLabels"`
+	HitLabelNames     []string `json:"HitLabelNames"`
+	PassThrough       string   `json:"PassThrough"`
+}
+
 type AsyncRcLlmResponse struct {
 	RequestId string      `json:"RequestId"`
 	Code      int         `json:"Code"`
