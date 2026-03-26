@@ -18,6 +18,7 @@ type Config struct {
 	TotalSizeLnBytes      int64
 	MaxSenderCount        int64
 	MaxBlockSec           int
+	BatchQueueSize        int
 	MaxBatchSize          int64
 	MaxBatchCount         int
 	LingerTime            time.Duration
@@ -28,6 +29,7 @@ type Config struct {
 	AdjustShardHashFlag   bool
 	ShardCount            int
 	NoRetryStatusCodeList []int
+	EnableNanosecond      bool
 
 	common.LoggerConfig
 	common.ClientConfig
@@ -47,6 +49,7 @@ func GetDefaultProducerConfig() *Config {
 		TotalSizeLnBytes:      100 * 1024 * 1024,
 		MaxSenderCount:        50,
 		MaxBlockSec:           60,
+		BatchQueueSize:        1000000,
 		MaxBatchSize:          512 * 1024,
 		LingerTime:            2000 * time.Millisecond,
 		Retries:               10,

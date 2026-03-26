@@ -51,11 +51,27 @@ func (sender *Sender) sendToServer(batch *Batch) {
 	level.Debug(sender.logger).Log("msg", "sender send data to server")
 	var err error
 
-	putLogsReq := &PutLogsRequest{
-		TopicID:      batch.topic,
-		CompressType: "lz4",
-		LogBody:      batch.logGroupList,
+	if batch.logGroupList != nil {
+		actual := int64(batch.logGroupList.Size())
+		delta := actual - batch.totalDataSize
+		if delta != 0 {
+			atomic.AddInt64(&sender.producer.producerLogGroupSize, delta)
+			batch.totalDataSize = actual
+		}
 	}
+
+	putLogsReq := &PutLogsRequest{
+		TopicID:          batch.topic,
+		CompressType:     "lz4",
+		LogBody:          batch.logGroupList,
+		EnableNanosecond: sender.producer.config.EnableNanosecond,
+	}
+	logCount := batch.getLogCount()
+	earliestLogTime := batch.getMinLogTime()
+	latestLogTime := batch.getMaxLogTime()
+	putLogsReq.LogCount = &logCount
+	putLogsReq.EarliestLogTime = &earliestLogTime
+	putLogsReq.LatestLogTime = &latestLogTime
 
 	if batch.shardHash != nil {
 		putLogsReq.HashKey = *batch.shardHash
@@ -90,16 +106,20 @@ func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 func (sender *Sender) handleFailure(batch *Batch, err error) {
 	_ = level.Info(sender.logger).Log("msg", "sendToServer failed", "error", err)
 
-	noRetryStatusCode := false
 	var sdkError *Error
 	tlsErrOk := errors.As(err, &sdkError)
+	retryable := true
 	if tlsErrOk {
-		_, noRetryStatusCode = sender.noRetryStatusCodeMap[int(sdkError.HTTPCode)]
+		httpCode := int(sdkError.HTTPCode)
+		retryable = httpCode == 0 || httpCode == 429 || httpCode >= 500
+		if _, ok := sender.noRetryStatusCodeMap[httpCode]; ok {
+			retryable = false
+		}
 	}
 
 	noNeedRetry := batch.attemptCount >= batch.maxRetryTimes
 
-	if sender.IsShutDown() || (tlsErrOk && noRetryStatusCode) || noNeedRetry {
+	if sender.IsShutDown() || !retryable || noNeedRetry {
 		sender.addErrorMessageToBatchAttempt(batch, err, false)
 		sender.FailedCallback(batch)
 

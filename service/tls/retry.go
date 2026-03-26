@@ -31,7 +31,7 @@ func needRetryNetworkError(err error) bool {
 	}
 	var nerr net.Error
 	if errors.As(err, &nerr) {
-		if nerr.Timeout() {
+		if nerr.Timeout() || nerr.Temporary() {
 			return true
 		}
 	}

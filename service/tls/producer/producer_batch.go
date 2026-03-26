@@ -7,11 +7,27 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
+func normalizeLogTime(t int64) int64 {
+	if t <= 0 {
+		return 0
+	}
+	if t < int64(1e10) {
+		return t * 1000
+	}
+	if t < int64(1e15) {
+		return t
+	}
+	return t / int64(1e6)
+}
+
 type Batch struct {
 	totalDataSize              int64
 	lock                       sync.RWMutex
 	logGroupList               *pb.LogGroupList
+	logGroupSizes              []int
 	logCount                   int
+	minLogTime                 int64
+	maxLogTime                 int64
 	attemptCount               int
 	retryBackoffMs             int64
 	baseRetryBackoffMs         int64
@@ -31,6 +47,7 @@ func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 	currentTime := time.Now()
 	producerBatch := &Batch{
 		logGroupList:               &pb.LogGroupList{LogGroups: []*pb.LogGroup{}},
+		logGroupSizes:              []int{},
 		attemptCount:               0,
 		maxRetryIntervalInMs:       config.MaxRetryBackoffMs,
 		callBackList:               []CallBack{},
@@ -47,10 +64,6 @@ func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 	producerBatch.shardHash = parseHash(batchLog.Key.ShardHash)
 	producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 
-	if batchLog.Key.CallBackFun != nil {
-		producerBatch.callBackList = append(producerBatch.callBackList, batchLog.Key.CallBackFun)
-	}
-
 	return producerBatch
 }
 
@@ -58,6 +71,7 @@ func newProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 	currentTime := time.Now()
 	producerBatch := &Batch{
 		logGroupList:               &pb.LogGroupList{LogGroups: []*pb.LogGroup{}},
+		logGroupSizes:              []int{},
 		attemptCount:               0,
 		maxRetryIntervalInMs:       config.MaxRetryBackoffMs,
 		callBackList:               []CallBack{},
@@ -83,54 +97,84 @@ func (batch *Batch) getLogCount() int {
 	return batch.logCount
 }
 
-func (batch *Batch) addLogToLogGroup(log *pb.Log) {
-	defer batch.lock.Unlock()
-	batch.lock.Lock()
+func (batch *Batch) getMinLogTime() int64 {
+	defer batch.lock.RUnlock()
+	batch.lock.RLock()
 
-	if len(batch.logGroupList.LogGroups) == 0 {
-		return
+	return batch.minLogTime
+}
+
+func (batch *Batch) getMaxLogTime() int64 {
+	defer batch.lock.RUnlock()
+	batch.lock.RLock()
+
+	return batch.maxLogTime
+}
+
+func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int64) {
+	batch.lock.Lock()
+	defer batch.lock.Unlock()
+
+	group, groupSize, newGroup := batch.getOrCreateTailGroup(batchLog.Key.Source, batchLog.Key.FileName, batchLog.Key.ContextFlow)
+	if !newGroup && len(group.Logs) >= MaxLogGroupCount {
+		group = nil
 	}
-	lastGroup := batch.logGroupList.LogGroups[len(batch.logGroupList.LogGroups)-1]
-	lastGroup.Logs = append(lastGroup.Logs, log)
-	batch.logCount++
-}
-
-func (batch *Batch) addProducerBatchCallBack(callBack CallBack) {
-	defer batch.lock.Unlock()
-	batch.lock.Lock()
-
-	batch.callBackList = append(batch.callBackList, callBack)
-}
-
-func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) bool {
-	group := batch.getOrCreateTailGroup(batchLog.Key.Source, batchLog.Key.FileName, batchLog.Key.ContextFlow)
-	if len(group.Logs) >= MaxLogGroupCount {
+	if group == nil {
 		group = batch.newGroup(batchLog.Key.Source, batchLog.Key.FileName, batchLog.Key.ContextFlow)
+		groupSize = group.Size()
+		newGroup = true
+	}
+
+	logMsgSize := batchLog.Log.Size()
+	logFieldSize := sizeOfBytesField(logMsgSize)
+	if batch.logCount+1 > MaxBatchCount {
+		return false, 0
+	}
+
+	var deltaTotal int
+	var newGroupSize int
+	if newGroup {
+		newGroupSize = groupSize + logFieldSize
+		deltaTotal = sizeOfBytesField(newGroupSize)
+	} else {
+		oldGroupSize := batch.logGroupSizes[len(batch.logGroupSizes)-1]
+		newGroupSize = oldGroupSize + logFieldSize
+		deltaTotal = logFieldSize + (varintLen(newGroupSize) - varintLen(oldGroupSize))
+	}
+
+	if batch.totalDataSize+int64(deltaTotal) > MaxBatchSize {
+		return false, 0
+	}
+
+	if newGroup {
 		batch.logGroupList.LogGroups = append(batch.logGroupList.LogGroups, group)
+		batch.logGroupSizes = append(batch.logGroupSizes, newGroupSize)
+	} else {
+		batch.logGroupSizes[len(batch.logGroupSizes)-1] = newGroupSize
 	}
 
 	group.Logs = append(group.Logs, batchLog.Log)
 	batch.logCount++
-	batch.totalDataSize = int64(batch.logGroupList.Size())
+	batch.totalDataSize += int64(deltaTotal)
 
-	if !batch.hasRoomFor(0, 0) {
-		group.Logs = group.Logs[:len(group.Logs)-1]
-		batch.logCount--
-		if len(group.Logs) == 0 && len(batch.logGroupList.LogGroups) > 0 && batch.logGroupList.LogGroups[len(batch.logGroupList.LogGroups)-1] == group {
-			batch.logGroupList.LogGroups = batch.logGroupList.LogGroups[:len(batch.logGroupList.LogGroups)-1]
+	normalizedTime := normalizeLogTime(batchLog.Log.Time)
+	if batch.logCount == 1 {
+		batch.minLogTime = normalizedTime
+		batch.maxLogTime = normalizedTime
+	} else {
+		if normalizedTime < batch.minLogTime {
+			batch.minLogTime = normalizedTime
 		}
-		batch.totalDataSize = int64(batch.logGroupList.Size())
-		return false
+		if normalizedTime > batch.maxLogTime {
+			batch.maxLogTime = normalizedTime
+		}
 	}
 
 	if callBack != nil {
 		batch.callBackList = append(batch.callBackList, callBack)
 	}
-	return true
-}
 
-func (batch *Batch) hasRoomFor(size int64, cnt int) bool {
-	return batch.totalDataSize+size <= MaxBatchSize && batch.logCount+cnt <= MaxBatchCount
+	return true, int64(deltaTotal)
 }
 
 func (batch *Batch) meetSendCondition(config *Config) bool {
@@ -154,17 +198,31 @@ func (batch *Batch) newGroup(source, fileName, contextFlow string) *pb.LogGroup 
 	}
 }
 
-func (batch *Batch) getOrCreateTailGroup(source, fileName, contextFlow string) *pb.LogGroup {
+func (batch *Batch) getOrCreateTailGroup(source, fileName, contextFlow string) (*pb.LogGroup, int, bool) {
 	if len(batch.logGroupList.LogGroups) == 0 {
 		group := batch.newGroup(source, fileName, contextFlow)
-		batch.logGroupList.LogGroups = append(batch.logGroupList.LogGroups, group)
-		return group
+		return group, group.Size(), true
 	}
 	lastGroup := batch.logGroupList.LogGroups[len(batch.logGroupList.LogGroups)-1]
 	if lastGroup.Source == source && lastGroup.FileName == fileName && lastGroup.ContextFlow == contextFlow {
-		return lastGroup
+		return lastGroup, batch.logGroupSizes[len(batch.logGroupSizes)-1], false
 	}
 	group := batch.newGroup(source, fileName, contextFlow)
-	batch.logGroupList.LogGroups = append(batch.logGroupList.LogGroups, group)
-	return group
+	return group, group.Size(), true
+}
+
+func sizeOfBytesField(payloadSize int) int {
+	return 1 + varintLen(payloadSize) + payloadSize
+}
+
+func varintLen(x int) int {
+	if x < 0 {
+		return 10
+	}
+	n := 1
+	for x >= 1<<7 {
+		n++
+		x >>= 7
+	}
+	return n
 }

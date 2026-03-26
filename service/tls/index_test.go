@@ -53,6 +53,9 @@ func (suite *SDKIndexTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKIndexTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKIndexTestSuite))
 }
 

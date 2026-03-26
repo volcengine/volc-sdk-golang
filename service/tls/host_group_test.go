@@ -83,6 +83,9 @@ func (suite *SDKHostGroupTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKHostGroupTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKHostGroupTestSuite))
 }
 

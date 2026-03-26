@@ -202,6 +202,9 @@ func (suite *SDKScheduleSqlTaskTestSuite) TestDescribeScheduleSqlTasksWithFilter
 }
 
 func TestSDKScheduleSqlTaskTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKScheduleSqlTaskTestSuite))
 }
 

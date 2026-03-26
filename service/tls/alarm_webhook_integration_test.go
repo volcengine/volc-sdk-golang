@@ -12,6 +12,9 @@ type SDKAlarmWebhookIntegrationTestSuite struct {
 }
 
 func TestSDKAlarmWebhookIntegrationTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKAlarmWebhookIntegrationTestSuite))
 }
 

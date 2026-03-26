@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math"
 	"net/http"
 	"strconv"
 	"strings"
@@ -32,41 +31,50 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 	}
 
 	var (
-		logCnt     int
-		maxLogTime int64 = math.MinInt64
-		minLogTime int64 = math.MaxInt64
-		logGroups  []*pb.LogGroup
+		logCnt           int
+		minLogTime       int64
+		maxLogTime       int64
+		statsInitialized bool
+		logGroups        []*pb.LogGroup
 	)
+	useProvidedStats := request.LogCount != nil && request.EarliestLogTime != nil && request.LatestLogTime != nil
 
 	for _, logGroup := range request.LogBody.LogGroups {
-		logGroupCount := len(logGroup.Logs)
-		if logGroupCount == 0 {
+		if len(logGroup.Logs) == 0 {
 			continue
 		}
 
 		logGroups = append(logGroups, logGroup)
-		logCnt += logGroupCount
-
-		var normalizedTime int64
 
 		for _, log := range logGroup.Logs {
 			if log.Time <= 0 {
-				log.Time = time.Now().UnixNano() / int64(1e6)
-				normalizedTime = log.Time
-			} else if log.Time < int64(1e10) { // s
-				normalizedTime = log.Time * 1000
-			} else if log.Time < int64(1e15) { // ms
-				normalizedTime = log.Time
-			} else { // ns
-				normalizedTime = log.Time / int64(1e6)
+				now := time.Now().UnixNano()
+				log.Time = now / int64(1e6)
+				if request.EnableNanosecond && log.OptionalTimeNs == nil {
+					log.OptionalTimeNs = &pb.Log_TimeNs{TimeNs: uint32(now % int64(1e6))}
+				}
 			}
 
-			if normalizedTime >= maxLogTime {
-				maxLogTime = normalizedTime
-			}
-
-			if normalizedTime <= minLogTime {
-				minLogTime = normalizedTime
+			logCnt++
+			if !useProvidedStats {
+				normalizedTime := log.Time
+				if log.Time > 0 && log.Time < int64(1e10) {
+					normalizedTime = log.Time * 1000
+				} else if log.Time >= int64(1e15) {
+					normalizedTime = log.Time / int64(1e6)
+				}
+				if !statsInitialized {
+					minLogTime = normalizedTime
+					maxLogTime = normalizedTime
+					statsInitialized = true
+					continue
+				}
+				if normalizedTime >= maxLogTime {
+					maxLogTime = normalizedTime
+				}
+				if normalizedTime <= minLogTime {
+					minLogTime = normalizedTime
+				}
 			}
 		}
 	}
@@ -93,9 +101,15 @@ func (c *LsClient) PutLogs(request *PutLogsRequest) (r *CommonResponse, e error)
 		"Content-Type":       "application/x-protobuf",
 		"x-tls-hashkey":      request.HashKey,
 		"x-tls-compresstype": request.CompressType,
-		"log-count":          strconv.Itoa(logCnt),
-		"earliest-log-time":  strconv.FormatInt(minLogTime, 10),
-		"latest-log-time":    strconv.FormatInt(maxLogTime, 10),
+	}
+	if useProvidedStats {
+		headers["log-count"] = strconv.Itoa(*request.LogCount)
+		headers["earliest-log-time"] = strconv.FormatInt(*request.EarliestLogTime, 10)
+		headers["latest-log-time"] = strconv.FormatInt(*request.LatestLogTime, 10)
+	} else {
+		headers["log-count"] = strconv.Itoa(logCnt)
+		headers["earliest-log-time"] = strconv.FormatInt(minLogTime, 10)
+		headers["latest-log-time"] = strconv.FormatInt(maxLogTime, 10)
 	}
 
 	rawResponse, err := c.Request(http.MethodPost, PathPutLogs, params, c.assembleHeader(request.CommonRequest, headers), bodyBytes)
@@ -127,9 +141,10 @@ func (c *LsClient) PutLogsV2(request *PutLogsV2Request) (r *CommonResponse, e er
 		return nil, nil
 	}
 	var realRequest = &PutLogsRequest{
-		TopicID:      request.TopicID,
-		HashKey:      request.HashKey,
-		CompressType: request.CompressType,
+		TopicID:          request.TopicID,
+		HashKey:          request.HashKey,
+		CompressType:     request.CompressType,
+		EnableNanosecond: request.EnableNanosecond,
 	}
 	realRequest.LogBody = &pb.LogGroupList{
 		LogGroups: []*pb.LogGroup{
@@ -141,6 +156,9 @@ func (c *LsClient) PutLogsV2(request *PutLogsV2Request) (r *CommonResponse, e er
 					for i := range request.Logs {
 						var log = &pb.Log{}
 						log.Time = request.Logs[i].Time
+						if request.Logs[i].TimeNs != nil {
+							log.OptionalTimeNs = &pb.Log_TimeNs{TimeNs: *request.Logs[i].TimeNs}
+						}
 						for _, logValue := range request.Logs[i].Contents {
 							log.Contents = append(log.Contents, &pb.LogContent{
 								Key:   logValue.Key,

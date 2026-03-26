@@ -63,6 +63,9 @@ func (suite *AppInstanceTestSuite) TearDownTest() {
 }
 
 func TestSDKCopilotTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(AppInstanceTestSuite))
 }
 
@@ -227,6 +230,9 @@ func (suite *AppSceneMetaTestSuite) TearDownTest() {
 }
 
 func TestSDKAppSceneMetaTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(AppSceneMetaTestSuite))
 }
 
@@ -498,6 +504,9 @@ func (suite *SessionAnswerTestSuite) TearDownTest() {
 }
 
 func TestSessionAnswerTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SessionAnswerTestSuite))
 }
 

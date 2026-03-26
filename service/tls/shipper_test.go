@@ -68,6 +68,9 @@ func (suite *SDKShipperTestSuite) SetupTest() {
 }
 
 func TestSDKShipperTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKShipperTestSuite))
 }
 

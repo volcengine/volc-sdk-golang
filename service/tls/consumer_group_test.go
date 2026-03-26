@@ -87,6 +87,9 @@ func (suite *SDKConsumerGroupTestSuite) validateError(err error, expectErr *Erro
 }
 
 func TestSDKConsumerGroupTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKConsumerGroupTestSuite))
 }
 

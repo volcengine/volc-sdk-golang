@@ -21,6 +21,9 @@ type SDKLogTestSuite struct {
 }
 
 func TestSDKLogTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKLogTestSuite))
 }
 

@@ -54,6 +54,9 @@ func (suite *SDKTopicTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKTopicTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKTopicTestSuite))
 }
 

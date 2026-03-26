@@ -76,6 +76,9 @@ func (suite *SDKKafkaTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKKafkaTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKKafkaTestSuite))
 }
 

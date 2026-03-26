@@ -266,6 +266,30 @@ var (
 				"Version": []string{"2023-07-01"},
 			},
 		},
+		"GetMediaEntityList": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMediaEntityList"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"GetMediaEntity": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetMediaEntity"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
+		"DeleteMediaEntity": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteMediaEntity"},
+				"Version": []string{"2023-07-01"},
+			},
+		},
 		"GetMediaInfos": {
 			Method: http.MethodGet,
 			Path:   "/",

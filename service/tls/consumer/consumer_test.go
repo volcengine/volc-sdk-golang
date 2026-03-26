@@ -29,6 +29,12 @@ type SdkConsumerTestSuite struct {
 }
 
 func TestSdkConsumerTestSuite(t *testing.T) {
+	if os.Getenv("LOG_SERVICE_ENDPOINT") == "" ||
+		os.Getenv("LOG_SERVICE_AK") == "" ||
+		os.Getenv("LOG_SERVICE_SK") == "" ||
+		os.Getenv("LOG_SERVICE_REGION") == "" {
+		t.Skip()
+	}
 	suite.Run(t, new(SdkConsumerTestSuite))
 }
 

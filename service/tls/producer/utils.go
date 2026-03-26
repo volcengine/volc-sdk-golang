@@ -2,6 +2,8 @@ package producer
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
@@ -33,6 +35,17 @@ func GetLogListSize(logList []*pb.Log) int {
 		sizeInBytes += GetLogSize(log)
 	}
 	return sizeInBytes
+}
+
+func EnsureLogTime(log *pb.Log, enableNanosecond bool) {
+	if log.Time > 0 {
+		return
+	}
+	now := time.Now().UnixNano()
+	log.Time = now / int64(1e6)
+	if enableNanosecond && log.OptionalTimeNs == nil {
+		log.OptionalTimeNs = &pb.Log_TimeNs{TimeNs: uint32(now % int64(1e6))}
+	}
 }
 
 func WithRecover(fn func()) {

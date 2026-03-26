@@ -17,6 +17,9 @@ type SDKAlarmContentTemplateTestSuite struct {
 }
 
 func TestSDKAlarmContentTemplateTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKAlarmContentTemplateTestSuite))
 }
 

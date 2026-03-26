@@ -77,6 +77,9 @@ func (suite *SDKDownloadTaskTestSuite) validateError(err error, expectErr *Error
 }
 
 func TestSDKDownloadTaskTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKDownloadTaskTestSuite))
 }
 

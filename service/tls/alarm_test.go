@@ -251,6 +251,9 @@ func createAlarms(cli Client, projectID string, topicID string, alarmNotifyGroup
 }
 
 func TestSDKAlarmTaskTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKAlarmTaskTestSuite))
 }
 

@@ -2,11 +2,12 @@ package producer
 
 import (
 	"errors"
-	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/volcengine/volc-sdk-golang/service/tls/common"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
@@ -95,6 +96,13 @@ func validateProducerConfig(producerConfig *Config) *Config {
 	producerConfig.MaxRetryBackoffMs = validateField(producerConfig.MaxRetryBackoffMs, int64(0), int64Max, int64(100)).(int64)
 	producerConfig.TotalSizeLnBytes = validateField(producerConfig.TotalSizeLnBytes, int64(0), int64Max, int64(100*1024*1024)).(int64)
 	producerConfig.LingerTime = validateField(producerConfig.LingerTime, 100*time.Millisecond, time.Duration(int64Max), 2000*time.Millisecond).(time.Duration)
+	if producerConfig.BatchQueueSize == 0 {
+		producerConfig.BatchQueueSize = 1000000
+	} else if producerConfig.BatchQueueSize < 100 {
+		producerConfig.BatchQueueSize = 100
+	} else if producerConfig.BatchQueueSize > intMax {
+		producerConfig.BatchQueueSize = intMax
+	}
 
 	return producerConfig
 }

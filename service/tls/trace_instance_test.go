@@ -95,5 +95,8 @@ func (suite *SDKTraceInstanceTestSuite) TestDescribeTraceInstanceValidation() {
 }
 
 func TestSDKTraceInstanceTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKTraceInstanceTestSuite))
 }

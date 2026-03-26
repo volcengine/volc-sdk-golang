@@ -531,10 +531,14 @@ type ManualShardSplitResponse struct {
 
 type PutLogsRequest struct {
 	CommonRequest
-	TopicID      string
-	HashKey      string
-	CompressType string
-	LogBody      *pb.LogGroupList
+	TopicID          string
+	HashKey          string
+	CompressType     string
+	LogBody          *pb.LogGroupList
+	LogCount         *int
+	EarliestLogTime  *int64
+	LatestLogTime    *int64
+	EnableNanosecond bool
 }
 
 func (v *PutLogsRequest) CheckValidation() error {
@@ -2169,15 +2173,17 @@ type LogContent struct {
 type Log struct {
 	Contents []LogContent
 	Time     int64 // 可以不填, 默认使用当前时间
+	TimeNs   *uint32
 }
 type PutLogsV2Request struct {
 	CommonRequest
-	TopicID      string
-	HashKey      string
-	CompressType string
-	Source       string
-	FileName     string
-	Logs         []Log
+	TopicID          string
+	HashKey          string
+	CompressType     string
+	Source           string
+	FileName         string
+	Logs             []Log
+	EnableNanosecond bool
 }
 
 type BackendConfig struct {

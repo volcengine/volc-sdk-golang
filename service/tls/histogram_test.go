@@ -78,6 +78,9 @@ func (suite *SDKHistogramTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKHistogramTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKHistogramTestSuite))
 }
 

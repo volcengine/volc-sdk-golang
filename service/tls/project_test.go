@@ -45,6 +45,9 @@ func (suite *SDKProjectTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKProjectTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKProjectTestSuite))
 }
 

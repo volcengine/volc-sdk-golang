@@ -142,6 +142,7 @@ func (sendLog *ProducerCallback) Fail(result *producer.Result) {
 | TotalSizeLnBytes      | int64         | 100 * 1024 * 1024       | 单个Producer实例能缓存的日志大小上限，单位为B，默认为100MB。                                                                                                                                                             |
 | MaxSenderCount        | int64         | 50                      | 单个Producer能并发的最多goroutine的数量，默认为50，该参数用户可以根据自己实际服务器的性能去配置。                                                                                                                                        |
 | MaxBlockSec           | int           | 60                      | 如果Producer可用空间(TotalSizeLnBytes)不足，调用者在Send方法上的最大阻塞时间，默认为60秒；如果超过这个时间后所需空间仍无法得到满足，Send方法会抛出TimeoutException；如果将该值设为0，当所需空间无法得到满足时，Send方法会立即抛出TimeoutException；如果您希望Send方法一直阻塞直到所需空间得到满足，可将该值设为负数。 |
+| BatchQueueSize        | int           | 1000000                 | Producer内部接收队列的缓冲容量。SendLog/SendLogs 先写入队列，再由后台 goroutine 聚合成 Batch 并发送。该值越大越能吸收突发流量，但会占用更多内存；最小值为100。                                                                                             |
 | MaxBatchSize          | int64         | 512 * 1024              | 当一个ProducerBatch中缓存的日志大小大于MaxBatchSize时，该Batch将被发送；默认为512KB，最大可设置成5 MB（SDK会自动将超过5 MB的配置调整为5 MB）。                                                                                                  |
 | MaxBatchCount         | int           | 4096                    | 当一个ProducerBatch中缓存的日志条数大于MaxBatchCount时，该Batch将被发送；如果未指定，默认为4096，最大可设置成10000（SDK会自动将超过10000的配置调整为10000）。                                                                                         |
 | LingerTime            | time.Duration | 2000 * time.Millisecond | 一个ProducerBatch从创建到可发送的逗留时间，默认为2秒，最小可设置成100毫秒。                                                                                                                                                    |
@@ -151,6 +152,33 @@ func (sendLog *ProducerCallback) Fail(result *producer.Result) {
 | MaxRetryBackoffMs     | int64         | 50 * 1000               | 重试的最大退避时间，默认为50秒。                                                                                                                                                                                 |
 | NoRetryStatusCodeList | []int         | [400,400]               | 用户配置的不需要重试的错误码列表，当发送日志失败时返回的错误码在列表中，则不会重试；默认包含400，404两个值。                                                                                                                                         |
 | LoggerConfig          | LoggerConfig  |                         | 日志相关配置                                                                                                                                                                                            |
+
+## 内存控制与上限估算
+
+### 如何控制内存
+
+Producer 的内存占用主要由两部分组成：已聚合但尚未最终发送完成的 Batch（包含重试队列中的 Batch），以及尚未被后台聚合处理的接收队列缓存（BatchQueueSize）。
+
+- 设置 TotalSizeLnBytes 控制 Batch 层面的“在途数据”上限；当发送变慢/失败重试时，该值越大可缓冲的数据越多，但占用内存也越大。
+- 设置 MaxBlockSec 决定达到 TotalSizeLnBytes 上限后的行为：0 表示立即返回错误；正数表示最多阻塞 N 秒等待空间；负数表示一直阻塞直到可用空间恢复。
+- 设置 BatchQueueSize 控制接收队列的缓存上限；该值越大越能吸收突发流量，但也会直接增加“尚未计入 TotalSizeLnBytes 的队列缓存”占用。
+- 通过 MaxBatchSize / MaxBatchCount / LingerTime 缩短日志在内存中停留的时间：更小的 LingerTime 或更低的 batch 触发阈值会更快落盘发送，降低瞬时在途堆积。
+- 在下游不稳定时，Retries / MaxRetryBackoffMs 会影响 Batch 在重试队列中的停留时长，从而影响内存占用曲线。
+
+### 最大内存如何估算
+
+定义：
+- S_total = TotalSizeLnBytes（Batch 层面“在途数据”字节上限，近似等于 PutLogs 请求体的 protobuf 大小总和）
+- Q = BatchQueueSize（接收队列容量）
+- S_log_avg = 平均单条日志 pb.Log 的 Size()（建议在业务侧对典型日志采样计算）
+
+粗略上界可按以下方式估算：
+- 队列缓存字节数约为：S_queue ≈ Q * S_log_avg
+- Producer 进程内存峰值（只看日志载荷相关）可按：S_peak ≈ S_total + S_queue
+
+说明：
+- S_total 不包含 Go 对象/切片/字符串等额外开销；S_queue 也同样不包含这些开销。生产环境建议在 S_peak 基础上预留额外裕量（例如按 1.3～2.0 倍）作为 Go 堆与运行时开销空间。
+- 如果 source/fileName/contextFlow 很长或日志字段较多，单条日志的对象开销会增大，建议通过降低 BatchQueueSize 或 TotalSizeLnBytes 控制峰值。
 
 ### LoggerConfig可配置参数
 

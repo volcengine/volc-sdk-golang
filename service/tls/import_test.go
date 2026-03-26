@@ -106,6 +106,9 @@ func (suite *SDKImportTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKImportTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKImportTestSuite))
 }
 

@@ -73,6 +73,9 @@ func (suite *SDKETLTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKETLTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKETLTestSuite))
 }
 

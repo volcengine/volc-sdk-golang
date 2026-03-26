@@ -11,10 +11,6 @@ import (
 	"github.com/volcengine/volc-sdk-golang/service/tls/pb"
 )
 
-const (
-	batchQueueSize = 1000000
-)
-
 type BatchKey struct {
 	Topic       string
 	Source      string
@@ -47,7 +43,7 @@ func initDispatcher(config *Config, sender *Sender, logger log.Logger, threadPoo
 	return &Dispatcher{
 		stopCh:         make(chan struct{}),
 		forceQuitCh:    make(chan struct{}),
-		newLogRecvChan: make(chan *BatchLog, batchQueueSize),
+		newLogRecvChan: make(chan *BatchLog, config.BatchQueueSize),
 		logGroupData:   make(map[string]*Batch),
 		retryQueue:     sender.retryQueue,
 		lock:           &sync.RWMutex{},
@@ -170,14 +166,14 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	}
 
 	key := dispatcher.getKeyString(batchLog.Key)
-	logSize := int64(GetLogSize(batchLog.Log))
-	atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, logSize)
+	EnsureLogTime(batchLog.Log, dispatcher.producerConfig.EnableNanosecond)
 
 	dispatcher.lock.Lock()
 	defer dispatcher.lock.Unlock()
 	producerBatch := dispatcher.getOrCreateProducerBatch(batchLog, key)
-	addSuccess := producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
+	addSuccess, deltaBytes := producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 	if addSuccess {
+		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, deltaBytes)
 		if producerBatch.meetSendCondition(dispatcher.producerConfig) {
 			dispatcher.innerSendToServer(key, producerBatch)
 
@@ -187,7 +183,10 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	dispatcher.innerSendToServer(key, producerBatch)
 	newBatch := newProducerBatch(batchLog, dispatcher.producerConfig)
 	dispatcher.logGroupData[key] = newBatch
-	newBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
+	addSuccess, deltaBytes = newBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
+	if addSuccess {
+		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, deltaBytes)
+	}
 	if newBatch.meetSendCondition(dispatcher.producerConfig) {
 		dispatcher.innerSendToServer(key, newBatch)
 	}

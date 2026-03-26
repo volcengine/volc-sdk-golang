@@ -58,6 +58,9 @@ func (suite *SDKTagsTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKTagsTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKTagsTestSuite))
 }
 

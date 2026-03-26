@@ -97,6 +97,9 @@ func (suite *SDKRuleTestSuite) validateError(err error, expectErr *Error) {
 }
 
 func TestSDKRuleTestSuite(t *testing.T) {
+	if !hasLogServiceEnv() {
+		t.Skip()
+	}
 	suite.Run(t, new(SDKRuleTestSuite))
 }
 
