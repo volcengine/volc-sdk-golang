@@ -494,14 +494,14 @@ type CreateCarouselTaskBodyRule struct {
 	// REQUIRED; 轮播任务的推流参数，包括视频、音频、推流地址及回调信息。
 	Output CreateCarouselTaskBodyRuleOutput `json:"Output"`
 
+	// REQUIRED; 播放时间，选填，默认会等待第一个视频缓存完毕，如果系统时间大于此值，则开始播放
+	PlayTime int64 `json:"PlayTime"`
+
 	// REQUIRED; 轮播素材列表，用于指定在轮播过程中播放的素材资源。
 	Source []CreateCarouselTaskBodyRuleSourceItem `json:"Source"`
 
-	// 播放时间，选填，默认会等待第一个视频缓存完毕，如果系统时间大于此值，则开始播放
-	PlayTime *int32 `json:"PlayTime,omitempty"`
-
 	// 停止时间，选填，当此字段被设置时，系统会遵循此时间设置关闭任务
-	StopTime *int32 `json:"StopTime,omitempty"`
+	StopTime *int64 `json:"StopTime,omitempty"`
 }
 
 // CreateCarouselTaskBodyRuleOutput - 轮播任务的推流参数，包括视频、音频、推流地址及回调信息。

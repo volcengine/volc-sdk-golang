@@ -914,9 +914,7 @@ type DescribeRulesRequest struct {
 }
 
 func (v *DescribeRulesRequest) CheckValidation() error {
-	if len(v.ProjectID) <= 0 {
-		return errors.New("Invalid argument, empty ProjectID")
-	}
+	// 对齐官方文档，可以不传projectID，表示查询租户下所有的采集配置
 	return nil
 }
 

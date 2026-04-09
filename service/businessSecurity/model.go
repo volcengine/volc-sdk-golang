@@ -242,16 +242,23 @@ type LiveFrame struct {
 }
 
 type Result struct {
-	Decision string      `json:"Decision"`
-	Label    string      `json:"Label"`
-	SubLabel string      `json:"SubLabel"`
-	Detail   interface{} `json:"Detail"`
+	Decision        string            `json:"Decision"`
+	Label           string            `json:"Label"`
+	SubLabel        string            `json:"SubLabel"`
+	Detail          interface{}       `json:"Detail"`
+	DecisionOutputs []*DecisionOutput `json:"DecisionOutputs"`
 }
+
 type LiveResult struct {
 	Decision string      `json:"Decision"`
 	Label    string      `json:"Label"`
 	SubLabel string      `json:"SubLabel"`
 	Detail   interface{} `json:"Detail"`
+}
+
+type DecisionOutput struct {
+	OutputType string `json:"OutputType"`
+	OutputJSON string `json:"OutputJSON"`
 }
 
 type ImageResultResponse struct {
