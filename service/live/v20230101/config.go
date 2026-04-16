@@ -630,6 +630,22 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeLiveStreamGroupByPage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeLiveStreamGroupByPage"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DescribeForbiddenStreamGroupByPage": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeForbiddenStreamGroupByPage"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"KillStream": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1411,6 +1427,62 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"ListHighLightTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"CreateSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"CreateSpeechTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"DeleteSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DeleteSpeechTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"SearchSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"SearchSpeechTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"UpdateSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"UpdateSpeechTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"GetSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpeechTask"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"GetSpeechConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSpeechConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"RestartSpeechTask": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"RestartSpeechTask"},
 				"Version": []string{"2023-01-01"},
 			},
 		},

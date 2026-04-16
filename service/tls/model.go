@@ -612,7 +612,7 @@ type DescribeLogContextRequest struct {
 	CommonRequest
 	TopicId       string `json:"TopicId"`
 	ContextFlow   string `json:"ContextFlow"`
-	PackageOffset int64  `json:"PackageOffset"`
+	PackageOffset uint64 `json:"PackageOffset"`
 	Source        string `json:"Source"`
 	PrevLogs      *int64 `json:",omitempty"`
 	NextLogs      *int64 `json:",omitempty"`
@@ -1665,7 +1665,7 @@ type CreateDownloadTaskRequest struct {
 type DownloadTaskLogContextInfos struct {
 	Source        *string `json:"Source"`
 	ContextFlow   *string `json:"ContextFlow"`
-	PackageOffset *int64  `json:"PackageOffset"`
+	PackageOffset *uint64 `json:"PackageOffset"`
 }
 
 func (v *CreateDownloadTaskRequest) CheckValidation() error {

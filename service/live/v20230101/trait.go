@@ -1631,6 +1631,46 @@ func (c *Live) UpdateRelaySourceV3(ctx context.Context, arg *UpdateRelaySourceV3
 	return result, nil
 }
 
+func (c *Live) DescribeLiveStreamGroupByPage(ctx context.Context, arg *DescribeLiveStreamGroupByPageBody) (*DescribeLiveStreamGroupByPageRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeLiveStreamGroupByPage", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeLiveStreamGroupByPageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DescribeForbiddenStreamGroupByPage(ctx context.Context, arg *DescribeForbiddenStreamGroupByPageBody) (*DescribeForbiddenStreamGroupByPageRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeForbiddenStreamGroupByPage", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeForbiddenStreamGroupByPageRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) KillStream(ctx context.Context, arg *KillStreamBody) (*KillStreamRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -3567,6 +3607,142 @@ func (c *Live) ListHighLightTask(ctx context.Context, arg *ListHighLightTaskBody
 	}
 
 	result := new(ListHighLightTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) CreateSpeechTask(ctx context.Context, arg *CreateSpeechTaskBody) (*CreateSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "CreateSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(CreateSpeechTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) DeleteSpeechTask(ctx context.Context, arg *DeleteSpeechTaskBody) (*DeleteSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DeleteSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DeleteSpeechTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) SearchSpeechTask(ctx context.Context, arg *SearchSpeechTaskBody) (*SearchSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "SearchSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(SearchSpeechTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) UpdateSpeechTask(ctx context.Context, arg *UpdateSpeechTaskBody) (*UpdateSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "UpdateSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(UpdateSpeechTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetSpeechTask(ctx context.Context, arg *GetSpeechTaskBody) (*GetSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "GetSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetSpeechTaskRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetSpeechConfig(ctx context.Context) (*GetSpeechConfigRes, error) {
+
+	data, _, err := c.CtxQuery(ctx, "GetSpeechConfig", url.Values{})
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetSpeechConfigRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) RestartSpeechTask(ctx context.Context, arg *RestartSpeechTaskBody) (*RestartSpeechTaskRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "RestartSpeechTask", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(RestartSpeechTaskRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
