@@ -65,3 +65,7 @@ Add the following content to `~/.volc/config`:
 ### Some service directories and examples
 
 - [Visual Intelligence](service/visual/README.md)
+
+## Security and privacy
+This project takes security seriously. 
+For vulnerability reporting and supported versions, see [SECURITY.md](SECURITY.md)

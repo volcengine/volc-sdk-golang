@@ -258,22 +258,23 @@ func (p *Vod) UploadMediaWithCallback(mediaRequset *request.VodUploadMediaReques
 	}
 
 	req := &model.VodUploadMediaInnerFuncRequest{
-		FilePath:          mediaRequset.GetFilePath(),
-		Rd:                file,
-		Size:              stat.Size(),
-		ParallelNum:       int(mediaRequset.GetParallelNum()),
-		SpaceName:         mediaRequset.GetSpaceName(),
-		CallbackArgs:      mediaRequset.GetCallbackArgs(),
-		Funcs:             mediaRequset.GetFunctions(),
-		FileName:          mediaRequset.GetFileName(),
-		FileExtension:     mediaRequset.GetFileExtension(),
-		VodUploadSource:   mediaRequset.GetVodUploadSource(),
-		StorageClass:      mediaRequset.StorageClass,
-		ClientNetWorkMode: mediaRequset.ClientNetWorkMode,
-		ClientIDCMode:     mediaRequset.ClientIDCMode,
-		ExpireTime:        mediaRequset.ExpireTime,
-		UploadHostPrefer:  mediaRequset.UploadHostPrefer,
-		ChunkSize:         mediaRequset.ChunkSize,
+		FilePath:             mediaRequset.GetFilePath(),
+		Rd:                   file,
+		Size:                 stat.Size(),
+		ParallelNum:          int(mediaRequset.GetParallelNum()),
+		SpaceName:            mediaRequset.GetSpaceName(),
+		CallbackArgs:         mediaRequset.GetCallbackArgs(),
+		Funcs:                mediaRequset.GetFunctions(),
+		FileName:             mediaRequset.GetFileName(),
+		FileExtension:        mediaRequset.GetFileExtension(),
+		VodUploadSource:      mediaRequset.GetVodUploadSource(),
+		StorageClass:         mediaRequset.StorageClass,
+		ClientNetWorkMode:    mediaRequset.ClientNetWorkMode,
+		ClientIDCMode:        mediaRequset.ClientIDCMode,
+		ExpireTime:           mediaRequset.ExpireTime,
+		UploadHostPrefer:     mediaRequset.UploadHostPrefer,
+		ChunkSize:            mediaRequset.ChunkSize,
+		SupportParseManifest: mediaRequset.SupportParseManifest,
 	}
 	return p.UploadMediaInner(req)
 }
@@ -308,6 +309,111 @@ func (p *Vod) UploadMaterialWithCallback(materialRequest *request.VodUploadMater
 	return p.UploadMediaInner(req)
 }
 
+func (p *Vod) parseM3U8Manifest(spaceName, manifestPath string) (*model.M3U8ParseResult, error) {
+	result := &model.M3U8ParseResult{
+		MainManifestPath: manifestPath,
+		Segments:         make([]*model.M3U8SegmentInfo, 0),
+	}
+
+	seenFiles := make(map[string]bool)
+
+	var parse func(string, string) error
+	parse = func(currentPath string, relativePathPrefix string) error {
+		manifestContent, err := ioutil.ReadFile(currentPath)
+		if err != nil {
+			return err
+		}
+
+		req := &request.VodParseUploadManifestRequest{
+			SpaceName:       spaceName,
+			ManifestType:    "m3u8",
+			ManifestContent: string(manifestContent),
+		}
+
+		resp, _, err := p.ParseUploadManifest(req)
+		if err != nil {
+			return err
+		}
+
+		manifestDir := filepath.Dir(currentPath)
+		if resp.GetResult() != nil && resp.GetResult().GetData() != nil {
+			for _, segment := range resp.GetResult().GetData().GetMediaSegments() {
+				segmentPath := filepath.Join(manifestDir, segment)
+
+				if seenFiles[segmentPath] {
+					continue
+				}
+				seenFiles[segmentPath] = true
+
+				segmentFileName := segment
+				if relativePathPrefix != "" {
+					segmentFileName = filepath.Join(relativePathPrefix, segmentFileName)
+				}
+
+				if strings.HasSuffix(strings.ToLower(segmentPath), ".m3u8") {
+					subRelativePathPrefix := filepath.Dir(segmentFileName)
+					if subRelativePathPrefix == "." {
+						subRelativePathPrefix = ""
+					}
+					err = parse(segmentPath, subRelativePathPrefix)
+					if err != nil {
+						return err
+					}
+				}
+
+				result.Segments = append(result.Segments, &model.M3U8SegmentInfo{
+					FilePath: segmentPath,
+					FileName: segmentFileName,
+				})
+			}
+		}
+
+		return nil
+	}
+
+	err := parse(manifestPath, "")
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (p *Vod) uploadM3U8Segments(uploadMediaInnerRequest *model.VodUploadMediaInnerFuncRequest, segments []*model.M3U8SegmentInfo) (r *response.VodCommitUploadInfoResponse, c int, e error) {
+	var pathPrefix string
+	if uploadMediaInnerRequest.FileName != "" {
+		pathPrefix = filepath.Dir(uploadMediaInnerRequest.FileName)
+		if pathPrefix != "." {
+			pathPrefix += "/"
+		} else {
+			pathPrefix = ""
+		}
+	}
+
+	for _, segment := range segments {
+		segmentFileName := pathPrefix + segment.FileName
+		fileExt := filepath.Ext(segmentFileName)
+		uploadReq := &request.VodUploadObjectRequest{
+			SpaceName:         uploadMediaInnerRequest.SpaceName,
+			FilePath:          segment.FilePath,
+			FileName:          segmentFileName,
+			FileExtension:     fileExt,
+			ClientNetWorkMode: uploadMediaInnerRequest.ClientNetWorkMode,
+			ClientIDCMode:     uploadMediaInnerRequest.ClientIDCMode,
+			UploadHostPrefer:  uploadMediaInnerRequest.UploadHostPrefer,
+			ChunkSize:         uploadMediaInnerRequest.ChunkSize,
+		}
+
+		if err := retry.Do(func() error {
+			r, c, e = p.UploadObjectWithCallbackV2(uploadReq)
+			return e 
+		}, retry.Attempts(3), retry.LastErrorOnly(true), retry.Delay(100*time.Millisecond), retry.MaxDelay(1*time.Second)); err != nil {
+			return r, c, err
+		}
+	}
+	return r, c, nil
+}
+
 func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInnerFuncRequest) (r *response.VodCommitUploadInfoResponse, c int, e error) {
 	now := time.Now()
 	defer func() {
@@ -321,6 +427,19 @@ func (p *Vod) UploadMediaInner(uploadMediaInnerRequest *model.VodUploadMediaInne
 		}
 		reporter.report(p, p.buildDefaultUploadReport(uploadMediaInnerRequest.SpaceName, time.Since(now).Microseconds(), code, 0, "", actionFinishUpload, "", msg))
 	}()
+
+	if uploadMediaInnerRequest.SupportParseManifest && strings.HasSuffix(strings.ToLower(uploadMediaInnerRequest.FilePath), ".m3u8") {
+		parseResult, err := p.parseM3U8Manifest(uploadMediaInnerRequest.SpaceName, uploadMediaInnerRequest.FilePath)
+		if err != nil {
+			return nil, -1, err
+		}
+
+		tsResp, code, err := p.uploadM3U8Segments(uploadMediaInnerRequest, parseResult.Segments)
+		if err != nil {
+			return tsResp, code, err
+		}
+	}
+
 	req := &model.VodUploadFuncRequest{
 		FilePath:          uploadMediaInnerRequest.FilePath,
 		Rd:                uploadMediaInnerRequest.Rd,

@@ -95,23 +95,24 @@ type VodUploadFuncRequest struct {
 }
 
 type VodUploadMediaInnerFuncRequest struct {
-	FilePath          string
-	Rd                io.Reader
-	Size              int64
-	ParallelNum       int
-	SpaceName         string
-	FileType          string
-	CallbackArgs      string
-	Funcs             string
-	FileName          string
-	FileExtension     string
-	StorageClass      int32
-	VodUploadSource   string
-	ClientNetWorkMode string
-	ClientIDCMode     string
-	ExpireTime        string
-	UploadHostPrefer  string
-	ChunkSize         int64
+	FilePath             string
+	Rd                   io.Reader
+	Size                 int64
+	ParallelNum          int
+	SpaceName            string
+	FileType             string
+	CallbackArgs         string
+	Funcs                string
+	FileName             string
+	FileExtension        string
+	StorageClass         int32
+	VodUploadSource      string
+	ClientNetWorkMode    string
+	ClientIDCMode        string
+	ExpireTime           string
+	UploadHostPrefer     string
+	ChunkSize            int64
+	SupportParseManifest bool
 }
 
 type UploadAuthOpt func(option *UploadAuthOption)
@@ -216,4 +217,14 @@ type UploadContentParam struct {
 	ChunkSize        int64
 	Size             int64
 	Content          io.Reader
+}
+
+type M3U8SegmentInfo struct {
+	FilePath string
+	FileName string
+}
+
+type M3U8ParseResult struct {
+	MainManifestPath string
+	Segments         []*M3U8SegmentInfo
 }

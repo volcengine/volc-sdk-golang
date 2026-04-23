@@ -46,3 +46,7 @@ iam.DefaultInstance.Client.SetSecretKey(Your SK)
 ###部分SDK服务目录及示例
 
 -【视觉智能】请点击[这里](service/visual/README.md)
+
+## Security and privacy
+This project takes security seriously. 
+For vulnerability reporting and supported versions, see [SECURITY.md](SECURITY.md)

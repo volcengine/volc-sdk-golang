@@ -95,3 +95,28 @@ func Test_CommitUploadInfo(t *testing.T) {
 	fmt.Println(err)
 	fmt.Println(resp.String())
 }
+
+func Test_ParseUploadManifest(t *testing.T) {
+	// Create a VOD instance in the specified region.
+	// instance := vod.NewInstanceWithRegion("cn-north-1")
+	instance := vod.NewInstance()
+
+	// Configure your Access Key ID (AK) and Secret Access Key (SK) in the environment variables or in the local ~/.volc/config file. For detailed instructions, see  https://www.volcengine.com/docs/4/65655.
+	// The SDK will automatically fetch the AK and SK from the environment variables or the ~/.volc/config file as needed.
+	// During testing, you may use the following code snippet. However, do not store the AK and SK directly in your project code to prevent potential leakage and safeguard the security of all resources associated with your account.
+	// instance.SetCredential(base.Credentials{
+	// AccessKeyID:     "your ak",
+	// SecretAccessKey: "your sk",
+	//})
+
+	query := &request.VodParseUploadManifestRequest{
+		SpaceName: "your SpaceName",
+		ManifestType: "m3u8",
+		ManifestContent: "#EXTM3U\n#EXT-X-VERSION:3\n#EXTINF:10,\n0.ts\n#EXTINF:10,\nsub/1.ts\n#EXT-X-ENDLIST",
+	}
+
+	resp, status, err := instance.ParseUploadManifest(query)
+	fmt.Println(status)
+	fmt.Println(err)
+	fmt.Println(resp.String())
+}
