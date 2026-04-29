@@ -201,10 +201,11 @@ type AudioLiveDetailV2 struct {
 	DecisionSubLabel       string           `json:"DecisionSubLabel"`
 }
 type FrameResultV2 struct {
-	Label    string     `json:"Label"`
-	SubLabel string     `json:"SubLabel"`
-	Decision string     `json:"Decision"`
-	Contexts []*Context `json:"Contexts"`
+	Label           string            `json:"Label"`
+	SubLabel        string            `json:"SubLabel"`
+	Decision        string            `json:"Decision"`
+	Contexts        []*Context        `json:"Contexts"`
+	DecisionOutputs []*DecisionOutput `json:"DecisionOutputs"`
 }
 
 type VideoResult struct {
@@ -246,7 +247,7 @@ type Result struct {
 	Label           string            `json:"Label"`
 	SubLabel        string            `json:"SubLabel"`
 	Detail          interface{}       `json:"Detail"`
-	DecisionOutputs []*DecisionOutput `json:"DecisionOutputs"`
+	DecisionOutputs []*DecisionOutput `json:"DecisionOutput"`
 }
 
 type LiveResult struct {
