@@ -1,10 +1,11 @@
 package tls
 
 const (
-	RequestIDHeader  = "x-tls-requestid"
-	AgentHeader      = "User-Agent"
-	ContentMd5Header = "Content-MD5"
-	ServiceName      = "TLS"
+	RequestIDHeader         = "x-tls-requestid"
+	AgentHeader             = "User-Agent"
+	ContentMd5Header        = "Content-MD5"
+	AnonymousIdentityHeader = "x-tls-anonymous-identity"
+	ServiceName             = "TLS"
 
 	CompressLz4  = "lz4"
 	CompressZlib = "zlib"
@@ -119,6 +120,21 @@ const (
 	PathModifyETLTask       = "/ModifyETLTask"
 	PathDescribeETLTasks    = "/DescribeETLTasks"
 	PathModifyETLTaskStatus = "/ModifyETLTaskStatus"
+
+	PathCreateProcessor            = "/CreateProcessor"
+	PathDeleteProcessor            = "/DeleteProcessor"
+	PathModifyProcessor            = "/ModifyProcessor"
+	PathDescribeProcessor          = "/DescribeProcessor"
+	PathDescribeProcessors         = "/DescribeProcessors"
+	PathExecProcessor              = "/ExecProcessor"
+	PathOperateProcessor           = "/OperateProcessor"
+	PathDescribeTopicsByProcessor  = "/DescribeTopicsByProcessor"
+	PathBindTopicProcessor         = "/BindTopicProcessor"
+	PathBatchBindTopics            = "/BatchBindTopics"
+	PathUnbindTopicProcessor       = "/UnbindTopicProcessor"
+	PathDescribeProcessorByTopic   = "/DescribeProcessorByTopic"
+	PathDescribeProcessorBindings  = "/DescribeProcessorBindings"
+	PathDescribeProcessorFunctions = "/DescribeProcessorFunctions"
 
 	PathCreateScheduleSqlTask = "/CreateScheduleSqlTask"
 	PathDeleteScheduleSqlTask = "/DeleteScheduleSqlTask"

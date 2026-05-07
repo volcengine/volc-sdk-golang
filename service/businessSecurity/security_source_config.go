@@ -158,5 +158,50 @@ var (
 				"Version": []string{"2022-08-26"},
 			},
 		},
+		"AudioLiteModeration": {
+			Method:  http.MethodPost,
+			Timeout: 5 * time.Minute,
+			Path:    "/openapi/v1/rc_llm/audio_lite_moderation",
+			Query: url.Values{
+				"Action":  []string{"AudioLiteModeration"},
+				"Version": []string{"2022-08-26"},
+			},
+		},
+		"AsyncAudioLiteModeration": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/openapi/v1/rc_llm/async_audio_lite_moderation",
+			Query: url.Values{
+				"Action":  []string{"AsyncAudioLiteModeration"},
+				"Version": []string{"2022-04-01"},
+			},
+		},
+		"AudioLiteModerationResult": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/openapi/v1/rc_llm/audio_lite_moderation_result",
+			Query: url.Values{
+				"Action":  []string{"AudioLiteModerationResult"},
+				"Version": []string{"2022-04-01"},
+			},
+		},
+		"AsyncVideoLiteModeration": {
+			Method:  http.MethodPost,
+			Timeout: 10 * time.Second,
+			Path:    "/openapi/v1/rc_llm/async_video_lite_moderation",
+			Query: url.Values{
+				"Action":  []string{"AsyncVideoLiteModeration"},
+				"Version": []string{"2022-04-01"},
+			},
+		},
+		"VideoLiteModerationResult": {
+			Method:  http.MethodGet,
+			Timeout: 10 * time.Second,
+			Path:    "/openapi/v1/rc_llm/video_lite_moderation_result",
+			Query: url.Values{
+				"Action":  []string{"VideoLiteModerationResult"},
+				"Version": []string{"2022-04-01"},
+			},
+		},
 	}
 )

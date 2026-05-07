@@ -359,6 +359,14 @@ var ApiInfoList = map[string]*base.ApiInfo{
 			"Version": []string{ServiceVersion},
 		},
 	},
+	"DescribeCdnIP": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeCdnIP"},
+			"Version": []string{ServiceVersion},
+		},
+	},
 	"DescribeDistrictData": {
 		Method: http.MethodPost,
 		Path:   "/",
@@ -556,6 +564,62 @@ var ApiInfoList = map[string]*base.ApiInfo{
 		Path:   "/",
 		Query: url.Values{
 			"Action":  []string{"DescribeRetrieveInfo"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"ListDomainVersions": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"ListDomainVersions"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeDomainEnvVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDomainEnvVersion"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"CreateDomainVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"CreateDomainVersion"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DeleteDomainVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DeleteDomainVersion"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"DescribeDomainVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"DescribeDomainVersion"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"UpdateDomainVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"UpdateDomainVersion"},
+			"Version": []string{ServiceVersion},
+		},
+	},
+	"ReleaseDomainVersion": {
+		Method: http.MethodPost,
+		Path:   "/",
+		Query: url.Values{
+			"Action":  []string{"ReleaseDomainVersion"},
 			"Version": []string{ServiceVersion},
 		},
 	},

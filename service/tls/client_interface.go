@@ -10,6 +10,7 @@ type Client interface {
 	GetHttpClient() *http.Client
 	SetHttpClient(client *http.Client) error
 	ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string)
+	SetAPIKey(apiKey string)
 	SetTimeout(timeout time.Duration)
 	SetAPIVersion(version string)
 	SetCustomUserAgent(customUserAgent string)
@@ -125,6 +126,21 @@ type Client interface {
 	DescribeETLTask(request *DescribeETLTaskRequest) (*DescribeETLTaskResponse, error)
 	DescribeETLTasks(request *DescribeETLTasksRequest) (*DescribeETLTasksResponse, error)
 	ModifyETLTaskStatus(request *ModifyETLTaskStatusRequest) (*CommonResponse, error)
+
+	CreateProcessor(request *CreateProcessorRequest) (*CreateProcessorResponse, error)
+	DeleteProcessor(request *DeleteProcessorRequest) (*CommonResponse, error)
+	ModifyProcessor(request *ModifyProcessorRequest) (*CommonResponse, error)
+	DescribeProcessor(request *DescribeProcessorRequest) (*DescribeProcessorResponse, error)
+	DescribeProcessors(request *DescribeProcessorsRequest) (*DescribeProcessorsResponse, error)
+	ExecProcessor(request *ExecProcessorRequest) (*ExecProcessorResponse, error)
+	OperateProcessor(request *OperateProcessorRequest) (*CommonResponse, error)
+	DescribeTopicsByProcessor(request *DescribeTopicsByProcessorRequest) (*DescribeTopicsByProcessorResponse, error)
+	BindTopicProcessor(request *BindTopicProcessorRequest) (*CommonResponse, error)
+	BatchBindTopics(request *BatchBindTopicsRequest) (*CommonResponse, error)
+	UnbindTopicProcessor(request *UnbindTopicProcessorRequest) (*CommonResponse, error)
+	DescribeProcessorByTopic(request *DescribeProcessorByTopicRequest) (*DescribeProcessorResponse, error)
+	DescribeProcessorBindings(request *DescribeProcessorBindingsRequest) (*DescribeProcessorBindingsResponse, error)
+	DescribeProcessorFunctions(request *DescribeProcessorFunctionsRequest) (*DescribeProcessorFunctionsResponse, error)
 
 	CreateImportTask(request *CreateImportTaskRequest) (*CreateImportTaskResponse, error)
 	DeleteImportTask(request *DeleteImportTaskRequest) (*DeleteImportTaskResponse, error)

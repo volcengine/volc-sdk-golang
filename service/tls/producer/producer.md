@@ -40,10 +40,15 @@ func main() {
 	tlsProducerCfg.Region = os.Getenv("VOLCENGINE_REGION")
 	tlsProducerCfg.AccessKeyID = os.Getenv("VOLCENGINE_ACCESS_KEY_ID")
 	tlsProducerCfg.AccessKeySecret = os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET")
+	// 如需使用 API Key 匿名鉴权写入日志，可改为配置 tlsProducerCfg.APIKey。
+	// 当前 API Key 匿名鉴权仅支持 Producer 最终发送的 /PutLogs 请求；其他接口仍需要完整 AK/SK。
+	// tlsProducerCfg.APIKey = os.Getenv("VOLCENGINE_TLS_API_KEY")
 
 	// 初始化并启动Producer
 	tlsProducer := producer.NewProducer(tlsProducerCfg)
 	tlsProducer.Start()
+	// 如需轮换 API Key，可在运行时更新：
+	// tlsProducer.SetAPIKey(os.Getenv("VOLCENGINE_TLS_API_KEY_NEW"))
 
 	// 请根据您的需要，填写topicId、source、filename
 	topicID := "your-topic-id"

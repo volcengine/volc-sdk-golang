@@ -14,5 +14,6 @@ type ClientConfig struct {
 	AccessKeyID     string
 	AccessKeySecret string
 	SecurityToken   string
+	APIKey          string
 	Region          string
 }

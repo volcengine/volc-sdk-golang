@@ -484,6 +484,17 @@ func (s *CDN) DescribeAccountingSummary(dto *DescribeAccountingSummaryRequest) (
 	return
 }
 
+func (s *CDN) DescribeCdnIP(dto *DescribeCdnIPRequest) (responseBody *DescribeCdnIPResponse, err error) {
+	responseBody = new(DescribeCdnIPResponse)
+	if err = s.post("DescribeCdnIP", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
 func (s *CDN) DescribeDistrictData(dto *DescribeDistrictDataRequest) (responseBody *DescribeDistrictDataResponse, err error) {
 	responseBody = new(DescribeDistrictDataResponse)
 	if err = s.post("DescribeDistrictData", dto, responseBody); err != nil {
@@ -751,6 +762,83 @@ func (s *CDN) CheckDomain(dto *CheckDomainRequest) (responseBody *CheckDomainRes
 func (s *CDN) DescribeRetrieveInfo(dto *DescribeRetrieveInfoRequest) (responseBody *DescribeRetrieveInfoResponse, err error) {
 	responseBody = new(DescribeRetrieveInfoResponse)
 	if err = s.post("DescribeRetrieveInfo", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) ListDomainVersions(dto *ListDomainVersionsRequest) (responseBody *ListDomainVersionsResponse, err error) {
+	responseBody = new(ListDomainVersionsResponse)
+	if err = s.post("ListDomainVersions", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeDomainEnvVersion(dto *DescribeDomainEnvVersionRequest) (responseBody *DescribeDomainEnvVersionResponse, err error) {
+	responseBody = new(DescribeDomainEnvVersionResponse)
+	if err = s.post("DescribeDomainEnvVersion", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) CreateDomainVersion(dto *CreateDomainVersionRequest) (responseBody *CreateDomainVersionResponse, err error) {
+	responseBody = new(CreateDomainVersionResponse)
+	if err = s.post("CreateDomainVersion", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DeleteDomainVersion(dto *DeleteDomainVersionRequest) (responseBody *DeleteDomainVersionResponse, err error) {
+	responseBody = new(DeleteDomainVersionResponse)
+	if err = s.post("DeleteDomainVersion", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) DescribeDomainVersion(dto *DescribeDomainVersionRequest) (responseBody *DescribeDomainVersionResponse, err error) {
+	responseBody = new(DescribeDomainVersionResponse)
+	if err = s.post("DescribeDomainVersion", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) UpdateDomainVersion(dto *UpdateDomainVersionRequest) (responseBody *UpdateDomainVersionResponse, err error) {
+	responseBody = new(UpdateDomainVersionResponse)
+	if err = s.post("UpdateDomainVersion", dto, responseBody); err != nil {
+		return
+	}
+	if err = validateResponse(responseBody.ResponseMetadata); err != nil {
+		return
+	}
+	return
+}
+
+func (s *CDN) ReleaseDomainVersion(dto *ReleaseDomainVersionRequest) (responseBody *ReleaseDomainVersionResponse, err error) {
+	responseBody = new(ReleaseDomainVersionResponse)
+	if err = s.post("ReleaseDomainVersion", dto, responseBody); err != nil {
 		return
 	}
 	if err = validateResponse(responseBody.ResponseMetadata); err != nil {

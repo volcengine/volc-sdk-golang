@@ -90,3 +90,102 @@ func TestRealRequest_GzipNewReaderErrorClosesUnderlyingBody(t *testing.T) {
 		t.Fatalf("expected underlying body close once, got %d", body.closed)
 	}
 }
+
+func TestNewClientWithAPIKeyPutLogsUsesAnonymousHeader(t *testing.T) {
+	var gotHeader http.Header
+	c := NewClientWithAPIKey("http://example.com", "cn-beijing", "api-key").(*LsClient)
+	if err := c.SetHttpClient(&http.Client{Transport: rtFunc(func(r *http.Request) (*http.Response, error) {
+		gotHeader = r.Header.Clone()
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{},
+			Body:       io.NopCloser(bytes.NewReader(nil)),
+			Request:    r,
+		}, nil
+	})}); err != nil {
+		t.Fatalf("unexpected SetHttpClient error: %v", err)
+	}
+
+	_, err := c.realRequest(context.Background(), http.MethodPost, PathPutLogs, map[string]string{}, []byte("body"))
+	if err != nil {
+		t.Fatalf("unexpected request error: %v", err)
+	}
+	if got := gotHeader.Get(AnonymousIdentityHeader); got != "api-key" {
+		t.Fatalf("expected anonymous header, got %q", got)
+	}
+	if got := gotHeader.Get("Authorization"); got != "" {
+		t.Fatalf("expected unsigned anonymous request, got Authorization %q", got)
+	}
+}
+
+func TestClientInterfaceSetAPIKeyUpdatesAnonymousHeader(t *testing.T) {
+	var gotHeader http.Header
+	var c Client = NewClientWithAPIKey("http://example.com", "cn-beijing", "old-api-key")
+	c.SetAPIKey("new-api-key")
+	lc := c.(*LsClient)
+	if err := lc.SetHttpClient(&http.Client{Transport: rtFunc(func(r *http.Request) (*http.Response, error) {
+		gotHeader = r.Header.Clone()
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{},
+			Body:       io.NopCloser(bytes.NewReader(nil)),
+			Request:    r,
+		}, nil
+	})}); err != nil {
+		t.Fatalf("unexpected SetHttpClient error: %v", err)
+	}
+
+	_, err := lc.realRequest(context.Background(), http.MethodPost, PathPutLogs, map[string]string{}, []byte("body"))
+	if err != nil {
+		t.Fatalf("unexpected request error: %v", err)
+	}
+	if got := gotHeader.Get(AnonymousIdentityHeader); got != "new-api-key" {
+		t.Fatalf("expected updated anonymous header, got %q", got)
+	}
+}
+
+func TestAPIKeyOnlyNonAnonymousActionReturnsMissingCredentialsBeforeNetwork(t *testing.T) {
+	c := NewClientWithAPIKey("http://example.com", "cn-beijing", "api-key").(*LsClient)
+	called := false
+	if err := c.SetHttpClient(&http.Client{Transport: rtFunc(func(r *http.Request) (*http.Response, error) {
+		called = true
+		return nil, nil
+	})}); err != nil {
+		t.Fatalf("unexpected SetHttpClient error: %v", err)
+	}
+
+	_, err := c.realRequest(context.Background(), http.MethodGet, "/DescribeTopic", map[string]string{}, nil)
+	if err == nil {
+		t.Fatalf("expected missing credentials error")
+	}
+	if called {
+		t.Fatalf("expected request to fail before network")
+	}
+}
+
+func TestAPIKeyWithCredentialsUsesAKSKForNonAnonymousAction(t *testing.T) {
+	var gotHeader http.Header
+	c := NewClientWithAPIKey("http://example.com", "cn-beijing", "api-key", "ak", "sk", "").(*LsClient)
+	if err := c.SetHttpClient(&http.Client{Transport: rtFunc(func(r *http.Request) (*http.Response, error) {
+		gotHeader = r.Header.Clone()
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Header:     http.Header{},
+			Body:       io.NopCloser(bytes.NewReader(nil)),
+			Request:    r,
+		}, nil
+	})}); err != nil {
+		t.Fatalf("unexpected SetHttpClient error: %v", err)
+	}
+
+	_, err := c.realRequest(context.Background(), http.MethodGet, "/DescribeTopic", map[string]string{}, nil)
+	if err != nil {
+		t.Fatalf("unexpected request error: %v", err)
+	}
+	if got := gotHeader.Get(AnonymousIdentityHeader); got != "" {
+		t.Fatalf("expected non-anonymous action to omit anonymous header, got %q", got)
+	}
+	if got := gotHeader.Get("Authorization"); got == "" {
+		t.Fatalf("expected signed request")
+	}
+}

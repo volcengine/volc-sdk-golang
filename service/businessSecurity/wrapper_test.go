@@ -92,16 +92,3 @@ func TestBusinessSecurity_ActivateRiskSampleData(t *testing.T) {
 	resp, err := DefaultInstance.ActivateRiskSampleData(req)
 	fmt.Println(resp, err)
 }
-
-func TestBusinessSecurity_ActivateRiskResult(t *testing.T) {
-
-	req := &ActivateRiskResultReq{
-		ActivateCode: "a00c7e86-7b42-494c-87a8-0c8c2aaa819c",
-		PlanId:       11,
-	}
-
-	resp, err := DefaultInstance.ActivateRiskResult(req)
-
-	fmt.Println(resp, err)
-
-}

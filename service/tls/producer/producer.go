@@ -44,8 +44,8 @@ func newProducer(producerConfig *Config) *producer {
 	} else {
 		logger = common.LogConfig(producerConfig.LoggerConfig)
 	}
-	client := NewClient(producerConfig.Endpoint, producerConfig.AccessKeyID, producerConfig.AccessKeySecret,
-		producerConfig.SecurityToken, producerConfig.Region)
+	client := NewClientWithAPIKey(producerConfig.Endpoint, producerConfig.Region, producerConfig.APIKey,
+		producerConfig.AccessKeyID, producerConfig.AccessKeySecret, producerConfig.SecurityToken)
 
 	producerConfig = validateProducerConfig(producerConfig)
 	if producerConfig.MaxBatchCount > MaxBatchCount {
@@ -303,4 +303,8 @@ func (producer *producer) ForceClose() {
 
 func (producer *producer) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string) {
 	producer.cli.ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken)
+}
+
+func (producer *producer) SetAPIKey(apiKey string) {
+	producer.cli.SetAPIKey(apiKey)
 }

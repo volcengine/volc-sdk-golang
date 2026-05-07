@@ -1743,6 +1743,140 @@ func (p *SecuritySecurityClient) ImageTextLiteModeration(req *RiskDetectionReque
 	return result, nil
 }
 
+func (p *SecuritySecurityClient) AudioLiteModeration(req *RiskDetectionRequest) (*AudioResultResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AudioLiteModeration: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("AudioLiteModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AudioLiteModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AudioLiteModeration: fail to do request, %v", err)
+			}
+			result := new(AudioResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AudioLiteModeration: fail to do request, %v", err)
+	}
+	result := new(AudioResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AsyncAudioLiteModeration(req *AsyncRiskDetectionRequest) (*AsyncVideoRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncAudioLiteModeration: fail to marshal request, %v", err)
+	}
+	respBody, _, err := p.Client.Json("AsyncAudioLiteModeration", nil, string(reqData))
+	if err != nil {
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncAudioLiteModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncAudioLiteModeration: fail to do request, %v", err)
+			}
+			result := new(AsyncVideoRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncAudioLiteModeration: fail to do request, %v", err)
+	}
+	result := new(AsyncVideoRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AudioLiteModerationResult(req *VideoResultRequest) (*AudioResultResponse, error) {
+	respBody, _, err := p.Client.Query("AudioLiteModerationResult", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("AudioLiteModerationResult", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("AudioLiteModerationResult: fail to do request, %v", err)
+			}
+			result := new(AudioResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AudioLiteModerationResult: fail to do request, %v", err)
+	}
+	result := new(AudioResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) AsyncVideoLiteModeration(req *AsyncRiskDetectionRequest) (*AsyncVideoRiskResponse, error) {
+	reqData, err := json.Marshal(req)
+	if err != nil {
+		return nil, fmt.Errorf("AsyncVideoLiteModeration: fail to marshal request, %v", err)
+	}
+
+	respBody, _, err := p.Client.Json("AsyncVideoLiteModeration", nil, string(reqData))
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Json("AsyncVideoLiteModeration", nil, string(reqData))
+			if err != nil {
+				return nil, fmt.Errorf("AsyncVideoLiteModeration: fail to do request, %v", err)
+			}
+			result := new(AsyncVideoRiskResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("AsyncVideoLiteModeration: fail to do request, %v", err)
+	}
+	result := new(AsyncVideoRiskResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
+func (p *SecuritySecurityClient) VideoLiteModerationResult(req *VideoResultRequest) (*VideoResultResponse, error) {
+	respBody, _, err := p.Client.Query("VideoLiteModerationResult", req.ToQuery())
+	if err != nil {
+		// Retry on error
+		// 支持错误重试
+		if p.Retry() {
+			respBody, _, err = p.Client.Query("VideoLiteModerationResult", req.ToQuery())
+			if err != nil {
+				return nil, fmt.Errorf("VideoLiteModerationResult: fail to do request, %v", err)
+			}
+			result := new(VideoResultResponse)
+			if err := UnmarshalResultInto(respBody, result); err != nil {
+				return nil, err
+			}
+			return result, nil
+		}
+		return nil, fmt.Errorf("VideoLiteModerationResult: fail to do request, %v", err)
+	}
+	result := new(VideoResultResponse)
+	if err := UnmarshalResultInto(respBody, result); err != nil {
+		return nil, err
+	}
+	return result, nil
+}
+
 func (p *BusinessSecurity) CreateCustomLib(req *CreateCustomLibRequest) (*CreateCustomLibResponse, error) {
 	reqData, err := json.Marshal(req)
 	if err != nil {

@@ -353,6 +353,7 @@ type CreateIndexRequest struct {
 	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
 	MaxTextLen        *int32          `json:",omitempty"`
 	EnableAutoIndex   *bool           `json:",omitempty"`
+	EnablePhraseIndex *bool           `json:",omitempty"`
 }
 
 func (v *CreateIndexRequest) CheckValidation() error {
@@ -412,6 +413,7 @@ type DescribeIndexResponse struct {
 	ModifyTime        string          `json:"ModifyTime"`
 	MaxTextLen        int32           `json:"MaxTextLen,omitempty"`
 	EnableAutoIndex   bool            `json:"EnableAutoIndex,omitempty"`
+	EnablePhraseIndex bool            `json:"EnablePhraseIndex,omitempty"`
 }
 
 type ModifyIndexRequest struct {
@@ -422,6 +424,7 @@ type ModifyIndexRequest struct {
 	UserInnerKeyValue *[]KeyValueInfo `json:",omitempty"`
 	MaxTextLen        *int32          `json:",omitempty"`
 	EnableAutoIndex   *bool           `json:",omitempty"`
+	EnablePhraseIndex *bool           `json:",omitempty"`
 }
 
 func (v *ModifyIndexRequest) CheckValidation() error {
@@ -2151,6 +2154,353 @@ type ModifyScheduleSqlTaskRequest struct {
 	ProcessTimeWindow *string       `json:"ProcessTimeWindow,omitempty"`
 	Query             *string       `json:"Query,omitempty"`
 	RequestCycle      *RequestCycle `json:"RequestCycle,omitempty"`
+}
+
+type ProcessorType string
+
+const (
+	ProcessorTypeIngester ProcessorType = "ingester"
+	ProcessorTypeConsumer ProcessorType = "consumer"
+)
+
+type ProcessorDSLType string
+
+const (
+	ProcessorDSLTypeDSL ProcessorDSLType = "dsl"
+	ProcessorDSLTypeSPL ProcessorDSLType = "spl"
+)
+
+type ProcessorStatus string
+
+const (
+	ProcessorStatusEnabled  ProcessorStatus = "enabled"
+	ProcessorStatusDisabled ProcessorStatus = "disabled"
+)
+
+type ProcessorFailStrategy string
+
+const (
+	ProcessorFailStrategyKeepRaw ProcessorFailStrategy = "keep_raw"
+	ProcessorFailStrategyDropLog ProcessorFailStrategy = "drop_log"
+)
+
+type CreateProcessorRequest struct {
+	CommonRequest
+	ProjectID        string                `json:"ProjectId"`
+	ProcessorName    string                `json:"ProcessorName"`
+	Description      string                `json:"Description,omitempty"`
+	DSLContent       string                `json:"DSLContent"`
+	ProcessorType    ProcessorType         `json:"ProcessorType"`
+	ProcessorDSLType ProcessorDSLType      `json:"ProcessorDSLType,omitempty"`
+	ProcessorStatus  ProcessorStatus       `json:"ProcessorStatus,omitempty"`
+	FailStrategy     ProcessorFailStrategy `json:"FailStrategy,omitempty"`
+	TimeoutMs        int                   `json:"TimeoutMs,omitempty"`
+	MaxQps           int                   `json:"MaxQps,omitempty"`
+}
+
+func (v *CreateProcessorRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	if len(v.ProcessorName) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorName")
+	}
+	if len(v.DSLContent) <= 0 {
+		return errors.New("Invalid argument, empty DSLContent")
+	}
+	if len(v.ProcessorType) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorType")
+	}
+	return nil
+}
+
+type CreateProcessorResponse struct {
+	CommonResponse
+	ProcessorID string `json:"ProcessorId"`
+}
+
+type DeleteProcessorRequest struct {
+	CommonRequest
+	ProcessorID string `json:"ProcessorId"`
+}
+
+func (v *DeleteProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	return nil
+}
+
+type ModifyProcessorRequest struct {
+	CommonRequest
+	ProcessorID   string                 `json:"ProcessorId"`
+	ProcessorName string                 `json:"ProcessorName,omitempty"`
+	Description   string                 `json:"Description,omitempty"`
+	DSLContent    string                 `json:"DSLContent,omitempty"`
+	FailStrategy  *ProcessorFailStrategy `json:"FailStrategy,omitempty"`
+	TimeoutMs     *int                   `json:"TimeoutMs,omitempty"`
+	MaxQps        *int                   `json:"MaxQps,omitempty"`
+}
+
+func (v *ModifyProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	return nil
+}
+
+type DescribeProcessorRequest struct {
+	CommonRequest
+	ProcessorID string `json:"ProcessorId"`
+}
+
+func (v *DescribeProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	return nil
+}
+
+type DescribeProcessorsRequest struct {
+	CommonRequest
+	IamProjectName   string
+	ProjectID        string
+	ProjectName      string
+	ProcessorID      string
+	ProcessorName    string
+	ProcessorType    *ProcessorType
+	ProcessorStatus  *ProcessorStatus
+	ProcessorDSLType *ProcessorDSLType
+	OrderByProject   *bool
+	PageNumber       int
+	PageSize         int
+}
+
+type ProcessorInfo struct {
+	ProjectName      string                `json:"ProjectName"`
+	ProcessorID      string                `json:"ProcessorId"`
+	ProjectID        string                `json:"ProjectId"`
+	AccountID        string                `json:"AccountId"`
+	ProcessorName    string                `json:"ProcessorName"`
+	Description      string                `json:"Description"`
+	DSLContent       string                `json:"DSLContent"`
+	ProcessorType    ProcessorType         `json:"ProcessorType"`
+	ProcessorDSLType ProcessorDSLType      `json:"ProcessorDSLType"`
+	ProcessorStatus  ProcessorStatus       `json:"ProcessorStatus"`
+	FailStrategy     ProcessorFailStrategy `json:"FailStrategy"`
+	TimeoutMs        int                   `json:"TimeoutMs"`
+	MaxQps           int                   `json:"MaxQps"`
+	CreateTime       string                `json:"CreateTime"`
+	UpdateTime       string                `json:"UpdateTime"`
+}
+
+type DescribeProcessorResponse struct {
+	CommonResponse
+	ProcessorInfo
+}
+
+type DescribeProcessorsResponse struct {
+	CommonResponse
+	Total int64            `json:"Total"`
+	Items []*ProcessorInfo `json:"Items"`
+}
+
+type ExecProcessorRequest struct {
+	CommonRequest
+	ExecAction       string                 `json:"ExecAction"`
+	ProcessorType    ProcessorType          `json:"ProcessorType"`
+	DSLContent       string                 `json:"DSLContent"`
+	LogSample        map[string]interface{} `json:"LogSample"`
+	ProcessorDSLType ProcessorDSLType       `json:"ProcessorDSLType,omitempty"`
+}
+
+func (v *ExecProcessorRequest) CheckValidation() error {
+	if len(v.ExecAction) <= 0 {
+		return errors.New("Invalid argument, empty ExecAction")
+	}
+	if len(v.ProcessorType) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorType")
+	}
+	if len(v.DSLContent) <= 0 {
+		return errors.New("Invalid argument, empty DSLContent")
+	}
+	if v.LogSample == nil {
+		return errors.New("Invalid argument, empty LogSample")
+	}
+	return nil
+}
+
+type ExecProcessorResponse struct {
+	CommonResponse
+	ExecStatus   string                   `json:"ExecStatus"`
+	ProcessedLog []map[string]interface{} `json:"ProcessedLog,omitempty"`
+	Error        string                   `json:"Error,omitempty"`
+}
+
+type OperateProcessorRequest struct {
+	CommonRequest
+	ProcessorID   string `json:"ProcessorId"`
+	OperateAction string `json:"OperateAction"`
+}
+
+func (v *OperateProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	if len(v.OperateAction) <= 0 {
+		return errors.New("Invalid argument, empty OperateAction")
+	}
+	return nil
+}
+
+type BindTopicProcessorRequest struct {
+	CommonRequest
+	ProcessorID string `json:"ProcessorId"`
+	TopicID     string `json:"TopicId"`
+}
+
+func (v *BindTopicProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
+type BatchBindTopicsRequest struct {
+	CommonRequest
+	ProcessorID string   `json:"ProcessorId"`
+	TopicIDs    []string `json:"TopicIds"`
+}
+
+func (v *BatchBindTopicsRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	if len(v.TopicIDs) <= 0 {
+		return errors.New("Invalid argument, empty TopicIDs")
+	}
+	return nil
+}
+
+type UnbindTopicProcessorRequest struct {
+	CommonRequest
+	TopicID string `json:"TopicId"`
+}
+
+func (v *UnbindTopicProcessorRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
+type DescribeTopicsByProcessorRequest struct {
+	CommonRequest
+	ProcessorID string
+	PageNumber  int
+	PageSize    int
+}
+
+func (v *DescribeTopicsByProcessorRequest) CheckValidation() error {
+	if len(v.ProcessorID) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorID")
+	}
+	return nil
+}
+
+type ProcessorTopicInfo struct {
+	TopicID   string `json:"TopicId"`
+	TopicName string `json:"TopicName"`
+}
+
+type DescribeTopicsByProcessorResponse struct {
+	CommonResponse
+	Total int64                 `json:"Total"`
+	Items []*ProcessorTopicInfo `json:"Items"`
+}
+
+type DescribeProcessorByTopicRequest struct {
+	CommonRequest
+	TopicID string
+}
+
+func (v *DescribeProcessorByTopicRequest) CheckValidation() error {
+	if len(v.TopicID) <= 0 {
+		return errors.New("Invalid argument, empty TopicID")
+	}
+	return nil
+}
+
+type DescribeProcessorBindingsRequest struct {
+	CommonRequest
+	ProjectID  string
+	PageNumber int
+	PageSize   int
+}
+
+func (v *DescribeProcessorBindingsRequest) CheckValidation() error {
+	if len(v.ProjectID) <= 0 {
+		return errors.New("Invalid argument, empty ProjectID")
+	}
+	return nil
+}
+
+type ProcessorBinding struct {
+	TopicID     string `json:"TopicId"`
+	ProcessorID string `json:"ProcessorId"`
+}
+
+type DescribeProcessorBindingsResponse struct {
+	CommonResponse
+	Total int64               `json:"Total"`
+	Items []*ProcessorBinding `json:"Items"`
+}
+
+type DescribeProcessorFunctionsRequest struct {
+	CommonRequest
+	ProcessorType    ProcessorType
+	ProcessorDSLType ProcessorDSLType
+}
+
+func (v *DescribeProcessorFunctionsRequest) CheckValidation() error {
+	if len(v.ProcessorType) <= 0 {
+		return errors.New("Invalid argument, empty ProcessorType")
+	}
+	return nil
+}
+
+type ProcessorFunctionArgument struct {
+	Index        int    `json:"Index"`
+	Name         string `json:"Name"`
+	ArgumentType string `json:"ArgumentType"`
+	Description  string `json:"Description"`
+	IsNecessary  bool   `json:"IsNecessary"`
+	DefaultValue string `json:"DefaultValue"`
+}
+
+type ProcessorFunctionSample struct {
+	Index       int                      `json:"Index"`
+	Log         []map[string]interface{} `json:"Log"`
+	Script      string                   `json:"Script"`
+	Result      []map[string]interface{} `json:"Result"`
+	Description string                   `json:"Description"`
+}
+
+type ProcessorFunctionInfo struct {
+	Name            string                      `json:"Name"`
+	FunctionType    string                      `json:"FunctionType"`
+	MethodSignature string                      `json:"MethodSignature"`
+	Description     string                      `json:"Description"`
+	Samples         []ProcessorFunctionSample   `json:"Samples"`
+	Arguments       []ProcessorFunctionArgument `json:"Arguments"`
+}
+
+type DescribeProcessorFunctionsResponse struct {
+	CommonResponse
+	Functions map[string][]ProcessorFunctionInfo `json:"Functions"`
 }
 
 func (v *ModifyScheduleSqlTaskRequest) CheckValidation() error {

@@ -934,12 +934,14 @@ type ImageTextLiteModerationSyncResponse struct {
 }
 
 type ImageTextLiteModerationSynData struct {
-	Decision          string   `json:"Decision"`
-	DecisionLabel     string   `json:"DecisionLabel"`
-	DecisionLabelName string   `json:"DecisionLabelName"`
-	HitLabels         []string `json:"HitLabels"`
-	HitLabelNames     []string `json:"HitLabelNames"`
-	PassThrough       string   `json:"PassThrough"`
+	Decision              string               `json:"Decision"`
+	DecisionLabel         string               `json:"DecisionLabel"`
+	DecisionLabelName     string               `json:"DecisionLabelName"`
+	HitLabels             []string             `json:"HitLabels"`
+	HitLabelNames         []string             `json:"HitLabelNames"`
+	PassThrough           string               `json:"PassThrough"`
+	TextModerationDetail  TextRiskRespV3       `json:"TextModerationDetail"`
+	ImageModerationDetail ImageContentRiskResp `json:"ImageModerationDetail"`
 }
 
 type AsyncRcLlmResponse struct {

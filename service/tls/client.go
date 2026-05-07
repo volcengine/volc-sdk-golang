@@ -71,6 +71,7 @@ type LsClient struct {
 	AccessKeyID     string
 	AccessKeySecret string
 	SecurityToken   string
+	APIKey          string
 	UserAgent       string
 	RequestTimeOut  time.Duration
 	Region          string
@@ -85,6 +86,24 @@ const (
 )
 
 func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region string) Client {
+	return newClient(endpoint, accessKeyID, accessKeySecret, securityToken, region, "")
+}
+
+func NewClientWithAPIKey(endpoint, region, apiKey string, credentials ...string) Client {
+	var accessKeyID, accessKeySecret, securityToken string
+	if len(credentials) > 0 {
+		accessKeyID = credentials[0]
+	}
+	if len(credentials) > 1 {
+		accessKeySecret = credentials[1]
+	}
+	if len(credentials) > 2 {
+		securityToken = credentials[2]
+	}
+	return newClient(endpoint, accessKeyID, accessKeySecret, securityToken, region, apiKey)
+}
+
+func newClient(endpoint, accessKeyID, accessKeySecret, securityToken, region, apiKey string) Client {
 	apiVersion := APIVersion3
 	client := &LsClient{
 		Client:          defaultHttpClient,
@@ -93,6 +112,7 @@ func NewClient(endpoint, accessKeyID, accessKeySecret, securityToken, region str
 		AccessKeyID:     accessKeyID,
 		AccessKeySecret: accessKeySecret,
 		SecurityToken:   securityToken,
+		APIKey:          apiKey,
 		Region:          region,
 		APIVersion:      apiVersion,
 	}
@@ -114,6 +134,12 @@ func (c *LsClient) ResetAccessKeyToken(accessKeyID, accessKeySecret, securityTok
 	c.AccessKeyID = accessKeyID
 	c.AccessKeySecret = accessKeySecret
 	c.SecurityToken = securityToken
+	c.accessLock.Unlock()
+}
+
+func (c *LsClient) SetAPIKey(apiKey string) {
+	c.accessLock.Lock()
+	c.APIKey = apiKey
 	c.accessLock.Unlock()
 }
 
@@ -297,18 +323,29 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	}
 
 	c.accessLock.RLock()
-
-	credential := base.Credentials{
-		AccessKeyID:     c.AccessKeyID,
-		SecretAccessKey: c.AccessKeySecret,
-		Region:          c.Region,
-		Service:         ServiceName,
-		SessionToken:    c.SecurityToken,
-	}
-
+	accessKeyID := c.AccessKeyID
+	accessKeySecret := c.AccessKeySecret
+	securityToken := c.SecurityToken
+	apiKey := c.APIKey
 	c.accessLock.RUnlock()
 
-	req = credential.Sign(req)
+	if apiKey != "" && isAnonymousAction(uri) {
+		req.Header.Set(AnonymousIdentityHeader, apiKey)
+		req.Header.Del("Authorization")
+		req.Header.Del("X-Security-Token")
+	} else {
+		if accessKeyID == "" || accessKeySecret == "" {
+			return nil, NewClientError(errors.New("Missing AK/SK credentials; anonymous API key is only supported for PutLogs"))
+		}
+		credential := base.Credentials{
+			AccessKeyID:     accessKeyID,
+			SecretAccessKey: accessKeySecret,
+			Region:          c.Region,
+			Service:         ServiceName,
+			SessionToken:    securityToken,
+		}
+		req = credential.Sign(req)
+	}
 
 	// Get ready to do request
 	resp, err := c.Client.Do(req)
@@ -346,6 +383,14 @@ func (c *LsClient) realRequest(ctx context.Context, method, uri string, headers 
 	}
 
 	return resp, nil
+}
+
+func isAnonymousAction(uri string) bool {
+	path := uri
+	if idx := strings.Index(path, "?"); idx >= 0 {
+		path = path[:idx]
+	}
+	return path == PathPutLogs
 }
 
 func (c *LsClient) Close() error {

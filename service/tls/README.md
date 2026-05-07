@@ -15,6 +15,30 @@ client := NewClient(os.Getenv("VOLCENGINE_ENDPOINT"), os.Getenv("VOLCENGINE_ACCE
     os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"), os.Getenv("VOLCENGINE_TOKEN"), os.Getenv("VOLCENGINE_REGION"))
 ```
 
+如需使用 API Key 匿名鉴权写入日志，请使用显式 API Key 初始化入口。当前匿名鉴权仅支持最终请求为 `/PutLogs` 的接口，例如 `PutLogs`、`PutLogsV2` 和 Producer 写入；其他接口仍需要完整 AK/SK。
+
+```go
+client := tls.NewClientWithAPIKey(os.Getenv("VOLCENGINE_ENDPOINT"),
+    os.Getenv("VOLCENGINE_REGION"), os.Getenv("VOLCENGINE_TLS_API_KEY"))
+```
+
+如果同时配置 API Key 与 AK/SK，`PutLogs`/`PutLogsV2` 会优先使用 API Key 匿名鉴权，其他接口继续使用 AK/SK 签名。`ak`、`sk`、`token` 为可选参数：
+
+```go
+client := tls.NewClientWithAPIKey(os.Getenv("VOLCENGINE_ENDPOINT"),
+    os.Getenv("VOLCENGINE_REGION"), os.Getenv("VOLCENGINE_TLS_API_KEY"),
+    os.Getenv("VOLCENGINE_ACCESS_KEY_ID"), os.Getenv("VOLCENGINE_ACCESS_KEY_SECRET"),
+    os.Getenv("VOLCENGINE_TOKEN"))
+```
+
+请勿在日志或错误信息中打印 API Key 原文。
+
+API Key 可在运行时更新：
+
+```go
+client.SetAPIKey(os.Getenv("VOLCENGINE_TLS_API_KEY_NEW"))
+```
+
 ### 配置请求重试（指数退避）
 
 TLS SDK 对部分可重试错误（例如 429/500/502/503 或网络超时）会进行指数退避重试。你可以通过 `RetryPolicy` 统一配置重试策略的各项参数，避免参数过大/过小导致的异常退避行为。
