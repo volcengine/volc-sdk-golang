@@ -247,7 +247,7 @@ type Result struct {
 	Label           string            `json:"Label"`
 	SubLabel        string            `json:"SubLabel"`
 	Detail          interface{}       `json:"Detail"`
-	DecisionOutputs []*DecisionOutput `json:"DecisionOutput"`
+	DecisionOutputs []*DecisionOutput `json:"DecisionOutputs"`
 }
 
 type LiveResult struct {
