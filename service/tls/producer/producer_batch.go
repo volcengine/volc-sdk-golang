@@ -41,6 +41,9 @@ type Batch struct {
 	shardHash                  *string
 	result                     *Result
 	maxReservedAttempts        int
+	reservedBytes              int64
+	reservationReleased        bool
+	circuitPermitCount         int
 }
 
 func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
@@ -125,7 +128,7 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 		newGroup = true
 	}
 
-	logMsgSize := batchLog.Log.Size()
+	logMsgSize := batchLog.size()
 	logFieldSize := sizeOfBytesField(logMsgSize)
 	if batch.logCount+1 > MaxBatchCount {
 		return false, 0
@@ -173,12 +176,88 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 	if callBack != nil {
 		batch.callBackList = append(batch.callBackList, callBack)
 	}
+	reservedBytes := batchLog.reservedMemoryBytes()
+	if reservedBytes > 0 && !batch.reservationReleased {
+		batch.reservedBytes += reservedBytes
+	}
+	if batchLog.hasCircuitPermit() {
+		batch.circuitPermitCount++
+	}
+	batchLog.clearReservation()
 
 	return true, int64(deltaTotal)
 }
 
 func (batch *Batch) meetSendCondition(config *Config) bool {
 	return batch.totalDataSize >= config.MaxBatchSize || batch.logCount >= config.MaxBatchCount
+}
+
+func (batch *Batch) releaseReservedBytes(limiter *memoryLimiter) {
+	if batch == nil {
+		return
+	}
+	batch.lock.Lock()
+	if batch.reservationReleased {
+		batch.lock.Unlock()
+		return
+	}
+	reservedBytes := batch.reservedBytes
+	batch.reservedBytes = 0
+	batch.reservationReleased = true
+	batch.lock.Unlock()
+
+	if limiter != nil {
+		limiter.release(reservedBytes)
+	}
+}
+
+func (batch *Batch) getTotalDataSize() int64 {
+	if batch == nil {
+		return 0
+	}
+	batch.lock.RLock()
+	defer batch.lock.RUnlock()
+	return batch.totalDataSize
+}
+
+func (batch *Batch) setTotalDataSize(size int64) int64 {
+	if batch == nil {
+		return 0
+	}
+	batch.lock.Lock()
+	defer batch.lock.Unlock()
+	delta := size - batch.totalDataSize
+	batch.totalDataSize = size
+	return delta
+}
+
+func (batch *Batch) getCircuitPermitCount() int {
+	if batch == nil {
+		return 0
+	}
+	batch.lock.RLock()
+	defer batch.lock.RUnlock()
+	return batch.circuitPermitCount
+}
+
+func (batch *Batch) addCircuitPermit() {
+	if batch == nil {
+		return
+	}
+	batch.lock.Lock()
+	batch.circuitPermitCount++
+	batch.lock.Unlock()
+}
+
+func (batch *Batch) takeCircuitPermitCount() int {
+	if batch == nil {
+		return 0
+	}
+	batch.lock.Lock()
+	defer batch.lock.Unlock()
+	count := batch.circuitPermitCount
+	batch.circuitPermitCount = 0
+	return count
 }
 
 func parseHash(inputHash string) *string {

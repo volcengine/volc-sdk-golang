@@ -3,7 +3,6 @@ package producer
 import (
 	"strings"
 	"sync"
-	"sync/atomic"
 	"time"
 
 	"github.com/go-kit/kit/log"
@@ -23,6 +22,83 @@ type BatchKey struct {
 type BatchLog struct {
 	Key BatchKey
 	Log *pb.Log
+	// state is written by the producer goroutine before channel send and by the dispatcher after receive.
+	// That channel handoff provides the happens-before edge. It is intentionally non-atomic;
+	// adding multiple consumers requires a new ownership model.
+	state uint64
+}
+
+const (
+	// BatchLog is allocated per log; keep log size and transient flags in one word.
+	batchLogCircuitPermitFlag uint64 = 1 << 63
+	batchLogReservedFlag      uint64 = 1 << 62
+	batchLogSizeMask          uint64 = batchLogReservedFlag - 1
+)
+
+func (batchLog *BatchLog) size() int {
+	if batchLog == nil || batchLog.Log == nil {
+		return 0
+	}
+	if size := batchLog.cachedLogSize(); size > 0 {
+		return size
+	}
+	return batchLog.Log.Size()
+}
+
+func (batchLog *BatchLog) cachedLogSize() int {
+	if batchLog == nil {
+		return 0
+	}
+	return int(batchLog.state & batchLogSizeMask)
+}
+
+func (batchLog *BatchLog) setLogSize(size int64) {
+	if batchLog == nil || size <= 0 {
+		return
+	}
+	if uint64(size) > batchLogSizeMask {
+		return
+	}
+	flags := batchLog.state &^ batchLogSizeMask
+	batchLog.state = flags | (uint64(size) & batchLogSizeMask)
+}
+
+func (batchLog *BatchLog) setCircuitPermit(permit bool) {
+	if batchLog == nil || !permit {
+		return
+	}
+	batchLog.state |= batchLogCircuitPermitFlag
+}
+
+func (batchLog *BatchLog) setReservedBytes(bytes int64) {
+	if batchLog == nil {
+		return
+	}
+	if bytes <= 0 {
+		batchLog.state &^= batchLogReservedFlag
+		return
+	}
+	batchLog.state |= batchLogReservedFlag
+}
+
+func (batchLog *BatchLog) reservedMemoryBytes() int64 {
+	if batchLog == nil {
+		return 0
+	}
+	if batchLog.state&batchLogReservedFlag == 0 {
+		return 0
+	}
+	return estimateBatchLogReservationBytes(batchLog, int64(batchLog.cachedLogSize()))
+}
+
+func (batchLog *BatchLog) hasCircuitPermit() bool {
+	return batchLog != nil && batchLog.state&batchLogCircuitPermitFlag != 0
+}
+
+func (batchLog *BatchLog) clearReservation() {
+	if batchLog != nil {
+		batchLog.state = 0
+	}
 }
 
 type Dispatcher struct {
@@ -89,8 +165,10 @@ func (dispatcher *Dispatcher) checkBatches(config *Config) {
 		timeInterval := time.Since(batch.createTime)
 		if timeInterval >= config.LingerTime {
 			level.Debug(dispatcher.logger).Log("msg", "mover goroutine execute sent producerBatch to Sender")
-			dispatcher.threadPool.taskChan <- batch
-			delete(dispatcher.logGroupData, key)
+			if !dispatcher.innerSendToServer(key, batch) {
+				dispatcher.lock.Unlock()
+				return
+			}
 		} else {
 			if sleepMs > timeInterval {
 				sleepMs = timeInterval
@@ -108,16 +186,39 @@ func (dispatcher *Dispatcher) checkBatches(config *Config) {
 	if retryProducerBatchList == nil {
 		// If there is nothing to send in the retry queue, just wait for the minimum time that was given to me last time.
 		for sleepMs > 0 {
-			if dispatcher.IsShutDown() {
+			if !dispatcher.sleepWithCancel(sleepMs) {
 				return
 			}
-			time.Sleep(time.Second)
-			sleepMs -= time.Second
+			sleepMs = 0
 		}
 	} else {
-		for _, producerBatch := range retryProducerBatchList {
-			dispatcher.threadPool.taskChan <- producerBatch
+		for i, producerBatch := range retryProducerBatchList {
+			if dispatcher.sendToThreadPool(producerBatch) {
+				continue
+			}
+			if dispatcher.producer != nil {
+				for _, batch := range retryProducerBatchList[i:] {
+					dispatcher.producer.releaseBatchResources(batch)
+				}
+			}
+			return
 		}
+	}
+}
+
+func (dispatcher *Dispatcher) sleepWithCancel(duration time.Duration) bool {
+	if duration <= 0 {
+		return true
+	}
+	timer := time.NewTimer(duration)
+	defer timer.Stop()
+	select {
+	case <-dispatcher.stopCh:
+		return false
+	case <-dispatcher.forceQuitCh:
+		return false
+	case <-timer.C:
+		return true
 	}
 }
 
@@ -159,6 +260,35 @@ func (dispatcher *Dispatcher) RetryQueueElegantQuit() {
 	}
 }
 
+func (dispatcher *Dispatcher) releasePending() {
+	if dispatcher == nil || dispatcher.producer == nil {
+		return
+	}
+	for {
+		select {
+		case batchLog, ok := <-dispatcher.newLogRecvChan:
+			if !ok {
+				goto releaseMapAndRetry
+			}
+			dispatcher.producer.releaseBatchLog(batchLog)
+		default:
+			goto releaseMapAndRetry
+		}
+	}
+
+releaseMapAndRetry:
+	dispatcher.lock.Lock()
+	for _, batch := range dispatcher.logGroupData {
+		dispatcher.producer.releaseBatchResources(batch)
+	}
+	dispatcher.logGroupData = make(map[string]*Batch)
+	dispatcher.lock.Unlock()
+
+	for _, batch := range dispatcher.retryQueue.getRetryBatch(true) {
+		dispatcher.producer.releaseBatchResources(batch)
+	}
+}
+
 func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	if batchLog == nil {
 		// dispatcher is closed
@@ -173,19 +303,24 @@ func (dispatcher *Dispatcher) handleLogs(batchLog *BatchLog) {
 	producerBatch := dispatcher.getOrCreateProducerBatch(batchLog, key)
 	addSuccess, deltaBytes := producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 	if addSuccess {
-		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, deltaBytes)
+		dispatcher.producer.addProducerLogGroupSize(deltaBytes)
 		if producerBatch.meetSendCondition(dispatcher.producerConfig) {
 			dispatcher.innerSendToServer(key, producerBatch)
 
 		}
 		return
 	}
-	dispatcher.innerSendToServer(key, producerBatch)
+	if !dispatcher.innerSendToServer(key, producerBatch) {
+		dispatcher.producer.releaseBatchLog(batchLog)
+		return
+	}
 	newBatch := newProducerBatch(batchLog, dispatcher.producerConfig)
 	dispatcher.logGroupData[key] = newBatch
 	addSuccess, deltaBytes = newBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
 	if addSuccess {
-		atomic.AddInt64(&dispatcher.producer.producerLogGroupSize, deltaBytes)
+		dispatcher.producer.addProducerLogGroupSize(deltaBytes)
+	} else {
+		dispatcher.producer.releaseBatchLog(batchLog)
 	}
 	if newBatch.meetSendCondition(dispatcher.producerConfig) {
 		dispatcher.innerSendToServer(key, newBatch)
@@ -201,12 +336,24 @@ func (dispatcher *Dispatcher) getOrCreateProducerBatch(batchLog *BatchLog, key s
 	return newBatch
 }
 
-func (dispatcher *Dispatcher) innerSendToServer(key string, producerBatch *Batch) {
+func (dispatcher *Dispatcher) sendToThreadPool(producerBatch *Batch) bool {
+	select {
+	case dispatcher.threadPool.taskChan <- producerBatch:
+		return true
+	case <-dispatcher.forceQuitCh:
+		return false
+	}
+}
+
+func (dispatcher *Dispatcher) innerSendToServer(key string, producerBatch *Batch) bool {
 	level.Debug(dispatcher.logger).Log("msg", "Send producerBatch to Sender from dispatcher")
 
-	dispatcher.threadPool.taskChan <- producerBatch
+	if !dispatcher.sendToThreadPool(producerBatch) {
+		return false
+	}
 
 	delete(dispatcher.logGroupData, key)
+	return true
 }
 
 func (dispatcher *Dispatcher) getKeyString(batchKey BatchKey) string {

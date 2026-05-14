@@ -3,7 +3,6 @@ package producer
 import (
 	"errors"
 	"math/rand"
-	"sync/atomic"
 	"time"
 
 	"github.com/go-kit/kit/log"
@@ -51,12 +50,22 @@ func (sender *Sender) sendToServer(batch *Batch) {
 	level.Debug(sender.logger).Log("msg", "sender send data to server")
 	var err error
 
+	if sender.producer != nil && sender.producer.failureController != nil && batch.getCircuitPermitCount() == 0 {
+		allowed, permit := sender.producer.failureController.allowSend()
+		if !allowed {
+			sender.handleFailure(batch, newCircuitOpenError(), false)
+			return
+		}
+		if permit {
+			batch.addCircuitPermit()
+		}
+	}
+
 	if batch.logGroupList != nil {
 		actual := int64(batch.logGroupList.Size())
-		delta := actual - batch.totalDataSize
+		delta := batch.setTotalDataSize(actual)
 		if delta != 0 {
-			atomic.AddInt64(&sender.producer.producerLogGroupSize, delta)
-			batch.totalDataSize = actual
+			sender.producer.addProducerLogGroupSize(delta)
 		}
 	}
 
@@ -77,7 +86,21 @@ func (sender *Sender) sendToServer(batch *Batch) {
 		putLogsReq.HashKey = *batch.shardHash
 	}
 
+	sendBufferBytes := estimatePutLogsBufferBytes(batch.getTotalDataSize())
+	if err = sender.producer.acquireTemporaryBytes(sendBufferBytes); err != nil {
+		sender.handleFailure(batch, err)
+		return
+	}
+	temporaryReleased := false
+	defer func() {
+		if !temporaryReleased {
+			sender.producer.releaseTemporaryBytes(sendBufferBytes)
+		}
+	}()
+
 	resp, err := sender.client.PutLogs(putLogsReq)
+	sender.producer.releaseTemporaryBytes(sendBufferBytes)
+	temporaryReleased = true
 	if err == nil {
 		sender.handleSuccess(batch, resp)
 		return
@@ -88,7 +111,9 @@ func (sender *Sender) sendToServer(batch *Batch) {
 
 func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 	level.Debug(sender.logger).Log("msg", "sendToServer succeeded,Execute successful callback function")
-	defer atomic.AddInt64(&sender.producer.producerLogGroupSize, -batch.totalDataSize)
+	if sender.producer != nil && sender.producer.failureController != nil {
+		sender.producer.failureController.afterSend(classifiedFailure{}, true, batch.takeCircuitPermitCount())
+	}
 
 	batch.result.SuccessFlag = true
 	if batch.attemptCount < batch.maxReservedAttempts {
@@ -96,6 +121,7 @@ func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 			newAttempt(true, putLogsResp.RequestID, "", "", GetTimeMs(time.Now().UnixNano())))
 	}
 
+	sender.producer.releaseBatchResources(batch)
 	for _, callBack := range batch.callBackList {
 		callBack.Success(batch.result)
 	}
@@ -103,23 +129,20 @@ func (sender *Sender) handleSuccess(batch *Batch, putLogsResp *CommonResponse) {
 	batch.retryBackoffMs = 0
 }
 
-func (sender *Sender) handleFailure(batch *Batch, err error) {
+func (sender *Sender) handleFailure(batch *Batch, err error, recordCircuitResult ...bool) {
 	_ = level.Info(sender.logger).Log("msg", "sendToServer failed", "error", err)
 
-	var sdkError *Error
-	tlsErrOk := errors.As(err, &sdkError)
-	retryable := true
-	if tlsErrOk {
-		httpCode := int(sdkError.HTTPCode)
-		retryable = httpCode == 0 || httpCode == 429 || httpCode >= 500
-		if _, ok := sender.noRetryStatusCodeMap[httpCode]; ok {
-			retryable = false
-		}
+	failure := classifyFailure(err, sender.noRetryStatusCodeMap)
+	recordResult := true
+	if len(recordCircuitResult) > 0 {
+		recordResult = recordCircuitResult[0]
 	}
-
+	if recordResult && sender.producer != nil && sender.producer.failureController != nil {
+		sender.producer.failureController.afterSend(failure, false, batch.takeCircuitPermitCount())
+	}
 	noNeedRetry := batch.attemptCount >= batch.maxRetryTimes
 
-	if sender.IsShutDown() || !retryable || noNeedRetry {
+	if sender.IsShutDown() || !failure.Retryable || noNeedRetry {
 		sender.addErrorMessageToBatchAttempt(batch, err, false)
 		sender.FailedCallback(batch)
 
@@ -148,7 +171,7 @@ func (sender *Sender) handleFailure(batch *Batch, err error) {
 
 func (sender *Sender) FailedCallback(batch *Batch) {
 	level.Info(sender.logger).Log("msg", "sendToServer failed,Execute failed callback function")
-	defer atomic.AddInt64(&sender.producer.producerLogGroupSize, -batch.totalDataSize)
+	sender.producer.releaseBatchResources(batch)
 
 	for _, callBack := range batch.callBackList {
 		callBack.Fail(batch.result)
@@ -157,7 +180,8 @@ func (sender *Sender) FailedCallback(batch *Batch) {
 
 func (sender *Sender) addErrorMessageToBatchAttempt(producerBatch *Batch, err error, retryInfo bool) {
 	if producerBatch.attemptCount < producerBatch.maxReservedAttempts {
-		tlsError, ok := err.(*Error)
+		var tlsError *Error
+		ok := errors.As(err, &tlsError)
 		var attempt *Attempt
 		if ok {
 			if retryInfo {

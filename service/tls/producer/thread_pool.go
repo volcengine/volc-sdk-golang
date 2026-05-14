@@ -50,21 +50,61 @@ func (threadPool *ThreadPool) handleBatch(batch *Batch) {
 	if batch == nil {
 		return
 	}
+	sender := threadPool.sender
+	if sender == nil {
+		return
+	}
 
+	select {
+	case sender.maxSender <- 1:
+	case <-threadPool.forceQuitCh:
+		if sender.producer != nil {
+			sender.producer.releaseBatchResources(batch)
+		}
+		return
+	}
+	select {
+	case <-threadPool.forceQuitCh:
+		<-sender.maxSender
+		if sender.producer != nil {
+			sender.producer.releaseBatchResources(batch)
+		}
+		return
+	default:
+	}
 	threadPool.ioWaitGroup.Add(1)
-	threadPool.sender.maxSender <- 1
 
 	go func(batch *Batch) {
 		defer func() {
 			if r := recover(); r != nil {
 				fmt.Printf("panic happens: %v", r)
+				if sender.producer != nil {
+					sender.producer.releaseBatchResources(batch)
+				}
 			}
 		}()
 		defer func() {
 			threadPool.ioWaitGroup.Done()
-			<-threadPool.sender.maxSender
+			<-sender.maxSender
 		}()
 
-		threadPool.sender.sendToServer(batch)
+		sender.sendToServer(batch)
 	}(batch)
+}
+
+func (threadPool *ThreadPool) releasePending() {
+	if threadPool == nil || threadPool.sender == nil || threadPool.sender.producer == nil {
+		return
+	}
+	for {
+		select {
+		case batch, ok := <-threadPool.taskChan:
+			if !ok {
+				return
+			}
+			threadPool.sender.producer.releaseBatchResources(batch)
+		default:
+			return
+		}
+	}
 }

@@ -175,6 +175,63 @@ func TestProducerDispatchSplitsLogGroupBy10000InOneRequest(t *testing.T) {
 	}
 }
 
+func TestProducerBatchTotalDataSizeMatchesProtobufForMixedGroups(t *testing.T) {
+	producerConfig := GetDefaultProducerConfig()
+	producerConfig.EnableNanosecond = true
+	producerConfig.MaxBatchSize = MaxBatchSize
+	producerConfig.MaxBatchCount = MaxBatchCount
+
+	p := &producer{
+		closeCh: make(chan struct{}),
+		config:  producerConfig,
+		logger:  log.NewNopLogger(),
+	}
+	threadPool := &ThreadPool{
+		taskChan: make(chan *Batch, 10),
+	}
+	sender := &Sender{
+		retryQueue: newRetryQueue(),
+	}
+	dispatcher := initDispatcher(producerConfig, sender, log.NewNopLogger(), threadPool, p)
+
+	inputs := []struct {
+		key BatchKey
+		log *pb.Log
+	}{
+		{
+			key: BatchKey{Topic: "t", Source: "s1", FileName: "f1", ContextFlow: "ctx1"},
+			log: &pb.Log{Time: 0, Contents: []*pb.LogContent{
+				{Key: "k", Value: strings.Repeat("a", 127)},
+			}},
+		},
+		{
+			key: BatchKey{Topic: "t", Source: "s1", FileName: "f1", ContextFlow: "ctx1"},
+			log: &pb.Log{Time: 1, Contents: []*pb.LogContent{
+				{Key: "k", Value: strings.Repeat("b", 128)},
+				{Key: "k2", Value: strings.Repeat("c", 4096)},
+			}},
+		},
+		{
+			key: BatchKey{Topic: "t", Source: "s2", FileName: "f2", ContextFlow: "ctx2"},
+			log: &pb.Log{Time: 1_700_000_000_000, Contents: []*pb.LogContent{
+				{Key: strings.Repeat("k", 20), Value: strings.Repeat("d", 16_384)},
+			}},
+		},
+	}
+
+	for _, input := range inputs {
+		dispatcher.handleLogs(&BatchLog{Key: input.key, Log: input.log})
+	}
+
+	dispatcher.lock.Lock()
+	defer dispatcher.lock.Unlock()
+	for key, batch := range dispatcher.logGroupData {
+		if got, want := batch.totalDataSize, int64(batch.logGroupList.Size()); got != want {
+			t.Fatalf("batch %q totalDataSize mismatch: got %d want %d", key, got, want)
+		}
+	}
+}
+
 func TestProducerRejectsSingleLogOverMaxBatchSize(t *testing.T) {
 	makeLog := func(payloadBytes int) *pb.Log {
 		return &pb.Log{
