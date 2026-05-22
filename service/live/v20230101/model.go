@@ -1,5 +1,7 @@
 package live_v20230101
 
+type CreateSubtitleTranscodePresetBodyPositionRelative string
+
 type BindCertBody struct {
 
 	// REQUIRED; 需要绑定的 HTTPS 证书的证书链 ID，可以通过查询证书列表 [https://www.volcengine.com/docs/6469/1126822]接口获取。
@@ -139,9 +141,11 @@ type Components1404CjzSchemasListvhostrecordpresetv2ResPropertiesResultPropertie
 }
 
 // Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguage
-// - 原文字幕展示参数配置。
+// - 原文字幕配置。
 type Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguage struct {
 	Border Components1O8E0AlSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBorder `json:"Border"`
+
+	Box ComponentsB25ZbwSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBox `json:"Box"`
 
 	Display bool `json:"Display"`
 
@@ -149,7 +153,13 @@ type Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResult
 
 	FontColor string `json:"FontColor"`
 
-	Language string `json:"Language"`
+	FontSize int32 `json:"FontSize"`
+
+	Language *string `json:"Language,omitempty"`
+
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
 type Components1B7Y2U1SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutputPropertiesHlsourceclipsItems struct {
@@ -161,13 +171,35 @@ type Components1B7Y2U1SchemasDescribehighlighttaskbyaccountidresPropertiesResult
 type Components1C398ShSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesTargetlanguageItems struct {
 	Border ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBorder `json:"Border"`
 
+	Box ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBox `json:"Box"`
+
 	FontColor string `json:"FontColor"`
+
+	FontSize int32 `json:"FontSize"`
 
 	Hidden bool `json:"Hidden"`
 
-	Language string `json:"Language"`
+	ShowPriority int32 `json:"ShowPriority"`
 
 	Font *string `json:"Font,omitempty"`
+
+	Language *string `json:"Language,omitempty"`
+
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+}
+
+// Components1FoorfqSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBorder
+// - 原文字幕字体阴影。
+type Components1FoorfqSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBorder struct {
+	Color *string `json:"Color,omitempty"`
+
+	Width *float32 `json:"Width,omitempty"`
+}
+
+type Components1Htc4EuSchemasGetsubtitletranscodepresetconfigresPropertiesResultPropertiesDataPropertiesFontAdditionalproperties struct {
+	Alias *string `json:"Alias,omitempty"`
+
+	Lang []*string `json:"Lang,omitempty"`
 }
 
 type Components1Nf1A8CSchemasListpulltopushtaskv2ResPropertiesResultPropertiesListItemsPropertiesVodsrcaddrsItems struct {
@@ -179,11 +211,11 @@ type Components1Nf1A8CSchemasListpulltopushtaskv2ResPropertiesResultPropertiesLi
 }
 
 // Components1O8E0AlSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBorder
-// - 原文字幕的字体描边配置。
+// - 原文字幕字体阴影。
 type Components1O8E0AlSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBorder struct {
 	Color string `json:"Color"`
 
-	Width int32 `json:"Width"`
+	Width float32 `json:"Width"`
 }
 
 type Components1Pvao98SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutput struct {
@@ -265,6 +297,14 @@ type ComponentsAoysk3SchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	VODParam *ComponentsS0Ofr3SchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesHlsparamPropertiesVodparam `json:"VODParam,omitempty"`
 }
 
+// ComponentsB25ZbwSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBox
+// - 原文字幕字体背景。
+type ComponentsB25ZbwSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguagePropertiesBox struct {
+	Color string `json:"Color"`
+
+	W float32 `json:"W"`
+}
+
 // ComponentsBbqv7RSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparamPropertiesTosparam
 // - TOS 存储相关配置。
 type ComponentsBbqv7RSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesFlvparamPropertiesTosparam struct {
@@ -281,6 +321,8 @@ type ComponentsBbqv7RSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 // - 声影同传模式配置。
 type ComponentsF0B6B8SchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSiconfig struct {
 	Enable bool `json:"Enable"`
+
+	PipeExtra string `json:"PipeExtra"`
 
 	DigitalHumanMouthShape *bool `json:"DigitalHumanMouthShape,omitempty"`
 
@@ -343,15 +385,21 @@ type ComponentsHqpv97SchemasDescribehighlighttaskbyaccountidresPropertiesResultP
 	ClipURL *string `json:"ClipUrl,omitempty"`
 }
 
+type ComponentsImc9MrSchemasGetspeechconfigresPropertiesResultPropertiesDataPropertiesFontAdditionalproperties struct {
+	Alias *string `json:"Alias,omitempty"`
+
+	Lang []*string `json:"Lang,omitempty"`
+}
+
 // ComponentsJ1MbxoSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesPosition
-// - 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-// :::tip
-// * 使用预设配置时，字幕位置设置不生效。
-// * 不使用预设配置时，字幕位置设置必填。 :::
+// - 字幕位置。
+// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
 type ComponentsJ1MbxoSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesPosition struct {
 	MarginHorizontal float32 `json:"MarginHorizontal"`
 
 	MarginVertical float32 `json:"MarginVertical"`
+
+	Relative string `json:"Relative"`
 }
 
 // ComponentsK46Cw0SchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpegparamPropertiesImagexparam
@@ -398,6 +446,18 @@ type ComponentsKqy98ZSchemasListvhostrecordpresetv2ResPropertiesResultProperties
 	VODParam *ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam `json:"VODParam,omitempty"`
 }
 
+// ComponentsL3CaumSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSubtitletosconfig
+// - 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+type ComponentsL3CaumSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSubtitletosconfig struct {
+	Bucket *string `json:"Bucket,omitempty"`
+
+	Enable *bool `json:"Enable,omitempty"`
+
+	Region *string `json:"Region,omitempty"`
+
+	StorageDir *string `json:"StorageDir,omitempty"`
+}
+
 // ComponentsQms0JiSchemasListvhostrecordpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesRecordpresetconfigPropertiesMp4ParamPropertiesVodparam
 // - VOD 存储相关配置
 // 说明
@@ -442,6 +502,14 @@ type ComponentsSlabtaSchemasListvhostsnapshotpresetv2ResPropertiesResultProperti
 	Enable      *bool                                                                                                                                                                                      `json:"Enable,omitempty"`
 	ImageXParam *Components1UxazjaSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesImagexparam `json:"ImageXParam,omitempty"`
 	TOSParam    *Components1Tzc8QlSchemasListvhostsnapshotpresetv2ResPropertiesResultPropertiesPresetlistItemsPropertiesSlicepresetv2PropertiesSnapshotpresetconfigPropertiesJpgparamPropertiesTosparam    `json:"TOSParam,omitempty"`
+}
+
+// ComponentsXx0WuhSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBox
+// - 原文字幕字体背景。
+type ComponentsXx0WuhSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBox struct {
+	Color *string `json:"Color,omitempty"`
+
+	W *float32 `json:"W,omitempty"`
 }
 
 type ContinuePullToPushTaskBody struct {
@@ -2534,14 +2602,18 @@ type CreateSpeechTaskBodyRule struct {
 	// 任务结束时间，注意默认任务最多运行3天
 	EndTime *string `json:"EndTime,omitempty"`
 
-	// 额外配置。
+	// 额外配置。 :::tip 建议仅在开启同传声音时传入该参数。有关同传声音的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1976224?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::
 	Extra *CreateSpeechTaskBodyRuleExtra `json:"Extra,omitempty"`
 
-	// 热词表，key为原文热词，value对应译文
-	GlossaryMap map[string]interface{} `json:"GlossaryMap,omitempty"`
+	// 热词，仅在ASR模式下有效
+	HotWords []*string `json:"HotWords,omitempty"`
 
 	// 当pipe为realtime时有效
 	RealTime *CreateSpeechTaskBodyRuleRealTime `json:"RealTime,omitempty"`
+
+	// 替换词表，key为目标词，value对应需要替换的词语，当前仅支持翻译语言内容的替换
+	ReplaceMap map[string]interface{} `json:"ReplaceMap,omitempty"`
 
 	// 当pipe为si时有效
 	SI *CreateSpeechTaskBodyRuleSI `json:"SI,omitempty"`
@@ -2553,18 +2625,37 @@ type CreateSpeechTaskBodyRule struct {
 	Subtitle *CreateSpeechTaskBodyRuleSubtitle `json:"Subtitle,omitempty"`
 }
 
-// CreateSpeechTaskBodyRuleExtra - 额外配置。
+// CreateSpeechTaskBodyRuleExtra - 额外配置。 :::tip 建议仅在开启同传声音时传入该参数。有关同传声音的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1976224?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+// :::
 type CreateSpeechTaskBodyRuleExtra struct {
 
 	// 混音配置
 	AMix *CreateSpeechTaskBodyRuleExtraAMix `json:"AMix,omitempty"`
+
+	// 音伴分离相关参数，si模式下可设置
+	Separator *CreateSpeechTaskBodyRuleExtraSeparator `json:"Separator,omitempty"`
 }
 
 // CreateSpeechTaskBodyRuleExtraAMix - 混音配置
 type CreateSpeechTaskBodyRuleExtraAMix struct {
 
+	// 音量均衡开关，默认打开，如果需要关闭填入false
+	AudioEnhance *bool `json:"AudioEnhance,omitempty"`
+
 	// 背景音降低
 	BGVolume *float32 `json:"BGVolume,omitempty"`
+}
+
+// CreateSpeechTaskBodyRuleExtraSeparator - 音伴分离相关参数，si模式下可设置
+type CreateSpeechTaskBodyRuleExtraSeparator struct {
+
+	// 降噪模式，默认为0，当设置为1时增强降噪能力，注意可能会导致背景音消失
+	HandleType *int32 `json:"HandleType,omitempty"`
+
+	// 是否用同传声音替换原声。默认值为 false。取值如下：
+	// * true：完全移除原声，只输出翻译后的声音。适用于不需要听到原声的场景。
+	// * false：在保留原声的同时，叠加翻译声音。常用于赛事直播等需要保留现场感的场景。 :::tip 仅在Pipe取值为realtime时生效。 :::
+	Separator *bool `json:"Separator,omitempty"`
 }
 
 // CreateSpeechTaskBodyRuleOutput - 转推配置。
@@ -2601,11 +2692,30 @@ type CreateSpeechTaskBodyRuleSubtitle struct {
 	// REQUIRED; 原文字幕配置
 	Original CreateSpeechTaskBodyRuleSubtitleOriginal `json:"Original"`
 
-	// REQUIRED; 目前只支持传入一个目标语种
-	Translation []CreateSpeechTaskBodyRuleSubtitleTranslationItem `json:"Translation"`
+	// 热词表，key为原文热词，value对应译文
+	GlossaryMap *CreateSpeechTaskBodyRuleSubtitleGlossaryMap `json:"GlossaryMap,omitempty"`
 
 	// 设置字幕位置
 	Position *CreateSpeechTaskBodyRuleSubtitlePosition `json:"Position,omitempty"`
+
+	// 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+	SubtitleTosConfig *CreateSpeechTaskBodyRuleSubtitleSubtitleTosConfig `json:"SubtitleTosConfig,omitempty"`
+
+	// 目前只支持传入一个目标语种
+	Translation []*CreateSpeechTaskBodyRuleSubtitleTranslationItem `json:"Translation,omitempty"`
+}
+
+// CreateSpeechTaskBodyRuleSubtitleGlossaryMap - 热词表，key为原文热词，value对应译文
+type CreateSpeechTaskBodyRuleSubtitleGlossaryMap struct {
+
+	// REQUIRED
+	Field54958 string `json:"Field_54958"`
+
+	// REQUIRED
+	Field79738 string `json:"Field_79738"`
+
+	// OPTIONAL; Contains additional key/value pairs not defined in the schema.
+	AdditionalProperties map[string]*string
 }
 
 // CreateSpeechTaskBodyRuleSubtitleOriginal - 原文字幕配置
@@ -2651,7 +2761,7 @@ type CreateSpeechTaskBodyRuleSubtitleOriginalBorder struct {
 	// REQUIRED; 颜色
 	Color string `json:"Color"`
 
-	// REQUIRED; 宽度。单位为 px。
+	// REQUIRED; 宽度。单位为 px。建议取值范围为 [1,10]。
 	W float32 `json:"W"`
 }
 
@@ -2661,7 +2771,7 @@ type CreateSpeechTaskBodyRuleSubtitleOriginalBox struct {
 	// REQUIRED; 颜色
 	Color string `json:"Color"`
 
-	// REQUIRED; 宽度。默认值为 1.0。单位为 px。
+	// REQUIRED; 宽度。单位为 px。建议取值范围为 [1,10]。
 	W float32 `json:"W"`
 }
 
@@ -2678,51 +2788,79 @@ type CreateSpeechTaskBodyRuleSubtitlePosition struct {
 	Relative *string `json:"Relative,omitempty"`
 }
 
+// CreateSpeechTaskBodyRuleSubtitleSubtitleTosConfig - 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+type CreateSpeechTaskBodyRuleSubtitleSubtitleTosConfig struct {
+
+	// tos桶名称
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 是否生成字幕 SRT 文件。默认值为 false。取值如下：
+	// * true：生成。
+	// * false：不生成。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// tos桶区域，如：cn-beijing、cn-guangzhou、cn-shanghai
+	Region *string `json:"Region,omitempty"`
+
+	// 文件夹地址
+	StorageDir *string `json:"StorageDir,omitempty"`
+}
+
 type CreateSpeechTaskBodyRuleSubtitleTranslationItem struct {
 
 	// REQUIRED; 目标语种
 	Language string `json:"Language"`
 
-	// 字幕对齐方式。默认值为 0。取值如下：
+	// 译文字幕对齐方式。默认值为 0。取值如下：
 	// * 0：居中对齐。
 	// * 1：左对齐。
 	// * 2：右对齐。
 	Alignment *int32 `json:"Alignment,omitempty"`
 
-	// 字体阴影。
+	// 译文字幕字体阴影。
 	Border *CreateSpeechTaskBodyRuleSubtitleTranslationItemBorder `json:"Border,omitempty"`
 
-	// 字体背景。
+	// 译文字幕字体背景。
 	Box *CreateSpeechTaskBodyRuleSubtitleTranslationItemBox `json:"Box,omitempty"`
 
-	// 字体，默认值为 arial。可通过 GetSpeechConfig [https://www.volcengine.com/docs/6469/1978525] 获取当前账号下可使用的字体列表。
+	// 译文字幕字体，默认值为 arial。可通过 GetSpeechConfig [https://www.volcengine.com/docs/6469/1978525] 的 Font 获取当前账号下可使用的字体列表，并传入 Key 值。
 	Font *string `json:"Font,omitempty"`
 
-	// 字体颜色。默认白色。 使用以下任一方式表示颜色值：
-	// * 颜色的英文名称，例如red表示红色。
-	// * 十六进制颜色代码，例如#FF0000表示红色。
-	// * R:G:B:A 颜色值，格式为红:绿:蓝:透明度，每个值的取值范围为 [0,255]，例如255:0:0:128表示半透明的红色。
+	// 译文字幕的字体颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// 或 #FF0000@0.5。
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
 	FontColor *string `json:"FontColor,omitempty"`
 
-	// 字号。默认值为 40。取值范围为 [1,100]。
+	// 译文字幕字号。默认值为 40。取值范围为 [1,100]。
 	FontSize *int32 `json:"FontSize,omitempty"`
 
-	// 是否隐藏字幕。默认值为 false。取值如下：
-	// * true：隐藏字幕。
-	// * false：显示字幕。
+	// 是否隐藏译文字幕。默认值为 false。取值如下：
+	// * true：隐藏译文字幕。
+	// * false：显示译文字幕。
 	Hidden *bool `json:"Hidden,omitempty"`
 
-	// 每行字幕的最大字符数。默认值为 60。建议取值 60。
+	// 译文每行字幕的最大字符数。默认值为 60。建议取值 60。 :::tip
+	// * 系统会综合您传入的该参数取值以及 MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果译文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当译文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// :::
 	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
 
-	// 译文字幕展示的最大行数，0 表示不限制行数。 :::tip 原文和译文的行数限制单独计算。 :::
+	// 译文字幕最多显示的行数。默认值为 0。取值如下：
+	// * 0：根据字幕总字数和每行最大字符数自动换行，确保内容完整显示。
+	// * 1：每种语言的字幕最多显示一行，内容可能被截断。
+	// * 2：每种语言的字幕最多显示两行，内容可能被截断。 :::tip 原文和译文的行数限制单独计算。 :::
 	MaxRowNumber *int32 `json:"MaxRowNumber,omitempty"`
 
-	// 展示优先级。默认原文字幕在上，译文字幕在下。取值越大，优先级越高。
+	// 译文字幕的展示优先级。默认原文字幕在上，译文字幕在下。 取值越大，优先级越高。例如原文字幕的 ShowPriority 为 1，译文字幕的 ShowPriority 为 2，则译文字幕在上，原文字幕在下。
 	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
-// CreateSpeechTaskBodyRuleSubtitleTranslationItemBorder - 字体阴影。
+// CreateSpeechTaskBodyRuleSubtitleTranslationItemBorder - 译文字幕字体阴影。
 type CreateSpeechTaskBodyRuleSubtitleTranslationItemBorder struct {
 
 	// REQUIRED
@@ -2732,7 +2870,7 @@ type CreateSpeechTaskBodyRuleSubtitleTranslationItemBorder struct {
 	W float32 `json:"W"`
 }
 
-// CreateSpeechTaskBodyRuleSubtitleTranslationItemBox - 字体背景。
+// CreateSpeechTaskBodyRuleSubtitleTranslationItemBox - 译文字幕字体背景。
 type CreateSpeechTaskBodyRuleSubtitleTranslationItemBox struct {
 
 	// REQUIRED
@@ -2778,68 +2916,104 @@ type CreateSpeechTaskResResultData struct {
 
 type CreateSubtitleTranscodePresetBody struct {
 
-	// REQUIRED; 应用名称，取值与直播流地址中 AppName 字段取值相同。支持由大小写字母（A - Z、a - z）、数字（0 - 9）、下划线（_）、短横线（-）和句点（.）组成，长度为 1 到 30 个字符。
+	// REQUIRED; 推流地址的 AppName。例如推流地址为 rtmp://push.example.com/live/test?authinfo，则 AppName 为 live。 :::warning 确保与转码配置的 AppName
+	// 保持一致。 :::
 	App string `json:"App"`
 
 	// REQUIRED; 源语言参数
 	SourceLanguage CreateSubtitleTranscodePresetBodySourceLanguage `json:"SourceLanguage"`
 
-	// REQUIRED; 关联的转码配置后缀，一个字幕配置支持关联多个转码配置后缀。
+	// REQUIRED; 字幕后缀。您可以在源流地址后拼接此后缀，为您的原始直播流直接添加字幕、同传声音等效果，不改变分辨率和码率等。 如需自定义该字幕后缀，您必须以短横线（-）或下划线（_）开头，长度为 1-100 个字符，并支持以下字符：
+	// * 大写字母 A - Z
+	// * 小写字母 a - z
+	// * 短横线（-）
+	// * 下划线（_）
+	// 示例：
+	// * 源流地址：rtmp://pull.example.com/live/test
+	// * 字幕流（包含字幕、同传声音等效果的源流）地址：rtmp://pull.example.com/live/test_subtitle
+	SuffixName string `json:"SuffixName"`
+
+	// REQUIRED; 当前 AppName 下的一个或多个转码后缀，为转码流添加字幕、同传声音等效果。这样，观众在切换清晰度时，也能体验到字幕、同传声音等效果。 您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853?lang=zh]，并通过
+	// SuffixName 参数获取转码后缀。 :::warningAppName
+	// 下的每个转码后缀，仅能绑定一个字幕配置。 ::: 示例：
+	// * 源流地址：rtmp://pull.example.com/live/test
+	// * 转码流（包含字幕、同传声音等效果）地址：rtmp://pull.example.com/live/test_hd
 	Suffixes []string `json:"Suffixes"`
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	// REQUIRED; 推拉流域名所属的域名空间。 通过以下任一方式，获取域名空间：
+	// * 调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口，通过返回参数 Vhost 获取。
+	// * 在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，通过域名空间字段获取。
 	Vhost string `json:"Vhost"`
+
+	// 播出延迟时长，以保证同传声音和字幕的翻译处理完成。取值范围为 [0,60]，单位为秒。 不同功能的建议取值如下：
+	// * si： * 同时开启数字人口型、同传声音、字幕时：20。
+	// * 同时开启同传声音、字幕时：12。
+	//
+	//
+	// * mix： * 整句出字方式原文 ASR 字幕：15。
+	// * 字幕翻译：8。
+	//
+	//
+	// * realtime（实时流式原文 ASR 字幕）：2或3。
+	// 有关具体功能的参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288711?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::tip
+	// * 如果字幕出现的时间要早于原声或画面，可适当降低播出延迟时长，让字幕与原声或画面对齐，反之亦然。
+	// * 该参数仅当 SIConfig 下的Enable取值为true时生效。 :::
+	Delay *int32 `json:"Delay,omitempty"`
 
 	// 字幕配置的描述信息。
 	Description *string `json:"Description,omitempty"`
 
-	// 预设配置，使用预设配置是系统将自动对字体大小、字幕行数、每行最大字符数和边距参数（MarginVertical 和 MarginHorizontal）进行智能化适配。默认为空，表示不使用预设配置，支持的预设配置如下所示。
+	// （不推荐使用）预设效果，用于快速配置。 传入该参数后，系统将自动对 Font（字体）、MaxRowNumber（字幕行数）、MaxCharNumber（每行最大字符数）、Position（左右边距和底部边距）进行智能化适配，且 MaxRowNumber、MaxCharNumber
+	// 和 Position 参数不再生效。默认为空，表示不使用预设效果。取值如下：
 	// * small ：小字幕。
 	// * medium：中字幕。
-	// * large：大字幕。 :::tip 使用预设配置时，字幕行数、每行最大字符数、左右边距和底部边距参数不生效，系统将使用预设配置自动进行计算。 :::
+	// * large：大字幕。
 	DisplayPreset *string `json:"DisplayPreset,omitempty"`
 
 	// 翻译热词对照列表，使用:符号分割，例如 Cook:库克
 	GlossaryWordList []*string `json:"GlossaryWordList,omitempty"`
 
-	// 原文字幕识别时使用的热词词库，总长度不超过为 10000 个字符，默认为空。
+	// 热词列表。默认为空。 传入热词（如产品名、流行语），可以提升语音识别准确率。热词需与原文语言一致，热词之间用英文逗号（,）隔开。总字符数不超过 3 万。 :::tip 仅原文 ASR 字幕生效。有关原文 ASR 字幕的相关参数配置，详见使用说明
+	// [https://www.volcengine.com/docs/6469/1288711?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。 :::
 	HotWordList []*string `json:"HotWordList,omitempty"`
 
-	// 设置在 16:9 分辨率场景下，每行字幕展示的最大字符数。 :::tip
-	// * 使用预设配置时，字幕每行最大字符数设置不生效。
-	// * 不使用预设配置时，字幕每行最大字符数必填。
-	// * 每个文字、字母、符号或数字均为一个字符。
-	// * 当屏幕分辨率改变时，屏幕上显示的每行文字数量会相应调整，以适应新的分辨率，确保文字的显示效果和阅读体验。 :::
-	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
-
-	// 字幕展示的行数，同时适用于原文字幕和译文字幕，支持的取值及含义如下所示。
-	// * 0：（默认值）根据字幕字数自动进行分行展示；
-	// * 1：每种字幕展示一行；
-	// * 2：每种字幕展示两行。 :::tip
-	// * 使用预设配置时，字幕行数为自动分行展示。
-	// * 超出行内字数限制时表示字幕将超过显示范围，此时字幕内容将被截断。 :::
+	// 每种语言字幕最多显示的行数。默认值为 0。取值如下：
+	// * 0：根据字幕总字数和每行最大字符数自动换行，确保内容完整显示。
+	// * 1：每种语言的字幕最多显示一行，内容可能被截断。
+	// * 2：每种语言的字幕最多显示两行，内容可能被截断。 :::tip
+	// * 如传入 DisplayPreset（预设效果配置），该参数取值固定为 0。
+	// * 该参数分别应用于原文和译文。原文和译文的行数限制单独计算。 :::
 	MaxRowNumber *int32 `json:"MaxRowNumber,omitempty"`
 
-	// 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-	// :::tip
-	// * 使用预设配置时，字幕位置设置不生效。
-	// * 不使用预设配置时，字幕位置设置必填。 :::
+	// 字幕位置。
+	// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
 	Position *CreateSubtitleTranscodePresetBodyPosition `json:"Position,omitempty"`
 
-	// 字幕配置的名称，不可以与其他已有的配置名称重复。默认为空，表示由系统将自动分配配置名称。
-	PresetName *string `json:"PresetName,omitempty"`
+	// 易错词列表。默认为空。 如果您在传入 GlossaryWordList（关键词）或 HotWordList（热词）后，仍然存在错译或原文字幕识别错误的情况，可选择传入易错词。格式为"目标词":"替换词"，每个"目标词":"替换词"之间用英文逗号（,）隔开。每个目标词或替换词长度为
+	// 1-10 个字符，最多可传入 60 对"目标词":"替换词"。
+	// 只要译文/原文字幕中包含您设置的目标词，系统就会自动将其替换为替换词。
+	// * 字幕翻译和同传声音示例：当 Tim 被错译为蒂姆或提姆时，您可以传入 {"蒂姆":"Tim","提姆":"Tim"}。这样，在译文字幕中，Tim 就不再会被错译成蒂姆或提姆，确保了翻译的准确性。
+	// * 原文 ASR 字幕示例：当 word 被错误识别为 world 时，您可以传入 {"world":"word"}。这样，在原文字幕中，word 就不再会被错误识别为 world，确保了字幕识别的准确性。 :::tip
+	// * 目标词和替换词本身不可包含英文逗号（,）。
+	// * 有关字幕翻译、同传声音和原文 ASR 字幕的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288711?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::
+	ReplaceMap map[string]interface{} `json:"ReplaceMap,omitempty"`
 
 	// 声影同传模式配置。
 	SIConfig *CreateSubtitleTranscodePresetBodySIConfig `json:"SIConfig,omitempty"`
 
-	// 译文字幕展示参数配置列表，当前最多支持配置一种译文。
+	// 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+	SubtitleTosConfig *CreateSubtitleTranscodePresetBodySubtitleTosConfig `json:"SubtitleTosConfig,omitempty"`
+
+	// 译文字幕配置。 :::tip
+	// * 目前每次调用仅支持传入一种语言的字幕。
+	// * SIConfig 下的 Enable 取值为 true 时，原文与译文必须配置不同的语言。 :::
 	TargetLanguage []*CreateSubtitleTranscodePresetBodyTargetLanguageItem `json:"TargetLanguage,omitempty"`
 }
 
-// CreateSubtitleTranscodePresetBodyPosition - 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-// :::tip
-// * 使用预设配置时，字幕位置设置不生效。
-// * 不使用预设配置时，字幕位置设置必填。 :::
+// CreateSubtitleTranscodePresetBodyPosition - 字幕位置。
+// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
 type CreateSubtitleTranscodePresetBodyPosition struct {
 
 	// 左右边距，[0,0.2]
@@ -2847,6 +3021,9 @@ type CreateSubtitleTranscodePresetBodyPosition struct {
 
 	// 上下边距
 	MarginVertical *float32 `json:"MarginVertical,omitempty"`
+
+	// MarginVertical是相对顶部或底部,默认底部
+	Relative *CreateSubtitleTranscodePresetBodyPositionRelative `json:"Relative,omitempty"`
 }
 
 // CreateSubtitleTranscodePresetBodySIConfig - 声影同传模式配置。
@@ -2858,11 +3035,14 @@ type CreateSubtitleTranscodePresetBodySIConfig struct {
 	// 是否开启声影同传模式
 	Enable *bool `json:"Enable,omitempty"`
 
-	// 指定模式，可选 mix、si 字段；mix代表纯字幕模式，si代表同传模式，可打开唇形替换功能
+	// 指定模式，可选 mix、si 字段；mix代表纯字幕模式，si代表同传模式，可打开唇形替换功能; realtime代表实时模式，可使用流式ASR能力
 	Pipe *string `json:"Pipe,omitempty"`
 
+	// 额外配置，参考xxx
+	PipeExtra *string `json:"PipeExtra,omitempty"`
+
 	// 是否开启同传声音功能。默认为空。取值如下：
-	// * 大于 0：开启。开启后，将提供带有音色复刻效果的翻译语音。
+	// * 大于 0：开启。开启后，将使用带有音色复刻效果的翻译语音替换直播原声。
 	// * 等于 0：关闭。 :::tip 仅在Pipe取值为空或si时生效。 :::
 	SpeakerRecognition *int32 `json:"SpeakerRecognition,omitempty"`
 }
@@ -2876,28 +3056,80 @@ type CreateSubtitleTranscodePresetBodySourceLanguage struct {
 	// REQUIRED; 字体
 	Font string `json:"Font"`
 
-	// REQUIRED; 字体颜色
-	FontColor string `json:"FontColor"`
-
-	// REQUIRED; 原文字幕的语言，取值及含义如下所示。
-	// * zh：中英混合；
-	// * en：英语；
-	// * ko：韩语；
-	// * ja：日语。
-	Language string `json:"Language"`
-
 	// 字幕阴影配置
 	Border *CreateSubtitleTranscodePresetBodySourceLanguageBorder `json:"Border,omitempty"`
+
+	// 原文字幕字体背景。
+	Box *CreateSubtitleTranscodePresetBodySourceLanguageBox `json:"Box,omitempty"`
+
+	// 字体颜色
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 字体大小
+	FontSize *int32 `json:"FontSize,omitempty"`
+
+	// 原文字幕语言。
+	// * 当 SIConfig 下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// OriginalLang 获取当前账号字幕翻译和同传声音可使用的原文字幕语言，或通过该接口的AsrLang获取当前账号可使用的原文
+	// ASR 字幕语言，并传入Key值。
+	// * 当 SIConfig 下的 Enable 取值为 false 使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 原文每行字幕的最大字符数。默认值为 60。建议取值 60。
+	// :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果原文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当原文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 原文字幕的展示优先级。默认原文字幕在上，译文字幕在下。 取值越大，优先级越高。例如原文字幕的 ShowPriority 为 1，译文字幕的 ShowPriority 为 2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
 // CreateSubtitleTranscodePresetBodySourceLanguageBorder - 字幕阴影配置
 type CreateSubtitleTranscodePresetBodySourceLanguageBorder struct {
 
+	// REQUIRED; 阴影颜色
+	Color string `json:"Color"`
+
 	// REQUIRED; 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
 	Width float32 `json:"Width"`
+}
 
-	// 阴影颜色
-	Color *string `json:"Color,omitempty"`
+// CreateSubtitleTranscodePresetBodySourceLanguageBox - 原文字幕字体背景。
+type CreateSubtitleTranscodePresetBodySourceLanguageBox struct {
+
+	// REQUIRED; 颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// 或 #FF0000@0.5。
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
+	Color string `json:"Color"`
+
+	// REQUIRED; 宽度。单位为 px。建议取值范围为 [1,10]。
+	W float32 `json:"W"`
+}
+
+// CreateSubtitleTranscodePresetBodySubtitleTosConfig - 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+type CreateSubtitleTranscodePresetBodySubtitleTosConfig struct {
+
+	// tos桶名称
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 是否开启生成srt文件
+	Enable *bool `json:"Enable,omitempty"`
+
+	// tos桶区域，如：cn-beijing、cn-guangzhou、cn-shanghai
+	Region *string `json:"Region,omitempty"`
+
+	// 文件夹地址
+	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
 type CreateSubtitleTranscodePresetBodyTargetLanguageItem struct {
@@ -2908,38 +3140,54 @@ type CreateSubtitleTranscodePresetBodyTargetLanguageItem struct {
 	// REQUIRED; 字体颜色，覆盖全局参数
 	FontColor string `json:"FontColor"`
 
-	// REQUIRED; 译文字幕的语言，取值及含义如下所示。
-	// * zh：中英混合；
-	// * zh-Hant：繁体中文；
-	// * en：英语；
-	// * ko：韩语；
-	// * ja：日语；
-	// * ar：阿拉伯语；
-	// * de：德语；
-	// * es：西班牙语；
-	// * fr：法语；
-	// * hi：印地语；
-	// * pt：葡萄牙语；
-	// * ru：俄语；
-	// * vi：越南语；
-	// * th：泰语。
-	Language string `json:"Language"`
-
 	// 字幕阴影配置
 	Border *CreateSubtitleTranscodePresetBodyTargetLanguageItemBorder `json:"Border,omitempty"`
 
+	// 译文字幕字体背景。
+	Box *CreateSubtitleTranscodePresetBodyTargetLanguageItemBox `json:"Box,omitempty"`
+
+	// 字体大小，覆盖全局参数
+	FontSize *int32 `json:"FontSize,omitempty"`
+
 	// 是否隐藏该字幕
 	Hidden *bool `json:"Hidden,omitempty"`
+
+	// 译文字幕语言。
+	// * 当 SIConfig 下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// Lang 获取当前账号下可使用的译文字幕语言，并传入 Key 值。
+	// * 当 SIConfig 下的 Enable 取值为 false 使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 译文每行字幕的最大字符数。默认值为 60。建议取值 60。 :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果译文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当译文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 译文字幕的展示优先级。默认原文字幕在上，译文字幕在下。 取值越大，优先级越高。例如原文字幕的 ShowPriority 为 1，译文字幕的 ShowPriority 为 2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
 // CreateSubtitleTranscodePresetBodyTargetLanguageItemBorder - 字幕阴影配置
 type CreateSubtitleTranscodePresetBodyTargetLanguageItemBorder struct {
 
+	// REQUIRED; 阴影颜色
+	Color string `json:"Color"`
+
 	// REQUIRED; 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
 	Width float32 `json:"Width"`
+}
 
-	// 阴影颜色
-	Color *string `json:"Color,omitempty"`
+// CreateSubtitleTranscodePresetBodyTargetLanguageItemBox - 译文字幕字体背景。
+type CreateSubtitleTranscodePresetBodyTargetLanguageItemBox struct {
+
+	// REQUIRED
+	Color string   `json:"Color"`
+	W     *float32 `json:"W,omitempty"`
 }
 
 type CreateSubtitleTranscodePresetRes struct {
@@ -4194,7 +4442,7 @@ type DeleteSubtitleTranscodePresetBody struct {
 	// REQUIRED; 火山必填
 	App string `json:"App"`
 
-	// REQUIRED; 截图配置的名称，您可以调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712] 接口，获取待删除字幕配置的 PresetName
+	// REQUIRED; 字幕配置的名称，您可以调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712] 接口，获取待删除字幕配置的 PresetName
 	// 取值。
 	PresetName string `json:"PresetName"`
 
@@ -5626,16 +5874,16 @@ type DescribeHighLightTaskByAccountIDResResultDataProducedResultsItemOutput stru
 	HLClipsOutput Components1Pvao98SchemasDescribehighlighttaskbyaccountidresPropertiesResultPropertiesDataPropertiesProducedresultsItemsPropertiesOutputPropertiesHlclipsoutput `json:"HLClipsOutput"`
 
 	// REQUIRED
-	HLMixOutput DescribeHighLightTaskByAccountIDResResultDataProducedResultsProperties `json:"HLMixOutput"`
+	HLMixOutput DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesProperties `json:"HLMixOutput"`
 }
 
-type DescribeHighLightTaskByAccountIDResResultDataProducedResultsProperties struct {
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesProperties struct {
 
 	// REQUIRED; 高光混剪结果信息，包含从多个高光片段中混剪生成的最终视频的详细信息。
-	HLMixCuts []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsItem `json:"HLMixCuts"`
+	HLMixCuts []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsItem `json:"HLMixCuts"`
 }
 
-type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsItem struct {
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsHLClipsItem struct {
 
 	// REQUIRED; 高光片段类型标识（即 Label）的置信度，用于表示该类型标识的可靠程度。仅适用于体育足球场景，取值范围为 [0,1]，数值越大表示置信度越高。
 	Confidence float32 `json:"Confidence"`
@@ -5678,7 +5926,7 @@ type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItems
 	Score float32 `json:"Score"`
 
 	// REQUIRED; 高光剪辑片段的卖点信息结果。
-	SellPointsRes []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsPropertiesItemsItem `json:"SellPointsRes"`
+	SellPointsRes []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsHLClipsPropertiesItemsItem `json:"SellPointsRes"`
 
 	// REQUIRED; 高光剪辑片段所属的原始视频 URL 地址，用于标识该片段是从哪个原始视频中提取的。
 	SourceURL string `json:"SourceUrl"`
@@ -5687,7 +5935,7 @@ type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItems
 	ClipURL *string `json:"ClipUrl,omitempty"`
 }
 
-type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsPropertiesItemsItem struct {
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsHLClipsPropertiesItemsItem struct {
 
 	// REQUIRED; 卖点相对于混剪结果的结束时间，单位为毫秒。
 	EndTime int64 `json:"EndTime"`
@@ -5710,13 +5958,13 @@ type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItems
 	EffectType *string `json:"EffectType,omitempty"`
 }
 
-type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsItem struct {
+type DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsItem struct {
 
 	// REQUIRED; 高光剪辑混剪结果视频的时长，单位为毫秒。
 	Duration int64 `json:"Duration"`
 
 	// REQUIRED; 高光剪辑混剪结果视频对应的片段详情信息，包含从原始视频中提取的高光片段信息。
-	HLClips []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesItemsHLClipsItem `json:"HLClips"`
+	HLClips []DescribeHighLightTaskByAccountIDResResultDataProducedResultsPropertiesPropertiesPropertiesItemsHLClipsItem `json:"HLClips"`
 
 	// REQUIRED; 高光剪辑混剪结果上传至视频点播（VOD）服务后的视频唯一标识符 vid（Video ID），用于唯一标识该视频文件。
 	HighlightURL string `json:"HighlightUrl"`
@@ -12285,6 +12533,320 @@ type DescribeStreamQuotaConfigResResultQuotaListPropertiesItemsItem struct {
 	StreamConfig *DescribeStreamQuotaConfigResResultQuotaListItemQuotaDetailListItemStreamConfig `json:"StreamConfig,omitempty"`
 }
 
+type DescribeSubtitleTranscodePresetDetailBody struct {
+
+	// REQUIRED; 字幕配置的名称，您可以调用ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712]接口，通过PresetName获取字幕配置名称。
+	PresetList []string `json:"PresetList"`
+}
+
+type DescribeSubtitleTranscodePresetDetailRes struct {
+
+	// REQUIRED
+	ResponseMetadata DescribeSubtitleTranscodePresetDetailResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result DescribeSubtitleTranscodePresetDetailResResult `json:"Result"`
+}
+
+type DescribeSubtitleTranscodePresetDetailResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type DescribeSubtitleTranscodePresetDetailResResult struct {
+
+	// REQUIRED; 字幕配置详情。
+	PresetDetailList []DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItem `json:"PresetDetailList"`
+}
+
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItem struct {
+
+	// 字幕配置的创建时间。Unix 时间戳，单位为秒。
+	CreatedAt *int32 `json:"CreatedAt,omitempty"`
+
+	// 播出延迟时长，以保证同传声音和字幕的翻译处理完成。单位为秒。
+	// :::tip
+	// * 如果字幕出现的时间要早于原声或画面，可适当降低播出延迟时长，让字幕与原声或画面对齐，反之亦然。
+	// * 该参数仅当SIConfig下的 Enable取值为true时生效。 :::
+	Delay *int32 `json:"Delay,omitempty"`
+
+	// 字幕配置的描述信息。
+	Description *string `json:"Description,omitempty"`
+
+	// （不推荐使用）预设效果，用于快速配置。 传入该参数后，系统将自动对 Font（字体）、MaxRowNumber（字幕行数）、MaxCharNumber（每行最大字符数）、Position（左右边距和底部边距）进行智能化适配，且 MaxRowNumber、MaxCharNumber
+	// 和 Position 参数不再生效。取值如下：
+	// * small ：小字幕。
+	// * medium：中字幕。
+	// * large：大字幕。
+	DisplayPreset *string `json:"DisplayPreset,omitempty"`
+
+	// 关键词列表。 您期望在翻译时保持固定译法的专有词汇，如品牌名、人名或特定术语。系统会严格按照关键词列表翻译，以确保准确性。 格式为"原文:译文"，每个"原文:译文"之间用英文逗号（,）隔开。 :::tip 仅字幕翻译和同传声音生效。 :::
+	GlossaryWordList []*string `json:"GlossaryWordList,omitempty"`
+
+	// 热词列表。 热词（如产品名、流行语）可以提升语音识别准确率，与原文语言一致。 :::tip 仅原文 ASR 字幕生效。 :::
+	HotWordList []*string `json:"HotWordList,omitempty"`
+
+	// 每种语言字幕最多显示的行数。取值如下：
+	// * 0：根据字幕总字数和每行最大字符数自动换行，确保内容完整显示。
+	// * 1：每种语言的字幕最多显示一行，内容可能被截断。
+	// * 2：每种语言的字幕最多显示两行，内容可能被截断。 :::tip
+	// * 如传入 DisplayPreset（预设效果配置），该参数取值固定为 0。
+	// * 该参数分别应用于原文和译文。原文和译文的行数限制单独计算。 :::
+	MaxRowNumber *int32 `json:"MaxRowNumber,omitempty"`
+
+	// 字幕位置。
+	// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+	Position *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemPosition `json:"Position,omitempty"`
+
+	// 字幕配置的名称。
+	PresetName *string `json:"PresetName,omitempty"`
+
+	// 易错词列表。 格式为"目标词":"替换词"，每个"目标词":"替换词"之间用英文逗号（,）隔开。只要译文/原文字幕中包含您设置的目标词，系统就会自动将其替换为替换词。
+	ReplaceMap map[string]interface{} `json:"ReplaceMap,omitempty"`
+
+	// 声影同传模式配置。
+	SIConfig *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSIConfig `json:"SIConfig,omitempty"`
+
+	// 原文字幕配置。
+	SourceLanguage *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSourceLanguage `json:"SourceLanguage,omitempty"`
+
+	// 已废弃。
+	Status *int32 `json:"Status,omitempty"`
+
+	// 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+	SubtitleTosConfig *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSubtitleTosConfig `json:"SubtitleTosConfig,omitempty"`
+
+	// 字幕后缀。例如字幕流地址为rtmp://pull.example.com/live/test_subtitle，则字幕后缀为_subtitle。
+	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 译文字幕配置。
+	TargetLanguage []*DescribeSubtitleTranscodePresetDetailResResultPresetDetailListPropertiesItemsItem `json:"TargetLanguage,omitempty"`
+
+	// 字幕配置的更新时间。Unix 时间戳，单位为秒。
+	UpdatedAt *int32 `json:"UpdatedAt,omitempty"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemPosition - 字幕位置。
+// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemPosition struct {
+
+	// REQUIRED; 字幕的左右边距，即字幕距离画面左右边缘的距离。取值为画面宽度的百分比，取值范围为(0, 0.3]。
+	MarginHorizontal float32 `json:"MarginHorizontal"`
+
+	// REQUIRED; 字幕的上下边距，即字幕距离画面顶部或底部的距离。取值为画面高度的百分比，取值范围为 (0, 0.5]。
+	// * 当 Relative 取值为 top 时，表示上边距。
+	// * 当 Relative 取值为 bottom 时，表示下边距。
+	MarginVertical float32 `json:"MarginVertical"`
+
+	// REQUIRED; 字幕在画面中的位置。取值如下：
+	// * top：字幕展示在画面顶部。
+	// * bottom：字幕展示在画面底部。
+	Relative string `json:"Relative"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSIConfig - 声影同传模式配置。
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSIConfig struct {
+
+	// 是否开启数字人口型功能。取值如下：
+	// * true：开启。开启后，说话人口型将与同传声音同步，提升直播的沉浸感。
+	// * false：关闭。 :::tip
+	// * 仅在Pipe取值为空或si时生效。
+	// * 取值为 true 时，默认开启同传声音功能。 :::
+	DigitalHumanMouthShape *bool `json:"DigitalHumanMouthShape,omitempty"`
+
+	// 是否开启声影同传模式。取值如下：
+	// * true：开启声影同传模式。支持生成字幕、生成同传声音替换原声，以及驱动数字人口型与同传声音同步，提供沉浸式体验。
+	// * false：关闭声影同传模式，开启纯字幕模式。关闭后，SIConfig 中的其他参数均不生效。
+	Enable *bool `json:"Enable,omitempty"`
+
+	// 声影同传类型。取值如下：
+	// * si：字幕、同传音频与画面完全同步，支持数字人口型功能。适用于对同步性和沉浸感要求较高的会议直播等场景。
+	// * mix：仅字幕。
+	// * realtime：实时流式原文 ASR 字幕。
+	Pipe *string `json:"Pipe,omitempty"`
+
+	// 额外配置，为 JSON 格式的字符串，包含音量均衡、降噪、原声音量等信息。详见 CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224?lang=zh] 接口的 Extra
+	// 参数。
+	// :::tip 仅在 SpeakerRecognition 取值大于 0，即开启同传声音时生效。 :::
+	PipeExtra *string `json:"PipeExtra,omitempty"`
+
+	// 是否开启同传声音功能。取值如下：
+	// * 大于 0：开启。开启后，将使用带有音色复刻效果的翻译语音替换直播原声。
+	// * 等于 0：关闭。 :::tip 仅在Pipe取值为空或si时生效。 :::
+	SpeakerRecognition *int32 `json:"SpeakerRecognition,omitempty"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSourceLanguage - 原文字幕配置。
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSourceLanguage struct {
+
+	// 原文字幕字体阴影。
+	Border *Components1FoorfqSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBorder `json:"Border,omitempty"`
+
+	// 原文字幕字体背景。
+	Box *ComponentsXx0WuhSchemasDescribesubtitletranscodepresetdetailresPropertiesResultPropertiesPresetdetaillistItemsPropertiesSourcelanguagePropertiesBox `json:"Box,omitempty"`
+
+	// 是否展示原文字幕，取值如下：
+	// * true：展示，此时将展示原文和译文双语字幕。
+	// * false：不展示，此时将仅展示译文字幕。
+	Display *bool `json:"Display,omitempty"`
+
+	// 原文字幕字体。
+	// * 当SIConfig下的Enable取值为true使用声影同传模式时，您可调用GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]并通过Alias参数获取字体对应的中文名称。
+	// * 当SIConfig下的Enable取值为false使用纯字幕模式时，具体取值如下。原文字幕语言（Language取值）不同，原文字幕字体也随之不同。 * 当原文字幕的语言是zh时，支持以下字体取值。 * siyuanheiti：思源黑体。
+	// * songtixi：宋体细。
+	// * songticu：宋体粗。
+	// * heitifan：黑体繁。
+	// * kaiti：楷体。
+	//
+	//
+	// * 当原文字幕的语言是en时，支持以下字体取值。 * inter：Inter。
+	// * roboto：Roboto。
+	// * opposans：OPPOSans。
+	// * siyuansongti：思源宋体。
+	// * montserrat：Montserrat。
+	//
+	//
+	// * 当原文字幕的语言是ko或ja时，支持notosans（Noto Sans) 字体。
+	Font *string `json:"Font,omitempty"`
+
+	// 原文字幕的字体颜色。 取值支持以下表示方式：
+	// * 以0x或#开头的十六进制 RGB 颜色值，并可通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80 或 #FF0000@0.5
+	// 表示 RGB 值为FF0000，透明度为 50% 的颜色。
+	// * FFmpeg 规定的颜色关键字，并可通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，AliceBlue@0.5 表示 RGB 值为 0xF0F8FF，透明度为 50% 的颜色。
+	// :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。 :::
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 原文字幕字号。单位为 px。 :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+	FontSize *int32 `json:"FontSize,omitempty"`
+
+	// 原文字幕语言。
+	// * 当 SIConfig下的 Enable 取值为 true 使用声影同传模式时，您可调用GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]并通过OriginalLang参数获取原文字幕语言对应的中文名，或通过
+	// AsrLang获取原文 ASR 字幕语言对应的中文名。
+	// * 当 SIConfig下的 Enable 取值为 false 使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 原文每行字幕的最大字符数。
+	// :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果原文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当原文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 原文字幕的展示优先级。 取值越大，优先级越高。例如原文字幕的 ShowPriority 为 1，译文字幕的 ShowPriority 为 2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSubtitleTosConfig - 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemSubtitleTosConfig struct {
+
+	// tos桶名称
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 是否开启生成srt文件
+	Enable *bool `json:"Enable,omitempty"`
+
+	// tos桶区域，如：cn-beijing、cn-guangzhou、cn-shanghai
+	Region *string `json:"Region,omitempty"`
+
+	// 文件夹地址
+	StorageDir *string `json:"StorageDir,omitempty"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBorder - 译文字幕字体阴影。
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBorder struct {
+	Color *string  `json:"Color,omitempty"`
+	Width *float32 `json:"Width,omitempty"`
+}
+
+// DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBox - 译文字幕字体背景。
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBox struct {
+	Color *string  `json:"Color,omitempty"`
+	W     *float32 `json:"W,omitempty"`
+}
+
+type DescribeSubtitleTranscodePresetDetailResResultPresetDetailListPropertiesItemsItem struct {
+
+	// 译文字幕字体阴影。
+	Border *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBorder `json:"Border,omitempty"`
+
+	// 译文字幕字体背景。
+	Box *DescribeSubtitleTranscodePresetDetailResResultPresetDetailListItemTargetLanguageItemBox `json:"Box,omitempty"`
+
+	// 译文字幕的字体。
+	// * 当SIConfig下的Enable取值为true使用声影同传模式时，您可调用GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]
+	// 并通过 Alias 参数获取字体对应的中文名称。
+	// * 当SIConfig下的Enable取值为false使用纯字幕模式时，具体取值如下。译文字幕语言（Language取值）不同，译文字幕字体也随之不同。 * 当译文字幕的语言是zh时，支持以下字体取值。 * siyuanheiti：思源黑体。
+	// * songtixi：宋体细。
+	// * songticu：宋体粗。
+	// * heitifan：黑体繁。
+	// * kaiti：楷体。
+	//
+	//
+	// * 当译文字幕的语言是en时，支持以下字体取值。 * inter：Inter。
+	// * roboto：Roboto。
+	// * opposans：OPPOSans。
+	// * siyuansongti：思源宋体。
+	// * montserrat：Montserrat。
+	//
+	//
+	// * 当译文字幕的语言是ko或ja时，支持notosans（Noto Sans) 字体。
+	Font *string `json:"Font,omitempty"`
+
+	// 译文字幕的字体颜色。 取值支持以下表示方式：
+	// * 以0x或#开头的十六进制 RGB 颜色值，并可通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80 或 #FF0000@0.5
+	// 表示 RGB 值为FF0000，透明度为 50% 的颜色。
+	// * FFmpeg 规定的颜色关键字，并可通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，AliceBlue@0.5 表示 RGB 值为 0xF0F8FF，透明度为 50% 的颜色。
+	// :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。 :::
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 译文字幕字号。单位为 px。 :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+	FontSize *int32 `json:"FontSize,omitempty"`
+
+	// 是否隐藏译文字幕。取值如下：
+	// * true：隐藏。
+	// * false：显示。
+	Hidden *bool `json:"Hidden,omitempty"`
+
+	// 译文字幕语言。
+	// * 当SIConfig下的Enable取值为true使用声影同传模式时，您可调用GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]并通过Lang参数获取语言对应的中文名。
+	// * 当SIConfig下的Enable取值为false使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 译文每行字幕的最大字符数。 :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果译文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当译文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 译文字幕的展示优先级。 取值越大，优先级越高。例如原文字幕的ShowPriority为1，译文字幕的ShowPriority为2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
+}
+
 type DisableDomainBody struct {
 
 	// REQUIRED; 待禁用域名，您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看需要待禁用域名的信息。
@@ -12996,13 +13558,17 @@ type GetSpeechConfigResResult struct {
 // GetSpeechConfigResResultData - 配置信息。
 type GetSpeechConfigResResultData struct {
 
-	// REQUIRED; 支持的字体。格式为"Key":"Value"，每个"Key":"Value"之间用英文逗号（,）隔开。其中，"Key"为字体名称，"Value"为字体信息，包括 Lang 和 Alias 字段。
-	// * Lang：字体支持的语种编号。
-	// * Alias：字体的中文名称。
-	Font map[string]interface{} `json:"Font"`
+	// REQUIRED; 系统支持的ASR语种，注意，流式ASR目前只支持中英，整句ASR可以使用此字段
+	AsrLang map[string]interface{} `json:"AsrLang"`
 
-	// REQUIRED; 支持的语种。格式为"Key":"Value"，每个"Key":"Value"之间用英文逗号（,）隔开。其中，"Key"为语种编号，"Value"为语种中文名。
+	// REQUIRED; 支持的字体列表。 格式为"Key":"Value"，每个"Key":"Value"之间用英文逗号（,）隔开。其中，"Key"为字体名称，"Value"为字体信息，详见 Font [https://www.volcengine.com/docs/6469/1978525?lang=zh#font]。
+	Font map[string]ComponentsImc9MrSchemasGetspeechconfigresPropertiesResultPropertiesDataPropertiesFontAdditionalproperties `json:"Font"`
+
+	// REQUIRED; 支持的译文语言列表。 格式为"Key":"Value"，每个"Key":"Value"之间用英文逗号（,）隔开。其中，"Key"为语言编号，"Value"为语言中文名。
 	Lang map[string]interface{} `json:"Lang"`
+
+	// REQUIRED; 翻译或者同传模式下，支持的原语言
+	OriginalLang map[string]interface{} `json:"OriginalLang"`
 }
 
 type GetSpeechTaskBody struct {
@@ -13059,7 +13625,7 @@ type GetSpeechTaskResResultData struct {
 	// * prepare：启动中。
 	Status string `json:"Status"`
 
-	// REQUIRED; 任务结束时间。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。
+	// REQUIRED; 任务实际结束时间。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。
 	StoppedAt string `json:"StoppedAt"`
 
 	// REQUIRED; 任务 ID。
@@ -13067,6 +13633,61 @@ type GetSpeechTaskResResultData struct {
 
 	// REQUIRED; 任务更新时间。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。
 	UpdatedAt string `json:"UpdatedAt"`
+}
+
+type GetSubtitleTranscodePresetConfigRes struct {
+
+	// REQUIRED
+	ResponseMetadata GetSubtitleTranscodePresetConfigResResponseMetadata `json:"ResponseMetadata"`
+
+	// REQUIRED
+	Result GetSubtitleTranscodePresetConfigResResult `json:"Result"`
+}
+
+type GetSubtitleTranscodePresetConfigResResponseMetadata struct {
+
+	// REQUIRED
+	Action string `json:"Action"`
+
+	// REQUIRED
+	Region string `json:"Region"`
+
+	// REQUIRED
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED
+	Service string `json:"Service"`
+
+	// REQUIRED
+	Version string `json:"Version"`
+}
+
+type GetSubtitleTranscodePresetConfigResResult struct {
+
+	// REQUIRED; 状态码。
+	Code int32 `json:"Code"`
+
+	// REQUIRED; 配置信息。
+	Data GetSubtitleTranscodePresetConfigResResultData `json:"Data"`
+
+	// REQUIRED; 状态信息。
+	Message string `json:"Message"`
+}
+
+// GetSubtitleTranscodePresetConfigResResultData - 配置信息。
+type GetSubtitleTranscodePresetConfigResResultData struct {
+
+	// REQUIRED; ASR支持的语种列表
+	AsrLang map[string]interface{} `json:"AsrLang"`
+
+	// REQUIRED; 声影同传模式支持的字体列表，key为字体名称
+	Font map[string]Components1Htc4EuSchemasGetsubtitletranscodepresetconfigresPropertiesResultPropertiesDataPropertiesFontAdditionalproperties `json:"Font"`
+
+	// REQUIRED; 翻译模式下支持的目标语言列表
+	Lang map[string]interface{} `json:"Lang"`
+
+	// REQUIRED; 翻译模式下支持的原语言列表
+	OriginalLang map[string]interface{} `json:"OriginalLang"`
 }
 
 type KillStreamBody struct {
@@ -14587,6 +15208,125 @@ type ListRelaySourceV4ResResultPagination struct {
 	TotalCount int32 `json:"TotalCount"`
 }
 
+// ListSpeechSubtitleSrtBody - 查询字幕SRT文件。当TaskID不为空时，按照TaskID查找SRT；当TaskID为空且PushDomain、AppName、StreamName、SuffixName均不为空时，则按照stream信息查找；如果TaskID和stream信息都不填，则查账号下所有的SRT文件
+type ListSpeechSubtitleSrtBody struct {
+
+	// 字幕任务推流地址中的AppName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则AppName为live。
+	AppName *string `json:"AppName,omitempty"`
+
+	// 查询时间范围截止时间，格式："2006-01-02 15:04:05.999999999 +0800 CST"。时间范围不超过72小时
+	EndTime *string `json:"EndTime,omitempty"`
+
+	// 当前页码。
+	PageCur *int32 `json:"PageCur,omitempty"`
+
+	// 单页数量。默认值为10，最大为20。
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 字幕任务对应的推流域名。例如推流地址为rtmp://push.example.com/live/test?authinfo，则推流域名为push.example.com。
+	PushDomain *string `json:"PushDomain,omitempty"`
+
+	// 查询时间范围开始时间，格式："2006-01-02 15:04:05.999999999 +0800 CST"。时间范围不超过72小时
+	StartTime *string `json:"StartTime,omitempty"`
+
+	// 字幕任务推流地址中的StreamName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则StreamName为test。
+	StreamName *string `json:"StreamName,omitempty"`
+
+	// 字幕任务的字幕后缀。例如字幕流地址为 rtmp://pull.example.com/live/test_subtitle，则字幕后缀为 _subtitle。 您可调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712?lang=zh]，并通过返回参数
+	// SuffixName 获取字幕后缀。
+	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 声影同传任务 ID。您可通过调用CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224]或SearchSpeechTask [https://www.volcengine.com/docs/6469/1978522]获取
+	// ID。
+	TaskID *string `json:"TaskID,omitempty"`
+}
+
+type ListSpeechSubtitleSrtRes struct {
+
+	// REQUIRED
+	ResponseMetadata ListSpeechSubtitleSrtResResponseMetadata `json:"ResponseMetadata"`
+
+	// 视请求的接口而定
+	Result *ListSpeechSubtitleSrtResResult `json:"Result,omitempty"`
+}
+
+type ListSpeechSubtitleSrtResResponseMetadata struct {
+
+	// REQUIRED; 请求的接口名，属于请求的公共参数。
+	Action string `json:"Action"`
+
+	// REQUIRED; 请求的Region，例如：cn-north-1
+	Region string `json:"Region"`
+
+	// REQUIRED; RequestId为每次API请求的唯一标识。
+	RequestID string `json:"RequestId"`
+
+	// REQUIRED; 请求的服务，属于请求的公共参数。
+	Service string `json:"Service"`
+
+	// REQUIRED; 请求的版本号，属于请求的公共参数。
+	Version string `json:"Version"`
+}
+
+// ListSpeechSubtitleSrtResResult - 视请求的接口而定
+type ListSpeechSubtitleSrtResResult struct {
+
+	// 数据列表。
+	List []*ListSpeechSubtitleSrtResResultListItem `json:"List,omitempty"`
+
+	// 分页信息。
+	Pagination *ListSpeechSubtitleSrtResResultPagination `json:"Pagination,omitempty"`
+}
+
+type ListSpeechSubtitleSrtResResultListItem struct {
+
+	// 字幕任务推流地址中的AppName。
+	AppName *string `json:"AppName,omitempty"`
+
+	// TOS桶名称
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 字幕任务对应的推流域名。
+	PushDomain *string `json:"PushDomain,omitempty"`
+
+	// TOS同区域
+	Region *string `json:"Region,omitempty"`
+
+	// 字幕任务推流地址中的 StreamName。
+	StreamName *string `json:"StreamName,omitempty"`
+
+	// 字幕任务的字幕后缀。
+	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 声影同传任务 ID。
+	TaskID *string `json:"TaskID,omitempty"`
+
+	// SRT文件生成unix时间
+	Time *string `json:"Time,omitempty"`
+
+	// SRT文件URI
+	URI *string `json:"Uri,omitempty"`
+
+	// 带鉴权的SRT文件访问地址
+	URL *string `json:"Url,omitempty"`
+}
+
+// ListSpeechSubtitleSrtResResultPagination - 分页信息。
+type ListSpeechSubtitleSrtResResultPagination struct {
+
+	// 当前页码
+	PageCur *int32 `json:"PageCur,omitempty"`
+
+	// 分页大小
+	PageSize *int32 `json:"PageSize,omitempty"`
+
+	// 总页数
+	PageTotal *int32 `json:"PageTotal,omitempty"`
+
+	// 总数量
+	TotalCount *int32 `json:"TotalCount,omitempty"`
+}
+
 type ListTimeShiftPresetV2Body struct {
 
 	// REQUIRED; 时移类型，默认类型为 vod。
@@ -14824,7 +15564,7 @@ type ListVhostSnapshotAuditPresetResResultPresetListItemAuditPreset struct {
 	Bucket string `json:"Bucket"`
 
 	// REQUIRED; 截图审核结果回调地址配置。
-	CallbackDetailList []ListVhostSnapshotAuditPresetResResultPresetListPropertiesItemsItem `json:"CallbackDetailList"`
+	CallbackDetailList []ListVhostSnapshotAuditPresetResResultPresetListPropertiesPropertiesItemsItem `json:"CallbackDetailList"`
 
 	// REQUIRED; 截图审核配置的描述。
 	Description string `json:"Description"`
@@ -14867,7 +15607,7 @@ type ListVhostSnapshotAuditPresetResResultPresetListItemAuditPreset struct {
 	UpdateTime string `json:"UpdateTime"`
 }
 
-type ListVhostSnapshotAuditPresetResResultPresetListPropertiesItemsItem struct {
+type ListVhostSnapshotAuditPresetResResultPresetListPropertiesPropertiesItemsItem struct {
 
 	// REQUIRED; 回调的类型 HTTP。
 	CallbackType string `json:"CallbackType"`
@@ -14940,7 +15680,7 @@ type ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 struct {
 	Name string `json:"Name"`
 
 	// REQUIRED; 截图配置详细信息。
-	SnapshotPresetConfig ListVhostSnapshotPresetV2ResResultPresetListProperties `json:"SnapshotPresetConfig"`
+	SnapshotPresetConfig ListVhostSnapshotPresetV2ResResultPresetListPropertiesProperties `json:"SnapshotPresetConfig"`
 
 	// REQUIRED; 截图配置生效状态，取值及含义如下所示。
 	// * 1：生效；
@@ -14948,8 +15688,8 @@ type ListVhostSnapshotPresetV2ResResultPresetListItemSlicePresetV2 struct {
 	Status int32 `json:"Status"`
 }
 
-// ListVhostSnapshotPresetV2ResResultPresetListProperties - 截图配置详细信息。
-type ListVhostSnapshotPresetV2ResResultPresetListProperties struct {
+// ListVhostSnapshotPresetV2ResResultPresetListPropertiesProperties - 截图配置详细信息。
+type ListVhostSnapshotPresetV2ResResultPresetListPropertiesProperties struct {
 
 	// REQUIRED; 截图间隔时间，单位为秒。
 	Interval int32 `json:"Interval"`
@@ -15000,7 +15740,9 @@ type ListVhostSnapshotPresetV2ResResultPresetListPropertiesPropertiesPropertiesP
 
 type ListVhostSubtitleTranscodePresetBody struct {
 
-	// REQUIRED; 域名空间，即直播流地址的域名所属的域名空间。您可以调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口或在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，查看直播流使用的域名所属的域名空间。
+	// REQUIRED; 推拉流域名所属的域名空间。 通过以下任一方式，获取域名空间：
+	// * 调用ListDomainDetail [https://www.volcengine.com/docs/6469/1126815]接口，通过返回参数 Vhost 获取。
+	// * 在视频直播控制台的域名管理 [https://console.volcengine.com/live/main/domain/list]页面，通过域名空间字段获取。
 	Vhost string `json:"Vhost"`
 }
 
@@ -15042,7 +15784,7 @@ type ListVhostSubtitleTranscodePresetResResultPresetListItem struct {
 	// REQUIRED; 应用名称。
 	App string `json:"App"`
 
-	// REQUIRED; 转码后缀标识。
+	// REQUIRED; 转码后缀。例如转码流地址为 rtmp://pull.example.com/live/test_hd，则转码后缀为 _hd。
 	Suffixes []string `json:"Suffixes"`
 
 	// REQUIRED; 字幕配置详细参数。
@@ -15055,63 +15797,81 @@ type ListVhostSubtitleTranscodePresetResResultPresetListItem struct {
 // ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePreset - 字幕配置详细参数。
 type ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePreset struct {
 
+	// REQUIRED; 播出延迟时长，以保证同传声音和字幕的翻译处理完成。单位为秒。
+	// :::tip
+	// * 如果字幕出现的时间要早于原声或画面，可适当降低播出延迟时长，让字幕与原声或画面对齐，反之亦然。
+	// * 该参数仅当SIConfig下的 Enable取值为true时生效。 :::
+	Delay int32 `json:"Delay"`
+
 	// REQUIRED; 字幕配置的描述信息。
 	Description string `json:"Description"`
 
-	// REQUIRED; 预设配置，使用预设配置是系统将自动对字体大小、字幕行数、每行最大字符数和边距参数（MarginVertical 和 MarginHorizontal）进行智能化适配。默认为空，表示不使用预设配置，支持的预设配置如下所示。
+	// REQUIRED; （不推荐使用）预设效果，用于快速配置。 传入该参数后，系统将自动对 Font（字体）、MaxRowNumber（字幕行数）、MaxCharNumber（每行最大字符数）、Position（左右边距和底部边距）进行智能化适配，且
+	// MaxRowNumber、MaxCharNumber 和 Position 参数不再生效。取值如下：
 	// * small ：小字幕。
 	// * medium：中字幕。
-	// * large：大字幕。 :::tip 使用预设配置时，字幕行数、每行最大字符数、左右边距和底部边距参数不生效，系统将使用预设配置自动进行计算。 :::
+	// * large：大字幕。
 	DisplayPreset string `json:"DisplayPreset"`
 
-	// REQUIRED; 原文翻译成译文时使用的热词词库。
+	// REQUIRED; 关键词列表。 您期望在翻译时保持固定译法的专有词汇，如品牌名、人名或特定术语。系统会严格按照关键词列表翻译，以确保准确性。 格式为"原文:译文"，每个"原文:译文"之间用英文逗号（,）隔开。 :::tip 仅字幕翻译和同传声音生效。
+	// :::
 	GlossaryWordList []string `json:"GlossaryWordList"`
 
-	// REQUIRED; 原文字幕识别时使用的热词词库。
-	HotWordList []string `json:"HotWordList"`
-
-	// REQUIRED; 设置在 16:9 分辨率场景下，每行字幕展示的最大字符数。 :::tip
-	// * 使用预设配置时，字幕每行最大字符数设置不生效。
-	// * 不使用预设配置时，字幕每行最大字符数必填。
-	// * 每个文字、字母、符号或数字均为一个字符。
-	// * 当屏幕分辨率改变时，屏幕上显示的每行文字数量会相应调整，以适应新的分辨率，确保文字的显示效果和阅读体验。 :::
-	MaxCharNumber int32 `json:"MaxCharNumber"`
-
-	// REQUIRED; 字幕展示的行数，同时适用于原文字幕和译文字幕，支持的取值及含义如下所示。
-	// * 0：（默认值）根据字幕字数自动进行分行展示；
-	// * 1：每种字幕展示一行；
-	// * 2：每种字幕展示两行。 :::tip
-	// * 使用预设配置时，字幕行数为自动分行展示。
-	// * 超出行内字数限制时表示字幕将超过显示范围，此时字幕内容将被截断。 :::
+	// REQUIRED; 每种语言字幕最多显示的行数。取值如下：
+	// * 0：根据字幕总字数和每行最大字符数自动换行，确保内容完整显示。
+	// * 1：每种语言的字幕最多显示一行，内容可能被截断。
+	// * 2：每种语言的字幕最多显示两行，内容可能被截断。 :::tip
+	// * 如传入 DisplayPreset（预设效果配置），该参数取值固定为 0。
+	// * 该参数分别应用于原文和译文。原文和译文的行数限制单独计算。 :::
 	MaxRowNumber int32 `json:"MaxRowNumber"`
 
-	// REQUIRED; 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-	// :::tip
-	// * 使用预设配置时，字幕位置设置不生效。
-	// * 不使用预设配置时，字幕位置设置必填。 :::
+	// REQUIRED; 字幕位置。
+	// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效。 :::
 	Position ComponentsJ1MbxoSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesPosition `json:"Position"`
 
-	// REQUIRED; 原文字幕展示参数配置。
-	SourceLanguage Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguage `json:"SourceLanguage"`
+	// REQUIRED; 易错词列表。 格式为"目标词":"替换词"，每个"目标词":"替换词"之间用英文逗号（,）隔开。只要译文/原文字幕中包含您设置的目标词，系统就会自动将其替换为替换词。
+	ReplaceMap map[string]interface{} `json:"ReplaceMap"`
 
-	// REQUIRED; 译文字幕展示参数配置列表。
+	// REQUIRED; 字幕后缀。例如字幕流地址为rtmp://pull.example.com/live/test_subtitle，则字幕后缀为_subtitle。
+	SuffixName string `json:"SuffixName"`
+
+	// REQUIRED; 译文字幕配置。
 	TargetLanguage []Components1C398ShSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesTargetlanguageItems `json:"TargetLanguage"`
+
+	// 热词列表。 热词（如产品名、流行语）可以提升语音识别准确率，与原文语言一致。 :::tip 仅原文 ASR 字幕生效。 :::
+	HotWordList []*string `json:"HotWordList,omitempty"`
 
 	// 字幕配置的名称。
 	PresetName *string `json:"PresetName,omitempty"`
 
 	// 声影同传模式配置。
 	SIConfig *ComponentsF0B6B8SchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSiconfig `json:"SIConfig,omitempty"`
+
+	// 原文字幕配置。
+	SourceLanguage *Components1523StvSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSourcelanguage `json:"SourceLanguage,omitempty"`
+
+	// 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+	SubtitleTosConfig *ComponentsL3CaumSchemasListvhostsubtitletranscodepresetresPropertiesResultPropertiesPresetlistItemsPropertiesTranscodepresetPropertiesSubtitletosconfig `json:"SubtitleTosConfig,omitempty"`
 }
 
-// ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBorder - 译文字幕的字体描边配置。
+// ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBorder - 译文字幕字体阴影。
 type ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBorder struct {
 
 	// REQUIRED
 	Color string `json:"Color"`
 
 	// REQUIRED
-	Width int32 `json:"Width"`
+	Width float32 `json:"Width"`
+}
+
+// ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBox - 译文字幕字体背景。
+type ListVhostSubtitleTranscodePresetResResultPresetListItemTranscodePresetTargetLanguageItemBox struct {
+
+	// REQUIRED
+	Color string `json:"Color"`
+
+	// REQUIRED
+	W float32 `json:"W"`
 }
 
 type ListVhostTransCodePresetBody struct {
@@ -15860,11 +16620,28 @@ type RelaunchPullToPushTaskResResponseMetadataError struct {
 	Message *string `json:"Message,omitempty"`
 }
 
+// RestartSpeechTaskBody - 提供两种方式重启任务：1、根据TaskID重启任务；2、根据PushDomain、AppName、StreamName、SuffixName重启。当TaskID不为空时，按照TaskID方式重启。
 type RestartSpeechTaskBody struct {
 
-	// REQUIRED; 任务 ID。可通过调用 CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224] 或 SearchSpeechTask [https://www.volcengine.com/docs/6469/1978522]
-	// 获取 ID。
-	TaskID string `json:"TaskID"`
+	// 字幕任务推流地址中的AppName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则AppName为live。
+	AppName *string `json:"AppName,omitempty"`
+
+	// 字幕任务对应的推流域名。例如推流地址为rtmp://push.example.com/live/test?authinfo，则推流域名为push.example.com。
+	PushDomain *string `json:"PushDomain,omitempty"`
+
+	// reload：标识重启asr算法；其他：表示重启声影同传任务
+	SetSiStatus *string `json:"SetSiStatus,omitempty"`
+
+	// 字幕任务推流地址中的StreamName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则StreamName为test。
+	StreamName *string `json:"StreamName,omitempty"`
+
+	// 字幕任务的字幕后缀。例如字幕流地址为 rtmp://pull.example.com/live/test_subtitle，则字幕后缀为 _subtitle。 您可调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712?lang=zh]，并通过返回参数
+	// SuffixName 获取字幕后缀。
+	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 声影同传任务 ID。您可通过调用CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224]或SearchSpeechTask [https://www.volcengine.com/docs/6469/1978522]获取
+	// ID。
+	TaskID *string `json:"TaskID,omitempty"`
 }
 
 type RestartSpeechTaskRes struct {
@@ -16006,7 +16783,7 @@ type SearchSpeechTaskBody struct {
 	// 返回创建时间在该时间点及之后的任务。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。默认返回所有任务。
 	CreateTimeSt *string `json:"CreateTimeSt,omitempty"`
 
-	// 任务名称。默认返回所有任务。长度为 1-64 个字节。不支持模糊搜索，英文区分大小写。可包含以下字符：
+	// 任务名称。默认返回所有任务。长度为 1-20 个字符。不支持模糊搜索，英文区分大小写。可包含以下字符：
 	// * 数字（0-9）
 	// * 大写字母（A-Z）
 	// * 小写字母（a-z）
@@ -16077,7 +16854,7 @@ type SearchSpeechTaskResResultDataTasksItem struct {
 	// * prepare：启动中。
 	Status string `json:"Status"`
 
-	// REQUIRED; 任务结束时间。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。
+	// REQUIRED; 任务实际结束时间。遵循 RFC3339 格式的东八区（UTC+8）时间，精度为秒。
 	StoppedAt string `json:"StoppedAt"`
 
 	// REQUIRED; 任务 ID。
@@ -18170,14 +18947,28 @@ type UpdateSnapshotPresetV2ResResponseMetadata struct {
 	Version string `json:"Version"`
 }
 
+// UpdateSpeechTaskBody - 提供两种方式更新任务：1、根据TaskID更新任务；2、根据PushDomain、AppName、StreamName、SuffixName更新。当TaskID不为空时，按照TaskID方式更新。
 type UpdateSpeechTaskBody struct {
 
-	// REQUIRED; 任务 ID。可通过调用 CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224] 或 SearchSpeechTask [https://www.volcengine.com/docs/6469/1978522]
-	// 获取 ID。
-	TaskID string `json:"TaskID"`
+	// REQUIRED; AllDisable: 关闭声音同传、字幕、唇形替换，AllEnable：全部开启，注意此字段不会打开未开启的功能
+	Switch string `json:"Switch"`
 
-	// AllDisable: 关闭声音同传、字幕、唇形替换，AllEnable：全部开启，注意此字段不会打开未开启的功能
-	Switch *string `json:"Switch,omitempty"`
+	// 字幕任务推流地址中的AppName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则AppName为live。
+	AppName *string `json:"AppName,omitempty"`
+
+	// 字幕任务对应的推流域名。例如推流地址为rtmp://push.example.com/live/test?authinfo，则推流域名为push.example.com。
+	PushDomain *string `json:"PushDomain,omitempty"`
+
+	// 字幕任务推流地址中的StreamName。例如推流地址为rtmp://push.example.com/live/test?authinfo，则StreamName为test。
+	StreamName *string `json:"StreamName,omitempty"`
+
+	// 字幕任务的字幕后缀。例如字幕流地址为 rtmp://pull.example.com/live/test_subtitle，则字幕后缀为 _subtitle。 您可调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712?lang=zh]，并通过返回参数
+	// SuffixName 获取字幕后缀。
+	SuffixName *string `json:"SuffixName,omitempty"`
+
+	// 声影同传任务 ID。您可通过调用CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224]或SearchSpeechTask [https://www.volcengine.com/docs/6469/1978522]获取
+	// ID。
+	TaskID *string `json:"TaskID,omitempty"`
 }
 
 type UpdateSpeechTaskRes struct {
@@ -18309,225 +19100,347 @@ type UpdateStreamQuotaConfigResResponseMetadataError struct {
 
 type UpdateSubtitleTranscodePresetBody struct {
 
-	// REQUIRED; 应用名称，您可以调用ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712]接口，获取待更新字幕配置的 App 取值。
+	// REQUIRED; 应用名称，您可以调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712] 接口，获取待更新字幕配置的 App
+	// 取值。
 	App string `json:"App"`
 
-	// REQUIRED; 截图配置的名称，您可以调用ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712]接口，获取待更新字幕配置的 PresetName
+	// REQUIRED; 字幕配置的名称，您可以调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712] 接口，获取待更新字幕配置的 PresetName
 	// 取值。
 	PresetName string `json:"PresetName"`
 
-	// REQUIRED; 原文字幕展示参数配置。
+	// REQUIRED; 原文字幕配置。 :::tipSIConfig下的 Enable 取值为 true 时，原文与译文必须配置不同的语言。 :::
 	SourceLanguage UpdateSubtitleTranscodePresetBodySourceLanguage `json:"SourceLanguage"`
-
-	// REQUIRED; 关联转码配置后缀，一个字幕配置支持关联多个转码配置后缀。
-	Suffixes []string `json:"Suffixes"`
 
 	// REQUIRED; 域名空间，您可以调用 ListVhostSubtitleTranscodePreset [https://www.volcengine.com/docs/6469/1288712] 接口，获取待更新字幕配置的 Vhost
 	// 取值。
 	Vhost string `json:"Vhost"`
 
+	// 播出延迟时长，以保证同传声音和字幕的翻译处理完成。取值范围为 [0,60]，单位为秒。 不同功能的建议取值如下：
+	// * si： * 同时开启数字人口型、同传声音、字幕时：20。
+	// * 同时开启同传声音、字幕时：12。
+	//
+	//
+	// * mix： * 整句出字方式原文 ASR 字幕：15。
+	// * 字幕翻译：8。
+	//
+	//
+	// * realtime（实时流式原文 ASR 字幕）：2或3。
+	// 有关具体功能的参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288713?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::tip
+	// * 如果字幕出现的时间要早于原声或画面，可适当降低播出延迟时长，让字幕与原声或画面对齐，反之亦然。
+	// * 该参数仅当SIConfig下的 Enable取值为true时生效。 :::
+	Delay *int32 `json:"Delay,omitempty"`
+
 	// 字幕配置的描述信息。
 	Description *string `json:"Description,omitempty"`
 
-	// 预设配置，使用预设配置是系统将自动对字体大小、字幕行数、每行最大字符数和边距参数（MarginVertical 和 MarginHorizontal）进行智能化适配。默认为空，表示不使用预设配置，支持的预设配置如下所示。
+	// （不推荐使用）预设效果，用于快速配置。 传入该参数后，系统将自动对 Font（字体）、MaxRowNumber（字幕行数）、MaxCharNumber（每行最大字符数）、Position（左右边距和底部边距）进行智能化适配，且 MaxRowNumber、MaxCharNumber
+	// 和 Position 参数不再生效。取值如下：
 	// * small ：小字幕。
 	// * medium：中字幕。
-	// * large：大字幕。 :::tip 使用预设配置时，字幕行数、每行最大字符数、左右边距和底部边距参数不生效，系统将使用预设配置自动进行计算。 :::
+	// * large：大字幕。
 	DisplayPreset *string `json:"DisplayPreset,omitempty"`
 
-	// 原文翻译成译文时使用的热词词库，总长度不超过 10000 个字符，默认为空。
+	// 关键词列表。 传入您期望在翻译时保持固定译法的专有词汇，如品牌名、人名或特定术语。系统会严格按照关键词列表翻译，以确保准确性。 格式为"原文:译文"，每个"原文:译文"之间用英文逗号（,）隔开。例如["字节跳动:ByteDance","视频直播:MediaLive"]。总字符数不超过
+	// 3 万。 :::tip
+	// * 原文或译文本身不可包含英文逗号（,）。
+	// * 仅字幕翻译和同传声音生效。有关字幕翻译和同传声音的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288713?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::
 	GlossaryWordList []*string `json:"GlossaryWordList,omitempty"`
 
-	// 原文字幕识别时使用的热词词库，总长度不超过为 10000 个字符，默认为空。
+	// 热词列表。 传入热词（如产品名、流行语），可以提升语音识别准确率。热词需与原文语言一致，热词之间用英文逗号（,）隔开。总字符数不超过 3 万。 :::tip 仅原文 ASR 字幕生效。有关原文 ASR 字幕的相关参数配置，详见使用说明
+	// [https://www.volcengine.com/docs/6469/1288713?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。 :::
 	HotWordList []*string `json:"HotWordList,omitempty"`
 
-	// 设置在 16:9 分辨率场景下，每行字幕展示的最大字符数。 :::tip
-	// * 使用预设配置时，字幕每行最大字符数设置不生效。
-	// * 不使用预设配置时，字幕每行最大字符数必填。
-	// * 每个文字、字母、符号或数字均为一个字符。
-	// * 当屏幕分辨率改变时，屏幕上显示的每行文字数量会相应调整，以适应新的分辨率，确保文字的显示效果和阅读体验。 :::
-	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
-
-	// 字幕展示的行数，同时适用于原文字幕和译文字幕，支持的取值及含义如下所示。
-	// * 0：（默认值）根据字幕字数自动进行分行展示；
-	// * 1：每种字幕展示一行；
-	// * 2：每种字幕展示两行。 :::tip
-	// * 使用预设配置时，字幕行数为自动分行展示。
-	// * 超出行内字数限制时表示字幕将超过显示范围，此时字幕内容将被截断。 :::
+	// 每种语言字幕最多显示的行数。取值如下：
+	// * 0：根据字幕总字数和每行最大字符数自动换行，确保内容完整显示。
+	// * 1：每种语言的字幕最多显示一行，内容可能被截断。
+	// * 2：每种语言的字幕最多显示两行，内容可能被截断。 :::tip
+	// * 如传入 DisplayPreset（预设效果配置），该参数取值固定为 0。
+	// * 该参数分别应用于原文和译文。原文和译文的行数限制单独计算。 :::
 	MaxRowNumber *int32 `json:"MaxRowNumber,omitempty"`
 
-	// 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-	// :::tip
-	// * 使用预设配置时，字幕位置设置不生效。
-	// * 不使用预设配置时，字幕位置设置必填。 :::
+	// 字幕位置。
+	// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
 	Position *UpdateSubtitleTranscodePresetBodyPosition `json:"Position,omitempty"`
+
+	// 易错词列表。 如果您在传入 GlossaryWordList（关键词）或 HotWordList（热词）后，仍然存在错译或原文字幕识别错误的情况，可选择传入易错词。格式为"目标词":"替换词"，每个"目标词":"替换词"之间用英文逗号（,）隔开。每个目标词或替换词长度为
+	// 1-10 个字符，最多可传入 60 对"目标词":"替换词"。
+	// 只要译文/原文字幕中包含您设置的目标词，系统就会自动将其替换为替换词。
+	// * 字幕翻译和同传声音示例：当 Tim 被错译为蒂姆或提姆时，您可以传入 {"蒂姆":"Tim","提姆":"Tim"}。这样，在译文字幕中，Tim 就不再会被错译成蒂姆或提姆，确保了翻译的准确性。
+	// * 原文 ASR 字幕示例：当 word 被错误识别为 world 时，您可以传入 {"world":"word"}。这样，在原文字幕中，word 就不再会被错误识别为 world，确保了字幕识别的准确性。 :::tip
+	// * 目标词和替换词本身不可包含英文逗号（,）。
+	// * 有关字幕翻译、同传声音和原文 ASR 字幕的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288713?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::
+	ReplaceMap map[string]interface{} `json:"ReplaceMap,omitempty"`
 
 	// 声影同传模式配置。
 	SIConfig *UpdateSubtitleTranscodePresetBodySIConfig `json:"SIConfig,omitempty"`
 
-	// 译文字幕展示参数配置列表，当前最多支持配置一种译文。
+	// 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+	SubtitleTosConfig *UpdateSubtitleTranscodePresetBodySubtitleTosConfig `json:"SubtitleTosConfig,omitempty"`
+
+	// 当前 AppName 下的一个或多个转码后缀，为转码流添加字幕、同传声音等效果。这样，观众在切换清晰度时，也能体验到字幕、同传声音等效果。 您可以调用 ListVhostTransCodePreset [https://www.volcengine.com/docs/6469/1126853?lang=zh]，并通过
+	// SuffixName 参数获取转码后缀。 :::warningAppName
+	// 下的每个转码后缀，仅能绑定一个字幕配置。 ::: 示例：
+	// * 源流地址：rtmp://pull.example.com/live/test
+	// * 转码流（包含字幕、同传声音等效果）地址：rtmp://pull.example.com/live/test_hd
+	Suffixes []*string `json:"Suffixes,omitempty"`
+
+	// 译文字幕配置。 :::tip
+	// * 目前每次调用仅支持传入一种语言的字幕。
+	// * SIConfig下的 Enable 取值为 true 时，原文与译文必须配置不同的语言。 :::
 	TargetLanguage []*UpdateSubtitleTranscodePresetBodyTargetLanguageItem `json:"TargetLanguage,omitempty"`
 }
 
-// UpdateSubtitleTranscodePresetBodyPosition - 字幕位置设置，通过设置字幕距离画面左右边距和底部边距来指定字幕位置。
-// :::tip
-// * 使用预设配置时，字幕位置设置不生效。
-// * 不使用预设配置时，字幕位置设置必填。 :::
+// UpdateSubtitleTranscodePresetBodyPosition - 字幕位置。
+// :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
 type UpdateSubtitleTranscodePresetBodyPosition struct {
 
-	// 字幕距离画面两侧的边距与画面宽度的占比，使用归一化百分表示，取值范围为 [0,0.2]。
+	// 字幕的左右边距，即字幕距离画面左右边缘的距离。取值为画面宽度的百分比，取值范围为(0, 0.3]。
 	MarginHorizontal *float32 `json:"MarginHorizontal,omitempty"`
 
-	// 字幕距离画面底部的边距与画面高度的占比，使用归一化百分表示，取值范围为 [0,0.5]。
+	// 字幕的上下边距，即字幕距离画面顶部或底部的距离。取值为画面高度的百分比，取值范围为 (0, 0.5]。
+	// * 当 Relative 取值为 top 时，表示上边距。
+	// * 当 Relative 取值为 bottom 时，表示下边距。
 	MarginVertical *float32 `json:"MarginVertical,omitempty"`
+
+	// 字幕在画面中的位置。取值如下：
+	// * top：字幕展示在画面顶部。
+	// * bottom：字幕展示在画面底部。
+	Relative *string `json:"Relative,omitempty"`
 }
 
 // UpdateSubtitleTranscodePresetBodySIConfig - 声影同传模式配置。
 type UpdateSubtitleTranscodePresetBodySIConfig struct {
 
 	// 是否开启数字人口型功能。取值如下：
-	// * true：开启。开启后，人物口型将与翻译后的语音同步，提升直播的沉浸感。
+	// * true：开启。开启后，说话人口型将与同传声音同步，提升直播的沉浸感。
 	// * false：关闭。 :::tip
 	// * 仅在Pipe取值为空或si时生效。
-	// * 取值为 true 时，默认开启同传声音功能。 :::
+	// * 取值为 true 时，默认开启同传声音。 :::
 	DigitalHumanMouthShape *bool `json:"DigitalHumanMouthShape,omitempty"`
 
 	// 是否开启声影同传模式。取值如下：
-	// * true：开启声影同传模式。支持输出字幕文本、复刻音色并同步口型，提供沉浸式体验。
-	// * false：关闭声影同传模式，开启纯字幕模式。
+	// * true：开启声影同传模式。支持生成字幕、生成同传声音替换原声，以及驱动数字人口型与同传声音同步，提供沉浸式体验。
+	// * false：关闭声影同传模式，开启纯字幕模式。关闭后，SIConfig 中的其他参数均不生效。
 	Enable *bool `json:"Enable,omitempty"`
 
 	// 声影同传类型。取值如下：
-	// * si：支持开启同传声音和数字人口型功能。适用于对沉浸感要求较高的会议直播等场景。
+	// * si：字幕、同传音频与画面完全同步，支持数字人口型功能。适用于对同步性和沉浸感要求较高的会议直播等场景。
 	// * mix：仅字幕。
+	// * realtime：实时流式原文 ASR 字幕。
 	Pipe *string `json:"Pipe,omitempty"`
 
+	// 额外配置，为 JSON 格式的字符串，包含音量均衡、降噪、原声音量等信息。详见 CreateSpeechTask [https://www.volcengine.com/docs/6469/1976224?lang=zh] 接口的 Extra
+	// 参数。
+	// :::tip 建议仅在开启同传声音时传入该参数。有关同传声音的相关参数配置，详见使用说明 [https://www.volcengine.com/docs/6469/1288713?lang=zh#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E]。
+	// :::
+	PipeExtra *string `json:"PipeExtra,omitempty"`
+
 	// 是否开启同传声音功能。取值如下：
-	// * 大于 0：开启。开启后，将提供带有音色复刻效果的翻译语音。
+	// * 大于 0：开启。开启后，将使用带有音色复刻效果的翻译语音替换直播原声。
 	// * 等于 0：关闭。 :::tip 仅在Pipe取值为空或si时生效。 :::
 	SpeakerRecognition *int32 `json:"SpeakerRecognition,omitempty"`
 }
 
-// UpdateSubtitleTranscodePresetBodySourceLanguage - 原文字幕展示参数配置。
+// UpdateSubtitleTranscodePresetBodySourceLanguage - 原文字幕配置。 :::tipSIConfig下的 Enable 取值为 true 时，原文与译文必须配置不同的语言。 :::
 type UpdateSubtitleTranscodePresetBodySourceLanguage struct {
 
-	// REQUIRED; 是否展示原文字幕，取值及含义如下所示。
-	// * true：展示，此时将展示原文和译文双语字幕
-	// * false：不展示，此时将只展示译文字幕。
-	// :::tip 原文字幕语言和译文字幕语言相同时，仅展示译文字幕。 :::
+	// REQUIRED; 是否展示原文字幕，取值如下：
+	// * true：展示，此时将展示原文和译文双语字幕。
+	// * false：不展示，此时将仅展示译文字幕。
 	Display bool `json:"Display"`
 
-	// REQUIRED; 原文字幕的字体，原文字幕字体根据原文字幕语言取值不同而不同，取值及含义如下所示。
-	// * 当原文字幕的语言是 zh 时，支持以下字体取值。 * siyuanheiti：思源黑体；
-	// * songtixi：宋体细；
-	// * songticu：宋体粗；
-	// * heitifan：黑体繁；
+	// REQUIRED; 原文字幕字体。
+	// * 当 SIConfig下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// Font 获取当前账号下可使用的字体列表，并传入 Key 值。
+	// * 当 SIConfig下的 Enable 取值为 false 使用纯字幕模式时，具体取值如下。原文字幕语言（Language 取值）不同，原文字幕字体也随之不同。 * 当原文字幕的语言是 zh 时，支持以下字体取值。 * siyuanheiti：思源黑体。
+	// * songtixi：宋体细。
+	// * songticu：宋体粗。
+	// * heitifan：黑体繁。
 	// * kaiti：楷体。
 	//
 	//
-	// * 当原文字幕的语言是 en 时，支持以下字体取值。 * inter：Inter；
-	// * roboto：Roboto；
-	// * opposans：OPPOSans；
-	// * siyuansongti：思源宋体；
+	// * 当原文字幕的语言是 en 时，支持以下字体取值。 * inter：Inter。
+	// * roboto：Roboto。
+	// * opposans：OPPOSans。
+	// * siyuansongti：思源宋体。
 	// * montserrat：Montserrat。
 	//
 	//
-	// * 当原文字幕的语言是 ko 和 ja 时，支持 notosans(Noto Sans) 字体。
+	// * 当原文字幕的语言是 ko 或 ja 时，支持 notosans（Noto Sans) 字体。
 	Font string `json:"Font"`
 
-	// REQUIRED; 原文字幕的字体颜色，支持以下几种方法进行定义。
-	// * 支持以 0x 或 # 开头，后面跟着十六进制颜色 RGB 值，再跟着 @+十六进制/百分比来表示的透明度值，来定义字幕的字体颜色。例如，设置 RGB 值为 FF0000，透明度为 5%的颜色时，您可以传入 0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
-	// 或 #FF0000@0.5。
-	// * 支持使用前端框架 FFmpeg 规定的颜色关键字，来定义字幕的字体颜色。例如，AliceBlue 表示 0xF0F8FF、AntiqueWhite 表示 0xFAEBD7、Black 表示 0x000000 等。 :::tip 查看详细颜色定义方法及更多颜色关键字，请参考
-	// FFmpeg 的颜色定义语法
-	// [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。 :::
-	FontColor string `json:"FontColor"`
-
-	// REQUIRED; 原文字幕的语言，取值及含义如下所示。
-	// * zh：中英混合；
-	// * en：英语；
-	// * ko：韩语；
-	// * ja：日语。
-	Language string `json:"Language"`
-
-	// 原文字幕的阴影配置。
+	// 原文字幕字体阴影。
 	Border *UpdateSubtitleTranscodePresetBodySourceLanguageBorder `json:"Border,omitempty"`
+
+	// 原文字幕字体背景。
+	Box *UpdateSubtitleTranscodePresetBodySourceLanguageBox `json:"Box,omitempty"`
+
+	// 原文字幕的字体颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// 或 #FF0000@0.5。
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 原文字幕字号。单位为 px。 :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	FontSize *int32 `json:"FontSize,omitempty"`
+
+	// 原文字幕语言。
+	// * 当 SIConfig下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// OriginalLang 获取当前账号字幕翻译和同传声音可使用的原文字幕语言，或通过该接口的AsrLang获取当前账号可使用的原文
+	// ASR 字幕语言，并传入Key值。
+	// * 当 SIConfig下的 Enable 取值为 false 使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 原文每行字幕的最大字符数。建议取值 60。
+	// :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果原文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当原文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 原文字幕的展示优先级。 取值越大，优先级越高。例如原文字幕的 ShowPriority 为 1，译文字幕的 ShowPriority 为 2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
-// UpdateSubtitleTranscodePresetBodySourceLanguageBorder - 原文字幕的阴影配置。
+// UpdateSubtitleTranscodePresetBodySourceLanguageBorder - 原文字幕字体阴影。
 type UpdateSubtitleTranscodePresetBodySourceLanguageBorder struct {
 
-	// REQUIRED; 描边的颜色，支持以下几种方法进行定义。
-	// * 支持以 0x 或 # 开头，后面跟着十六进制颜色 RGB 值，再跟着 @+十六进制/百分比来表示的透明度值，来定义字幕的字体颜色。例如，设置 RGB 值为 FF0000，透明度为 5%的颜色时，您可以传入 0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// REQUIRED; 颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
 	// 或 #FF0000@0.5。
-	// * 支持使用前端框架 FFmpeg 规定的颜色关键字，来定义字幕的字体颜色。例如，AliceBlue 表示 0xF0F8FF、AntiqueWhite 表示 0xFAEBD7、Black 表示 0x000000 等。 :::tip 查看详细颜色定义方法及更多颜色关键字，请参考
-	// FFmpeg 的颜色定义语法
-	// [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。 :::
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
 	Color string `json:"Color"`
 
-	// 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
-	Width *float32 `json:"Width,omitempty"`
+	// REQUIRED; 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
+	Width float32 `json:"Width"`
+}
+
+// UpdateSubtitleTranscodePresetBodySourceLanguageBox - 原文字幕字体背景。
+type UpdateSubtitleTranscodePresetBodySourceLanguageBox struct {
+
+	// REQUIRED; 颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// 或 #FF0000@0.5。
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
+	Color string `json:"Color"`
+
+	// REQUIRED; 宽度。单位为 px。建议取值范围为 [1,10]。
+	W float32 `json:"W"`
+}
+
+// UpdateSubtitleTranscodePresetBodySubtitleTosConfig - 生成字幕srt文件的tos配置。注意：需要开启视频直播的跨服务授权
+type UpdateSubtitleTranscodePresetBodySubtitleTosConfig struct {
+
+	// tos桶名称
+	Bucket *string `json:"Bucket,omitempty"`
+
+	// 是否开启生成srt文件
+	Enable *bool `json:"Enable,omitempty"`
+
+	// tos桶区域，如：cn-beijing、cn-guangzhou、cn-shanghai
+	Region *string `json:"Region,omitempty"`
+
+	// 文件夹地址
+	StorageDir *string `json:"StorageDir,omitempty"`
 }
 
 type UpdateSubtitleTranscodePresetBodyTargetLanguageItem struct {
 
-	// REQUIRED; 译文字幕的字体，译文字幕字体根据译文字幕语言取值不同而不同，取值及含义如下所示。
-	// * 当译文字幕的语言是 zh 时，支持以下字体取值。 * siyuanheiti：思源黑体；
-	// * songtixi：宋体细；
-	// * songticu：宋体粗；
-	// * heitifan：黑体繁；
+	// REQUIRED; 译文字幕的字体。
+	// * 当 SIConfig下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// Font 获取当前账号下可使用的字体列表，并传入 Key 值。
+	// * 当 SIConfig下的 Enable 取值为 false 使用纯字幕模式时，具体取值如下。译文字幕语言（Language 取值）不同，译文字幕字体也随之不同。 * 当译文字幕的语言是 zh 时，支持以下字体取值。 * siyuanheiti：思源黑体。
+	// * songtixi：宋体细。
+	// * songticu：宋体粗。
+	// * heitifan：黑体繁。
 	// * kaiti：楷体。
 	//
 	//
-	// * 当译文字幕的语言是 zh-Hant 时，支持 siyuanheiti （思源黑体）字体。
-	// * 当译文字幕的语言是 en 时，支持以下字体取值。 * inter：Inter；
-	// * roboto：Roboto；
-	// * opposans：OPPOSans；
-	// * siyuansongti：思源宋体；
+	// * 当译文字幕的语言是 en 时，支持以下字体取值。 * inter：Inter。
+	// * roboto：Roboto。
+	// * opposans：OPPOSans。
+	// * siyuansongti：思源宋体。
 	// * montserrat：Montserrat。
 	//
 	//
-	// * 当译文字幕的语言是 ko、ja、ar、de、es、fr、hi、pt、 ru、 vi、 th 时，支持 notosans(Noto Sans) 字体。
+	// * 当译文字幕的语言是 ko 或 ja 时，支持 notosans（Noto Sans) 字体。
 	Font string `json:"Font"`
-
-	// REQUIRED; 译文字幕的字体颜色，支持以下几种方法进行定义。
-	// * 支持以 0x 或 # 开头，后面跟着十六进制颜色 RGB 值，再跟着 @+十六进制/百分比来表示的透明度值，来定义字幕的字体颜色。例如，设置 RGB 值为 FF0000，透明度为 5%的颜色时，您可以传入 0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
-	// 或 #FF0000@0.5。
-	// * 支持使用前端框架 FFmpeg 规定的颜色关键字，来定义字幕的字体颜色。例如，AliceBlue 表示 0xF0F8FF、AntiqueWhite 表示 0xFAEBD7、Black 表示 0x000000 等。 :::tip 查看详细颜色定义方法及更多颜色关键字，请参考
-	// FFmpeg 的颜色定义语法
-	// [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。 :::
-	FontColor string `json:"FontColor"`
-
-	// REQUIRED; 译文字幕的语言，取值及含义如下所示。
-	// * zh：中英混合；
-	// * zh-Hant：繁体中文；
-	// * en：英语；
-	// * ko：韩语；
-	// * ja：日语；
-	// * ar：阿拉伯语；
-	// * de：德语；
-	// * es：西班牙语；
-	// * fr：法语；
-	// * hi：印地语；
-	// * pt：葡萄牙语；
-	// * ru：俄语；
-	// * vi：越南语；
-	// * th：泰语。
-	Language string `json:"Language"`
 
 	// 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
 	Border *UpdateSubtitleTranscodePresetBodyTargetLanguageItemBorder `json:"Border,omitempty"`
 
+	// 译文字幕字体背景。
+	Box *UpdateSubtitleTranscodePresetBodyTargetLanguageItemBox `json:"Box,omitempty"`
+
+	// 译文字幕的字体颜色。 使用以下任一方式表示颜色值：
+	// * 以0x或#开头，后面跟十六进制 RGB 颜色值，再通过@符号附加透明度，透明度支持十六进制（如0x80）或小数（如0.5）两种表示方式。例如，设置 RGB 值为FF0000，透明度为 50% 的颜色时，可以传入0xFF0000@0x80、0xFF0000@0.5、#FF0000@0x80
+	// 或 #FF0000@0.5。
+	// * 使用 FFmpeg 规定的颜色关键字，再通过@符号附加透明度，透明度支持用小数（如0.5）表示。例如，设置 RGB 值为 0xF0F8FF，透明度为 50% 的颜色时，可以传入 AliceBlue@0.5。 :::tip
+	// * 颜色定义方法及更多颜色关键字，详见 FFmpeg 的颜色定义语法 [https://ffmpeg.org/ffmpeg-utils.html#color-syntax]。
+	// * 透明度数值越大，越不透明。
+	// * 用小数表示透明度时，取值范围为 [0,1]，支持 2 位小数。 :::
+	FontColor *string `json:"FontColor,omitempty"`
+
+	// 译文字幕字号。单位为 px。 :::tip 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	FontSize *int32 `json:"FontSize,omitempty"`
+
 	// 是否隐藏字幕
 	Hidden *bool `json:"Hidden,omitempty"`
+
+	// 译文字幕语言。
+	// * 当 SIConfig下的 Enable 取值为 true 使用声影同传模式时，可通过GetSubtitleTranscodePresetConfig [https://www.volcengine.com/docs/6469/2310464?lang=zh]的
+	// Lang 获取当前账号下可使用的译文字幕语言，并传入 Key 值。
+	// * 当 SIConfig下的 Enable 取值为 false 使用纯字幕模式时，取值如下： * zh：中英混合。
+	// * en：英语。
+	// * ko：韩语。
+	// * ja：日语。
+	Language *string `json:"Language,omitempty"`
+
+	// 译文每行字幕的最大字符数。建议取值 60。 :::tip
+	// * 系统会综合您传入的该参数取值以及MarginLr（左右边距）、Font（字体）、FontSize（字号）和屏幕分辨率等因素，计算出每行最终可显示的最大字符数。
+	// * 每个文字、字母、符号或数字均为一个字符。
+	// * 当 MaxRowNumber 取值为 1 或 2 时，如果译文的字幕总字数超出显示范围，内容将会被截断。例如每行字幕的最大字符数为 10，MaxRowNumber 取值 2，则当译文字幕总字数超出 20 时，20 字后的内容会被截断。
+	// * 如传入 DisplayPreset（预设效果配置），该参数配置不生效，如未传入 DisplayPreset，该参数必选。 :::
+	MaxCharNumber *int32 `json:"MaxCharNumber,omitempty"`
+
+	// 译文字幕的展示优先级。 取值越大，优先级越高。例如原文字幕的ShowPriority为1，译文字幕的ShowPriority为2，则译文字幕在上，原文字幕在下。
+	ShowPriority *int32 `json:"ShowPriority,omitempty"`
 }
 
 // UpdateSubtitleTranscodePresetBodyTargetLanguageItemBorder - 填0的时候后端根据字体大小进行计算，字体大小/32*1.25
 type UpdateSubtitleTranscodePresetBodyTargetLanguageItemBorder struct {
 
 	// REQUIRED
-	Color string   `json:"Color"`
-	Width *float32 `json:"Width,omitempty"`
+	Color string `json:"Color"`
+
+	// REQUIRED
+	Width float32 `json:"Width"`
+}
+
+// UpdateSubtitleTranscodePresetBodyTargetLanguageItemBox - 译文字幕字体背景。
+type UpdateSubtitleTranscodePresetBodyTargetLanguageItemBox struct {
+
+	// REQUIRED
+	Color string `json:"Color"`
+
+	// REQUIRED
+	W float32 `json:"W"`
 }
 
 type UpdateSubtitleTranscodePresetRes struct {
@@ -19150,6 +20063,8 @@ type DescribeRelaySourceV3 struct{}
 type DescribeRelaySourceV3Query struct{}
 type DescribeStreamQuotaConfig struct{}
 type DescribeStreamQuotaConfigQuery struct{}
+type DescribeSubtitleTranscodePresetDetail struct{}
+type DescribeSubtitleTranscodePresetDetailQuery struct{}
 type DisableDomain struct{}
 type DisableDomainQuery struct{}
 type EnableDomain struct{}
@@ -19177,6 +20092,9 @@ type GetSpeechConfigBody struct{}
 type GetSpeechConfigQuery struct{}
 type GetSpeechTask struct{}
 type GetSpeechTaskQuery struct{}
+type GetSubtitleTranscodePresetConfig struct{}
+type GetSubtitleTranscodePresetConfigBody struct{}
+type GetSubtitleTranscodePresetConfigQuery struct{}
 type KillStream struct{}
 type KillStreamQuery struct{}
 type ListBindEncryptDRM struct{}
@@ -19205,6 +20123,8 @@ type ListPullToPushTaskV2 struct{}
 type ListPullToPushTaskV2Query struct{}
 type ListRelaySourceV4 struct{}
 type ListRelaySourceV4Query struct{}
+type ListSpeechSubtitleSrt struct{}
+type ListSpeechSubtitleSrtQuery struct{}
 type ListTimeShiftPresetV2 struct{}
 type ListTimeShiftPresetV2Query struct{}
 type ListVhostRecordPresetV2 struct{}
@@ -19735,6 +20655,10 @@ type DescribeStreamQuotaConfigReq struct {
 	*DescribeStreamQuotaConfigQuery
 	*DescribeStreamQuotaConfigBody
 }
+type DescribeSubtitleTranscodePresetDetailReq struct {
+	*DescribeSubtitleTranscodePresetDetailQuery
+	*DescribeSubtitleTranscodePresetDetailBody
+}
 type DisableDomainReq struct {
 	*DisableDomainQuery
 	*DisableDomainBody
@@ -19786,6 +20710,10 @@ type GetSpeechConfigReq struct {
 type GetSpeechTaskReq struct {
 	*GetSpeechTaskQuery
 	*GetSpeechTaskBody
+}
+type GetSubtitleTranscodePresetConfigReq struct {
+	*GetSubtitleTranscodePresetConfigQuery
+	*GetSubtitleTranscodePresetConfigBody
 }
 type KillStreamReq struct {
 	*KillStreamQuery
@@ -19842,6 +20770,10 @@ type ListPullToPushTaskV2Req struct {
 type ListRelaySourceV4Req struct {
 	*ListRelaySourceV4Query
 	*ListRelaySourceV4Body
+}
+type ListSpeechSubtitleSrtReq struct {
+	*ListSpeechSubtitleSrtQuery
+	*ListSpeechSubtitleSrtBody
 }
 type ListTimeShiftPresetV2Req struct {
 	*ListTimeShiftPresetV2Query

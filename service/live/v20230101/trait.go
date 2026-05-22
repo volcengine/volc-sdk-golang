@@ -3275,6 +3275,26 @@ func (c *Live) UpdateSubtitleTranscodePreset(ctx context.Context, arg *UpdateSub
 	return result, nil
 }
 
+func (c *Live) DescribeSubtitleTranscodePresetDetail(ctx context.Context, arg *DescribeSubtitleTranscodePresetDetailBody) (*DescribeSubtitleTranscodePresetDetailRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "DescribeSubtitleTranscodePresetDetail", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(DescribeSubtitleTranscodePresetDetailRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *Live) ListVhostSubtitleTranscodePreset(ctx context.Context, arg *ListVhostSubtitleTranscodePresetBody) (*ListVhostSubtitleTranscodePresetRes, error) {
 	body, err := marshalToJson(arg)
 	if err != nil {
@@ -3307,6 +3327,22 @@ func (c *Live) CreateSubtitleTranscodePreset(ctx context.Context, arg *CreateSub
 	}
 
 	result := new(CreateSubtitleTranscodePresetRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) GetSubtitleTranscodePresetConfig(ctx context.Context) (*GetSubtitleTranscodePresetConfigRes, error) {
+
+	data, _, err := c.CtxQuery(ctx, "GetSubtitleTranscodePresetConfig", url.Values{})
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(GetSubtitleTranscodePresetConfigRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err
@@ -3723,6 +3759,26 @@ func (c *Live) GetSpeechConfig(ctx context.Context) (*GetSpeechConfigRes, error)
 	}
 
 	result := new(GetSpeechConfigRes)
+	err = unmarshalResultInto(data, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
+func (c *Live) ListSpeechSubtitleSrt(ctx context.Context, arg *ListSpeechSubtitleSrtBody) (*ListSpeechSubtitleSrtRes, error) {
+	body, err := marshalToJson(arg)
+	if err != nil {
+		return nil, err
+	}
+
+	data, _, err := c.Client.CtxJson(ctx, "ListSpeechSubtitleSrt", url.Values{}, string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	result := new(ListSpeechSubtitleSrtRes)
 	err = unmarshalResultInto(data, result)
 	if err != nil {
 		return nil, err

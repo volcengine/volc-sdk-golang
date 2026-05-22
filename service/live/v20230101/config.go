@@ -1294,6 +1294,14 @@ var (
 				"Version": []string{"2023-01-01"},
 			},
 		},
+		"DescribeSubtitleTranscodePresetDetail": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"DescribeSubtitleTranscodePresetDetail"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
 		"ListVhostSubtitleTranscodePreset": {
 			Method: http.MethodPost,
 			Path:   "/",
@@ -1307,6 +1315,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"CreateSubtitleTranscodePreset"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"GetSubtitleTranscodePresetConfig": {
+			Method: http.MethodGet,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"GetSubtitleTranscodePresetConfig"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
@@ -1475,6 +1491,14 @@ var (
 			Path:   "/",
 			Query: url.Values{
 				"Action":  []string{"GetSpeechConfig"},
+				"Version": []string{"2023-01-01"},
+			},
+		},
+		"ListSpeechSubtitleSrt": {
+			Method: http.MethodPost,
+			Path:   "/",
+			Query: url.Values{
+				"Action":  []string{"ListSpeechSubtitleSrt"},
 				"Version": []string{"2023-01-01"},
 			},
 		},
