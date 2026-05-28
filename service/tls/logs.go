@@ -417,7 +417,7 @@ func (c *LsClient) DescribeCursor(request *DescribeCursorRequest) (r *DescribeCu
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeCursor, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathDescribeCursor, params, c.assembleHeader(request.CommonRequest, headers), bytesBody)
 	if err != nil {
 		return nil, err
 	}

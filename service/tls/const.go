@@ -39,6 +39,7 @@ const (
 
 	PathPutLogs             = "/PutLogs"
 	PathDescribeCursor      = "/DescribeCursor"
+	PathDescribeCursorTime  = "/DescribeCursorTime"
 	PathConsumeLogs         = "/ConsumeLogs"
 	PathConsumeOriginalLogs = "/ConsumeOriginalLogs"
 	PathDescribeLogContext  = "/DescribeLogContext"
@@ -87,6 +88,10 @@ const (
 	PathDescribeDownloadTasks            = "/DescribeDownloadTasks"
 	PathDescribeDownloadUrl              = "/DescribeDownloadUrl"
 	PathCancelDownloadTask               = "/CancelDownloadTask"
+	PathCreateLogBackFlowTask            = "/CreateLogBackFlowTask"
+	PathDeleteLogBackFlowTask            = "/DeleteLogBackFlowTask"
+	PathDescribeLogBackFlowTasks         = "/DescribeLogBackFlowTasks"
+	PathModifyLogBackFlowTask            = "/ModifyLogBackFlowTask"
 
 	PathWebTracks = "/WebTracks"
 
@@ -155,8 +160,10 @@ const (
 	PathCreateAppInstance     = "/CreateAppInstance"
 	PathDescribeAppInstances  = "/DescribeAppInstances"
 	PathDeleteAppInstance     = "/DeleteAppInstance"
+	PathModifyAppInstance     = "/ModifyAppInstance"
 	PathCreateAppSceneMeta    = "/CreateAppSceneMeta"
 	PathDescribeAppSceneMetas = "/DescribeAppSceneMetas"
+	PathDescribeAppSceneMeta  = "/DescribeAppSceneMeta"
 	PathModifyAppSceneMeta    = "/ModifyAppSceneMeta"
 	PathDeleteAppSceneMeta    = "/DeleteAppSceneMeta"
 

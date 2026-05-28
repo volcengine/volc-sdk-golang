@@ -442,14 +442,17 @@ type AnalysisResult struct {
 
 type SearchLogsRequest struct {
 	CommonRequest
-	TopicID   string `json:"TopicId"`
-	Query     string `json:"Query"`
-	StartTime int64  `json:"StartTime"`
-	EndTime   int64  `json:"EndTime"`
-	Limit     int    `json:"Limit"`
-	HighLight bool   `json:"HighLight"`
-	Context   string `json:"Context"`
-	Sort      string `json:"Sort"`
+	TopicID       string `json:"TopicId"`
+	Query         string `json:"Query"`
+	StartTime     int64  `json:"StartTime"`
+	EndTime       int64  `json:"EndTime"`
+	Limit         int    `json:"Limit"`
+	HighLight     bool   `json:"HighLight"`
+	Context       string `json:"Context"`
+	Sort          string `json:"Sort"`
+	AccurateQuery *bool  `json:"AccurateQuery,omitempty"`
+	MustComplete  *bool  `json:"MustComplete,omitempty"`
+	Offset        *int64 `json:"Offset,omitempty"`
 }
 
 func (v *SearchLogsRequest) CheckValidation() error {
@@ -464,16 +467,17 @@ func (v *SearchLogsRequest) CheckValidation() error {
 
 type SearchLogsResponse struct {
 	CommonResponse
-	Status         string                   `json:"ResultStatus"`
-	Analysis       bool                     `json:"Analysis"`
-	ListOver       bool                     `json:"ListOver"`
-	HitCount       int                      `json:"HitCount"`
-	Count          int                      `json:"Count"`
-	Limit          int                      `json:"Limit"`
-	Logs           []map[string]interface{} `json:"Logs"`
-	AnalysisResult *AnalysisResult          `json:"AnalysisResult"`
-	Context        string                   `json:"Context"`
-	HighLight      []map[string]interface{} `json:"HighLight,omitempty"`
+	Status             string                   `json:"ResultStatus"`
+	Analysis           bool                     `json:"Analysis"`
+	ListOver           bool                     `json:"ListOver"`
+	HitCount           int                      `json:"HitCount"`
+	Count              int                      `json:"Count"`
+	Limit              int                      `json:"Limit"`
+	Logs               []map[string]interface{} `json:"Logs"`
+	AnalysisResult     *AnalysisResult          `json:"AnalysisResult"`
+	Context            string                   `json:"Context"`
+	HighLight          []map[string]interface{} `json:"HighLight,omitempty"`
+	ElapsedMillisecond int64                    `json:"ElapsedMillisecond,omitempty"`
 }
 
 type DescribeShardsRequest struct {
@@ -592,6 +596,7 @@ type ConsumeLogsRequest struct {
 	EndCursor     *string `json:",omitempty"`
 	LogGroupCount *int    `json:",omitempty"`
 	Compression   *string `json:",omitempty"`
+	Offset        *int64  `json:"Offset,omitempty"`
 
 	ConsumerGroupName *string `json:",omitempty"`
 	ConsumerName      *string `json:",omitempty"`
@@ -837,11 +842,14 @@ func (v *DescribeRuleRequestV2) CheckValidation() error {
 
 type DescribeRuleResponseV2 struct {
 	CommonResponse
-	ProjectID   string    `json:"ProjectId"`
-	ProjectName string    `json:"ProjectName"`
-	TopicID     string    `json:"TopicId"`
-	TopicName   string    `json:"TopicName"`
-	RuleInfo    *RuleInfo `json:"RuleInfo"`
+	ProjectID        string    `json:"ProjectId"`
+	ProjectName      string    `json:"ProjectName"`
+	TopicID          string    `json:"TopicId"`
+	TopicName        string    `json:"TopicName"`
+	RuleInfo         *RuleInfo `json:"RuleInfo"`
+	CsAccountChannel string    `json:"CsAccountChannel,omitempty"`
+	AllowEdit        *bool     `json:"AllowEdit,omitempty"`
+	AllowDelete      *bool     `json:"AllowDelete,omitempty"`
 }
 
 type DescribeBoundHostGroupsRequest struct {
@@ -1097,6 +1105,7 @@ type DescribeHostGroupsRequestV2 struct {
 	AutoUpdate     *bool   `json:",omitempty"`
 	ServiceLogging *bool   `json:",omitempty"`
 	IamProjectName *string `json:",omitempty"`
+	Hidden         *bool   `json:",omitempty"`
 }
 
 func (v *DescribeHostGroupsRequestV2) CheckValidation() error {
@@ -1275,7 +1284,7 @@ type QueryRequests []QueryRequest
 type RequestCycle struct {
 	Type         string  `json:"Type"`
 	Time         int     `json:"Time"`
-	CronTab      string  `json:"CronTab"`
+	CronTab      string  `json:"CronTab,omitempty"`
 	CronTimeZone *string `json:"CronTimeZone,omitempty"`
 }
 
@@ -1662,6 +1671,7 @@ type CreateDownloadTaskRequest struct {
 	Sort            string
 	TaskType        int                          `json:"TaskType"`
 	AllowIncomplete *bool                        `json:"AllowIncomplete,omitempty"`
+	MustComplete    *bool                        `json:"MustComplete,omitempty"`
 	LogContextInfos *DownloadTaskLogContextInfos `json:"LogContextInfos,omitempty"`
 }
 
@@ -2842,6 +2852,8 @@ func (v *DescribeTraceInstanceRequest) CheckValidation() error {
 type DescribeTraceInstanceResponse struct {
 	CommonResponse
 	CreateTime               string              `json:"CreateTime"`
+	BackendConfig            *BackendConfig      `json:"BackendConfig,omitempty"`
+	CsAccountChannel         string              `json:"CsAccountChannel,omitempty"`
 	DependencyTopicId        string              `json:"DependencyTopicId"`
 	DependencyTopicTopicName string              `json:"DependencyTopicTopicName"`
 	Description              string              `json:"Description"`
@@ -3395,6 +3407,25 @@ type DeleteAppInstanceResp struct {
 	CommonResponse
 }
 
+type ModifyAppInstanceReq struct {
+	CommonRequest
+	InstanceId   string  `json:"InstanceId" binding:"required"`
+	InstanceType string  `json:"InstanceType,omitempty"`
+	InstanceName *string `json:"InstanceName,omitempty"`
+	Description  *string `json:"Description,omitempty"`
+}
+
+func (m *ModifyAppInstanceReq) CheckValidation() error {
+	if len(m.InstanceId) == 0 {
+		return errors.New("invalid argument, InstanceId")
+	}
+	return nil
+}
+
+type ModifyAppInstanceResp struct {
+	CommonResponse
+}
+
 type APPMetaType string
 
 var (
@@ -3487,6 +3518,29 @@ type DescribeAppSceneMetasResp struct {
 	PageContext string                      `json:"PageContext,omitempty"`
 	Total       int64                       `json:"Total"`
 	Items       []*DescribeAppSceneMetasRes `json:"Items"`
+}
+
+type DescribeAppSceneMetaReq struct {
+	CommonRequest
+	InstanceId  string  `json:"-"`
+	Id          string  `json:"-"`
+	MetaName    *string `json:"-"`
+	APPMetaType string  `json:"-"`
+}
+
+func (d *DescribeAppSceneMetaReq) CheckValidation() error {
+	if len(d.InstanceId) == 0 {
+		return errors.New("invalid argument, InstanceId")
+	}
+	if len(d.Id) == 0 {
+		return errors.New("invalid argument, Id")
+	}
+	return nil
+}
+
+type DescribeAppSceneMetaResp struct {
+	CommonResponse
+	DescribeAppSceneMetasRes
 }
 
 type DeleteAppSceneMetaReq struct {
@@ -3698,6 +3752,7 @@ type DescribeTraceInstancesRequest struct {
 	ProjectName       *string `json:",omitempty"`
 	Status            *string `json:",omitempty"`
 	IamProjectName    *string `json:",omitempty"`
+	CsAccountChannel  *string `json:"CsAccountChannel,omitempty"`
 }
 
 func (v *DescribeTraceInstancesRequest) CheckValidation() error {
@@ -3728,9 +3783,10 @@ type TraceInstance struct {
 // Trace 相关结构体
 type CreateTraceInstanceRequest struct {
 	CommonRequest
-	ProjectID         string `json:"ProjectId"`
-	TraceInstanceName string `json:"TraceInstanceName"`
-	Description       string `json:"Description,omitempty"`
+	ProjectID         string         `json:"ProjectId"`
+	TraceInstanceName string         `json:"TraceInstanceName"`
+	Description       string         `json:"Description,omitempty"`
+	BackendConfig     *BackendConfig `json:"BackendConfig,omitempty"`
 }
 
 func (v *CreateTraceInstanceRequest) CheckValidation() error {

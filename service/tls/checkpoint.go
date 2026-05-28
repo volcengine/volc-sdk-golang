@@ -28,7 +28,7 @@ func (c *LsClient) DescribeCheckPoint(request *DescribeCheckPointRequest) (*Desc
 		return nil, err
 	}
 
-	rawResponse, err := c.Request(http.MethodGet, PathDescribeCheckPoint, params, reqHeaders, bytesBody)
+	rawResponse, err := c.Request(http.MethodPost, PathDescribeCheckPoint, params, reqHeaders, bytesBody)
 	if err != nil {
 		return nil, err
 	}

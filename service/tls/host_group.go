@@ -313,6 +313,10 @@ func (c *LsClient) DescribeHostGroupsV2(request *DescribeHostGroupsRequestV2) (r
 		params["IamProjectName"] = *request.IamProjectName
 	}
 
+	if request.Hidden != nil {
+		params["Hidden"] = strconv.FormatBool(*request.Hidden)
+	}
+
 	body := map[string]string{}
 	bytesBody, err := json.Marshal(body)
 

@@ -139,6 +139,45 @@ func (c *LsClient) DeleteAppInstance(request *DeleteAppInstanceReq) (*DeleteAppI
 	return response, nil
 }
 
+func (c *LsClient) ModifyAppInstance(request *ModifyAppInstanceReq) (*ModifyAppInstanceResp, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{}
+
+	bytesBody, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
+	}
+
+	rawResponse, err := c.Request(http.MethodPut, PathModifyAppInstance, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
+	if err != nil {
+		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &ModifyAppInstanceResp{}
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
+}
+
 func (c *LsClient) CreateAppSceneMeta(request *CreateAppSceneMetaReq) (*CreateAppSceneMetaResp, error) {
 	if err := request.CheckValidation(); err != nil {
 		return nil, NewClientError(err)
@@ -158,6 +197,9 @@ func (c *LsClient) CreateAppSceneMeta(request *CreateAppSceneMetaReq) (*CreateAp
 	rawResponse, err := c.Request(http.MethodPost, PathCreateAppSceneMeta, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -209,6 +251,9 @@ func (c *LsClient) DescribeAppSceneMetas(request *DescribeAppSceneMetasReq) (*De
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
@@ -217,6 +262,53 @@ func (c *LsClient) DescribeAppSceneMetas(request *DescribeAppSceneMetasReq) (*De
 	}
 
 	var response = &DescribeAppSceneMetasResp{}
+	if err := json.Unmarshal(responseBody, response); err != nil {
+		return nil, err
+	}
+	response.FillRequestId(rawResponse)
+
+	return response, nil
+}
+
+func (c *LsClient) DescribeAppSceneMeta(request *DescribeAppSceneMetaReq) (*DescribeAppSceneMetaResp, error) {
+	if err := request.CheckValidation(); err != nil {
+		return nil, NewClientError(err)
+	}
+
+	reqHeaders := map[string]string{
+		"Content-Type": "application/json",
+	}
+
+	params := map[string]string{}
+
+	if request.InstanceId != "" {
+		params["InstanceId"] = request.InstanceId
+	}
+	if request.Id != "" {
+		params["Id"] = request.Id
+	}
+	if request.APPMetaType != "" {
+		params["APPMetaType"] = request.APPMetaType
+	}
+	if request.MetaName != nil {
+		params["Name"] = *request.MetaName
+	}
+
+	rawResponse, err := c.Request(http.MethodGet, PathDescribeAppSceneMeta, params, c.assembleHeader(request.CommonRequest, reqHeaders), nil)
+	if err != nil {
+		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
+	defer rawResponse.Body.Close()
+
+	responseBody, err := ioutil.ReadAll(rawResponse.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var response = &DescribeAppSceneMetaResp{}
 	if err := json.Unmarshal(responseBody, response); err != nil {
 		return nil, err
 	}
@@ -244,6 +336,9 @@ func (c *LsClient) ModifyAppSceneMeta(request *ModifyAppSceneMetaReq) (*ModifyAp
 	rawResponse, err := c.Request(http.MethodPut, PathModifyAppSceneMeta, params, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	defer rawResponse.Body.Close()
 
@@ -281,6 +376,9 @@ func (c *LsClient) DeleteAppSceneMeta(request *DeleteAppSceneMetaReq) (*DeleteAp
 	if err != nil {
 		return nil, err
 	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
+	}
 	defer rawResponse.Body.Close()
 
 	responseBody, err := ioutil.ReadAll(rawResponse.Body)
@@ -315,6 +413,9 @@ func (c *LsClient) DescribeSessionAnswer(request *DescribeSessionAnswerReq) (rea
 	rawResponse, err := c.Request(http.MethodPost, PathDescribeSessionAnswer, nil, c.assembleHeader(request.CommonRequest, reqHeaders), bytesBody)
 	if err != nil {
 		return nil, err
+	}
+	if rawResponse == nil {
+		return nil, fmt.Errorf("raw response is nil")
 	}
 	if rawResponse.StatusCode != http.StatusOK {
 		errorMessage, err := ioutil.ReadAll(rawResponse.Body)

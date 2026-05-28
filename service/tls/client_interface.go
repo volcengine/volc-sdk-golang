@@ -22,6 +22,7 @@ type Client interface {
 	DescribeCursor(request *DescribeCursorRequest) (*DescribeCursorResponse, error)
 	ConsumeLogs(request *ConsumeLogsRequest) (*ConsumeLogsResponse, error)
 	DescribeLogContext(request *DescribeLogContextRequest) (*DescribeLogContextResponse, error)
+	DescribeCursorTime(request *DescribeCursorTimeRequest) (*DescribeCursorTimeResponse, error)
 
 	CreateProject(request *CreateProjectRequest) (*CreateProjectResponse, error)
 	DeleteProject(request *DeleteProjectRequest) (*CommonResponse, error)
@@ -93,6 +94,10 @@ type Client interface {
 	DescribeDownloadTasks(request *DescribeDownloadTasksRequest) (*DescribeDownloadTasksResponse, error)
 	DescribeDownloadUrl(request *DescribeDownloadUrlRequest) (*DescribeDownloadUrlResponse, error)
 	CancelDownloadTask(request *CancelDownloadTaskRequest) (*CancelDownloadTaskResponse, error)
+	CreateLogBackFlowTask(request *CreateLogBackFlowTaskRequest) (*CreateLogBackFlowTaskResponse, error)
+	DeleteLogBackFlowTask(request *DeleteLogBackFlowTaskRequest) (*DeleteLogBackFlowTaskResponse, error)
+	DescribeLogBackFlowTasks(request *DescribeLogBackFlowTasksRequest) (*DescribeLogBackFlowTasksResponse, error)
+	ModifyLogBackFlowTask(request *ModifyLogBackFlowTaskRequest) (*ModifyLogBackFlowTaskResponse, error)
 
 	WebTracks(request *WebTracksRequest) (*WebTracksResponse, error)
 
@@ -158,10 +163,12 @@ type Client interface {
 	CreateAppInstance(request *CreateAppInstanceReq) (*CreateAppInstanceResp, error)
 	DescribeAppInstances(request *DescribeAppInstancesReq) (*DescribeAppInstancesResp, error)
 	DeleteAppInstance(request *DeleteAppInstanceReq) (*DeleteAppInstanceResp, error)
+	ModifyAppInstance(request *ModifyAppInstanceReq) (*ModifyAppInstanceResp, error)
 
 	// AI场景元数据管理
 	CreateAppSceneMeta(request *CreateAppSceneMetaReq) (*CreateAppSceneMetaResp, error)
 	DescribeAppSceneMetas(request *DescribeAppSceneMetasReq) (*DescribeAppSceneMetasResp, error)
+	DescribeAppSceneMeta(request *DescribeAppSceneMetaReq) (*DescribeAppSceneMetaResp, error)
 	DeleteAppSceneMeta(request *DeleteAppSceneMetaReq) (*DeleteAppSceneMetaResp, error)
 	ModifyAppSceneMeta(request *ModifyAppSceneMetaReq) (*ModifyAppSceneMetaResp, error)
 
@@ -171,6 +178,7 @@ type Client interface {
 	// Trace 相关接口
 	DeleteTraceInstance(request *DeleteTraceInstanceRequest) (*DeleteTraceInstanceResponse, error)
 	DescribeTraceInstance(request *DescribeTraceInstanceRequest) (*DescribeTraceInstanceResponse, error)
+	ModifyTraceInstance(request *ModifyTraceInstanceRequest) (*ModifyTraceInstanceResponse, error)
 	DescribeTrace(request *DescribeTraceRequest) (*DescribeTraceResponse, error)
 	DescribeTraceInstances(request *DescribeTraceInstancesRequest) (*DescribeTraceInstancesResponse, error)
 	CreateTraceInstance(request *CreateTraceInstanceRequest) (*CreateTraceInstanceResponse, error)

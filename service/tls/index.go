@@ -190,22 +190,11 @@ func (c *LsClient) search(request *SearchLogsRequest, reqHeaders map[string]stri
 		return nil, NewClientError(err)
 	}
 
-	reqBody := map[string]interface{}{
-		"TopicId":   request.TopicID,
-		"Query":     request.Query,
-		"StartTime": request.StartTime,
-		"EndTime":   request.EndTime,
-		"Limit":     request.Limit,
-		"HighLight": request.HighLight,
-		"Context":   request.Context,
-		"Sort":      request.Sort,
-	}
-
 	if request.HighLight {
 		reqHeaders["SourceType"] = "front"
 	}
 
-	bytesBody, err := json.Marshal(reqBody)
+	bytesBody, err := json.Marshal(request)
 	if err != nil {
 		return nil, err
 	}

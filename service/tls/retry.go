@@ -19,7 +19,8 @@ func needRetry(err *Error) bool {
 	if err == nil {
 		return false
 	}
-	if err.HTTPCode == 429 || err.HTTPCode == 500 || err.HTTPCode == 502 || err.HTTPCode == 503 {
+	// L4-D4：纳入 504，与 Java/C++ V2 对齐。
+	if err.HTTPCode == 429 || err.HTTPCode == 500 || err.HTTPCode == 502 || err.HTTPCode == 503 || err.HTTPCode == 504 {
 		return true
 	}
 	return false
@@ -60,7 +61,8 @@ func needRetryError(err error) bool {
 		return true
 	}
 	if badRespErr, ok := err.(*BadResponseError); ok {
-		return badRespErr.HTTPCode == 429 || badRespErr.HTTPCode == 500 || badRespErr.HTTPCode == 502 || badRespErr.HTTPCode == 503
+		// L4-D4：纳入 504。
+		return badRespErr.HTTPCode == 429 || badRespErr.HTTPCode == 500 || badRespErr.HTTPCode == 502 || badRespErr.HTTPCode == 503 || badRespErr.HTTPCode == 504
 	}
 	return false
 }
