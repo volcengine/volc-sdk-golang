@@ -915,6 +915,8 @@ type CustomRiskAsyncData struct {
 	DataId         string                 `json:"DataId"`
 	DecisionRate   float64                `json:"DecisionRate"`
 	DecisionReason string                 `json:"DecisionReason"`
+	HitLabels      []string               `json:"HitLabels,omitempty"`
+	SubLabels      []string               `json:"SubLabels,omitempty"`
 	Detail         map[string]interface{} `json:"Detail"`
 	PassThrough    string                 `json:"PassThrough"`
 }
@@ -923,7 +925,10 @@ type CustomRiskSyncData struct {
 	DecisionLabel  string                 `json:"DecisionLabel"`
 	DecisionRate   float64                `json:"DecisionRate"`
 	DecisionReason string                 `json:"DecisionReason"`
+	HitLabels      []string               `json:"HitLabels,omitempty"`
+	SubLabels      []string               `json:"SubLabels,omitempty"`
 	Detail         map[string]interface{} `json:"Detail"`
+	PassThrough    string                 `json:"PassThrough,omitempty"`
 }
 
 type ImageTextLiteModerationSyncResponse struct {
