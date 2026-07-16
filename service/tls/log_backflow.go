@@ -86,10 +86,10 @@ func (c *LsClient) DescribeLogBackFlowTasks(request *DescribeLogBackFlowTasksReq
 		params["TaskName"] = *request.TaskName
 	}
 	if request.Status != nil {
-		params["Status"] = strconv.Itoa(*request.Status)
+		params["Status"] = *request.Status
 	}
-	if request.ScheduleSQLTaskID != nil {
-		params["ScheduleSQLTaskId"] = *request.ScheduleSQLTaskID
+	if request.ETLTaskID != nil {
+		params["ETLTaskId"] = *request.ETLTaskID
 	}
 	if request.ShipperID != nil {
 		params["ShipperId"] = *request.ShipperID

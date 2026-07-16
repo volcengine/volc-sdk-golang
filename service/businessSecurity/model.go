@@ -270,17 +270,18 @@ type ImageResultResponse struct {
 }
 
 type ImageContentRiskResp struct {
-	DataId         string                     `json:"DataId"`
-	Decision       string                     `json:"Decision"`
-	OcrText        string                     `json:"OcrText"`
-	DecisionDetail string                     `json:"DecisionDetail"`
-	Results        []*ImageContentRiskTag     `json:"Results"`
-	FinalLabel     string                     `json:"FinalLabel"`
-	DecisionLabel  string                     `json:"DecisionLabel"`
-	Scores         map[string]float64         `json:"Scores"`
-	OcrDetails     []*ImageContentFrameDetail `json:"OcrDetails"`
-	QrcodeDetails  []*QrcodeData              `json:"QrcodeDetails"`
-	PassThrough    string                     `json:"PassThrough"`
+	DataId          string                     `json:"DataId"`
+	Decision        string                     `json:"Decision"`
+	OcrText         string                     `json:"OcrText"`
+	DecisionDetail  string                     `json:"DecisionDetail"`
+	Results         []*ImageContentRiskTag     `json:"Results"`
+	FinalLabel      string                     `json:"FinalLabel"`
+	DecisionLabel   string                     `json:"DecisionLabel"`
+	Scores          map[string]float64         `json:"Scores"`
+	OcrDetails      []*ImageContentFrameDetail `json:"OcrDetails"`
+	QrcodeDetails   []*QrcodeData              `json:"QrcodeDetails"`
+	PassThrough     string                     `json:"PassThrough"`
+	ImageStorageUrl string                     `json:"ImageStorageUrl"`
 }
 
 type ImageContentRiskTag struct {

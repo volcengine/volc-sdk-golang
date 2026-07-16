@@ -2573,10 +2573,13 @@ type ModifyTraceInstanceResponse struct {
 }
 
 type TargetResource struct {
-	Alias   string  `json:"Alias"`
-	TopicID string  `json:"TopicId"`
-	Region  string  `json:"Region"`
-	RoleTrn *string `json:"RoleTrn,omitempty"`
+	Alias      string  `json:"Alias"`
+	TopicID    string  `json:"TopicId"`
+	Region     string  `json:"Region"`
+	RoleTrn    *string `json:"RoleTrn,omitempty"`
+	ServiceTrn *string `json:"ServiceTrn,omitempty"`
+	ProxyPoint *string `json:"ProxyPoint,omitempty"`
+	Endpoint   *string `json:"Endpoint,omitempty"`
 }
 
 type CreateETLTaskRequest struct {
@@ -2930,10 +2933,20 @@ type JsonInfo struct {
 	Escape bool     `json:"Escape,omitempty"`
 }
 
+type ParquetField struct {
+	Key       string `json:"Key"`
+	TransType string `json:"TransType"`
+}
+
+type ParquetInfo struct {
+	Fields []ParquetField `json:"Fields"`
+}
+
 type ContentInfo struct {
-	Format   string    `json:"Format,omitempty"`
-	CsvInfo  *CsvInfo  `json:"CsvInfo,omitempty"`
-	JsonInfo *JsonInfo `json:"JsonInfo,omitempty"`
+	Format      string       `json:"Format,omitempty"`
+	CsvInfo     *CsvInfo     `json:"CsvInfo,omitempty"`
+	JsonInfo    *JsonInfo    `json:"JsonInfo,omitempty"`
+	ParquetInfo *ParquetInfo `json:"ParquetInfo,omitempty"`
 }
 
 type TosShipperInfo struct {
