@@ -126,21 +126,22 @@ func (c *Imagex) segmentedUpload(set *uploadTaskSet, item *uploadTaskElement) er
 		if err != nil {
 			return err
 		}
-		err = c.directUpload(item.ctx, item.host, item.idx, set, item.info, bts, item.ct)
+		err = c.directUpload(item.ctx, item.host, item.idx, set, item.info, bts, item.ct, item.aigcMetaData)
 		if err != nil {
 			return err
 		}
 	} else {
 		arg := &segmentedUploadParam{
-			host:        item.host,
-			StoreInfo:   item.info,
-			content:     item.content,
-			size:        item.size,
+			host:         item.host,
+			StoreInfo:    item.info,
+			content:      item.content,
+			size:         item.size,
 			isLargeFile:  item.size > LargeFileSize || set.preferredHost != "",
-			idx:         item.idx,
-			set:         set,
-			ct:          item.ct,
-			imagex:      c,
+			idx:          item.idx,
+			set:          set,
+			ct:           item.ct,
+			aigcMetaData: item.aigcMetaData,
+			imagex:       c,
 			storageClass: item.storageClass,
 		}
 		err := arg.chunkUpload()
@@ -204,13 +205,14 @@ func (c *Imagex) SegmentedUploadImages(ctx context.Context, params *ApplyUploadI
 
 	wg := &sync.WaitGroup{}
 	uploadTaskSet := &uploadTaskSet{
-		ctx:       ctx,
-		host:      host,
-		info:      uploadAddr.StoreInfos,
-		content:   content,
-		size:      size,
-		cts:       params.ContentTypes,
-		serviceId: params.ServiceId,
+		ctx:            ctx,
+		host:           host,
+		info:           uploadAddr.StoreInfos,
+		content:        content,
+		size:           size,
+		cts:            params.ContentTypes,
+		aigcMetaData:   params.AIGCMetaData,
+		serviceId:      params.ServiceId,
 		preferredHost:  params.UploadHost,
 		storageClasses: params.StorageClasses,
 	}
@@ -304,12 +306,12 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (r
 		host = params.UploadHost
 	}
 	uploadTaskSet := &uploadTaskSet{
-		ctx:       context.Background(),
-		host:      host,
-		info:      uploadAddr.StoreInfos,
-		content:   make([]io.Reader, 0),
-		size:      make([]int64, 0),
-		serviceId: params.ServiceId,
+		ctx:            context.Background(),
+		host:           host,
+		info:           uploadAddr.StoreInfos,
+		content:        make([]io.Reader, 0),
+		size:           make([]int64, 0),
+		serviceId:      params.ServiceId,
 		storageClasses: params.StorageClasses,
 	}
 	uploadTaskSet.init()
@@ -324,10 +326,15 @@ func (c *Imagex) UploadImages(params *ApplyUploadImageParam, images [][]byte) (r
 		if idx < len(params.ContentTypes) {
 			ct = params.ContentTypes[idx]
 		}
+		var aigcMetaData *AIGCMetaData
+		if idx < len(params.AIGCMetaData) {
+			aigcMetaData = params.AIGCMetaData[idx]
+		}
+
 		err = retry.Do(func() error {
 			ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
 			defer cancel()
-			return c.directUpload(ctx, host, idx, uploadTaskSet, info, imageCopy, ct)
+			return c.directUpload(ctx, host, idx, uploadTaskSet, info, imageCopy, ct, aigcMetaData)
 		}, retry.Attempts(2))
 		if err != nil {
 			uploadTaskSet.result[idx].errMsg = err.Error()

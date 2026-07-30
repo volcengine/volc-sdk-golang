@@ -315,6 +315,7 @@ func (c *ImageX) UploadImages(params *ApplyUploadImageParam, images [][]byte) (*
 		if idx < len(params.ContentTypes) {
 			ct = params.ContentTypes[idx]
 		}
+
 		err = retry.Do(func() error {
 			ctx, cancel := context.WithTimeout(context.Background(), c.ServiceInfo.Timeout)
 			defer cancel()

@@ -181,6 +181,7 @@ func (c *ImageX) directUpload(ctx context.Context, host string, idx int, set *up
 	if ct != "" {
 		req.Header.Set("Specified-Content-Type", ct)
 	}
+
 	req = req.WithContext(ctx)
 
 	rsp, err := http.DefaultClient.Do(req)

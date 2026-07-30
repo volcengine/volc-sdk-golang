@@ -15,6 +15,17 @@ type ApplyUploadImageParam struct {
 	SkipMeta       bool
 	SkipCommit     bool
 	Overwrite      bool
+	AIGCMetaData   []*AIGCMetaData
+}
+
+type AIGCMetaData struct {
+	Label             string `json:"Label"`
+	ContentProducer   string `json:"ContentProducer"`
+	ProduceID         string `json:"ProduceID"`
+	ReservedCode1     string `json:"ReservedCode1"`
+	ContentPropagator string `json:"ContentPropagator"`
+	PropagateID       string `json:"PropagateID"`
+	ReservedCode2     string `json:"ReservedCode2"`
 }
 
 type VpcUploadRequest struct {

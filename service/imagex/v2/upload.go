@@ -3,6 +3,7 @@ package imagex
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,13 +21,14 @@ import (
 )
 
 type uploadTaskSet struct {
-	ctx       context.Context
-	host      string
-	info      []StoreInfo
-	content   []io.Reader
-	size      []int64
-	cts       []string
-	serviceId string
+	ctx            context.Context
+	host           string
+	info           []StoreInfo
+	content        []io.Reader
+	size           []int64
+	cts            []string
+	aigcMetaData   []*AIGCMetaData
+	serviceId      string
 	preferredHost  string
 	storageClasses []string
 
@@ -100,6 +102,7 @@ type uploadTaskElement struct {
 	size         int64
 	ct           string
 	storageClass string
+	aigcMetaData *AIGCMetaData
 }
 
 func (r *uploadTaskSet) init() {
@@ -122,6 +125,9 @@ func (r *uploadTaskSet) init() {
 		}
 		if idx < len(r.cts) {
 			ele.ct = r.cts[idx]
+		}
+		if idx < len(r.aigcMetaData) {
+			ele.aigcMetaData = r.aigcMetaData[idx]
 		}
 		if idx < len(r.storageClasses) {
 			ele.storageClass = r.storageClasses[idx]
@@ -179,7 +185,7 @@ type UploadPayload struct {
 	Hash string `json:"hash"`
 }
 
-func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *uploadTaskSet, storeInfo StoreInfo, imageBytes []byte, ct string) error {
+func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *uploadTaskSet, storeInfo StoreInfo, imageBytes []byte, ct string, aigcMetaData *AIGCMetaData) error {
 	if len(imageBytes) == 0 {
 		return fmt.Errorf("file size is zero")
 	}
@@ -195,6 +201,17 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 	if ct != "" {
 		req.Header.Set("Specified-Content-Type", ct)
 	}
+
+	if aigcMetaData != nil {
+		// 序列化 aigcMetaData
+		metaDataBytes, err := json.Marshal(aigcMetaData)
+		if err == nil {
+			// 进行 base64 编码
+			base64Encoded := base64.StdEncoding.EncodeToString(metaDataBytes)
+			req.Header.Set("X-Upload-AIGC-Meta", base64Encoded)
+		}
+	}
+
 	if set != nil && idx < len(set.storageClasses) {
 		req.Header.Set("X-VeImageX-Storage-Class", set.storageClasses[idx])
 	}
@@ -241,13 +258,14 @@ func (c *Imagex) directUpload(ctx context.Context, host string, idx int, set *up
 type segmentedUploadParam struct {
 	host string
 	StoreInfo
-	content     io.Reader
-	size        int64
-	isLargeFile bool
-	idx         int
-	set         *uploadTaskSet
-	ct          string
-	imagex      *Imagex
+	content      io.Reader
+	size         int64
+	isLargeFile  bool
+	idx          int
+	set          *uploadTaskSet
+	ct           string
+	aigcMetaData *AIGCMetaData
+	imagex       *Imagex
 	storageClass string
 }
 
@@ -431,6 +449,16 @@ func (c *segmentedUploadParam) uploadMergePart(uploadID string, checkSum []strin
 	}
 	if c.storageClass != "" {
 		req.Header.Set("X-VeImageX-Storage-Class", c.storageClass)
+	}
+
+	if c.aigcMetaData != nil {
+		// 序列化 aigcMetaData
+		metaDataBytes, err := json.Marshal(c.aigcMetaData)
+		if err == nil {
+			// 进行 base64 编码
+			base64Encoded := base64.StdEncoding.EncodeToString(metaDataBytes)
+			req.Header.Set("X-Upload-AIGC-Meta", base64Encoded)
+		}
 	}
 
 	now := time.Now()
