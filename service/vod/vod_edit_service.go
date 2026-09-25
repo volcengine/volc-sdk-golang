@@ -129,6 +129,9 @@ func (p *Vod) GetDirectEditResult(req *request.VodGetDirectEditResultRequest) (*
 	}
 	jsonData := marshaler.Format(req)
 	respBody, status, err := p.Json("GetDirectEditResult", url.Values{}, jsonData)
+	if err != nil {
+		return nil, status, err
+	}
 	resultMap := struct {
 		ResponseMetadata *base.ResponseMetadata
 		Result           []map[string]interface{}
@@ -236,6 +239,9 @@ func (p *Vod) GetDirectEditProgress(req *request.VodGetDirectEditProgressRequest
 	}
 
 	respBody, status, err := p.Query("GetDirectEditProgress", query)
+	if err != nil {
+		return nil, status, err
+	}
 	resultMap := struct {
 		ResponseMetadata *base.ResponseMetadata
 		Result           int32
