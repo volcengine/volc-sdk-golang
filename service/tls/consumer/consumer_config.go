@@ -25,6 +25,13 @@ type Config struct {
 	OrderedConsume                 bool
 	Original                       bool
 	Logger                         *log.Logger
+
+	// MetricsLevel controls stats collection granularity.
+	// Zero value (MetricsLevelOff) stops business-metric collection while
+	// retaining minimal lifecycle facts. Adding this exported field is
+	// source-incompatible with external unkeyed Config literals; users should
+	// construct Config with keyed fields.
+	MetricsLevel MetricsLevel
 }
 
 func GetDefaultConsumerConfig() *Config {
@@ -49,6 +56,9 @@ func GetDefaultConsumerConfig() *Config {
 }
 
 func validateConsumerConfig(c *Config) error {
+	if !validMetricsLevel(c.MetricsLevel) {
+		return ErrInvalidMetricsLevel
+	}
 	if len(c.CompressType) == 0 {
 		c.CompressType = tls.CompressLz4
 	}

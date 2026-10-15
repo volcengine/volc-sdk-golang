@@ -271,7 +271,7 @@ func TestSenderRetryClassifierRetriesNetworkErrors(t *testing.T) {
 	}
 	p.producerLogGroupSize = b.totalDataSize
 
-	s.handleFailure(b, io.EOF)
+	s.handleFailure(b, io.EOF, -1)
 
 	if retryQueue.Len() != 1 {
 		t.Fatalf("expected network EOF to be scheduled for retry, got queue len %d", retryQueue.Len())
@@ -296,7 +296,7 @@ func TestSenderRetryClassifierDoesNotRetryLocalResourceFailure(t *testing.T) {
 	}
 	p.producerLogGroupSize = b.totalDataSize
 
-	s.handleFailure(b, ErrMemoryTimeout)
+	s.handleFailure(b, ErrMemoryTimeout, -1)
 
 	if retryQueue.Len() != 0 {
 		t.Fatalf("expected local resource failure not to retry, got queue len %d", retryQueue.Len())
@@ -418,7 +418,7 @@ func TestCircuitBreakerOpenFailsRetryBatchAndReleasesMemory(t *testing.T) {
 	client := &countingPutLogsClient{}
 	sender := initSender(client, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := atomic.LoadInt32(&client.calls); got != 0 {
 		t.Fatalf("expected open circuit to avoid client PutLogs, got %d calls", got)
@@ -681,7 +681,7 @@ func TestCircuitBreakerHalfOpenCoalescedBatchReleasesAllPermits(t *testing.T) {
 		t.Fatalf("expected coalesced half-open batch")
 	}
 	sender := initSender(&countingPutLogsClient{}, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
-	sender.handleSuccess(batch, &tls.CommonResponse{})
+	sender.handleSuccess(batch, &tls.CommonResponse{}, -1)
 
 	p.failureController.lock.Lock()
 	defer p.failureController.lock.Unlock()
@@ -721,7 +721,7 @@ func TestCircuitBreakerTemporaryMemoryFailureReleasesHalfOpenPermit(t *testing.T
 	}
 	p.producerLogGroupSize = batch.totalDataSize
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := atomic.LoadInt32(&client.calls); got != 0 {
 		t.Fatalf("expected temporary memory failure to avoid PutLogs, got %d calls", got)
@@ -758,7 +758,7 @@ func TestSenderReleasesResourcesBeforeSuccessCallback(t *testing.T) {
 	p.producerLogGroupSize = batch.totalDataSize
 	sender := initSender(&successPutLogsClient{}, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := atomic.LoadInt32(&callback.successes); got != 1 {
 		t.Fatalf("expected success callback once, got %d", got)
@@ -778,7 +778,7 @@ func TestSenderReleasesResourcesBeforeFailureCallback(t *testing.T) {
 	p.producerLogGroupSize = batch.totalDataSize
 	sender := initSender(&permanentErrorPutLogsClient{}, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := atomic.LoadInt32(&callback.failures); got != 1 {
 		t.Fatalf("expected failure callback once, got %d", got)
@@ -810,7 +810,7 @@ func TestCircuitBreakerSenderRejectDoesNotReleaseUnheldPermit(t *testing.T) {
 	}
 	p.producerLogGroupSize = batch.totalDataSize
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := atomic.LoadInt32(&client.calls); got != 0 {
 		t.Fatalf("expected sender-side circuit rejection to avoid PutLogs, got %d calls", got)
@@ -981,12 +981,18 @@ type always429RoundTripper struct {
 	calls int32
 }
 
+type testReadCloser struct {
+	io.Reader
+}
+
+func (testReadCloser) Close() error { return nil }
+
 func (rt *always429RoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
 	atomic.AddInt32(&rt.calls, 1)
 	return &http.Response{
 		StatusCode: http.StatusTooManyRequests,
 		Header:     make(http.Header),
-		Body:       io.NopCloser(strings.NewReader(`{"errorCode":"TooManyRequests","errorMessage":"slow down"}`)),
+		Body:       testReadCloser{Reader: strings.NewReader(`{"errorCode":"TooManyRequests","errorMessage":"slow down"}`)},
 		Request:    req,
 	}, nil
 }
@@ -1001,14 +1007,14 @@ func (rt *retryThenSuccessRoundTripper) RoundTrip(req *http.Request) (*http.Resp
 		return &http.Response{
 			StatusCode: http.StatusTooManyRequests,
 			Header:     make(http.Header),
-			Body:       io.NopCloser(strings.NewReader(`{"errorCode":"TooManyRequests","errorMessage":"slow down"}`)),
+			Body:       testReadCloser{Reader: strings.NewReader(`{"errorCode":"TooManyRequests","errorMessage":"slow down"}`)},
 			Request:    req,
 		}, nil
 	}
 	return &http.Response{
 		StatusCode: http.StatusOK,
 		Header:     make(http.Header),
-		Body:       io.NopCloser(strings.NewReader(`{}`)),
+		Body:       testReadCloser{Reader: strings.NewReader(`{}`)},
 		Request:    req,
 	}, nil
 }

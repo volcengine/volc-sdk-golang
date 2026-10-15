@@ -26,7 +26,7 @@ func TestSenderHandleFailure_RetryPolicy(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 401})
+		s.handleFailure(b, &tls.Error{HTTPCode: 401}, -1)
 
 		if retryQueue.Len() != 0 {
 			t.Fatalf("expected retryQueue empty, got %d", retryQueue.Len())
@@ -52,7 +52,7 @@ func TestSenderHandleFailure_RetryPolicy(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 
 		if retryQueue.Len() != 1 {
 			t.Fatalf("expected retryQueue size 1, got %d", retryQueue.Len())
@@ -78,7 +78,7 @@ func TestSenderHandleFailure_RetryPolicy(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, errors.New("boom"))
+		s.handleFailure(b, errors.New("boom"), -1)
 
 		if retryQueue.Len() != 0 {
 			t.Fatalf("expected retryQueue empty, got %d", retryQueue.Len())
@@ -106,7 +106,7 @@ func TestSenderRetryConfigSemantics(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 
 		if retryQueue.Len() != 0 {
 			t.Fatalf("expected retryQueue empty, got %d", retryQueue.Len())
@@ -135,19 +135,19 @@ func TestSenderRetryConfigSemantics(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 		if retryQueue.Len() != 1 {
 			t.Fatalf("expected first failure to schedule retry, got queue len %d", retryQueue.Len())
 		}
 		_ = retryQueue.getRetryBatch(true)
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 		if retryQueue.Len() != 1 {
 			t.Fatalf("expected second failure to schedule retry, got queue len %d", retryQueue.Len())
 		}
 		_ = retryQueue.getRetryBatch(true)
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 		if retryQueue.Len() != 0 {
 			t.Fatalf("expected third failure to stop retrying, got queue len %d", retryQueue.Len())
 		}
@@ -175,7 +175,7 @@ func TestSenderRetryConfigSemantics(t *testing.T) {
 		}
 		p.producerLogGroupSize = b.totalDataSize
 
-		s.handleFailure(b, &tls.Error{HTTPCode: 429})
+		s.handleFailure(b, &tls.Error{HTTPCode: 429}, -1)
 		if b.retryBackoffMs != 10 {
 			t.Fatalf("expected retryBackoffMs capped to 10, got %d", b.retryBackoffMs)
 		}

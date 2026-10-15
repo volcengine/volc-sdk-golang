@@ -35,39 +35,30 @@ type Batch struct {
 	nextRetryMs                int64
 	maxRetryIntervalInMs       int64
 	callBackList               []CallBack
+	metricsTracking            *batchMetricsTracking
 	createTime                 time.Time
-	maxRetryTimes              int
-	topic                      string
-	shardHash                  *string
-	result                     *Result
-	maxReservedAttempts        int
-	reservedBytes              int64
-	reservationReleased        bool
-	circuitPermitCount         int
+	// latencyAnchorElapsedNanos is the queue-entry time until the first send
+	// starts, then becomes the first-send time used by delivery latency. Zero
+	// means the complete interval was not collected.
+	latencyAnchorElapsedNanos int64
+	latencyGeneration         uint64
+	maxRetryTimes             int
+	topic                     string
+	shardHash                 *string
+	result                    *Result
+	maxReservedAttempts       int
+	reservedBytes             int64
+	reservationReleased       bool
+	circuitPermitCount        int
+	memoryStage               payloadMemoryStage
 }
 
-func initProducerBatch(batchLog *BatchLog, config *Config) *Batch {
-	currentTime := time.Now()
-	producerBatch := &Batch{
-		logGroupList:               &pb.LogGroupList{LogGroups: []*pb.LogGroup{}},
-		logGroupSizes:              []int{},
-		attemptCount:               0,
-		maxRetryIntervalInMs:       config.MaxRetryBackoffMs,
-		callBackList:               []CallBack{},
-		createTime:                 currentTime,
-		maxRetryTimes:              config.Retries,
-		retryBackoffMs:             0,
-		baseRetryBackoffMs:         config.BaseRetryBackoffMs,
-		baseIncreaseRetryBackoffMs: 1000,
-		topic:                      batchLog.Key.Topic,
-		result:                     newResult(),
-		maxReservedAttempts:        config.MaxReservedAttempts,
-	}
-
-	producerBatch.shardHash = parseHash(batchLog.Key.ShardHash)
-	producerBatch.tryAddLog(batchLog, batchLog.Key.CallBackFun)
-
-	return producerBatch
+// batchMetricsTracking is allocated only for a batch containing work admitted
+// while collection was enabled.
+type batchMetricsTracking struct {
+	generation     uint32
+	acceptedLogs   int64
+	acceptedGroups int64
 }
 
 func newProducerBatch(batchLog *BatchLog, config *Config) *Batch {
@@ -86,6 +77,7 @@ func newProducerBatch(batchLog *BatchLog, config *Config) *Batch {
 		topic:                      batchLog.Key.Topic,
 		result:                     newResult(),
 		maxReservedAttempts:        config.MaxReservedAttempts,
+		memoryStage:                payloadStageAggregate,
 	}
 
 	producerBatch.shardHash = parseHash(batchLog.Key.ShardHash)
@@ -114,7 +106,7 @@ func (batch *Batch) getMaxLogTime() int64 {
 	return batch.maxLogTime
 }
 
-func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int64) {
+func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int64, bool) {
 	batch.lock.Lock()
 	defer batch.lock.Unlock()
 
@@ -131,7 +123,7 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 	logMsgSize := batchLog.size()
 	logFieldSize := sizeOfBytesField(logMsgSize)
 	if batch.logCount+1 > MaxBatchCount {
-		return false, 0
+		return false, 0, false
 	}
 
 	var deltaTotal int
@@ -146,7 +138,7 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 	}
 
 	if batch.totalDataSize+int64(deltaTotal) > MaxBatchSize {
-		return false, 0
+		return false, 0, false
 	}
 
 	if newGroup {
@@ -173,6 +165,17 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 		}
 	}
 
+	if batchLog.metricsTracked() {
+		if batch.metricsTracking == nil {
+			batch.metricsTracking = &batchMetricsTracking{
+				generation: batchLog.metricsGeneration(),
+			}
+		}
+		batch.metricsTracking.acceptedLogs++
+		if newGroup {
+			batch.metricsTracking.acceptedGroups++
+		}
+	}
 	if callBack != nil {
 		batch.callBackList = append(batch.callBackList, callBack)
 	}
@@ -185,7 +188,23 @@ func (batch *Batch) tryAddLog(batchLog *BatchLog, callBack CallBack) (bool, int6
 	}
 	batchLog.clearReservation()
 
-	return true, int64(deltaTotal)
+	return true, int64(deltaTotal), newGroup
+}
+
+// statsCounts returns only work admitted while metrics were enabled. The
+// caller must use these values for terminal accounting across collection
+// generations; otherwise an Off -> On transition could produce terminal >
+// accepted and break the published conservation invariant.
+func (batch *Batch) statsCounts() (logs, groups int64) {
+	if batch == nil {
+		return 0, 0
+	}
+	batch.lock.RLock()
+	defer batch.lock.RUnlock()
+	if batch.metricsTracking == nil {
+		return 0, 0
+	}
+	return batch.metricsTracking.acceptedLogs, batch.metricsTracking.acceptedGroups
 }
 
 func (batch *Batch) meetSendCondition(config *Config) bool {
@@ -202,13 +221,27 @@ func (batch *Batch) releaseReservedBytes(limiter *memoryLimiter) {
 		return
 	}
 	reservedBytes := batch.reservedBytes
+	stage := batch.memoryStage
 	batch.reservedBytes = 0
 	batch.reservationReleased = true
 	batch.lock.Unlock()
 
 	if limiter != nil {
-		limiter.release(reservedBytes)
+		limiter.releasePayloadFrom(stage, reservedBytes)
 	}
+}
+
+func (batch *Batch) movePayloadTo(limiter *memoryLimiter, target payloadMemoryStage) {
+	if batch == nil || limiter == nil {
+		return
+	}
+	batch.lock.Lock()
+	defer batch.lock.Unlock()
+	if batch.reservationReleased || batch.memoryStage == target {
+		return
+	}
+	limiter.movePayload(batch.memoryStage, target, batch.reservedBytes)
+	batch.memoryStage = target
 }
 
 func (batch *Batch) getTotalDataSize() int64 {

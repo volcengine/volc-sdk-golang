@@ -79,7 +79,7 @@ func (suite *SDKSenderTestSuite) TestHandleSuccessRetryTimesNormally() {
 		RequestID: "Test-TLS-RequestID",
 	}
 
-	suite.sender.handleSuccess(suite.batch, commonRes)
+	suite.sender.handleSuccess(suite.batch, commonRes, -1)
 
 	suite.Equal(int64(0), suite.batch.retryBackoffMs)
 }
@@ -110,7 +110,7 @@ func (suite *SDKSenderTestSuite) TestHandleFailureRetryTimesNormally() {
 
 		fmt.Println("#############" + strconv.Itoa(i) + "#############")
 
-		suite.sender.handleFailure(suite.batch, err)
+		suite.sender.handleFailure(suite.batch, err, -1)
 		now := time.Now().UnixNano()
 
 		suite.False(suite.batch.result.SuccessFlag)

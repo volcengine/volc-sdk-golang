@@ -165,7 +165,7 @@ func TestProducerMemoryLimitReleasesOnSuccess(t *testing.T) {
 	}
 	sender := initSender(&observingPutLogsClient{}, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.handleSuccess(batch, &tls.CommonResponse{})
+	sender.handleSuccess(batch, &tls.CommonResponse{}, -1)
 
 	if got := p.memoryLimiter.Used(); got != 0 {
 		t.Fatalf("expected memory to be released on success, got %d", got)
@@ -195,7 +195,7 @@ func TestProducerMemoryLimitRetainsOnRetryAndReleasesOnFinalFailure(t *testing.T
 	}
 	sender := initSender(&observingPutLogsClient{}, newRetryQueue(), 2, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.handleFailure(batch, &tls.Error{HTTPCode: 429})
+	sender.handleFailure(batch, &tls.Error{HTTPCode: 429}, -1)
 	if got := p.memoryLimiter.Used(); got != 256 {
 		t.Fatalf("expected retryable batch memory to stay reserved, got %d", got)
 	}
@@ -203,7 +203,7 @@ func TestProducerMemoryLimitRetainsOnRetryAndReleasesOnFinalFailure(t *testing.T
 		t.Fatalf("expected batch in retry queue, got %d", len(retry))
 	}
 
-	sender.handleFailure(batch, &tls.Error{HTTPCode: 429})
+	sender.handleFailure(batch, &tls.Error{HTTPCode: 429}, -1)
 	if got := p.memoryLimiter.Used(); got != 256 {
 		t.Fatalf("expected second retry to keep memory reserved, got %d", got)
 	}
@@ -211,7 +211,7 @@ func TestProducerMemoryLimitRetainsOnRetryAndReleasesOnFinalFailure(t *testing.T
 		t.Fatalf("expected batch in retry queue on second retry, got %d", len(retry))
 	}
 
-	sender.handleFailure(batch, &tls.Error{HTTPCode: 429})
+	sender.handleFailure(batch, &tls.Error{HTTPCode: 429}, -1)
 	if got := p.memoryLimiter.Used(); got != 0 {
 		t.Fatalf("expected final failure to release memory, got %d", got)
 	}
@@ -239,8 +239,174 @@ func TestProducerTemporaryMemoryAcquireFailsFastWhenBudgetUnavailable(t *testing
 	}
 }
 
+func TestMemoryLimiterSplitsPayloadAndRuntimeBufferRejections(t *testing.T) {
+	limiter := newMemoryLimiter(100, 60)
+	limiter.setMetricsEnabled(true)
+	if err := limiter.acquirePayload(61, 0); err == nil {
+		t.Fatal("expected payload admission rejection")
+	}
+	if err := limiter.acquireTemporary(101, 0); err == nil {
+		t.Fatal("expected runtime buffer rejection")
+	}
+	if limiter.PayloadRejected() != 1 || limiter.TemporaryRejected() != 1 {
+		t.Fatalf("unexpected rejection split: payload=%d runtime=%d",
+			limiter.PayloadRejected(), limiter.TemporaryRejected())
+	}
+}
+
+func TestMemoryLimiterRejectionTotalsSurviveHotToggleAndReset(t *testing.T) {
+	limiter := newMemoryLimiter(100, 60)
+	limiter.setMetricsEnabled(true)
+	if err := limiter.acquirePayload(61, 0); err == nil {
+		t.Fatal("expected payload admission rejection")
+	}
+	if err := limiter.acquireTemporary(101, 0); err == nil {
+		t.Fatal("expected runtime buffer rejection")
+	}
+
+	limiter.setMetricsEnabled(false)
+	if err := limiter.acquirePayload(61, 0); err == nil {
+		t.Fatal("expected unobserved payload admission rejection while Off")
+	}
+	limiter.setMetricsEnabled(true)
+	if limiter.PayloadRejected() != 1 || limiter.TemporaryRejected() != 1 {
+		t.Fatalf("hot toggle reset monotonic rejection totals: payload=%d runtime=%d",
+			limiter.PayloadRejected(), limiter.TemporaryRejected())
+	}
+
+	limiter.reset()
+	if limiter.PayloadRejected() != 1 || limiter.TemporaryRejected() != 1 {
+		t.Fatalf("lifecycle reset erased rejection totals: payload=%d runtime=%d",
+			limiter.PayloadRejected(), limiter.TemporaryRejected())
+	}
+}
+
+func TestProducerManagedAdmissionRejectionIsSeparateFromBatchGate(t *testing.T) {
+	cfg := GetDefaultProducerConfig()
+	cfg.MetricsLevel = MetricsLevelCore
+	cfg.TotalSizeLnBytes = 4096
+	cfg.MaxProducerMemoryBytes = 4096
+	cfg.MaxSenderCount = 1
+	cfg.MaxBatchSize = 512
+	cfg.MaxBlockSec = 0
+	p := newProducer(cfg)
+	p.Start()
+	t.Cleanup(p.ForceClose)
+
+	if err := p.memoryLimiter.acquireTemporary(p.memoryLimiter.payloadLimit, 0); err != nil {
+		t.Fatalf("fill managed admission gate: %v", err)
+	}
+	err := p.SendLog("", "topic", "source", "file", makeMemoryBudgetLog(128), nil)
+	if err == nil {
+		t.Fatal("expected managed admission rejection")
+	}
+	snapshot, statsErr := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if statsErr != nil {
+		t.Fatalf("GetStats: %v", statsErr)
+	}
+	counters := snapshot.Operational.Counters
+	if counters.RejectedMemoryFullTotal != 1 || counters.RejectedManagedAdmissionTotal != 1 ||
+		counters.RejectedBatchInflightLimitTotal != 0 {
+		t.Fatalf("unexpected public rejection split: %+v", counters)
+	}
+	if snapshot.ManagedMemory == nil || snapshot.ManagedMemory.PayloadAdmissionRejectedTotal != 1 ||
+		snapshot.ManagedMemory.RuntimeBufferRejectedTotal != 0 || snapshot.ManagedMemory.RejectedTotal != 1 {
+		t.Fatalf("unexpected managed rejection split: %+v", snapshot.ManagedMemory)
+	}
+	p.memoryLimiter.releaseTemporary(p.memoryLimiter.payloadLimit)
+	p.ForceClose()
+	finalSnapshot, finalErr := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if finalErr != nil {
+		t.Fatalf("GetStats after force close: %v", finalErr)
+	}
+	if finalSnapshot.ManagedMemory == nil || finalSnapshot.ManagedMemory.PayloadAdmissionRejectedTotal != 1 ||
+		finalSnapshot.ManagedMemory.RejectedTotal != 1 {
+		t.Fatalf("force close erased managed rejection history: %+v", finalSnapshot.ManagedMemory)
+	}
+}
+
+func TestProducerManagedRejectionCountersStayAlignedDuringMetricsToggle(t *testing.T) {
+	cfg := GetDefaultProducerConfig()
+	cfg.MetricsLevel = MetricsLevelCore
+	cfg.TotalSizeLnBytes = 4096
+	cfg.MaxProducerMemoryBytes = 4096
+	cfg.MaxSenderCount = 1
+	cfg.MaxBatchSize = 512
+	cfg.MaxBlockSec = 0
+	p := newProducer(cfg)
+	p.Start()
+	t.Cleanup(p.ForceClose)
+
+	if err := p.memoryLimiter.acquireTemporary(p.memoryLimiter.payloadLimit, 0); err != nil {
+		t.Fatalf("fill managed admission gate: %v", err)
+	}
+	var senders sync.WaitGroup
+	for worker := 0; worker < 4; worker++ {
+		senders.Add(1)
+		go func() {
+			defer senders.Done()
+			for i := 0; i < 500; i++ {
+				_ = p.SendLog("", "topic", "source", "file", makeMemoryBudgetLog(128), nil)
+			}
+		}()
+	}
+	for i := 0; i < 200; i++ {
+		if err := p.SetMetricsLevel(MetricsLevelOff); err != nil {
+			t.Fatalf("disable metrics: %v", err)
+		}
+		if err := p.SetMetricsLevel(MetricsLevelCore); err != nil {
+			t.Fatalf("enable metrics: %v", err)
+		}
+	}
+	senders.Wait()
+	p.memoryLimiter.releaseTemporary(p.memoryLimiter.payloadLimit)
+
+	snapshot, err := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if err != nil {
+		t.Fatalf("GetStats: %v", err)
+	}
+	managedRejected := snapshot.Operational.Counters.RejectedManagedAdmissionTotal
+	if managedRejected == 0 {
+		t.Fatal("expected at least one observed managed rejection")
+	}
+	if snapshot.Operational.Counters.RejectedMemoryFullTotal != managedRejected ||
+		snapshot.ManagedMemory == nil ||
+		snapshot.ManagedMemory.PayloadAdmissionRejectedTotal != managedRejected ||
+		snapshot.ManagedMemory.RejectedTotal != managedRejected {
+		t.Fatalf("managed rejection views diverged during hot toggle: counters=%+v memory=%+v",
+			snapshot.Operational.Counters, snapshot.ManagedMemory)
+	}
+}
+
+func TestProducerRuntimeBufferRejectionIsNotPublicAdmissionRejection(t *testing.T) {
+	cfg := GetDefaultProducerConfig()
+	cfg.MetricsLevel = MetricsLevelCore
+	cfg.TotalSizeLnBytes = 4096
+	cfg.MaxProducerMemoryBytes = 4096
+	p := newProducer(cfg)
+
+	if err := p.acquireTemporaryBytes(cfg.MaxProducerMemoryBytes + 1); err == nil {
+		t.Fatal("expected runtime buffer rejection")
+	}
+	snapshot, err := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if err != nil {
+		t.Fatalf("GetStats: %v", err)
+	}
+	if snapshot.Operational.Counters.RejectedMemoryFullTotal != 0 ||
+		snapshot.Operational.Counters.RejectedManagedAdmissionTotal != 0 {
+		t.Fatalf("runtime buffer failure must not become an API admission rejection: %+v",
+			snapshot.Operational.Counters)
+	}
+	if snapshot.ManagedMemory == nil || snapshot.ManagedMemory.RejectedTotal != 1 ||
+		snapshot.ManagedMemory.PayloadAdmissionRejectedTotal != 0 ||
+		snapshot.ManagedMemory.RuntimeBufferRejectedTotal != 1 {
+		t.Fatalf("unexpected runtime buffer rejection split: %+v", snapshot.ManagedMemory)
+	}
+}
+
 func TestProducerPayloadMemoryAcquireUnblocksOnForceClose(t *testing.T) {
 	cfg := GetDefaultProducerConfig()
+	cfg.MetricsLevel = MetricsLevelCore
 	cfg.MaxProducerMemoryBytes = int64(4096)
 	cfg.TotalSizeLnBytes = int64(4096)
 	cfg.MaxBlockSec = -1
@@ -268,10 +434,61 @@ func TestProducerPayloadMemoryAcquireUnblocksOnForceClose(t *testing.T) {
 	case <-time.After(300 * time.Millisecond):
 		t.Fatalf("expected force close to unblock payload memory acquire")
 	}
+
+	snapshot, statsErr := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if statsErr != nil {
+		t.Fatalf("GetStats after force close: %v", statsErr)
+	}
+	if snapshot.Operational.Counters.RejectedManagedAdmissionTotal != 0 ||
+		snapshot.Operational.Counters.RejectedMemoryFullTotal != 0 {
+		t.Fatalf("close cancellation must not become managed pressure: %+v", snapshot.Operational.Counters)
+	}
+	if snapshot.Operational.Counters.RejectedClosedTotal != 1 {
+		t.Fatalf("close cancellation must be classified as rejected_closed: %+v", snapshot.Operational.Counters)
+	}
+	if snapshot.ManagedMemory == nil || snapshot.ManagedMemory.RejectedTotal != 0 {
+		t.Fatalf("close cancellation must not enter limiter rejection totals: %+v", snapshot.ManagedMemory)
+	}
+}
+
+func TestProducerBatchGateWaitUnblocksOnForceCloseAsClosedRejection(t *testing.T) {
+	cfg := GetDefaultProducerConfig()
+	cfg.MetricsLevel = MetricsLevelCore
+	cfg.TotalSizeLnBytes = 1024
+	cfg.MaxProducerMemoryBytes = 4096
+	cfg.MaxBlockSec = -1
+	p := newProducer(cfg)
+	atomic.StoreInt64(&p.producerLogGroupSize, cfg.TotalSizeLnBytes+1)
+
+	done := make(chan error, 1)
+	go func() {
+		done <- p.SendLog("", "topic", "source", "file", makeMemoryBudgetLog(128), nil)
+	}()
+	time.Sleep(20 * time.Millisecond)
+	p.ForceClose()
+	select {
+	case err := <-done:
+		if err == nil || !strings.Contains(err.Error(), "closed") {
+			t.Fatalf("expected closed error after force close, got %v", err)
+		}
+	default:
+		t.Fatal("ForceClose returned before the blocked batch admission completed")
+	}
+
+	snapshot, err := p.GetStats(StatsOptions{View: StatsViewOperational})
+	if err != nil {
+		t.Fatalf("GetStats after force close: %v", err)
+	}
+	if snapshot.Operational.Counters.RejectedBatchInflightLimitTotal != 0 ||
+		snapshot.Operational.Counters.RejectedMemoryFullTotal != 0 ||
+		snapshot.Operational.Counters.RejectedClosedTotal != 1 {
+		t.Fatalf("batch wait cancellation classification is wrong: %+v", snapshot.Operational.Counters)
+	}
 }
 
 func TestMemoryLimiterNoWaitHonorsClosedDone(t *testing.T) {
 	limiter := newMemoryLimiter(1024, 1024)
+	limiter.setMetricsEnabled(true)
 	done := make(chan struct{})
 	close(done)
 
@@ -281,6 +498,9 @@ func TestMemoryLimiterNoWaitHonorsClosedDone(t *testing.T) {
 	}
 	if got := limiter.Used(); got != 0 {
 		t.Fatalf("expected closed done to avoid reservation, got used=%d", got)
+	}
+	if limiter.PayloadRejected() != 0 || limiter.TemporaryRejected() != 0 {
+		t.Fatalf("close cancellation must not be reported as memory pressure rejection")
 	}
 }
 
@@ -300,7 +520,7 @@ func TestMemoryLimiterAcquireWakesOnRelease(t *testing.T) {
 	}()
 
 	time.Sleep(10 * time.Millisecond)
-	limiter.release(1024)
+	limiter.releaseTemporary(1024)
 
 	select {
 	case elapsed := <-done:
@@ -322,7 +542,7 @@ func TestMemoryLimiterReleaseWithoutWaitersDoesNotRotateNotifyChannel(t *testing
 	notifyCh := limiter.notifier.ch
 	limiter.notifier.mu.Unlock()
 
-	limiter.release(512)
+	limiter.releaseTemporary(512)
 
 	limiter.notifier.mu.Lock()
 	defer limiter.notifier.mu.Unlock()
@@ -399,7 +619,7 @@ func TestProducerWaitTimeWakesWhenProducerSizeDrops(t *testing.T) {
 
 	time.Sleep(10 * time.Millisecond)
 	sender := initSender(&countingPutLogsClient{}, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
-	sender.handleSuccess(batch, &tls.CommonResponse{})
+	sender.handleSuccess(batch, &tls.CommonResponse{}, -1)
 
 	select {
 	case elapsed := <-done:
@@ -492,7 +712,7 @@ func TestProducerMemoryLimitCountsSendBuffers(t *testing.T) {
 	}
 	sender := initSender(client, newRetryQueue(), 1, common.LogConfig(cfg.LoggerConfig), map[int]struct{}{}, p)
 
-	sender.sendToServer(batch)
+	sender.sendToServer(batch, -1)
 
 	if got := p.memoryLimiter.Used(); got != 0 {
 		t.Fatalf("expected payload and send buffers to be released, got %d", got)

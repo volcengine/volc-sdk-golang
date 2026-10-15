@@ -12,6 +12,8 @@ type Producer interface {
 	Start()
 	Close()
 	ForceClose()
+	GetStats(options StatsOptions) (StatsSnapshot, error)
+	SetMetricsLevel(level MetricsLevel) error
 }
 
 func NewProducer(config *Config) Producer {

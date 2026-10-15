@@ -1,5 +1,14 @@
 ### Change log
 
+2026-10-15 Bumped to version v1.0.258
+- Updated service tls
+
+Unreleased
+- Added optional local runtime observability for TLS Producer and Consumer through `GetStats` and runtime `SetMetricsLevel`; collection defaults to `Off` and does not report data to a server.
+- Added Producer batch-inflight and managed-lifecycle memory gate statistics, including the effective payload-admission limit and rejection sources. These SDK-managed values do not represent process Heap or RSS.
+- Fixed graceful Producer `Close` to keep draining batches accepted before shutdown: they may still acquire an immediately available send buffer and complete their normal success or failure callback. `ForceClose` remains interrupting and may drop pending work.
+- Compatibility: external unkeyed Producer/Consumer `Config` literals must migrate to keyed literals, and external implementations or mocks of the `Producer`/`Consumer` interfaces must implement `GetStats` and `SetMetricsLevel`. The default `Off` setting does not remove these compile-time migration requirements.
+
 2026-09-17 Bumped to version v1.0.257
 - Updated service live
 

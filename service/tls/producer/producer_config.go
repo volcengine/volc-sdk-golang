@@ -62,6 +62,10 @@ type Config struct {
 	FailurePolicy          FailurePolicy
 	CircuitBreaker         CircuitBreakerConfig
 
+	// MetricsLevel controls stats collection granularity.
+	// Zero value (MetricsLevelOff=0) disables all business counters.
+	MetricsLevel MetricsLevel
+
 	common.LoggerConfig
 	common.ClientConfig
 	Logger *log.Logger

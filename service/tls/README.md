@@ -245,3 +245,29 @@ func main() {
 ## 通过 Consumer 消费日志数据
 
 [通过Consumer消费日志数据](consumer/consumer.md)
+
+## 本地健康观测（GetStats）
+
+Producer 和 Consumer 支持可选的本地 `GetStats` 健康快照，用于读取吞吐、队列/重试、worker 和
+生命周期等指标。默认 `MetricsLevel=Off`：如果您的代码通过 `GetDefaultProducerConfig()` 或
+`GetDefaultConsumerConfig()` 获取配置后再修改业务字段，则无需变更，默认不会开启指标采集。
+运行中的实例可直接调用 `SetMetricsLevel` 在 Off/Core/Detailed 之间切换；切换到 Off 会真正停止
+业务 counter、queue、worker 和 latency 采集，不只是隐藏返回字段；Consumer 仅在常驻角色
+启动/退出时维护最小生命周期事实，以便重新开启后准确报告实际存活角色。
+
+Producer 内存背压包含 `TotalSizeLnBytes` 的 batch-inflight gate、
+`MaxProducerMemoryBytes` 的 lifecycle total gate，以及为 sender buffer 预留空间后派生的 payload
+admission 子门禁。`GetStats` 会分别返回 gate、拒绝来源、有效 pressure 与当前 bottleneck；
+`managed_memory` 不是进程 Heap/RSS，也不代表整个 I/O 栈的物理内存。
+
+配置和接口注意事项：
+
+- 只有按字段位置初始化的 `producer.Config{...}` / `consumer.Config{...}`（unkeyed composite
+  literal）需要改为 keyed literal；例如 `consumer.Config{ProjectID: projectID}`。新增字段会使原有
+  unkeyed literal 在编译时不再匹配，默认 `Off` 不能规避这个源码兼容影响。
+- 外部代码若自行实现了 `producer.Producer` / `consumer.Consumer`（常见于测试 mock），需要补充
+  `GetStats` 和 `SetMetricsLevel` 方法，否则实现会在编译时不再满足接口。推荐始终从默认配置开始，
+  或使用 keyed literal；mock 应同步实现这两个方法并保留默认 `Off` 语义。
+
+完整的开关、字段语义和采样建议见
+[健康观测说明](health-observability.md)。

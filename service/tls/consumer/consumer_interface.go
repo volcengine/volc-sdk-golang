@@ -10,6 +10,8 @@ type Consumer interface {
 	ResetAccessKeyToken(accessKeyID, accessKeySecret, securityToken string)
 	Start() error
 	Stop()
+	GetStats(options StatsOptions) (StatsSnapshot, error)
+	SetMetricsLevel(level MetricsLevel) error
 }
 
 func NewConsumer(ctx context.Context, conf *Config, f func(topicID string, shardID int, l *pb.LogGroupList)) (Consumer, error) {
