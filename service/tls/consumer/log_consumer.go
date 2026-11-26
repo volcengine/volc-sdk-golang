@@ -210,10 +210,11 @@ func (lc *logConsumer) fetchData() error {
 		Compression:       &compressType,
 		ConsumerGroupName: &lc.conf.ConsumerGroupName,
 		ConsumerName:      &lc.conf.ConsumerName,
-		Original:          lc.conf.Original,
+		Original:          lc.conf.Original && lc.conf.ProcessorID == "",
+		ProcessorID:       lc.conf.ProcessorID,
 	}
 
-	_ = level.Debug(lc.logger).Log("msg", "fetch start", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", consumeReq.Cursor, "count_req", lc.conf.MaxFetchLogGroupCount, "compress", compressType, "original", lc.conf.Original)
+	_ = level.Debug(lc.logger).Log("msg", "fetch start", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", consumeReq.Cursor, "count_req", lc.conf.MaxFetchLogGroupCount, "compress", compressType, "original", consumeReq.Original)
 
 	// fetch_call_duration: time for one ConsumeLogs call (incl. internal retry).
 	// time.Now() only when latency is on (off path: no clock call).
@@ -291,7 +292,7 @@ func (lc *logConsumer) fetchData() error {
 			return nil
 		}
 
-		_ = level.Error(lc.logger).Log("msg", "fetch failed", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", lc.nextCheckpoint, "compress", compressType, "original", lc.conf.Original, "http_code", clientErr.HTTPCode, "code", clientErr.Code, "error", err.Error())
+		_ = level.Error(lc.logger).Log("msg", "fetch failed", "topic", lc.shard.TopicID, "shard", lc.shard.ShardID, "req_cursor", lc.nextCheckpoint, "compress", compressType, "original", consumeReq.Original, "http_code", clientErr.HTTPCode, "code", clientErr.Code, "error", err.Error())
 
 		return err
 	}

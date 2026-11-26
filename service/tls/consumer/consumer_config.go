@@ -25,6 +25,8 @@ type Config struct {
 	OrderedConsume                 bool
 	Original                       bool
 	Logger                         *log.Logger
+	// ProcessorID selects normal consumption even when Original is true.
+	ProcessorID string
 
 	// MetricsLevel controls stats collection granularity.
 	// Zero value (MetricsLevelOff) stops business-metric collection while

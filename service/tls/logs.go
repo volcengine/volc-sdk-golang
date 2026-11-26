@@ -297,6 +297,9 @@ func (c *LsClient) ConsumeLogs(request *ConsumeLogsRequest) (r *ConsumeLogsRespo
 	reqBody := map[string]interface{}{
 		"Cursor": request.Cursor,
 	}
+	if request.ProcessorID != "" {
+		reqBody["ProcessorId"] = request.ProcessorID
+	}
 
 	if request.EndCursor != nil {
 		reqBody["EndCursor"] = *request.EndCursor

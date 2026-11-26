@@ -598,6 +598,9 @@ type ConsumeLogsRequest struct {
 	Compression   *string `json:",omitempty"`
 	Offset        *int64  `json:"Offset,omitempty"`
 
+	// ProcessorID selects a processor for normal consumption. It cannot be used with Original.
+	ProcessorID string `json:"ProcessorId,omitempty"`
+
 	ConsumerGroupName *string `json:",omitempty"`
 	ConsumerName      *string `json:",omitempty"`
 }
@@ -605,6 +608,9 @@ type ConsumeLogsRequest struct {
 func (v *ConsumeLogsRequest) CheckValidation() error {
 	if len(v.TopicID) <= 0 {
 		return errors.New("Invalid argument, empty TopicID")
+	}
+	if v.ProcessorID != "" && v.Original {
+		return errors.New("Invalid argument, ProcessorID cannot be used with Original")
 	}
 	return nil
 }
